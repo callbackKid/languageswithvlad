@@ -55,3 +55,13 @@ export function transcribePrompt(pageCount: number): string {
 Transcribe every line exactly as written, top to bottom, keeping the writer's line breaks, punctuation, dashes, arrows (→) and square brackets. Keep the writer's spelling and accents; do not correct, translate or add anything. Write a word you cannot read as [?]. Leave out crossed-out text, page numbers and doodles. Separate pages with an empty line.
 Reply with only a JSON object: {"title": string, "text": string}. title is what the notes are about, in English, at most 6 words; text is the transcription.`;
 }
+
+export function textbookPrompt(): string {
+  return `The PDF holds a few pages from a French textbook, usually one chapter. Write the lesson notes a teacher would write from them for a Russian-speaking learner, as plain text, one item per line, using only what these pages teach:
+- Vocabulary, one word per line as "mot — перевод": nouns with le, la, l' or un/une, adjectives in the masculine form, verbs in the infinitive.
+- Set phrases and expressions the same way: "phrase — перевод".
+- A line "Grammaire:" followed by each grammar point of the chapter: a short rule in Russian and one or two French examples.
+- A line "Exemples:" followed by up to 10 useful sentences from the pages, each followed by " — " and its Russian translation.
+Leave out exercise instructions, answer keys, page numbers, headers and anything not in French or about French. Do not invent content that is not on the pages.
+Reply with only a JSON object: {"title": string, "text": string}. title is the chapter's topic in English, at most 6 words; text is the notes.`;
+}

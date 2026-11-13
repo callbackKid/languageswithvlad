@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { api, ApiError } from '../lib/api';
 import { shrinkImage } from '../lib/image';
+import { extractPages, MAX_PDF_PAGES, pdfPageCount } from '../lib/pdf';
 import { asObjectText } from '../lib/parse';
 import { load, save } from '../lib/storage';
 import type { Lesson } from '../lib/types';
@@ -8,7 +9,26 @@ import { hash } from '../lib/util';
 import AddToDoc, { type DocTarget } from './AddToDoc';
 import LessonView from './LessonView';
 
-const STORAGE_KEY = 'handwritten';
+/** Where the lesson comes from: photos of handwritten notes, or pages of a textbook PDF. */
+export type PaperSource = 'handwritten' | 'textbook';
+
+const SOURCES: Record<
+  PaperSource,
+  { storageKey: string; keyPrefix: string; name: string; reading: string }
+> = {
+  handwritten: {
+    storageKey: 'handwritten',
+    keyPrefix: 'hw-',
+    name: 'Handwritten notes',
+    reading: 'Reading the handwriting…',
+  },
+  textbook: {
+    storageKey: 'textbook',
+    keyPrefix: 'tb-',
+    name: 'Textbook chapter',
+    reading: 'Reading the pages and writing lesson notes…',
+  },
+};
 // keep in step with MAX_PAGES in api/transcribe.ts
 const MAX_PAGES = 4;
 // smaller than for a book page: several pages have to fit in one upload
@@ -21,21 +41,34 @@ interface HandwrittenLesson {
   at: number;
 }
 
-const toLesson = (entry: HandwrittenLesson, position: number): Lesson => ({
-  key: 'hw-' + entry.id,
+const toLesson = (entry: HandwrittenLesson, position: number, source: PaperSource): Lesson => ({
+  key: SOURCES[source].keyPrefix + entry.id,
   n: position + 1,
   word: 'Leçon',
   date: new Date(entry.at),
   body: entry.text,
   hash: hash(entry.text),
-  title: entry.title || `Handwritten notes ${position + 1}`,
+  title: entry.title || `${SOURCES[source].name} ${position + 1}`,
 });
 
-/** Photos of handwritten lesson notes → text the student can correct → the same words, verbs and exercises as a lesson from the document. */
-export default function HandwrittenNotes({ ai, target }: { ai: boolean; target: DocTarget }) {
+/** Photos of handwritten notes, or pages of a textbook PDF → text the student can correct → the same words, verbs and exercises as a lesson from the document. */
+export default function HandwrittenNotes({
+  ai,
+  target,
+  source,
+}: {
+  ai: boolean;
+  target: DocTarget;
+  source: PaperSource;
+}) {
+  const { storageKey, name, reading } = SOURCES[source];
   const [entries, setEntries] = useState<HandwrittenLesson[]>(
-    () => load<HandwrittenLesson[]>(STORAGE_KEY) || []
+    () => load<HandwrittenLesson[]>(storageKey) || []
   );
+  // the PDF waiting for the student to choose its pages
+  const [pdf, setPdf] = useState<{ file: File; pageCount: number } | null>(null);
+  const [firstPage, setFirstPage] = useState(1);
+  const [lastPage, setLastPage] = useState(1);
   const [currentId, setCurrentId] = useState<string | null>(() => entries[0]?.id ?? null);
   const [draft, setDraft] = useState<string | null>(null);
   const [state, setState] = useState<'idle' | 'loading' | 'error'>('idle');
@@ -43,10 +76,54 @@ export default function HandwrittenNotes({ ai, target }: { ai: boolean; target: 
 
   const store = (next: HandwrittenLesson[]) => {
     setEntries(next);
-    save(STORAGE_KEY, next);
+    save(storageKey, next);
   };
   const currentIndex = entries.findIndex((entry) => entry.id === currentId);
   const current = currentIndex >= 0 ? entries[currentIndex] : null;
+
+  /** Adds the notes Claude wrote as a new saved lesson and opens them for checking. */
+  function addEntry(answer: unknown, nothingFound: string) {
+    const { title, text } = asObjectText(answer, ['title', 'text']);
+    if (!text) throw new ApiError(0, 'empty', nothingFound);
+    const entry: HandwrittenLesson = { id: Date.now().toString(36), title, text, at: Date.now() };
+    store([entry, ...entries]);
+    setCurrentId(entry.id);
+    // the student checks the text before the lesson is prepared
+    setDraft(text);
+  }
+
+  async function openPdf(file: File) {
+    setState('loading');
+    setError('');
+    try {
+      const pageCount = await pdfPageCount(file);
+      setPdf({ file, pageCount });
+      setFirstPage(1);
+      setLastPage(Math.min(pageCount, MAX_PDF_PAGES));
+      setState('idle');
+    } catch {
+      setState('error');
+      setError('This PDF couldn’t be opened. Try another file.');
+    }
+  }
+
+  async function readPdf() {
+    if (!pdf) return;
+    setState('loading');
+    setError('');
+    try {
+      const pages = await extractPages(pdf.file, firstPage, lastPage);
+      if ('error' in pages) throw new ApiError(0, 'pages', pages.error);
+      addEntry(await api.textbook(pages.data), 'No lesson content was found on these pages.');
+      setPdf(null);
+      setState('idle');
+    } catch (failure) {
+      setState('error');
+      setError(
+        failure instanceof ApiError ? failure.message : 'The pages couldn’t be read. Try again.'
+      );
+    }
+  }
 
   async function read(files: File[]) {
     if (files.length > MAX_PAGES) {
@@ -58,14 +135,9 @@ export default function HandwrittenNotes({ ai, target }: { ai: boolean; target: 
     setError('');
     try {
       const images = await Promise.all(files.map((file) => shrinkImage(file, MAX_SIDE)));
-      const { title, text } = asObjectText(await api.transcribe(images), ['title', 'text']);
-      if (!text) throw new ApiError(0, 'empty', 'No handwriting was found in these photos.');
-      const entry: HandwrittenLesson = { id: Date.now().toString(36), title, text, at: Date.now() };
-      store([entry, ...entries]);
-      setCurrentId(entry.id);
-      // the student checks the transcription before the lesson is prepared
-      setDraft(text);
+      addEntry(await api.transcribe(images), 'No handwriting was found in these photos.');
       setState('idle');
+      return;
     } catch (failure) {
       setState('error');
       setError(
@@ -91,30 +163,61 @@ export default function HandwrittenNotes({ ai, target }: { ai: boolean; target: 
 
   if (!ai)
     return (
-      <p className="empty">Reading handwriting needs Claude, which isn’t set up on this server.</p>
+      <p className="empty">
+        Reading {source === 'textbook' ? 'textbooks' : 'handwriting'} needs Claude, which isn’t set
+        up on this server.
+      </p>
     );
 
   return (
     <>
-      <p className="hint photo-intro">
-        Take photos of handwritten lesson notes (up to {MAX_PAGES} pages at once). You can fix
-        anything misread, then practise the words and verbs like any other lesson.
-      </p>
+      {source === 'textbook' ? (
+        <p className="hint photo-intro">
+          Choose a textbook PDF and the pages of one chapter (up to {MAX_PDF_PAGES}). Claude writes
+          lesson notes from them: words, phrases, grammar and examples. Check them, then practise
+          like any other lesson.
+        </p>
+      ) : (
+        <p className="hint photo-intro">
+          Take photos of handwritten lesson notes (up to {MAX_PAGES} pages at once). You can fix
+          anything misread, then practise the words and verbs like any other lesson.
+        </p>
+      )}
       <div className="photo-pick">
         <label className="btn primary">
-          {entries.length ? 'New notes from photos' : 'Choose or take photos'}
-          <input
-            type="file"
-            accept="image/*"
-            multiple
-            hidden
-            disabled={state === 'loading'}
-            onChange={(event) => {
-              const files = Array.from(event.target.files || []);
-              event.target.value = '';
-              if (files.length) void read(files);
-            }}
-          />
+          {source === 'textbook'
+            ? pdf
+              ? 'Another PDF'
+              : 'Choose a PDF'
+            : entries.length
+              ? 'New notes from photos'
+              : 'Choose or take photos'}
+          {source === 'textbook' ? (
+            <input
+              type="file"
+              accept="application/pdf"
+              hidden
+              disabled={state === 'loading'}
+              onChange={(event) => {
+                const file = event.target.files?.[0];
+                event.target.value = '';
+                if (file) void openPdf(file);
+              }}
+            />
+          ) : (
+            <input
+              type="file"
+              accept="image/*"
+              multiple
+              hidden
+              disabled={state === 'loading'}
+              onChange={(event) => {
+                const files = Array.from(event.target.files || []);
+                event.target.value = '';
+                if (files.length) void read(files);
+              }}
+            />
+          )}
         </label>
         {entries.length > 1 && (
           <select
@@ -127,16 +230,52 @@ export default function HandwrittenNotes({ ai, target }: { ai: boolean; target: 
           >
             {entries.map((entry, position) => (
               <option key={entry.id} value={entry.id}>
-                {entry.title || `Handwritten notes ${entries.length - position}`}
+                {entry.title || `${name} ${entries.length - position}`}
               </option>
             ))}
           </select>
         )}
       </div>
+      {pdf && state !== 'loading' && (
+        <form
+          className="pdf-pages"
+          onSubmit={(event) => {
+            event.preventDefault();
+            void readPdf();
+          }}
+        >
+          <span className="pdf-name">
+            {pdf.file.name} · {pdf.pageCount} pages
+          </span>
+          <label>
+            From page{' '}
+            <input
+              type="number"
+              min={1}
+              max={pdf.pageCount}
+              value={firstPage}
+              onChange={(event) => setFirstPage(Number(event.target.value))}
+            />
+          </label>
+          <label>
+            to{' '}
+            <input
+              type="number"
+              min={1}
+              max={pdf.pageCount}
+              value={lastPage}
+              onChange={(event) => setLastPage(Number(event.target.value))}
+            />
+          </label>
+          <button className="btn primary" type="submit">
+            Read these pages
+          </button>
+        </form>
+      )}
       {state === 'loading' && (
         <div className="note info">
           <span className="spinner" />
-          <p>Reading the handwriting…</p>
+          <p>{pdf ? reading : source === 'textbook' ? 'Opening the PDF…' : reading}</p>
         </div>
       )}
       {state === 'error' && (
@@ -151,7 +290,9 @@ export default function HandwrittenNotes({ ai, target }: { ai: boolean; target: 
           <section className="panel solo">
             <div className="body">
               <p className="hint">
-                Check the text against your notes. Words that couldn’t be read are marked [?].
+                {source === 'textbook'
+                  ? 'Check the notes against the textbook: remove what you don’t need, add what’s missing.'
+                  : 'Check the text against your notes. Words that couldn’t be read are marked [?].'}
               </p>
               <textarea
                 className="transcript"
@@ -187,8 +328,8 @@ export default function HandwrittenNotes({ ai, target }: { ai: boolean; target: 
             />
             <LessonView
               key={current.id + hash(current.text)}
-              lesson={toLesson(current, entries.length - 1 - currentIndex)}
-              docId="handwritten"
+              lesson={toLesson(current, entries.length - 1 - currentIndex, source)}
+              docId={storageKey}
               ai={ai}
             />
           </>

@@ -1777,3 +1777,31 @@ a.lesson-link {
   text-decoration: none;
   color: inherit;
 }
+
+/* Choosing the pages of a textbook PDF */
+.pdf-pages {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 16px;
+  margin: 0 0 16px;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+  font-size: 14px;
+}
+.pdf-pages .pdf-name {
+  flex-basis: 100%;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+.pdf-pages input {
+  width: 72px;
+  font: inherit;
+  padding: 6px 8px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--text);
+}

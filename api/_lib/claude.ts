@@ -69,12 +69,30 @@ export function readImages(body: unknown, maxCount: number): ImageInput[] | stri
 
 export async function claudeJSON(
   prompt: string,
-  options: { model?: string; maxTokens?: number; cache?: boolean; images?: ImageInput[] } = {}
+  options: {
+    model?: string;
+    maxTokens?: number;
+    cache?: boolean;
+    images?: ImageInput[];
+    /** base64 PDFs, read before the prompt */
+    pdfs?: string[];
+  } = {}
 ): Promise<unknown> {
   const model = options.model || MODEL;
   const images = options.images || [];
-  // photos are never cached: the key would be the whole image
-  const useCache = options.cache !== false && !images.length;
+  const pdfs = options.pdfs || [];
+  const attachments = [
+    ...pdfs.map((data) => ({
+      type: 'document',
+      source: { type: 'base64', media_type: 'application/pdf', data },
+    })),
+    ...images.map((image) => ({
+      type: 'image',
+      source: { type: 'base64', media_type: image.mediaType, data: image.data },
+    })),
+  ];
+  // photos and PDFs are never cached: the key would be the whole file
+  const useCache = options.cache !== false && !attachments.length;
   const key = model + '\u0000' + prompt;
   if (useCache && cache.has(key)) return cache.get(key);
 
@@ -94,15 +112,7 @@ export async function claudeJSON(
       messages: [
         {
           role: 'user',
-          content: images.length
-            ? [
-                ...images.map((image) => ({
-                  type: 'image',
-                  source: { type: 'base64', media_type: image.mediaType, data: image.data },
-                })),
-                { type: 'text', text: prompt },
-              ]
-            : prompt,
+          content: attachments.length ? [...attachments, { type: 'text', text: prompt }] : prompt,
         },
       ],
     }),

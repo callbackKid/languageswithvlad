@@ -355,8 +355,8 @@ const GUIDES: Guide[] = [
     id: 'photo',
     icon: '📷',
     title: 'Photo',
-    summary: 'Underlined words in a book, or handwritten notes',
-    intro: <p>Two ways to bring words in from paper. Choose one with the switch at the top.</p>,
+    summary: 'Underlined words, handwritten notes, or a textbook PDF',
+    intro: <p>Three ways to bring words in from paper. Choose one with the switch at the top.</p>,
     steps: [
       <>
         <b>Underlined words</b>: underline words in a book, press{' '}
@@ -367,6 +367,12 @@ const GUIDES: Guide[] = [
         <b>Handwritten notes</b>: photograph up to 4 pages of notes, fix anything misread
         (unreadable words are marked [?]), then press <Button primary>Prepare lesson</Button> to get
         words, verbs and exercises as for any lesson.
+      </>,
+      <>
+        <b>Textbook PDF</b>: press <Button primary>Choose a PDF</Button>, enter the pages of one
+        chapter (up to 20), then <Button primary>Read these pages</Button>. Claude writes lesson
+        notes: words, phrases, grammar and examples. Check them and press{' '}
+        <Button primary>Prepare lesson</Button>.
       </>,
       <>
         <Button>Add to Google Doc as Leçon 8</Button> adds what was read to the end of the document
