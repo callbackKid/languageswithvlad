@@ -1,0 +1,10 @@
+{
+  // Prettier formats every file on save, using .prettierrc.js
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  // then ESLint fixes whatever it can (prettier/prettier and other fixable rules)
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"]
+}

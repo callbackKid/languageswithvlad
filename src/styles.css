@@ -1,8 +1,6 @@
 :root {
   color-scheme: dark;
   --paper: #121212;
-  --rule: #333333;
-  --rule-fine: #1e1e1e;
   --margin: #5a5a5a;
   --ink: #e6e6e6;
   --ink-hover: #ffffff;
@@ -20,6 +18,8 @@
   --warn: #f2c064;
   --warn-soft: #2b2312;
   --serif: 'Literata', Georgia, 'Times New Roman', serif;
+  /* headings: rounded and casual */
+  --display: 'Nunito', 'Onest', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --sans: 'Onest', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   box-sizing: border-box;
   padding-top: env(safe-area-inset-top, 0px);
@@ -70,9 +70,9 @@ a {
   flex: 1;
 }
 .doc-title {
-  font-family: var(--serif);
+  font-family: var(--display);
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 700;
   margin: 0;
   white-space: nowrap;
   overflow: hidden;
@@ -196,23 +196,12 @@ main {
   border-radius: 12px 12px 0 0;
   border: 1px solid var(--line);
   border-bottom: 0;
-  background-color: var(--paper);
-  background-image: linear-gradient(
-      to right,
-      transparent 63px,
-      var(--margin) 63px,
-      var(--margin) 65px,
-      transparent 65px
-    ),
-    repeating-linear-gradient(to bottom, transparent 0 31px, var(--rule) 31px 32px),
-    repeating-linear-gradient(to bottom, transparent 0 7px, var(--rule-fine) 7px 8px),
-    repeating-linear-gradient(to right, transparent 0 31px, var(--rule-fine) 31px 32px);
-  padding: 32px 24px 32px 88px;
+  background: var(--paper);
+  padding: 32px 28px;
 }
 .sheet h1 {
-  font-family: var(--serif);
-  font-style: italic;
-  font-weight: 500;
+  font-family: var(--display);
+  font-weight: 800;
   font-size: 52px;
   line-height: 64px;
   margin: 0;
@@ -385,8 +374,8 @@ main {
   margin-bottom: 16px;
 }
 .ex-head h2 {
-  font-family: var(--serif);
-  font-weight: 600;
+  font-family: var(--display);
+  font-weight: 700;
   font-size: 20px;
   margin: 0;
   flex: 1;
@@ -627,10 +616,9 @@ main {
   margin-bottom: 4px;
 }
 .conj-head h2 {
-  font-family: var(--serif);
+  font-family: var(--display);
   font-size: 30px;
-  font-style: italic;
-  font-weight: 500;
+  font-weight: 800;
   margin: 0;
   color: var(--ink);
 }
@@ -763,15 +751,8 @@ textarea.notes {
   border-radius: 10px;
   padding: 14px 16px;
   background: var(--paper);
-  font: 17px/32px var(--serif);
+  font: 17px/1.6 var(--serif);
   resize: vertical;
-  background-image: repeating-linear-gradient(
-    to bottom,
-    transparent 0 31px,
-    var(--rule-fine) 31px 32px
-  );
-  background-attachment: local;
-  background-position: 0 14px;
 }
 .notes-status {
   font-size: 13px;
@@ -792,9 +773,8 @@ pre.source {
   padding: 0 24px;
 }
 .connect h1 {
-  font-family: var(--serif);
-  font-style: italic;
-  font-weight: 500;
+  font-family: var(--display);
+  font-weight: 800;
   font-size: 44px;
   line-height: 1.15;
   margin: 0 0 12px;
@@ -893,17 +873,7 @@ pre.source {
     padding: 12px 16px;
   }
   .sheet {
-    padding: 32px 16px 32px 56px;
-    background-image: linear-gradient(
-        to right,
-        transparent 39px,
-        var(--margin) 39px,
-        var(--margin) 41px,
-        transparent 41px
-      ),
-      repeating-linear-gradient(to bottom, transparent 0 31px, var(--rule) 31px 32px),
-      repeating-linear-gradient(to bottom, transparent 0 7px, var(--rule-fine) 7px 8px),
-      repeating-linear-gradient(to right, transparent 0 31px, var(--rule-fine) 31px 32px);
+    padding: 24px 16px;
   }
   .sheet h1 {
     font-size: 40px;
@@ -984,9 +954,8 @@ main.page {
   margin-bottom: 20px;
 }
 .page-head h1 {
-  font-family: var(--serif);
-  font-style: italic;
-  font-weight: 500;
+  font-family: var(--display);
+  font-weight: 800;
   font-size: 40px;
   line-height: 1.15;
   margin: 0 0 6px;
@@ -1001,8 +970,8 @@ main.page {
   border-radius: 12px;
 }
 .sub-h {
-  font-family: var(--serif);
-  font-weight: 600;
+  font-family: var(--display);
+  font-weight: 700;
   font-size: 20px;
   margin: 0 0 12px;
 }
@@ -1482,9 +1451,9 @@ a.btn {
 }
 .tutorial-block h2,
 .guide h2 {
-  font-family: var(--serif);
+  font-family: var(--display);
   font-size: 24px;
-  font-weight: 500;
+  font-weight: 700;
   margin: 0 0 12px;
   color: var(--ink);
 }

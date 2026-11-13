@@ -1,4 +1,3 @@
-/** The app's sections and their addresses, shared by the menu and the Tutorial. */
 export type Section =
   | 'home'
   | 'lessons'
@@ -22,7 +21,9 @@ export const SECTIONS: { id: Section; label: string; path: string }[] = [
   { id: 'tutorial', label: 'Tutorial', path: '/tutorial' },
 ];
 
-// "/lessons/2026-11-12_7" → the Lessons section and that lesson; null for a path the app doesn't have. */
+// /lessons/2026-11-12_7 → the Lessons section and that lesson
+// null for a path the app doesn't have.
+
 export function parsePath(path: string): { section: Section; lessonKey: string | null } | null {
   const [first = '', second] = path.split('/').filter(Boolean);
 
@@ -31,4 +32,5 @@ export function parsePath(path: string): { section: Section; lessonKey: string |
   if (!entry || (second && entry.id !== 'lessons')) return null;
   return { section: entry.id, lessonKey: second ? decodeURIComponent(second) : null };
 }
+
 export const lessonPath = (key: string) => '/lessons/' + encodeURIComponent(key);
