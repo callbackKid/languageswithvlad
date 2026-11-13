@@ -177,14 +177,14 @@ nav.lessons {
 .lesson-link:hover {
   background: var(--surface);
 }
-.lesson-link[aria-current='true'] {
+.lesson-link[aria-current='page'] {
   background: var(--surface);
   box-shadow: inset 3px 0 0 var(--margin);
 }
-.lesson-link[aria-current='true'] .n {
+.lesson-link[aria-current='page'] .n {
   color: var(--ink);
 }
-.lesson-link[aria-current='true'] .d {
+.lesson-link[aria-current='page'] .d {
   color: var(--text);
 }
 main {
@@ -883,7 +883,7 @@ pre.source {
     flex: none;
     white-space: nowrap;
   }
-  .lesson-link[aria-current='true'] {
+  .lesson-link[aria-current='page'] {
     box-shadow: inset 0 -3px 0 var(--margin);
   }
   main {
@@ -1534,4 +1534,11 @@ a.btn {
 .next-lesson.now {
   color: var(--ok);
   font-weight: 600;
+}
+
+/* Section and lesson links are real links now (each has its own address) */
+a.section-link,
+a.lesson-link {
+  text-decoration: none;
+  color: inherit;
 }

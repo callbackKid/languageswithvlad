@@ -1,9 +1,10 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { api, ApiError } from './lib/api';
 import { useBank } from './lib/bank';
 import { docIdFrom, splitLessons } from './lib/parse';
 import { setProgressDoc, useProgress } from './lib/progress';
 import { load, remove, save } from './lib/storage';
+import { followLink, hrefFor, navigate, usePath } from './lib/router';
 import { plural } from './lib/util';
 import Connect from './components/Connect';
 import CodeGate from './components/CodeGate';
@@ -33,17 +34,26 @@ type Section =
   | 'photo'
   | 'document'
   | 'tutorial';
-const SECTIONS: { id: Section; label: string }[] = [
-  { id: 'home', label: 'Home' },
-  { id: 'lessons', label: 'Lessons' },
-  { id: 'practice', label: 'All lessons' },
-  { id: 'mine', label: 'My words' },
-  { id: 'mistakes', label: 'Mistakes' },
-  { id: 'stats', label: 'Stats' },
-  { id: 'photo', label: 'Photo' },
-  { id: 'document', label: 'Document' },
-  { id: 'tutorial', label: 'Tutorial' },
+const SECTIONS: { id: Section; label: string; path: string }[] = [
+  { id: 'home', label: 'Home', path: '/' },
+  { id: 'lessons', label: 'Lessons', path: '/lessons' },
+  { id: 'practice', label: 'All lessons', path: '/all-lessons' },
+  { id: 'mine', label: 'My words', path: '/my-words' },
+  { id: 'mistakes', label: 'Mistakes', path: '/mistakes' },
+  { id: 'stats', label: 'Stats', path: '/stats' },
+  { id: 'photo', label: 'Photo', path: '/photo' },
+  { id: 'document', label: 'Document', path: '/document' },
+  { id: 'tutorial', label: 'Tutorial', path: '/tutorial' },
 ];
+
+/** "/lessons/2026-11-12_7" → the Lessons section and that lesson; null for a path the app doesn't have. */
+function parsePath(path: string): { section: Section; lessonKey: string | null } | null {
+  const [first = '', second] = path.split('/').filter(Boolean);
+  const entry = SECTIONS.find((candidate) => candidate.path === '/' + first);
+  if (!entry || (second && entry.id !== 'lessons')) return null;
+  return { section: entry.id, lessonKey: second ? decodeURIComponent(second) : null };
+}
+const lessonPath = (key: string) => '/lessons/' + encodeURIComponent(key);
 
 const shortDateFormat = new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'short' });
 
@@ -74,9 +84,14 @@ export default function App() {
   );
   const [sync, setSync] = useState<Sync>({ state: 'idle' });
   const [changing, setChanging] = useState(false);
-  const [currentLessonKey, setCurrentLessonKey] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
-  const [section, setSection] = useState<Section>('home');
+  const route = parsePath(usePath());
+  const section = route?.section ?? 'home';
+  // an address the app doesn't have goes to Home
+  const unknownPath = !route;
+  useEffect(() => {
+    if (unknownPath) navigate('/', { replace: true });
+  }, [unknownPath]);
 
   useEffect(() => {
     api
@@ -113,6 +128,12 @@ export default function App() {
   useEffect(() => {
     if (docId) runSync(docId);
   }, [docId, runSync]);
+  // leaving the editor pulls in whatever was just written there
+  const previousSection = useRef(section);
+  useEffect(() => {
+    if (previousSection.current === 'document' && section !== 'document' && docId) runSync(docId);
+    previousSection.current = section;
+  }, [section, docId, runSync]);
   // something was just written into the document (a lesson from a photo)
   useEffect(() => {
     if (!docId) return;
@@ -129,17 +150,16 @@ export default function App() {
   // Set while rendering, so the first quiz round already sees this document's progress.
   setProgressDoc(docId);
   const hardCount = Object.values(useProgress().words).filter((stat) => stat.hard).length;
-  useEffect(() => {
-    if (!lessons.length) return;
-    const newest = lessons[lessons.length - 1];
-    if (newest && (!currentLessonKey || !lessons.some((lesson) => lesson.key === currentLessonKey)))
-      setCurrentLessonKey(newest.key);
-  }, [lessons, currentLessonKey]);
+  // the lesson in the address, or the newest one
+  const lesson =
+    lessons.find((candidate) => candidate.key === route?.lessonKey) ??
+    lessons[lessons.length - 1] ??
+    null;
+  const currentLessonKey = lesson?.key ?? null;
 
   function connect(id: string) {
     if (id !== docId) {
       setDoc(load<DocCache>('doc:' + id));
-      setCurrentLessonKey(null);
     }
     save('doc', id);
     setDocId(id);
@@ -181,13 +201,6 @@ export default function App() {
       />
     );
 
-  // leaving the editor pulls in whatever was just written
-  function openSection(next: Section) {
-    if (section === 'document' && next !== 'document' && docId) runSync(docId);
-    setSection(next);
-  }
-
-  const lesson = lessons.find((candidate) => candidate.key === currentLessonKey) || null;
   // the newest Google Meet link written anywhere in the document
   // (meet.google.com/abc-defg-hij, also with extra path parts like /meet/abc-defg-hij or /lookup/…)
   const meetLinks = doc?.text.match(/https?:\/\/meet\.google\.com(?:\/[\w-]+)+/gi);
@@ -260,15 +273,16 @@ export default function App() {
         <>
           <nav className="sections" aria-label="Sections">
             {SECTIONS.map((entry) => (
-              <button
+              <a
                 key={entry.id}
                 className="section-link"
+                href={hrefFor(entry.path)}
                 aria-current={section === entry.id ? 'page' : undefined}
-                onClick={() => openSection(entry.id)}
+                onClick={(event) => followLink(event, entry.path)}
               >
                 {entry.label}
                 {entry.id === 'mine' && hardCount > 0 && <span className="count">{hardCount}</span>}
-              </button>
+              </a>
             ))}
           </nav>
           {section === 'document' ? (
@@ -287,15 +301,16 @@ export default function App() {
             <div className="layout">
               <nav className="lessons" aria-label="Lessons">
                 {lessons.map((listedLesson) => (
-                  <button
+                  <a
                     key={listedLesson.key}
                     className="lesson-link"
-                    aria-current={listedLesson.key === currentLessonKey}
-                    onClick={() => setCurrentLessonKey(listedLesson.key)}
+                    href={hrefFor(lessonPath(listedLesson.key))}
+                    aria-current={listedLesson.key === currentLessonKey ? 'page' : undefined}
+                    onClick={(event) => followLink(event, lessonPath(listedLesson.key))}
                   >
                     <span className="n">{listedLesson.n}</span>
                     <span className="d">{shortDateFormat.format(listedLesson.date)}</span>
-                  </button>
+                  </a>
                 ))}
               </nav>
               <main>
