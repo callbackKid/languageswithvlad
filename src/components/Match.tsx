@@ -53,7 +53,7 @@ export default function Match({
     const next = { ...pick, [side]: pick[side] === id ? null : id };
     setWrong(null);
     if (next.L && next.R) {
-      const word = byId[next.L].word;
+      const word = byId[next.L]?.word;
       if (next.L === next.R) {
         setDone((previous) => new Set(previous).add(next.L!));
         setCleared((previous) => previous + 1);
@@ -76,6 +76,7 @@ export default function Match({
 
   const tile = (side: 'L' | 'R', id: string) => {
     const pair = byId[id];
+    if (!pair) return null;
     const isDone = done.has(id);
     const tileClass = [
       'tile',

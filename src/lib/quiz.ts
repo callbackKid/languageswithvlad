@@ -29,8 +29,10 @@ function weighted<T>(items: T[], weight: (item: T) => number, count: number): T[
   while (out.length < count && pool.length) {
     let threshold = Math.random() * pool.reduce((sum, entry) => sum + entry.weight, 0);
     let index = 0;
-    while (index < pool.length - 1 && (threshold -= pool[index].weight) > 0) index++;
-    out.push(pool.splice(index, 1)[0].item);
+    while (index < pool.length - 1 && (threshold -= pool[index]?.weight ?? 0) > 0) index++;
+    const [picked] = pool.splice(index, 1);
+    if (!picked) break;
+    out.push(picked.item);
   }
   return out;
 }

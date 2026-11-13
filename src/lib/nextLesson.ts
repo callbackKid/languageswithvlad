@@ -48,7 +48,14 @@ function zoneOffsetMinutes(moment: number, zone: string): number {
       .formatToParts(new Date(moment))
       .map((part) => [part.type, part.value])
   );
-  const asUtc = Date.UTC(+parts.year, +parts.month - 1, +parts.day, +parts.hour, +parts.minute);
+  const part = (name: string) => Number(parts[name] ?? 0);
+  const asUtc = Date.UTC(
+    part('year'),
+    part('month') - 1,
+    part('day'),
+    part('hour'),
+    part('minute')
+  );
   return Math.round((asUtc - moment) / 60000);
 }
 
@@ -79,16 +86,16 @@ export function parseNextLesson(text: string, now = new Date()): NextLesson | 'u
   const match = afterLabel.match(DATE_TIME);
   if (!match) return 'unconfirmed';
   const [, dayText, monthText, yearText, hourText, minuteText, rest] = match;
-  const day = +dayText,
-    month = +monthText,
-    year = +yearText;
+  const day = Number(dayText),
+    month = Number(monthText),
+    year = Number(yearText);
   if (month < 1 || month > 12 || day < 1 || day > 31) return 'unconfirmed';
   const hasTime = hourText !== undefined;
-  const hour = hasTime ? +hourText : 0,
+  const hour = hasTime ? Number(hourText) : 0,
     minute = hasTime ? +(minuteText || 0) : 0;
   if (hour > 23 || minute > 59) return 'unconfirmed';
 
-  const zoneEntry = ZONES.find(([pattern]) => pattern.test(rest));
+  const zoneEntry = ZONES.find(([pattern]) => pattern.test(rest ?? ''));
   const viewerZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const zone = hasTime && zoneEntry ? zoneEntry[1] : null;
   const start = zone
@@ -104,7 +111,7 @@ export function parseNextLesson(text: string, now = new Date()): NextLesson | 'u
     start,
     hasTime,
     zone,
-    zoneLabel: zone && !sameZone ? zone.split('/')[1].replace(/_/g, ' ') : null,
+    zoneLabel: zone && !sameZone ? (zone.split('/')[1] ?? zone).replace(/_/g, ' ') : null,
     state,
   };
 }

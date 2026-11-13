@@ -127,7 +127,7 @@ export default function Stats({ bank }: { bank: Bank }) {
     for (const stat of stats) {
       if (stat.lesson && lessonName.has(stat.lesson))
         addTo(byLesson, stat.lesson, lessonName.get(stat.lesson)!, stat.right, stat.wrong);
-      addTo(byKind, stat.kind, KINDS[stat.kind] || KINDS.other, stat.right, stat.wrong);
+      addTo(byKind, stat.kind, KINDS[stat.kind] || 'Other words', stat.right, stat.wrong);
     }
     for (const formStat of Object.values(progress.forms))
       addTo(byTense, formStat.t, formStat.t, formStat.right, formStat.wrong);

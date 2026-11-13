@@ -16,7 +16,7 @@ export function docIdFrom(input: string): string | null {
   const text = input.trim();
   // same bounds as the server, which rejects anything longer
   const match = text.match(/\/d\/([a-zA-Z0-9_-]{20,100})(?![a-zA-Z0-9_-])/);
-  if (match) return match[1];
+  if (match?.[1]) return match[1];
   return /^[a-zA-Z0-9_-]{20,100}$/.test(text) ? text : null;
 }
 
@@ -49,17 +49,15 @@ export function splitLessons(text: string): Lesson[] {
     marks.push({
       i: match.index,
       end: match.index + match[0].length,
-      d: +match[1],
-      mo: +match[2],
-      y: +match[3],
-      n: +match[4],
-      word: /^lesson$/i.test(match[5]) ? 'Lesson' : 'Leçon',
+      d: Number(match[1]),
+      mo: Number(match[2]),
+      y: Number(match[3]),
+      n: Number(match[4]),
+      word: /^lesson$/i.test(match[5] ?? '') ? 'Lesson' : 'Leçon',
     });
   const pad = (value: number) => String(value).padStart(2, '0');
   return marks.map((mark, index) => {
-    const body = cleaned
-      .slice(mark.end, index + 1 < marks.length ? marks[index + 1].i : cleaned.length)
-      .trim();
+    const body = cleaned.slice(mark.end, marks[index + 1]?.i ?? cleaned.length).trim();
     return {
       key: `${mark.y}-${pad(mark.mo)}-${pad(mark.d)}_${mark.n}`,
       n: mark.n,
@@ -78,7 +76,7 @@ export function splitTr(source: string): { text: string; tr: string } {
   const text = (source.slice(0, match.index) + ' ' + source.slice(match.index + match[0].length))
     .replace(/\s+/g, ' ')
     .replace(/^[\s,;:–—-]+|[\s,;:–—-]+$/g, '');
-  return { text, tr: match[1].trim() };
+  return { text, tr: (match[1] ?? '').trim() };
 }
 
 /** Moves a transcription Claude left in fr or ru (older cached lessons) into tr. */
@@ -108,16 +106,14 @@ export function localParse(body: string): Analysis {
     if (!line) continue;
     let fr = '',
       ru = '';
-    let match = line.match(/^(.+?)\s+[-—–=]\s+(.+)$/);
-    if (match && !CYRILLIC.test(match[1]) && CYRILLIC.test(match[2])) {
-      fr = match[1];
-      ru = match[2];
+    const [, left = '', right = ''] = line.match(/^(.+?)\s+[-—–=]\s+(.+)$/) ?? [];
+    if (left && !CYRILLIC.test(left) && CYRILLIC.test(right)) {
+      fr = left;
+      ru = right;
     } else {
-      match = line.match(/^([^А-Яа-яЁё]+?)\s+([А-Яа-яЁё].*)$/);
-      if (match) {
-        fr = match[1];
-        ru = match[2];
-      }
+      const [, french = '', russian = ''] = line.match(/^([^А-Яа-яЁё]+?)\s+([А-Яа-яЁё].*)$/) ?? [];
+      fr = french;
+      ru = russian;
     }
     fr = fr.replace(/[-—–=\s]+$/, '').trim();
     if (!fr || fr.length > 40 || /\d/.test(fr)) continue;
@@ -180,7 +176,8 @@ export function normAnalysis(raw: unknown): Analysis {
 export function withPerson(form: Form): Form {
   const match = form.p.match(/^(\S+)\s+(me|te|se|nous|vous|[mts]['’])$/i);
   if (!match) return form;
-  return { p: match[1], f: /['’]$/.test(match[2]) ? match[2] + form.f : `${match[2]} ${form.f}` };
+  const [, person = '', pronoun = ''] = match;
+  return { p: person, f: /['’]$/.test(pronoun) ? pronoun + form.f : `${pronoun} ${form.f}` };
 }
 
 export function normConj(raw: unknown, infinitive: string): Conjugation {

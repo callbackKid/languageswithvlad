@@ -2,7 +2,10 @@ export const shuffle = <T>(items: readonly T[]): T[] => {
   const copy = items.slice();
   for (let index = copy.length - 1; index > 0; index--) {
     const other = Math.floor(Math.random() * (index + 1));
-    [copy[index], copy[other]] = [copy[other], copy[index]];
+    // both positions are inside the array, so neither value is missing
+    const current = copy[index] as T;
+    copy[index] = copy[other] as T;
+    copy[other] = current;
   }
   return copy;
 };
@@ -16,7 +19,7 @@ export const asText = (value: unknown): string => (typeof value === 'string' ? v
 export const plural = (count: number, one: string, many = one + 's') =>
   `${count} ${count === 1 ? one : many}`;
 
-/** Saves text as a file in the browser's downloads. */
+// Saves text as a file in the browser's downloads.
 export function downloadText(filename: string, text: string, type = 'text/plain') {
   const url = URL.createObjectURL(new Blob([text], { type: type + ';charset=utf-8' }));
   const link = document.createElement('a');

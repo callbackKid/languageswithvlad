@@ -1,5 +1,4 @@
 import javascript from '@eslint/js';
-import jsdoc from 'eslint-plugin-jsdoc';
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
@@ -19,7 +18,6 @@ export default [
     rules: reactHooks.configs.recommended.rules,
     settings: { react: { version: 'detect' } },
   },
-  jsdoc.configs['flat/recommended-typescript'],
   {
     languageOptions: {
       globals: {

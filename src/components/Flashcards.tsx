@@ -32,7 +32,10 @@ export default function Flashcards({
   }, [currentCard]);
   const again = useCallback(() => {
     if (currentCard) recordWord(currentCard, false);
-    setDeck((previous) => [...previous.slice(1), previous[0]]);
+    setDeck((previous) => {
+      const [first, ...others] = previous;
+      return first ? [...others, first] : previous;
+    });
     setFlipped(false);
   }, [currentCard]);
 
@@ -73,7 +76,8 @@ export default function Flashcards({
     </span>
   );
 
-  if (!deck.length)
+  const card = deck[0];
+  if (!card)
     return (
       <div className="ex">
         <ExHead title="Flashcards" onClose={onClose}>
@@ -88,7 +92,6 @@ export default function Flashcards({
       </div>
     );
 
-  const card = deck[0];
   const [front, back] = direction === 'fr' ? [card.fr, card.ru] : [card.ru, card.fr];
   return (
     <div className="ex">

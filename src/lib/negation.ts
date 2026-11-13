@@ -13,13 +13,14 @@ export function negate(form: Form, tense: Tense): Form {
   let text = form.f.trim();
   if (tense === 'impératif') {
     const match = text.match(IMPERATIVE_PRONOUN);
-    if (match && match.index !== undefined)
-      text = `${match[1].toLowerCase() === 'toi' ? 'te' : match[1]} ${text.slice(0, match.index)}`;
+    const pronoun = match?.[1];
+    if (match && pronoun && match.index !== undefined)
+      text = `${pronoun.toLowerCase() === 'toi' ? 'te' : pronoun} ${text.slice(0, match.index)}`;
   }
   const pronouns = text.match(PRONOUNS)?.[0] ?? '';
   // pas follows the conjugated word: the verb itself or the auxiliary
   const [verb, ...rest] = text.slice(pronouns.length).trim().split(/\s+/);
-  const following = pronouns || verb;
+  const following = pronouns || verb || '';
   const ne = VOWEL.test(following) && !ASPIRATED_H.test(following) ? "n'" : 'ne ';
   return {
     p: form.p.replace(/^j['’]$/i, 'je'),

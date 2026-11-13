@@ -87,7 +87,7 @@ export default function VerbsTab({
   if (mode === 'quiz')
     return (
       <Quiz
-        conjugations={loaded.map((verb) => conjugations[verb.inf])}
+        conjugations={loaded.flatMap((verb) => conjugations[verb.inf] ?? [])}
         onClose={() => setMode('table')}
       />
     );
@@ -271,7 +271,7 @@ function Drill({
   }, [round]);
 
   const results: Grade[] = checked
-    ? rows.map((row, index) => grade(values[index], row.f, row.p))
+    ? rows.map((row, index) => grade(values[index] ?? '', row.f, row.p))
     : [];
   const score = results.filter((result) => result === 'ok').length;
 
@@ -282,7 +282,7 @@ function Drill({
         setChecked(true);
         // blank rows and accent slips don't count either way
         rows.forEach((row, index) => {
-          const result = grade(values[index], row.f, row.p);
+          const result = grade(values[index] ?? '', row.f, row.p);
           if (result === 'ok' || result === 'bad')
             recordForm(inf, tense, row.p, row.f, result === 'ok', negative);
         });
@@ -389,7 +389,9 @@ function Quiz({ conjugations, onClose }: { conjugations: Conjugation[]; onClose:
       </span>
     </ExHead>
   );
-  if (index >= questions.length)
+  const question = questions[index];
+  // past the last question: the round is over
+  if (!question)
     return (
       <div className="ex">
         {head}
@@ -412,7 +414,6 @@ function Quiz({ conjugations, onClose }: { conjugations: Conjugation[]; onClose:
         </div>
       </div>
     );
-  const question = questions[index];
   const next = () => {
     setIndex((previous) => previous + 1);
     setTyped('');

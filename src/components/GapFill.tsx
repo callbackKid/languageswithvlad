@@ -67,7 +67,9 @@ export default function GapFill({
         </p>
       </div>
     );
-  if (index >= items.length)
+  const item = items[index];
+  // past the last sentence: the round is over
+  if (!item)
     return (
       <div className="ex">
         <ExHead title="Fill the gap" onClose={onClose} />
@@ -82,7 +84,6 @@ export default function GapFill({
       </div>
     );
 
-  const item = items[index];
   const right = picked === item.answer;
   return (
     <div className="ex">

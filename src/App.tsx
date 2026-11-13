@@ -131,8 +131,9 @@ export default function App() {
   const hardCount = Object.values(useProgress().words).filter((stat) => stat.hard).length;
   useEffect(() => {
     if (!lessons.length) return;
-    if (!currentLessonKey || !lessons.some((lesson) => lesson.key === currentLessonKey))
-      setCurrentLessonKey(lessons[lessons.length - 1].key);
+    const newest = lessons[lessons.length - 1];
+    if (newest && (!currentLessonKey || !lessons.some((lesson) => lesson.key === currentLessonKey)))
+      setCurrentLessonKey(newest.key);
   }, [lessons, currentLessonKey]);
 
   function connect(id: string) {

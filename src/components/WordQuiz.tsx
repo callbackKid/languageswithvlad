@@ -85,7 +85,8 @@ export default function WordQuiz({
 
   if (!questions.length)
     return shell(<p className="empty">{empty || 'Nothing to practise yet.'}</p>);
-  if (index >= questions.length)
+  // past the last question: the round is over
+  if (!current)
     return shell(
       <>
         <p className="score">
@@ -99,7 +100,7 @@ export default function WordQuiz({
       </>
     );
 
-  const question = questions[index];
+  const question = current;
   const finish = (outcome: Result) => {
     setResult(outcome);
     if (outcome === 'ok') setScore((previous) => previous + 1);
