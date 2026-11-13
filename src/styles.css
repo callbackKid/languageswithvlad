@@ -1477,40 +1477,306 @@ a.btn {
 }
 
 /* Tutorial */
-.tutorial-toc {
-  margin-bottom: 8px;
+.tutorial-block {
+  margin: 8px 0 28px;
 }
-.tutorial-toc a.chip {
-  text-decoration: none;
-  color: inherit;
-}
-.tutorial-topic {
-  padding: 22px 0;
-  border-bottom: 1px solid var(--line);
-  scroll-margin-top: 16px;
-}
-.tutorial-topic h2 {
+.tutorial-block h2,
+.guide h2 {
   font-family: var(--serif);
   font-size: 24px;
   font-weight: 500;
-  margin: 0 0 10px;
+  margin: 0 0 12px;
   color: var(--ink);
 }
-.tutorial-topic h3 {
-  font-size: 15px;
-  font-weight: 600;
-  margin: 16px 0 6px;
-  color: var(--text);
+.quick-start {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 10px;
 }
-.tutorial-topic p,
-.tutorial-topic li {
+.quick-start li {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  padding: 14px;
+}
+.quick-start p {
+  margin: 6px 0 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+.step-number {
+  display: inline-grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--on-ink);
+  font-weight: 700;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+.quick-start li > b {
+  display: block;
+}
+.guide-map {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 8px;
+}
+.guide-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 10px;
+  align-items: start;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 10px 12px;
+  text-decoration: none;
+  color: var(--text);
+  background: var(--surface);
+}
+.guide-card:hover {
+  border-color: var(--ink);
+}
+.guide-card .icon {
+  grid-row: span 2;
+  font-size: 22px;
+  line-height: 1.2;
+}
+.guide-card span:last-child {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+.guide {
+  padding: 26px 0;
+  border-top: 1px solid var(--line);
+  scroll-margin-top: 16px;
+}
+.guide-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 16px;
+}
+.guide-head h2 {
+  margin: 0;
+}
+.guide > p,
+.guide-steps li,
+.guide-tips li {
   line-height: 1.6;
   color: var(--text);
-  margin: 0 0 8px;
 }
-.tutorial-topic ul {
-  padding-left: 20px;
-  margin: 0 0 8px;
+.guide > p {
+  margin: 10px 0 0;
+}
+.guide h3 {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  margin: 18px 0 8px;
+}
+.guide-body.with-mock {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 360px);
+  gap: 24px;
+  align-items: start;
+}
+.guide-steps,
+.guide-tips {
+  margin: 0;
+  padding-left: 22px;
+}
+.guide-steps li,
+.guide-tips li {
+  margin-bottom: 8px;
+}
+.guide-steps li::marker {
+  font-weight: 700;
+  color: var(--ink);
+}
+.open-link {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  text-decoration: none;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 5px 12px;
+  white-space: nowrap;
+}
+.open-link:hover {
+  border-color: var(--ink);
+}
+p .open-link,
+li .open-link {
+  border: 0;
+  padding: 0;
+  text-decoration: underline;
+}
+.back-to-top {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.key {
+  display: inline-block;
+  min-width: 22px;
+  text-align: center;
+  padding: 1px 6px;
+  border: 1px solid var(--line);
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  font-family: inherit;
+  font-size: 12px;
+  background: var(--surface);
+}
+.mock-btn {
+  display: inline-block;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  border-radius: 7px;
+  padding: 2px 9px;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.5;
+  white-space: nowrap;
+  margin: 2px 0;
+}
+.mock-btn.primary {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--on-ink);
+}
+
+/* Drawings of the screen in the Tutorial */
+.mock {
+  margin: 18px 0 0;
+}
+.mock-body {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--paper);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 13px;
+  pointer-events: none;
+}
+.mock figcaption {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 6px;
+  text-align: center;
+}
+.mock-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+.mock-text {
+  color: var(--text);
+}
+.mock-bar {
+  display: inline-block;
+  width: 80px;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--soft);
+  overflow: hidden;
+}
+.mock-bar span {
+  display: block;
+  height: 100%;
+  background: var(--ink);
+}
+.mock-tabs {
+  display: flex;
+  gap: 14px;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 6px;
+  color: var(--muted);
+}
+.mock-tabs .on {
+  color: var(--ink);
+  font-weight: 600;
+}
+.mock-tabs i {
+  font-style: normal;
+  font-size: 11px;
+  background: var(--soft);
+  border-radius: 999px;
+  padding: 0 6px;
+}
+.mock-word {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 6px;
+}
+.mock-word .fr,
+.mock-table .fr,
+.mock-photo .fr {
+  font-family: var(--serif);
+  font-size: 15px;
+  color: var(--ink);
+}
+.mock-word .tr {
+  color: var(--muted);
+}
+.mock-word .ru {
+  flex: 1;
+  color: var(--muted);
+}
+.mock-word .added {
+  color: var(--margin);
+}
+.mock-pill {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 2px 9px;
+  color: var(--muted);
+}
+.mock-pill.on {
+  border-color: var(--ink);
+  color: var(--ink);
+  font-weight: 600;
+}
+.mock-table,
+.mock-photo {
+  display: grid;
+  gap: 6px 14px;
+  align-items: baseline;
+}
+.mock-table {
+  grid-template-columns: auto 1fr;
+}
+.mock-photo {
+  grid-template-columns: repeat(3, auto);
+}
+.mock-photo .head {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+@media (max-width: 720px) {
+  .guide-body.with-mock {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* Next lesson, next to Join call */
