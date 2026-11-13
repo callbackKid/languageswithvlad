@@ -65,3 +65,28 @@ export function textbookPrompt(): string {
 Leave out exercise instructions, answer keys, page numbers, headers and anything not in French or about French. Do not invent content that is not on the pages.
 Reply with only a JSON object: {"title": string, "text": string}. title is the chapter's topic in English, at most 6 words; text is the notes.`;
 }
+
+export interface DiscussionRequest {
+  language: 'fr' | 'en';
+  level: string;
+  topic: string;
+  grammar: string;
+}
+
+export function discussionPrompt({ language, level, topic, grammar }: DiscussionRequest): string {
+  const languageName = language === 'en' ? 'English' : 'French';
+  return `You help a teacher start a ${languageName} lesson with a Russian-speaking student at CEFR level ${level}. Write one open discussion question for the start of the lesson.
+- Vocabulary topic: ${topic || 'any everyday topic'}.
+- Grammar to practise: ${grammar || 'none in particular'}. The question should make the student answer using it (a question about childhood memories calls for the imparfait, plans for the future call for the futur proche, and so on).
+- Match the level strictly: at A1–A2 short, concrete, personal questions with common words; at B1–B2 opinions and experiences; at C1–C2 abstract or debatable questions.
+- The question must be about the student’s own life, opinions or experience, never a quiz with a right answer.
+
+Reply with only a JSON object:
+{"question": string, "ru": string, "followUps": [string], "vocabulary": [{"word": string, "ru": string}], "starters": [string], "grammarTip": string}
+- question: the question in ${languageName}.
+- ru: its Russian translation.
+- followUps: 3 or 4 short follow-up questions in ${languageName} that keep the conversation going.
+- vocabulary: 6 to 8 words or expressions useful for answering, in ${languageName} (${language === 'fr' ? 'nouns with le, la, l’ or un/une, verbs in the infinitive' : 'verbs without “to”'}), each with a Russian translation.
+- starters: 3 sentence beginnings in ${languageName} that use the grammar topic, for the student to finish (for example “Quand j’étais petit, je…”).
+- grammarTip: one or two sentences in Russian reminding how to form the grammar point, with a ${languageName} example; "" if there is no grammar topic.`;
+}

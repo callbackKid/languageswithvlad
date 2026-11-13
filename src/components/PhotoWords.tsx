@@ -7,6 +7,7 @@ import type { PhotoItem, Word } from '../lib/types';
 import AddToDoc, { type DocTarget } from './AddToDoc';
 import Speak from './Speak';
 import Star from './Star';
+import WaitingFact from './WaitingFact';
 
 const LAST_KEY = 'photo:last';
 // long side in pixels: enough to read book print, small enough for the server's upload limit
@@ -90,12 +91,7 @@ export default function PhotoWords({ ai, target }: { ai: boolean; target: DocTar
             </label>
             {preview && <img className="photo-preview" src={preview} alt="The page you sent" />}
           </div>
-          {state === 'loading' && (
-            <div className="note info">
-              <span className="spinner" />
-              <p>Reading the underlined words…</p>
-            </div>
-          )}
+          {state === 'loading' && <WaitingFact>Reading the underlined words…</WaitingFact>}
           {state === 'error' && (
             <div className="note err">
               <p>{error}</p>

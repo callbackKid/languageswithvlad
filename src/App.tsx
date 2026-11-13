@@ -8,6 +8,7 @@ import { followLink, hrefFor, navigate, usePath } from './lib/router';
 import { lessonPath, parsePath, SECTIONS } from './lib/sections';
 import { plural } from './lib/util';
 import Connect from './components/Connect';
+import Discuss from './components/Discuss';
 import CodeGate from './components/CodeGate';
 import Home from './components/Home';
 import LessonView from './components/LessonView';
@@ -304,6 +305,7 @@ export default function App() {
               {section === 'mistakes' && <Mistakes bank={bank} />}
               {section === 'stats' && <Stats bank={bank} />}
               {section === 'tutorial' && <Tutorial />}
+              {section === 'discuss' && <Discuss bank={bank} ai={ai} />}
               {section === 'photo' && (
                 <PhotoSection
                   ai={ai}

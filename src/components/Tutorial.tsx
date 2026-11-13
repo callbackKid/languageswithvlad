@@ -404,6 +404,37 @@ const GUIDES: Guide[] = [
     ],
   },
   {
+    section: 'discuss',
+    id: 'discuss',
+    icon: '💬',
+    title: 'Discuss',
+    summary: 'A discussion question to start the lesson',
+    intro: (
+      <p>
+        A question to talk about at the start of a lesson, written for your level and the grammar
+        you are practising.
+      </p>
+    ),
+    steps: [
+      <>
+        Choose the language and your <b>level</b> (A1–C2).
+      </>,
+      <>
+        Pick a <b>vocabulary topic</b>: from the list, from your lessons, or <b>Other…</b> to type
+        your own. Pick a <b>grammar topic</b>, or leave <b>Any</b>.
+      </>,
+      <>
+        Press <Button primary>Write a question</Button>. You get the question (🔊 reads it,{' '}
+        <b>Show translation</b> shows it in Russian), follow-up questions, sentence beginnings that
+        use the grammar, and useful words.
+      </>,
+      <>
+        <Button primary>Another question</Button> writes a new one with the same settings.
+      </>,
+    ],
+    tips: [<>☆ next to a useful word puts it on My words.</>],
+  },
+  {
     section: 'document',
     id: 'document',
     icon: '📝',

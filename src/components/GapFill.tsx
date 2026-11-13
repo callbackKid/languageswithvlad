@@ -5,6 +5,7 @@ import { recordWord } from '../lib/progress';
 import type { GapItem, Word } from '../lib/types';
 import { shuffle } from '../lib/util';
 import ExHead from './ExHead';
+import WaitingFact from './WaitingFact';
 
 export default function GapFill({
   words,
@@ -62,9 +63,7 @@ export default function GapFill({
     return (
       <div className="ex">
         <ExHead title="Fill the gap" onClose={onClose} />
-        <p>
-          <span className="spinner" /> Writing sentences with your words…
-        </p>
+        <WaitingFact language={language}>Writing sentences with your words…</WaitingFact>
       </div>
     );
   const item = items[index];

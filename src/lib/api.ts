@@ -86,6 +86,8 @@ export const api = {
     }),
   photo: (image: ImagePayload) =>
     request<unknown>('/api/photo', { method: 'POST', body: JSON.stringify({ images: [image] }) }),
+  discussion: (options: { language: Language; level: string; topic: string; grammar: string }) =>
+    request<unknown>('/api/discussion', { method: 'POST', body: JSON.stringify(options) }),
   textbook: (data: string) =>
     request<unknown>('/api/textbook', { method: 'POST', body: JSON.stringify({ data }) }),
   transcribe: (images: ImagePayload[]) =>

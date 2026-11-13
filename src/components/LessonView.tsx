@@ -7,6 +7,7 @@ import type { Analysis, Lesson } from '../lib/types';
 import WordsTab from './WordsTab';
 import VerbsTab from './VerbsTab';
 import Notes from './Notes';
+import WaitingFact from './WaitingFact';
 
 const longDateFormat = new Intl.DateTimeFormat('fr-FR', {
   weekday: 'long',
@@ -99,10 +100,9 @@ export default function LessonView({
   let note = null;
   if (state === 'loading')
     note = (
-      <div className="note info">
-        <span className="spinner" />
-        <p>Reading this lesson and preparing words, pairs and verbs…</p>
-      </div>
+      <WaitingFact language={analysis?.language}>
+        Reading this lesson and preparing words, pairs and verbs…
+      </WaitingFact>
     );
   else if (state === 'error')
     note = (

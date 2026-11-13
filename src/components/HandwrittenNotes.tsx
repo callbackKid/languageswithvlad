@@ -8,6 +8,7 @@ import type { Lesson } from '../lib/types';
 import { hash } from '../lib/util';
 import AddToDoc, { type DocTarget } from './AddToDoc';
 import LessonView from './LessonView';
+import WaitingFact from './WaitingFact';
 
 /** Where the lesson comes from: photos of handwritten notes, or pages of a textbook PDF. */
 export type PaperSource = 'handwritten' | 'textbook';
@@ -273,10 +274,9 @@ export default function HandwrittenNotes({
         </form>
       )}
       {state === 'loading' && (
-        <div className="note info">
-          <span className="spinner" />
-          <p>{pdf ? reading : source === 'textbook' ? 'Opening the PDF…' : reading}</p>
-        </div>
+        <WaitingFact>
+          {pdf ? reading : source === 'textbook' ? 'Opening the PDF…' : reading}
+        </WaitingFact>
       )}
       {state === 'error' && (
         <div className="note err">

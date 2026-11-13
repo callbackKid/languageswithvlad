@@ -40,6 +40,7 @@ React + TypeScript + Vite in the browser, small Vercel serverless functions in `
 
 **Around the lessons**
 
+- **Discuss**: a discussion question for the start of a lesson, for a chosen level, vocabulary topic and grammar point, with follow-up questions, sentence starters and useful words.
 - **Document**: the Google Docs editor inside the app.
 - **Next lesson** date and **Join call** button in the top bar, read from the document.
 - **Tutorial**: a guide to every section, written for students.
@@ -107,6 +108,7 @@ Every section has its own address, so links can be shared and the browser’s Ba
 | Mistakes    | `/mistakes`                                               |
 | Stats       | `/stats`                                                  |
 | Photo       | `/photo`                                                  |
+| Discuss     | `/discuss`                                                |
 | Document    | `/document`                                               |
 | Tutorial    | `/tutorial`                                               |
 
@@ -145,6 +147,7 @@ api/                serverless functions (Vercel)
   photo.ts          underlined words on a photo
   transcribe.ts     handwritten notes on photos
   textbook.ts       a textbook chapter (PDF pages) as lesson notes
+  discussion.ts     a discussion question for the start of a lesson
   append.ts         adds a lesson to the Google Doc
   health.ts         what the server is set up for
 src/

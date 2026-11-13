@@ -1,4 +1,5 @@
 import type {
+  Discussion,
   Analysis,
   Conjugation,
   Form,
@@ -246,4 +247,22 @@ export function normPhoto(raw: unknown): PhotoItem[] {
 export function asObjectText<K extends string>(raw: unknown, keys: K[]): Record<K, string> {
   const object = asObject(raw);
   return Object.fromEntries(keys.map((key) => [key, asText(object[key])])) as Record<K, string>;
+}
+
+export function normDiscussion(raw: unknown): Discussion | null {
+  const data = asObject(raw);
+  const question = asText(data.question);
+  if (!question) return null;
+  const texts = (value: unknown) => asArray(value).map(asText).filter(Boolean);
+  return {
+    question,
+    ru: asText(data.ru),
+    followUps: texts(data.followUps),
+    vocabulary: asArray(data.vocabulary)
+      .map(asObject)
+      .map((item) => ({ word: asText(item.word), ru: asText(item.ru) }))
+      .filter((item) => item.word),
+    starters: texts(data.starters),
+    grammarTip: asText(data.grammarTip),
+  };
 }

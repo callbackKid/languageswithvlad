@@ -11,6 +11,7 @@ import { TENSES, type Conjugation, type Form, type Tense, type VerbRef } from '.
 import { plural, shuffle } from '../lib/util';
 import ExHead from './ExHead';
 import Speak from './Speak';
+import WaitingFact from './WaitingFact';
 
 export default function VerbsTab({
   verbs,
@@ -129,9 +130,9 @@ export default function VerbsTab({
 
       {!currentVerb && <p className="empty">Pick a verb to see its conjugation.</p>}
       {shownStatus === 'loading' && (
-        <p>
-          <span className="spinner" /> Conjugating <i lang="fr">{currentVerb}</i>…
-        </p>
+        <WaitingFact>
+          Conjugating <i lang="fr">{currentVerb}</i>…
+        </WaitingFact>
       )}
       {shownStatus && shownStatus !== 'loading' && (
         <div className="note err">

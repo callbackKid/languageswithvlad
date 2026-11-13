@@ -1832,3 +1832,168 @@ a.lesson-link {
   background: var(--bg);
   color: var(--text);
 }
+
+/* A fact about the language while Claude is working */
+.waiting {
+  margin: 0 0 18px;
+}
+.waiting-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 12px;
+  color: var(--muted);
+}
+.fact {
+  margin: 0;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  border-radius: 10px;
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-width: 560px;
+}
+.fact-label {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent);
+}
+.fact-phrase {
+  font-family: var(--serif);
+  font-size: 19px;
+  font-weight: 500;
+  color: var(--ink);
+}
+.fact figcaption {
+  color: var(--text);
+  line-height: 1.5;
+}
+.fact-next {
+  align-self: flex-start;
+  margin-top: 4px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* Discussion question */
+.discuss-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px 18px;
+  align-items: start;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  margin-bottom: 20px;
+}
+.discuss-form .row-actions {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+.discuss-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+}
+.discuss-field > span {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+}
+.discuss-field select,
+.discuss-field input {
+  font: inherit;
+  padding: 7px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--text);
+  max-width: 100%;
+}
+.discuss-field .seg {
+  align-self: flex-start;
+  flex-wrap: wrap;
+}
+.discussion {
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  border-radius: 12px;
+  padding: 20px;
+  background: var(--paper);
+}
+.discussion-question {
+  font-family: var(--serif);
+  font-size: 26px;
+  line-height: 1.35;
+  color: var(--ink);
+  margin: 0 0 8px;
+}
+.discussion-ru {
+  color: var(--muted);
+  margin: 0 0 6px;
+}
+.discussion h3 {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  margin: 20px 0 8px;
+}
+.discussion ul {
+  margin: 0;
+  padding-left: 20px;
+  line-height: 1.6;
+}
+.discussion-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 0 28px;
+}
+.starters li {
+  font-family: var(--serif);
+  font-size: 17px;
+}
+.grammar-tip {
+  margin: 10px 0 0;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: var(--soft);
+  font-size: 14px;
+  line-height: 1.5;
+}
+.discussion-words {
+  list-style: none;
+  padding: 0 !important;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2px 24px;
+}
+.discussion-words li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid var(--line);
+  padding: 4px 0;
+}
+.discussion-words .fr {
+  flex: none;
+  max-width: 60%;
+  font-family: var(--serif);
+  font-size: 16px;
+  color: var(--ink);
+}
+.discussion-words .ru {
+  flex: 1;
+  color: var(--muted);
+  font-size: 14px;
+}

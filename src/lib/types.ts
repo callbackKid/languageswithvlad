@@ -86,3 +86,14 @@ export interface PhotoItem {
   tense: string;
   explanation: string;
 }
+
+/** A discussion question for the start of a lesson. */
+export interface Discussion {
+  question: string;
+  ru: string;
+  followUps: string[];
+  vocabulary: { word: string; ru: string }[];
+  /** sentence beginnings that use the grammar topic */
+  starters: string[];
+  grammarTip: string;
+}
