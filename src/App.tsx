@@ -9,6 +9,7 @@ import { lessonPath, parsePath, SECTIONS } from './lib/sections';
 import { plural } from './lib/util';
 import Connect from './components/Connect';
 import Discuss from './components/Discuss';
+import Feedback from './components/Feedback';
 import CodeGate from './components/CodeGate';
 import Home from './components/Home';
 import LessonView from './components/LessonView';
@@ -50,6 +51,7 @@ export default function App() {
   const [needsCode, setNeedsCode] = useState(false);
   const [ai, setAi] = useState(true);
   const [docWriter, setDocWriter] = useState<string | null>(null);
+  const [feedback, setFeedback] = useState(false);
   const [docId, setDocId] = useState<string | null>(initialDocId);
   const [doc, setDoc] = useState<DocCache | null>(() =>
     docId ? load<DocCache>('doc:' + docId) : null
@@ -71,6 +73,7 @@ export default function App() {
       .then((health) => {
         setAi(health.ai);
         setDocWriter(health.docWriter ?? null);
+        setFeedback(!!health.feedback);
         if (health.needsCode && !load<string>('code')) setNeedsCode(true);
       })
       .catch(() => {
@@ -220,6 +223,7 @@ export default function App() {
           <button className="btn ghost" onClick={() => setChanging(true)}>
             Change document
           </button>
+          {feedback && <Feedback docTitle={doc?.title ?? ''} />}
         </div>
       </header>
 

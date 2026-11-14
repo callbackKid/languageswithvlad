@@ -66,12 +66,13 @@ About 10 minutes.
 3. **Import it on vercel.com** (New Project → pick the repo). Vercel detects Vite; keep the defaults.
 4. **Add environment variables** (Project → Settings → Environment Variables):
 
-   | Variable                            | Required    | What it is                                                              |
-   | ----------------------------------- | ----------- | ----------------------------------------------------------------------- |
-   | `ANTHROPIC_API_KEY`                 | yes         | Your Anthropic key.                                                     |
-   | `APP_ACCESS_CODE`                   | recommended | A class code students enter once, so strangers can’t spend your credit. |
-   | `CLAUDE_MODEL`, `CLAUDE_FAST_MODEL` | no          | Model overrides.                                                        |
-   | `GOOGLE_SERVICE_ACCOUNT`            | no          | Lets the app add lessons to the Google Doc (setup below).               |
+   | Variable                                 | Required    | What it is                                                              |
+   | ---------------------------------------- | ----------- | ----------------------------------------------------------------------- |
+   | `ANTHROPIC_API_KEY`                      | yes         | Your Anthropic key.                                                     |
+   | `APP_ACCESS_CODE`                        | recommended | A class code students enter once, so strangers can’t spend your credit. |
+   | `CLAUDE_MODEL`, `CLAUDE_FAST_MODEL`      | no          | Model overrides.                                                        |
+   | `GOOGLE_SERVICE_ACCOUNT`                 | no          | Lets the app add lessons to the Google Doc (setup below).               |
+   | `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` | no          | Sends students’ bug reports and ideas to your Telegram (setup below).   |
 
 5. **Deploy**, then redeploy once after adding variables so the functions pick them up.
 
@@ -94,6 +95,17 @@ The **Photo** section can append what it read (underlined words, handwritten not
 5. Copy the account’s email (`…@….iam.gserviceaccount.com`; the app also shows it if something is missing) and **Share** the lesson document with it as **Editor**.
 
 The key can edit only documents shared with that email. Keep the JSON file private and never commit it.
+
+## Optional: feedback from students in Telegram
+
+With these two variables set, a **Feedback** button appears in the top bar. Students can report a bug, suggest a change or write anything, with up to 3 screenshots (attached, pasted or dropped). Each message arrives in your Telegram with the page it was sent from and the browser. Without them, the button is hidden.
+
+1. In Telegram, open [@BotFather](https://t.me/BotFather), send `/newbot` and follow the steps. It gives you a token like `123456789:AA…`: that is `TELEGRAM_BOT_TOKEN`.
+2. Open your new bot and press **Start** (a bot can't write to you first).
+3. Open `https://api.telegram.org/bot<TOKEN>/getUpdates` in a browser, with your token in place of `<TOKEN>`. Find `"chat":{"id":…}`: that number is `TELEGRAM_CHAT_ID`. To get reports in a group instead, add the bot to the group, send a message there, and use the group's id (it starts with `-`).
+4. Add both variables in Vercel and redeploy.
+
+Keep the token private: anyone with it can send messages as the bot.
 
 ## Pages
 

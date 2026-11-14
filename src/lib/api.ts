@@ -2,6 +2,20 @@ import { load } from './storage';
 import type { ImagePayload } from './image';
 import type { Language } from './types';
 
+export type FeedbackKind = 'bug' | 'idea' | 'other';
+export interface FeedbackReport {
+  kind: FeedbackKind;
+  message: string;
+  /** how to reach the student: a name, Telegram or email; optional */
+  contact: string;
+  images: ImagePayload[];
+  /** filled in by the app, so the teacher knows where it happened */
+  page: string;
+  docTitle: string;
+  browser: string;
+  sentAt: string;
+}
+
 export class ApiError extends Error {
   constructor(
     public status: number,
@@ -70,7 +84,11 @@ function analyzeOnce(body: string, fresh: boolean): Promise<unknown> {
 
 export const api = {
   health: () =>
-    request<{ needsCode: boolean; ai: boolean; docWriter?: string | null }>('/api/health'),
+    request<{ needsCode: boolean; ai: boolean; docWriter?: string | null; feedback?: boolean }>(
+      '/api/health'
+    ),
+  feedback: (report: FeedbackReport) =>
+    request<{ ok: boolean }>('/api/feedback', { method: 'POST', body: JSON.stringify(report) }),
   append: (docId: string, text: string) =>
     request<{ ok: boolean }>('/api/append', {
       method: 'POST',

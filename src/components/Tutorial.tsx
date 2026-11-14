@@ -56,7 +56,7 @@ const GUIDES: Guide[] = [
     id: 'header',
     icon: '🧭',
     title: 'The top bar',
-    summary: 'Document, sync, next lesson and the call link',
+    summary: 'Document, sync, next lesson, the call link and feedback',
     intro: (
       <p>
         The bar at the top is always there. It shows which Google Doc the app reads and when it last
@@ -78,6 +78,10 @@ const GUIDES: Guide[] = [
       <>
         <b>Open document</b> opens the Google Doc in a new tab. <b>Copy student link</b> copies a
         link that opens this document straight away. <b>Change document</b> connects another one.
+      </>,
+      <>
+        <b>Feedback</b> sends a message to the teacher: a bug, an idea or anything else. Add up to 3
+        screenshots, or paste one with Ctrl+V / ⌘V. The page you were on is added automatically.
       </>,
     ],
     mock: (
