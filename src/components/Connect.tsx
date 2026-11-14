@@ -1,5 +1,9 @@
 import { useState } from 'react';
+import { useTranslation } from '../i18n/core';
+import { app } from '../i18n/messages/app';
+import { common } from '../i18n/messages/common';
 import { docIdFrom } from '../lib/parse';
+import LanguagePicker from './LanguagePicker';
 
 export default function Connect({
   current,
@@ -10,22 +14,29 @@ export default function Connect({
   onConnect: (id: string) => void;
   onCancel?: () => void;
 }) {
+  const { t, rich } = useTranslation(app);
+  const commonText = useTranslation(common);
   const [value, setValue] = useState(
     current ? `https://docs.google.com/document/d/${encodeURIComponent(current)}/edit` : ''
   );
   const [error, setError] = useState('');
   return (
     <div className="connect">
-      <h1>Language lessons, ready to practise</h1>
+      <div className="connect-language">
+        <LanguagePicker />
+      </div>
+      <h1>{t('connectTitle')}</h1>
       <p>
-        Paste the link to the Google Doc with the lesson notes. Every line like{' '}
-        <span className="example">14.10.2026 1 Leçon</span> or{' '}
-        <span className="example">14.10.2026 1 Lesson</span> starts a new lesson, with its own
-        words, verbs and notes.
+        {rich(
+          'connectIntro',
+          {},
+          {
+            leçon: <span className="example">14.10.2026 1 Leçon</span>,
+            lesson: <span className="example">14.10.2026 1 Lesson</span>,
+          }
+        )}
       </p>
-      <p>
-        The document must be shared as <b>Anyone with the link can view</b>.
-      </p>
+      <p>{rich('connectShare', { b: (chunk) => <b>{chunk}</b> })}</p>
       {/* noValidate: a bare document id is fine too, and our message is clearer than the browser's */}
       <form
         className="field"
@@ -34,7 +45,7 @@ export default function Connect({
           event.preventDefault();
           const id = docIdFrom(value);
           if (!id) {
-            setError('That doesn’t look like a Google Docs link.');
+            setError(commonText.t('badDocLink'));
             return;
           }
           onConnect(id);
@@ -43,8 +54,8 @@ export default function Connect({
         <input
           type="url"
           inputMode="url"
-          placeholder="Paste a Google Docs link"
-          aria-label="Google Docs link"
+          placeholder={t('docLinkPlaceholder')}
+          aria-label={t('docLinkLabel')}
           value={value}
           onChange={(event) => {
             setValue(event.target.value);
@@ -52,11 +63,11 @@ export default function Connect({
           }}
         />
         <button className="btn primary big" type="submit">
-          Load lessons
+          {t('loadLessons')}
         </button>
         {onCancel && (
           <button className="btn ghost" type="button" onClick={onCancel}>
-            Cancel
+            {commonText.t('cancel')}
           </button>
         )}
       </form>

@@ -57,7 +57,7 @@ function readPhotos(raw: unknown): TelegramPhoto[] | string {
 export default async function handler(request: VercelRequest, response: VercelResponse) {
   if (!onlyPost(request, response) || !checkAccess(request, response)) return;
   if (!telegramConfigured())
-    return response.status(503).json({ error: 'Feedback isn’t set up on this server.' });
+    return response.status(501).json({ error: 'Feedback isn’t set up on this server.' });
 
   const body = (request.body ?? {}) as Record<string, unknown>;
   const message = text(body.message, 3000);

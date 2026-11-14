@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import type { Bank } from '../lib/bank';
-import { plural } from '../lib/util';
+import { useTranslation } from '../i18n/core';
+import { common } from '../i18n/messages/common';
 
 export default function PageHead({ title, children }: { title: string; children?: ReactNode }) {
   return (
@@ -13,31 +14,24 @@ export default function PageHead({ title, children }: { title: string; children?
 
 /** Says when some lessons aren't in the cross-lesson pages yet: still preparing, failed, or never opened. */
 export function BankNote({ bank }: { bank: Bank }) {
+  const { t } = useTranslation(common);
   if (bank.pending)
     return (
       <div className="note info">
         <span className="spinner" />
-        <p>
-          Preparing {plural(bank.pending, 'more lesson')}. Their words appear here as they’re ready.
-        </p>
+        <p>{t('preparingMore', { count: bank.pending })}</p>
       </div>
     );
   if (bank.failed)
     return (
       <div className="note err">
-        <p>
-          {plural(bank.failed, 'lesson')} couldn’t be prepared. Open{' '}
-          {bank.failed === 1 ? 'it' : 'them'} under Lessons to try again.
-        </p>
+        <p>{t('failedLessons', { count: bank.failed })}</p>
       </div>
     );
   if (bank.waiting)
     return (
       <div className="note info">
-        <p>
-          {plural(bank.waiting, 'older lesson')} {bank.waiting === 1 ? 'isn’t' : 'aren’t'} included
-          yet. Open a lesson under Lessons to add its words here.
-        </p>
+        <p>{t('waitingLessons', { count: bank.waiting })}</p>
       </div>
     );
   return null;

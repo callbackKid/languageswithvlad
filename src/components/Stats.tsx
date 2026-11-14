@@ -1,24 +1,21 @@
 import { useMemo } from 'react';
 import type { Bank } from '../lib/bank';
 import { isLearned, topMistakes, useProgress, wordKey } from '../lib/progress';
-import { plural } from '../lib/util';
+import { useTranslation } from '../i18n/core';
+import { pages } from '../i18n/messages/pages';
 import MistakeList from './MistakeList';
 import PageHead, { BankNote } from './PageHead';
 
 /** Fewer answers than this say too little about a topic to call it weak. */
 const MIN_ANSWERS = 4;
-const KINDS: Record<string, string> = {
-  noun: 'Nouns',
-  verb: 'Verbs',
-  adjective: 'Adjectives',
-  adverb: 'Adverbs',
-  expression: 'Expressions',
-  other: 'Other words',
-};
+const KINDS = ['noun', 'verb', 'adjective', 'adverb', 'expression', 'other'] as const;
+type Kind = (typeof KINDS)[number];
+const asKind = (kind: string): Kind => (KINDS.includes(kind as Kind) ? (kind as Kind) : 'other');
 
 const percent = (part: number, whole: number) => (whole ? Math.round((part / whole) * 100) : 0);
 
 function Meter({ value, max, label }: { value: number; max: number; label: string }) {
+  const { t } = useTranslation(pages);
   const share = percent(value, max);
   return (
     <div
@@ -28,7 +25,7 @@ function Meter({ value, max, label }: { value: number; max: number; label: strin
       aria-valuemax={max}
       aria-valuenow={value}
       aria-label={label}
-      title={`${label}: ${value} of ${max} (${share}%)`}
+      title={t('meterTitle', { label, value, max, percent: share })}
     >
       <div className="meter-fill" style={{ width: share + '%' }} />
     </div>
@@ -55,6 +52,7 @@ const weakest = (rowsById: Map<string, Row>) =>
     .sort((first, second) => first.right / first.total - second.right / second.total);
 
 function RankList({ title, rows }: { title: string; rows: Row[] }) {
+  const { t } = useTranslation(pages);
   if (!rows.length) return null;
   return (
     <div className="rank">
@@ -63,9 +61,10 @@ function RankList({ title, rows }: { title: string; rows: Row[] }) {
         {rows.map((row) => (
           <li key={row.id}>
             <span className="rank-name">{row.name}</span>
-            <Meter value={row.right} max={row.total} label={`${row.name}, right answers`} />
+            <Meter value={row.right} max={row.total} label={t('rightAnswersOf', { name: row.name })} />
             <span className="rank-val">
-              {percent(row.right, row.total)}%<span className="rank-n"> of {row.total}</span>
+              {percent(row.right, row.total)}%
+              <span className="rank-n">{t('ofTotal', { count: row.total })}</span>
             </span>
           </li>
         ))}
@@ -75,6 +74,7 @@ function RankList({ title, rows }: { title: string; rows: Row[] }) {
 }
 
 export default function Stats({ bank }: { bank: Bank }) {
+  const { t } = useTranslation(pages);
   const progress = useProgress();
   const {
     total,
@@ -127,7 +127,7 @@ export default function Stats({ bank }: { bank: Bank }) {
     for (const stat of stats) {
       if (stat.lesson && lessonName.has(stat.lesson))
         addTo(byLesson, stat.lesson, lessonName.get(stat.lesson)!, stat.right, stat.wrong);
-      addTo(byKind, stat.kind, KINDS[stat.kind] || 'Other words', stat.right, stat.wrong);
+      addTo(byKind, asKind(stat.kind), t(`kind.${asKind(stat.kind)}`), stat.right, stat.wrong);
     }
     for (const formStat of Object.values(progress.forms))
       addTo(byTense, formStat.t, formStat.t, formStat.right, formStat.wrong);
@@ -148,30 +148,30 @@ export default function Stats({ bank }: { bank: Bank }) {
       topWords,
       topForms,
     };
-  }, [bank.words, bank.lessons, progress]);
+  }, [bank.words, bank.lessons, progress, t]);
 
   return (
     <>
-      <PageHead title="Stats">
-        {answers ? `Based on ${plural(answers, 'answer')} in exercises.` : null}
+      <PageHead title={t('statsTitle')}>
+        {answers ? t('basedOn', { count: answers }) : null}
       </PageHead>
       <BankNote bank={bank} />
 
       <div className="kpis">
         <div className="kpi">
-          <span className="kpi-label">Words learned</span>
+          <span className="kpi-label">{t('wordsLearned')}</span>
           <span className="kpi-value">{learned}</span>
         </div>
         <div className="kpi">
-          <span className="kpi-label">Left to learn</span>
+          <span className="kpi-label">{t('leftToLearn')}</span>
           <span className="kpi-value">{Math.max(total - learned, 0)}</span>
         </div>
         <div className="kpi">
-          <span className="kpi-label">Right answers</span>
+          <span className="kpi-label">{t('rightAnswers')}</span>
           <span className="kpi-value">{answers ? percent(right, answers) + '%' : '—'}</span>
         </div>
         <div className="kpi">
-          <span className="kpi-label">On My words</span>
+          <span className="kpi-label">{t('onMyWords')}</span>
           <span className="kpi-value">{hard}</span>
         </div>
       </div>
@@ -179,13 +179,13 @@ export default function Stats({ bank }: { bank: Bank }) {
       <section className="panel solo stats-block">
         <div className="body">
           <div className="meter-head">
-            <h2 className="sub-h">Vocabulary</h2>
+            <h2 className="sub-h">{t('vocabulary')}</h2>
             <span className="hint">
-              {learned} of {plural(total, 'word')} learned ({percent(learned, total)}%)
+              {t('learnedOf', { learned, count: total, percent: percent(learned, total) })}
             </span>
           </div>
-          <Meter value={learned} max={total} label="Words learned" />
-          <p className="legend">A word counts as learned after 3 right answers in a row.</p>
+          <Meter value={learned} max={total} label={t('wordsLearned')} />
+          <p className="legend">{t('learnedRule')}</p>
           {perLesson.length > 0 && (
             <ul className="lesson-progress">
               {perLesson.map((lesson) => (
@@ -197,7 +197,7 @@ export default function Stats({ bank }: { bank: Bank }) {
                   <Meter
                     value={lesson.learned}
                     max={lesson.total}
-                    label={`${lesson.word} ${lesson.n}, words learned`}
+                    label={t('lessonWordsLearned', { lesson: `${lesson.word} ${lesson.n}` })}
                   />
                   <span className="rank-val">
                     {lesson.learned}
@@ -212,32 +212,29 @@ export default function Stats({ bank }: { bank: Bank }) {
 
       <section className="panel solo stats-block">
         <div className="body">
-          <h2 className="sub-h">Weak topics</h2>
+          <h2 className="sub-h">{t('weakTopics')}</h2>
           {weakLessons.length || weakKinds.length || tenses.length ? (
             <div className="rank-cols">
-              <RankList title="Lessons" rows={weakLessons} />
-              <RankList title="Kinds of words" rows={weakKinds} />
-              <RankList title="Tenses" rows={tenses} />
+              <RankList title={t('lessons')} rows={weakLessons} />
+              <RankList title={t('kindsOfWords')} rows={weakKinds} />
+              <RankList title={t('tenses')} rows={tenses} />
             </div>
           ) : (
-            <p className="empty">
-              Not enough answers yet. Topics show up here once you’ve answered at least{' '}
-              {MIN_ANSWERS} questions on them.
-            </p>
+            <p className="empty">{t('notEnough', { count: MIN_ANSWERS })}</p>
           )}
           {(weakLessons.length > 0 || weakKinds.length > 0 || tenses.length > 0) && (
-            <p className="legend">Share of right answers, weakest first.</p>
+            <p className="legend">{t('weakestFirst')}</p>
           )}
         </div>
       </section>
 
       <section className="panel solo stats-block">
         <div className="body">
-          <h2 className="sub-h">Most common mistakes</h2>
+          <h2 className="sub-h">{t('commonMistakes')}</h2>
           {topWords.length || topForms.length ? (
             <MistakeList words={topWords.slice(0, 6)} forms={topForms.slice(0, 4)} />
           ) : (
-            <p className="empty">No mistakes recorded yet.</p>
+            <p className="empty">{t('noMistakesRecorded')}</p>
           )}
         </div>
       </section>

@@ -1,3 +1,5 @@
+import { translator } from '../i18n/core';
+import { common } from '../i18n/messages/common';
 import { load } from './storage';
 import type { ImagePayload } from './image';
 import type { Language } from './types';
@@ -34,16 +36,12 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
   try {
     response = await fetch(path, { ...init, headers });
   } catch {
-    throw new ApiError(0, 'offline', 'No connection. Check your internet and try again.');
+    throw new ApiError(0, 'offline', translator(common).t('offline'));
   }
   const data = await response.json().catch(() => null);
   // Vite alone (yarn dev) answers /api/* with index.html and a 200.
   if (response.ok && data === null)
-    throw new ApiError(
-      response.status,
-      'no_api',
-      'The server isn’t running. Start the app with yarn start.'
-    );
+    throw new ApiError(response.status, 'no_api', translator(common).t('noServer'));
   if (!response.ok) {
     const errorCode = (data as { error?: string } | null)?.error || '';
     throw new ApiError(response.status, errorCode, messageFor(response.status, errorCode));
@@ -51,19 +49,26 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
   return data as T;
 }
 
+/** The error in the interface language. Codes and common statuses are translated here; the
+    rare input errors the server explains in its own words (in English) are shown as they are. */
 function messageFor(status: number, errorCode: string): string {
+  const { t } = translator(common);
   if (status === 401) {
     window.dispatchEvent(new Event('cahier:need-code'));
-    return 'Enter the class code to continue.';
+    return t('enterCode');
   }
-  if (errorCode === 'not_shared')
-    return 'This document isn’t shared. In Google Docs, choose Share → General access → Anyone with the link, then try again.';
-  if (errorCode === 'not_found') return 'No Google Doc was found at that link.';
-  if (errorCode === 'bad_id') return 'That doesn’t look like a Google Docs link.';
-  if (errorCode === 'unreachable') return 'Google Docs didn’t answer. Try again in a moment.';
+  if (errorCode === 'not_shared') return t('notShared');
+  if (errorCode === 'not_found') return t('docNotFound');
+  if (errorCode === 'bad_id') return t('badDocLink');
+  if (errorCode === 'unreachable') return t('docUnreachable');
+  if (errorCode === 'delivery_failed') return t('deliveryFailed');
+  if (status === 429) return t('tooMany');
+  if (status === 503) return t('busy');
+  if (status === 502) return t('unreadable');
+  if (status >= 500) return t('somethingWrong');
   return errorCode && errorCode.length > 3 && !/^[a-z_]+$/.test(errorCode)
     ? errorCode
-    : 'Something went wrong. Try again.';
+    : t('somethingWrong');
 }
 
 // Identical analyses already on their way share one request (the lesson page and the

@@ -1,4 +1,7 @@
 import { useState } from 'react';
+import { useTranslation } from '../i18n/core';
+import { app } from '../i18n/messages/app';
+import LanguagePicker from './LanguagePicker';
 
 export default function CodeGate({
   onDone,
@@ -7,14 +10,15 @@ export default function CodeGate({
   onDone: (code: string) => void;
   onClear: () => void;
 }) {
+  const { t } = useTranslation(app);
   const [code, setCode] = useState('');
   return (
     <div className="connect">
-      <h1>Class code</h1>
-      <p>
-        Your teacher gave you a code for this notebook. You only need to enter it once on this
-        device.
-      </p>
+      <div className="connect-language">
+        <LanguagePicker />
+      </div>
+      <h1>{t('codeTitle')}</h1>
+      <p>{t('codeIntro')}</p>
       <form
         className="field"
         onSubmit={(event) => {
@@ -28,13 +32,13 @@ export default function CodeGate({
         <input
           value={code}
           onChange={(event) => setCode(event.target.value)}
-          placeholder="Class code"
-          aria-label="Class code"
+          placeholder={t('codeTitle')}
+          aria-label={t('codeTitle')}
           autoComplete="off"
           autoFocus
         />
         <button className="btn primary big" type="submit" disabled={!code.trim()}>
-          Continue
+          {t('codeContinue')}
         </button>
       </form>
     </div>

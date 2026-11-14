@@ -10,6 +10,7 @@ export type Section =
   | 'document'
   | 'tutorial';
 
+/** The label of each section is translated: app.ts, "section.<id>". */
 export const SECTIONS: { id: Section; label: string; path: string }[] = [
   { id: 'home', label: 'Home', path: '/' },
   { id: 'lessons', label: 'Lessons', path: '/lessons' },

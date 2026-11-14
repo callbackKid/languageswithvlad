@@ -8,7 +8,8 @@ import {
   wordKey,
 } from '../lib/progress';
 import { buildQuiz, pickForms, pickWords } from '../lib/quiz';
-import { plural } from '../lib/util';
+import { useTranslation } from '../i18n/core';
+import { pages } from '../i18n/messages/pages';
 import PageHead, { BankNote } from './PageHead';
 import WordQuiz from './WordQuiz';
 
@@ -17,6 +18,7 @@ const FORMS = 2;
 
 /** The landing page: a round of random questions from every lesson, weighted towards what the student doesn't know yet. */
 export default function Home({ bank }: { bank: Bank }) {
+  const { t } = useTranslation(pages);
   const progress = useProgress();
   const learned = bank.words.filter((word) => isLearned(progress.words[wordKey(word.fr)])).length;
   const hard = Object.values(progress.words).filter((stat) => stat.hard).length;
@@ -34,38 +36,36 @@ export default function Home({ bank }: { bank: Bank }) {
 
   return (
     <>
-      <PageHead title="Today’s practice">
+      <PageHead title={t('homeTitle')}>
         {bank.words.length ? (
           <>
-            {learned} of {plural(bank.words.length, 'word')} learned
-            {hard > 0 && <>, {hard} on My words</>}. Each round mixes words from every lesson, with
-            the ones you miss coming back more often.
+            {t('homeLearned', { learned, count: bank.words.length })}
+            {hard > 0 && t('homeOnMyWords', { hard })}
+            {t('homeIntro')}
           </>
         ) : null}
       </PageHead>
       {bank.words.length > 0 && (
         <div className="daily" role="status">
           <span className="streak">
-            {streak > 0 ? `🔥 ${plural(streak, 'day')} in a row` : 'Start a streak today'}
+            {streak > 0 ? t('streak', { count: streak }) : t('startStreak')}
           </span>
           <span className="goal">
             <span className="goal-bar" aria-hidden="true">
               <span style={{ width: `${Math.min(today / DAILY_GOAL, 1) * 100}%` }} />
             </span>
             {today >= DAILY_GOAL
-              ? `Today’s goal done: ${today} answers`
-              : `Today: ${today} of ${DAILY_GOAL} answers`}
+              ? t('goalDone', { count: today })
+              : t('goalProgress', { count: today, goal: DAILY_GOAL })}
           </span>
         </div>
       )}
       <BankNote bank={bank} />
       {bank.words.length ? (
-        <WordQuiz title="Random exercises" make={make} />
+        <WordQuiz title={t('randomExercises')} make={make} />
       ) : (
         !bank.pending && (
-          <p className="empty">
-            No words yet. Once a lesson has vocabulary, exercises appear here.
-          </p>
+          <p className="empty">{t('noWordsYet')}</p>
         )
       )}
     </>

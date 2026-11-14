@@ -28,7 +28,7 @@ async function call(method: string, body: FormData): Promise<void> {
     const answer = (await response.json().catch(() => null)) as { description?: string } | null;
     // the description says what's wrong ("chat not found", "Unauthorized"); it never contains the token
     console.error('Telegram', method, response.status, answer?.description);
-    throw new TelegramError('The report couldn’t be delivered. Try again later.');
+    throw new TelegramError('delivery_failed');
   }
 }
 

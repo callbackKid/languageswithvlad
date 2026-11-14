@@ -1,7 +1,7 @@
 import type { FormStat, WordStat } from '../lib/progress';
+import { useTranslation } from '../i18n/core';
+import { common } from '../i18n/messages/common';
 import Transcription from './Transcription';
-
-const times = (count: number) => (count === 1 ? 'once' : `${count} times`);
 
 /** Missed words and verb forms with how often each was missed. */
 export default function MistakeList({
@@ -11,6 +11,7 @@ export default function MistakeList({
   words?: WordStat[];
   forms?: FormStat[];
 }) {
+  const { t } = useTranslation(common);
   return (
     <ul className="mistakes">
       {words.map((stat) => (
@@ -27,7 +28,7 @@ export default function MistakeList({
           <span className="ru" lang="ru">
             {stat.ru || '—'}
           </span>
-          <span className="miss">missed {times(stat.wrong)}</span>
+          <span className="miss">{t('missed', { count: stat.wrong })}</span>
         </li>
       ))}
       {forms.map((stat) => (
@@ -37,9 +38,9 @@ export default function MistakeList({
           </span>
           <span className="ru">
             <i lang="fr">{stat.inf}</i>, {stat.t}
-            {stat.negative && ', negative'}
+            {stat.negative && `, ${t('negative')}`}
           </span>
-          <span className="miss">missed {times(stat.wrong)}</span>
+          <span className="miss">{t('missed', { count: stat.wrong })}</span>
         </li>
       ))}
     </ul>

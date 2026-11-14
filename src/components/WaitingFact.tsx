@@ -1,4 +1,6 @@
 import { useEffect, useState, type ReactNode } from 'react';
+import { useTranslation } from '../i18n/core';
+import { common } from '../i18n/messages/common';
 import { FACTS } from '../lib/facts';
 import type { Language } from '../lib/types';
 
@@ -18,6 +20,7 @@ export default function WaitingFact({
   children: ReactNode;
   language?: Language;
 }) {
+  const { t, language: uiLanguage } = useTranslation(common);
   const facts = FACTS[language];
   // a different first fact each time, so waiting twice doesn't show the same one
   const [position, setPosition] = useState(() => Math.floor(Math.random() * facts.length));
@@ -44,9 +47,9 @@ export default function WaitingFact({
           <b className="fact-phrase" lang={language}>
             {fact.phrase}
           </b>
-          <figcaption>{fact.note}</figcaption>
+          <figcaption>{fact.note[uiLanguage]}</figcaption>
           <button type="button" className="btn ghost flush fact-next" onClick={next}>
-            Next fact →
+            {t('nextFact')}
           </button>
         </figure>
       )}

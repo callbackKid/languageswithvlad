@@ -1,11 +1,13 @@
 import { statWord, useProgress } from '../lib/progress';
 import type { Analysis } from '../lib/types';
-import { plural } from '../lib/util';
+import { useTranslation } from '../i18n/core';
+import { pages } from '../i18n/messages/pages';
 import PageHead from './PageHead';
 import WordsTab from './WordsTab';
 
 /** The student's list of unfamiliar words: starred by hand or missed in an exercise. */
 export default function MyWords({ ai }: { ai: boolean }) {
+  const { t } = useTranslation(pages);
   const progress = useProgress();
   const words = Object.values(progress.words)
     .filter((stat) => stat.hard)
@@ -22,13 +24,8 @@ export default function MyWords({ ai }: { ai: boolean }) {
 
   return (
     <>
-      <PageHead title="My words">
-        {words.length ? (
-          <>
-            {plural(words.length, 'word')} to work on. A word leaves the list after 3 right answers
-            in a row, or when you take its ★ off.
-          </>
-        ) : null}
+      <PageHead title={t('myWordsTitle')}>
+        {words.length ? t('myWordsIntro', { count: words.length }) : null}
       </PageHead>
       {words.length ? (
         <section className="panel solo">
@@ -37,10 +34,7 @@ export default function MyWords({ ai }: { ai: boolean }) {
           </div>
         </section>
       ) : (
-        <p className="empty">
-          Your list is empty. Press ☆ next to a word in any lesson to add it here. Words you get
-          wrong in exercises are added automatically.
-        </p>
+        <p className="empty">{t('myWordsEmpty')}</p>
       )}
     </>
   );

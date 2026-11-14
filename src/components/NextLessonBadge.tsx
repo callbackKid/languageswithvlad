@@ -1,23 +1,11 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from '../i18n/core';
+import { app } from '../i18n/messages/app';
 import { parseNextLesson } from '../lib/nextLesson';
-
-const dayFormat = new Intl.DateTimeFormat('en-GB', {
-  weekday: 'short',
-  day: 'numeric',
-  month: 'short',
-});
-const timeFormat = new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit' });
-
-/** "today", "tomorrow" or "Sun 22 Nov", in the viewer's own calendar. */
-function dayLabel(date: Date, now: Date): string {
-  const startOfDay = (value: Date) =>
-    new Date(value.getFullYear(), value.getMonth(), value.getDate()).getTime();
-  const days = Math.round((startOfDay(date) - startOfDay(now)) / 86400000);
-  return days === 0 ? 'today' : days === 1 ? 'tomorrow' : dayFormat.format(date);
-}
 
 /** The next lesson's date and time, read from the newest "le cours prochain:" / "next lesson:" line in the document. */
 export default function NextLessonBadge({ text }: { text: string }) {
+  const { t, rich, locale } = useTranslation(app);
   const [now, setNow] = useState(() => new Date());
   // keeps "today", "now" and "not confirmed" up to date while the page stays open
   useEffect(() => {
@@ -29,34 +17,42 @@ export default function NextLessonBadge({ text }: { text: string }) {
   if (!lesson) return null;
   if (lesson === 'unconfirmed' || lesson.state === 'past') {
     return (
-      <span
-        className="next-lesson muted"
-        title="Write “le cours prochain: 22.11.2026 18:00 de Paris” in the document"
-      >
-        Next lesson: date not confirmed yet
+      <span className="next-lesson muted" title={t('nextUnconfirmedHint')}>
+        {t('nextUnconfirmed')}
       </span>
     );
   }
-  const localTime = timeFormat.format(lesson.start);
+  const timeFormat = (timeZone?: string) =>
+    new Intl.DateTimeFormat(locale, { hour: '2-digit', minute: '2-digit', timeZone });
+  const localTime = timeFormat().format(lesson.start);
+  // "today", "tomorrow" or "Sun 22 Nov", in the viewer's own calendar
+  const startOfDay = (value: Date) =>
+    new Date(value.getFullYear(), value.getMonth(), value.getDate()).getTime();
+  const days = Math.round((startOfDay(lesson.start) - startOfDay(now)) / 86400000);
+  const day =
+    days === 0
+      ? t('today')
+      : days === 1
+        ? t('tomorrow')
+        : new Intl.DateTimeFormat(locale, { weekday: 'short', day: 'numeric', month: 'short' }).format(
+            lesson.start
+          );
   // the time as written, in the city it was given in
   const writtenTime =
     lesson.zone && lesson.zoneLabel
-      ? `${new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: lesson.zone }).format(lesson.start)} ${lesson.zoneLabel}`
+      ? `${timeFormat(lesson.zone).format(lesson.start)} ${lesson.zoneLabel}`
       : null;
   if (lesson.state === 'now')
-    return <span className="next-lesson now">Lesson now · started {localTime}</span>;
+    return <span className="next-lesson now">{t('lessonNow', { time: localTime })}</span>;
   return (
-    <span className="next-lesson" title={lesson.start.toString()}>
-      Next lesson:{' '}
-      <b>
-        {dayLabel(lesson.start, now)}
-        {lesson.hasTime && <>, {localTime}</>}
-      </b>
+    <span className="next-lesson" title={lesson.start.toLocaleString(locale)}>
+      {rich(
+        'nextLesson',
+        { b: (chunk) => <b>{chunk}</b> },
+        { when: lesson.hasTime ? `${day}, ${localTime}` : day }
+      )}
       {writtenTime && (
-        <span className="zone">
-          {' '}
-          ({writtenTime}, {localTime} your time)
-        </span>
+        <span className="zone"> {t('yourTime', { written: writtenTime, time: localTime })}</span>
       )}
     </span>
   );

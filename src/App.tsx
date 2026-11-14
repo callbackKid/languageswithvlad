@@ -6,10 +6,12 @@ import { setProgressDoc, useProgress } from './lib/progress';
 import { load, remove, save } from './lib/storage';
 import { followLink, hrefFor, navigate, usePath } from './lib/router';
 import { lessonPath, parsePath, SECTIONS } from './lib/sections';
-import { plural } from './lib/util';
+import { useTranslation, type Translator } from './i18n/core';
+import { app } from './i18n/messages/app';
 import Connect from './components/Connect';
 import Discuss from './components/Discuss';
 import Feedback from './components/Feedback';
+import LanguagePicker from './components/LanguagePicker';
 import CodeGate from './components/CodeGate';
 import Home from './components/Home';
 import LessonView from './components/LessonView';
@@ -28,14 +30,14 @@ interface DocCache {
 }
 type Sync = { state: 'idle' | 'loading' | 'ok' | 'error'; msg?: string };
 
-const shortDateFormat = new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'short' });
-
-function ago(timestamp: number): string {
+function ago(timestamp: number, { t, locale }: Translator<keyof (typeof app)['en']>): string {
   const minutes = Math.round((Date.now() - timestamp) / 60000);
-  if (minutes < 1) return 'just now';
-  if (minutes < 60) return `${minutes} min ago`;
+  if (minutes < 1) return t('justNow');
+  if (minutes < 60) return t('minutesAgo', { count: minutes });
   const hours = Math.round(minutes / 60);
-  return hours < 24 ? `${hours} h ago` : new Date(timestamp).toLocaleDateString();
+  return hours < 24
+    ? t('hoursAgo', { count: hours })
+    : new Date(timestamp).toLocaleDateString(locale);
 }
 
 function initialDocId(): string | null {
@@ -48,6 +50,8 @@ function initialDocId(): string | null {
 }
 
 export default function App() {
+  const translation = useTranslation(app);
+  const { t, rich, locale } = translation;
   const [needsCode, setNeedsCode] = useState(false);
   const [ai, setAi] = useState(true);
   const [docWriter, setDocWriter] = useState<string | null>(null);
@@ -95,9 +99,10 @@ export default function App() {
     } catch (error) {
       setSync({
         state: 'error',
-        msg: error instanceof ApiError ? error.message : 'Couldn’t read the document.',
+        msg: error instanceof ApiError ? error.message : t('readFailed'),
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- the message is read when it fails
   }, []);
 
   useEffect(() => {
@@ -153,7 +158,7 @@ export default function App() {
       setCopied(true);
       setTimeout(() => setCopied(false), 2500);
     } catch {
-      window.prompt('Copy this link for your student:', link);
+      window.prompt(t('copyPrompt'), link);
     }
   }
 
@@ -182,10 +187,13 @@ export default function App() {
   const meetLink = meetLinks ? meetLinks[meetLinks.length - 1] : null;
   const docUrl = `https://docs.google.com/document/d/${encodeURIComponent(docId)}/edit`;
   let status: string;
-  if (sync.state === 'loading') status = 'Syncing with Google Docs…';
+  if (sync.state === 'loading') status = t('syncing');
   else if (sync.state === 'error') status = sync.msg || '';
-  else if (doc) status = `${plural(lessons.length, 'lesson')}, synced ${ago(doc.fetchedAt)}`;
-  else status = 'Not synced yet';
+  else if (doc)
+    status = t('synced', { count: lessons.length, ago: ago(doc.fetchedAt, translation) });
+  else status = t('notSynced');
+  const shortDateFormat = new Intl.DateTimeFormat(locale, { day: 'numeric', month: 'short' });
+  const example = (text: string) => <span className="example">{text}</span>;
 
   return (
     <>
@@ -193,7 +201,7 @@ export default function App() {
         <div className="doc">
           <p className="doc-title">
             <a href={docUrl} target="_blank" rel="noopener noreferrer">
-              {doc?.title || 'Lesson notes'}
+              {doc?.title || t('lessonNotes')}
             </a>
           </p>
           <div className={'sync-line' + (sync.state === 'error' ? ' err' : '')} role="status">
@@ -204,26 +212,27 @@ export default function App() {
           {doc?.text && <NextLessonBadge text={doc.text} />}
           {meetLink && (
             <a className="btn" href={meetLink} target="_blank" rel="noopener noreferrer">
-              Join call
+              {t('joinCall')}
             </a>
           )}
           <a className="btn" href={docUrl} target="_blank" rel="noopener noreferrer">
-            Open document
+            {t('openDocument')}
           </a>
           <button
             className="btn primary"
             onClick={() => runSync(docId)}
             disabled={sync.state === 'loading'}
           >
-            Sync
+            {t('sync')}
           </button>
           <button className="btn" onClick={copyLink}>
-            {copied ? 'Link copied' : 'Copy student link'}
+            {copied ? t('linkCopied') : t('copyLink')}
           </button>
           <button className="btn ghost" onClick={() => setChanging(true)}>
-            Change document
+            {t('changeDocument')}
           </button>
           {feedback && <Feedback docTitle={doc?.title ?? ''} />}
+          <LanguagePicker />
         </div>
       </header>
 
@@ -232,23 +241,26 @@ export default function App() {
           <p className="empty">
             {sync.state === 'loading' ? (
               <>
-                <span className="spinner" /> Reading the document…
+                <span className="spinner" /> {t('readingDocument')}
               </>
             ) : sync.state === 'error' && !doc ? (
               sync.msg
             ) : (
-              <>
-                No lessons found yet. Start each lesson in the document with a line like{' '}
-                <span className="example">14.10.2026 1 Leçon</span>,{' '}
-                <span className="example">14.10.2026 1 Lesson</span> or{' '}
-                <span className="example">14.10.2026 1 Lektion</span>, then press Sync.
-              </>
+              rich(
+                'noLessons',
+                {},
+                {
+                  leçon: example('14.10.2026 1 Leçon'),
+                  lesson: example('14.10.2026 1 Lesson'),
+                  lektion: example('14.10.2026 1 Lektion'),
+                }
+              )
             )}
           </p>
         </div>
       ) : (
         <>
-          <nav className="sections" aria-label="Sections">
+          <nav className="sections" aria-label={t('sectionsLabel')}>
             {SECTIONS.map((entry) => (
               <a
                 key={entry.id}
@@ -257,7 +269,7 @@ export default function App() {
                 aria-current={section === entry.id ? 'page' : undefined}
                 onClick={(event) => followLink(event, entry.path)}
               >
-                {entry.label}
+                {t(`section.${entry.id}`)}
                 {entry.id === 'mine' && hardCount > 0 && <span className="count">{hardCount}</span>}
               </a>
             ))}
@@ -265,18 +277,19 @@ export default function App() {
           {section === 'document' ? (
             <main className="doc-editor">
               <p className="hint">
-                Edits save to Google Docs and appear in the lessons when you leave this page. If the
-                editor asks you to sign in or stays blank, your browser blocks it here:{' '}
-                <a href={docUrl} target="_blank" rel="noopener noreferrer">
-                  open it in a new tab
-                </a>
-                .
+                {rich('editorHint', {
+                  link: (chunk) => (
+                    <a href={docUrl} target="_blank" rel="noopener noreferrer">
+                      {chunk}
+                    </a>
+                  ),
+                })}
               </p>
               <iframe title="Google Doc" src={docUrl} allow="clipboard-read; clipboard-write" />
             </main>
           ) : section === 'lessons' ? (
             <div className="layout">
-              <nav className="lessons" aria-label="Lessons">
+              <nav className="lessons" aria-label={t('lessonsLabel')}>
                 {lessons.map((listedLesson) => (
                   <a
                     key={listedLesson.key}

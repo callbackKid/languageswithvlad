@@ -1,12 +1,17 @@
 import { useMemo, useState } from 'react';
 import type { Bank } from '../lib/bank';
 import type { Analysis } from '../lib/types';
+import { useTranslation } from '../i18n/core';
+import { pages } from '../i18n/messages/pages';
+import { app } from '../i18n/messages/app';
 import PageHead, { BankNote } from './PageHead';
 import VerbsTab from './VerbsTab';
 import WordsTab from './WordsTab';
 
 /** Every exercise, run on the words and verbs of all lessons or the ones picked. */
 export default function Practice({ bank, ai }: { bank: Bank; ai: boolean }) {
+  const { t } = useTranslation(pages);
+  const appText = useTranslation(app);
   // null means every lesson, including ones still being prepared
   const [selectedLessons, setSelectedLessons] = useState<Set<string> | null>(null);
   const [tab, setTab] = useState<'words' | 'verbs'>('words');
@@ -42,17 +47,15 @@ export default function Practice({ bank, ai }: { bank: Bank; ai: boolean }) {
 
   return (
     <>
-      <PageHead title="All downloaded lessons">
-        Exercises on words and verbs from every lesson. Pick lessons to narrow it down.
-      </PageHead>
+      <PageHead title={t('allTitle')}>{t('allIntro')}</PageHead>
       <BankNote bank={bank} />
-      <div className="chips" role="group" aria-label="Lessons">
+      <div className="chips" role="group" aria-label={appText.t('lessonsLabel')}>
         <button
           className="chip"
           aria-pressed={!selectedLessons}
           onClick={() => setSelectedLessons(null)}
         >
-          All
+          {t('all')}
         </button>
         {ready.map((lesson) => (
           <button
@@ -74,7 +77,7 @@ export default function Practice({ bank, ai }: { bank: Bank; ai: boolean }) {
             aria-selected={tab === 'words'}
             onClick={() => setTab('words')}
           >
-            Words<span className="count">{words.length}</span>
+            {t('words')}<span className="count">{words.length}</span>
           </button>
           <button
             className="tab"
@@ -82,7 +85,7 @@ export default function Practice({ bank, ai }: { bank: Bank; ai: boolean }) {
             aria-selected={tab === 'verbs'}
             onClick={() => setTab('verbs')}
           >
-            Verbs<span className="count">{analysis.verbs.length}</span>
+            {t('verbs')}<span className="count">{analysis.verbs.length}</span>
           </button>
         </div>
         <div className="body">
