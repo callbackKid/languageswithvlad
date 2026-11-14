@@ -1,6 +1,6 @@
 # Cahier de français
 
-A study app for French lessons kept in a Google Doc. The teacher writes lessons in the document; the app turns each lesson into vocabulary, verb tables and exercises for the student.
+A study app for French, English and German lessons kept in a Google Doc. The teacher writes lessons in the document; the app turns each lesson into vocabulary, verb tables and exercises for the student.
 
 React + TypeScript + Vite in the browser, small Vercel serverless functions in `api/`. The Anthropic API key stays on the server and never reaches the browser.
 
@@ -47,13 +47,13 @@ React + TypeScript + Vite in the browser, small Vercel serverless functions in `
 
 ## How to write the lesson document
 
-| What           | Write in the document                          | Notes                                        |
-| -------------- | ---------------------------------------------- | -------------------------------------------- |
-| Start a lesson | `14.10.2026 1 Leçon` or `14.10.2026 1 Lesson`  | Everything below it belongs to that lesson.  |
-| A word         | `bonjour — привет`                             | Messier notes work too; this is clearest.    |
-| Pronunciation  | `bonjour [bɔ̃ʒuʁ] — привет`                     | In square brackets, IPA or Cyrillic.         |
-| Next lesson    | `le cours prochain: 22.11.2026 18:00 de Paris` | Or `next lesson: …`. The newest line counts. |
-| Video call     | `https://meet.google.com/abc-defg-hij`         | Anywhere; the newest link is used.           |
+| What           | Write in the document                               | Notes                                                             |
+| -------------- | --------------------------------------------------- | ----------------------------------------------------------------- |
+| Start a lesson | `14.10.2026 1 Leçon`, `… 1 Lesson` or `… 1 Lektion` | Everything below it belongs to that lesson.                       |
+| A word         | `bonjour — привет`                                  | Messier notes work too; this is clearest.                         |
+| Pronunciation  | `bonjour [bɔ̃ʒuʁ] — привет`                          | In square brackets, IPA or Cyrillic.                              |
+| Next lesson    | `le cours prochain: 22.11.2026 18:00 de Paris`      | Or `next lesson: …`, `nächste Stunde: …`. The newest line counts. |
+| Video call     | `https://meet.google.com/abc-defg-hij`              | Anywhere; the newest link is used.                                |
 
 With a city after the time (`de Paris`, `Moscow`…), students see the next lesson in their own time.
 

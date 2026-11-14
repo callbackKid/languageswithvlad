@@ -151,10 +151,10 @@ export default function LessonView({
               }
             />
           )}
-          {tab === 'verbs' && analysis?.language === 'en' && (
+          {tab === 'verbs' && analysis && analysis.language !== 'fr' && (
             <p className="empty">Verb tables are only available for French lessons for now.</p>
           )}
-          {tab === 'verbs' && analysis && analysis.language !== 'en' && (
+          {tab === 'verbs' && analysis?.language === 'fr' && (
             <VerbsTab
               key={lesson.hash}
               verbs={analysis.verbs}

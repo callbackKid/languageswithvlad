@@ -3,7 +3,7 @@ import { api, ApiError } from '../lib/api';
 import type { Bank } from '../lib/bank';
 import { normDiscussion } from '../lib/parse';
 import { load, save } from '../lib/storage';
-import type { Discussion, Language } from '../lib/types';
+import { LANGUAGE_NAMES, LANGUAGES, type Discussion, type Language } from '../lib/types';
 import PageHead from './PageHead';
 import Speak from './Speak';
 import Star from './Star';
@@ -57,6 +57,28 @@ const TOPICS: Record<Language, string[]> = {
     'Plans',
     'English-speaking countries',
   ],
+  de: [
+    'Die Familie',
+    'Freunde',
+    'Die Arbeit',
+    'Das Studium',
+    'Reisen',
+    'Essen und Trinken',
+    'Wohnen',
+    'Die Stadt',
+    'Freizeit',
+    'Sport',
+    'Gesundheit',
+    'Urlaub',
+    'Einkaufen',
+    'Technik',
+    'Die Umwelt',
+    'Kultur und Kunst',
+    'Feste',
+    'Die Kindheit',
+    'Pläne',
+    'Deutschland, Österreich und die Schweiz',
+  ],
 };
 
 const GRAMMAR: Record<Language, string[]> = {
@@ -91,6 +113,25 @@ const GRAMMAR: Record<Language, string[]> = {
     'Comparatives and superlatives',
     'The passive',
     'Reported speech',
+  ],
+  de: [
+    'Präsens',
+    'Perfekt',
+    'Präteritum',
+    'Perfekt oder Präteritum',
+    'Futur I',
+    'Modalverben',
+    'Trennbare Verben',
+    'Reflexive Verben',
+    'Akkusativ und Dativ',
+    'Wechselpräpositionen',
+    'Adjektivdeklination',
+    'Nebensätze (weil, dass, wenn)',
+    'Konjunktiv II',
+    'Imperativ',
+    'Komparativ und Superlativ',
+    'Das Passiv',
+    'Relativsätze',
   ],
 };
 
@@ -237,8 +278,11 @@ export default function Discuss({ bank, ai }: { bank: Bank; ai: boolean }) {
                   update({ language: next, topic: TOPICS[next][0] ?? '', grammar: '' });
                 }}
               >
-                <option value="fr">French</option>
-                <option value="en">English</option>
+                {LANGUAGES.map((code) => (
+                  <option key={code} value={code}>
+                    {LANGUAGE_NAMES[code]}
+                  </option>
+                ))}
               </select>
             </label>
             <div className="discuss-field">

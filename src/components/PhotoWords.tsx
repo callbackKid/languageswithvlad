@@ -25,7 +25,7 @@ const asWord = (item: PhotoItem): Word => ({
   tr: '',
   kind: item.kind,
   added: false,
-  language: 'fr',
+  language: item.language ?? 'fr',
 });
 
 /** Photo of a book page with underlined words → translation, dictionary form, tense and a short explanation for each. */
@@ -115,9 +115,9 @@ export default function PhotoWords({ ai, target }: { ai: boolean; target: DocTar
                     {scan.items.map((item, index) => (
                       <tr key={index}>
                         <td>
-                          <b lang="fr">{item.fr}</b>
+                          <b lang={item.language ?? 'fr'}>{item.fr}</b>
                           {item.context && (
-                            <div className="context" lang="fr">
+                            <div className="context" lang={item.language ?? 'fr'}>
                               {item.context}
                             </div>
                           )}
@@ -125,7 +125,7 @@ export default function PhotoWords({ ai, target }: { ai: boolean; target: DocTar
                         <td lang="ru">{item.ru}</td>
                         <td>
                           {item.base && (
-                            <div lang="fr">
+                            <div lang={item.language ?? 'fr'}>
                               <i>{item.base}</i>
                             </div>
                           )}
@@ -136,7 +136,7 @@ export default function PhotoWords({ ai, target }: { ai: boolean; target: DocTar
                           {item.explanation}
                         </td>
                         <td className="actions">
-                          <Speak text={item.fr} />
+                          <Speak text={item.fr} language={item.language ?? 'fr'} />
                           <Star word={asWord(item)} />
                         </td>
                       </tr>

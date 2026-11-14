@@ -10,7 +10,7 @@ import type {
   VerbRef,
   Word,
 } from './types';
-import { TENSES } from './types';
+import { TENSES, asLanguage } from './types';
 import { hash, shuffle, asText } from './util';
 
 export function docIdFrom(input: string): string | null {
@@ -31,11 +31,11 @@ export function clean(text: string): string {
     .replace(/\n{3,}/g, '\n\n');
 }
 
-/** Every line like "14.10.2026 1 Leçon" or "14.10.2026 1 Lesson" starts a lesson. */
+/** Every line like "14.10.2026 1 Leçon", "14.10.2026 1 Lesson" or "14.10.2026 1 Lektion" starts a lesson. */
 export function splitLessons(text: string): Lesson[] {
   const cleaned = clean(text);
   const headingPattern =
-    /^[ \t]*(\d{1,2})\.(\d{1,2})\.(\d{4})[ \t]+(\d+)[ \t]*(le[çc]on|lesson)\b[^\n]*$/gim;
+    /^[ \t]*(\d{1,2})\.(\d{1,2})\.(\d{4})[ \t]+(\d+)[ \t]*(le[çc]on|lesson|lektion)\b[^\n]*$/gim;
   const marks: {
     i: number;
     end: number;
@@ -54,7 +54,11 @@ export function splitLessons(text: string): Lesson[] {
       mo: Number(match[2]),
       y: Number(match[3]),
       n: Number(match[4]),
-      word: /^lesson$/i.test(match[5] ?? '') ? 'Lesson' : 'Leçon',
+      word: /^lesson$/i.test(match[5] ?? '')
+        ? 'Lesson'
+        : /^lektion$/i.test(match[5] ?? '')
+          ? 'Lektion'
+          : 'Leçon',
     });
   const pad = (value: number) => String(value).padStart(2, '0');
   return marks.map((mark, index) => {
@@ -169,7 +173,7 @@ export function normAnalysis(raw: unknown): Analysis {
     );
   // An empty list is a real answer (a lesson without vocabulary); a missing one means the reply was malformed.
   if (!Array.isArray(data.words)) throw new Error('malformed');
-  const language = data.language === 'en' ? 'en' : 'fr';
+  const language = asLanguage(data.language);
   return { language, topic: asText(data.topic), words, pairs, verbs, local: false };
 }
 
@@ -229,7 +233,9 @@ export function normGaps(raw: unknown): GapItem[] {
 }
 
 export function normPhoto(raw: unknown): PhotoItem[] {
-  return asArray(asObject(raw).items)
+  const data = asObject(raw);
+  const language = asLanguage(data.language);
+  return asArray(data.items)
     .map(asObject)
     .map((item) => ({
       fr: asText(item.fr),
@@ -239,6 +245,7 @@ export function normPhoto(raw: unknown): PhotoItem[] {
       kind: asText(item.kind) || 'other',
       tense: asText(item.tense),
       explanation: asText(item.explanation),
+      language,
     }))
     .filter((item) => item.fr);
 }

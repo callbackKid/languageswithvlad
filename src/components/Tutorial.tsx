@@ -97,8 +97,8 @@ const GUIDES: Guide[] = [
       <>
         A lesson in the document starts with a line like{' '}
         <span className="example">14.10.2026 1 Leçon</span> (or{' '}
-        <span className="example">Lesson</span>). Everything under it, up to the next such line,
-        belongs to that lesson.
+        <span className="example">Lesson</span>, <span className="example">Lektion</span>).
+        Everything under it, up to the next such line, belongs to that lesson.
       </>,
     ],
   },

@@ -1,6 +1,6 @@
 import type { Language } from './types';
 
-const LOCALES: Record<Language, string> = { fr: 'fr-FR', en: 'en-GB' };
+const LOCALES: Record<Language, string> = { fr: 'fr-FR', en: 'en-GB', de: 'de-DE' };
 
 export const canSpeak = typeof window !== 'undefined' && 'speechSynthesis' in window;
 

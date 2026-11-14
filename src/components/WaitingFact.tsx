@@ -4,7 +4,11 @@ import type { Language } from '../lib/types';
 
 const ROTATE_EVERY = 8000;
 // "Did you know?" in the language being learned
-const LABELS: Record<Language, string> = { fr: 'Le saviez-vous ?', en: 'Did you know?' };
+const LABELS: Record<Language, string> = {
+  fr: 'Le saviez-vous ?',
+  en: 'Did you know?',
+  de: 'Schon gewusst?',
+};
 
 /** What's happening, plus a fact about the language that changes every few seconds, while the student waits for Claude. */
 export default function WaitingFact({

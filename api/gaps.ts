@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { checkAccess, claudeJSON, fail, onlyPost, FAST_MODEL } from './_lib/claude.js';
-import { gapPrompt } from './_lib/prompts.js';
+import { asLanguage, gapPrompt } from './_lib/prompts.js';
 
 export default async function handler(request: VercelRequest, response: VercelResponse) {
   if (!onlyPost(request, response) || !checkAccess(request, response)) return;
@@ -15,7 +15,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
     .filter((word) => word.fr);
   if (!words.length) return response.status(400).json({ error: 'No words.' });
   const count = Math.min(8, Math.max(4, words.length));
-  const language = request.body?.language === 'en' ? 'en' : 'fr';
+  const language = asLanguage(request.body?.language);
   try {
     // Fresh sentences every time, so no caching.
     response.status(200).json(

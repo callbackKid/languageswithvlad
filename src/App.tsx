@@ -235,8 +235,9 @@ export default function App() {
             ) : (
               <>
                 No lessons found yet. Start each lesson in the document with a line like{' '}
-                <span className="example">14.10.2026 1 Leçon</span> or{' '}
-                <span className="example">14.10.2026 1 Lesson</span>, then press Sync.
+                <span className="example">14.10.2026 1 Leçon</span>,{' '}
+                <span className="example">14.10.2026 1 Lesson</span> or{' '}
+                <span className="example">14.10.2026 1 Lektion</span>, then press Sync.
               </>
             )}
           </p>

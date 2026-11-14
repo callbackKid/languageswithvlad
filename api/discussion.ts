@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { checkAccess, claudeJSON, fail, onlyPost, MODEL } from './_lib/claude.js';
-import { discussionPrompt } from './_lib/prompts.js';
+import { asLanguage, discussionPrompt } from './_lib/prompts.js';
 
 const LEVELS = new Set(['A0', 'A1', 'A2', 'B1', 'B2', 'C1', 'C2']);
 const text = (value: unknown, maxLength: number) =>
@@ -13,7 +13,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
   if (!LEVELS.has(level)) return response.status(400).json({ error: 'Choose a level.' });
   try {
     const prompt = discussionPrompt({
-      language: request.body?.language === 'en' ? 'en' : 'fr',
+      language: asLanguage(request.body?.language),
       level,
       topic: text(request.body?.topic, 120),
       grammar: text(request.body?.grammar, 120),

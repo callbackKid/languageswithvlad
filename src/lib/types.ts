@@ -1,6 +1,13 @@
 /** The language a lesson teaches; translations are always Russian. */
-export type Language = 'fr' | 'en';
-export const LANGUAGE_NAMES: Record<Language, string> = { fr: 'French', en: 'English' };
+export type Language = 'fr' | 'en' | 'de';
+export const LANGUAGES: Language[] = ['fr', 'en', 'de'];
+export const LANGUAGE_NAMES: Record<Language, string> = {
+  fr: 'French',
+  en: 'English',
+  de: 'German',
+};
+export const asLanguage = (value: unknown): Language =>
+  LANGUAGES.includes(value as Language) ? (value as Language) : 'fr';
 
 export interface Word {
   fr: string;
@@ -37,7 +44,7 @@ export interface Analysis {
 export interface Lesson {
   key: string;
   n: number;
-  word: 'Leçon' | 'Lesson';
+  word: 'Leçon' | 'Lesson' | 'Lektion';
   date: Date;
   body: string;
   hash: string;
@@ -85,6 +92,8 @@ export interface PhotoItem {
   /** tense or mood of a verb form, "" otherwise */
   tense: string;
   explanation: string;
+  /** the language of the book; French when missing (older scans) */
+  language?: Language;
 }
 
 /** A discussion question for the start of a lesson. */

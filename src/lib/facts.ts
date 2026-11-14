@@ -135,4 +135,62 @@ export const FACTS: Record<Language, Fact[]> = {
       note: 'The usual answer to “thank you”; “no problem” and “sure” are more casual.',
     },
   ],
+  de: [
+    {
+      phrase: 'die Sonne, der Mond',
+      note: 'In German the sun is feminine and the moon masculine — the other way round from French: le soleil, la lune.',
+    },
+    {
+      phrase: 'das Mädchen',
+      note: '“Girl” is neuter, because every noun ending in -chen is neuter: das Mädchen, das Brötchen.',
+    },
+    {
+      phrase: 'der Tisch, die Freiheit',
+      note: 'Every noun is written with a capital letter, not only names.',
+    },
+    {
+      phrase: 'einundzwanzig',
+      note: '21 is “one-and-twenty”: the ones come before the tens, so 48 is achtundvierzig.',
+    },
+    {
+      phrase: 'die Schifffahrt',
+      note: 'German glues words together: Schiff + Fahrt. Since the 1996 spelling reform all three f’s are kept.',
+    },
+    {
+      phrase: 'ß',
+      note: 'The Eszett is read as a sharp s: die Straße. Switzerland doesn’t use it and writes ss; a capital ẞ has been official since 2017.',
+    },
+    {
+      phrase: 'du / Sie',
+      note: 'Sie with a capital S is the polite “you”; du is for friends, family and children.',
+    },
+    {
+      phrase: 'бутерброд, рюкзак, шлагбаум',
+      note: 'Russian took these from German: Butterbrot, Rucksack, Schlagbaum. Парикмахер comes from Perückenmacher, “wig maker”.',
+    },
+    {
+      phrase: 'Ich habe Hunger.',
+      note: 'Like French avoir faim, German “has” hunger and thirst: ich habe Durst — I’m thirsty.',
+    },
+    {
+      phrase: 'Ich verstehe nur Bahnhof.',
+      note: '“I only understand ‘train station’”: I don’t understand a thing.',
+    },
+    {
+      phrase: 'Tomaten auf den Augen haben',
+      note: '“To have tomatoes on your eyes”: not to notice something obvious.',
+    },
+    {
+      phrase: 'Das ist mir Wurst.',
+      note: '“That’s sausage to me”: I don’t care.',
+    },
+    {
+      phrase: 'Schadenfreude',
+      note: 'Joy at someone else’s bad luck. English borrowed the word as it is.',
+    },
+    {
+      phrase: 'Guten Tag / Grüß Gott / Grüezi',
+      note: 'The same “hello”: most of Germany says Guten Tag, the south and Austria Grüß Gott, Switzerland Grüezi.',
+    },
+  ],
 };
