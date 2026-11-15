@@ -3,6 +3,7 @@ import { useTranslation } from '../i18n/core';
 import { app } from '../i18n/messages/app';
 import { common } from '../i18n/messages/common';
 import { docIdFrom } from '../lib/parse';
+import { sourceUrl } from '../lib/source';
 import LanguagePicker from './LanguagePicker';
 
 export default function Connect({
@@ -16,9 +17,7 @@ export default function Connect({
 }) {
   const { t, rich } = useTranslation(app);
   const commonText = useTranslation(common);
-  const [value, setValue] = useState(
-    current ? `https://docs.google.com/document/d/${encodeURIComponent(current)}/edit` : ''
-  );
+  const [value, setValue] = useState(current ? sourceUrl(current) : '');
   const [error, setError] = useState('');
   return (
     <div className="connect">
@@ -37,6 +36,7 @@ export default function Connect({
         )}
       </p>
       <p>{rich('connectShare', { b: (chunk) => <b>{chunk}</b> })}</p>
+      <p className="hint">{t('connectNotion')}</p>
       {/* noValidate: a bare document id is fine too, and our message is clearer than the browser's */}
       <form
         className="field"

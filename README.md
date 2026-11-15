@@ -1,6 +1,6 @@
 # Cahier de français
 
-A study app for French, English and German lessons kept in a Google Doc. The teacher writes lessons in the document; the app turns each lesson into vocabulary, verb tables and exercises for the student.
+A study app for French, English and German lessons kept in a Google Doc or a Notion page. The teacher writes lessons in the document; the app turns each lesson into vocabulary, verb tables and exercises for the student.
 
 React + TypeScript + Vite in the browser, small Vercel serverless functions in `api/`. The Anthropic API key stays on the server and never reaches the browser.
 
@@ -76,6 +76,7 @@ About 10 minutes.
    | `GOOGLE_SERVICE_ACCOUNT`                 | no          | Lets the app add lessons to the Google Doc (setup below).               |
    | `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` | no          | Sends students’ bug reports and ideas to your Telegram (setup below).   |
    | `ZOOM_SDK_KEY`, `ZOOM_SDK_SECRET`        | no          | Runs Zoom calls inside the app, in lesson mode (setup below).           |
+   | `NOTION_TOKEN`                           | no          | Reads lessons from Notion pages instead of a Google Doc (setup below).  |
 
 5. **Deploy**, then redeploy once after adding variables so the functions pick them up.
 
@@ -109,6 +110,25 @@ With these two variables set, a **Feedback** button appears in the top bar. Stud
 4. Add both variables in Vercel and redeploy.
 
 Keep the token private: anyone with it can send messages as the bot.
+
+## Optional: lessons in Notion
+
+Instead of a Google Doc, the app can read a Notion page: paste its link on the first screen (or in **Change document**). The lessons are written the same way, `12.11.2026 1 Leçon` and everything under it, and the page can hold them in any of these shapes:
+
+- one under another on the page;
+- as **sub-pages**, each titled like `12.11.2026 1 Leçon`;
+- as rows of a **database**: a row titled `12.11.2026 1 Leçon`, or any title plus a **Date** column (the app builds the heading from the date).
+
+Tables become “word — translation — transcription” lines, toggles and columns are read too, and a Meet or Zoom link hidden behind text still counts for **Join call**. Notion pages can’t be edited inside the app; the Document page links to Notion instead.
+
+Notion only lets apps read pages through an integration, so this needs a one-time setup:
+
+1. Open [notion.so/my-integrations](https://www.notion.so/my-integrations) → **New integration**, type **Internal**, any name (for example “Cahier”), your workspace.
+2. Under **Capabilities**, keep **Read content**, and turn on **Insert content** if lessons from photos and lesson notes should be added to the page.
+3. Copy the **Internal Integration Secret** and add it in Vercel as `NOTION_TOKEN`. Redeploy.
+4. In Notion, open the lesson page → **•••** (top right) → **Connections** → add the integration. Sub-pages and databases inside it are included.
+
+Every student link for that page (**Copy student link**) works like the Google Doc one. If the app says it can’t see the page, step 4 was skipped for that page.
 
 ## Optional: Zoom calls inside the app
 
@@ -175,7 +195,8 @@ api/                serverless functions (Vercel)
   _lib/prompts.ts   every prompt sent to Claude
   _lib/telegram.ts  sending feedback to the teacher’s Telegram
   _lib/zoom.ts      signing Zoom Meeting SDK joins
-  doc.ts            reads the Google Doc
+  _lib/notion.ts    reading a Notion page as lesson text, adding lessons to it
+  doc.ts            reads the Google Doc (or the Notion page)
   analyze.ts        prepares a lesson: words, pairs, verbs
   conjugate.ts      a verb’s tables
   gaps.ts           fill-the-gap sentences

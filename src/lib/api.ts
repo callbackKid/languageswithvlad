@@ -62,6 +62,12 @@ function messageFor(status: number, errorCode: string): string {
   if (errorCode === 'bad_id') return t('badDocLink');
   if (errorCode === 'unreachable') return t('docUnreachable');
   if (errorCode === 'delivery_failed') return t('deliveryFailed');
+  if (errorCode === 'notion_off') return t('notionOff');
+  if (errorCode === 'notion_token') return t('notionToken');
+  if (errorCode === 'notion_not_shared') return t('notionNotShared');
+  if (errorCode === 'notion_no_write') return t('notionNoWrite');
+  if (errorCode === 'notion_unreachable' || errorCode === 'notion_validation')
+    return t('notionUnreachable');
   if (status === 429) return t('tooMany');
   if (status === 503) return t('busy');
   if (status === 502) return t('unreadable');
@@ -95,6 +101,7 @@ export const api = {
       docWriter?: string | null;
       feedback?: boolean;
       zoom?: boolean;
+      notion?: boolean;
     }>('/api/health'),
   zoomSignature: (meetingNumber: string) =>
     request<{ signature: string }>('/api/zoom-signature', {

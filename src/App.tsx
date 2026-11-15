@@ -14,6 +14,7 @@ import Feedback from './components/Feedback';
 import LanguagePicker from './components/LanguagePicker';
 import LessonMode from './components/LessonMode';
 import { findCall } from './lib/call';
+import { isNotion, sourceUrl } from './lib/source';
 import CodeGate from './components/CodeGate';
 import Home from './components/Home';
 import LessonView from './components/LessonView';
@@ -59,6 +60,7 @@ export default function App() {
   const [docWriter, setDocWriter] = useState<string | null>(null);
   const [feedback, setFeedback] = useState(false);
   const [zoomReady, setZoomReady] = useState(false);
+  const [notionReady, setNotionReady] = useState(false);
   const [docId, setDocId] = useState<string | null>(initialDocId);
   const [doc, setDoc] = useState<DocCache | null>(() =>
     docId ? load<DocCache>('doc:' + docId) : null
@@ -82,6 +84,7 @@ export default function App() {
         setDocWriter(health.docWriter ?? null);
         setFeedback(!!health.feedback);
         setZoomReady(!!health.zoom);
+        setNotionReady(!!health.notion);
         if (health.needsCode && !load<string>('code')) setNeedsCode(true);
       })
       .catch(() => {
@@ -187,12 +190,14 @@ export default function App() {
 
   // the newest Google Meet or Zoom link written anywhere in the document
   const callLink = doc?.text ? findCall(doc.text) : null;
+  const notion = isNotion(docId);
   const docTarget = {
     docId,
-    docWriter,
+    // Notion pages are written with the same integration that reads them
+    docWriter: notion ? (notionReady ? 'notion' : null) : docWriter,
     nextLessonNumber: Math.max(0, ...lessons.map((listed) => listed.n)) + 1,
   };
-  const docUrl = `https://docs.google.com/document/d/${encodeURIComponent(docId)}/edit`;
+  const docUrl = sourceUrl(docId);
   let status: string;
   if (sync.state === 'loading') status = t('syncing');
   else if (sync.state === 'error') status = sync.msg || '';
@@ -286,7 +291,19 @@ export default function App() {
               </a>
             ))}
           </nav>
-          {section === 'document' ? (
+          {section === 'document' && notion ? (
+            <main className="page">
+              <p className="empty">
+                {rich('notionDocument', {
+                  link: (chunk) => (
+                    <a href={docUrl} target="_blank" rel="noopener noreferrer">
+                      {chunk}
+                    </a>
+                  ),
+                })}
+              </p>
+            </main>
+          ) : section === 'document' ? (
             <main className="doc-editor">
               <p className="hint">
                 {rich('editorHint', {

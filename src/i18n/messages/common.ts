@@ -56,11 +56,19 @@ export const common = defineMessages({
     somethingWrong: 'Something went wrong. Try again.',
     tooMany: 'Too many requests right now. Wait a minute and try again.',
     busy: 'The server is busy right now. Try again in a minute.',
+    notionOff: 'Notion isn’t set up on this server yet (NOTION_TOKEN, see README).',
+    notionToken:
+      'The server’s Notion key is wrong or was revoked. Check NOTION_TOKEN (see README).',
+    notionNotShared:
+      'The app can’t see this Notion page. In Notion, open ••• → Connections and add the app’s integration, then try again.',
+    notionNoWrite:
+      'The app may read this Notion page but not add to it. Give the integration the “Insert content” capability (see README).',
+    notionUnreachable: 'Notion didn’t answer. Try again in a moment.',
     deliveryFailed: 'The message couldn’t be delivered. Try again later.',
     // adding to the Google Doc
     docWriterMissing:
       'Adding to the Google Doc isn’t set up on the server yet (GOOGLE_SERVICE_ACCOUNT, see README).',
-    addAsLesson: 'Add to Google Doc as Leçon {number}',
+    addAsLesson: 'Add to the document as Leçon {number}',
     adding: 'Adding…',
     added: 'Added ✓',
     addedAs: 'Added to the document as Leçon {number}.',
@@ -128,10 +136,18 @@ export const common = defineMessages({
     somethingWrong: 'Что-то пошло не так. Попробуйте ещё раз.',
     tooMany: 'Слишком много запросов. Подождите минуту и попробуйте снова.',
     busy: 'Сервер сейчас перегружен. Попробуйте через минуту.',
+    notionOff: 'Notion ещё не настроен на сервере (NOTION_TOKEN, см. README).',
+    notionToken:
+      'Ключ Notion на сервере неверный или отозван. Проверьте NOTION_TOKEN (см. README).',
+    notionNotShared:
+      'Приложение не видит эту страницу Notion. В Notion откройте ••• → Connections (Подключения) и добавьте интеграцию приложения, затем попробуйте ещё раз.',
+    notionNoWrite:
+      'Приложению можно читать эту страницу Notion, но не добавлять в неё. Дайте интеграции право «Insert content» (см. README).',
+    notionUnreachable: 'Notion не отвечает. Попробуйте через минуту.',
     deliveryFailed: 'Сообщение не удалось доставить. Попробуйте позже.',
     docWriterMissing:
       'Добавление в Google-документ ещё не настроено на сервере (GOOGLE_SERVICE_ACCOUNT, см. README).',
-    addAsLesson: 'Добавить в Google-документ как Leçon {number}',
+    addAsLesson: 'Добавить в документ как Leçon {number}',
     adding: 'Добавляю…',
     added: 'Добавлено ✓',
     addedAs: 'Добавлено в документ как Leçon {number}.',
@@ -192,10 +208,18 @@ export const common = defineMessages({
     somethingWrong: 'Une erreur s’est produite. Réessayez.',
     tooMany: 'Trop de demandes pour l’instant. Attendez une minute et réessayez.',
     busy: 'Le serveur est occupé pour l’instant. Réessayez dans une minute.',
+    notionOff: 'Notion n’est pas encore configuré sur ce serveur (NOTION_TOKEN, voir README).',
+    notionToken:
+      'La clé Notion du serveur est fausse ou révoquée. Vérifiez NOTION_TOKEN (voir README).',
+    notionNotShared:
+      'L’application ne voit pas cette page Notion. Dans Notion, ouvrez ••• → Connexions et ajoutez l’intégration de l’application, puis réessayez.',
+    notionNoWrite:
+      'L’application peut lire cette page Notion mais pas y ajouter. Donnez à l’intégration la capacité « Insert content » (voir README).',
+    notionUnreachable: 'Notion ne répond pas. Réessayez dans un instant.',
     deliveryFailed: 'Le message n’a pas pu être envoyé. Réessayez plus tard.',
     docWriterMissing:
       'L’ajout au Google Doc n’est pas encore configuré sur le serveur (GOOGLE_SERVICE_ACCOUNT, voir README).',
-    addAsLesson: 'Ajouter au Google Doc comme Leçon {number}',
+    addAsLesson: 'Ajouter au document comme Leçon {number}',
     adding: 'Ajout…',
     added: 'Ajouté ✓',
     addedAs: 'Ajouté au document comme Leçon {number}.',
@@ -257,10 +281,18 @@ export const common = defineMessages({
     somethingWrong: 'Etwas ist schiefgelaufen. Versuch es nochmal.',
     tooMany: 'Gerade zu viele Anfragen. Warte eine Minute und versuch es nochmal.',
     busy: 'Der Server ist gerade ausgelastet. Versuch es in einer Minute nochmal.',
+    notionOff: 'Notion ist auf diesem Server noch nicht eingerichtet (NOTION_TOKEN, siehe README).',
+    notionToken:
+      'Der Notion-Schlüssel des Servers ist falsch oder widerrufen. Prüfe NOTION_TOKEN (siehe README).',
+    notionNotShared:
+      'Die App sieht diese Notion-Seite nicht. Öffne in Notion ••• → Verbindungen und füge die Integration der App hinzu, dann versuch es nochmal.',
+    notionNoWrite:
+      'Die App darf diese Notion-Seite lesen, aber nichts hinzufügen. Gib der Integration die Fähigkeit „Insert content“ (siehe README).',
+    notionUnreachable: 'Notion antwortet nicht. Versuch es gleich nochmal.',
     deliveryFailed: 'Die Nachricht konnte nicht zugestellt werden. Versuch es später nochmal.',
     docWriterMissing:
       'Das Hinzufügen zum Google-Dokument ist auf dem Server noch nicht eingerichtet (GOOGLE_SERVICE_ACCOUNT, siehe README).',
-    addAsLesson: 'Als Leçon {number} zum Google-Dokument hinzufügen',
+    addAsLesson: 'Als Leçon {number} zum Dokument hinzufügen',
     adding: 'Wird hinzugefügt…',
     added: 'Hinzugefügt ✓',
     addedAs: 'Als Leçon {number} zum Dokument hinzugefügt.',

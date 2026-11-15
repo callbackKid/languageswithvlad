@@ -40,10 +40,14 @@ export const app = defineMessages({
     // connect screen
     connectTitle: 'Language lessons, ready to practise',
     connectIntro:
-      'Paste the link to the Google Doc with the lesson notes. Every line like {leçon} or {lesson} starts a new lesson, with its own words, verbs and notes.',
+      'Paste the link to the Google Doc or Notion page with the lesson notes. Every line like {leçon} or {lesson} starts a new lesson, with its own words, verbs and notes.',
     connectShare: 'The document must be shared as <b>Anyone with the link can view</b>.',
-    docLinkPlaceholder: 'Paste a Google Docs link',
-    docLinkLabel: 'Google Docs link',
+    docLinkPlaceholder: 'Paste a Google Docs or Notion link',
+    docLinkLabel: 'Google Docs or Notion link',
+    connectNotion:
+      'A Notion page has to be connected to the app once: in Notion, open ••• → Connections and add the app’s integration. Lessons can be written one under another, as sub-pages, or as rows of a database.',
+    notionDocument:
+      'Notion pages can’t be edited inside the app. <link>Open the page in Notion</link>; when you come back, press Sync.',
     loadLessons: 'Load lessons',
     // class code
     codeTitle: 'Class code',
@@ -101,11 +105,15 @@ export const app = defineMessages({
       'Правки сохраняются в Google Docs и появляются в уроках, когда вы уходите с этой страницы. Если редактор просит войти или остаётся пустым, браузер блокирует его здесь: <link>откройте в новой вкладке</link>.',
     connectTitle: 'Уроки иностранного языка — сразу с упражнениями',
     connectIntro:
-      'Вставьте ссылку на Google-документ с записями уроков. Каждая строка вроде {leçon} или {lesson} начинает новый урок со своими словами, глаголами и заметками.',
+      'Вставьте ссылку на Google-документ или страницу Notion с записями уроков. Каждая строка вроде {leçon} или {lesson} начинает новый урок со своими словами, глаголами и заметками.',
     connectShare:
       'Документ должен быть открыт: <b>«Все, у кого есть ссылка, могут просматривать»</b>.',
-    docLinkPlaceholder: 'Вставьте ссылку на Google Docs',
-    docLinkLabel: 'Ссылка на Google Docs',
+    docLinkPlaceholder: 'Вставьте ссылку на Google Docs или Notion',
+    docLinkLabel: 'Ссылка на Google Docs или Notion',
+    connectNotion:
+      'Страницу Notion нужно один раз подключить к приложению: в Notion откройте ••• → Connections (Подключения) и добавьте интеграцию приложения. Уроки можно писать друг под другом, подстраницами или строками базы данных.',
+    notionDocument:
+      'Страницы Notion нельзя редактировать внутри приложения. <link>Откройте страницу в Notion</link>, а вернувшись, нажмите «Синхронизировать».',
     loadLessons: 'Загрузить уроки',
     codeTitle: 'Код класса',
     codeIntro:
@@ -159,11 +167,15 @@ export const app = defineMessages({
       'Les modifications sont enregistrées dans Google Docs et apparaissent dans les leçons quand vous quittez cette page. Si l’éditeur demande de se connecter ou reste vide, votre navigateur le bloque ici : <link>ouvrez-le dans un nouvel onglet</link>.',
     connectTitle: 'Vos cours de langue, prêts à réviser',
     connectIntro:
-      'Collez le lien du Google Doc avec les notes de cours. Chaque ligne comme {leçon} ou {lesson} commence une nouvelle leçon, avec ses mots, ses verbes et ses notes.',
+      'Collez le lien du Google Doc ou de la page Notion avec les notes de cours. Chaque ligne comme {leçon} ou {lesson} commence une nouvelle leçon, avec ses mots, ses verbes et ses notes.',
     connectShare:
       'Le document doit être partagé avec <b>Tous les utilisateurs qui ont le lien peuvent consulter</b>.',
-    docLinkPlaceholder: 'Collez un lien Google Docs',
-    docLinkLabel: 'Lien Google Docs',
+    docLinkPlaceholder: 'Collez un lien Google Docs ou Notion',
+    docLinkLabel: 'Lien Google Docs ou Notion',
+    connectNotion:
+      'Une page Notion doit être connectée une fois à l’application : dans Notion, ouvrez ••• → Connexions et ajoutez l’intégration de l’application. Les leçons peuvent se suivre sur la page, être des sous-pages ou des lignes d’une base de données.',
+    notionDocument:
+      'Les pages Notion ne se modifient pas dans l’application. <link>Ouvrez la page dans Notion</link> ; en revenant, appuyez sur Synchroniser.',
     loadLessons: 'Charger les leçons',
     codeTitle: 'Code de la classe',
     codeIntro:
@@ -218,11 +230,15 @@ export const app = defineMessages({
       'Änderungen werden in Google Docs gespeichert und erscheinen in den Lektionen, wenn du diese Seite verlässt. Wenn der Editor eine Anmeldung verlangt oder leer bleibt, blockiert ihn dein Browser hier: <link>in einem neuen Tab öffnen</link>.',
     connectTitle: 'Sprachunterricht, bereit zum Üben',
     connectIntro:
-      'Füge den Link zum Google-Dokument mit den Unterrichtsnotizen ein. Jede Zeile wie {leçon} oder {lesson} beginnt eine neue Lektion mit eigenen Wörtern, Verben und Notizen.',
+      'Füge den Link zum Google-Dokument oder zur Notion-Seite mit den Unterrichtsnotizen ein. Jede Zeile wie {leçon} oder {lesson} beginnt eine neue Lektion mit eigenen Wörtern, Verben und Notizen.',
     connectShare:
       'Das Dokument muss freigegeben sein: <b>Jeder, der über den Link verfügt, kann ansehen</b>.',
-    docLinkPlaceholder: 'Google-Docs-Link einfügen',
-    docLinkLabel: 'Google-Docs-Link',
+    docLinkPlaceholder: 'Google-Docs- oder Notion-Link einfügen',
+    docLinkLabel: 'Google-Docs- oder Notion-Link',
+    connectNotion:
+      'Eine Notion-Seite muss einmal mit der App verbunden werden: Öffne in Notion ••• → Verbindungen und füge die Integration der App hinzu. Lektionen können untereinander stehen, Unterseiten oder Zeilen einer Datenbank sein.',
+    notionDocument:
+      'Notion-Seiten lassen sich nicht in der App bearbeiten. <link>Öffne die Seite in Notion</link> und tippe danach auf Synchronisieren.',
     loadLessons: 'Lektionen laden',
     codeTitle: 'Klassencode',
     codeIntro:

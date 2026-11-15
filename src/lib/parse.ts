@@ -11,10 +11,15 @@ import type {
   Word,
 } from './types';
 import { TENSES, asLanguage } from './types';
+import { notionIdFrom } from './source';
 import { hash, shuffle, asText } from './util';
 
+/** The lessons' source from a pasted link: a Google Docs id, or "notion-<id>" for a Notion page. */
 export function docIdFrom(input: string): string | null {
   const text = input.trim();
+  const notion = notionIdFrom(text);
+  if (notion) return notion;
+  if (/^notion-[0-9a-f]{32}$/.test(text)) return text;
   // same bounds as the server, which rejects anything longer
   const match = text.match(/\/d\/([a-zA-Z0-9_-]{20,100})(?![a-zA-Z0-9_-])/);
   if (match?.[1]) return match[1];

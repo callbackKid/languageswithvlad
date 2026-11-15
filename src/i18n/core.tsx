@@ -93,7 +93,7 @@ function pickForm(message: Message | undefined, language: UiLanguage, params?: P
 
 const fill = (text: string, params?: Params) =>
   params
-    ? text.replace(/\{(\w+)\}/g, (whole, name: string) => String(params[name] ?? whole))
+    ? text.replace(/\{([\p{L}\p{N}_]+)\}/gu, (whole, name: string) => String(params[name] ?? whole))
     : text;
 
 /** A text with <b>tags</b> and {placeholders} turned into React: tags by the renderers, placeholders by values. */
@@ -103,7 +103,8 @@ function richText(
   values: Record<string, ReactNode>
 ): ReactNode {
   const parts: ReactNode[] = [];
-  const pattern = /<(\w+)>([\s\S]*?)<\/\1>|<(\w+)\/>|\{(\w+)\}/g;
+  // placeholder names may use any letters: {leçon}
+  const pattern = /<(\w+)>([\s\S]*?)<\/\1>|<(\w+)\/>|\{([\p{L}\p{N}_]+)\}/gu;
   let last = 0;
   let match: RegExpExecArray | null;
   while ((match = pattern.exec(text))) {
