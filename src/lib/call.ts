@@ -54,14 +54,18 @@ export function findCall(text: string): CallLink | null {
  * Opens the call as a small separate window at the right edge of the screen, so the app stays
  * beside it. Google Meet refuses to load inside other sites, so this is as close as it gets.
  */
-export function openCallWindow(url: string): boolean {
-  const width = 520;
-  const height = 400;
-  const left = Math.max(0, window.screen.availWidth - width - 24);
+export function openCallWindow(url: string, layout: 'small' | 'half' = 'small'): boolean {
+  const screen = window.screen;
+  // "half": a tall window over the right half of the screen, the closest a page can get to
+  // the browser's own split view (which no website can open by itself)
+  const width = layout === 'half' ? Math.round(screen.availWidth / 2) : 520;
+  const height = layout === 'half' ? screen.availHeight : 400;
+  const left = Math.max(0, screen.availWidth - width - (layout === 'half' ? 0 : 24));
+  const top = layout === 'half' ? 0 : 48;
   const opened = window.open(
     url,
     'cahier-call',
-    `popup,width=${width},height=${height},left=${left},top=48`
+    `popup,width=${width},height=${height},left=${left},top=${top}`
   );
   return !!opened;
 }

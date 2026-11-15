@@ -89,22 +89,34 @@ export interface DiscussionRequest {
   level: string;
   topic: string;
   grammar: string;
+  /** the interface language: the grammar explanation is written in it */
+  explainIn: 'en' | 'ru' | 'fr' | 'de';
 }
 
-export function discussionPrompt({ language, level, topic, grammar }: DiscussionRequest): string {
+const EXPLAIN_NAMES = { en: 'English', ru: 'Russian', fr: 'French', de: 'German' } as const;
+
+export function discussionPrompt({
+  language,
+  level,
+  topic,
+  grammar,
+  explainIn,
+}: DiscussionRequest): string {
   const languageName = LANGUAGE_NAMES[language];
+  const explainName = EXPLAIN_NAMES[explainIn];
   return `You help a teacher start a ${languageName} lesson with a Russian-speaking student at CEFR level ${level}. Write one open discussion question for the start of the lesson.
-- Vocabulary topic: ${topic || 'any everyday topic'}.
+- Vocabulary topic: ${topic || 'any everyday topic'}. The student may have typed this topic themselves, and it can be anything: a TV series or film (ask about their opinion of it, its characters or its world, without spoiling the plot), a hobby, a news story, a trip, or a kind of words ("new slang words", "words about money"), in which case the question should make them use such words. Build the question, the follow-ups and the vocabulary around it.
 - Grammar to practise: ${grammar || 'none in particular'}. The question should make the student answer using it (a question about childhood memories calls for the imparfait, plans for the future call for the futur proche, and so on).
 - Match the level strictly: at A1–A2 short, concrete, personal questions with common words; at B1–B2 opinions and experiences; at C1–C2 abstract or debatable questions.
 - The question must be about the student’s own life, opinions or experience, never a quiz with a right answer.
 
 Reply with only a JSON object:
-{"question": string, "ru": string, "followUps": [string], "vocabulary": [{"word": string, "ru": string}], "starters": [string], "grammarTip": string}
+{"question": string, "ru": string, "followUps": [string], "vocabulary": [{"word": string, "ru": string}], "starters": [string], "grammarTip": string, "grammarRule": {"title": string, "summary": string, "formation": [string], "usage": [string], "examples": [{"text": string, "translation": string}], "pitfall": string} | null}
 - question: the question in ${languageName}.
 - ru: its Russian translation.
 - followUps: 3 or 4 short follow-up questions in ${languageName} that keep the conversation going.
 - vocabulary: 6 to 8 words or expressions useful for answering, in ${languageName} (${WORD_FORMS[language]}), each with a Russian translation.
 - starters: 3 sentence beginnings in ${languageName} that use the grammar topic, for the student to finish (for example “Quand j’étais petit, je…”).
-- grammarTip: one or two sentences in Russian reminding how to form the grammar point, with a ${languageName} example; "" if there is no grammar topic.`;
+- grammarTip: one or two sentences in ${explainName} reminding how to form the grammar point, with a ${languageName} example; "" if there is no grammar topic.
+- grammarRule: null if there is no grammar topic. Otherwise a short, clear explanation of the rule for a student at ${level}, written in ${explainName} (forms and examples in ${languageName}): title is the name of the grammar point; summary is one or two sentences on what it is; formation lists the steps or forms (for a tense, how it is built, with the endings or the auxiliary, and irregular forms worth knowing), each item one short line; usage lists when it is used, each item one short line with a tiny ${languageName} example; examples are 3 or 4 natural ${languageName} sentences on the vocabulary topic, each with its ${explainName} translation; pitfall is the most common mistake learners make with it and how to avoid it, one or two sentences.`;
 }

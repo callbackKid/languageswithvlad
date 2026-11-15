@@ -276,5 +276,25 @@ export function normDiscussion(raw: unknown): Discussion | null {
       .filter((item) => item.word),
     starters: texts(data.starters),
     grammarTip: asText(data.grammarTip),
+    grammarRule: normGrammarRule(data.grammarRule),
+  };
+}
+
+function normGrammarRule(raw: unknown): Discussion['grammarRule'] {
+  const data = asObject(raw);
+  const title = asText(data.title);
+  const summary = asText(data.summary);
+  if (!title && !summary) return null;
+  const texts = (value: unknown) => asArray(value).map(asText).filter(Boolean);
+  return {
+    title,
+    summary,
+    formation: texts(data.formation),
+    usage: texts(data.usage),
+    examples: asArray(data.examples)
+      .map(asObject)
+      .map((item) => ({ text: asText(item.text), translation: asText(item.translation) }))
+      .filter((item) => item.text),
+    pitfall: asText(data.pitfall),
   };
 }

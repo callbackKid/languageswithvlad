@@ -40,10 +40,10 @@ React + TypeScript + Vite in the browser, small Vercel serverless functions in `
 
 **Around the lessons**
 
-- **Discuss**: a discussion question for the start of a lesson, for a chosen level, vocabulary topic and grammar point, with follow-up questions, sentence starters and useful words.
+- **Discuss**: a discussion question for the start of a lesson, for a chosen level, a vocabulary topic from the list or the student’s own (“the TV series Dexter”) and a grammar point, with follow-up questions, sentence starters, useful words and a fold-out explanation of the grammar rule.
 - **Document**: the Google Docs editor inside the app.
 - **Next lesson** date and **Join call** button in the top bar, read from the document.
-- **Lesson mode** (`/call`): the call, the teacher’s notes and the lesson’s words on one screen. Google Meet opens as a small window beside the app (Google doesn’t allow Meet inside other sites); Zoom runs inside the page (optional setup). The notes go into the Google Doc as a new lesson with one button.
+- **Lesson mode** (`/call`): the call, the teacher’s notes and the lesson’s words on one screen. Google Meet opens as a small window beside the app (Google doesn’t allow Meet inside other sites); Zoom runs inside the page (optional setup). The notes go into the Google Doc as a new lesson with one button. Below them, a **board** (Excalidraw) to write and draw on; the student sees it through screen sharing.
 - **Tutorial**: a guide to every section, written for students.
 - **Interface in four languages**: English, Russian, French and German, chosen in the top bar (the browser’s language by default). Word translations stay in Russian.
 

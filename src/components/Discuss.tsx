@@ -3,7 +3,7 @@ import { api, ApiError } from '../lib/api';
 import type { Bank } from '../lib/bank';
 import { normDiscussion } from '../lib/parse';
 import { load, save } from '../lib/storage';
-import { LANGUAGES, type Discussion, type Language } from '../lib/types';
+import { LANGUAGES, type Discussion, type GrammarRule, type Language } from '../lib/types';
 import { useTranslation } from '../i18n/core';
 import { common, learning } from '../i18n/messages/common';
 import { talk } from '../i18n/messages/talk';
@@ -163,6 +163,8 @@ function TopicSelect({
   value,
   custom,
   noneLabel,
+  allowCustom = true,
+  dimmed = false,
   onChange,
   onCustom,
 }: {
@@ -173,12 +175,16 @@ function TopicSelect({
   value: string;
   custom: string;
   noneLabel?: string;
+  /** offer "Other…" with a text field (the vocabulary topic has its own field instead) */
+  allowCustom?: boolean;
+  /** shown greyed out: something else (the student's own topic) is used instead */
+  dimmed?: boolean;
   onChange: (value: string) => void;
   onCustom: (value: string) => void;
 }) {
   const { t } = useTranslation(talk);
   return (
-    <label className="discuss-field">
+    <label className={'discuss-field' + (dimmed ? ' dimmed' : '')}>
       <span>{label}</span>
       <select value={value} onChange={(event) => onChange(event.target.value)}>
         {noneLabel !== undefined && <option value="">{noneLabel}</option>}
@@ -196,7 +202,7 @@ function TopicSelect({
             ))}
           </optgroup>
         )}
-        <option value={CUSTOM}>{t('other')}</option>
+        {allowCustom && <option value={CUSTOM}>{t('other')}</option>}
       </select>
       {value === CUSTOM && (
         <input
@@ -211,15 +217,70 @@ function TopicSelect({
   );
 }
 
+/** The chosen grammar point explained, folded away until the student opens it. */
+function GrammarRuleBox({ rule, language }: { rule: GrammarRule; language: Language }) {
+  const { t, language: uiLanguage } = useTranslation(talk);
+  return (
+    <details className="grammar-rule">
+      <summary>📘 {t('ruleSummary', { title: rule.title })}</summary>
+      <div className="grammar-rule-body" lang={uiLanguage}>
+        {rule.summary && <p>{rule.summary}</p>}
+        {rule.formation.length > 0 && (
+          <>
+            <h4>{t('ruleFormation')}</h4>
+            <ul>
+              {rule.formation.map((line) => (
+                <li key={line}>{line}</li>
+              ))}
+            </ul>
+          </>
+        )}
+        {rule.usage.length > 0 && (
+          <>
+            <h4>{t('ruleUsage')}</h4>
+            <ul>
+              {rule.usage.map((line) => (
+                <li key={line}>{line}</li>
+              ))}
+            </ul>
+          </>
+        )}
+        {rule.examples.length > 0 && (
+          <>
+            <h4>{t('ruleExamples')}</h4>
+            <ul className="grammar-examples">
+              {rule.examples.map((example) => (
+                <li key={example.text}>
+                  <span lang={language}>{example.text}</span>{' '}
+                  <Speak text={example.text} language={language} />
+                  {example.translation && (
+                    <span className="translation"> — {example.translation}</span>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
+        {rule.pitfall && (
+          <p className="grammar-pitfall">
+            <b>⚠️ {t('rulePitfall')}:</b> {rule.pitfall}
+          </p>
+        )}
+      </div>
+    </details>
+  );
+}
+
 /** A discussion question for the start of a lesson: chosen level, vocabulary topic and grammar point. */
 export default function Discuss({ bank, ai }: { bank: Bank; ai: boolean }) {
-  const { t } = useTranslation(talk);
+  const { t, language: uiLanguage } = useTranslation(talk);
   const commonText = useTranslation(common);
   const names = useTranslation(learning);
-  const [choice, setChoice] = useState<Choice>(() => ({
-    ...DEFAULT_CHOICE,
-    ...load<Choice>('discuss:choice'),
-  }));
+  const [choice, setChoice] = useState<Choice>(() => {
+    const saved = { ...DEFAULT_CHOICE, ...load<Choice>('discuss:choice') };
+    // the topic list no longer has "Other…": an own topic lives in its own field
+    return saved.topic === CUSTOM ? { ...saved, topic: TOPICS[saved.language][0] ?? '' } : saved;
+  });
   const [discussion, setDiscussion] = useState<Discussion | null>(() =>
     load<Discussion>('discuss:last')
   );
@@ -234,7 +295,9 @@ export default function Discuss({ bank, ai }: { bank: Bank; ai: boolean }) {
       return next;
     });
   const lessonTopics = [...new Set(bank.lessons.map((lesson) => lesson.topic).filter(Boolean))];
-  const topic = choice.topic === CUSTOM ? choice.customTopic : choice.topic;
+  // a topic of their own ("the TV series Dexter") wins over the list
+  const ownTopic = choice.customTopic.trim();
+  const topic = ownTopic || choice.topic;
   const grammar = choice.grammar === CUSTOM ? choice.customGrammar : choice.grammar;
 
   async function generate() {
@@ -242,7 +305,13 @@ export default function Discuss({ bank, ai }: { bank: Bank; ai: boolean }) {
     setError('');
     try {
       const next = normDiscussion(
-        await api.discussion({ language: choice.language, level: choice.level, topic, grammar })
+        await api.discussion({
+          language: choice.language,
+          level: choice.level,
+          topic,
+          grammar,
+          explainIn: uiLanguage,
+        })
       );
       if (!next) throw new ApiError(0, 'empty', t('noQuestion'));
       setDiscussion(next);
@@ -308,9 +377,38 @@ export default function Discuss({ bank, ai }: { bank: Bank; ai: boolean }) {
               extra={{ label: t('fromLessons'), options: lessonTopics }}
               value={choice.topic}
               custom={choice.customTopic}
+              allowCustom={false}
+              dimmed={!!ownTopic}
               onChange={(value) => update({ topic: value })}
               onCustom={(value) => update({ customTopic: value })}
             />
+            <div className="discuss-field discuss-own">
+              <label htmlFor="discuss-own-topic">
+                <span>{t('ownTopic')}</span>
+              </label>
+              <div className="discuss-own-input">
+                <input
+                  id="discuss-own-topic"
+                  type="text"
+                  value={choice.customTopic}
+                  maxLength={120}
+                  placeholder={t('ownTopicPlaceholder')}
+                  onChange={(event) => update({ customTopic: event.target.value })}
+                />
+                {ownTopic && (
+                  <button
+                    type="button"
+                    className="btn ghost"
+                    aria-label={t('clearOwnTopic')}
+                    title={t('clearOwnTopic')}
+                    onClick={() => update({ customTopic: '' })}
+                  >
+                    ×
+                  </button>
+                )}
+              </div>
+              <small className="hint">{t('ownTopicHint')}</small>
+            </div>
             <TopicSelect
               label={t('grammarTopic')}
               options={GRAMMAR[language]}
@@ -372,13 +470,17 @@ export default function Discuss({ bank, ai }: { bank: Bank; ai: boolean }) {
                       ))}
                     </ul>
                     {discussion.grammarTip && (
-                      <p className="grammar-tip" lang="ru">
+                      <p className="grammar-tip" lang={uiLanguage}>
                         {discussion.grammarTip}
                       </p>
                     )}
                   </section>
                 )}
               </div>
+
+              {discussion.grammarRule && (
+                <GrammarRuleBox rule={discussion.grammarRule} language={language} />
+              )}
 
               {discussion.vocabulary.length > 0 && (
                 <section>

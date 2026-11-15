@@ -150,9 +150,9 @@ export const tutorial = defineMessages({
       'A question to talk about at the start of a lesson, written for your level and the grammar you are practising.',
     'discuss.step1': 'Choose the language and your <b>level</b> (A1–C2).',
     'discuss.step2':
-      'Pick a <b>vocabulary topic</b>: from the list, from your lessons, or <b>Other…</b> to type your own. Pick a <b>grammar topic</b>, or leave <b>Any</b>.',
+      'Pick a <b>vocabulary topic</b>: from the list or from your lessons, or write any topic of your own under <b>Or your own topic</b>: a TV series, a hobby, new slang words. Pick a <b>grammar topic</b>, or leave <b>Any</b>.',
     'discuss.step3':
-      'Press <pbtn>Write a question</pbtn>. You get the question (🔊 reads it, <b>Show translation</b> shows it in Russian), follow-up questions, sentence beginnings that use the grammar, and useful words.',
+      'Press <pbtn>Write a question</pbtn>. You get the question (🔊 reads it, <b>Show translation</b> shows it in Russian), follow-up questions, sentence beginnings that use the grammar, and useful words. With a grammar topic, <b>📘 The rule</b> opens an explanation with examples.',
     'discuss.step4': '<pbtn>Another question</pbtn> writes a new one with the same settings.',
     'discuss.tip1': '☆ next to a useful word puts it on My words.',
 
@@ -168,6 +168,10 @@ export const tutorial = defineMessages({
       'Write in <b>Lesson notes</b> during the lesson: new words as “mot — перевод”, mistakes, homework. <btn>⏱ Time</btn> marks when something came up.',
     'call.step4':
       'After the lesson, <btn>Add to Google Doc as Leçon 8</btn> puts the notes into the document as a new lesson, ready for exercises.',
+    'call.step5':
+      '<pbtn>Open the board</pbtn> under the notes: write, draw and paste pictures. Share your screen in the call so the student sees it. <b>Full screen</b> and <b>Save as picture</b> are above it.',
+    'call.tip3':
+      '<btn>Side by side (half the screen)</btn> opens Meet over the right half of the screen, next to the app.',
     'call.tip1':
       'The notes are saved on this device for each day, so closing the page loses nothing.',
     'call.tip2':
@@ -328,9 +332,9 @@ export const tutorial = defineMessages({
       'Вопрос, чтобы поговорить в начале урока, под ваш уровень и грамматику, которую вы тренируете.',
     'discuss.step1': 'Выберите язык и свой <b>уровень</b> (A1–C2).',
     'discuss.step2':
-      'Выберите <b>лексическую тему</b>: из списка, из ваших уроков или <b>Другое…</b>, чтобы вписать свою. Выберите <b>грамматическую тему</b> или оставьте <b>Любая</b>.',
+      'Выберите <b>лексическую тему</b>: из списка или из ваших уроков — или впишите любую свою в поле <b>Или своя тема</b>: сериал, хобби, новые сленговые слова. Выберите <b>грамматическую тему</b> или оставьте <b>Любая</b>.',
     'discuss.step3':
-      'Нажмите <pbtn>Придумать вопрос</pbtn>. Вы получите вопрос (🔊 прочитает его, <b>Показать перевод</b> покажет его по-русски), вопросы для продолжения разговора, начала фраз с нужной грамматикой и полезные слова.',
+      'Нажмите <pbtn>Придумать вопрос</pbtn>. Вы получите вопрос (🔊 прочитает его, <b>Показать перевод</b> покажет его по-русски), вопросы для продолжения разговора, начала фраз с нужной грамматикой и полезные слова. Если выбрана грамматика, <b>📘 Правило</b> раскрывает объяснение с примерами.',
     'discuss.step4': '<pbtn>Другой вопрос</pbtn> придумает новый с теми же настройками.',
     'discuss.tip1': '☆ рядом с полезным словом добавляет его в «Мои слова».',
 
@@ -346,6 +350,10 @@ export const tutorial = defineMessages({
       'Во время урока пишите в <b>Заметки урока</b>: новые слова в виде «mot — перевод», ошибки, домашнее задание. <btn>⏱ Время</btn> отмечает, когда что-то прозвучало.',
     'call.step4':
       'После урока <btn>Добавить в Google-документ как Leçon 8</btn> переносит заметки в документ новым уроком — сразу с упражнениями.',
+    'call.step5':
+      '<pbtn>Открыть доску</pbtn> под заметками: пишите, рисуйте, вставляйте картинки. Покажите экран в звонке, чтобы ученик видел доску. Над ней — <b>На весь экран</b> и <b>Сохранить картинкой</b>.',
+    'call.tip3':
+      '<btn>Рядом (половина экрана)</btn> открывает Meet на правой половине экрана, рядом с приложением.',
     'call.tip1':
       'Заметки сохраняются на этом устройстве отдельно на каждый день — если закрыть страницу, ничего не пропадёт.',
     'call.tip2':
@@ -511,9 +519,9 @@ export const tutorial = defineMessages({
       'Une question à discuter en début de cours, écrite pour votre niveau et la grammaire que vous travaillez.',
     'discuss.step1': 'Choisissez la langue et votre <b>niveau</b> (A1–C2).',
     'discuss.step2':
-      'Choisissez un <b>thème de vocabulaire</b> : dans la liste, dans vos leçons, ou <b>Autre…</b> pour saisir le vôtre. Choisissez un <b>point de grammaire</b>, ou laissez <b>Peu importe</b>.',
+      'Choisissez un <b>thème de vocabulaire</b> : dans la liste ou dans vos leçons, ou écrivez n’importe quel thème sous <b>Ou votre propre thème</b> : une série, un loisir, des mots d’argot. Choisissez un <b>point de grammaire</b>, ou laissez <b>Peu importe</b>.',
     'discuss.step3':
-      'Appuyez sur <pbtn>Écrire une question</pbtn>. Vous obtenez la question (🔊 la lit, <b>Afficher la traduction</b> la montre en russe), des questions de relance, des débuts de phrase avec la grammaire, et des mots utiles.',
+      'Appuyez sur <pbtn>Écrire une question</pbtn>. Vous obtenez la question (🔊 la lit, <b>Afficher la traduction</b> la montre en russe), des questions de relance, des débuts de phrase avec la grammaire, et des mots utiles. Avec un point de grammaire, <b>📘 La règle</b> ouvre une explication avec des exemples.',
     'discuss.step4':
       '<pbtn>Une autre question</pbtn> en écrit une nouvelle avec les mêmes réglages.',
     'discuss.tip1': '☆ à côté d’un mot utile l’ajoute à Mes mots.',
@@ -530,6 +538,10 @@ export const tutorial = defineMessages({
       'Pendant le cours, écrivez dans <b>Notes du cours</b> : les nouveaux mots sous la forme « mot — перевод », les erreurs, les devoirs. <btn>⏱ Heure</btn> marque le moment.',
     'call.step4':
       'Après le cours, <btn>Ajouter au Google Doc comme Leçon 8</btn> met les notes dans le document comme nouvelle leçon, prête pour les exercices.',
+    'call.step5':
+      '<pbtn>Ouvrir le tableau</pbtn> sous les notes : écrivez, dessinez, collez des images. Partagez votre écran dans l’appel pour que l’élève le voie. <b>Plein écran</b> et <b>Enregistrer en image</b> sont au-dessus.',
+    'call.tip3':
+      '<btn>Côte à côte (moitié de l’écran)</btn> ouvre Meet sur la moitié droite de l’écran, à côté de l’application.',
     'call.tip1':
       'Les notes sont enregistrées sur cet appareil pour chaque jour : fermer la page ne fait rien perdre.',
     'call.tip2':
@@ -694,9 +706,9 @@ export const tutorial = defineMessages({
       'Eine Frage zum Reden am Anfang der Stunde, passend zu deinem Niveau und der Grammatik, die du übst.',
     'discuss.step1': 'Wähle die Sprache und dein <b>Niveau</b> (A1–C2).',
     'discuss.step2':
-      'Wähle ein <b>Wortschatzthema</b>: aus der Liste, aus deinen Lektionen oder <b>Anderes…</b>, um ein eigenes einzugeben. Wähle ein <b>Grammatikthema</b> oder lass <b>Beliebig</b>.',
+      'Wähle ein <b>Wortschatzthema</b>: aus der Liste oder aus deinen Lektionen, oder schreib unter <b>Oder ein eigenes Thema</b> ein beliebiges: eine Serie, ein Hobby, neue Slangwörter. Wähle ein <b>Grammatikthema</b> oder lass <b>Beliebig</b>.',
     'discuss.step3':
-      'Tippe auf <pbtn>Frage schreiben</pbtn>. Du bekommst die Frage (🔊 liest sie vor, <b>Übersetzung zeigen</b> zeigt sie auf Russisch), Anschlussfragen, Satzanfänge mit der Grammatik und nützliche Wörter.',
+      'Tippe auf <pbtn>Frage schreiben</pbtn>. Du bekommst die Frage (🔊 liest sie vor, <b>Übersetzung zeigen</b> zeigt sie auf Russisch), Anschlussfragen, Satzanfänge mit der Grammatik und nützliche Wörter. Mit einem Grammatikthema öffnet <b>📘 Die Regel</b> eine Erklärung mit Beispielen.',
     'discuss.step4': '<pbtn>Andere Frage</pbtn> schreibt eine neue mit denselben Einstellungen.',
     'discuss.tip1': '☆ neben einem nützlichen Wort fügt es zu Meine Wörter hinzu.',
 
@@ -712,6 +724,10 @@ export const tutorial = defineMessages({
       'Schreib während der Stunde in die <b>Notizen zur Stunde</b>: neue Wörter als „Wort — перевод“, Fehler, Hausaufgaben. <btn>⏱ Uhrzeit</btn> markiert, wann etwas vorkam.',
     'call.step4':
       'Nach der Stunde legt <btn>Als Leçon 8 zum Google-Dokument hinzufügen</btn> die Notizen als neue Lektion ins Dokument, bereit für Übungen.',
+    'call.step5':
+      '<pbtn>Tafel öffnen</pbtn> unter den Notizen: schreiben, zeichnen, Bilder einfügen. Teile deinen Bildschirm im Anruf, damit die Schülerin oder der Schüler sie sieht. <b>Vollbild</b> und <b>Als Bild speichern</b> stehen darüber.',
+    'call.tip3':
+      '<btn>Nebeneinander (halber Bildschirm)</btn> öffnet Meet auf der rechten Bildschirmhälfte, neben der App.',
     'call.tip1':
       'Die Notizen werden auf diesem Gerät für jeden Tag gespeichert; wenn du die Seite schließt, geht nichts verloren.',
     'call.tip2':

@@ -8,6 +8,7 @@ import { lessonPath } from '../lib/sections';
 import { load, remove, save } from '../lib/storage';
 import type { Lesson } from '../lib/types';
 import AddToDoc, { type DocTarget } from './AddToDoc';
+import LessonBoard from './LessonBoard';
 import PageHead from './PageHead';
 import Speak from './Speak';
 import ZoomCall from './ZoomCall';
@@ -48,6 +49,13 @@ function CallPanel({ docText, zoomReady }: { docText: string; zoomReady: boolean
             onClick={() => setBlocked(!openCallWindow(link.url))}
           >
             {t('openMeet')}
+          </button>
+          <button
+            type="button"
+            className="btn"
+            onClick={() => setBlocked(!openCallWindow(link.url, 'half'))}
+          >
+            {t('sideBySide')}
           </button>
           {newTab(t('openInTab'))}
         </div>
@@ -252,6 +260,7 @@ export default function LessonMode({
         </div>
         <LessonNotes docId={docId} target={target} />
       </div>
+      <LessonBoard storageKey={`board:${docId}:${today()}`} />
     </>
   );
 }

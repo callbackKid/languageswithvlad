@@ -12,6 +12,17 @@ export const call = defineMessages({
     meetExplain:
       'Google Meet can’t run inside other websites, so it opens as a small window at the side of the screen. Keep it next to this page.',
     openMeet: 'Open the call in a small window',
+    sideBySide: 'Side by side (half the screen)',
+    boardTitle: 'Board',
+    boardHint:
+      'Write, draw and paste pictures, like on a whiteboard. Share your screen in the call so the student sees it. Saved on this device for each day.',
+    openBoard: 'Open the board',
+    loadingBoard: 'Loading the board…',
+    fullScreen: 'Full screen',
+    exitFullScreen: 'Exit full screen',
+    savePicture: 'Save as picture',
+    clearBoard: 'Clear',
+    clearBoardConfirm: 'Clear the whole board?',
     openInTab: 'Open in a new tab',
     popupBlocked:
       'The browser blocked the window. Allow pop-ups for this site, or open the call in a new tab.',
@@ -52,6 +63,17 @@ export const call = defineMessages({
     meetExplain:
       'Google Meet нельзя встроить в другие сайты, поэтому он открывается маленьким окном сбоку экрана. Держите его рядом с этой страницей.',
     openMeet: 'Открыть звонок в маленьком окне',
+    sideBySide: 'Рядом (половина экрана)',
+    boardTitle: 'Доска',
+    boardHint:
+      'Пишите, рисуйте и вставляйте картинки, как на доске. Покажите экран в звонке, чтобы ученик её видел. Сохраняется на этом устройстве отдельно на каждый день.',
+    openBoard: 'Открыть доску',
+    loadingBoard: 'Загружаю доску…',
+    fullScreen: 'На весь экран',
+    exitFullScreen: 'Выйти из полноэкранного режима',
+    savePicture: 'Сохранить картинкой',
+    clearBoard: 'Очистить',
+    clearBoardConfirm: 'Очистить всю доску?',
     openInTab: 'Открыть в новой вкладке',
     popupBlocked:
       'Браузер заблокировал окно. Разрешите всплывающие окна для этого сайта или откройте звонок в новой вкладке.',
@@ -89,6 +111,17 @@ export const call = defineMessages({
     meetExplain:
       'Google Meet ne peut pas s’afficher dans d’autres sites : il s’ouvre donc dans une petite fenêtre sur le côté de l’écran. Gardez-la à côté de cette page.',
     openMeet: 'Ouvrir l’appel dans une petite fenêtre',
+    sideBySide: 'Côte à côte (moitié de l’écran)',
+    boardTitle: 'Tableau',
+    boardHint:
+      'Écrivez, dessinez et collez des images, comme sur un tableau blanc. Partagez votre écran dans l’appel pour que l’élève le voie. Enregistré sur cet appareil pour chaque jour.',
+    openBoard: 'Ouvrir le tableau',
+    loadingBoard: 'Chargement du tableau…',
+    fullScreen: 'Plein écran',
+    exitFullScreen: 'Quitter le plein écran',
+    savePicture: 'Enregistrer en image',
+    clearBoard: 'Effacer',
+    clearBoardConfirm: 'Effacer tout le tableau ?',
     openInTab: 'Ouvrir dans un nouvel onglet',
     popupBlocked:
       'Le navigateur a bloqué la fenêtre. Autorisez les fenêtres pop-up pour ce site, ou ouvrez l’appel dans un nouvel onglet.',
@@ -127,6 +160,17 @@ export const call = defineMessages({
     meetExplain:
       'Google Meet lässt sich nicht in andere Websites einbetten, deshalb öffnet es sich als kleines Fenster am Bildschirmrand. Behalte es neben dieser Seite.',
     openMeet: 'Anruf in kleinem Fenster öffnen',
+    sideBySide: 'Nebeneinander (halber Bildschirm)',
+    boardTitle: 'Tafel',
+    boardHint:
+      'Schreib, zeichne und füge Bilder ein, wie an einem Whiteboard. Teile deinen Bildschirm im Anruf, damit die Schülerin oder der Schüler sie sieht. Wird auf diesem Gerät für jeden Tag gespeichert.',
+    openBoard: 'Tafel öffnen',
+    loadingBoard: 'Tafel wird geladen…',
+    fullScreen: 'Vollbild',
+    exitFullScreen: 'Vollbild verlassen',
+    savePicture: 'Als Bild speichern',
+    clearBoard: 'Leeren',
+    clearBoardConfirm: 'Die ganze Tafel leeren?',
     openInTab: 'In neuem Tab öffnen',
     popupBlocked:
       'Der Browser hat das Fenster blockiert. Erlaube Pop-ups für diese Seite oder öffne den Anruf in einem neuen Tab.',

@@ -105,4 +105,14 @@ export interface Discussion {
   /** sentence beginnings that use the grammar topic */
   starters: string[];
   grammarTip: string;
+  /** the grammar point explained, when one was chosen; in the interface language */
+  grammarRule: GrammarRule | null;
+}
+export interface GrammarRule {
+  title: string;
+  summary: string;
+  formation: string[];
+  usage: string[];
+  examples: { text: string; translation: string }[];
+  pitfall: string;
 }

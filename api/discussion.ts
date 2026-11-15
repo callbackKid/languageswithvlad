@@ -17,11 +17,14 @@ export default async function handler(request: VercelRequest, response: VercelRe
       level,
       topic: text(request.body?.topic, 120),
       grammar: text(request.body?.grammar, 120),
+      explainIn: ['en', 'ru', 'fr', 'de'].includes(request.body?.explainIn)
+        ? request.body.explainIn
+        : 'ru',
     });
     // a new question every time, so no caching
     response
       .status(200)
-      .json(await claudeJSON(prompt, { model: MODEL, maxTokens: 3000, cache: false }));
+      .json(await claudeJSON(prompt, { model: MODEL, maxTokens: 5000, cache: false }));
   } catch (error) {
     fail(response, error);
   }
