@@ -34,9 +34,11 @@ export default function NextLessonBadge({ text }: { text: string }) {
       ? t('today')
       : days === 1
         ? t('tomorrow')
-        : new Intl.DateTimeFormat(locale, { weekday: 'short', day: 'numeric', month: 'short' }).format(
-            lesson.start
-          );
+        : new Intl.DateTimeFormat(locale, {
+            weekday: 'short',
+            day: 'numeric',
+            month: 'short',
+          }).format(lesson.start);
   // the time as written, in the city it was given in
   const writtenTime =
     lesson.zone && lesson.zoneLabel

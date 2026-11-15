@@ -1,6 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { serviceAccount } from './_lib/google.js';
 import { telegramConfigured } from './_lib/telegram.js';
+import { zoomConfigured } from './_lib/zoom.js';
 
 /** Lets the app know whether it should ask students for an access code, and what the server can do. */
 export default function handler(_request: VercelRequest, response: VercelResponse) {
@@ -11,5 +12,7 @@ export default function handler(_request: VercelRequest, response: VercelRespons
     docWriter: serviceAccount()?.client_email ?? null,
     // whether bug reports and suggestions can be sent to the teacher's Telegram
     feedback: telegramConfigured(),
+    // whether Zoom calls can run inside the app
+    zoom: zoomConfigured(),
   });
 }

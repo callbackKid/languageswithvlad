@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { recordWord } from '../lib/progress';
-import { LANGUAGE_NAMES, type Word } from '../lib/types';
+import type { Word } from '../lib/types';
+import { useTranslation } from '../i18n/core';
+import { learning } from '../i18n/messages/common';
+import { exercises } from '../i18n/messages/exercises';
 import { shuffle } from '../lib/util';
 import ExHead from './ExHead';
 
@@ -34,6 +37,8 @@ export default function Match({
   onClose: () => void;
   onRestart: () => void;
 }) {
+  const { t } = useTranslation(exercises);
+  const names = useTranslation(learning);
   const [pool, setPool] = useState(() => shuffle(pairs));
   const [{ round, left, right }, setRound] = useState(() => makeRound(pool));
   const [done, setDone] = useState<Set<string>>(new Set());
@@ -46,7 +51,7 @@ export default function Match({
   const byId = Object.fromEntries(round.map((pair) => [pair.id, pair]));
   const roundDone = round.length > 0 && done.size === round.length;
   const rest = pool.slice(ROUND);
-  const title = mode === 'syn' ? 'Synonyms & antonyms' : 'Match translations';
+  const title = mode === 'syn' ? t('synonyms') : t('matchTranslations');
 
   function choose(side: 'L' | 'R', id: string) {
     if (done.has(id)) return;
@@ -97,7 +102,9 @@ export default function Match({
       >
         {side === 'L' ? pair.a : pair.b}
         {side === 'R' && isDone && mode === 'syn' && (
-          <span className="kind">{pair.kind === 'synonym' ? '= synonym' : '≠ antonym'}</span>
+          <span className="kind">
+            {pair.kind === 'synonym' ? t('synonymTag') : t('antonymTag')}
+          </span>
         )}
       </button>
     );
@@ -113,13 +120,11 @@ export default function Match({
     return (
       <div className="ex">
         <ExHead title={title} onClose={onClose} />
-        <p className="score">
-          All {pairs.length} pairs matched with {mistakes} mistake{mistakes === 1 ? '' : 's'}.
-        </p>
+        <p className="score">{t('pairsDone', { count: pairs.length, mistakes })}</p>
         {grid}
         <div className="row-actions">
           <button className="btn primary" onClick={onRestart}>
-            Play again
+            {t('playAgain')}
           </button>
         </div>
       </div>
@@ -133,15 +138,13 @@ export default function Match({
         </span>
       </ExHead>
       <p className="ru-line">
-        {mode === 'syn'
-          ? 'Connect each word with its synonym or antonym.'
-          : `Tap a${language === 'en' ? 'n' : ''} ${LANGUAGE_NAMES[language]} word, then its translation.`}
+        {mode === 'syn' ? t('connectPairs') : names.t(`tapWord.${language}`)}
       </p>
       {grid}
       {roundDone && (
         <div className="row-actions">
           <button className="btn primary" onClick={nextRound}>
-            Next pairs
+            {t('nextPairs')}
           </button>
         </div>
       )}

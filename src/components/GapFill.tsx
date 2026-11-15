@@ -4,6 +4,9 @@ import { normGaps } from '../lib/parse';
 import { recordWord } from '../lib/progress';
 import type { GapItem, Word } from '../lib/types';
 import { shuffle } from '../lib/util';
+import { useTranslation } from '../i18n/core';
+import { common } from '../i18n/messages/common';
+import { exercises } from '../i18n/messages/exercises';
 import ExHead from './ExHead';
 import WaitingFact from './WaitingFact';
 
@@ -16,6 +19,8 @@ export default function GapFill({
   onClose: () => void;
   onRestart: () => void;
 }) {
+  const { t, rich } = useTranslation(exercises);
+  const commonText = useTranslation(common);
   const language = words[0]?.language ?? 'fr';
   const [items, setItems] = useState<GapItem[] | null>(null);
   const [error, setError] = useState('');
@@ -36,25 +41,22 @@ export default function GapFill({
       })
       .catch((failure) => {
         if (alive)
-          setError(
-            failure instanceof ApiError
-              ? failure.message
-              : 'The answer couldn’t be read. Try again.'
-          );
+          setError(failure instanceof ApiError ? failure.message : commonText.t('unreadable'));
       });
     return () => {
       alive = false;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- the message is read when it fails
   }, [words, language]);
 
   if (error)
     return (
       <div className="ex">
-        <ExHead title="Fill the gap" onClose={onClose} />
+        <ExHead title={t('fillGap')} onClose={onClose} />
         <div className="note err">
           <p>{error}</p>
           <button className="btn" onClick={onRestart}>
-            Try again
+            {commonText.t('tryAgain')}
           </button>
         </div>
       </div>
@@ -62,8 +64,8 @@ export default function GapFill({
   if (!items)
     return (
       <div className="ex">
-        <ExHead title="Fill the gap" onClose={onClose} />
-        <WaitingFact language={language}>Writing sentences with your words…</WaitingFact>
+        <ExHead title={t('fillGap')} onClose={onClose} />
+        <WaitingFact language={language}>{t('writingSentences')}</WaitingFact>
       </div>
     );
   const item = items[index];
@@ -71,13 +73,11 @@ export default function GapFill({
   if (!item)
     return (
       <div className="ex">
-        <ExHead title="Fill the gap" onClose={onClose} />
-        <p className="score">
-          {score} of {items.length} right.
-        </p>
+        <ExHead title={t('fillGap')} onClose={onClose} />
+        <p className="score">{commonText.t('scoreLine', { score, total: items.length })}</p>
         <div className="row-actions">
           <button className="btn primary" onClick={onRestart}>
-            New sentences
+            {t('newSentences')}
           </button>
         </div>
       </div>
@@ -86,7 +86,7 @@ export default function GapFill({
   const right = picked === item.answer;
   return (
     <div className="ex">
-      <ExHead title="Fill the gap" onClose={onClose}>
+      <ExHead title={t('fillGap')} onClose={onClose}>
         <span className="progress">
           {index + 1} / {items.length}
         </span>
@@ -105,7 +105,7 @@ export default function GapFill({
       ) : (
         <p className="ru-line">
           <button className="btn ghost flush" onClick={() => setShowRu(true)}>
-            Show translation
+            {commonText.t('showTranslation')}
           </button>
         </p>
       )}
@@ -134,13 +134,13 @@ export default function GapFill({
       {picked != null && (
         <>
           <p className={'feedback ' + (right ? 'ok' : 'bad')}>
-            {right ? 'Right.' : <>The answer is “{item.answer}”.</>}
-            {item.word && (
-              <>
-                {' '}
-                From <i lang={language}>{item.word}</i>.
-              </>
-            )}
+            {right ? commonText.t('right') : t('gapAnswer', { answer: item.answer })}
+            {item.word &&
+              rich(
+                'fromWord',
+                { i: (chunk) => <i lang={language}>{chunk}</i> },
+                { word: item.word }
+              )}
           </p>
           <div className="row-actions">
             <button
@@ -152,7 +152,7 @@ export default function GapFill({
                 setShowRu(false);
               }}
             >
-              {index + 1 < items.length ? 'Next sentence' : 'See score'}
+              {index + 1 < items.length ? t('nextSentence') : commonText.t('seeScore')}
             </button>
           </div>
         </>

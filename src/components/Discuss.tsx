@@ -3,7 +3,10 @@ import { api, ApiError } from '../lib/api';
 import type { Bank } from '../lib/bank';
 import { normDiscussion } from '../lib/parse';
 import { load, save } from '../lib/storage';
-import { LANGUAGE_NAMES, LANGUAGES, type Discussion, type Language } from '../lib/types';
+import { LANGUAGES, type Discussion, type Language } from '../lib/types';
+import { useTranslation } from '../i18n/core';
+import { common, learning } from '../i18n/messages/common';
+import { talk } from '../i18n/messages/talk';
 import PageHead from './PageHead';
 import Speak from './Speak';
 import Star from './Star';
@@ -173,6 +176,7 @@ function TopicSelect({
   onChange: (value: string) => void;
   onCustom: (value: string) => void;
 }) {
+  const { t } = useTranslation(talk);
   return (
     <label className="discuss-field">
       <span>{label}</span>
@@ -192,14 +196,14 @@ function TopicSelect({
             ))}
           </optgroup>
         )}
-        <option value={CUSTOM}>Other…</option>
+        <option value={CUSTOM}>{t('other')}</option>
       </select>
       {value === CUSTOM && (
         <input
           type="text"
           value={custom}
           maxLength={120}
-          placeholder="Type your own"
+          placeholder={t('typeYourOwn')}
           onChange={(event) => onCustom(event.target.value)}
         />
       )}
@@ -209,6 +213,9 @@ function TopicSelect({
 
 /** A discussion question for the start of a lesson: chosen level, vocabulary topic and grammar point. */
 export default function Discuss({ bank, ai }: { bank: Bank; ai: boolean }) {
+  const { t } = useTranslation(talk);
+  const commonText = useTranslation(common);
+  const names = useTranslation(learning);
   const [choice, setChoice] = useState<Choice>(() => ({
     ...DEFAULT_CHOICE,
     ...load<Choice>('discuss:choice'),
@@ -237,28 +244,23 @@ export default function Discuss({ bank, ai }: { bank: Bank; ai: boolean }) {
       const next = normDiscussion(
         await api.discussion({ language: choice.language, level: choice.level, topic, grammar })
       );
-      if (!next) throw new ApiError(0, 'empty', 'No question came back. Try again.');
+      if (!next) throw new ApiError(0, 'empty', t('noQuestion'));
       setDiscussion(next);
       save('discuss:last', next);
       setShowTranslation(false);
       setState('idle');
     } catch (failure) {
       setState('error');
-      setError(
-        failure instanceof ApiError ? failure.message : 'Couldn’t write a question. Try again.'
-      );
+      setError(failure instanceof ApiError ? failure.message : t('questionFailed'));
     }
   }
 
   const language = choice.language;
   return (
     <>
-      <PageHead title="Discussion question">
-        A question to start the lesson with: choose the level, a vocabulary topic and the grammar
-        the answer should use.
-      </PageHead>
+      <PageHead title={t('discussTitle')}>{t('discussIntro')}</PageHead>
       {!ai ? (
-        <p className="empty">Writing questions needs Claude, which isn’t set up on this server.</p>
+        <p className="empty">{commonText.t('needsClaude')}</p>
       ) : (
         <>
           <form
@@ -269,7 +271,7 @@ export default function Discuss({ bank, ai }: { bank: Bank; ai: boolean }) {
             }}
           >
             <label className="discuss-field">
-              <span>Language</span>
+              <span>{t('language')}</span>
               <select
                 value={language}
                 onChange={(event) => {
@@ -280,14 +282,14 @@ export default function Discuss({ bank, ai }: { bank: Bank; ai: boolean }) {
               >
                 {LANGUAGES.map((code) => (
                   <option key={code} value={code}>
-                    {LANGUAGE_NAMES[code]}
+                    {names.t(`name.${code}`)}
                   </option>
                 ))}
               </select>
             </label>
             <div className="discuss-field">
-              <span>Level</span>
-              <div className="seg" role="group" aria-label="Level">
+              <span>{t('level')}</span>
+              <div className="seg" role="group" aria-label={t('level')}>
                 {LEVELS.map((level) => (
                   <button
                     key={level}
@@ -301,18 +303,18 @@ export default function Discuss({ bank, ai }: { bank: Bank; ai: boolean }) {
               </div>
             </div>
             <TopicSelect
-              label="Vocabulary topic"
+              label={t('vocabularyTopic')}
               options={TOPICS[language]}
-              extra={{ label: 'From your lessons', options: lessonTopics }}
+              extra={{ label: t('fromLessons'), options: lessonTopics }}
               value={choice.topic}
               custom={choice.customTopic}
               onChange={(value) => update({ topic: value })}
               onCustom={(value) => update({ customTopic: value })}
             />
             <TopicSelect
-              label="Grammar topic"
+              label={t('grammarTopic')}
               options={GRAMMAR[language]}
-              noneLabel="Any"
+              noneLabel={t('any')}
               value={choice.grammar}
               custom={choice.customGrammar}
               onChange={(value) => update({ grammar: value })}
@@ -320,13 +322,13 @@ export default function Discuss({ bank, ai }: { bank: Bank; ai: boolean }) {
             />
             <div className="row-actions">
               <button className="btn primary" type="submit" disabled={state === 'loading'}>
-                {discussion ? 'Another question' : 'Write a question'}
+                {discussion ? t('anotherQuestion') : t('writeQuestion')}
               </button>
             </div>
           </form>
 
           {state === 'loading' && (
-            <WaitingFact language={language}>Writing a question…</WaitingFact>
+            <WaitingFact language={language}>{t('writingQuestion')}</WaitingFact>
           )}
           {state === 'error' && (
             <div className="note err">
@@ -346,14 +348,14 @@ export default function Discuss({ bank, ai }: { bank: Bank; ai: boolean }) {
                   </p>
                 ) : (
                   <button className="btn ghost flush" onClick={() => setShowTranslation(true)}>
-                    Show translation
+                    {commonText.t('showTranslation')}
                   </button>
                 ))}
 
               <div className="discussion-grid">
                 {discussion.followUps.length > 0 && (
                   <section>
-                    <h3>To keep it going</h3>
+                    <h3>{t('keepGoing')}</h3>
                     <ul lang={language}>
                       {discussion.followUps.map((followUp) => (
                         <li key={followUp}>{followUp}</li>
@@ -363,7 +365,7 @@ export default function Discuss({ bank, ai }: { bank: Bank; ai: boolean }) {
                 )}
                 {discussion.starters.length > 0 && (
                   <section>
-                    <h3>Start your answer with…</h3>
+                    <h3>{t('startWith')}</h3>
                     <ul className="starters" lang={language}>
                       {discussion.starters.map((starter) => (
                         <li key={starter}>{starter}</li>
@@ -380,7 +382,7 @@ export default function Discuss({ bank, ai }: { bank: Bank; ai: boolean }) {
 
               {discussion.vocabulary.length > 0 && (
                 <section>
-                  <h3>Useful words</h3>
+                  <h3>{t('usefulWords')}</h3>
                   <ul className="discussion-words">
                     {discussion.vocabulary.map((item) => (
                       <li key={item.word}>

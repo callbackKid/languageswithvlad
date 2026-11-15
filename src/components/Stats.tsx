@@ -61,7 +61,11 @@ function RankList({ title, rows }: { title: string; rows: Row[] }) {
         {rows.map((row) => (
           <li key={row.id}>
             <span className="rank-name">{row.name}</span>
-            <Meter value={row.right} max={row.total} label={t('rightAnswersOf', { name: row.name })} />
+            <Meter
+              value={row.right}
+              max={row.total}
+              label={t('rightAnswersOf', { name: row.name })}
+            />
             <span className="rank-val">
               {percent(row.right, row.total)}%
               <span className="rank-n">{t('ofTotal', { count: row.total })}</span>

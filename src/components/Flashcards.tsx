@@ -2,6 +2,8 @@ import { useCallback, useEffect, useState } from 'react';
 import { recordWord } from '../lib/progress';
 import type { Word } from '../lib/types';
 import { shuffle } from '../lib/util';
+import { useTranslation } from '../i18n/core';
+import { exercises } from '../i18n/messages/exercises';
 import ExHead from './ExHead';
 import Speak from './Speak';
 import Transcription from './Transcription';
@@ -15,6 +17,7 @@ export default function Flashcards({
   onClose: () => void;
   onRestart: () => void;
 }) {
+  const { t } = useTranslation(exercises);
   const [deck, setDeck] = useState(() => shuffle(words));
   // "fr" direction means from the language being learned into Russian, whichever language that is
   const language = words[0]?.language ?? 'fr';
@@ -54,7 +57,7 @@ export default function Flashcards({
   }, [deck.length, know, again]);
 
   const directionToggle = (
-    <span className="seg" role="group" aria-label="Direction">
+    <span className="seg" role="group" aria-label={t('direction')}>
       <button
         aria-pressed={direction === 'fr'}
         onClick={() => {
@@ -80,13 +83,13 @@ export default function Flashcards({
   if (!card)
     return (
       <div className="ex">
-        <ExHead title="Flashcards" onClose={onClose}>
+        <ExHead title={t('flashcards')} onClose={onClose}>
           {directionToggle}
         </ExHead>
-        <p className="score">All {words.length} cards done.</p>
+        <p className="score">{t('cardsDone', { count: words.length })}</p>
         <div className="row-actions">
           <button className="btn primary" onClick={onRestart}>
-            Start over
+            {t('startOver')}
           </button>
         </div>
       </div>
@@ -95,16 +98,14 @@ export default function Flashcards({
   const [front, back] = direction === 'fr' ? [card.fr, card.ru] : [card.ru, card.fr];
   return (
     <div className="ex">
-      <ExHead title="Flashcards" onClose={onClose}>
-        <span className="progress">
-          {done} / {words.length} known
-        </span>
+      <ExHead title={t('flashcards')} onClose={onClose}>
+        <span className="progress">{t('known', { done, total: words.length })}</span>
         {directionToggle}
       </ExHead>
       <button
         className="card"
         onClick={() => setFlipped((previous) => !previous)}
-        aria-label="Flip card"
+        aria-label={t('flipCard')}
       >
         <span className="face" lang={direction === 'fr' ? language : 'ru'}>
           {front}
@@ -121,19 +122,19 @@ export default function Flashcards({
             )}
           </span>
         ) : (
-          <span className="sub">Tap to see the answer</span>
+          <span className="sub">{t('tapToSee')}</span>
         )}
       </button>
       <div className="card-actions">
         <Speak text={card.fr} language={language} />
         <button className="btn big" onClick={again}>
-          Again
+          {t('again')}
         </button>
         <button className="btn primary big" onClick={know}>
-          I know it
+          {t('iKnowIt')}
         </button>
       </div>
-      <p className="kbd">Space flips, ← again, → I know it</p>
+      <p className="kbd">{t('keys')}</p>
     </div>
   );
 }

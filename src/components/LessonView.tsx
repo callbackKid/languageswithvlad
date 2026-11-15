@@ -4,17 +4,14 @@ import { analysisKey, readAnalysis } from '../lib/bank';
 import { localParse, normAnalysis } from '../lib/parse';
 import { save } from '../lib/storage';
 import type { Analysis, Lesson } from '../lib/types';
+import { useTranslation } from '../i18n/core';
+import { common } from '../i18n/messages/common';
+import { paper } from '../i18n/messages/paper';
 import WordsTab from './WordsTab';
 import VerbsTab from './VerbsTab';
 import Notes from './Notes';
 import WaitingFact from './WaitingFact';
 
-const longDateFormat = new Intl.DateTimeFormat('fr-FR', {
-  weekday: 'long',
-  day: 'numeric',
-  month: 'long',
-  year: 'numeric',
-});
 type Tab = 'words' | 'verbs' | 'notes' | 'source';
 
 export default function LessonView({
@@ -28,6 +25,8 @@ export default function LessonView({
   ai: boolean;
   onAnalysis?: (lessonKey: string, analysis: Analysis) => void;
 }) {
+  const { t, locale } = useTranslation(paper);
+  const commonText = useTranslation(common);
   const [tab, setTab] = useState<Tab>('words');
   const [analysis, setAnalysis] = useState<Analysis | null>(null);
   const [state, setState] = useState<'loading' | 'ready' | 'error'>('loading');
@@ -64,16 +63,13 @@ export default function LessonView({
       .catch((failure) => {
         if (alive) {
           setState('error');
-          setError(
-            failure instanceof ApiError
-              ? failure.message
-              : 'The answer couldn’t be read. Try again.'
-          );
+          setError(failure instanceof ApiError ? failure.message : commonText.t('unreadable'));
         }
       });
     return () => {
       alive = false;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- the message is read when it fails
   }, [lesson.hash, lesson.key, lesson.body, ai, fresh, onAnalysis]);
 
   // Words carry their lesson so progress and stats can group by lesson.
@@ -99,27 +95,20 @@ export default function LessonView({
 
   let note = null;
   if (state === 'loading')
-    note = (
-      <WaitingFact language={analysis?.language}>
-        Reading this lesson and preparing words, pairs and verbs…
-      </WaitingFact>
-    );
+    note = <WaitingFact language={analysis?.language}>{t('preparing')}</WaitingFact>;
   else if (state === 'error')
     note = (
       <div className="note err">
         <p>{error}</p>
         <button className="btn" onClick={() => setFresh((previous) => previous + 1)}>
-          Try again
+          {commonText.t('tryAgain')}
         </button>
       </div>
     );
   else if (analysis?.local)
     note = (
       <div className="note info">
-        <p>
-          Showing words exactly as written in the notes. Translations, pairs, verbs and sentences
-          need Claude.
-        </p>
+        <p>{t('localOnly')}</p>
       </div>
     );
 
@@ -127,15 +116,22 @@ export default function LessonView({
     <>
       <section className="sheet">
         <h1>{lesson.title || `${lesson.word} ${lesson.n}`}</h1>
-        <p className="date">{longDateFormat.format(lesson.date)}</p>
+        <p className="date">
+          {new Intl.DateTimeFormat(locale, {
+            weekday: 'long',
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+          }).format(lesson.date)}
+        </p>
         {analysis?.topic && <p className="topic">{analysis.topic}</p>}
       </section>
       <section className="panel">
         <div className="tabs" role="tablist">
-          {tabBtn('words', 'Words', analysis?.words.length ?? 0)}
-          {tabBtn('verbs', 'Verbs', analysis?.verbs.length ?? 0)}
-          {tabBtn('notes', 'My notes')}
-          {tabBtn('source', 'Original')}
+          {tabBtn('words', t('words'), analysis?.words.length ?? 0)}
+          {tabBtn('verbs', t('verbs'), analysis?.verbs.length ?? 0)}
+          {tabBtn('notes', t('myNotes'))}
+          {tabBtn('source', t('original'))}
         </div>
         <div className="body">
           {(tab === 'words' || tab === 'verbs') && note}
@@ -152,7 +148,7 @@ export default function LessonView({
             />
           )}
           {tab === 'verbs' && analysis && analysis.language !== 'fr' && (
-            <p className="empty">Verb tables are only available for French lessons for now.</p>
+            <p className="empty">{t('frenchOnlyVerbs')}</p>
           )}
           {tab === 'verbs' && analysis?.language === 'fr' && (
             <VerbsTab

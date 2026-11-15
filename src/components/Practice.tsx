@@ -77,7 +77,8 @@ export default function Practice({ bank, ai }: { bank: Bank; ai: boolean }) {
             aria-selected={tab === 'words'}
             onClick={() => setTab('words')}
           >
-            {t('words')}<span className="count">{words.length}</span>
+            {t('words')}
+            <span className="count">{words.length}</span>
           </button>
           <button
             className="tab"
@@ -85,7 +86,8 @@ export default function Practice({ bank, ai }: { bank: Bank; ai: boolean }) {
             aria-selected={tab === 'verbs'}
             onClick={() => setTab('verbs')}
           >
-            {t('verbs')}<span className="count">{analysis.verbs.length}</span>
+            {t('verbs')}
+            <span className="count">{analysis.verbs.length}</span>
           </button>
         </div>
         <div className="body">

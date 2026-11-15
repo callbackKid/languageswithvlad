@@ -6,6 +6,9 @@ import { asObjectText } from '../lib/parse';
 import { load, save } from '../lib/storage';
 import type { Lesson } from '../lib/types';
 import { hash } from '../lib/util';
+import { useTranslation } from '../i18n/core';
+import { common } from '../i18n/messages/common';
+import { paper } from '../i18n/messages/paper';
 import AddToDoc, { type DocTarget } from './AddToDoc';
 import LessonView from './LessonView';
 import WaitingFact from './WaitingFact';
@@ -13,22 +16,9 @@ import WaitingFact from './WaitingFact';
 /** Where the lesson comes from: photos of handwritten notes, or pages of a textbook PDF. */
 export type PaperSource = 'handwritten' | 'textbook';
 
-const SOURCES: Record<
-  PaperSource,
-  { storageKey: string; keyPrefix: string; name: string; reading: string }
-> = {
-  handwritten: {
-    storageKey: 'handwritten',
-    keyPrefix: 'hw-',
-    name: 'Handwritten notes',
-    reading: 'Reading the handwriting…',
-  },
-  textbook: {
-    storageKey: 'textbook',
-    keyPrefix: 'tb-',
-    name: 'Textbook chapter',
-    reading: 'Reading the pages and writing lesson notes…',
-  },
+const SOURCES: Record<PaperSource, { storageKey: string; keyPrefix: string }> = {
+  handwritten: { storageKey: 'handwritten', keyPrefix: 'hw-' },
+  textbook: { storageKey: 'textbook', keyPrefix: 'tb-' },
 };
 // keep in step with MAX_PAGES in api/transcribe.ts
 const MAX_PAGES = 4;
@@ -42,14 +32,19 @@ interface HandwrittenLesson {
   at: number;
 }
 
-const toLesson = (entry: HandwrittenLesson, position: number, source: PaperSource): Lesson => ({
+const toLesson = (
+  entry: HandwrittenLesson,
+  position: number,
+  source: PaperSource,
+  name: string
+): Lesson => ({
   key: SOURCES[source].keyPrefix + entry.id,
   n: position + 1,
   word: 'Leçon',
   date: new Date(entry.at),
   body: entry.text,
   hash: hash(entry.text),
-  title: entry.title || `${SOURCES[source].name} ${position + 1}`,
+  title: entry.title || `${name} ${position + 1}`,
 });
 
 /** Photos of handwritten notes, or pages of a textbook PDF → text the student can correct → the same words, verbs and exercises as a lesson from the document. */
@@ -62,7 +57,11 @@ export default function HandwrittenNotes({
   target: DocTarget;
   source: PaperSource;
 }) {
-  const { storageKey, name, reading } = SOURCES[source];
+  const { t } = useTranslation(paper);
+  const commonText = useTranslation(common);
+  const { storageKey } = SOURCES[source];
+  const name = t(`name.${source}`);
+  const reading = t(`reading.${source}`);
   const [entries, setEntries] = useState<HandwrittenLesson[]>(
     () => load<HandwrittenLesson[]>(storageKey) || []
   );
@@ -104,7 +103,7 @@ export default function HandwrittenNotes({
       setState('idle');
     } catch {
       setState('error');
-      setError('This PDF couldn’t be opened. Try another file.');
+      setError(t('pdfFailed'));
     }
   }
 
@@ -115,35 +114,31 @@ export default function HandwrittenNotes({
     try {
       const pages = await extractPages(pdf.file, firstPage, lastPage);
       if ('error' in pages) throw new ApiError(0, 'pages', pages.error);
-      addEntry(await api.textbook(pages.data), 'No lesson content was found on these pages.');
+      addEntry(await api.textbook(pages.data), t('noTextbookContent'));
       setPdf(null);
       setState('idle');
     } catch (failure) {
       setState('error');
-      setError(
-        failure instanceof ApiError ? failure.message : 'The pages couldn’t be read. Try again.'
-      );
+      setError(failure instanceof ApiError ? failure.message : t('pagesFailed'));
     }
   }
 
   async function read(files: File[]) {
     if (files.length > MAX_PAGES) {
       setState('error');
-      setError(`Choose at most ${MAX_PAGES} pages at once.`);
+      setError(t('tooManyPages', { count: MAX_PAGES }));
       return;
     }
     setState('loading');
     setError('');
     try {
       const images = await Promise.all(files.map((file) => shrinkImage(file, MAX_SIDE)));
-      addEntry(await api.transcribe(images), 'No handwriting was found in these photos.');
+      addEntry(await api.transcribe(images), t('noHandwriting'));
       setState('idle');
       return;
     } catch (failure) {
       setState('error');
-      setError(
-        failure instanceof ApiError ? failure.message : 'The photos couldn’t be read. Try again.'
-      );
+      setError(failure instanceof ApiError ? failure.message : t('photosFailed'));
     }
   }
 
@@ -155,44 +150,35 @@ export default function HandwrittenNotes({
   }
 
   function remove() {
-    if (!current || !window.confirm(`Delete “${current.title || 'these notes'}”?`)) return;
+    if (
+      !current ||
+      !window.confirm(t('deleteConfirm', { title: current.title || t('theseNotes') }))
+    )
+      return;
     const next = entries.filter((entry) => entry.id !== current.id);
     store(next);
     setCurrentId(next[0]?.id ?? null);
     setDraft(null);
   }
 
-  if (!ai)
-    return (
-      <p className="empty">
-        Reading {source === 'textbook' ? 'textbooks' : 'handwriting'} needs Claude, which isn’t set
-        up on this server.
-      </p>
-    );
+  if (!ai) return <p className="empty">{commonText.t('needsClaude')}</p>;
 
   return (
     <>
       {source === 'textbook' ? (
-        <p className="hint photo-intro">
-          Choose a textbook PDF and the pages of one chapter (up to {MAX_PDF_PAGES}). Claude writes
-          lesson notes from them: words, phrases, grammar and examples. Check them, then practise
-          like any other lesson.
-        </p>
+        <p className="hint photo-intro">{t('textbookIntro', { count: MAX_PDF_PAGES })}</p>
       ) : (
-        <p className="hint photo-intro">
-          Take photos of handwritten lesson notes (up to {MAX_PAGES} pages at once). You can fix
-          anything misread, then practise the words and verbs like any other lesson.
-        </p>
+        <p className="hint photo-intro">{t('handwrittenIntro', { count: MAX_PAGES })}</p>
       )}
       <div className="photo-pick">
         <label className="btn primary">
           {source === 'textbook'
             ? pdf
-              ? 'Another PDF'
-              : 'Choose a PDF'
+              ? t('anotherPdf')
+              : t('choosePdf')
             : entries.length
-              ? 'New notes from photos'
-              : 'Choose or take photos'}
+              ? t('newNotes')
+              : t('choosePhotos')}
           {source === 'textbook' ? (
             <input
               type="file"
@@ -222,7 +208,7 @@ export default function HandwrittenNotes({
         </label>
         {entries.length > 1 && (
           <select
-            aria-label="Saved notes"
+            aria-label={t('savedNotes')}
             value={currentId ?? ''}
             onChange={(event) => {
               setCurrentId(event.target.value);
@@ -246,10 +232,10 @@ export default function HandwrittenNotes({
           }}
         >
           <span className="pdf-name">
-            {pdf.file.name} · {pdf.pageCount} pages
+            {pdf.file.name} · {t('pageCount', { count: pdf.pageCount })}
           </span>
           <label>
-            From page{' '}
+            {t('fromPage')}{' '}
             <input
               type="number"
               min={1}
@@ -259,7 +245,7 @@ export default function HandwrittenNotes({
             />
           </label>
           <label>
-            to{' '}
+            {t('toPage')}{' '}
             <input
               type="number"
               min={1}
@@ -269,13 +255,13 @@ export default function HandwrittenNotes({
             />
           </label>
           <button className="btn primary" type="submit">
-            Read these pages
+            {t('readPages')}
           </button>
         </form>
       )}
       {state === 'loading' && (
         <WaitingFact>
-          {pdf ? reading : source === 'textbook' ? 'Opening the PDF…' : reading}
+          {pdf ? reading : source === 'textbook' ? t('openingPdf') : reading}
         </WaitingFact>
       )}
       {state === 'error' && (
@@ -290,9 +276,7 @@ export default function HandwrittenNotes({
           <section className="panel solo">
             <div className="body">
               <p className="hint">
-                {source === 'textbook'
-                  ? 'Check the notes against the textbook: remove what you don’t need, add what’s missing.'
-                  : 'Check the text against your notes. Words that couldn’t be read are marked [?].'}
+                {source === 'textbook' ? t('checkTextbook') : t('checkHandwriting')}
               </p>
               <textarea
                 className="transcript"
@@ -303,10 +287,10 @@ export default function HandwrittenNotes({
               />
               <div className="row-actions">
                 <button className="btn primary" onClick={saveDraft}>
-                  Prepare lesson
+                  {t('prepareLesson')}
                 </button>
                 <button className="btn ghost" onClick={() => setDraft(null)}>
-                  Cancel
+                  {commonText.t('cancel')}
                 </button>
               </div>
             </div>
@@ -315,10 +299,10 @@ export default function HandwrittenNotes({
           <>
             <div className="row-actions handwritten-actions">
               <button className="btn ghost" onClick={() => setDraft(current.text)}>
-                Edit text
+                {t('editText')}
               </button>
               <button className="btn ghost" onClick={remove}>
-                Delete
+                {t('delete')}
               </button>
             </div>
             <AddToDoc
@@ -328,7 +312,7 @@ export default function HandwrittenNotes({
             />
             <LessonView
               key={current.id + hash(current.text)}
-              lesson={toLesson(current, entries.length - 1 - currentIndex, source)}
+              lesson={toLesson(current, entries.length - 1 - currentIndex, source, name)}
               docId={storageKey}
               ai={ai}
             />

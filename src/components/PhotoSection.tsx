@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { load, save } from '../lib/storage';
+import { useTranslation } from '../i18n/core';
+import { paper } from '../i18n/messages/paper';
 import type { DocTarget } from './AddToDoc';
 import HandwrittenNotes from './HandwrittenNotes';
 import PageHead from './PageHead';
@@ -7,14 +9,11 @@ import PhotoWords from './PhotoWords';
 
 type Mode = 'underlined' | 'handwritten' | 'textbook';
 
-const MODES: { id: Mode; label: string }[] = [
-  { id: 'underlined', label: 'Underlined words' },
-  { id: 'handwritten', label: 'Handwritten notes' },
-  { id: 'textbook', label: 'Textbook PDF' },
-];
+const MODES: Mode[] = ['underlined', 'handwritten', 'textbook'];
 
 /** Everything that starts from paper: underlined words in a book, handwritten lesson notes, or a textbook chapter. */
 export default function PhotoSection({ ai, target }: { ai: boolean; target: DocTarget }) {
+  const { t } = useTranslation(paper);
   const [mode, setMode] = useState<Mode>(() => load<Mode>('photo:mode') || 'underlined');
   const choose = (next: Mode) => {
     setMode(next);
@@ -22,11 +21,11 @@ export default function PhotoSection({ ai, target }: { ai: boolean; target: DocT
   };
   return (
     <>
-      <PageHead title="From paper" />
-      <div className="seg photo-mode" role="group" aria-label="What to read">
+      <PageHead title={t('fromPaper')} />
+      <div className="seg photo-mode" role="group" aria-label={t('whatToRead')}>
         {MODES.map((entry) => (
-          <button key={entry.id} aria-pressed={mode === entry.id} onClick={() => choose(entry.id)}>
-            {entry.label}
+          <button key={entry} aria-pressed={mode === entry} onClick={() => choose(entry)}>
+            {t(`mode.${entry}`)}
           </button>
         ))}
       </div>

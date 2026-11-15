@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState, type ClipboardEvent, type DragEvent } from 'react';
 import { api, ApiError, type FeedbackKind } from '../lib/api';
 import { shrinkImage, type ImagePayload } from '../lib/image';
+import { useTranslation } from '../i18n/core';
+import { common } from '../i18n/messages/common';
+import { talk } from '../i18n/messages/talk';
 import { load, save } from '../lib/storage';
 
 const MAX_PICTURES = 3;
@@ -8,19 +11,7 @@ const MAX_PICTURES = 3;
 const MAX_SIDE = 1600;
 const DRAFT_KEY = 'feedback:draft';
 
-const KINDS: { id: FeedbackKind; label: string; placeholder: string }[] = [
-  {
-    id: 'bug',
-    label: '🐞 Something’s broken',
-    placeholder: 'What did you do, what happened, and what did you expect?',
-  },
-  {
-    id: 'idea',
-    label: '💡 Idea',
-    placeholder: 'What would you like to change or add?',
-  },
-  { id: 'other', label: '💬 Something else', placeholder: 'Write anything.' },
-];
+const KINDS: FeedbackKind[] = ['bug', 'idea', 'other'];
 
 interface Draft {
   kind: FeedbackKind;
@@ -41,6 +32,8 @@ function browserLine(): string {
 
 /** A "Feedback" button that opens a form: report a bug, suggest a change or write anything, with screenshots. Goes to the teacher's Telegram. */
 export default function Feedback({ docTitle }: { docTitle: string }) {
+  const { t } = useTranslation(talk);
+  const { t: tc } = useTranslation(common);
   const dialog = useRef<HTMLDialogElement>(null);
   const [draft, setDraft] = useState<Draft>(() => ({ ...EMPTY_DRAFT, ...load<Draft>(DRAFT_KEY) }));
   const [pictures, setPictures] = useState<Picture[]>([]);
@@ -64,7 +57,7 @@ export default function Feedback({ docTitle }: { docTitle: string }) {
     const room = MAX_PICTURES - pictures.length;
     if (!images.length) return;
     if (room <= 0) {
-      setError(`You can attach up to ${MAX_PICTURES} pictures.`);
+      setError(t('tooManyPictures', { count: MAX_PICTURES }));
       return;
     }
     setError('');
@@ -77,7 +70,7 @@ export default function Feedback({ docTitle }: { docTitle: string }) {
       );
       setPictures((previous) => [...previous, ...added].slice(0, MAX_PICTURES));
     } catch {
-      setError('That picture couldn’t be opened. Try a JPEG or PNG.');
+      setError(t('pictureFailed'));
     }
   }
 
@@ -116,7 +109,7 @@ export default function Feedback({ docTitle }: { docTitle: string }) {
       setState('sent');
     } catch (failure) {
       setState('error');
-      setError(failure instanceof ApiError ? failure.message : 'It couldn’t be sent. Try again.');
+      setError(failure instanceof ApiError ? failure.message : t('sendFailed'));
     }
   }
 
@@ -133,12 +126,10 @@ export default function Feedback({ docTitle }: { docTitle: string }) {
     void addFiles([...event.dataTransfer.files]);
   };
 
-  const kind = KINDS.find((entry) => entry.id === draft.kind) ?? KINDS[0];
-
   return (
     <>
       <button type="button" className="btn ghost" onClick={open}>
-        Feedback
+        {t('feedback')}
       </button>
       <dialog
         ref={dialog}
@@ -154,14 +145,14 @@ export default function Feedback({ docTitle }: { docTitle: string }) {
       >
         {state === 'sent' ? (
           <div className="report-body">
-            <h2 id="report-title">Thank you!</h2>
-            <p>Your message has been sent to the teacher.</p>
+            <h2 id="report-title">{t('thanks')}</h2>
+            <p>{t('sent')}</p>
             <div className="row-actions">
               <button type="button" className="btn primary" onClick={close}>
-                Close
+                {tc('close')}
               </button>
               <button type="button" className="btn ghost" onClick={() => setState('idle')}>
-                Write another
+                {t('writeAnother')}
               </button>
             </div>
           </div>
@@ -173,46 +164,44 @@ export default function Feedback({ docTitle }: { docTitle: string }) {
               void send();
             }}
           >
-            <h2 id="report-title">Feedback</h2>
-            <p className="hint">
-              Found a bug, have an idea, or want to say something? It goes straight to the teacher.
-            </p>
+            <h2 id="report-title">{t('feedback')}</h2>
+            <p className="hint">{t('feedbackIntro')}</p>
 
-            <div className="seg report-kinds" role="group" aria-label="What is it about">
+            <div className="seg report-kinds" role="group" aria-label={t('whatAbout')}>
               {KINDS.map((entry) => (
                 <button
-                  key={entry.id}
+                  key={entry}
                   type="button"
-                  aria-pressed={draft.kind === entry.id}
-                  onClick={() => update({ kind: entry.id })}
+                  aria-pressed={draft.kind === entry}
+                  onClick={() => update({ kind: entry })}
                 >
-                  {entry.label}
+                  {t(`kind.${entry}`)}
                 </button>
               ))}
             </div>
 
             <label className="report-field">
-              <span>Message</span>
+              <span>{t('message')}</span>
               <textarea
                 required
                 rows={5}
                 maxLength={3000}
                 value={draft.message}
-                placeholder={kind?.placeholder}
+                placeholder={t(`placeholder.${draft.kind}`)}
                 onChange={(event) => update({ message: event.target.value })}
               />
             </label>
 
             <div className="report-field">
-              <span>Pictures (optional)</span>
+              <span>{t('pictures')}</span>
               <div className="report-pictures">
                 {pictures.map((picture, index) => (
                   <figure key={picture.preview}>
-                    <img src={picture.preview} alt={`Attached picture ${index + 1}`} />
+                    <img src={picture.preview} alt={t('attachedPicture', { count: index + 1 })} />
                     <button
                       type="button"
                       className="report-remove"
-                      aria-label={`Remove picture ${index + 1}`}
+                      aria-label={t('removePicture', { count: index + 1 })}
                       onClick={() => removePicture(index)}
                     >
                       ×
@@ -221,7 +210,7 @@ export default function Feedback({ docTitle }: { docTitle: string }) {
                 ))}
                 {pictures.length < MAX_PICTURES && (
                   <label className="btn report-add">
-                    + Add a picture
+                    {t('addPicture')}
                     <input
                       type="file"
                       accept="image/*"
@@ -235,25 +224,21 @@ export default function Feedback({ docTitle }: { docTitle: string }) {
                   </label>
                 )}
               </div>
-              <small className="hint">
-                Up to {MAX_PICTURES}. You can also paste a screenshot (Ctrl+V / ⌘V) or drop it here.
-              </small>
+              <small className="hint">{t('picturesHint', { count: MAX_PICTURES })}</small>
             </div>
 
             <label className="report-field">
-              <span>Your name or how to reach you (optional)</span>
+              <span>{t('contact')}</span>
               <input
                 type="text"
                 maxLength={200}
                 value={draft.contact}
-                placeholder="Anna, @anna_tg or anna@mail.com"
+                placeholder={t('contactPlaceholder')}
                 onChange={(event) => update({ contact: event.target.value })}
               />
             </label>
 
-            <p className="hint report-privacy">
-              The page you’re on and your browser are added, so the problem is easier to find.
-            </p>
+            <p className="hint report-privacy">{t('privacy')}</p>
 
             {error && (
               <div className="note err" role="alert">
@@ -267,10 +252,10 @@ export default function Feedback({ docTitle }: { docTitle: string }) {
                 className="btn primary"
                 disabled={state === 'sending' || !draft.message.trim()}
               >
-                {state === 'sending' ? 'Sending…' : 'Send'}
+                {state === 'sending' ? t('sending') : t('send')}
               </button>
               <button type="button" className="btn ghost" onClick={close}>
-                Cancel
+                {tc('cancel')}
               </button>
             </div>
           </form>

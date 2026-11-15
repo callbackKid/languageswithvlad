@@ -64,9 +64,7 @@ export default function Home({ bank }: { bank: Bank }) {
       {bank.words.length ? (
         <WordQuiz title={t('randomExercises')} make={make} />
       ) : (
-        !bank.pending && (
-          <p className="empty">{t('noWordsYet')}</p>
-        )
+        !bank.pending && <p className="empty">{t('noWordsYet')}</p>
       )}
     </>
   );

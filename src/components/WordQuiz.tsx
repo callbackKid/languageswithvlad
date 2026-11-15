@@ -3,7 +3,9 @@ import { grade } from '../lib/grade';
 import { recordForm, recordWord } from '../lib/progress';
 import { speak } from '../lib/speech';
 import type { QItem } from '../lib/quiz';
-import { LANGUAGE_NAMES } from '../lib/types';
+import { useTranslation } from '../i18n/core';
+import { common, learning } from '../i18n/messages/common';
+import { exercises } from '../i18n/messages/exercises';
 import ExHead from './ExHead';
 import Speak from './Speak';
 import Transcription from './Transcription';
@@ -33,6 +35,9 @@ export default function WordQuiz({
   closeLabel?: string;
   empty?: string;
 }) {
+  const { t: tx } = useTranslation(exercises);
+  const { t, rich } = useTranslation(common);
+  const names = useTranslation(learning);
   const [questions, setQuestions] = useState(make);
   const [index, setIndex] = useState(0);
   const [typed, setTyped] = useState('');
@@ -83,18 +88,15 @@ export default function WordQuiz({
     </div>
   );
 
-  if (!questions.length)
-    return shell(<p className="empty">{empty || 'Nothing to practise yet.'}</p>);
+  if (!questions.length) return shell(<p className="empty">{empty || tx('nothingToPractise')}</p>);
   // past the last question: the round is over
   if (!current)
     return shell(
       <>
-        <p className="score">
-          {score} of {questions.length} right.
-        </p>
+        <p className="score">{t('scoreLine', { score, total: questions.length })}</p>
         <div className="row-actions">
           <button className="btn primary" autoFocus onClick={restart}>
-            Next round
+            {tx('nextRound')}
           </button>
         </div>
       </>
@@ -136,7 +138,7 @@ export default function WordQuiz({
     <>
       {result === 'ok' && (
         <p className="feedback ok">
-          Right.
+          {t('right')}
           {question.kind === 'listen' && (
             <>
               {' '}
@@ -148,19 +150,23 @@ export default function WordQuiz({
       )}
       {result === 'accent' && (
         <p className="feedback warn">
-          Almost, mind the accents: <b lang={language}>{answer}</b>
+          {rich('almostAccents', { b: (chunk) => <b lang={language}>{chunk}</b> }, { answer })}
           {listen}
         </p>
       )}
       {result === 'article' && (
         <p className="feedback warn">
-          Almost, don’t forget the article: <b lang={language}>{answer}</b>
+          {rich('almostArticle', { b: (chunk) => <b lang={language}>{chunk}</b> }, { answer })}
           {listen}
         </p>
       )}
       {result === 'bad' && (
         <p className="feedback bad">
-          The answer is <b lang={question.kind === 'pick-ru' ? 'ru' : language}>{answer}</b>
+          {rich(
+            'answerIs',
+            { b: (chunk) => <b lang={question.kind === 'pick-ru' ? 'ru' : language}>{chunk}</b> },
+            { answer }
+          )}
           {question.kind !== 'form' && question.kind !== 'pick-ru' && question.word.tr && (
             <>
               {' '}
@@ -177,7 +183,7 @@ export default function WordQuiz({
       )}
       <div className="row-actions">
         <button ref={nextButton} className="btn primary" onClick={next}>
-          {index + 1 < questions.length ? 'Next' : 'See score'}
+          {index + 1 < questions.length ? t('next') : t('seeScore')}
         </button>
       </div>
     </>
@@ -199,9 +205,7 @@ export default function WordQuiz({
           </p>
         )}
         <p className="ru-line">
-          {question.kind === 'pick-ru'
-            ? 'Pick the translation.'
-            : `Pick the ${LANGUAGE_NAMES[language]} word.`}
+          {question.kind === 'pick-ru' ? tx('pickTranslation') : names.t(`pickWord.${language}`)}
         </p>
         <div className="choices">
           {question.choices.map((choice) => {
@@ -242,7 +246,7 @@ export default function WordQuiz({
       {question.kind === 'form' ? (
         <p className="quiz-q">
           <b lang="fr">{question.form.inf}</b>, {question.form.t}
-          {question.form.negative && ', negative'}
+          {question.form.negative && `, ${t('negative')}`}
         </p>
       ) : question.kind === 'listen' ? (
         <>
@@ -252,17 +256,17 @@ export default function WordQuiz({
               className="btn big"
               onClick={() => speak(question.word.fr, language)}
             >
-              🔊 Listen again
+              {tx('listenAgain')}
             </button>
           </p>
-          <p className="ru-line">Write what you hear.</p>
+          <p className="ru-line">{tx('writeWhatYouHear')}</p>
         </>
       ) : (
         <>
           <p className="quiz-word ru" lang="ru">
             {question.word.ru}
           </p>
-          <p className="ru-line">Type it in {LANGUAGE_NAMES[language]}.</p>
+          <p className="ru-line">{names.t(`typeIn.${language}`)}</p>
         </>
       )}
       <form className="quiz-input" onSubmit={check}>
@@ -280,11 +284,11 @@ export default function WordQuiz({
           autoComplete="off"
           autoCapitalize="off"
           spellCheck={false}
-          aria-label="Your answer"
+          aria-label={t('yourAnswer')}
         />
         {!result && (
           <button className="btn primary" type="submit">
-            Check
+            {t('check')}
           </button>
         )}
       </form>

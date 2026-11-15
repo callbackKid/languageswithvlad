@@ -2100,3 +2100,113 @@ a.lesson-link {
 .report-privacy {
   margin: 0;
 }
+
+/* Interface language menu: in the top bar, and at the top of the first screens */
+.language-picker {
+  font-size: 14px;
+  padding: 6px 8px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+}
+.connect-language {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 8px;
+}
+
+/* Lesson mode: the call and the lesson's words on one side, the teacher's notes on the other */
+main.page.wide {
+  max-width: 1240px;
+}
+.lesson-mode {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+  gap: 20px;
+  align-items: start;
+}
+.lesson-mode-side {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}
+.call-card {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 18px 20px;
+  background: var(--bg);
+  min-width: 0;
+}
+.call-card h2 {
+  margin: 0 0 6px;
+  font-size: 17px;
+}
+.call-card .row-actions {
+  margin-top: 12px;
+}
+.call-card .legend {
+  margin-bottom: 0;
+}
+.call-join {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 12px;
+}
+.call-notes-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.call-notes-head h2 {
+  margin: 0 auto 0 0;
+}
+.call-notes textarea.notes {
+  min-height: 420px;
+  margin-top: 4px;
+}
+.call-words {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+  max-height: 340px;
+  overflow-y: auto;
+}
+.call-words li {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--line);
+}
+.call-words .fr {
+  font-family: var(--serif);
+  font-weight: 600;
+}
+.call-words .ru {
+  color: var(--muted);
+  margin-right: auto;
+}
+.zoom-call {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+}
+/* the SDK places its video window itself; this is just where its toolbar mounts */
+.zoom-root {
+  width: 100%;
+  min-height: 60px;
+}
+@media (max-width: 860px) {
+  .lesson-mode {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .call-notes textarea.notes {
+    min-height: 260px;
+  }
+}

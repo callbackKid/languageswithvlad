@@ -8,10 +8,11 @@ export type Section =
   | 'photo'
   | 'discuss'
   | 'document'
-  | 'tutorial';
+  | 'tutorial'
+  | 'call';
 
 /** The label of each section is translated: app.ts, "section.<id>". */
-export const SECTIONS: { id: Section; label: string; path: string }[] = [
+export const SECTIONS: { id: Section; label: string; path: string; inMenu?: false }[] = [
   { id: 'home', label: 'Home', path: '/' },
   { id: 'lessons', label: 'Lessons', path: '/lessons' },
   { id: 'practice', label: 'All lessons', path: '/all-lessons' },
@@ -22,6 +23,8 @@ export const SECTIONS: { id: Section; label: string; path: string }[] = [
   { id: 'discuss', label: 'Discuss', path: '/discuss' },
   { id: 'document', label: 'Document', path: '/document' },
   { id: 'tutorial', label: 'Tutorial', path: '/tutorial' },
+  // lesson mode opens from Join call, not from the menu
+  { id: 'call', label: 'Lesson mode', path: '/call', inMenu: false },
 ];
 
 // /lessons/2026-11-12_7 → the Lessons section and that lesson

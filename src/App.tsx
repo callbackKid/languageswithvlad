@@ -12,6 +12,8 @@ import Connect from './components/Connect';
 import Discuss from './components/Discuss';
 import Feedback from './components/Feedback';
 import LanguagePicker from './components/LanguagePicker';
+import LessonMode from './components/LessonMode';
+import { findCall } from './lib/call';
 import CodeGate from './components/CodeGate';
 import Home from './components/Home';
 import LessonView from './components/LessonView';
@@ -56,6 +58,7 @@ export default function App() {
   const [ai, setAi] = useState(true);
   const [docWriter, setDocWriter] = useState<string | null>(null);
   const [feedback, setFeedback] = useState(false);
+  const [zoomReady, setZoomReady] = useState(false);
   const [docId, setDocId] = useState<string | null>(initialDocId);
   const [doc, setDoc] = useState<DocCache | null>(() =>
     docId ? load<DocCache>('doc:' + docId) : null
@@ -78,6 +81,7 @@ export default function App() {
         setAi(health.ai);
         setDocWriter(health.docWriter ?? null);
         setFeedback(!!health.feedback);
+        setZoomReady(!!health.zoom);
         if (health.needsCode && !load<string>('code')) setNeedsCode(true);
       })
       .catch(() => {
@@ -181,10 +185,13 @@ export default function App() {
       />
     );
 
-  // the newest Google Meet link written anywhere in the document
-  // (meet.google.com/abc-defg-hij, also with extra path parts like /meet/abc-defg-hij or /lookup/…)
-  const meetLinks = doc?.text.match(/https?:\/\/meet\.google\.com(?:\/[\w-]+)+/gi);
-  const meetLink = meetLinks ? meetLinks[meetLinks.length - 1] : null;
+  // the newest Google Meet or Zoom link written anywhere in the document
+  const callLink = doc?.text ? findCall(doc.text) : null;
+  const docTarget = {
+    docId,
+    docWriter,
+    nextLessonNumber: Math.max(0, ...lessons.map((listed) => listed.n)) + 1,
+  };
   const docUrl = `https://docs.google.com/document/d/${encodeURIComponent(docId)}/edit`;
   let status: string;
   if (sync.state === 'loading') status = t('syncing');
@@ -210,8 +217,13 @@ export default function App() {
         </div>
         <div className="top-actions">
           {doc?.text && <NextLessonBadge text={doc.text} />}
-          {meetLink && (
-            <a className="btn" href={meetLink} target="_blank" rel="noopener noreferrer">
+          {callLink && (
+            <a
+              className="btn"
+              href={hrefFor('/call')}
+              aria-current={section === 'call' ? 'page' : undefined}
+              onClick={(event) => followLink(event, '/call')}
+            >
               {t('joinCall')}
             </a>
           )}
@@ -261,7 +273,7 @@ export default function App() {
       ) : (
         <>
           <nav className="sections" aria-label={t('sectionsLabel')}>
-            {SECTIONS.map((entry) => (
+            {SECTIONS.filter((entry) => entry.inMenu !== false).map((entry) => (
               <a
                 key={entry.id}
                 className="section-link"
@@ -286,6 +298,17 @@ export default function App() {
                 })}
               </p>
               <iframe title="Google Doc" src={docUrl} allow="clipboard-read; clipboard-write" />
+            </main>
+          ) : section === 'call' ? (
+            <main className="page wide">
+              <LessonMode
+                docText={doc?.text ?? ''}
+                docId={docId}
+                bank={bank}
+                lessons={lessons}
+                target={docTarget}
+                zoomReady={zoomReady}
+              />
             </main>
           ) : section === 'lessons' ? (
             <div className="layout">
@@ -324,16 +347,7 @@ export default function App() {
               {section === 'stats' && <Stats bank={bank} />}
               {section === 'tutorial' && <Tutorial />}
               {section === 'discuss' && <Discuss bank={bank} ai={ai} />}
-              {section === 'photo' && (
-                <PhotoSection
-                  ai={ai}
-                  target={{
-                    docId,
-                    docWriter,
-                    nextLessonNumber: Math.max(0, ...lessons.map((listed) => listed.n)) + 1,
-                  }}
-                />
-              )}
+              {section === 'photo' && <PhotoSection ai={ai} target={docTarget} />}
             </main>
           )}
         </>

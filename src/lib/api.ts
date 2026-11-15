@@ -89,9 +89,18 @@ function analyzeOnce(body: string, fresh: boolean): Promise<unknown> {
 
 export const api = {
   health: () =>
-    request<{ needsCode: boolean; ai: boolean; docWriter?: string | null; feedback?: boolean }>(
-      '/api/health'
-    ),
+    request<{
+      needsCode: boolean;
+      ai: boolean;
+      docWriter?: string | null;
+      feedback?: boolean;
+      zoom?: boolean;
+    }>('/api/health'),
+  zoomSignature: (meetingNumber: string) =>
+    request<{ signature: string }>('/api/zoom-signature', {
+      method: 'POST',
+      body: JSON.stringify({ meetingNumber }),
+    }),
   feedback: (report: FeedbackReport) =>
     request<{ ok: boolean }>('/api/feedback', { method: 'POST', body: JSON.stringify(report) }),
   append: (docId: string, text: string) =>

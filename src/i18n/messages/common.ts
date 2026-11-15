@@ -55,7 +55,7 @@ export const common = defineMessages({
     docUnreachable: 'Google Docs didn’t answer. Try again in a moment.',
     somethingWrong: 'Something went wrong. Try again.',
     tooMany: 'Too many requests right now. Wait a minute and try again.',
-    busy: 'Claude is busy right now. Try again in a minute.',
+    busy: 'The server is busy right now. Try again in a minute.',
     deliveryFailed: 'The message couldn’t be delivered. Try again later.',
     // adding to the Google Doc
     docWriterMissing:
@@ -127,7 +127,7 @@ export const common = defineMessages({
     docUnreachable: 'Google Docs не отвечает. Попробуйте через минуту.',
     somethingWrong: 'Что-то пошло не так. Попробуйте ещё раз.',
     tooMany: 'Слишком много запросов. Подождите минуту и попробуйте снова.',
-    busy: 'Claude сейчас перегружен. Попробуйте через минуту.',
+    busy: 'Сервер сейчас перегружен. Попробуйте через минуту.',
     deliveryFailed: 'Сообщение не удалось доставить. Попробуйте позже.',
     docWriterMissing:
       'Добавление в Google-документ ещё не настроено на сервере (GOOGLE_SERVICE_ACCOUNT, см. README).',
@@ -191,7 +191,7 @@ export const common = defineMessages({
     docUnreachable: 'Google Docs ne répond pas. Réessayez dans un instant.',
     somethingWrong: 'Une erreur s’est produite. Réessayez.',
     tooMany: 'Trop de demandes pour l’instant. Attendez une minute et réessayez.',
-    busy: 'Claude est occupé pour l’instant. Réessayez dans une minute.',
+    busy: 'Le serveur est occupé pour l’instant. Réessayez dans une minute.',
     deliveryFailed: 'Le message n’a pas pu être envoyé. Réessayez plus tard.',
     docWriterMissing:
       'L’ajout au Google Doc n’est pas encore configuré sur le serveur (GOOGLE_SERVICE_ACCOUNT, voir README).',
@@ -256,7 +256,7 @@ export const common = defineMessages({
     docUnreachable: 'Google Docs antwortet nicht. Versuch es gleich nochmal.',
     somethingWrong: 'Etwas ist schiefgelaufen. Versuch es nochmal.',
     tooMany: 'Gerade zu viele Anfragen. Warte eine Minute und versuch es nochmal.',
-    busy: 'Claude ist gerade ausgelastet. Versuch es in einer Minute nochmal.',
+    busy: 'Der Server ist gerade ausgelastet. Versuch es in einer Minute nochmal.',
     deliveryFailed: 'Die Nachricht konnte nicht zugestellt werden. Versuch es später nochmal.',
     docWriterMissing:
       'Das Hinzufügen zum Google-Dokument ist auf dem Server noch nicht eingerichtet (GOOGLE_SERVICE_ACCOUNT, siehe README).',

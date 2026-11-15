@@ -1,3 +1,5 @@
+import { translator } from '../i18n/core';
+import { paper } from '../i18n/messages/paper';
 /* Cutting pages out of a PDF in the browser, so only the chapter is uploaded: Vercel accepts
    at most 4.5 MB per request and whole textbooks are much larger. pdf-lib is loaded only when
    a PDF is actually opened, so it doesn't slow down the rest of the app. */
@@ -38,9 +40,9 @@ export async function extractPages(
   const { PDFDocument, source } = await loadPdf(file);
   const pageCount = source.getPageCount();
   if (firstPage < 1 || lastPage > pageCount || firstPage > lastPage)
-    return { error: `Choose pages between 1 and ${pageCount}.` };
+    return { error: translator(paper).t('pagesRange', { count: pageCount }) };
   if (lastPage - firstPage + 1 > MAX_PDF_PAGES)
-    return { error: `Choose at most ${MAX_PDF_PAGES} pages at once.` };
+    return { error: translator(paper).t('tooManyPages', { count: MAX_PDF_PAGES }) };
   const chapter = await PDFDocument.create();
   const indexes = Array.from(
     { length: lastPage - firstPage + 1 },
@@ -50,7 +52,7 @@ export async function extractPages(
   const data = toBase64(await chapter.save());
   if (data.length > MAX_BASE64_LENGTH)
     return {
-      error: 'These pages are too large to send (scanned pages are heavy). Choose fewer pages.',
+      error: translator(paper).t('pagesTooLarge'),
     };
   return { data };
 }

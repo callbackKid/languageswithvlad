@@ -8,7 +8,10 @@ import { recordForm } from '../lib/progress';
 import { verbForms, type FormQ } from '../lib/quiz';
 import { save } from '../lib/storage';
 import { TENSES, type Conjugation, type Form, type Tense, type VerbRef } from '../lib/types';
-import { plural, shuffle } from '../lib/util';
+import { shuffle } from '../lib/util';
+import { useTranslation } from '../i18n/core';
+import { common } from '../i18n/messages/common';
+import { exercises } from '../i18n/messages/exercises';
 import ExHead from './ExHead';
 import Speak from './Speak';
 import WaitingFact from './WaitingFact';
@@ -22,6 +25,8 @@ export default function VerbsTab({
   ai: boolean;
   waiting: boolean;
 }) {
+  const { t, rich } = useTranslation(exercises);
+  const commonText = useTranslation(common);
   const [currentVerb, setCurrentVerb] = useState<string | null>(null);
   const [tense, setTense] = useState<Tense>('présent');
   const [negative, setNegative] = useState(false);
@@ -52,7 +57,7 @@ export default function VerbsTab({
     if (!ai) {
       setStatus((previous) => ({
         ...previous,
-        [verb.inf]: 'Conjugation tables need Claude, which isn’t set up on this server.',
+        [verb.inf]: commonText.t('needsClaude'),
       }));
       return;
     }
@@ -69,19 +74,14 @@ export default function VerbsTab({
     } catch (error) {
       setStatus((previous) => ({
         ...previous,
-        [verb.inf]:
-          error instanceof ApiError ? error.message : 'The answer couldn’t be read. Try again.',
+        [verb.inf]: error instanceof ApiError ? error.message : commonText.t('unreadable'),
       }));
     }
   }
 
   if (!verbs.length)
     return waiting ? null : (
-      <p className="empty">
-        {ai
-          ? 'No verbs found in this lesson.'
-          : 'Verb tables need Claude, which isn’t set up on this server.'}
-      </p>
+      <p className="empty">{ai ? t('noVerbs') : commonText.t('needsClaude')}</p>
     );
   const loaded = verbs.filter((verb) => conjugations[verb.inf]);
 
@@ -119,19 +119,17 @@ export default function VerbsTab({
       </div>
       <div className="row-actions quiz-bar">
         <button className="btn" disabled={!loaded.length} onClick={() => setMode('quiz')}>
-          Quick quiz
+          {t('quickQuiz')}
         </button>
         <span className="hint">
-          {loaded.length
-            ? `Uses the ${plural(loaded.length, 'verb')} you’ve opened`
-            : 'Open a verb to add it to the quiz'}
+          {loaded.length ? t('usesVerbs', { count: loaded.length }) : t('openVerbFirst')}
         </span>
       </div>
 
-      {!currentVerb && <p className="empty">Pick a verb to see its conjugation.</p>}
+      {!currentVerb && <p className="empty">{t('pickVerb')}</p>}
       {shownStatus === 'loading' && (
         <WaitingFact>
-          Conjugating <i lang="fr">{currentVerb}</i>…
+          {rich('conjugating', { i: (chunk) => <i lang="fr">{chunk}</i> }, { verb: currentVerb })}
         </WaitingFact>
       )}
       {shownStatus && shownStatus !== 'loading' && (
@@ -151,7 +149,7 @@ export default function VerbsTab({
               }
             }}
           >
-            Try again
+            {commonText.t('tryAgain')}
           </button>
         </div>
       )}
@@ -165,34 +163,36 @@ export default function VerbsTab({
             </span>
           </div>
           <p className="conj-meta">
-            {shownConjugation.pp && (
-              <>
-                Past participle <i lang="fr">{shownConjugation.pp}</i>
-              </>
-            )}
-            {shownConjugation.aux && (
-              <>
-                , passé composé with <i lang="fr">{shownConjugation.aux}</i>
-              </>
-            )}
+            {shownConjugation.pp &&
+              rich(
+                'pastParticiple',
+                { i: (chunk) => <i lang="fr">{chunk}</i> },
+                { pp: shownConjugation.pp }
+              )}
+            {shownConjugation.aux &&
+              rich(
+                'withAux',
+                { i: (chunk) => <i lang="fr">{chunk}</i> },
+                { aux: shownConjugation.aux }
+              )}
             {ai && (
               <>
                 {' '}
                 ·{' '}
                 <button
                   className="btn ghost flush inline"
-                  title="Asks Claude for this table again and replaces the saved one"
+                  title={t('conjugateAgainTitle')}
                   onClick={() => {
                     const verb = verbs.find((candidate) => candidate.inf === currentVerb);
                     if (verb) void open(verb, true);
                   }}
                 >
-                  Conjugate again
+                  {t('conjugateAgain')}
                 </button>
               </>
             )}
           </p>
-          <div className="tense-tabs" role="group" aria-label="Tense">
+          <div className="tense-tabs" role="group" aria-label={t('tense')}>
             {TENSES.map((tenseOption) => (
               <button
                 key={tenseOption}
@@ -204,16 +204,16 @@ export default function VerbsTab({
               </button>
             ))}
           </div>
-          <div className="tense-tabs" role="group" aria-label="Sentence type">
+          <div className="tense-tabs" role="group" aria-label={t('sentenceType')}>
             <button aria-pressed={!negative} onClick={() => setNegative(false)}>
-              affirmative
+              {t('affirmative')}
             </button>
             <button aria-pressed={negative} onClick={() => setNegative(true)}>
-              negative
+              {commonText.t('negative')}
             </button>
           </div>
           {!rows.length ? (
-            <p className="empty">This verb has no {tense}.</p>
+            <p className="empty">{t('noTense', { tense })}</p>
           ) : mode === 'drill' ? (
             <Drill
               key={shownConjugation.inf + tense + negative}
@@ -239,7 +239,7 @@ export default function VerbsTab({
               </table>
               <div className="row-actions">
                 <button className="btn primary" onClick={() => setMode('drill')}>
-                  Practise this tense
+                  {t('practiseTense')}
                 </button>
               </div>
             </>
@@ -263,6 +263,8 @@ function Drill({
   rows: Form[];
   onStop: () => void;
 }) {
+  const { t } = useTranslation(exercises);
+  const commonText = useTranslation(common);
   const [values, setValues] = useState<string[]>(() => rows.map(() => ''));
   const [checked, setChecked] = useState(false);
   const [round, setRound] = useState(0);
@@ -329,7 +331,7 @@ function Drill({
                     <div className="fix bad">{row.f}</div>
                   )}
                   {result === 'accent' && (
-                    <div className="fix accent">Mind the accents: {row.f}</div>
+                    <div className="fix accent">{t('mindAccents', { form: row.f })}</div>
                   )}
                 </td>
               </tr>
@@ -341,7 +343,7 @@ function Drill({
         {checked ? (
           <>
             <span className="score">
-              {score} of {rows.length} right
+              {commonText.t('scoreLine', { score, total: rows.length })}
             </span>
             <button
               type="button"
@@ -352,16 +354,16 @@ function Drill({
                 setRound((previous) => previous + 1);
               }}
             >
-              Try again
+              {commonText.t('tryAgain')}
             </button>
           </>
         ) : (
           <button type="submit" className="btn primary">
-            Check answers
+            {t('checkAnswers')}
           </button>
         )}
         <button type="button" className="btn ghost" onClick={onStop}>
-          Show table
+          {t('showTable')}
         </button>
       </div>
     </form>
@@ -373,6 +375,8 @@ function makeQuiz(conjugations: Conjugation[]): FormQ[] {
 }
 
 function Quiz({ conjugations, onClose }: { conjugations: Conjugation[]; onClose: () => void }) {
+  const { t } = useTranslation(exercises);
+  const commonText = useTranslation(common);
   const [questions, setQuestions] = useState(() => makeQuiz(conjugations));
   const [index, setIndex] = useState(0);
   const [typed, setTyped] = useState('');
@@ -384,7 +388,7 @@ function Quiz({ conjugations, onClose }: { conjugations: Conjugation[]; onClose:
   }, [index]);
 
   const head = (
-    <ExHead title="Quick quiz" onClose={onClose} closeLabel="Back to verbs">
+    <ExHead title={t('quickQuiz')} onClose={onClose} closeLabel={t('backToVerbs')}>
       <span className="progress">
         {Math.min(index + 1, questions.length)} / {questions.length}
       </span>
@@ -396,9 +400,7 @@ function Quiz({ conjugations, onClose }: { conjugations: Conjugation[]; onClose:
     return (
       <div className="ex">
         {head}
-        <p className="score">
-          {score} of {questions.length} right.
-        </p>
+        <p className="score">{commonText.t('scoreLine', { score, total: questions.length })}</p>
         <div className="row-actions">
           <button
             className="btn primary"
@@ -410,7 +412,7 @@ function Quiz({ conjugations, onClose }: { conjugations: Conjugation[]; onClose:
               setResult(null);
             }}
           >
-            New quiz
+            {t('newQuiz')}
           </button>
         </div>
       </div>
@@ -425,7 +427,7 @@ function Quiz({ conjugations, onClose }: { conjugations: Conjugation[]; onClose:
       {head}
       <p className="quiz-q">
         <b lang="fr">{question.inf}</b>, {question.t}
-        {question.negative && ', negative'}
+        {question.negative && `, ${commonText.t('negative')}`}
       </p>
       <form
         className="quiz-input"
@@ -459,27 +461,29 @@ function Quiz({ conjugations, onClose }: { conjugations: Conjugation[]; onClose:
           autoComplete="off"
           autoCapitalize="off"
           spellCheck={false}
-          aria-label="Your answer"
+          aria-label={commonText.t('yourAnswer')}
         />
         <button className="btn primary" type="submit">
-          {result ? 'Next' : 'Check'}
+          {result ? commonText.t('next') : commonText.t('check')}
         </button>
       </form>
-      {result === 'ok' && <p className="feedback ok">Right.</p>}
+      {result === 'ok' && <p className="feedback ok">{commonText.t('right')}</p>}
       {result === 'accent' && (
         <p className="feedback warn">
-          Almost, mind the accents:{' '}
-          <b lang="fr">
-            {question.p} {question.f}
-          </b>
+          {commonText.rich(
+            'almostAccents',
+            { b: (chunk) => <b lang="fr">{chunk}</b> },
+            { answer: `${question.p} ${question.f}` }
+          )}
         </p>
       )}
       {result === 'bad' && (
         <p className="feedback bad">
-          The answer is{' '}
-          <b lang="fr">
-            {question.p} {question.f}
-          </b>
+          {commonText.rich(
+            'answerIs',
+            { b: (chunk) => <b lang="fr">{chunk}</b> },
+            { answer: `${question.p} ${question.f}` }
+          )}
         </p>
       )}
     </div>

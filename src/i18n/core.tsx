@@ -78,7 +78,9 @@ export function defineMessages<Keys extends string>(
 type Messages<Keys extends string> = Record<UiLanguage, Record<Keys, Message>>;
 
 const pluralRules = new Map<UiLanguage, Intl.PluralRules>();
-function pickForm(message: Message, language: UiLanguage, params?: Params): string {
+function pickForm(message: Message | undefined, language: UiLanguage, params?: Params): string {
+  // a key missing from the dictionaries shows as nothing rather than breaking the page
+  if (message === undefined) return '';
   if (typeof message === 'string') return message;
   const count = Number(params?.count ?? 0);
   let rules = pluralRules.get(language);
@@ -90,7 +92,9 @@ function pickForm(message: Message, language: UiLanguage, params?: Params): stri
 }
 
 const fill = (text: string, params?: Params) =>
-  params ? text.replace(/\{(\w+)\}/g, (whole, name: string) => String(params[name] ?? whole)) : text;
+  params
+    ? text.replace(/\{(\w+)\}/g, (whole, name: string) => String(params[name] ?? whole))
+    : text;
 
 /** A text with <b>tags</b> and {placeholders} turned into React: tags by the renderers, placeholders by values. */
 function richText(
@@ -143,11 +147,7 @@ export function translator<Keys extends string>(
     t: (key, params) => fill(text(key, params), params),
     rich: (key, tags = {}, values = {}) => {
       const count = values.count;
-      return richText(
-        text(key, typeof count === 'number' ? { count } : undefined),
-        tags,
-        values
-      );
+      return richText(text(key, typeof count === 'number' ? { count } : undefined), tags, values);
     },
     language,
     locale: LOCALES[language],

@@ -43,7 +43,9 @@ React + TypeScript + Vite in the browser, small Vercel serverless functions in `
 - **Discuss**: a discussion question for the start of a lesson, for a chosen level, vocabulary topic and grammar point, with follow-up questions, sentence starters and useful words.
 - **Document**: the Google Docs editor inside the app.
 - **Next lesson** date and **Join call** button in the top bar, read from the document.
+- **Lesson mode** (`/call`): the call, the teacher’s notes and the lesson’s words on one screen. Google Meet opens as a small window beside the app (Google doesn’t allow Meet inside other sites); Zoom runs inside the page (optional setup). The notes go into the Google Doc as a new lesson with one button.
 - **Tutorial**: a guide to every section, written for students.
+- **Interface in four languages**: English, Russian, French and German, chosen in the top bar (the browser’s language by default). Word translations stay in Russian.
 
 ## How to write the lesson document
 
@@ -73,6 +75,7 @@ About 10 minutes.
    | `CLAUDE_MODEL`, `CLAUDE_FAST_MODEL`      | no          | Model overrides.                                                        |
    | `GOOGLE_SERVICE_ACCOUNT`                 | no          | Lets the app add lessons to the Google Doc (setup below).               |
    | `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` | no          | Sends students’ bug reports and ideas to your Telegram (setup below).   |
+   | `ZOOM_SDK_KEY`, `ZOOM_SDK_SECRET`        | no          | Runs Zoom calls inside the app, in lesson mode (setup below).           |
 
 5. **Deploy**, then redeploy once after adding variables so the functions pick them up.
 
@@ -107,6 +110,23 @@ With these two variables set, a **Feedback** button appears in the top bar. Stud
 
 Keep the token private: anyone with it can send messages as the bot.
 
+## Optional: Zoom calls inside the app
+
+Google Meet links always open in a small separate window: Google doesn’t let Meet run inside other websites. Zoom can run inside the page with Zoom’s Meeting SDK, which needs a free Zoom developer app:
+
+1. Sign in at [marketplace.zoom.us](https://marketplace.zoom.us) with your Zoom account → **Develop → Build App → General App**.
+2. Under **Features → Embed**, turn on **Meeting SDK**.
+3. Copy the app’s **Client ID** and **Client Secret** (under **App Credentials**).
+4. In Vercel, add `ZOOM_SDK_KEY` (the Client ID) and `ZOOM_SDK_SECRET` (the Client Secret). Redeploy.
+
+Then a Zoom link in the document (`https://…zoom.us/j/12345678901?pwd=…`, with `Passcode: …` next to it if the meeting has one) shows **Join here** in lesson mode. Without these variables, Zoom links simply open in Zoom.
+
+Limits to know:
+
+- The app joins as a **participant**. Start the meeting as host from the Zoom app, or turn on **Allow participants to join before host** for the meeting. Hosting from the app would need a Zoom sign-in (OAuth), which isn’t built yet.
+- Zoom only lets an unpublished developer app join meetings of its **own account**. For students joining your meetings that’s fine; joining other people’s meetings needs Zoom’s app review.
+- The SDK is large (about 1 MB compressed), so it downloads only when someone presses **Join here**.
+
 ## Pages
 
 Every section has its own address, so links can be shared and the browser’s Back button works.
@@ -123,6 +143,7 @@ Every section has its own address, so links can be shared and the browser’s Ba
 | Discuss     | `/discuss`                                                |
 | Document    | `/document`                                               |
 | Tutorial    | `/tutorial`                                               |
+| Lesson mode | `/call` (opened by **Join call**, not in the menu)        |
 
 `vercel.json` sends every address except `/api/…` to the app, so refreshing any page works.
 
@@ -152,6 +173,8 @@ api/                serverless functions (Vercel)
   _lib/claude.ts    calls to Claude, access code check, photo checks
   _lib/google.ts    writing to Google Docs with the service account
   _lib/prompts.ts   every prompt sent to Claude
+  _lib/telegram.ts  sending feedback to the teacher’s Telegram
+  _lib/zoom.ts      signing Zoom Meeting SDK joins
   doc.ts            reads the Google Doc
   analyze.ts        prepares a lesson: words, pairs, verbs
   conjugate.ts      a verb’s tables
@@ -161,10 +184,13 @@ api/                serverless functions (Vercel)
   textbook.ts       a textbook chapter (PDF pages) as lesson notes
   discussion.ts     a discussion question for the start of a lesson
   append.ts         adds a lesson to the Google Doc
+  feedback.ts       bug reports and ideas from students, to Telegram
+  zoom-signature.ts a signature for joining a Zoom call inside the app
   health.ts         what the server is set up for
 src/
   App.tsx           top bar, menu and pages
   components/       one file per page or exercise
+  i18n/             interface languages: core.tsx, and messages/ with every text in en, ru, fr, de
   lib/              logic without UI: parsing, grading, progress, routing, speech
 ```
 

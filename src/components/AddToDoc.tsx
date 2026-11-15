@@ -28,8 +28,7 @@ export default function AddToDoc({ target, lines }: { target: DocTarget; lines: 
   const [state, setState] = useState<'idle' | 'saving' | 'done' | 'error'>('idle');
   const [message, setMessage] = useState('');
 
-  if (!target.docWriter)
-    return <p className="hint">{t('docWriterMissing')}</p>;
+  if (!target.docWriter) return <p className="hint">{t('docWriterMissing')}</p>;
 
   async function add() {
     setState('saving');

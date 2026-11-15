@@ -4,6 +4,9 @@ import { shrinkImage } from '../lib/image';
 import { normPhoto } from '../lib/parse';
 import { load, save } from '../lib/storage';
 import type { PhotoItem, Word } from '../lib/types';
+import { useTranslation } from '../i18n/core';
+import { common } from '../i18n/messages/common';
+import { paper } from '../i18n/messages/paper';
 import AddToDoc, { type DocTarget } from './AddToDoc';
 import Speak from './Speak';
 import Star from './Star';
@@ -38,6 +41,8 @@ function docLine(item: PhotoItem): string {
 }
 
 export default function PhotoWords({ ai, target }: { ai: boolean; target: DocTarget }) {
+  const { t } = useTranslation(paper);
+  const commonText = useTranslation(common);
   const [preview, setPreview] = useState<string | null>(null);
   const [scan, setScan] = useState<LastScan | null>(() => load<LastScan>(LAST_KEY));
   const [state, setState] = useState<'idle' | 'loading' | 'error'>('idle');
@@ -58,25 +63,20 @@ export default function PhotoWords({ ai, target }: { ai: boolean; target: DocTar
       setState('idle');
     } catch (failure) {
       setState('error');
-      setError(
-        failure instanceof ApiError ? failure.message : 'The photo couldn’t be read. Try again.'
-      );
+      setError(failure instanceof ApiError ? failure.message : t('photoFailed'));
     }
   }
 
   return (
     <>
-      <p className="hint photo-intro">
-        Underline words in your book, take a photo of the page, and get a translation, the
-        dictionary form, the tense and a short explanation for each.
-      </p>
+      <p className="hint photo-intro">{t('photoIntro')}</p>
       {!ai ? (
-        <p className="empty">Reading photos needs Claude, which isn’t set up on this server.</p>
+        <p className="empty">{commonText.t('needsClaude')}</p>
       ) : (
         <>
           <div className="photo-pick">
             <label className="btn primary">
-              {scan || preview ? 'Another photo' : 'Choose or take a photo'}
+              {scan || preview ? t('anotherPhoto') : t('choosePhoto')}
               <input
                 type="file"
                 accept="image/*"
@@ -89,9 +89,9 @@ export default function PhotoWords({ ai, target }: { ai: boolean; target: DocTar
                 }}
               />
             </label>
-            {preview && <img className="photo-preview" src={preview} alt="The page you sent" />}
+            {preview && <img className="photo-preview" src={preview} alt={t('pageYouSent')} />}
           </div>
-          {state === 'loading' && <WaitingFact>Reading the underlined words…</WaitingFact>}
+          {state === 'loading' && <WaitingFact>{t('readingUnderlined')}</WaitingFact>}
           {state === 'error' && (
             <div className="note err">
               <p>{error}</p>
@@ -104,11 +104,11 @@ export default function PhotoWords({ ai, target }: { ai: boolean; target: DocTar
                 <table className="photo-table">
                   <thead>
                     <tr>
-                      <th>Underlined</th>
-                      <th>Translation</th>
-                      <th>Form</th>
-                      <th>Explanation</th>
-                      <th aria-label="Actions" />
+                      <th>{t('colUnderlined')}</th>
+                      <th>{t('colTranslation')}</th>
+                      <th>{t('colForm')}</th>
+                      <th>{t('colExplanation')}</th>
+                      <th aria-label={t('colActions')} />
                     </tr>
                   </thead>
                   <tbody>
@@ -143,15 +143,11 @@ export default function PhotoWords({ ai, target }: { ai: boolean; target: DocTar
                     ))}
                   </tbody>
                 </table>
-                <p className="legend">
-                  ☆ adds the word to My words, so it comes back in exercises.
-                </p>
+                <p className="legend">{t('photoStarLegend')}</p>
                 <AddToDoc key={scan.at} target={target} lines={scan.items.map(docLine)} />
               </div>
             ) : (
-              <p className="empty">
-                No underlined words found. Make sure the marks are visible and the page is in focus.
-              </p>
+              <p className="empty">{t('noUnderlined')}</p>
             ))}
         </>
       )}

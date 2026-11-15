@@ -4,6 +4,8 @@ import { buildDictation, buildQuiz, pickWords } from '../lib/quiz';
 import { canSpeak } from '../lib/speech';
 import { downloadText } from '../lib/util';
 import type { Analysis } from '../lib/types';
+import { useTranslation } from '../i18n/core';
+import { exercises } from '../i18n/messages/exercises';
 import Flashcards from './Flashcards';
 import Match, { type MatchPair } from './Match';
 import GapFill from './GapFill';
@@ -31,6 +33,7 @@ export default function WordsTab({
   onRefresh?: () => void;
   hidePairs?: boolean;
 }) {
+  const { t, rich } = useTranslation(exercises);
   // Tracks the words left out, so words that arrive later (more lessons prepared) start picked.
   const [unpicked, setUnpicked] = useState<Set<string>>(() => new Set());
   const [filter, setFilter] = useState('');
@@ -57,7 +60,7 @@ export default function WordsTab({
     return (
       <WordQuiz
         key={run}
-        title="Quiz"
+        title={t('quiz')}
         onClose={close}
         make={() => buildQuiz(pickWords(picked, getProgress(), 10), analysis.words)}
       />
@@ -66,7 +69,7 @@ export default function WordsTab({
     return (
       <WordQuiz
         key={run}
-        title="Dictation"
+        title={t('dictation')}
         onClose={close}
         make={() => buildDictation(pickWords(picked, getProgress(), 10))}
       />
@@ -108,50 +111,50 @@ export default function WordsTab({
     <>
       <div className="ex-bar">
         <button className="btn primary" disabled={picked.length < 1} onClick={() => start('quiz')}>
-          Quiz
+          {t('quiz')}
         </button>
         <button className="btn" disabled={picked.length < 1} onClick={() => start('cards')}>
-          Flashcards
+          {t('flashcards')}
         </button>
         <button className="btn" disabled={picked.length < 2} onClick={() => start('match')}>
-          Match translations
+          {t('matchTranslations')}
         </button>
         {!(hidePairs && !synOk) && (
           <button
             className="btn"
             disabled={!synOk}
-            title={synOk ? undefined : 'No synonym or antonym pairs in this lesson'}
+            title={synOk ? undefined : t('noPairs')}
             onClick={() => start('syn')}
           >
-            Synonyms &amp; antonyms
+            {t('synonyms')}
           </button>
         )}
         <button className="btn" disabled={picked.length < 1 || !ai} onClick={() => start('gap')}>
-          Fill the gap
+          {t('fillGap')}
         </button>
         {canSpeak && (
           <button className="btn" disabled={picked.length < 1} onClick={() => start('dictation')}>
-            Dictation
+            {t('dictation')}
           </button>
         )}
         <span className="hint">
-          {picked.length} of {analysis.words.length} words picked
+          {t('picked', { picked: picked.length, total: analysis.words.length })}
         </span>
       </div>
       <div className="sel-bar">
         <button className="btn ghost" onClick={() => setUnpicked(new Set())}>
-          Pick all
+          {t('pickAll')}
         </button>
         <button
           className="btn ghost"
           onClick={() => setUnpicked(new Set(analysis.words.map((word) => word.fr)))}
         >
-          Clear
+          {t('clear')}
         </button>
         <input
           type="search"
-          placeholder="Filter words"
-          aria-label="Filter words"
+          placeholder={t('filterWords')}
+          aria-label={t('filterWords')}
           value={filter}
           onChange={(event) => setFilter(event.target.value)}
         />
@@ -178,7 +181,7 @@ export default function WordsTab({
                 <span className="ru" lang="ru">
                   {word.ru || '—'}
                   {word.added && (
-                    <span className="added" title="Translation added by Claude">
+                    <span className="added" title={t('addedByClaude')}>
                       {' '}
                       ✱
                     </span>
@@ -191,40 +194,27 @@ export default function WordsTab({
           ))}
         </ul>
       ) : (
-        <p className="empty">
-          {analysis.words.length
-            ? 'No words match that filter.'
-            : 'No vocabulary found in this lesson.'}
-        </p>
+        <p className="empty">{analysis.words.length ? t('noMatch') : t('noVocabulary')}</p>
       )}
       {analysis.words.some((word) => word.added) && (
         <p className="legend">
-          <span className="added">✱</span> translation added by Claude, not in the teacher’s notes
+          {rich('addedLegend', {}, { mark: <span className="added">✱</span> })}
         </p>
       )}
-      {analysis.words.length > 0 && (
-        <p className="legend">
-          ☆ adds a word to My words. Words you miss in exercises are added too, and leave the list
-          after 3 right answers in a row.
-        </p>
-      )}
+      {analysis.words.length > 0 && <p className="legend">{t('starLegend')}</p>}
       <p className="legend legend-actions">
         {picked.length > 0 && (
           <button
             className="btn ghost flush"
             onClick={() => downloadText('words.txt', ankiText(picked))}
-            title="Tab-separated: word, translation, transcription. In Anki: File → Import."
+            title={t('ankiTitle')}
           >
-            Export {picked.length} words for Anki
+            {t('ankiExport', { count: picked.length })}
           </button>
         )}
         {onRefresh && (
-          <button
-            className="btn ghost flush"
-            onClick={onRefresh}
-            title="Reads the lesson with Claude again and replaces the saved words"
-          >
-            Prepare this lesson again
+          <button className="btn ghost flush" onClick={onRefresh} title={t('refreshTitle')}>
+            {t('refresh')}
           </button>
         )}
       </p>

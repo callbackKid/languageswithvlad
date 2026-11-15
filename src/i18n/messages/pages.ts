@@ -44,7 +44,10 @@ export const pages = defineMessages({
     verbs: 'Verbs',
     // Stats
     statsTitle: 'Stats',
-    basedOn: { one: 'Based on {count} answer in exercises.', other: 'Based on {count} answers in exercises.' },
+    basedOn: {
+      one: 'Based on {count} answer in exercises.',
+      other: 'Based on {count} answers in exercises.',
+    },
     wordsLearned: 'Words learned',
     leftToLearn: 'Left to learn',
     rightAnswers: 'Right answers',
@@ -247,8 +250,7 @@ export const pages = defineMessages({
     goalDone: 'Tagesziel erreicht: {count} Antworten',
     goalProgress: 'Heute: {count} von {goal} Antworten',
     randomExercises: 'Gemischte Übungen',
-    noWordsYet:
-      'Noch keine Wörter. Sobald eine Lektion Vokabeln hat, erscheinen hier die Übungen.',
+    noWordsYet: 'Noch keine Wörter. Sobald eine Lektion Vokabeln hat, erscheinen hier die Übungen.',
     myWordsTitle: 'Meine Wörter',
     myWordsIntro: {
       one: '{count} Wort zum Üben. Ein Wort verlässt die Liste nach 3 richtigen Antworten in Folge oder wenn du den ★ entfernst.',
