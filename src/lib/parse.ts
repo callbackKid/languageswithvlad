@@ -1,7 +1,8 @@
+import { notionIdFrom } from './source';
 import type {
-  Discussion,
   Analysis,
   Conjugation,
+  Discussion,
   Form,
   GapItem,
   Lesson,
@@ -10,9 +11,8 @@ import type {
   VerbRef,
   Word,
 } from './types';
-import { TENSES, asLanguage } from './types';
-import { notionIdFrom } from './source';
-import { hash, shuffle, asText } from './util';
+import { asLanguage, TENSES } from './types';
+import { asText, hash, shuffle } from './util';
 
 /** The lessons' source from a pasted link: a Google Docs id, or "notion-<id>" for a Notion page. */
 export function docIdFrom(input: string): string | null {
@@ -42,37 +42,41 @@ export function splitLessons(text: string): Lesson[] {
   const headingPattern =
     /^[ \t]*(\d{1,2})\.(\d{1,2})\.(\d{4})[ \t]+(\d+)[ \t]*(le[çc]on|lesson|lektion)\b[^\n]*$/gim;
   const marks: {
-    i: number;
+    start: number;
     end: number;
-    d: number;
-    mo: number;
-    y: number;
-    n: number;
+    day: number;
+    month: number;
+    year: number;
+    number: number;
     word: Lesson['word'];
   }[] = [];
   let match: RegExpExecArray | null;
-  while ((match = headingPattern.exec(cleaned)))
+  while ((match = headingPattern.exec(cleaned))) {
+    const label = (match[5] ?? '').toLowerCase();
     marks.push({
-      i: match.index,
+      start: match.index,
       end: match.index + match[0].length,
-      d: Number(match[1]),
-      mo: Number(match[2]),
-      y: Number(match[3]),
-      n: Number(match[4]),
-      word: /^lesson$/i.test(match[5] ?? '')
-        ? 'Lesson'
-        : /^lektion$/i.test(match[5] ?? '')
-          ? 'Lektion'
-          : 'Leçon',
+      day: Number(match[1]),
+      month: Number(match[2]),
+      year: Number(match[3]),
+      number: Number(match[4]),
+      word: label === 'lesson' ? 'Lesson' : label === 'lektion' ? 'Lektion' : 'Leçon',
     });
+  }
   const pad = (value: number) => String(value).padStart(2, '0');
+  // the key names the lesson in addresses, saved notes and progress, so it must be unique:
+  // a second lesson with the same date and number gets "-2"
+  const seenKeys = new Map<string, number>();
   return marks.map((mark, index) => {
-    const body = cleaned.slice(mark.end, marks[index + 1]?.i ?? cleaned.length).trim();
+    const body = cleaned.slice(mark.end, marks[index + 1]?.start ?? cleaned.length).trim();
+    const baseKey = `${mark.year}-${pad(mark.month)}-${pad(mark.day)}_${mark.number}`;
+    const repeats = (seenKeys.get(baseKey) ?? 0) + 1;
+    seenKeys.set(baseKey, repeats);
     return {
-      key: `${mark.y}-${pad(mark.mo)}-${pad(mark.d)}_${mark.n}`,
-      n: mark.n,
+      key: repeats === 1 ? baseKey : `${baseKey}-${repeats}`,
+      n: mark.number,
       word: mark.word,
-      date: new Date(mark.y, mark.mo - 1, mark.d),
+      date: new Date(mark.year, mark.month - 1, mark.day),
       body,
       hash: hash(body),
     };
@@ -80,7 +84,7 @@ export function splitLessons(text: string): Lesson[] {
 }
 
 /** Pulls a "[bɔ̃ʒuʁ]" or "[бонжур]" transcription out of a string. */
-export function splitTr(source: string): { text: string; tr: string } {
+export function splitTranscription(source: string): { text: string; tr: string } {
   const match = source.match(/\[([^\]]+)\]/);
   if (!match || match.index === undefined) return { text: source, tr: '' };
   const text = (source.slice(0, match.index) + ' ' + source.slice(match.index + match[0].length))
@@ -90,9 +94,9 @@ export function splitTr(source: string): { text: string; tr: string } {
 }
 
 /** Moves a transcription Claude left in fr or ru (older cached lessons) into tr. */
-export function withTr(word: Omit<Word, 'tr'> & { tr?: string }): Word {
-  const frenchParts = splitTr(word.fr),
-    russianParts = splitTr(word.ru);
+export function withTranscription(word: Omit<Word, 'tr'> & { tr?: string }): Word {
+  const frenchParts = splitTranscription(word.fr),
+    russianParts = splitTranscription(word.ru);
   return {
     ...word,
     fr: frenchParts.text || word.fr,
@@ -111,7 +115,7 @@ export function localParse(body: string): Analysis {
       .replace(/^\s*[-*•]\s*/, '')
       .replace(/\*+/g, '')
       .trim();
-    const { text, tr } = splitTr(line);
+    const { text, tr } = splitTranscription(line);
     line = text;
     if (!line) continue;
     let fr = '',
@@ -135,18 +139,20 @@ export function localParse(body: string): Analysis {
   return { language: 'fr', topic: '', words, pairs: [], verbs: [], local: true };
 }
 
-type Obj = Record<string, unknown>;
-const asObject = (value: unknown): Obj =>
-  value && typeof value === 'object' ? (value as Obj) : {};
+type JsonObject = Record<string, unknown>;
+const asObject = (value: unknown): JsonObject =>
+  value && typeof value === 'object' ? (value as JsonObject) : {};
 const asArray = (value: unknown): unknown[] => (Array.isArray(value) ? value : []);
+/** The non-empty strings of a list. */
+const asTexts = (value: unknown): string[] => asArray(value).map(asText).filter(Boolean);
 
-export function normAnalysis(raw: unknown): Analysis {
+export function normalizeAnalysis(raw: unknown): Analysis {
   const data = asObject(raw);
   const seen = new Set<string>();
   const words: Word[] = asArray(data.words)
     .map(asObject)
     .map((word) =>
-      withTr({
+      withTranscription({
         fr: asText(word.fr),
         ru: asText(word.ru),
         kind: asText(word.kind) || 'other',
@@ -190,7 +196,7 @@ export function withPerson(form: Form): Form {
   return { p: person, f: /['’]$/.test(pronoun) ? pronoun + form.f : `${pronoun} ${form.f}` };
 }
 
-export function normConj(raw: unknown, infinitive: string): Conjugation {
+export function normalizeConjugation(raw: unknown, infinitive: string): Conjugation {
   const data = asObject(raw);
   const rawTenses = asObject(data.tenses);
   const tenses = {} as Record<(typeof TENSES)[number], Form[]>;
@@ -209,7 +215,7 @@ export function normConj(raw: unknown, infinitive: string): Conjugation {
   };
 }
 
-export function normGaps(raw: unknown): GapItem[] {
+export function normalizeGaps(raw: unknown): GapItem[] {
   const normalize = (text: string) => text.toLowerCase().replace(/[’']/g, "'").trim();
   const items = asArray(raw)
     .map(asObject)
@@ -237,7 +243,7 @@ export function normGaps(raw: unknown): GapItem[] {
   return items;
 }
 
-export function normPhoto(raw: unknown): PhotoItem[] {
+export function normalizePhoto(raw: unknown): PhotoItem[] {
   const data = asObject(raw);
   const language = asLanguage(data.language);
   return asArray(data.items)
@@ -261,36 +267,34 @@ export function asObjectText<K extends string>(raw: unknown, keys: K[]): Record<
   return Object.fromEntries(keys.map((key) => [key, asText(object[key])])) as Record<K, string>;
 }
 
-export function normDiscussion(raw: unknown): Discussion | null {
+export function normalizeDiscussion(raw: unknown): Discussion | null {
   const data = asObject(raw);
   const question = asText(data.question);
   if (!question) return null;
-  const texts = (value: unknown) => asArray(value).map(asText).filter(Boolean);
   return {
     question,
     ru: asText(data.ru),
-    followUps: texts(data.followUps),
+    followUps: asTexts(data.followUps),
     vocabulary: asArray(data.vocabulary)
       .map(asObject)
       .map((item) => ({ word: asText(item.word), ru: asText(item.ru) }))
       .filter((item) => item.word),
-    starters: texts(data.starters),
+    starters: asTexts(data.starters),
     grammarTip: asText(data.grammarTip),
-    grammarRule: normGrammarRule(data.grammarRule),
+    grammarRule: normalizeGrammarRule(data.grammarRule),
   };
 }
 
-function normGrammarRule(raw: unknown): Discussion['grammarRule'] {
+function normalizeGrammarRule(raw: unknown): Discussion['grammarRule'] {
   const data = asObject(raw);
   const title = asText(data.title);
   const summary = asText(data.summary);
   if (!title && !summary) return null;
-  const texts = (value: unknown) => asArray(value).map(asText).filter(Boolean);
   return {
     title,
     summary,
-    formation: texts(data.formation),
-    usage: texts(data.usage),
+    formation: asTexts(data.formation),
+    usage: asTexts(data.usage),
     examples: asArray(data.examples)
       .map(asObject)
       .map((item) => ({ text: asText(item.text), translation: asText(item.translation) }))

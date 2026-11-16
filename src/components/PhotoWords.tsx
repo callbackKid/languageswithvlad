@@ -1,12 +1,13 @@
-import { useState } from 'react';
-import { api, ApiError } from '../lib/api';
-import { shrinkImage } from '../lib/image';
-import { normPhoto } from '../lib/parse';
-import { load, save } from '../lib/storage';
-import type { PhotoItem, Word } from '../lib/types';
+import { useEffect, useRef, useState } from 'react';
+
 import { useTranslation } from '../i18n/core';
 import { common } from '../i18n/messages/common';
 import { paper } from '../i18n/messages/paper';
+import { api, ApiError } from '../lib/api';
+import { shrinkImage } from '../lib/image';
+import { normalizePhoto } from '../lib/parse';
+import { load, save } from '../lib/storage';
+import type { PhotoItem, Word } from '../lib/types';
 import AddToDoc, { type DocTarget } from './AddToDoc';
 import Speak from './Speak';
 import Star from './Star';
@@ -48,15 +49,27 @@ export default function PhotoWords({ ai, target }: { ai: boolean; target: DocTar
   const [state, setState] = useState<'idle' | 'loading' | 'error'>('idle');
   const [error, setError] = useState('');
 
+  // the preview is an object URL: the old one is released when a new photo replaces it and
+  // when the page is left
+  const previewUrl = useRef<string | null>(null);
+  const showPreview = (file: File) => {
+    if (previewUrl.current) URL.revokeObjectURL(previewUrl.current);
+    previewUrl.current = URL.createObjectURL(file);
+    setPreview(previewUrl.current);
+  };
+  useEffect(
+    () => () => {
+      if (previewUrl.current) URL.revokeObjectURL(previewUrl.current);
+    },
+    []
+  );
+
   async function read(file: File) {
-    setPreview((previous) => {
-      if (previous) URL.revokeObjectURL(previous);
-      return URL.createObjectURL(file);
-    });
+    showPreview(file);
     setState('loading');
     setError('');
     try {
-      const items = normPhoto(await api.photo(await shrinkImage(file, MAX_SIDE)));
+      const items = normalizePhoto(await api.photo(await shrinkImage(file, MAX_SIDE)));
       const next = { items, at: Date.now() };
       save(LAST_KEY, next);
       setScan(next);

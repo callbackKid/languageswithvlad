@@ -1,14 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+
+import { translator, useTranslation } from '../i18n/core';
+import { common } from '../i18n/messages/common';
+import { exercises } from '../i18n/messages/exercises';
 import { api, ApiError } from '../lib/api';
-import { normGaps } from '../lib/parse';
+import { normalizeGaps } from '../lib/parse';
 import { recordWord } from '../lib/progress';
 import { getSettings } from '../lib/settings';
 import type { GapItem, Word } from '../lib/types';
 import { shuffle } from '../lib/util';
-import { useTranslation } from '../i18n/core';
-import { common } from '../i18n/messages/common';
-import { exercises } from '../i18n/messages/exercises';
-import ExHead from './ExHead';
+import ExerciseHead from './ExerciseHead';
 import WaitingFact from './WaitingFact';
 
 export default function GapFill({
@@ -30,33 +31,39 @@ export default function GapFill({
   const [showRu, setShowRu] = useState(false);
   const [score, setScore] = useState(0);
 
+  // Asked for once, with the words the exercise started with: the parent may hand over a new
+  // list while it runs (another lesson finishes preparing), and that must not restart it or
+  // pay for a second set of sentences. A new round remounts the exercise.
+  const startingWords = useRef(words).current;
   useEffect(() => {
     let alive = true;
-    const sample = shuffle(words)
+    const sample = shuffle(startingWords)
       .slice(0, 24)
       .map((word) => ({ fr: word.fr, ru: word.ru }));
     api
       .gaps(sample, language, getSettings().levels[language])
       .then((response) => {
-        if (alive) setItems(normGaps(response));
+        if (alive) setItems(normalizeGaps(response));
       })
       .catch((failure) => {
         if (alive)
-          setError(failure instanceof ApiError ? failure.message : commonText.t('unreadable'));
+          // read at the moment of failure, so the effect doesn't depend on the language
+          setError(
+            failure instanceof ApiError ? failure.message : translator(common).t('unreadable')
+          );
       });
     return () => {
       alive = false;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- the message is read when it fails
-  }, [words, language]);
+  }, [startingWords, language]);
 
   if (error)
     return (
       <div className="ex">
-        <ExHead title={t('fillGap')} onClose={onClose} />
+        <ExerciseHead title={t('fillGap')} onClose={onClose} />
         <div className="note err">
           <p>{error}</p>
-          <button className="btn" onClick={onRestart}>
+          <button type="button" className="btn" onClick={onRestart}>
             {commonText.t('tryAgain')}
           </button>
         </div>
@@ -65,7 +72,7 @@ export default function GapFill({
   if (!items)
     return (
       <div className="ex">
-        <ExHead title={t('fillGap')} onClose={onClose} />
+        <ExerciseHead title={t('fillGap')} onClose={onClose} />
         <WaitingFact language={language}>{t('writingSentences')}</WaitingFact>
       </div>
     );
@@ -74,10 +81,10 @@ export default function GapFill({
   if (!item)
     return (
       <div className="ex">
-        <ExHead title={t('fillGap')} onClose={onClose} />
+        <ExerciseHead title={t('fillGap')} onClose={onClose} />
         <p className="score">{commonText.t('scoreLine', { score, total: items.length })}</p>
         <div className="row-actions">
-          <button className="btn primary" onClick={onRestart}>
+          <button type="button" className="btn primary" onClick={onRestart}>
             {t('newSentences')}
           </button>
         </div>
@@ -87,11 +94,11 @@ export default function GapFill({
   const right = picked === item.answer;
   return (
     <div className="ex">
-      <ExHead title={t('fillGap')} onClose={onClose}>
+      <ExerciseHead title={t('fillGap')} onClose={onClose}>
         <span className="progress">
           {index + 1} / {items.length}
         </span>
-      </ExHead>
+      </ExerciseHead>
       <p className="sentence" lang={language}>
         {item.before}{' '}
         <span className={'gap' + (picked == null ? '' : right ? ' ok' : ' bad')}>
@@ -105,7 +112,7 @@ export default function GapFill({
         </p>
       ) : (
         <p className="ru-line">
-          <button className="btn ghost flush" onClick={() => setShowRu(true)}>
+          <button type="button" className="btn ghost flush" onClick={() => setShowRu(true)}>
             {commonText.t('showTranslation')}
           </button>
         </p>
@@ -116,6 +123,7 @@ export default function GapFill({
             picked == null ? '' : choice === item.answer ? ' ok' : choice === picked ? ' bad' : '';
           return (
             <button
+              type="button"
               key={choice}
               className={'choice' + stateClass}
               lang={language}
@@ -145,6 +153,7 @@ export default function GapFill({
           </p>
           <div className="row-actions">
             <button
+              type="button"
               className="btn primary"
               autoFocus
               onClick={() => {

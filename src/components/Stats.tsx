@@ -1,9 +1,10 @@
 import { useMemo } from 'react';
+
+import { useTranslation } from '../i18n/core';
+import { pages } from '../i18n/messages/pages';
 import type { Bank } from '../lib/bank';
 import { isLearned, topMistakes, useProgress, wordKey } from '../lib/progress';
 import { isStudied, useSettings } from '../lib/settings';
-import { useTranslation } from '../i18n/core';
-import { pages } from '../i18n/messages/pages';
 import MistakeList from './MistakeList';
 import PageHead, { BankNote } from './PageHead';
 
@@ -134,8 +135,8 @@ export default function Stats({ bank }: { bank: Bank }) {
       ])
     );
     for (const stat of stats) {
-      if (stat.lesson && lessonName.has(stat.lesson))
-        addTo(byLesson, stat.lesson, lessonName.get(stat.lesson)!, stat.right, stat.wrong);
+      const name = lessonName.get(stat.lesson);
+      if (name) addTo(byLesson, stat.lesson, name, stat.right, stat.wrong);
       addTo(byKind, asKind(stat.kind), t(`kind.${asKind(stat.kind)}`), stat.right, stat.wrong);
     }
     for (const formStat of settings.studying.includes('fr') ? Object.values(progress.forms) : [])

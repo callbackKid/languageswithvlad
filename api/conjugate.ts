@@ -1,7 +1,10 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { checkAccess, claudeJSON, fail, onlyPost, MODEL } from './_lib/claude.js';
-import { conjPrompt } from './_lib/prompts.js';
 
+import { claudeJSON, MODEL } from './_lib/claude.js';
+import { checkAccess, fail, onlyPost } from './_lib/http.js';
+import { conjugationPrompt } from './_lib/prompts.js';
+
+/** A French verb's conjugation tables. */
 export default async function handler(request: VercelRequest, response: VercelResponse) {
   if (!onlyPost(request, response) || !checkAccess(request, response)) return;
   const infinitive = typeof request.body?.inf === 'string' ? request.body.inf.trim() : '';
@@ -11,7 +14,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
   try {
     const fresh = request.body?.fresh === true;
     response.status(200).json(
-      await claudeJSON(conjPrompt(infinitive, ru), {
+      await claudeJSON(conjugationPrompt(infinitive, ru), {
         model: MODEL,
         maxTokens: 3000,
         cache: !fresh,

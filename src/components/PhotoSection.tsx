@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { load, save } from '../lib/storage';
+
 import { useTranslation } from '../i18n/core';
 import { paper } from '../i18n/messages/paper';
+import { load, save } from '../lib/storage';
 import type { DocTarget } from './AddToDoc';
 import HandwrittenNotes from './HandwrittenNotes';
 import PageHead from './PageHead';
@@ -24,7 +25,12 @@ export default function PhotoSection({ ai, target }: { ai: boolean; target: DocT
       <PageHead title={t('fromPaper')} />
       <div className="seg photo-mode" role="group" aria-label={t('whatToRead')}>
         {MODES.map((entry) => (
-          <button key={entry} aria-pressed={mode === entry} onClick={() => choose(entry)}>
+          <button
+            type="button"
+            key={entry}
+            aria-pressed={mode === entry}
+            onClick={() => choose(entry)}
+          >
             {t(`mode.${entry}`)}
           </button>
         ))}

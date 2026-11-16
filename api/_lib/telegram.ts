@@ -1,3 +1,5 @@
+import { HttpError } from './http.js';
+
 /* Sends messages to the teacher's Telegram through a bot.
    TELEGRAM_BOT_TOKEN comes from @BotFather; TELEGRAM_CHAT_ID is the chat the bot writes to. */
 
@@ -6,7 +8,7 @@ const API_URL = 'https://api.telegram.org/bot';
 const MAX_TEXT = 4096;
 const MAX_CAPTION = 1024;
 
-export class TelegramError extends Error {}
+export class TelegramError extends HttpError {}
 
 export interface TelegramPhoto {
   mediaType: string;
@@ -21,14 +23,14 @@ export function telegramConfigured(): boolean {
 async function call(method: string, body: FormData): Promise<void> {
   const token = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID;
-  if (!token || !chatId) throw new TelegramError('Telegram isn’t set up on this server.');
+  if (!token || !chatId) throw new TelegramError(501, 'Telegram isn’t set up on this server.');
   body.set('chat_id', chatId);
   const response = await fetch(`${API_URL}${token}/${method}`, { method: 'POST', body });
   if (!response.ok) {
     const answer = (await response.json().catch(() => null)) as { description?: string } | null;
     // the description says what's wrong ("chat not found", "Unauthorized"); it never contains the token
     console.error('Telegram', method, response.status, answer?.description);
-    throw new TelegramError('delivery_failed');
+    throw new TelegramError(502, 'delivery_failed');
   }
 }
 

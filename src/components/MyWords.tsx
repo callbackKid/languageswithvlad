@@ -1,8 +1,8 @@
+import { useTranslation } from '../i18n/core';
+import { pages } from '../i18n/messages/pages';
 import { statWord, useProgress } from '../lib/progress';
 import { isStudied, useSettings } from '../lib/settings';
 import type { Analysis } from '../lib/types';
-import { useTranslation } from '../i18n/core';
-import { pages } from '../i18n/messages/pages';
 import PageHead from './PageHead';
 import WordsTab from './WordsTab';
 

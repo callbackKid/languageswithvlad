@@ -1,38 +1,15 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node';
+import { HttpError } from './http.js';
 
 const API_URL = 'https://api.anthropic.com/v1/messages';
 export const MODEL = process.env.CLAUDE_MODEL || 'claude-sonnet-5-5';
 export const FAST_MODEL = process.env.CLAUDE_FAST_MODEL || 'claude-haiku-5-5';
-
-/** Rejects requests without the shared access code (when one is configured). */
-export function checkAccess(request: VercelRequest, response: VercelResponse): boolean {
-  const code = process.env.APP_ACCESS_CODE;
-  if (!code) return true;
-  if (request.headers['x-access-code'] === code) return true;
-  response.status(401).json({ error: 'access_code' });
-  return false;
-}
-
-export function onlyPost(request: VercelRequest, response: VercelResponse): boolean {
-  if (request.method === 'POST') return true;
-  response.setHeader('Allow', 'POST');
-  response.status(405).json({ error: 'method' });
-  return false;
-}
 
 /* Small in-memory cache: warm instances skip repeated identical prompts
    (many students opening the same lesson or the same verb). */
 const cache = new Map<string, unknown>();
 const MAX_CACHE = 500;
 
-export class ClaudeError extends Error {
-  constructor(
-    public status: number,
-    message: string
-  ) {
-    super(message);
-  }
-}
+export class ClaudeError extends HttpError {}
 
 export interface ImageInput {
   mediaType: 'image/jpeg' | 'image/png' | 'image/webp' | 'image/gif';
@@ -155,11 +132,4 @@ export function extractJSON(text: string): unknown {
     }
   }
   return undefined;
-}
-
-export function fail(response: VercelResponse, error: unknown) {
-  if (error instanceof ClaudeError)
-    return response.status(error.status).json({ error: error.message });
-  console.error(error);
-  return response.status(500).json({ error: 'Something went wrong on the server.' });
 }

@@ -1,15 +1,16 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+
 import { api } from './api';
-import { localParse, normAnalysis, withPerson, withTr } from './parse';
+import { localParse, normalizeAnalysis, withPerson, withTranscription } from './parse';
 import { wordKey } from './progress';
 import { useSettings } from './settings';
 import { load, save } from './storage';
 import {
-  TENSES,
   type Analysis,
   type Conjugation,
   type Lesson,
   type Pair,
+  TENSES,
   type VerbRef,
   type Word,
 } from './types';
@@ -19,17 +20,17 @@ export const AUTO_PREPARE = 1;
 
 // v2: analyses know the lesson's language; v1 entries treated English lessons as French.
 export const analysisKey = (hash: string) => 'an2:' + hash;
-export const conjKey = (infinitive: string) => 'conj:' + infinitive.toLowerCase();
+export const conjugationKey = (infinitive: string) => 'conj:' + infinitive.toLowerCase();
 
 /** Cached analysis, with transcriptions moved out of older entries. */
 export function readAnalysis(hash: string): Analysis | null {
   const analysis = load<Analysis>(analysisKey(hash));
-  return analysis ? { ...analysis, words: analysis.words.map(withTr) } : null;
+  return analysis ? { ...analysis, words: analysis.words.map(withTranscription) } : null;
 }
 
 /** Cached conjugation, with reflexive pronouns moved out of the person in older entries. */
-export function readConj(infinitive: string): Conjugation | null {
-  const conjugation = load<Conjugation>(conjKey(infinitive));
+export function readConjugation(infinitive: string): Conjugation | null {
+  const conjugation = load<Conjugation>(conjugationKey(infinitive));
   if (!conjugation) return null;
   const tenses = {} as Conjugation['tenses'];
   for (const tense of TENSES) tenses[tense] = (conjugation.tenses[tense] || []).map(withPerson);
@@ -95,7 +96,7 @@ export function useBank(lessons: Lesson[], ai: boolean): Bank {
     api
       .analyze(next.body)
       .then((raw) => {
-        const analysis = normAnalysis(raw);
+        const analysis = normalizeAnalysis(raw);
         save(analysisKey(next.hash), analysis);
         if (requestGeneration === generation.current)
           setAnalyses((previous) =>

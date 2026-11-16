@@ -1,9 +1,10 @@
 import { useMemo, useState } from 'react';
+
+import { useTranslation } from '../i18n/core';
+import { app } from '../i18n/messages/app';
+import { pages } from '../i18n/messages/pages';
 import type { Bank } from '../lib/bank';
 import type { Analysis } from '../lib/types';
-import { useTranslation } from '../i18n/core';
-import { pages } from '../i18n/messages/pages';
-import { app } from '../i18n/messages/app';
 import PageHead, { BankNote } from './PageHead';
 import VerbsTab from './VerbsTab';
 import WordsTab from './WordsTab';
@@ -20,7 +21,7 @@ export default function Practice({ bank, ai }: { bank: Bank; ai: boolean }) {
     const isIncluded = (key: string | undefined) =>
       !selectedLessons || (!!key && selectedLessons.has(key));
     const words = bank.words.filter((word) => isIncluded(word.lesson));
-    const frenchWords = new Set(words.map((word) => word.fr));
+    const chosenWords = new Set(words.map((word) => word.fr));
     return {
       // lessons can mix languages; each word also carries its own
       language: words[0]?.language ?? 'fr',
@@ -28,7 +29,7 @@ export default function Practice({ bank, ai }: { bank: Bank; ai: boolean }) {
       words,
       local: !ai,
       pairs: bank.pairs.filter(
-        (pair) => isIncluded(pair.lesson) && frenchWords.has(pair.a) && frenchWords.has(pair.b)
+        (pair) => isIncluded(pair.lesson) && chosenWords.has(pair.a) && chosenWords.has(pair.b)
       ),
       verbs: bank.verbs.filter((verb) => isIncluded(verb.lesson)),
     };
@@ -43,7 +44,7 @@ export default function Practice({ bank, ai }: { bank: Bank; ai: boolean }) {
       return updated.size === ready.length ? null : updated;
     });
   // a new selection starts the word list and verb list afresh
-  const selKey = selectedLessons ? [...selectedLessons].sort().join(',') : 'all';
+  const selectionKey = selectedLessons ? [...selectedLessons].sort().join(',') : 'all';
 
   return (
     <>
@@ -51,6 +52,7 @@ export default function Practice({ bank, ai }: { bank: Bank; ai: boolean }) {
       <BankNote bank={bank} />
       <div className="chips" role="group" aria-label={appText.t('lessonsLabel')}>
         <button
+          type="button"
           className="chip"
           aria-pressed={!selectedLessons}
           onClick={() => setSelectedLessons(null)}
@@ -59,6 +61,7 @@ export default function Practice({ bank, ai }: { bank: Bank; ai: boolean }) {
         </button>
         {ready.map((lesson) => (
           <button
+            type="button"
             key={lesson.key}
             className="chip"
             aria-pressed={!!selectedLessons && selectedLessons.has(lesson.key)}
@@ -72,6 +75,7 @@ export default function Practice({ bank, ai }: { bank: Bank; ai: boolean }) {
       <section className="panel solo">
         <div className="tabs" role="tablist">
           <button
+            type="button"
             className="tab"
             role="tab"
             aria-selected={tab === 'words'}
@@ -81,6 +85,7 @@ export default function Practice({ bank, ai }: { bank: Bank; ai: boolean }) {
             <span className="count">{words.length}</span>
           </button>
           <button
+            type="button"
             className="tab"
             role="tab"
             aria-selected={tab === 'verbs'}
@@ -91,9 +96,14 @@ export default function Practice({ bank, ai }: { bank: Bank; ai: boolean }) {
           </button>
         </div>
         <div className="body">
-          {tab === 'words' && <WordsTab key={selKey} analysis={analysis} ai={ai} />}
+          {tab === 'words' && <WordsTab key={selectionKey} analysis={analysis} ai={ai} />}
           {tab === 'verbs' && (
-            <VerbsTab key={selKey} verbs={analysis.verbs} ai={ai} waiting={bank.pending > 0} />
+            <VerbsTab
+              key={selectionKey}
+              verbs={analysis.verbs}
+              ai={ai}
+              waiting={bank.pending > 0}
+            />
           )}
         </div>
       </section>

@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
+
+import { useTranslation } from '../i18n/core';
+import { exercises } from '../i18n/messages/exercises';
 import { recordWord } from '../lib/progress';
 import type { Word } from '../lib/types';
 import { shuffle } from '../lib/util';
-import { useTranslation } from '../i18n/core';
-import { exercises } from '../i18n/messages/exercises';
-import ExHead from './ExHead';
+import ExerciseHead from './ExerciseHead';
 import Speak from './Speak';
 import Transcription from './Transcription';
 
@@ -45,6 +46,7 @@ export default function Flashcards({
   useEffect(() => {
     if (!deck.length) return;
     const onKey = (event: KeyboardEvent) => {
+      if (event.metaKey || event.ctrlKey || event.altKey) return;
       if ((event.target as HTMLElement).matches('input, textarea')) return;
       if (event.key === ' ') {
         event.preventDefault();
@@ -59,6 +61,7 @@ export default function Flashcards({
   const directionToggle = (
     <span className="seg" role="group" aria-label={t('direction')}>
       <button
+        type="button"
         aria-pressed={direction === 'fr'}
         onClick={() => {
           setDirection('fr');
@@ -68,6 +71,7 @@ export default function Flashcards({
         {code} → RU
       </button>
       <button
+        type="button"
         aria-pressed={direction === 'ru'}
         onClick={() => {
           setDirection('ru');
@@ -83,12 +87,12 @@ export default function Flashcards({
   if (!card)
     return (
       <div className="ex">
-        <ExHead title={t('flashcards')} onClose={onClose}>
+        <ExerciseHead title={t('flashcards')} onClose={onClose}>
           {directionToggle}
-        </ExHead>
+        </ExerciseHead>
         <p className="score">{t('cardsDone', { count: words.length })}</p>
         <div className="row-actions">
-          <button className="btn primary" onClick={onRestart}>
+          <button type="button" className="btn primary" onClick={onRestart}>
             {t('startOver')}
           </button>
         </div>
@@ -98,11 +102,12 @@ export default function Flashcards({
   const [front, back] = direction === 'fr' ? [card.fr, card.ru] : [card.ru, card.fr];
   return (
     <div className="ex">
-      <ExHead title={t('flashcards')} onClose={onClose}>
+      <ExerciseHead title={t('flashcards')} onClose={onClose}>
         <span className="progress">{t('known', { done, total: words.length })}</span>
         {directionToggle}
-      </ExHead>
+      </ExerciseHead>
       <button
+        type="button"
         className="card"
         onClick={() => setFlipped((previous) => !previous)}
         aria-label={t('flipCard')}
@@ -127,10 +132,10 @@ export default function Flashcards({
       </button>
       <div className="card-actions">
         <Speak text={card.fr} language={language} />
-        <button className="btn big" onClick={again}>
+        <button type="button" className="btn big" onClick={again}>
           {t('again')}
         </button>
-        <button className="btn primary big" onClick={know}>
+        <button type="button" className="btn primary big" onClick={know}>
           {t('iKnowIt')}
         </button>
       </div>

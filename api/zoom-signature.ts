@@ -1,5 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { checkAccess, onlyPost } from './_lib/claude.js';
+
+import { checkAccess, onlyPost } from './_lib/http.js';
 import { zoomSignature } from './_lib/zoom.js';
 
 /** A signature for joining one Zoom meeting inside the app (Meeting SDK). */

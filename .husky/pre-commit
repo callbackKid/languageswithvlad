@@ -1,0 +1,5 @@
+# Runs before every commit; the rules are in CODE_STYLE.md.
+# 1. the staged files are fixed where possible (import order, formatting) and linted
+yarn -s lint-staged
+# 2. the whole project must still typecheck, app and server
+yarn -s typecheck

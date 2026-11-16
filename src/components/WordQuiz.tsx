@@ -1,17 +1,19 @@
-import { useEffect, useRef, useState } from 'react';
-import { grade } from '../lib/grade';
-import { recordForm, recordWord } from '../lib/progress';
-import { speak } from '../lib/speech';
-import type { QItem } from '../lib/quiz';
+import { type FormEvent, type ReactNode, useEffect, useRef, useState } from 'react';
+
 import { useTranslation } from '../i18n/core';
 import { common, learning } from '../i18n/messages/common';
 import { exercises } from '../i18n/messages/exercises';
-import ExHead from './ExHead';
+import { grade } from '../lib/grade';
+import { recordForm, recordWord } from '../lib/progress';
+import type { QuizItem } from '../lib/quiz';
+import { speak } from '../lib/speech';
+import ExerciseHead from './ExerciseHead';
 import Speak from './Speak';
 import Transcription from './Transcription';
 
 type Result = 'ok' | 'bad' | 'accent' | 'article';
-const ARTICLE = /^(le|la|les|un|une|des|l')\s*/i;
+// a noun typed without its article is a near miss, not a mistake (French and German)
+const ARTICLE = /^(?:le|la|les|un|une|des|l'|der|die|das|ein|eine)\s*/i;
 
 function gradeWord(typed: string, answer: string): Result | null {
   const result = grade(typed, answer);
@@ -30,7 +32,7 @@ export default function WordQuiz({
   empty,
 }: {
   title: string;
-  make: () => QItem[];
+  make: () => QuizItem[];
   onClose?: () => void;
   closeLabel?: string;
   empty?: string;
@@ -73,15 +75,15 @@ export default function WordQuiz({
     setResult(null);
   };
   const head = (
-    <ExHead title={title} onClose={onClose} closeLabel={closeLabel}>
+    <ExerciseHead title={title} onClose={onClose} closeLabel={closeLabel}>
       {questions.length > 0 && (
         <span className="progress">
           {Math.min(index + 1, questions.length)} / {questions.length}
         </span>
       )}
-    </ExHead>
+    </ExerciseHead>
   );
-  const shell = (body: React.ReactNode) => (
+  const shell = (body: ReactNode) => (
     <div className="ex">
       {head}
       {body}
@@ -95,7 +97,7 @@ export default function WordQuiz({
       <>
         <p className="score">{t('scoreLine', { score, total: questions.length })}</p>
         <div className="row-actions">
-          <button className="btn primary" autoFocus onClick={restart}>
+          <button type="button" className="btn primary" autoFocus onClick={restart}>
             {tx('nextRound')}
           </button>
         </div>
@@ -182,7 +184,7 @@ export default function WordQuiz({
         </p>
       )}
       <div className="row-actions">
-        <button ref={nextButton} className="btn primary" onClick={next}>
+        <button type="button" ref={nextButton} className="btn primary" onClick={next}>
           {index + 1 < questions.length ? t('next') : t('seeScore')}
         </button>
       </div>
@@ -213,6 +215,7 @@ export default function WordQuiz({
               picked == null ? '' : choice === right ? ' ok' : choice === picked ? ' bad' : '';
             return (
               <button
+                type="button"
                 key={choice}
                 className={'choice' + stateClass + (question.kind === 'pick-ru' ? ' ru' : '')}
                 lang={question.kind === 'pick-ru' ? 'ru' : language}
@@ -232,7 +235,7 @@ export default function WordQuiz({
     );
   }
 
-  const check = (event: React.FormEvent) => {
+  const check = (event: FormEvent) => {
     event.preventDefault();
     if (result) return next();
     const grading =

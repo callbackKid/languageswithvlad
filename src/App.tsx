@@ -1,38 +1,39 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { api, ApiError } from './lib/api';
-import { useBank } from './lib/bank';
-import { docIdFrom, splitLessons } from './lib/parse';
-import { setProgressDoc, useProgress } from './lib/progress';
-import { load, remove, save } from './lib/storage';
-import { followLink, hrefFor, navigate, usePath } from './lib/router';
-import { lessonPath, parsePath, SECTIONS } from './lib/sections';
-import { useTranslation, type Translator } from './i18n/core';
-import { app } from './i18n/messages/app';
+
+import CodeGate from './components/CodeGate';
 import Connect from './components/Connect';
 import Discuss from './components/Discuss';
 import Feedback from './components/Feedback';
-import Settings, { Avatar } from './components/Settings';
-import { useSettings } from './lib/settings';
-import LessonMode from './components/LessonMode';
-import { findCall } from './lib/call';
-import { isNotion, sourceUrl } from './lib/source';
-import CodeGate from './components/CodeGate';
 import Home from './components/Home';
+import LessonMode from './components/LessonMode';
 import LessonView from './components/LessonView';
 import Mistakes from './components/Mistakes';
 import MyWords from './components/MyWords';
 import NextLessonBadge from './components/NextLessonBadge';
 import PhotoSection from './components/PhotoSection';
 import Practice from './components/Practice';
+import Settings, { Avatar } from './components/Settings';
 import Stats from './components/Stats';
 import Tutorial from './components/Tutorial';
+import { type Translator, translator, useTranslation } from './i18n/core';
+import { app } from './i18n/messages/app';
+import { api, ApiError } from './lib/api';
+import { useBank } from './lib/bank';
+import { findCall } from './lib/call';
+import { docIdFrom, splitLessons } from './lib/parse';
+import { setProgressDoc, useProgress } from './lib/progress';
+import { followLink, hrefFor, navigate, usePath } from './lib/router';
+import { lessonPath, NEEDS_LESSONS, parsePath, SECTIONS } from './lib/sections';
+import { isStudied, useSettings } from './lib/settings';
+import { isNotion, sourceUrl } from './lib/source';
+import { load, remove, save } from './lib/storage';
 
 interface DocCache {
   title: string;
   text: string;
   fetchedAt: number;
 }
-type Sync = { state: 'idle' | 'loading' | 'ok' | 'error'; msg?: string };
+type Sync = { state: 'idle' | 'loading' | 'ok' | 'error'; message?: string };
 
 function ago(timestamp: number, { t, locale }: Translator<keyof (typeof app)['en']>): string {
   const minutes = Math.round((Date.now() - timestamp) / 60000);
@@ -97,36 +98,43 @@ export default function App() {
     return () => window.removeEventListener('cahier:need-code', onCode);
   }, []);
 
+  // Only the newest sync may touch the screen: an answer for a document the user has since
+  // switched away from is saved for later, never shown.
+  const latestSync = useRef(0);
   const runSync = useCallback(async (id: string) => {
+    const syncNumber = ++latestSync.current;
     setSync({ state: 'loading' });
     try {
       const fetched = await api.doc(id);
       const next = { title: fetched.title, text: fetched.text, fetchedAt: Date.now() };
       save('doc:' + id, next);
+      if (syncNumber !== latestSync.current) return;
       setDoc(next);
       setSync({ state: 'ok' });
     } catch (error) {
+      if (syncNumber !== latestSync.current) return;
       setSync({
         state: 'error',
-        msg: error instanceof ApiError ? error.message : t('readFailed'),
+        // read at the moment of failure, so a new interface language doesn't start a sync
+        message: error instanceof ApiError ? error.message : translator(app).t('readFailed'),
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- the message is read when it fails
   }, []);
 
   useEffect(() => {
-    if (docId) runSync(docId);
+    if (docId) void runSync(docId);
   }, [docId, runSync]);
   // leaving the editor pulls in whatever was just written there
   const previousSection = useRef(section);
   useEffect(() => {
-    if (previousSection.current === 'document' && section !== 'document' && docId) runSync(docId);
+    if (previousSection.current === 'document' && section !== 'document' && docId)
+      void runSync(docId);
     previousSection.current = section;
   }, [section, docId, runSync]);
   // something was just written into the document (a lesson from a photo)
   useEffect(() => {
     if (!docId) return;
-    const onChanged = () => runSync(docId);
+    const onChanged = () => void runSync(docId);
     window.addEventListener('cahier:doc-changed', onChanged);
     return () => window.removeEventListener('cahier:doc-changed', onChanged);
   }, [docId, runSync]);
@@ -138,7 +146,10 @@ export default function App() {
   const bank = useBank(lessons, ai);
   // Set while rendering, so the first quiz round already sees this document's progress.
   setProgressDoc(docId);
-  const hardCount = Object.values(useProgress().words).filter((stat) => stat.hard).length;
+  // the same words the My words page lists
+  const hardCount = Object.values(useProgress().words).filter(
+    (stat) => stat.hard && isStudied(stat.language, settings)
+  ).length;
   // the lesson in the address, or the newest one
   const lesson =
     lessons.find((candidate) => candidate.key === route?.lessonKey) ??
@@ -156,7 +167,7 @@ export default function App() {
     const url = new URL(window.location.href);
     url.searchParams.set('doc', id);
     window.history.replaceState(null, '', url);
-    if (id === docId) runSync(id);
+    if (id === docId) void runSync(id);
   }
 
   async function copyLink() {
@@ -177,6 +188,8 @@ export default function App() {
         onDone={(code) => {
           save('code', code);
           setNeedsCode(false);
+          // the first sync was refused for the missing code
+          if (docId) void runSync(docId);
         }}
         onClear={() => remove('code')}
       />
@@ -202,11 +215,13 @@ export default function App() {
   const docUrl = sourceUrl(docId);
   let status: string;
   if (sync.state === 'loading') status = t('syncing');
-  else if (sync.state === 'error') status = sync.msg || '';
+  else if (sync.state === 'error') status = sync.message || '';
   else if (doc)
     status = t('synced', { count: lessons.length, ago: ago(doc.fetchedAt, translation) });
   else status = t('notSynced');
   const shortDateFormat = new Intl.DateTimeFormat(locale, { day: 'numeric', month: 'short' });
+  // pages about the lessons have nothing to show until the document has one
+  const waitingForLessons = !lessons.length && NEEDS_LESSONS.includes(section);
   const example = (text: string) => <span className="example">{text}</span>;
 
   return (
@@ -237,16 +252,17 @@ export default function App() {
             {t('openDocument')}
           </a>
           <button
+            type="button"
             className="btn primary"
-            onClick={() => runSync(docId)}
+            onClick={() => void runSync(docId)}
             disabled={sync.state === 'loading'}
           >
             {t('sync')}
           </button>
-          <button className="btn" onClick={copyLink}>
+          <button type="button" className="btn" onClick={() => void copyLink()}>
             {copied ? t('linkCopied') : t('copyLink')}
           </button>
-          <button className="btn ghost" onClick={() => setChanging(true)}>
+          <button type="button" className="btn ghost" onClick={() => setChanging(true)}>
             {t('changeDocument')}
           </button>
           {feedback && <Feedback docTitle={doc?.title ?? ''} />}
@@ -263,15 +279,32 @@ export default function App() {
         </div>
       </header>
 
-      {!lessons.length ? (
-        <div className="connect">
+      <nav className="sections" aria-label={t('sectionsLabel')}>
+        {SECTIONS.filter(
+          (entry) => entry.inMenu !== false && !settings.hidden.includes(entry.id)
+        ).map((entry) => (
+          <a
+            key={entry.id}
+            className="section-link"
+            href={hrefFor(entry.path)}
+            aria-current={section === entry.id ? 'page' : undefined}
+            onClick={(event) => followLink(event, entry.path)}
+          >
+            {t(`section.${entry.id}`)}
+            {entry.id === 'mine' && hardCount > 0 && <span className="count">{hardCount}</span>}
+          </a>
+        ))}
+      </nav>
+      {doc?.text && <NextLessonBadge text={doc.text} />}
+      {waitingForLessons ? (
+        <main className="page">
           <p className="empty">
             {sync.state === 'loading' ? (
               <>
                 <span className="spinner" /> {t('readingDocument')}
               </>
             ) : sync.state === 'error' && !doc ? (
-              sync.msg
+              sync.message
             ) : (
               rich(
                 'noLessons',
@@ -284,104 +317,83 @@ export default function App() {
               )
             )}
           </p>
-        </div>
-      ) : (
-        <>
-          <nav className="sections" aria-label={t('sectionsLabel')}>
-            {SECTIONS.filter(
-              (entry) => entry.inMenu !== false && !settings.hidden.includes(entry.id)
-            ).map((entry) => (
+        </main>
+      ) : section === 'document' && notion ? (
+        <main className="page">
+          <p className="empty">
+            {rich('notionDocument', {
+              link: (chunk) => (
+                <a href={docUrl} target="_blank" rel="noopener noreferrer">
+                  {chunk}
+                </a>
+              ),
+            })}
+          </p>
+        </main>
+      ) : section === 'document' ? (
+        <main className="doc-editor">
+          <p className="hint">
+            {rich('editorHint', {
+              link: (chunk) => (
+                <a href={docUrl} target="_blank" rel="noopener noreferrer">
+                  {chunk}
+                </a>
+              ),
+            })}
+          </p>
+          <iframe title="Google Doc" src={docUrl} allow="clipboard-read; clipboard-write" />
+        </main>
+      ) : section === 'call' ? (
+        <main className="page wide">
+          <LessonMode
+            docText={doc?.text ?? ''}
+            docId={docId}
+            bank={bank}
+            lessons={lessons}
+            target={docTarget}
+            zoomReady={zoomReady}
+          />
+        </main>
+      ) : section === 'lessons' ? (
+        <div className="layout">
+          <nav className="lessons" aria-label={t('lessonsLabel')}>
+            {lessons.map((listedLesson) => (
               <a
-                key={entry.id}
-                className="section-link"
-                href={hrefFor(entry.path)}
-                aria-current={section === entry.id ? 'page' : undefined}
-                onClick={(event) => followLink(event, entry.path)}
+                key={listedLesson.key}
+                className="lesson-link"
+                href={hrefFor(lessonPath(listedLesson.key))}
+                aria-current={listedLesson.key === currentLessonKey ? 'page' : undefined}
+                onClick={(event) => followLink(event, lessonPath(listedLesson.key))}
               >
-                {t(`section.${entry.id}`)}
-                {entry.id === 'mine' && hardCount > 0 && <span className="count">{hardCount}</span>}
+                <span className="n">{listedLesson.n}</span>
+                <span className="d">{shortDateFormat.format(listedLesson.date)}</span>
               </a>
             ))}
           </nav>
-          {doc?.text && <NextLessonBadge text={doc.text} />}
-          {section === 'document' && notion ? (
-            <main className="page">
-              <p className="empty">
-                {rich('notionDocument', {
-                  link: (chunk) => (
-                    <a href={docUrl} target="_blank" rel="noopener noreferrer">
-                      {chunk}
-                    </a>
-                  ),
-                })}
-              </p>
-            </main>
-          ) : section === 'document' ? (
-            <main className="doc-editor">
-              <p className="hint">
-                {rich('editorHint', {
-                  link: (chunk) => (
-                    <a href={docUrl} target="_blank" rel="noopener noreferrer">
-                      {chunk}
-                    </a>
-                  ),
-                })}
-              </p>
-              <iframe title="Google Doc" src={docUrl} allow="clipboard-read; clipboard-write" />
-            </main>
-          ) : section === 'call' ? (
-            <main className="page wide">
-              <LessonMode
-                docText={doc?.text ?? ''}
+          <main>
+            {lesson && (
+              <LessonView
+                key={lesson.key}
+                lesson={lesson}
                 docId={docId}
-                bank={bank}
-                lessons={lessons}
-                target={docTarget}
-                zoomReady={zoomReady}
+                ai={ai}
+                onAnalysis={bank.put}
               />
-            </main>
-          ) : section === 'lessons' ? (
-            <div className="layout">
-              <nav className="lessons" aria-label={t('lessonsLabel')}>
-                {lessons.map((listedLesson) => (
-                  <a
-                    key={listedLesson.key}
-                    className="lesson-link"
-                    href={hrefFor(lessonPath(listedLesson.key))}
-                    aria-current={listedLesson.key === currentLessonKey ? 'page' : undefined}
-                    onClick={(event) => followLink(event, lessonPath(listedLesson.key))}
-                  >
-                    <span className="n">{listedLesson.n}</span>
-                    <span className="d">{shortDateFormat.format(listedLesson.date)}</span>
-                  </a>
-                ))}
-              </nav>
-              <main>
-                {lesson && (
-                  <LessonView
-                    key={lesson.key}
-                    lesson={lesson}
-                    docId={docId}
-                    ai={ai}
-                    onAnalysis={bank.put}
-                  />
-                )}
-              </main>
-            </div>
-          ) : (
-            <main className="page">
-              {section === 'home' && <Home bank={bank} />}
-              {section === 'practice' && <Practice bank={bank} ai={ai} />}
-              {section === 'mine' && <MyWords ai={ai} />}
-              {section === 'mistakes' && <Mistakes bank={bank} />}
-              {section === 'stats' && <Stats bank={bank} />}
-              {section === 'tutorial' && <Tutorial />}
-              {section === 'settings' && <Settings />}
-              {section === 'discuss' && <Discuss bank={bank} ai={ai} />}
-              {section === 'photo' && <PhotoSection ai={ai} target={docTarget} />}
-            </main>
-          )}
-        </>
+            )}
+          </main>
+        </div>
+      ) : (
+        <main className="page">
+          {section === 'home' && <Home bank={bank} />}
+          {section === 'practice' && <Practice bank={bank} ai={ai} />}
+          {section === 'mine' && <MyWords ai={ai} />}
+          {section === 'mistakes' && <Mistakes bank={bank} />}
+          {section === 'stats' && <Stats bank={bank} />}
+          {section === 'tutorial' && <Tutorial />}
+          {section === 'settings' && <Settings />}
+          {section === 'discuss' && <Discuss bank={bank} ai={ai} />}
+          {section === 'photo' && <PhotoSection ai={ai} target={docTarget} />}
+        </main>
       )}
     </>
   );

@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import type { Bank } from '../lib/bank';
-import { statWord, topMistakes, useProgress } from '../lib/progress';
-import { buildQuiz, type FormQ } from '../lib/quiz';
-import type { Tense } from '../lib/types';
-import { shuffle } from '../lib/util';
+
 import { useTranslation } from '../i18n/core';
 import { pages } from '../i18n/messages/pages';
+import type { Bank } from '../lib/bank';
+import { statWord, topMistakes, useProgress } from '../lib/progress';
+import { buildQuiz, type FormQuestion } from '../lib/quiz';
+import type { Tense } from '../lib/types';
+import { shuffle } from '../lib/util';
 import MistakeList from './MistakeList';
 import PageHead from './PageHead';
 import WordQuiz from './WordQuiz';
@@ -26,7 +27,7 @@ export default function Mistakes({ bank }: { bank: Bank }) {
         make={() => {
           const mistakes = topMistakes();
           const pickedWords = shuffle(mistakes.words).slice(0, 7).map(statWord);
-          const pickedForms: FormQ[] = shuffle(mistakes.forms)
+          const pickedForms: FormQuestion[] = shuffle(mistakes.forms)
             .slice(0, 10 - pickedWords.length)
             .map((form) => ({
               inf: form.inf,
@@ -54,7 +55,7 @@ export default function Mistakes({ bank }: { bank: Bank }) {
       ) : (
         <>
           <div className="row-actions lead">
-            <button className="btn primary" onClick={() => setPractise(true)}>
+            <button type="button" className="btn primary" onClick={() => setPractise(true)}>
               {t('practiseMistakes')}
             </button>
           </div>

@@ -12,33 +12,45 @@ export type Section =
   | 'settings'
   | 'call';
 
-/** The label of each section is translated: app.ts, "section.<id>". */
-export const SECTIONS: { id: Section; label: string; path: string; inMenu?: false }[] = [
-  { id: 'home', label: 'Home', path: '/' },
-  { id: 'lessons', label: 'Lessons', path: '/lessons' },
-  { id: 'practice', label: 'All lessons', path: '/all-lessons' },
-  { id: 'mine', label: 'My words', path: '/my-words' },
-  { id: 'mistakes', label: 'Mistakes', path: '/mistakes' },
-  { id: 'stats', label: 'Stats', path: '/stats' },
-  { id: 'photo', label: 'Photo', path: '/photo' },
-  { id: 'discuss', label: 'Discuss', path: '/discuss' },
-  { id: 'document', label: 'Document', path: '/document' },
-  { id: 'tutorial', label: 'Tutorial', path: '/tutorial' },
-  { id: 'settings', label: 'Settings', path: '/settings' },
+/** Every page of the app, in menu order. Their names are translated: app.ts, "section.<id>". */
+export const SECTIONS: { id: Section; path: string; inMenu?: false }[] = [
+  { id: 'home', path: '/' },
+  { id: 'lessons', path: '/lessons' },
+  { id: 'practice', path: '/all-lessons' },
+  { id: 'mine', path: '/my-words' },
+  { id: 'mistakes', path: '/mistakes' },
+  { id: 'stats', path: '/stats' },
+  { id: 'photo', path: '/photo' },
+  { id: 'discuss', path: '/discuss' },
+  { id: 'document', path: '/document' },
+  { id: 'tutorial', path: '/tutorial' },
+  { id: 'settings', path: '/settings' },
   // lesson mode opens from Join call, not from the menu
-  { id: 'call', label: 'Lesson mode', path: '/call', inMenu: false },
+  { id: 'call', path: '/call', inMenu: false },
 ];
 
-// /lessons/2026-11-12_7 → the Lessons section and that lesson
-// null for a path the app doesn't have.
+/** Sections that show the lessons' content, so they need at least one lesson in the document. */
+export const NEEDS_LESSONS: Section[] = [
+  'home',
+  'lessons',
+  'practice',
+  'mine',
+  'mistakes',
+  'stats',
+];
 
+/** "/lessons/2026-11-12_7" → the Lessons section and that lesson; null for a path the app doesn't have. */
 export function parsePath(path: string): { section: Section; lessonKey: string | null } | null {
   const [first = '', second] = path.split('/').filter(Boolean);
-
   const entry = SECTIONS.find((candidate) => candidate.path === '/' + first);
-
   if (!entry || (second && entry.id !== 'lessons')) return null;
-  return { section: entry.id, lessonKey: second ? decodeURIComponent(second) : null };
+  if (!second) return { section: entry.id, lessonKey: null };
+  try {
+    return { section: entry.id, lessonKey: decodeURIComponent(second) };
+  } catch {
+    // a broken %-escape typed into the address: not a lesson
+    return null;
+  }
 }
 
 export const lessonPath = (key: string) => '/lessons/' + encodeURIComponent(key);

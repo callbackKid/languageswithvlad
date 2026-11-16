@@ -8,6 +8,21 @@
       rel="icon"
       href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📓</text></svg>"
     />
+    <script>
+      // The theme, set before the first paint so a dark screen never flashes white.
+      // src/lib/settings.ts keeps it up to date afterwards; keep the two in step.
+      (function () {
+        var theme;
+        try {
+          theme = (JSON.parse(localStorage.getItem('cahier-fr:settings')) || {}).theme;
+        } catch (error) {
+          // unreadable settings: follow the system
+        }
+        var systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var dark = theme === 'dark' || (theme !== 'light' && systemDark);
+        document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

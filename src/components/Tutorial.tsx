@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+
 import { useTranslation } from '../i18n/core';
 import { app } from '../i18n/messages/app';
 import { exercises } from '../i18n/messages/exercises';
@@ -6,7 +7,7 @@ import { pages } from '../i18n/messages/pages';
 import { paper } from '../i18n/messages/paper';
 import { tutorial } from '../i18n/messages/tutorial';
 import { followLink, hrefFor } from '../lib/router';
-import { SECTIONS, type Section } from '../lib/sections';
+import { type Section, SECTIONS } from '../lib/sections';
 import PageHead from './PageHead';
 
 /* A guide for someone opening the app for the first time: a quick start, a map of the sections,

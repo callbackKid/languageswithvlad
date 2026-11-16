@@ -1,20 +1,21 @@
 import { useMemo, useState } from 'react';
+
+import { useTranslation } from '../i18n/core';
+import { exercises } from '../i18n/messages/exercises';
 import { getProgress } from '../lib/progress';
 import { buildDictation, buildQuiz, pickWords } from '../lib/quiz';
 import { canSpeak } from '../lib/speech';
-import { downloadText } from '../lib/util';
 import type { Analysis } from '../lib/types';
-import { useTranslation } from '../i18n/core';
-import { exercises } from '../i18n/messages/exercises';
+import { downloadText } from '../lib/util';
 import Flashcards from './Flashcards';
-import Match, { type MatchPair } from './Match';
 import GapFill from './GapFill';
+import Match, { type MatchPair } from './Match';
 import Speak from './Speak';
 import Star from './Star';
 import Transcription from './Transcription';
 import WordQuiz from './WordQuiz';
 
-type Ex = null | 'quiz' | 'cards' | 'match' | 'syn' | 'gap' | 'dictation';
+type Exercise = null | 'quiz' | 'cards' | 'match' | 'syn' | 'gap' | 'dictation';
 
 /** Tab-separated text Anki imports as cards: word, translation, transcription. */
 function ankiText(words: Analysis['words']): string {
@@ -37,7 +38,7 @@ export default function WordsTab({
   // Tracks the words left out, so words that arrive later (more lessons prepared) start picked.
   const [unpicked, setUnpicked] = useState<Set<string>>(() => new Set());
   const [filter, setFilter] = useState('');
-  const [exercise, setExercise] = useState<Ex>(null);
+  const [exercise, setExercise] = useState<Exercise>(null);
   const [run, setRun] = useState(0);
 
   const picked = useMemo(
@@ -49,8 +50,8 @@ export default function WordsTab({
     (word) =>
       !query || word.fr.toLowerCase().includes(query) || word.ru.toLowerCase().includes(query)
   );
-  const synOk = analysis.pairs.length >= 2;
-  const start = (kind: Ex) => {
+  const hasPairs = analysis.pairs.length >= 2;
+  const start = (kind: Exercise) => {
     setExercise(kind);
     setRun((previous) => previous + 1);
   };
@@ -85,7 +86,7 @@ export default function WordsTab({
             b: pair.b,
             kind: pair.kind,
           }))
-        : picked.map((word, index) => ({ id: 'w' + index, a: word.fr, b: word.ru, word: word }));
+        : picked.map((word, index) => ({ id: 'w' + index, a: word.fr, b: word.ru, word }));
     return (
       <Match
         key={run}
@@ -110,30 +111,56 @@ export default function WordsTab({
   return (
     <>
       <div className="ex-bar">
-        <button className="btn primary" disabled={picked.length < 1} onClick={() => start('quiz')}>
+        <button
+          type="button"
+          className="btn primary"
+          disabled={picked.length < 1}
+          onClick={() => start('quiz')}
+        >
           {t('quiz')}
         </button>
-        <button className="btn" disabled={picked.length < 1} onClick={() => start('cards')}>
+        <button
+          type="button"
+          className="btn"
+          disabled={picked.length < 1}
+          onClick={() => start('cards')}
+        >
           {t('flashcards')}
         </button>
-        <button className="btn" disabled={picked.length < 2} onClick={() => start('match')}>
+        <button
+          type="button"
+          className="btn"
+          disabled={picked.length < 2}
+          onClick={() => start('match')}
+        >
           {t('matchTranslations')}
         </button>
-        {!(hidePairs && !synOk) && (
+        {!(hidePairs && !hasPairs) && (
           <button
+            type="button"
             className="btn"
-            disabled={!synOk}
-            title={synOk ? undefined : t('noPairs')}
+            disabled={!hasPairs}
+            title={hasPairs ? undefined : t('noPairs')}
             onClick={() => start('syn')}
           >
             {t('synonyms')}
           </button>
         )}
-        <button className="btn" disabled={picked.length < 1 || !ai} onClick={() => start('gap')}>
+        <button
+          type="button"
+          className="btn"
+          disabled={picked.length < 1 || !ai}
+          onClick={() => start('gap')}
+        >
           {t('fillGap')}
         </button>
         {canSpeak && (
-          <button className="btn" disabled={picked.length < 1} onClick={() => start('dictation')}>
+          <button
+            type="button"
+            className="btn"
+            disabled={picked.length < 1}
+            onClick={() => start('dictation')}
+          >
             {t('dictation')}
           </button>
         )}
@@ -142,10 +169,11 @@ export default function WordsTab({
         </span>
       </div>
       <div className="sel-bar">
-        <button className="btn ghost" onClick={() => setUnpicked(new Set())}>
+        <button type="button" className="btn ghost" onClick={() => setUnpicked(new Set())}>
           {t('pickAll')}
         </button>
         <button
+          type="button"
           className="btn ghost"
           onClick={() => setUnpicked(new Set(analysis.words.map((word) => word.fr)))}
         >
@@ -205,6 +233,7 @@ export default function WordsTab({
       <p className="legend legend-actions">
         {picked.length > 0 && (
           <button
+            type="button"
             className="btn ghost flush"
             onClick={() => downloadText('words.txt', ankiText(picked))}
             title={t('ankiTitle')}
@@ -213,7 +242,12 @@ export default function WordsTab({
           </button>
         )}
         {onRefresh && (
-          <button className="btn ghost flush" onClick={onRefresh} title={t('refreshTitle')}>
+          <button
+            type="button"
+            className="btn ghost flush"
+            onClick={onRefresh}
+            title={t('refreshTitle')}
+          >
             {t('refresh')}
           </button>
         )}

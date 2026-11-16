@@ -1,5 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { checkAccess, claudeJSON, fail, onlyPost, readImages, MODEL } from './_lib/claude.js';
+
+import { claudeJSON, MODEL, readImages } from './_lib/claude.js';
+import { checkAccess, fail, onlyPost } from './_lib/http.js';
 import { transcribePrompt } from './_lib/prompts.js';
 
 // keep in step with MAX_PAGES in src/components/HandwrittenNotes.tsx

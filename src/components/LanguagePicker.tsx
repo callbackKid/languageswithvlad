@@ -1,4 +1,4 @@
-import { setUiLanguage, UI_LANGUAGES, useTranslation, type UiLanguage } from '../i18n/core';
+import { setUiLanguage, UI_LANGUAGES, type UiLanguage, useTranslation } from '../i18n/core';
 import { app } from '../i18n/messages/app';
 
 /** The dropdown in the top bar that changes the language of the interface. */

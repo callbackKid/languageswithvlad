@@ -1,5 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { checkAccess, claudeJSON, fail, onlyPost, MODEL } from './_lib/claude.js';
+
+import { claudeJSON, MODEL } from './_lib/claude.js';
+import { checkAccess, fail, onlyPost } from './_lib/http.js';
 import { textbookPrompt } from './_lib/prompts.js';
 
 // The app cuts the chosen pages out of the PDF before sending; Vercel refuses bodies over 4.5 MB.

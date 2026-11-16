@@ -12,7 +12,9 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "verify": "yarn lint && yarn format:check && yarn typecheck",
+    "prepare": "husky || true"
   },
   "dependencies": {
     "@excalidraw/excalidraw": "0.18.1",
@@ -37,11 +39,21 @@
     "eslint-plugin-prettier": "5.2.1",
     "eslint-plugin-react": "7.37.3",
     "eslint-plugin-react-hooks": "5.1.0",
+    "eslint-plugin-simple-import-sort": "14.0.0",
     "globals": "15.14.0",
+    "husky": "9.1.7",
+    "lint-staged": "16.2.7",
     "prettier": "3.4.2",
     "typescript": "5.5.3",
     "typescript-eslint": "8.18.2",
-    "vercel": "^65.8.0",
+    "vercel": "65.8.0",
     "vite": "5.3.4"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js}": [
+      "eslint --fix --max-warnings=0",
+      "prettier --write"
+    ],
+    "*.{css,md,json,html}": "prettier --write"
   }
 }

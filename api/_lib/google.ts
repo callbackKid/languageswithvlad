@@ -1,5 +1,7 @@
 import { createSign } from 'node:crypto';
 
+import { HttpError } from './http.js';
+
 /* Writing to Google Docs as a service account: a robot Google account whose key lives in
    the GOOGLE_SERVICE_ACCOUNT env variable (the whole JSON key file). It can edit only the
    documents shared with its email as Editor. */
@@ -9,17 +11,13 @@ interface ServiceAccount {
   private_key: string;
 }
 
+/** What a Google Docs id looks like; only such ids ever reach a Google URL. */
+export const GOOGLE_DOC_ID = /^[a-zA-Z0-9_-]{20,100}$/;
+
 const SCOPE = 'https://www.googleapis.com/auth/documents';
 const TOKEN_URL = 'https://oauth2.googleapis.com/token';
 
-export class GoogleError extends Error {
-  constructor(
-    public status: number,
-    message: string
-  ) {
-    super(message);
-  }
-}
+export class GoogleError extends HttpError {}
 
 export function serviceAccount(): ServiceAccount | null {
   const raw = process.env.GOOGLE_SERVICE_ACCOUNT;

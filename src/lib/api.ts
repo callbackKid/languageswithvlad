@@ -1,7 +1,7 @@
 import { translator } from '../i18n/core';
 import { common } from '../i18n/messages/common';
-import { load } from './storage';
 import type { ImagePayload } from './image';
+import { load } from './storage';
 import type { Language } from './types';
 
 export type FeedbackKind = 'bug' | 'idea' | 'other';

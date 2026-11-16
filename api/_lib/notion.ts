@@ -1,3 +1,5 @@
+import { HttpError } from './http.js';
+
 /* Reads a Notion page as plain text in the same shape as the Google Doc export, so the app finds
    lessons in it the same way ("12.11.2026 1 Leçon" and the lines under it), and appends new
    lessons back. NOTION_TOKEN is the secret of an internal integration (notion.so/my-integrations);
@@ -13,14 +15,7 @@ const MAX_BLOCKS = 4000;
 export const NOTION_ID = /^notion-([0-9a-f]{32})$/;
 
 /** Ends up as the error code the app translates (notion_not_shared and so on). */
-export class NotionError extends Error {
-  constructor(
-    public status: number,
-    message: string
-  ) {
-    super(message);
-  }
-}
+export class NotionError extends HttpError {}
 
 export function notionConfigured(): boolean {
   return !!process.env.NOTION_TOKEN;
@@ -201,6 +196,8 @@ class Reader {
   }
 }
 
+const NOT_A_PAGE = new Set(['notion_validation', 'notion_not_shared']);
+
 const tidy = (lines: string[]) =>
   lines
     .join('\n')
@@ -217,10 +214,17 @@ export async function readNotion(id: string): Promise<{ title: string; text: str
     );
     return { title, text: tidy(await reader.lines(await children(id), 0)) };
   } catch (error) {
-    // a link to a full-page database: its rows are the lessons
-    if (!(error instanceof NotionError) || error.message !== 'notion_validation') throw error;
-    const database: Database = await notion(`/databases/${id}`);
-    return { title: plain(database.title), text: tidy(await reader.database(id, 0)) };
+    // A link to a full-page database, whose rows are the lessons. Notion answers "validation
+    // error" for a database id on the pages endpoint; "not found" is tried too, in case a
+    // database the integration can see is reported that way.
+    if (!(error instanceof NotionError) || !NOT_A_PAGE.has(error.message)) throw error;
+    try {
+      const database: Database = await notion(`/databases/${id}`);
+      return { title: plain(database.title), text: tidy(await reader.database(id, 0)) };
+    } catch (databaseError) {
+      // neither a page nor a database the app can read: report the first, clearer problem
+      throw error.message === 'notion_not_shared' ? error : databaseError;
+    }
   }
 }
 

@@ -1,4 +1,5 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react';
+
 import { useTranslation } from '../i18n/core';
 import { call } from '../i18n/messages/call';
 import { isDark, useSettings } from '../lib/settings';
@@ -38,7 +39,7 @@ export default function LessonBoard({ storageKey }: { storageKey: string }) {
 
   return (
     <section className="call-card lesson-board">
-      <div className="call-notes-head">
+      <div className="call-card-head">
         <h2>{t('boardTitle')}</h2>
         {open && (
           <>

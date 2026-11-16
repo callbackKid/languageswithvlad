@@ -1,0 +1,62 @@
+import { timingSafeEqual } from 'node:crypto';
+
+import type { VercelRequest, VercelResponse } from '@vercel/node';
+
+/* What every endpoint shares: the class-code check, the method check, reading request fields
+   safely, and turning errors into answers. */
+
+/** An error with the HTTP status to answer with. The message goes to the app: either a code
+    it translates ("not_shared", "notion_token") or a sentence it shows as it is. */
+export class HttpError extends Error {
+  constructor(
+    public status: number,
+    message: string
+  ) {
+    super(message);
+  }
+}
+
+/** Compares in constant time, so the answer's timing doesn't leak how much of a guess was right. */
+function sameSecret(given: string, expected: string): boolean {
+  const givenBytes = Buffer.from(given);
+  const expectedBytes = Buffer.from(expected);
+  return givenBytes.length === expectedBytes.length && timingSafeEqual(givenBytes, expectedBytes);
+}
+
+/** Rejects requests without the shared access code (when one is configured). */
+export function checkAccess(request: VercelRequest, response: VercelResponse): boolean {
+  const code = process.env.APP_ACCESS_CODE;
+  if (!code) return true;
+  const given = request.headers['x-access-code'];
+  if (typeof given === 'string' && sameSecret(given, code)) return true;
+  response.status(401).json({ error: 'access_code' });
+  return false;
+}
+
+export function onlyPost(request: VercelRequest, response: VercelResponse): boolean {
+  if (request.method === 'POST') return true;
+  response.setHeader('Allow', 'POST');
+  response.status(405).json({ error: 'method' });
+  return false;
+}
+
+/** Answers with the error's own status and message when it is one of ours, 500 otherwise. */
+export function fail(response: VercelResponse, error: unknown) {
+  if (error instanceof HttpError)
+    return response.status(error.status).json({ error: error.message });
+  console.error(error);
+  return response.status(500).json({ error: 'Something went wrong on the server.' });
+}
+
+/** A request field as trimmed text of at most maxLength characters; "" when it isn't a string. */
+export const text = (value: unknown, maxLength: number): string =>
+  typeof value === 'string' ? value.trim().slice(0, maxLength) : '';
+
+/** CEFR levels, with A0 for a complete beginner. Keep in step with LEVELS in src/lib/settings.ts. */
+export const LEVELS = ['A0', 'A1', 'A2', 'B1', 'B2', 'C1', 'C2'] as const;
+export type Level = (typeof LEVELS)[number];
+/** The level a request asks for, or null when it isn't one. */
+export const asLevel = (value: unknown): Level | null => {
+  const level = text(value, 2).toUpperCase();
+  return LEVELS.includes(level as Level) ? (level as Level) : null;
+};

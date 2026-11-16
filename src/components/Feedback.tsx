@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState, type ClipboardEvent, type DragEvent } from 'react';
-import { api, ApiError, type FeedbackKind } from '../lib/api';
-import { shrinkImage, type ImagePayload } from '../lib/image';
+import { type ClipboardEvent, type DragEvent, useEffect, useRef, useState } from 'react';
+
 import { useTranslation } from '../i18n/core';
 import { common } from '../i18n/messages/common';
 import { talk } from '../i18n/messages/talk';
+import { api, ApiError, type FeedbackKind } from '../lib/api';
+import { type ImagePayload, shrinkImage } from '../lib/image';
 import { getSettings, isDark } from '../lib/settings';
 import { load, save } from '../lib/storage';
 
@@ -46,12 +47,11 @@ export default function Feedback({ docTitle }: { docTitle: string }) {
   const [state, setState] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
   const [error, setError] = useState('');
 
-  const update = (changes: Partial<Draft>) =>
-    setDraft((previous) => {
-      const next = { ...previous, ...changes };
-      save(DRAFT_KEY, next);
-      return next;
-    });
+  const update = (changes: Partial<Draft>) => {
+    const next = { ...draft, ...changes };
+    setDraft(next);
+    save(DRAFT_KEY, next);
+  };
 
   // previews are object URLs; let them go when the form is done with them
   const previews = useRef<string[]>([]);
@@ -186,7 +186,7 @@ export default function Feedback({ docTitle }: { docTitle: string }) {
               ))}
             </div>
 
-            <label className="report-field">
+            <label className="form-field">
               <span>{t('message')}</span>
               <textarea
                 required
@@ -198,7 +198,7 @@ export default function Feedback({ docTitle }: { docTitle: string }) {
               />
             </label>
 
-            <div className="report-field">
+            <div className="form-field">
               <span>{t('pictures')}</span>
               <div className="report-pictures">
                 {pictures.map((picture, index) => (
@@ -233,7 +233,7 @@ export default function Feedback({ docTitle }: { docTitle: string }) {
               <small className="hint">{t('picturesHint', { count: MAX_PICTURES })}</small>
             </div>
 
-            <label className="report-field">
+            <label className="form-field">
               <span>{t('contact')}</span>
               <input
                 type="text"

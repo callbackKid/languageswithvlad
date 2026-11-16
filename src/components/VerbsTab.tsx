@@ -1,18 +1,19 @@
 import { useEffect, useRef, useState } from 'react';
-import { api, ApiError } from '../lib/api';
-import { grade, type Grade } from '../lib/grade';
-import { conjKey, readConj } from '../lib/bank';
-import { negate } from '../lib/negation';
-import { normConj } from '../lib/parse';
-import { recordForm } from '../lib/progress';
-import { verbForms, type FormQ } from '../lib/quiz';
-import { save } from '../lib/storage';
-import { TENSES, type Conjugation, type Form, type Tense, type VerbRef } from '../lib/types';
-import { shuffle } from '../lib/util';
+
 import { useTranslation } from '../i18n/core';
 import { common } from '../i18n/messages/common';
 import { exercises } from '../i18n/messages/exercises';
-import ExHead from './ExHead';
+import { api, ApiError } from '../lib/api';
+import { conjugationKey, readConjugation } from '../lib/bank';
+import { type Grade, grade } from '../lib/grade';
+import { negate } from '../lib/negation';
+import { normalizeConjugation } from '../lib/parse';
+import { recordForm } from '../lib/progress';
+import { type FormQuestion, verbForms } from '../lib/quiz';
+import { save } from '../lib/storage';
+import { type Conjugation, type Form, type Tense, TENSES, type VerbRef } from '../lib/types';
+import { shuffle } from '../lib/util';
+import ExerciseHead from './ExerciseHead';
 import Speak from './Speak';
 import WaitingFact from './WaitingFact';
 
@@ -33,7 +34,7 @@ export default function VerbsTab({
   const [conjugations, setConjugations] = useState<Record<string, Conjugation>>(() => {
     const out: Record<string, Conjugation> = {};
     for (const verb of verbs) {
-      const conjugation = readConj(verb.inf);
+      const conjugation = readConjugation(verb.inf);
       if (conjugation) out[verb.inf] = conjugation;
     }
     return out;
@@ -48,7 +49,7 @@ export default function VerbsTab({
     if (status[verb.inf] === 'loading') return;
     if (!fresh) {
       if (conjugations[verb.inf]) return;
-      const cached = readConj(verb.inf);
+      const cached = readConjugation(verb.inf);
       if (cached) {
         setConjugations((previous) => ({ ...previous, [verb.inf]: cached }));
         return;
@@ -63,8 +64,11 @@ export default function VerbsTab({
     }
     setStatus((previous) => ({ ...previous, [verb.inf]: 'loading' }));
     try {
-      const conjugation = normConj(await api.conjugate(verb.inf, verb.ru, fresh), verb.inf);
-      save(conjKey(verb.inf), conjugation);
+      const conjugation = normalizeConjugation(
+        await api.conjugate(verb.inf, verb.ru, fresh),
+        verb.inf
+      );
+      save(conjugationKey(verb.inf), conjugation);
       setConjugations((previous) => ({ ...previous, [verb.inf]: conjugation }));
       setStatus((previous) => {
         const copy = { ...previous };
@@ -103,10 +107,11 @@ export default function VerbsTab({
       <div className="verbs">
         {verbs.map((verb) => (
           <button
+            type="button"
             key={verb.inf}
             className="verb"
             aria-pressed={currentVerb === verb.inf}
-            onClick={() => open(verb)}
+            onClick={() => void open(verb)}
           >
             <span className="fr" lang="fr">
               {verb.inf}
@@ -118,7 +123,12 @@ export default function VerbsTab({
         ))}
       </div>
       <div className="row-actions quiz-bar">
-        <button className="btn" disabled={!loaded.length} onClick={() => setMode('quiz')}>
+        <button
+          type="button"
+          className="btn"
+          disabled={!loaded.length}
+          onClick={() => setMode('quiz')}
+        >
           {t('quickQuiz')}
         </button>
         <span className="hint">
@@ -136,6 +146,7 @@ export default function VerbsTab({
         <div className="note err">
           <p>{shownStatus}</p>
           <button
+            type="button"
             className="btn"
             onClick={() => {
               const verb = verbs.find((candidate) => candidate.inf === currentVerb);
@@ -180,6 +191,7 @@ export default function VerbsTab({
                 {' '}
                 ·{' '}
                 <button
+                  type="button"
                   className="btn ghost flush inline"
                   title={t('conjugateAgainTitle')}
                   onClick={() => {
@@ -195,6 +207,7 @@ export default function VerbsTab({
           <div className="tense-tabs" role="group" aria-label={t('tense')}>
             {TENSES.map((tenseOption) => (
               <button
+                type="button"
                 key={tenseOption}
                 aria-pressed={tense === tenseOption}
                 disabled={!(shownConjugation.tenses[tenseOption] || []).length}
@@ -205,10 +218,10 @@ export default function VerbsTab({
             ))}
           </div>
           <div className="tense-tabs" role="group" aria-label={t('sentenceType')}>
-            <button aria-pressed={!negative} onClick={() => setNegative(false)}>
+            <button type="button" aria-pressed={!negative} onClick={() => setNegative(false)}>
               {t('affirmative')}
             </button>
-            <button aria-pressed={negative} onClick={() => setNegative(true)}>
+            <button type="button" aria-pressed={negative} onClick={() => setNegative(true)}>
               {commonText.t('negative')}
             </button>
           </div>
@@ -238,7 +251,7 @@ export default function VerbsTab({
                 </tbody>
               </table>
               <div className="row-actions">
-                <button className="btn primary" onClick={() => setMode('drill')}>
+                <button type="button" className="btn primary" onClick={() => setMode('drill')}>
                   {t('practiseTense')}
                 </button>
               </div>
@@ -370,7 +383,7 @@ function Drill({
   );
 }
 
-function makeQuiz(conjugations: Conjugation[]): FormQ[] {
+function makeQuiz(conjugations: Conjugation[]): FormQuestion[] {
   return shuffle(conjugations.flatMap(verbForms)).slice(0, 10);
 }
 
@@ -388,11 +401,11 @@ function Quiz({ conjugations, onClose }: { conjugations: Conjugation[]; onClose:
   }, [index]);
 
   const head = (
-    <ExHead title={t('quickQuiz')} onClose={onClose} closeLabel={t('backToVerbs')}>
+    <ExerciseHead title={t('quickQuiz')} onClose={onClose} closeLabel={t('backToVerbs')}>
       <span className="progress">
         {Math.min(index + 1, questions.length)} / {questions.length}
       </span>
-    </ExHead>
+    </ExerciseHead>
   );
   const question = questions[index];
   // past the last question: the round is over
@@ -403,6 +416,7 @@ function Quiz({ conjugations, onClose }: { conjugations: Conjugation[]; onClose:
         <p className="score">{commonText.t('scoreLine', { score, total: questions.length })}</p>
         <div className="row-actions">
           <button
+            type="button"
             className="btn primary"
             onClick={() => {
               setQuestions(makeQuiz(conjugations));

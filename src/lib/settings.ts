@@ -1,15 +1,18 @@
 import { useSyncExternalStore } from 'react';
+
 import type { Section } from './sections';
 import { load, save } from './storage';
-import { LANGUAGES, type Language } from './types';
+import { type Language, LANGUAGES } from './types';
 
 /* The student's settings, saved in this browser. The interface language has its own store
    (src/i18n/core.tsx); everything else lives here. */
 
 export const LEVELS = ['A0', 'A1', 'A2', 'B1', 'B2', 'C1', 'C2'] as const;
 export type Level = (typeof LEVELS)[number];
-export type Theme = 'system' | 'light' | 'dark';
-export type SpeechSpeed = 'normal' | 'slow';
+export const THEMES = ['system', 'light', 'dark'] as const;
+export type Theme = (typeof THEMES)[number];
+export const SPEECH_SPEEDS = ['normal', 'slow'] as const;
+export type SpeechSpeed = (typeof SPEECH_SPEEDS)[number];
 export const DAILY_GOALS = [10, 20, 30, 50] as const;
 
 /** Sections that can't be hidden: the way back to everything else. */
@@ -49,12 +52,22 @@ function sanitize(raw: Partial<Settings> | null): Settings {
   const studying = (Array.isArray(value.studying) ? value.studying : []).filter((language) =>
     LANGUAGES.includes(language)
   );
+  const storedLevels: Partial<Record<Language, unknown>> = value.levels ?? {};
+  const levels = { ...DEFAULTS.levels };
+  for (const language of LANGUAGES) {
+    const level = storedLevels[language];
+    if (LEVELS.includes(level as Level)) levels[language] = level as Level;
+  }
   return {
-    ...value,
     studying: studying.length ? studying : DEFAULTS.studying,
-    levels: { ...DEFAULTS.levels, ...value.levels },
-    theme: ['system', 'light', 'dark'].includes(value.theme) ? value.theme : 'system',
-    dailyGoal: DAILY_GOALS.includes(value.dailyGoal as never) ? value.dailyGoal : 20,
+    levels,
+    theme: THEMES.includes(value.theme) ? value.theme : DEFAULTS.theme,
+    name: typeof value.name === 'string' ? value.name : '',
+    avatar: typeof value.avatar === 'string' ? value.avatar : '',
+    dailyGoal: DAILY_GOALS.includes(value.dailyGoal as (typeof DAILY_GOALS)[number])
+      ? value.dailyGoal
+      : DEFAULTS.dailyGoal,
+    speechSpeed: SPEECH_SPEEDS.includes(value.speechSpeed) ? value.speechSpeed : 'normal',
     hidden: Array.isArray(value.hidden) ? value.hidden : [],
   };
 }
@@ -69,18 +82,20 @@ const prefersDark = () =>
 export const isDark = (settings: Settings = current) =>
   settings.theme === 'dark' || (settings.theme === 'system' && prefersDark());
 
-/** The page reads data-theme: no attribute follows the system, "light"/"dark" force one. */
+/** The page reads data-theme ("light" or "dark"): the chosen theme, or the system's. */
 function applyTheme(settings: Settings) {
   if (typeof document === 'undefined') return;
-  if (settings.theme === 'system') delete document.documentElement.dataset.theme;
-  else document.documentElement.dataset.theme = settings.theme;
+  document.documentElement.dataset.theme = isDark(settings) ? 'dark' : 'light';
 }
 applyTheme(current);
 if (typeof window !== 'undefined')
-  // components that draw in the theme's colours (the board) re-render when the system switches
-  window
-    .matchMedia('(prefers-color-scheme: dark)')
-    .addEventListener('change', () => listeners.forEach((listener) => listener()));
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+    applyTheme(current);
+    // a new object, or subscribers would see the same snapshot and skip the re-render
+    // (the board draws in the theme's colours)
+    current = { ...current };
+    listeners.forEach((listener) => listener());
+  });
 
 export const getSettings = () => current;
 

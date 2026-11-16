@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { useTranslation, type UiLanguage } from '../i18n/core';
+
+import { getUiLanguage, translator, type UiLanguage, useTranslation } from '../i18n/core';
 import { call } from '../i18n/messages/call';
 import { api, ApiError } from '../lib/api';
 
@@ -24,7 +25,7 @@ export default function ZoomCall({
   userName: string;
   onLeave: () => void;
 }) {
-  const { t, language } = useTranslation(call);
+  const { t } = useTranslation(call);
   const root = useRef<HTMLDivElement>(null);
   const [state, setState] = useState<'joining' | 'in' | 'error'>('joining');
   const [error, setError] = useState('');
@@ -45,7 +46,8 @@ export default function ZoomCall({
       };
       await client.init({
         zoomAppRoot: root.current ?? undefined,
-        language: ZOOM_LANGUAGES[language],
+        // the language at the moment of joining; changing it later doesn't restart the call
+        language: ZOOM_LANGUAGES[getUiLanguage()],
         patchJsMedia: true,
         leaveOnPageUnload: true,
         customize: {
@@ -62,14 +64,12 @@ export default function ZoomCall({
         failure instanceof ApiError
           ? failure.message
           : String((failure as { reason?: string } | null)?.reason ?? failure);
-      setError(t('zoomFailed', { reason }));
+      setError(translator(call).t('zoomFailed', { reason }));
     });
     return () => {
       cancelled = true;
       leave?.();
     };
-    // joins once per meeting; the language and texts don't restart the call
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [meetingNumber, passcode, userName]);
 
   return (

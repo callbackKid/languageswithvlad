@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+
 import { useTranslation } from '../i18n/core';
 import { call } from '../i18n/messages/call';
 import type { Bank } from '../lib/bank';
@@ -8,6 +9,7 @@ import { lessonPath } from '../lib/sections';
 import { getSettings } from '../lib/settings';
 import { load, remove, save } from '../lib/storage';
 import type { Lesson } from '../lib/types';
+import { hash } from '../lib/util';
 import AddToDoc, { type DocTarget } from './AddToDoc';
 import LessonBoard from './LessonBoard';
 import PageHead from './PageHead';
@@ -101,7 +103,7 @@ function CallPanel({ docText, zoomReady }: { docText: string; zoomReady: boolean
               setJoined(true);
             }}
           >
-            <label className="report-field">
+            <label className="form-field">
               <span>{t('yourName')}</span>
               <input
                 type="text"
@@ -111,7 +113,7 @@ function CallPanel({ docText, zoomReady }: { docText: string; zoomReady: boolean
                 onChange={(event) => setName(event.target.value)}
               />
             </label>
-            <label className="report-field">
+            <label className="form-field">
               <span>{t('passcode')}</span>
               <input
                 type="text"
@@ -163,7 +165,7 @@ function LessonNotes({ docId, target }: { docId: string; target: DocTarget }) {
 
   return (
     <section className="call-card call-notes">
-      <div className="call-notes-head">
+      <div className="call-card-head">
         <h2>{t('notesTitle')}</h2>
         <button type="button" className="btn ghost" onClick={insertTime}>
           {t('insertTime')}
@@ -190,7 +192,8 @@ function LessonNotes({ docId, target }: { docId: string; target: DocTarget }) {
         aria-label={t('notesTitle')}
         onChange={(event) => change(event.target.value)}
       />
-      <AddToDoc key={text ? 'notes' : 'empty'} target={target} lines={text.split('\n')} />
+      {/* a new key per text: after "Added", editing the notes makes the button live again */}
+      <AddToDoc key={hash(text)} target={target} lines={text.split('\n')} />
     </section>
   );
 }
@@ -201,7 +204,7 @@ function LessonWords({ bank, lesson }: { bank: Bank; lesson: Lesson | null }) {
   const words = lesson ? bank.words.filter((word) => word.lesson === lesson.key) : [];
   return (
     <section className="call-card">
-      <div className="call-notes-head">
+      <div className="call-card-head">
         <h2>{t('wordsTitle')}</h2>
         {lesson && (
           <a

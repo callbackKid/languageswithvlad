@@ -11,6 +11,9 @@ React + TypeScript + Vite in the browser, small Vercel serverless functions in `
 - [Deploy](#deploy)
 - [Using it with students](#using-it-with-students)
 - [Optional: adding lessons from photos to the Google Doc](#optional-adding-lessons-from-photos-to-the-google-doc)
+- [Optional: feedback from students in Telegram](#optional-feedback-from-students-in-telegram)
+- [Optional: lessons in Notion](#optional-lessons-in-notion)
+- [Optional: Zoom calls inside the app](#optional-zoom-calls-inside-the-app)
 - [Pages](#pages)
 - [Local development](#local-development)
 - [Project structure](#project-structure)
@@ -184,14 +187,20 @@ yarn start   # the UI and the api/ functions together (vercel dev)
 | `yarn typecheck`                    | Type-checks the app and the API functions.                    |
 | `yarn lint` / `yarn lint:fix`       | ESLint (with Prettier as a rule); `:fix` repairs what it can. |
 | `yarn format` / `yarn format:check` | Prettier on every file, or only a check.                      |
+| `yarn verify`                       | Lint, format check and typecheck in one go.                   |
 
 In VS Code, the workspace settings in `.vscode/` format and fix files on save (needs the ESLint and Prettier extensions, which VS Code suggests).
+
+### Code style
+
+The rules for the code are in [CODE_STYLE.md](CODE_STYLE.md). A pre-commit hook (`.husky/pre-commit`, installed by `yarn install`) enforces the checkable ones: it fixes and lints the staged files, then type-checks the whole project. A commit that fails is refused; fix what it reports, or run `yarn lint:fix`, and commit again.
 
 ## Project structure
 
 ```
 api/                serverless functions (Vercel)
-  _lib/claude.ts    calls to Claude, access code check, photo checks
+  _lib/http.ts      what every endpoint shares: class code check, input reading, errors
+  _lib/claude.ts    calls to Claude, photo checks
   _lib/google.ts    writing to Google Docs with the service account
   _lib/prompts.ts   every prompt sent to Claude
   _lib/telegram.ts  sending feedback to the teacher’s Telegram

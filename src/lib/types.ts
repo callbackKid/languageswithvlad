@@ -1,11 +1,7 @@
-/** The language a lesson teaches; translations are always Russian. */
+/** The language a lesson teaches; translations are always Russian. Its name in each interface
+    language is in i18n/messages/common.ts ("name.<code>"). */
 export type Language = 'fr' | 'en' | 'de';
 export const LANGUAGES: Language[] = ['fr', 'en', 'de'];
-export const LANGUAGE_NAMES: Record<Language, string> = {
-  fr: 'French',
-  en: 'English',
-  de: 'German',
-};
 export const asLanguage = (value: unknown): Language =>
   LANGUAGES.includes(value as Language) ? (value as Language) : 'fr';
 

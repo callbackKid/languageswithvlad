@@ -1,26 +1,25 @@
 import { useState } from 'react';
+
 import { setUiLanguage, UI_LANGUAGES, useTranslation } from '../i18n/core';
 import { app } from '../i18n/messages/app';
 import { learning } from '../i18n/messages/common';
 import { settingsText } from '../i18n/messages/settings';
 import { shrinkImage } from '../lib/image';
-import { SECTIONS } from '../lib/sections';
+import { type Section, SECTIONS } from '../lib/sections';
 import {
   ALWAYS_SHOWN,
   DAILY_GOALS,
+  type Level,
   LEVELS,
+  SPEECH_SPEEDS,
+  THEMES,
   updateSettings,
   useSettings,
-  type Level,
-  type SpeechSpeed,
-  type Theme,
 } from '../lib/settings';
 import { canSpeak, speak } from '../lib/speech';
-import { LANGUAGES, type Language } from '../lib/types';
+import { type Language, LANGUAGES } from '../lib/types';
 import PageHead from './PageHead';
 
-const THEMES: Theme[] = ['system', 'light', 'dark'];
-const SPEEDS: SpeechSpeed[] = ['normal', 'slow'];
 // a sentence to try the voice with
 const SAMPLES: Record<Language, string> = {
   fr: 'Bonjour, comment ça va ?',
@@ -64,7 +63,7 @@ export default function Settings() {
       : [...settings.studying, language];
     if (studying.length) updateSettings({ studying });
   };
-  const toggleSection = (section: (typeof SECTIONS)[number]['id']) =>
+  const toggleSection = (section: Section) =>
     updateSettings({
       hidden: settings.hidden.includes(section)
         ? settings.hidden.filter((hidden) => hidden !== section)
@@ -109,7 +108,7 @@ export default function Settings() {
                 {t('pictureFailed')}
               </p>
             )}
-            <label className="report-field">
+            <label className="form-field">
               <span>{t('name')}</span>
               <input
                 type="text"
@@ -220,7 +219,7 @@ export default function Settings() {
           <div className="settings-row">
             <span className="settings-label">{t('speechSpeed')}</span>
             <div className="seg" role="group" aria-label={t('speechSpeed')}>
-              {SPEEDS.map((speed) => (
+              {SPEECH_SPEEDS.map((speed) => (
                 <button
                   key={speed}
                   type="button"

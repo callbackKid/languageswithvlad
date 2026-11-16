@@ -1,4 +1,5 @@
-import { useEffect, useState, type ReactNode } from 'react';
+import { type ReactNode, useEffect, useState } from 'react';
+
 import { useTranslation } from '../i18n/core';
 import { common } from '../i18n/messages/common';
 import { FACTS } from '../lib/facts';

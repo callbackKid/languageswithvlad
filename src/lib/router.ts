@@ -1,4 +1,4 @@
-import { useSyncExternalStore, type MouseEvent } from 'react';
+import { type MouseEvent, useSyncExternalStore } from 'react';
 
 /* A tiny router on top of the browser's History API: the path is the state, links push a new
    entry, Back and Forward pop one. The query string (?doc=…) is kept on every navigation. */

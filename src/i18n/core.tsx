@@ -1,4 +1,5 @@
-import { Fragment, useSyncExternalStore, type ReactNode } from 'react';
+import { Fragment, type ReactNode, useSyncExternalStore } from 'react';
+
 import { load, save } from '../lib/storage';
 
 /** The language of the interface (buttons, hints, the Tutorial). Translations of words stay Russian. */
@@ -138,13 +139,25 @@ export interface Translator<Keys extends string> {
   locale: string;
 }
 
+// One translator per dictionary and language, so t and rich keep their identity between
+// renders and are safe in dependency lists.
+const translators = new WeakMap<object, Partial<Record<UiLanguage, Translator<string>>>>();
+
 export function translator<Keys extends string>(
   messages: Messages<Keys>,
   language: UiLanguage = current
 ): Translator<Keys> {
+  let byLanguage = translators.get(messages);
+  if (!byLanguage) {
+    byLanguage = {};
+    translators.set(messages, byLanguage);
+  }
+  const cached = byLanguage[language];
+  if (cached) return cached as Translator<Keys>;
+
   const text = (key: Keys, params?: Params) =>
     pickForm(messages[language][key] ?? messages.en[key], language, params);
-  return {
+  const created: Translator<Keys> = {
     t: (key, params) => fill(text(key, params), params),
     rich: (key, tags = {}, values = {}) => {
       const count = values.count;
@@ -153,6 +166,8 @@ export function translator<Keys extends string>(
     language,
     locale: LOCALES[language],
   };
+  byLanguage[language] = created as Translator<string>;
+  return created;
 }
 
 /** The texts of one area in the chosen language; the component re-renders when it changes. */

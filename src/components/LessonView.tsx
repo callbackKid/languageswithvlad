@@ -1,16 +1,17 @@
 import { useEffect, useMemo, useState } from 'react';
-import { api, ApiError } from '../lib/api';
-import { analysisKey, readAnalysis } from '../lib/bank';
-import { localParse, normAnalysis } from '../lib/parse';
-import { save } from '../lib/storage';
-import type { Analysis, Lesson } from '../lib/types';
-import { useTranslation } from '../i18n/core';
+
+import { translator, useTranslation } from '../i18n/core';
 import { common } from '../i18n/messages/common';
 import { paper } from '../i18n/messages/paper';
-import WordsTab from './WordsTab';
-import VerbsTab from './VerbsTab';
+import { api, ApiError } from '../lib/api';
+import { analysisKey, readAnalysis } from '../lib/bank';
+import { localParse, normalizeAnalysis } from '../lib/parse';
+import { save } from '../lib/storage';
+import type { Analysis, Lesson } from '../lib/types';
 import Notes from './Notes';
+import VerbsTab from './VerbsTab';
 import WaitingFact from './WaitingFact';
+import WordsTab from './WordsTab';
 
 type Tab = 'words' | 'verbs' | 'notes' | 'source';
 
@@ -52,7 +53,7 @@ export default function LessonView({
     api
       .analyze(lesson.body, fresh > 0)
       .then((raw) => {
-        const prepared = normAnalysis(raw);
+        const prepared = normalizeAnalysis(raw);
         save(analysisKey(lesson.hash), prepared);
         onAnalysis?.(lesson.key, prepared);
         if (alive) {
@@ -63,13 +64,15 @@ export default function LessonView({
       .catch((failure) => {
         if (alive) {
           setState('error');
-          setError(failure instanceof ApiError ? failure.message : commonText.t('unreadable'));
+          // read at the moment of failure, so the effect doesn't depend on the language
+          setError(
+            failure instanceof ApiError ? failure.message : translator(common).t('unreadable')
+          );
         }
       });
     return () => {
       alive = false;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- the message is read when it fails
   }, [lesson.hash, lesson.key, lesson.body, ai, fresh, onAnalysis]);
 
   // Words carry their lesson so progress and stats can group by lesson.
@@ -86,8 +89,14 @@ export default function LessonView({
     [analysis, lesson.key]
   );
 
-  const tabBtn = (id: Tab, label: string, count?: number) => (
-    <button className="tab" role="tab" aria-selected={tab === id} onClick={() => setTab(id)}>
+  const tabButton = (id: Tab, label: string, count?: number) => (
+    <button
+      type="button"
+      className="tab"
+      role="tab"
+      aria-selected={tab === id}
+      onClick={() => setTab(id)}
+    >
       {label}
       {count !== undefined && <span className="count">{count}</span>}
     </button>
@@ -100,7 +109,7 @@ export default function LessonView({
     note = (
       <div className="note err">
         <p>{error}</p>
-        <button className="btn" onClick={() => setFresh((previous) => previous + 1)}>
+        <button type="button" className="btn" onClick={() => setFresh((previous) => previous + 1)}>
           {commonText.t('tryAgain')}
         </button>
       </div>
@@ -128,10 +137,10 @@ export default function LessonView({
       </section>
       <section className="panel">
         <div className="tabs" role="tablist">
-          {tabBtn('words', t('words'), analysis?.words.length ?? 0)}
-          {tabBtn('verbs', t('verbs'), analysis?.verbs.length ?? 0)}
-          {tabBtn('notes', t('myNotes'))}
-          {tabBtn('source', t('original'))}
+          {tabButton('words', t('words'), analysis?.words.length ?? 0)}
+          {tabButton('verbs', t('verbs'), analysis?.verbs.length ?? 0)}
+          {tabButton('notes', t('myNotes'))}
+          {tabButton('source', t('original'))}
         </div>
         <div className="body">
           {(tab === 'words' || tab === 'verbs') && note}

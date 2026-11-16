@@ -1,24 +1,24 @@
-import { readConj } from './bank';
-import { canSpeak } from './speech';
+import { readConjugation } from './bank';
 import { negate } from './negation';
 import { formKey, isLearned, type Progress, wordKey } from './progress';
-import { TENSES, type Conjugation, type Tense, type VerbRef, type Word } from './types';
+import { canSpeak } from './speech';
+import { type Conjugation, type Tense, TENSES, type VerbRef, type Word } from './types';
 import { shuffle } from './util';
 
-export interface FormQ {
+export interface FormQuestion {
   inf: string;
   t: Tense;
   p: string;
   f: string;
   negative?: boolean;
 }
-export type QItem =
+export type QuizItem =
   | { kind: 'pick-ru'; word: Word; choices: string[] }
   | { kind: 'pick-fr'; word: Word; choices: string[] }
   | { kind: 'type-fr'; word: Word }
   /** dictation: the word is read aloud and typed */
   | { kind: 'listen'; word: Word }
-  | { kind: 'form'; form: FormQ };
+  | { kind: 'form'; form: FormQuestion };
 
 const DAY = 86400000;
 
@@ -55,8 +55,8 @@ export function pickWords(words: Word[], progress: Progress, count: number): Wor
 }
 
 /** Every form of a verb, affirmative and negative. */
-export function verbForms(conjugation: Conjugation): FormQ[] {
-  const all: FormQ[] = [];
+export function verbForms(conjugation: Conjugation): FormQuestion[] {
+  const all: FormQuestion[] = [];
   for (const tense of TENSES)
     for (const form of conjugation.tenses[tense] || []) {
       all.push({ inf: conjugation.inf, t: tense, p: form.p, f: form.f });
@@ -66,10 +66,10 @@ export function verbForms(conjugation: Conjugation): FormQ[] {
 }
 
 /** Forms of the verbs whose tables the student has opened, missed forms more often. */
-export function pickForms(verbs: VerbRef[], progress: Progress, count: number): FormQ[] {
-  const all: FormQ[] = [];
+export function pickForms(verbs: VerbRef[], progress: Progress, count: number): FormQuestion[] {
+  const all: FormQuestion[] = [];
   for (const verb of verbs) {
-    const conjugation = readConj(verb.inf);
+    const conjugation = readConjugation(verb.inf);
     if (conjugation) all.push(...verbForms(conjugation));
   }
   return weighted(
@@ -134,13 +134,13 @@ function distractors(word: Word, pool: Word[], side: 'fr' | 'ru'): string[] | nu
 }
 
 /** Every word read aloud once, to be typed. */
-export function buildDictation(targets: Word[]): QItem[] {
+export function buildDictation(targets: Word[]): QuizItem[] {
   return shuffle(targets).map((word) => ({ kind: 'listen' as const, word }));
 }
 
-export function buildQuiz(targets: Word[], pool: Word[], forms: FormQ[] = []): QItem[] {
+export function buildQuiz(targets: Word[], pool: Word[], forms: FormQuestion[] = []): QuizItem[] {
   // every question starts from or ends at the translation
-  const items: QItem[] = targets
+  const items: QuizItem[] = targets
     .filter((word) => word.ru)
     .map((word) => {
       const roll = Math.random();

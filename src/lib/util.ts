@@ -16,10 +16,8 @@ export const hash = (text: string): string => {
   return (digest >>> 0).toString(36);
 };
 export const asText = (value: unknown): string => (typeof value === 'string' ? value.trim() : '');
-export const plural = (count: number, one: string, many = one + 's') =>
-  `${count} ${count === 1 ? one : many}`;
 
-// Saves text as a file in the browser's downloads.
+/** Saves text as a file in the browser's downloads. */
 export function downloadText(filename: string, text: string, type = 'text/plain') {
   const url = URL.createObjectURL(new Blob([text], { type: type + ';charset=utf-8' }));
   const link = document.createElement('a');

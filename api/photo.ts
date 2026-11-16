@@ -1,5 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { checkAccess, claudeJSON, fail, onlyPost, readImages, MODEL } from './_lib/claude.js';
+
+import { claudeJSON, MODEL, readImages } from './_lib/claude.js';
+import { checkAccess, fail, onlyPost } from './_lib/http.js';
 import { photoPrompt } from './_lib/prompts.js';
 
 /** Reads the words a learner underlined on a photo of a book page. */

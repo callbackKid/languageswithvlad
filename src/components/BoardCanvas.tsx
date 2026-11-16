@@ -1,7 +1,9 @@
-import { Excalidraw, exportToBlob } from '@excalidraw/excalidraw';
 import '@excalidraw/excalidraw/index.css';
+
+import { Excalidraw, exportToBlob } from '@excalidraw/excalidraw';
 import type { ExcalidrawImperativeAPI } from '@excalidraw/excalidraw/types';
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
+
 import type { UiLanguage } from '../i18n/core';
 import { load, save } from '../lib/storage';
 
@@ -32,12 +34,18 @@ export default function BoardCanvas({
   dark: boolean;
   onReady: (handle: BoardHandle) => void;
 }) {
-  const api = useRef<ExcalidrawImperativeAPI | null>(null);
   const timer = useRef<number>();
   const initial = useRef(load<Saved>(storageKey));
+  // the newest drawing not written to storage yet (saving waits for a pause in drawing)
+  const unsaved = useRef<Saved | null>(null);
 
-  // keep the last drawing even if the page closes during the short save delay
-  useEffect(() => () => window.clearTimeout(timer.current), []);
+  const flush = useCallback(() => {
+    window.clearTimeout(timer.current);
+    if (unsaved.current) save(storageKey, unsaved.current);
+    unsaved.current = null;
+  }, [storageKey]);
+  // the last strokes are kept even when the board closes during the short save delay
+  useEffect(() => flush, [flush]);
 
   return (
     <Excalidraw
@@ -53,8 +61,7 @@ export default function BoardCanvas({
           : null
       }
       UIOptions={{ canvasActions: { loadScene: false, saveToActiveFile: false } }}
-      excalidrawAPI={(instance) => {
-        api.current = instance;
+      excalidrawAPI={(instance: ExcalidrawImperativeAPI) => {
         onReady({
           picture: async () => {
             const elements = instance.getSceneElements();
@@ -68,19 +75,16 @@ export default function BoardCanvas({
           },
           clear: () => {
             instance.resetScene();
-            save(storageKey, { elements: [], files: {} });
+            unsaved.current = { elements: [], files: {} };
+            flush();
           },
         });
       }}
       onChange={(elements, _appState, files) => {
+        // pictures pasted on the board can be large; storage may refuse them, the drawing stays
+        unsaved.current = { elements: elements.filter((element) => !element.isDeleted), files };
         window.clearTimeout(timer.current);
-        timer.current = window.setTimeout(() => {
-          // pictures pasted on the board can be large; storage may refuse them, the drawing stays
-          save(storageKey, {
-            elements: elements.filter((element) => !element.isDeleted),
-            files,
-          });
-        }, 400);
+        timer.current = window.setTimeout(flush, 400);
       }}
     />
   );

@@ -1,11 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { checkAccess, onlyPost } from './_lib/claude.js';
-import {
-  sendWithPhotos,
-  telegramConfigured,
-  TelegramError,
-  type TelegramPhoto,
-} from './_lib/telegram.js';
+
+import { checkAccess, fail, onlyPost, text } from './_lib/http.js';
+import { sendWithPhotos, telegramConfigured, type TelegramPhoto } from './_lib/telegram.js';
 
 const KINDS: Record<string, string> = {
   bug: '🐞 Bug report',
@@ -23,14 +19,14 @@ const RECENT_WINDOW = 10 * 60 * 1000;
 const recent = new Map<string, number[]>();
 function tooMany(visitor: string): boolean {
   const now = Date.now();
+  // forget visitors whose reports are all old, so the list doesn't grow for ever
+  for (const [known, times] of recent)
+    if (times.every((time) => now - time >= RECENT_WINDOW)) recent.delete(known);
   const times = (recent.get(visitor) ?? []).filter((time) => now - time < RECENT_WINDOW);
   times.push(now);
   recent.set(visitor, times);
   return times.length > RECENT_LIMIT;
 }
-
-const text = (value: unknown, maxLength: number) =>
-  typeof value === 'string' ? value.trim().slice(0, maxLength) : '';
 
 function readPhotos(raw: unknown): TelegramPhoto[] | string {
   const list = Array.isArray(raw) ? raw : [];
@@ -91,8 +87,6 @@ export default async function handler(request: VercelRequest, response: VercelRe
     await sendWithPhotos(report, photos);
     response.status(200).json({ ok: true });
   } catch (error) {
-    if (error instanceof TelegramError) return response.status(502).json({ error: error.message });
-    console.error(error);
-    response.status(500).json({ error: 'Something went wrong on the server.' });
+    fail(response, error);
   }
 }

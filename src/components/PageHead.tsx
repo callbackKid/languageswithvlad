@@ -1,7 +1,8 @@
 import type { ReactNode } from 'react';
-import type { Bank } from '../lib/bank';
+
 import { useTranslation } from '../i18n/core';
 import { common } from '../i18n/messages/common';
+import type { Bank } from '../lib/bank';
 
 export default function PageHead({ title, children }: { title: string; children?: ReactNode }) {
   return (

@@ -1,23 +1,25 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { NOTION_ID, NotionError, readNotion } from './_lib/notion.js';
+
+import { GOOGLE_DOC_ID } from './_lib/google.js';
+import { checkAccess, fail } from './_lib/http.js';
+import { NOTION_ID, readNotion } from './_lib/notion.js';
 
 /** Reads a Google Doc shared as "Anyone with the link can view", or a Notion page, as plain text. */
 export default async function handler(request: VercelRequest, response: VercelResponse) {
+  // the class code guards the lessons too: with Notion connected, this reads private pages
+  if (!checkAccess(request, response)) return;
   const id = String(request.query.id || '');
+  response.setHeader('Cache-Control', 'no-store');
   const notionId = id.match(NOTION_ID)?.[1];
   if (notionId) {
     try {
-      response.setHeader('Cache-Control', 'no-store');
       return response.status(200).json(await readNotion(notionId));
     } catch (error) {
-      if (error instanceof NotionError)
-        return response.status(error.status).json({ error: error.message });
-      console.error(error);
-      return response.status(502).json({ error: 'notion_unreachable' });
+      return fail(response, error);
     }
   }
   // Only real Docs ids reach the outgoing URL.
-  if (!/^[a-zA-Z0-9_-]{20,100}$/.test(id)) return response.status(400).json({ error: 'bad_id' });
+  if (!GOOGLE_DOC_ID.test(id)) return response.status(400).json({ error: 'bad_id' });
 
   try {
     const googleResponse = await fetch(
@@ -47,7 +49,6 @@ export default async function handler(request: VercelRequest, response: VercelRe
       }
       title = title.replace(/\.txt$/i, '');
     }
-    response.setHeader('Cache-Control', 'no-store');
     return response.status(200).json({ title, text });
   } catch (error) {
     console.error(error);

@@ -1,14 +1,15 @@
 import { useState } from 'react';
-import { api, ApiError } from '../lib/api';
-import { shrinkImage } from '../lib/image';
-import { extractPages, MAX_PDF_PAGES, pdfPageCount } from '../lib/pdf';
-import { asObjectText } from '../lib/parse';
-import { load, save } from '../lib/storage';
-import type { Lesson } from '../lib/types';
-import { hash } from '../lib/util';
+
 import { useTranslation } from '../i18n/core';
 import { common } from '../i18n/messages/common';
 import { paper } from '../i18n/messages/paper';
+import { api, ApiError } from '../lib/api';
+import { shrinkImage } from '../lib/image';
+import { asObjectText } from '../lib/parse';
+import { extractPages, MAX_PDF_PAGES, pdfPageCount } from '../lib/pdf';
+import { load, save } from '../lib/storage';
+import type { Lesson } from '../lib/types';
+import { hash } from '../lib/util';
 import AddToDoc, { type DocTarget } from './AddToDoc';
 import LessonView from './LessonView';
 import WaitingFact from './WaitingFact';
@@ -286,10 +287,10 @@ export default function HandwrittenNotes({
                 spellCheck={false}
               />
               <div className="row-actions">
-                <button className="btn primary" onClick={saveDraft}>
+                <button type="button" className="btn primary" onClick={saveDraft}>
                   {t('prepareLesson')}
                 </button>
-                <button className="btn ghost" onClick={() => setDraft(null)}>
+                <button type="button" className="btn ghost" onClick={() => setDraft(null)}>
                   {commonText.t('cancel')}
                 </button>
               </div>
@@ -298,10 +299,10 @@ export default function HandwrittenNotes({
         ) : (
           <>
             <div className="row-actions handwritten-actions">
-              <button className="btn ghost" onClick={() => setDraft(current.text)}>
+              <button type="button" className="btn ghost" onClick={() => setDraft(current.text)}>
                 {t('editText')}
               </button>
-              <button className="btn ghost" onClick={remove}>
+              <button type="button" className="btn ghost" onClick={remove}>
                 {t('delete')}
               </button>
             </div>

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import { useTranslation } from '../i18n/core';
 import { common } from '../i18n/messages/common';
 import { api, ApiError } from '../lib/api';
@@ -46,6 +47,7 @@ export default function AddToDoc({ target, lines }: { target: DocTarget; lines: 
   return (
     <div className="row-actions add-to-doc">
       <button
+        type="button"
         className="btn"
         disabled={state === 'saving' || state === 'done' || !lines.length}
         onClick={add}

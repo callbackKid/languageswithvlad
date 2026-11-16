@@ -1,12 +1,18 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { checkAccess, claudeJSON, fail, onlyPost, MODEL } from './_lib/claude.js';
+
+import { claudeJSON, MODEL } from './_lib/claude.js';
+import { checkAccess, fail, onlyPost } from './_lib/http.js';
 import { analysisPrompt } from './_lib/prompts.js';
 
+/** Longest lesson read in one go; a longer one is refused instead of being cut silently. */
+const MAX_LESSON_LENGTH = 20_000;
+
+/** Prepares a lesson: its words with translations, synonym and antonym pairs, and verbs. */
 export default async function handler(request: VercelRequest, response: VercelResponse) {
   if (!onlyPost(request, response) || !checkAccess(request, response)) return;
   const body = typeof request.body?.body === 'string' ? request.body.body : '';
   if (!body.trim()) return response.status(400).json({ error: 'Empty lesson.' });
-  if (body.length > 20000)
+  if (body.length > MAX_LESSON_LENGTH)
     return response.status(413).json({ error: 'This lesson is too long to analyze in one go.' });
   try {
     const fresh = request.body?.fresh === true;

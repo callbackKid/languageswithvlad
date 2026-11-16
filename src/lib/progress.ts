@@ -1,6 +1,7 @@
 import { useSyncExternalStore } from 'react';
-import { load, save } from './storage';
+
 import { getSettings, isStudied } from './settings';
+import { load, save } from './storage';
 import type { Language, Word } from './types';
 
 /** Correct answers in a row that make a word learned (and take it off the hard list). */
@@ -36,8 +37,6 @@ export interface Progress {
   /** answers given per local day, "2026-11-12" → 14 */
   days?: Record<string, number>;
 }
-
-/** Answers a day that count as a full day of practice. */
 
 const EMPTY: Progress = { words: {}, forms: {} };
 let docId: string | null = null;
@@ -108,7 +107,7 @@ function baseStat(word: Word, old?: WordStat): WordStat {
 
 export function recordWord(word: Word, ok: boolean) {
   const identity = wordKey(word.fr);
-  const stat = baseStat(word, state.words[identity] as WordStat | undefined);
+  const stat = baseStat(word, state.words[identity]);
   if (ok) {
     stat.right++;
     stat.streak++;
@@ -158,16 +157,16 @@ export function recordForm(
 
 export const getProgress = () => state;
 
+// outside the hook, so React subscribes once instead of on every render
+function subscribe(listener: () => void) {
+  subscribers.add(listener);
+  return () => {
+    subscribers.delete(listener);
+  };
+}
+
 export function useProgress(): Progress {
-  return useSyncExternalStore(
-    (listener) => {
-      subscribers.add(listener);
-      return () => {
-        subscribers.delete(listener);
-      };
-    },
-    () => state
-  );
+  return useSyncExternalStore(subscribe, getProgress);
 }
 
 export const statWord = (stat: WordStat): Word => ({

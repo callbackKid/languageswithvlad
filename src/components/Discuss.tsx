@@ -1,13 +1,14 @@
 import { useState } from 'react';
-import { api, ApiError } from '../lib/api';
-import type { Bank } from '../lib/bank';
-import { normDiscussion } from '../lib/parse';
-import { load, save } from '../lib/storage';
-import { LEVELS, useSettings } from '../lib/settings';
-import type { Discussion, GrammarRule, Language } from '../lib/types';
+
 import { useTranslation } from '../i18n/core';
 import { common, learning } from '../i18n/messages/common';
 import { talk } from '../i18n/messages/talk';
+import { api, ApiError } from '../lib/api';
+import type { Bank } from '../lib/bank';
+import { normalizeDiscussion } from '../lib/parse';
+import { LEVELS, useSettings } from '../lib/settings';
+import { load, save } from '../lib/storage';
+import type { Discussion, GrammarRule, Language } from '../lib/types';
 import PageHead from './PageHead';
 import Speak from './Speak';
 import Star from './Star';
@@ -303,23 +304,29 @@ export default function Discuss({ bank, ai }: { bank: Bank; ai: boolean }) {
   const [error, setError] = useState('');
   const [showTranslation, setShowTranslation] = useState(false);
 
-  const update = (changes: Partial<Choice>) =>
-    setChoice((previous) => {
-      const next = { ...previous, ...changes };
-      save('discuss:choice', next);
-      return next;
-    });
+  const update = (changes: Partial<Choice>) => {
+    const next = { ...choice, ...changes };
+    setChoice(next);
+    save('discuss:choice', next);
+  };
   const lessonTopics = [...new Set(bank.lessons.map((lesson) => lesson.topic).filter(Boolean))];
   // a topic of their own ("the TV series Dexter") wins over the list
   const ownTopic = choice.customTopic.trim();
-  const topic = ownTopic || choice.topic;
-  const grammar = choice.grammar === CUSTOM ? choice.customGrammar : choice.grammar;
+  // a saved choice can belong to another language (it was taken out in Settings): fall back
+  const listTopic =
+    TOPICS[language].includes(choice.topic) || lessonTopics.includes(choice.topic)
+      ? choice.topic
+      : (TOPICS[language][0] ?? '');
+  const listGrammar =
+    choice.grammar === CUSTOM || GRAMMAR[language].includes(choice.grammar) ? choice.grammar : '';
+  const topic = ownTopic || listTopic;
+  const grammar = listGrammar === CUSTOM ? choice.customGrammar : listGrammar;
 
   async function generate() {
     setState('loading');
     setError('');
     try {
-      const next = normDiscussion(
+      const next = normalizeDiscussion(
         await api.discussion({
           language,
           level: choice.level,
@@ -394,7 +401,7 @@ export default function Discuss({ bank, ai }: { bank: Bank; ai: boolean }) {
               label={t('vocabularyTopic')}
               options={TOPICS[language]}
               extra={{ label: t('fromLessons'), options: lessonTopics }}
-              value={choice.topic}
+              value={listTopic}
               custom={choice.customTopic}
               allowCustom={false}
               dimmed={!!ownTopic}
@@ -432,7 +439,7 @@ export default function Discuss({ bank, ai }: { bank: Bank; ai: boolean }) {
               label={t('grammarTopic')}
               options={GRAMMAR[language]}
               noneLabel={t('any')}
-              value={choice.grammar}
+              value={listGrammar}
               custom={choice.customGrammar}
               onChange={(value) => update({ grammar: value })}
               onCustom={(value) => update({ customGrammar: value })}
@@ -464,7 +471,11 @@ export default function Discuss({ bank, ai }: { bank: Bank; ai: boolean }) {
                     {discussion.ru}
                   </p>
                 ) : (
-                  <button className="btn ghost flush" onClick={() => setShowTranslation(true)}>
+                  <button
+                    type="button"
+                    className="btn ghost flush"
+                    onClick={() => setShowTranslation(true)}
+                  >
                     {commonText.t('showTranslation')}
                   </button>
                 ))}

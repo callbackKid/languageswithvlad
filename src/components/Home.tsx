@@ -1,9 +1,9 @@
+import { useTranslation } from '../i18n/core';
+import { pages } from '../i18n/messages/pages';
 import type { Bank } from '../lib/bank';
 import { dailyStats, getProgress, isLearned, useProgress, wordKey } from '../lib/progress';
 import { buildQuiz, pickForms, pickWords } from '../lib/quiz';
 import { isStudied, useSettings } from '../lib/settings';
-import { useTranslation } from '../i18n/core';
-import { pages } from '../i18n/messages/pages';
 import PageHead, { BankNote } from './PageHead';
 import WordQuiz from './WordQuiz';
 

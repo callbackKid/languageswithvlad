@@ -1,7 +1,8 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
+
 import { serviceAccount } from './_lib/google.js';
-import { telegramConfigured } from './_lib/telegram.js';
 import { notionConfigured } from './_lib/notion.js';
+import { telegramConfigured } from './_lib/telegram.js';
 import { zoomConfigured } from './_lib/zoom.js';
 
 /** Lets the app know whether it should ask students for an access code, and what the server can do. */

@@ -15,6 +15,7 @@ const WORD_FORMS: Record<LearnLanguage, string> = {
   de: 'nouns capitalised with der, die or das, verbs in the infinitive',
 };
 
+/** body is one lesson's notes; the endpoint has already refused anything too long to read whole. */
 export function analysisPrompt(body: string): string {
   return `You are helping a Russian-speaking beginner (A1) learn a foreign language: French, English or German. Below are raw notes from one lesson, written by the teacher in that language and Russian. They are messy: some words have no translation, and some lines are conjugation tables, example sentences or pronunciation rules.
 
@@ -31,11 +32,11 @@ Rules:
 
 Lesson notes:
 """
-${body.slice(0, 14000)}
+${body}
 """`;
 }
 
-export function conjPrompt(infinitive: string, ru: string): string {
+export function conjugationPrompt(infinitive: string, ru: string): string {
   return `Conjugate the French verb "${infinitive}"${ru ? ` (Russian meaning: ${ru})` : ''}.
 Reply with only a JSON object:
 {"inf": string, "ru": string, "aux": "avoir"|"être", "pp": string, "tenses": {"présent": [..6], "passé composé": [..6], "imparfait": [..6], "futur simple": [..6], "conditionnel présent": [..6], "impératif": [..3]}}
@@ -91,10 +92,14 @@ export interface DiscussionRequest {
   topic: string;
   grammar: string;
   /** the interface language: the grammar explanation is written in it */
-  explainIn: 'en' | 'ru' | 'fr' | 'de';
+  explainIn: ExplainLanguage;
 }
 
 const EXPLAIN_NAMES = { en: 'English', ru: 'Russian', fr: 'French', de: 'German' } as const;
+export type ExplainLanguage = keyof typeof EXPLAIN_NAMES;
+/** The language to explain grammar in; Russian when it's missing or unknown. */
+export const asExplainLanguage = (value: unknown): ExplainLanguage =>
+  typeof value === 'string' && value in EXPLAIN_NAMES ? (value as ExplainLanguage) : 'ru';
 
 export function discussionPrompt({
   language,

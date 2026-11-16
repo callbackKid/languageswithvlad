@@ -1,7 +1,7 @@
-import { canSpeak, speak } from '../lib/speech';
-import type { Language } from '../lib/types';
 import { useTranslation } from '../i18n/core';
 import { common } from '../i18n/messages/common';
+import { canSpeak, speak } from '../lib/speech';
+import type { Language } from '../lib/types';
 
 /** A small 🔊 button that reads the text aloud; hidden where the browser has no speech. */
 export default function Speak({ text, language = 'fr' }: { text: string; language?: Language }) {
