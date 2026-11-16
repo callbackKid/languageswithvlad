@@ -22,6 +22,18 @@ export const NEWS: NewsDay[] = [
       {
         kind: 'new',
         text: {
+          en: 'Warm-up in lesson mode: about 5 minutes of questions on the previous lesson and on your mistakes since, with a list of what didn’t stick at the end, for the teacher to see on the shared screen.',
+          ru: 'Разминка в режиме урока: минут 5 вопросов по прошлому уроку и вашим ошибкам с тех пор, а в конце — список того, что не закрепилось, чтобы учитель увидел его на общем экране.',
+          fr: 'Échauffement dans le mode cours : environ 5 minutes de questions sur la leçon précédente et sur vos erreurs depuis, avec à la fin la liste de ce qui n’est pas acquis, que le professeur voit sur l’écran partagé.',
+          de: 'Aufwärmen im Unterrichtsmodus: etwa 5 Minuten Fragen zur letzten Lektion und zu deinen Fehlern seitdem, am Ende eine Liste dessen, was noch nicht sitzt, damit die Lehrkraft sie auf dem geteilten Bildschirm sieht.',
+          es: 'Calentamiento en el modo clase: unos 5 minutos de preguntas sobre la lección anterior y sobre tus errores desde entonces, con una lista al final de lo que no se ha fijado, para que el profesor la vea en la pantalla compartida.',
+          pt: 'Aquecimento no modo aula: cerca de 5 minutos de perguntas sobre a lição anterior e sobre os seus erros desde então, com uma lista no fim do que não ficou, para o professor ver no ecrã partilhado.',
+          it: 'Riscaldamento nella modalità lezione: circa 5 minuti di domande sulla lezione precedente e sui tuoi errori da allora, con alla fine l’elenco di ciò che non è rimasto, che l’insegnante vede sullo schermo condiviso.',
+        },
+      },
+      {
+        kind: 'new',
+        text: {
           en: 'Live sync: while the top bar says “Lesson now”, the app reads the document every minute by itself, so the words the teacher writes appear with their exercises without pressing ↻.',
           ru: 'Живая синхронизация: пока в шапке горит «Урок идёт», приложение само читает документ каждую минуту, и слова, которые пишет учитель, появляются вместе с упражнениями без нажатия ↻.',
           fr: 'Synchro en direct : tant que la barre du haut affiche « Cours en cours », l’app relit le document chaque minute, et les mots que le professeur écrit apparaissent avec leurs exercices sans appuyer sur ↻.',

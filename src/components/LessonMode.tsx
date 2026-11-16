@@ -1,20 +1,25 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { useTranslation } from '../i18n/core';
 import { call } from '../i18n/messages/call';
-import type { Bank } from '../lib/bank';
+import { api } from '../lib/api';
+import { analysisKey, type Bank, readAnalysis } from '../lib/bank';
 import type { BoardServer } from '../lib/boardSync';
 import { findCall, openCallWindow } from '../lib/call';
+import { normalizeAnalysis } from '../lib/parse';
+import { getProgress } from '../lib/progress';
 import { followLink, hrefFor } from '../lib/router';
 import { lessonPath } from '../lib/sections';
 import { getSettings } from '../lib/settings';
 import { load, remove, save } from '../lib/storage';
 import type { Lesson } from '../lib/types';
 import { hash } from '../lib/util';
+import { previousLesson, warmUpRound } from '../lib/warmUp';
 import AddToDoc, { type DocTarget } from './AddToDoc';
 import LessonBoard from './LessonBoard';
 import PageHead from './PageHead';
 import Speak from './Speak';
+import WordQuiz from './WordQuiz';
 import ZoomCall from './ZoomCall';
 
 const NAME_KEY = 'call:name';
@@ -241,7 +246,101 @@ function LessonWords({ bank, lesson }: { bank: Bank; lesson: Lesson | null }) {
   );
 }
 
-/** Lesson mode: the call, the teacher's notes and the lesson's words on one screen. */
+/** The warm-up offered at the start of the lesson. */
+function WarmUpCard({
+  lesson,
+  preparing,
+  onStart,
+}: {
+  lesson: Lesson | null;
+  preparing: boolean;
+  onStart: () => void;
+}) {
+  const { t, locale } = useTranslation(call);
+  const date = (value: Date) =>
+    new Intl.DateTimeFormat(locale, { day: 'numeric', month: 'long' }).format(value);
+  return (
+    <section className="call-card">
+      <h2>{t('warmUpTitle')}</h2>
+      <p className="hint">
+        {lesson
+          ? t('warmUpHint', { n: lesson.n, date: date(lesson.date) })
+          : t('warmUpHintNoLesson')}
+      </p>
+      <div className="row-actions">
+        <button type="button" className="btn primary" disabled={preparing} onClick={onStart}>
+          {preparing && lesson ? t('preparingWarmUp', { n: lesson.n }) : t('startWarmUp')}
+        </button>
+      </div>
+    </section>
+  );
+}
+
+/** Only the newest lesson is prepared by itself (AUTO_PREPARE). Once today's lesson is in the
+    document, the one before it may not be on this device yet, so lesson mode prepares it for
+    the warm-up. True while Claude is reading it. */
+function usePrepared(lesson: Lesson | null, bank: Bank, ai: boolean): boolean {
+  const ready =
+    !lesson ||
+    bank.lessons.some((info) => info.key === lesson.key && info.ready) ||
+    !!readAnalysis(lesson.hash);
+  const [preparing, setPreparing] = useState(false);
+  const { put } = bank;
+  useEffect(() => {
+    if (!lesson || ready || !ai) return;
+    let alive = true;
+    setPreparing(true);
+    api
+      .analyze(lesson.body)
+      .then((raw) => {
+        const analysis = normalizeAnalysis(raw);
+        save(analysisKey(lesson.hash), analysis);
+        put(lesson.key, analysis);
+      })
+      // the warm-up then asks about the mistakes alone
+      .catch(() => {})
+      .finally(() => {
+        if (alive) setPreparing(false);
+      });
+    return () => {
+      alive = false;
+    };
+  }, [lesson, ready, ai, put]);
+  return preparing;
+}
+
+/** The warm-up round: the previous lesson's words and the student's mistakes since, ending with
+    the list of what didn't stick, for the teacher to see on the shared screen. */
+function WarmUp({
+  bank,
+  lesson,
+  onClose,
+}: {
+  bank: Bank;
+  lesson: Lesson | null;
+  onClose: () => void;
+}) {
+  const { t } = useTranslation(call);
+  const place = useRef<HTMLElement>(null);
+  // it opens above the call, out of view when the button was further down
+  useEffect(() => {
+    place.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, []);
+  return (
+    <section ref={place} className="warm-up">
+      <WordQuiz
+        title={lesson ? t('warmUpRound', { n: lesson.n }) : t('warmUpTitle')}
+        make={() => warmUpRound(bank, lesson, getProgress())}
+        onClose={onClose}
+        closeLabel={t('backToLesson')}
+        empty={t('warmUpEmpty')}
+        review={{ title: t('missedTitle'), none: t('allStuck') }}
+      />
+    </section>
+  );
+}
+
+/** Lesson mode: the call, the warm-up, the teacher's notes and the lesson's words on one screen. */
 export default function LessonMode({
   docText,
   docId,
@@ -250,6 +349,7 @@ export default function LessonMode({
   target,
   zoomReady,
   boardServer,
+  ai,
 }: {
   docText: string;
   docId: string;
@@ -258,14 +358,23 @@ export default function LessonMode({
   target: DocTarget;
   zoomReady: boolean;
   boardServer: BoardServer | null;
+  ai: boolean;
 }) {
   const { t } = useTranslation(call);
+  const [warmingUp, setWarmingUp] = useState(false);
+  const earlier = previousLesson(lessons);
+  const preparing = usePrepared(earlier, bank, ai);
   return (
     <>
       <PageHead title={t('title')}>{t('intro')}</PageHead>
+      {/* above the call rather than instead of it: closing a Zoom call's panel would end the call */}
+      {warmingUp && <WarmUp bank={bank} lesson={earlier} onClose={() => setWarmingUp(false)} />}
       <div className="lesson-mode">
         <div className="lesson-mode-side">
           <CallPanel docText={docText} zoomReady={zoomReady} />
+          {!warmingUp && (
+            <WarmUpCard lesson={earlier} preparing={preparing} onStart={() => setWarmingUp(true)} />
+          )}
           <LessonWords bank={bank} lesson={lessons[lessons.length - 1] ?? null} />
         </div>
         <LessonNotes docId={docId} target={target} />

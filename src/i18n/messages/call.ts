@@ -58,6 +58,19 @@ export const call = defineMessages({
     wordsTitle: 'Words of the last lesson',
     noWords: 'No words prepared yet.',
     openLesson: 'Open the lesson',
+    // warm-up
+    warmUpTitle: 'Warm-up',
+    warmUpHint:
+      'About 5 minutes at the start: questions on lesson {n} ({date}) and on what the student got wrong since. Do it on the student’s device, where their mistakes are kept, with the screen shared: the teacher sees at once what didn’t stick.',
+    warmUpHintNoLesson:
+      'About 5 minutes at the start: questions on what the student got wrong this past week. Do it on the student’s device, where their mistakes are kept, with the screen shared: the teacher sees at once what didn’t stick.',
+    startWarmUp: 'Start the warm-up',
+    preparingWarmUp: 'Preparing lesson {n}…',
+    warmUpEmpty: 'Nothing to go over yet: no words from the last lesson and no mistakes since.',
+    warmUpRound: 'Warm-up · lesson {n}',
+    backToLesson: 'Back to the lesson',
+    missedTitle: 'Didn’t stick: go over these together',
+    allStuck: 'Everything stuck: no mistakes in this round.',
   },
   ru: {
     title: 'Режим урока',
@@ -111,6 +124,19 @@ export const call = defineMessages({
     wordsTitle: 'Слова последнего урока',
     noWords: 'Слова ещё не подготовлены.',
     openLesson: 'Открыть урок',
+    // warm-up
+    warmUpTitle: 'Разминка',
+    warmUpHint:
+      'Минут 5 в начале: вопросы по уроку {n} ({date}) и по ошибкам ученика с тех пор. Делайте на устройстве ученика, где хранятся его ошибки, с общим экраном: учитель сразу видит, что не закрепилось.',
+    warmUpHintNoLesson:
+      'Минут 5 в начале: вопросы по ошибкам ученика за последнюю неделю. Делайте на устройстве ученика, где хранятся его ошибки, с общим экраном: учитель сразу видит, что не закрепилось.',
+    startWarmUp: 'Начать разминку',
+    preparingWarmUp: 'Готовлю урок {n}…',
+    warmUpEmpty: 'Пока не о чем спрашивать: нет слов прошлого урока и ошибок с тех пор.',
+    warmUpRound: 'Разминка · урок {n}',
+    backToLesson: 'Вернуться к уроку',
+    missedTitle: 'Не закрепилось: разберите вместе',
+    allStuck: 'Всё закрепилось: в этом раунде ни одной ошибки.',
   },
   fr: {
     title: 'Mode cours',
@@ -165,6 +191,20 @@ export const call = defineMessages({
     wordsTitle: 'Mots de la dernière leçon',
     noWords: 'Aucun mot préparé pour l’instant.',
     openLesson: 'Ouvrir la leçon',
+    // warm-up
+    warmUpTitle: 'Échauffement',
+    warmUpHint:
+      'Environ 5 minutes au début : des questions sur la leçon {n} ({date}) et sur les erreurs de l’élève depuis. Faites-le sur l’appareil de l’élève, où ses erreurs sont gardées, avec l’écran partagé : le professeur voit tout de suite ce qui n’est pas acquis.',
+    warmUpHintNoLesson:
+      'Environ 5 minutes au début : des questions sur les erreurs de l’élève de la semaine passée. Faites-le sur l’appareil de l’élève, où ses erreurs sont gardées, avec l’écran partagé : le professeur voit tout de suite ce qui n’est pas acquis.',
+    startWarmUp: 'Commencer l’échauffement',
+    preparingWarmUp: 'Préparation de la leçon {n}…',
+    warmUpEmpty:
+      'Rien à revoir pour l’instant : pas de mots de la dernière leçon ni d’erreurs depuis.',
+    warmUpRound: 'Échauffement · leçon {n}',
+    backToLesson: 'Retour au cours',
+    missedTitle: 'Pas encore acquis : à revoir ensemble',
+    allStuck: 'Tout est acquis : aucune erreur dans ce tour.',
   },
   de: {
     title: 'Unterrichtsmodus',
@@ -219,6 +259,20 @@ export const call = defineMessages({
     wordsTitle: 'Wörter der letzten Lektion',
     noWords: 'Noch keine Wörter vorbereitet.',
     openLesson: 'Lektion öffnen',
+    // warm-up
+    warmUpTitle: 'Aufwärmen',
+    warmUpHint:
+      'Etwa 5 Minuten am Anfang: Fragen zur Lektion {n} ({date}) und zu den Fehlern seitdem. Am Gerät der Schülerin oder des Schülers, wo die Fehler gespeichert sind, mit geteiltem Bildschirm: Die Lehrkraft sieht sofort, was noch nicht sitzt.',
+    warmUpHintNoLesson:
+      'Etwa 5 Minuten am Anfang: Fragen zu den Fehlern der letzten Woche. Am Gerät der Schülerin oder des Schülers, wo die Fehler gespeichert sind, mit geteiltem Bildschirm: Die Lehrkraft sieht sofort, was noch nicht sitzt.',
+    startWarmUp: 'Aufwärmen starten',
+    preparingWarmUp: 'Lektion {n} wird vorbereitet…',
+    warmUpEmpty:
+      'Noch nichts zu wiederholen: keine Wörter aus der letzten Lektion und seitdem keine Fehler.',
+    warmUpRound: 'Aufwärmen · Lektion {n}',
+    backToLesson: 'Zurück zur Stunde',
+    missedTitle: 'Sitzt noch nicht: gemeinsam durchgehen',
+    allStuck: 'Alles sitzt: kein Fehler in dieser Runde.',
   },
   es: {
     title: 'Modo clase',
@@ -274,6 +328,20 @@ export const call = defineMessages({
     wordsTitle: 'Palabras de la última lección',
     noWords: 'Aún no hay palabras preparadas.',
     openLesson: 'Abrir la lección',
+    // warm-up
+    warmUpTitle: 'Calentamiento',
+    warmUpHint:
+      'Unos 5 minutos al principio: preguntas sobre la lección {n} ({date}) y sobre los errores del alumno desde entonces. Hazlo en el dispositivo del alumno, donde se guardan sus errores, con la pantalla compartida: el profesor ve enseguida lo que no se ha fijado.',
+    warmUpHintNoLesson:
+      'Unos 5 minutos al principio: preguntas sobre los errores del alumno de la última semana. Hazlo en el dispositivo del alumno, donde se guardan sus errores, con la pantalla compartida: el profesor ve enseguida lo que no se ha fijado.',
+    startWarmUp: 'Empezar el calentamiento',
+    preparingWarmUp: 'Preparando la lección {n}…',
+    warmUpEmpty:
+      'Todavía no hay nada que repasar: ni palabras de la última lección ni errores desde entonces.',
+    warmUpRound: 'Calentamiento · lección {n}',
+    backToLesson: 'Volver a la clase',
+    missedTitle: 'No se ha fijado: repasadlo juntos',
+    allStuck: 'Todo se ha fijado: ningún error en esta ronda.',
   },
   pt: {
     title: 'Modo aula',
@@ -329,6 +397,20 @@ export const call = defineMessages({
     wordsTitle: 'Palavras da última lição',
     noWords: 'Ainda não há palavras preparadas.',
     openLesson: 'Abrir a lição',
+    // warm-up
+    warmUpTitle: 'Aquecimento',
+    warmUpHint:
+      'Cerca de 5 minutos no início: perguntas sobre a lição {n} ({date}) e sobre os erros do aluno desde então. Faça-o no dispositivo do aluno, onde os erros ficam guardados, com o ecrã partilhado: o professor vê logo o que não ficou.',
+    warmUpHintNoLesson:
+      'Cerca de 5 minutos no início: perguntas sobre os erros do aluno na última semana. Faça-o no dispositivo do aluno, onde os erros ficam guardados, com o ecrã partilhado: o professor vê logo o que não ficou.',
+    startWarmUp: 'Começar o aquecimento',
+    preparingWarmUp: 'A preparar a lição {n}…',
+    warmUpEmpty:
+      'Ainda não há nada para rever: nem palavras da última lição nem erros desde então.',
+    warmUpRound: 'Aquecimento · lição {n}',
+    backToLesson: 'Voltar à aula',
+    missedTitle: 'Não ficou: revejam juntos',
+    allStuck: 'Ficou tudo: nenhum erro nesta ronda.',
   },
   it: {
     title: 'Modalità lezione',
@@ -384,5 +466,19 @@ export const call = defineMessages({
     wordsTitle: 'Parole dell’ultima lezione',
     noWords: 'Nessuna parola ancora pronta.',
     openLesson: 'Apri la lezione',
+    // warm-up
+    warmUpTitle: 'Riscaldamento',
+    warmUpHint:
+      'Circa 5 minuti all’inizio: domande sulla lezione {n} ({date}) e sugli errori dello studente da allora. Fatelo sul dispositivo dello studente, dove sono salvati i suoi errori, con lo schermo condiviso: l’insegnante vede subito cosa non è rimasto.',
+    warmUpHintNoLesson:
+      'Circa 5 minuti all’inizio: domande sugli errori dello studente nell’ultima settimana. Fatelo sul dispositivo dello studente, dove sono salvati i suoi errori, con lo schermo condiviso: l’insegnante vede subito cosa non è rimasto.',
+    startWarmUp: 'Inizia il riscaldamento',
+    preparingWarmUp: 'Preparo la lezione {n}…',
+    warmUpEmpty:
+      'Ancora niente da ripassare: nessuna parola dell’ultima lezione e nessun errore da allora.',
+    warmUpRound: 'Riscaldamento · lezione {n}',
+    backToLesson: 'Torna alla lezione',
+    missedTitle: 'Non è rimasto: ripassatelo insieme',
+    allStuck: 'È rimasto tutto: nessun errore in questo giro.',
   },
 });

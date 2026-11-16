@@ -410,6 +410,7 @@ export default function App() {
                 target={docTarget}
                 zoomReady={zoomReady}
                 boardServer={boardServer}
+                ai={ai}
               />
             </main>
           ) : section === 'lessons' ? (

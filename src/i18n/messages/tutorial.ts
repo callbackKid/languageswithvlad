@@ -199,6 +199,8 @@ export const tutorial = defineMessages({
       'After the lesson, <btn>Add to Google Doc as Leçon 8</btn> puts the notes into the document as a new lesson, ready for exercises.',
     'call.step5':
       '<pbtn>Open the board</pbtn> under the notes: write, draw and paste pictures. With live sharing set up, the teacher and the student draw on the same board at once and see each other’s pointer; otherwise share your screen in the call. <b>Full screen</b> and <b>Save as picture</b> are above it.',
+    'call.step6':
+      '<pbtn>Start the warm-up</pbtn> at the start of the lesson: about 5 minutes of questions on the previous lesson and on the student’s mistakes since. At the end, <b>Didn’t stick</b> lists every wrong answer for the teacher. Do it on the student’s device, where the mistakes are kept, and share the screen.',
     'call.tip3':
       '<btn>Side by side (half the screen)</btn> opens Meet over the right half of the screen, next to the app.',
     'call.tip1':
@@ -417,6 +419,8 @@ export const tutorial = defineMessages({
       'После урока <btn>Добавить в Google-документ как Leçon 8</btn> переносит заметки в документ новым уроком — сразу с упражнениями.',
     'call.step5':
       '<pbtn>Открыть доску</pbtn> под заметками: пишите, рисуйте, вставляйте картинки. Если настроен общий доступ, преподаватель и ученик рисуют на одной доске одновременно и видят указатель друг друга; иначе покажите экран в звонке. Над ней — <b>На весь экран</b> и <b>Сохранить картинкой</b>.',
+    'call.step6':
+      '<pbtn>Начать разминку</pbtn> в начале урока: минут 5 вопросов по прошлому уроку и ошибкам ученика с тех пор. В конце <b>Не закрепилось</b> показывает учителю все неверные ответы. Делайте на устройстве ученика, где хранятся ошибки, и покажите экран.',
     'call.tip3':
       '<btn>Рядом (половина экрана)</btn> открывает Meet на правой половине экрана, рядом с приложением.',
     'call.tip1':
@@ -642,6 +646,8 @@ export const tutorial = defineMessages({
       'Après le cours, <btn>Ajouter au Google Doc comme Leçon 8</btn> met les notes dans le document comme nouvelle leçon, prête pour les exercices.',
     'call.step5':
       '<pbtn>Ouvrir le tableau</pbtn> sous les notes : écrivez, dessinez, collez des images. Avec le partage en direct configuré, le professeur et l’élève dessinent sur le même tableau en même temps et voient le pointeur de l’autre ; sinon, partagez votre écran dans l’appel. <b>Plein écran</b> et <b>Enregistrer en image</b> sont au-dessus.',
+    'call.step6':
+      '<pbtn>Commencer l’échauffement</pbtn> au début du cours : environ 5 minutes de questions sur la leçon précédente et sur les erreurs de l’élève depuis. À la fin, <b>Pas encore acquis</b> liste toutes les mauvaises réponses pour le professeur. Faites-le sur l’appareil de l’élève, où ses erreurs sont gardées, et partagez l’écran.',
     'call.tip3':
       '<btn>Côte à côte (moitié de l’écran)</btn> ouvre Meet sur la moitié droite de l’écran, à côté de l’application.',
     'call.tip1':
@@ -865,6 +871,8 @@ export const tutorial = defineMessages({
       'Nach der Stunde legt <btn>Als Leçon 8 zum Google-Dokument hinzufügen</btn> die Notizen als neue Lektion ins Dokument, bereit für Übungen.',
     'call.step5':
       '<pbtn>Tafel öffnen</pbtn> unter den Notizen: schreiben, zeichnen, Bilder einfügen. Ist das Live-Teilen eingerichtet, zeichnen Lehrkraft und Schüler gleichzeitig auf derselben Tafel und sehen den Zeiger des anderen; sonst teile deinen Bildschirm im Anruf. <b>Vollbild</b> und <b>Als Bild speichern</b> stehen darüber.',
+    'call.step6':
+      '<pbtn>Aufwärmen starten</pbtn> zu Beginn der Stunde: etwa 5 Minuten Fragen zur letzten Lektion und zu den Fehlern seitdem. Am Ende listet <b>Sitzt noch nicht</b> alle falschen Antworten für die Lehrkraft auf. Am Gerät der Schülerin oder des Schülers, wo die Fehler gespeichert sind, mit geteiltem Bildschirm.',
     'call.tip3':
       '<btn>Nebeneinander (halber Bildschirm)</btn> öffnet Meet auf der rechten Bildschirmhälfte, neben der App.',
     'call.tip1':
@@ -1089,6 +1097,8 @@ export const tutorial = defineMessages({
       'Después de la clase, <btn>Añadir al Google Doc como Leçon 8</btn> pone las notas en el documento como una lección nueva, lista para los ejercicios.',
     'call.step5':
       '<pbtn>Abrir la pizarra</pbtn> debajo de las notas: escribe, dibuja y pega imágenes. Con el uso compartido en directo configurado, el profesor y el alumno dibujan a la vez en la misma pizarra y ven el puntero del otro; si no, comparte la pantalla en la llamada. <b>Pantalla completa</b> y <b>Guardar como imagen</b> están encima.',
+    'call.step6':
+      '<pbtn>Empezar el calentamiento</pbtn> al principio de la clase: unos 5 minutos de preguntas sobre la lección anterior y sobre los errores del alumno desde entonces. Al final, <b>No se ha fijado</b> muestra al profesor todas las respuestas incorrectas. Hazlo en el dispositivo del alumno, donde se guardan los errores, y comparte la pantalla.',
     'call.tip3':
       '<btn>Lado a lado (media pantalla)</btn> abre Meet sobre la mitad derecha de la pantalla, junto a la aplicación.',
     'call.tip1':
@@ -1313,6 +1323,8 @@ export const tutorial = defineMessages({
       'Depois da aula, <btn>Acrescentar ao Google Doc como Leçon 8</btn> põe as notas no documento como uma nova lição, pronta para os exercícios.',
     'call.step5':
       '<pbtn>Abrir o quadro</pbtn> por baixo das notas: escreva, desenhe e cole imagens. Com a partilha em direto configurada, o professor e o aluno desenham ao mesmo tempo no mesmo quadro e veem o ponteiro um do outro; caso contrário, partilhe o ecrã na chamada. <b>Ecrã inteiro</b> e <b>Guardar como imagem</b> estão por cima.',
+    'call.step6':
+      '<pbtn>Começar o aquecimento</pbtn> no início da aula: cerca de 5 minutos de perguntas sobre a lição anterior e sobre os erros do aluno desde então. No fim, <b>Não ficou</b> mostra ao professor todas as respostas erradas. Faça-o no dispositivo do aluno, onde os erros ficam guardados, e partilhe o ecrã.',
     'call.tip3':
       '<btn>Lado a lado (meio ecrã)</btn> abre o Meet na metade direita do ecrã, ao lado da aplicação.',
     'call.tip1':
@@ -1538,6 +1550,8 @@ export const tutorial = defineMessages({
       'Dopo la lezione, <btn>Aggiungi al Google Doc come Leçon 8</btn> mette gli appunti nel documento come nuova lezione, pronta per gli esercizi.',
     'call.step5':
       '<pbtn>Apri la lavagna</pbtn> sotto gli appunti: scrivi, disegna e incolla immagini. Con la condivisione in diretta configurata, insegnante e studente disegnano insieme sulla stessa lavagna e vedono il puntatore dell’altro; altrimenti condividi lo schermo nella chiamata. <b>Schermo intero</b> e <b>Salva come immagine</b> sono sopra.',
+    'call.step6':
+      '<pbtn>Inizia il riscaldamento</pbtn> all’inizio della lezione: circa 5 minuti di domande sulla lezione precedente e sugli errori dello studente da allora. Alla fine, <b>Non è rimasto</b> mostra all’insegnante tutte le risposte sbagliate. Fatelo sul dispositivo dello studente, dove sono salvati gli errori, e condividete lo schermo.',
     'call.tip3':
       '<btn>Affiancata (metà schermo)</btn> apre Meet sulla metà destra dello schermo, accanto all’app.',
     'call.tip1':

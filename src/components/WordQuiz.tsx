@@ -7,6 +7,7 @@ import { grade } from '../lib/grade';
 import { recordForm, recordWord } from '../lib/progress';
 import type { QuizItem } from '../lib/quiz';
 import { speak } from '../lib/speech';
+import type { Language } from '../lib/types';
 import ExerciseHead from './ExerciseHead';
 import Speak from './Speak';
 import Transcription from './Transcription';
@@ -25,19 +26,29 @@ function gradeWord(typed: string, answer: string): Result | null {
   return bare !== answer && grade(typed, bare) !== 'bad' ? 'article' : 'bad';
 }
 
-/** A run of mixed questions; make() builds the next round. */
+/** An answer the student got wrong, for the list at the end of a round. */
+interface Missed {
+  asked: string;
+  answer: string;
+  language: Language;
+}
+
+/** A run of mixed questions; make() builds the next round. With review, the end of a round
+    lists what the student got wrong (the warm-up, for the teacher to go over). */
 export default function WordQuiz({
   title,
   make,
   onClose,
   closeLabel,
   empty,
+  review,
 }: {
   title: string;
   make: () => QuizItem[];
   onClose?: () => void;
   closeLabel?: string;
   empty?: string;
+  review?: { title: string; none: string };
 }) {
   const { t: tx } = useTranslation(exercises);
   const { t, rich } = useTranslation(common);
@@ -48,6 +59,7 @@ export default function WordQuiz({
   const [picked, setPicked] = useState<string | null>(null);
   const [result, setResult] = useState<Result | null>(null);
   const [score, setScore] = useState(0);
+  const [missed, setMissed] = useState<Missed[]>([]);
   const input = useRef<HTMLInputElement>(null);
   const nextButton = useRef<HTMLButtonElement>(null);
   useEffect(() => {
@@ -66,6 +78,7 @@ export default function WordQuiz({
     setQuestions(make());
     setIndex(0);
     setScore(0);
+    setMissed([]);
     setTyped('');
     setPicked(null);
     setResult(null);
@@ -98,6 +111,24 @@ export default function WordQuiz({
     return shell(
       <>
         <p className="score">{t('scoreLine', { score, total: questions.length })}</p>
+        {review &&
+          (missed.length ? (
+            <section className="quiz-missed">
+              <h3>{review.title}</h3>
+              <ul>
+                {missed.map((item) => (
+                  <li key={item.asked + item.answer}>
+                    <span className="fr" lang={item.language}>
+                      {item.answer}
+                    </span>
+                    <span className="ru">{item.asked}</span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ) : (
+            <p className="hint">{review.none}</p>
+          ))}
         <div className="row-actions">
           <button type="button" className="btn primary" autoFocus onClick={restart}>
             {tx('nextRound')}
@@ -110,6 +141,21 @@ export default function WordQuiz({
   const finish = (outcome: Result) => {
     setResult(outcome);
     if (outcome === 'ok') setScore((previous) => previous + 1);
+    if (outcome === 'bad')
+      setMissed((previous) => [
+        ...previous,
+        question.kind === 'form'
+          ? {
+              asked: `${question.form.inf}, ${question.form.t}${question.form.negative ? `, ${t('negative')}` : ''}`,
+              answer: `${question.form.p} ${question.form.f}`,
+              language: 'fr',
+            }
+          : {
+              asked: question.word.ru,
+              answer: question.word.fr,
+              language: question.word.language ?? 'fr',
+            },
+      ]);
     // near misses show the right form without counting against the student
     if (outcome === 'ok' || outcome === 'bad') {
       if (question.kind === 'form')

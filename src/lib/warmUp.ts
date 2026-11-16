@@ -1,0 +1,80 @@
+import type { Bank } from './bank';
+import { isLearned, type Progress, statWord } from './progress';
+import { buildQuiz, type FormQuestion, pickWords, type QuizItem } from './quiz';
+import { getSettings, isStudied } from './settings';
+import type { Lesson, Tense } from './types';
+
+/** About five minutes of questions. */
+export const WARM_UP_QUESTIONS = 12;
+// at most this many questions from the mistakes, so the lesson's own words get asked too
+const MISSED_WORDS = 6;
+const MISSED_FORMS = 2;
+// with no earlier lesson in the document, the mistakes of the past week
+const FALLBACK_DAYS = 7;
+
+const startOfDay = (date: Date) =>
+  new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime();
+
+/** The lesson the warm-up goes over: the newest one before today, since today's may already be
+    written in the document. */
+export function previousLesson(lessons: Lesson[], now = new Date()): Lesson | null {
+  const today = startOfDay(now);
+  return [...lessons].reverse().find((lesson) => lesson.date.getTime() < today) ?? null;
+}
+
+/** Questions on the previous lesson's words and on what the student got wrong since that lesson:
+    the mistakes first, then the lesson's words, the ones not known yet more often. */
+export function warmUpRound(
+  bank: Bank,
+  lesson: Lesson | null,
+  progress: Progress,
+  now = new Date()
+): QuizItem[] {
+  const since = lesson
+    ? startOfDay(lesson.date)
+    : startOfDay(now) - FALLBACK_DAYS * 24 * 60 * 60 * 1000;
+  const settings = getSettings();
+  const byMisses = <T extends { wrong: number; right: number }>(first: T, second: T) =>
+    second.wrong - first.wrong || first.right - second.right;
+
+  // missed since then and not learned again afterwards
+  const missedWords = Object.values(progress.words)
+    .filter(
+      (stat) =>
+        stat.wrong > 0 &&
+        stat.last >= since &&
+        !isLearned(stat) &&
+        isStudied(stat.language, settings)
+    )
+    .sort(byMisses)
+    .slice(0, MISSED_WORDS)
+    .map(statWord);
+  // verb forms are French
+  const missedForms: FormQuestion[] = settings.studying.includes('fr')
+    ? Object.values(progress.forms)
+        .filter((stat) => stat.wrong > 0 && stat.last >= since && stat.wrong >= stat.right)
+        .sort(byMisses)
+        .slice(0, MISSED_FORMS)
+        .map((stat) => ({
+          inf: stat.inf,
+          t: stat.t as Tense,
+          p: stat.p,
+          f: stat.f,
+          negative: stat.negative,
+        }))
+    : [];
+
+  const asked = new Set(missedWords.map((word) => word.fr.toLowerCase()));
+  const lessonWords = lesson
+    ? bank.words.filter((word) => word.lesson === lesson.key && !asked.has(word.fr.toLowerCase()))
+    : [];
+  const fromLesson = pickWords(
+    lessonWords,
+    progress,
+    WARM_UP_QUESTIONS - missedWords.length - missedForms.length
+  );
+  const targets = [...missedWords, ...fromLesson];
+  // wrong answers come from every lesson, so a short lesson still gets four choices
+  const pool = bank.words.length >= 4 ? bank.words : targets;
+  return buildQuiz(targets, pool, missedForms);
+}
