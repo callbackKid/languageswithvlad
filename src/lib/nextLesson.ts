@@ -37,7 +37,8 @@ export interface NextLesson {
   /** the city the time was given in, e.g. "Paris", when it isn't the viewer's own time zone */
   zoneLabel: string | null;
   zone: string | null;
-  state: 'upcoming' | 'now' | 'past';
+  /** finished: it ended earlier today; past: it was on an earlier day, so the date is out of date */
+  state: 'upcoming' | 'now' | 'finished' | 'past';
 }
 
 /** Minutes the zone is ahead of UTC at that moment. */
@@ -110,7 +111,17 @@ export function parseNextLesson(text: string, now = new Date()): NextLesson | 'u
     : new Date(year, month - 1, day, hour, minute);
   // a date without a time stays current for the whole day
   const end = start.getTime() + (hasTime ? LESSON_LENGTH : 24 * 60 * 60 * 1000);
-  const state = now.getTime() >= end ? 'past' : hasTime && now >= start ? 'now' : 'upcoming';
+  // after it ends, the lesson reads as finished until that day is over
+  const endOfDay = new Date(start.getFullYear(), start.getMonth(), start.getDate() + 1).getTime();
+  const moment = now.getTime();
+  const state =
+    moment >= end
+      ? hasTime && moment < endOfDay
+        ? 'finished'
+        : 'past'
+      : hasTime && moment >= start.getTime()
+        ? 'now'
+        : 'upcoming';
   const sameZone =
     !zone ||
     zoneOffsetMinutes(start.getTime(), zone) === zoneOffsetMinutes(start.getTime(), viewerZone);

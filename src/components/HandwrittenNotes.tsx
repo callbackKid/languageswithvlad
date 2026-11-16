@@ -21,7 +21,7 @@ const SOURCES: Record<PaperSource, { storageKey: string; keyPrefix: string }> = 
   handwritten: { storageKey: 'handwritten', keyPrefix: 'hw-' },
   textbook: { storageKey: 'textbook', keyPrefix: 'tb-' },
 };
-// keep in step with MAX_PAGES in api/transcribe.ts
+// keep in step with MAX_HANDWRITTEN_PAGES in api/paper.ts
 const MAX_PAGES = 4;
 // smaller than for a book page: several pages have to fit in one upload
 const MAX_SIDE = 1600;

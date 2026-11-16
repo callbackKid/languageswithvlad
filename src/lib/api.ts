@@ -124,7 +124,10 @@ export const api = {
       body: JSON.stringify({ inf: infinitive, ru, fresh }),
     }),
   photo: (image: ImagePayload) =>
-    request<unknown>('/api/photo', { method: 'POST', body: JSON.stringify({ images: [image] }) }),
+    request<unknown>('/api/paper', {
+      method: 'POST',
+      body: JSON.stringify({ kind: 'underlined', images: [image] }),
+    }),
   discussion: (options: {
     language: Language;
     level: string;
@@ -133,9 +136,33 @@ export const api = {
     explainIn: string;
   }) => request<unknown>('/api/discussion', { method: 'POST', body: JSON.stringify(options) }),
   textbook: (data: string) =>
-    request<unknown>('/api/textbook', { method: 'POST', body: JSON.stringify({ data }) }),
+    request<unknown>('/api/paper', {
+      method: 'POST',
+      body: JSON.stringify({ kind: 'textbook', data }),
+    }),
   transcribe: (images: ImagePayload[]) =>
-    request<unknown>('/api/transcribe', { method: 'POST', body: JSON.stringify({ images }) }),
+    request<unknown>('/api/paper', {
+      method: 'POST',
+      body: JSON.stringify({ kind: 'handwritten', images }),
+    }),
+  /** a word or phrase marked in a pasted text, explained in its sentence */
+  explain: (selection: string, context: string) =>
+    request<unknown>('/api/text', {
+      method: 'POST',
+      body: JSON.stringify({ action: 'explain', selection, context }),
+    }),
+  /** a pasted text in Russian, paragraph by paragraph */
+  translate: (text: string) =>
+    request<unknown>('/api/text', {
+      method: 'POST',
+      body: JSON.stringify({ action: 'translate', text }),
+    }),
+  /** vocabulary, questions and true-or-false statements built from a pasted text */
+  study: (text: string, levels: Record<Language, string>) =>
+    request<unknown>('/api/text', {
+      method: 'POST',
+      body: JSON.stringify({ action: 'study', text, levels }),
+    }),
   gaps: (words: { fr: string; ru: string }[], language: Language, level: string) =>
     request<unknown>('/api/gaps', {
       method: 'POST',

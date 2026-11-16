@@ -7,11 +7,10 @@ import { api, ApiError } from '../lib/api';
 import { shrinkImage } from '../lib/image';
 import { normalizePhoto } from '../lib/parse';
 import { load, save } from '../lib/storage';
-import type { PhotoItem, Word } from '../lib/types';
+import type { PhotoItem } from '../lib/types';
 import AddToDoc, { type DocTarget } from './AddToDoc';
-import Speak from './Speak';
-import Star from './Star';
 import WaitingFact from './WaitingFact';
+import WordNotesTable from './WordNotesTable';
 
 const LAST_KEY = 'photo:last';
 // long side in pixels: enough to read book print, small enough for the server's upload limit
@@ -21,16 +20,6 @@ interface LastScan {
   items: PhotoItem[];
   at: number;
 }
-
-/** What goes onto My words: the dictionary form when there is one. */
-const asWord = (item: PhotoItem): Word => ({
-  fr: item.base || item.fr,
-  ru: item.ru,
-  tr: '',
-  kind: item.kind,
-  added: false,
-  language: item.language ?? 'fr',
-});
 
 /** Photo of a book page with underlined words → translation, dictionary form, tense and a short explanation for each. */
 /** "avoir raison — был прав (avait raison, imparfait, il)": one line of a lesson in the document. */
@@ -113,52 +102,10 @@ export default function PhotoWords({ ai, target }: { ai: boolean; target: DocTar
           {scan &&
             state !== 'loading' &&
             (scan.items.length ? (
-              <div className="photo-table-wrap">
-                <table className="photo-table">
-                  <thead>
-                    <tr>
-                      <th>{t('colUnderlined')}</th>
-                      <th>{t('colTranslation')}</th>
-                      <th>{t('colForm')}</th>
-                      <th>{t('colExplanation')}</th>
-                      <th aria-label={t('colActions')} />
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {scan.items.map((item, index) => (
-                      <tr key={index}>
-                        <td>
-                          <b lang={item.language ?? 'fr'}>{item.fr}</b>
-                          {item.context && (
-                            <div className="context" lang={item.language ?? 'fr'}>
-                              {item.context}
-                            </div>
-                          )}
-                        </td>
-                        <td lang="ru">{item.ru}</td>
-                        <td>
-                          {item.base && (
-                            <div lang={item.language ?? 'fr'}>
-                              <i>{item.base}</i>
-                            </div>
-                          )}
-                          {item.tense && <div className="tense">{item.tense}</div>}
-                          {!item.base && !item.tense && <span className="muted">—</span>}
-                        </td>
-                        <td lang="ru" className="explanation">
-                          {item.explanation}
-                        </td>
-                        <td className="actions">
-                          <Speak text={item.fr} language={item.language ?? 'fr'} />
-                          <Star word={asWord(item)} />
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-                <p className="legend">{t('photoStarLegend')}</p>
+              <>
+                <WordNotesTable items={scan.items} firstColumn={t('colUnderlined')} />
                 <AddToDoc key={scan.at} target={target} lines={scan.items.map(docLine)} />
-              </div>
+              </>
             ) : (
               <p className="empty">{t('noUnderlined')}</p>
             ))}

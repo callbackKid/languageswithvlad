@@ -28,6 +28,13 @@ export default function NextLessonBadge({ text }: { text: string }) {
   const timeFormat = (timeZone?: string) =>
     new Intl.DateTimeFormat(locale, { hour: '2-digit', minute: '2-digit', timeZone });
   const localTime = timeFormat().format(lesson.start);
+  if (lesson.state === 'finished')
+    return (
+      <div className="next-lesson-widget muted" role="status">
+        <span aria-hidden="true">✅</span>
+        <span className="next-lesson">{t('lessonFinished', { time: localTime })}</span>
+      </div>
+    );
   // "today", "tomorrow" or "Sun 22 Nov", in the viewer's own calendar
   const startOfDay = (value: Date) =>
     new Date(value.getFullYear(), value.getMonth(), value.getDate()).getTime();

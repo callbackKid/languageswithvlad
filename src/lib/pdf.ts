@@ -6,7 +6,7 @@ import { paper } from '../i18n/messages/paper';
 
 /** Most pages read at once; a chapter is usually 4–15. */
 export const MAX_PDF_PAGES = 20;
-// keep in step with MAX_BASE64_LENGTH in api/textbook.ts
+// keep in step with MAX_PDF_BASE64_LENGTH in api/paper.ts
 const MAX_BASE64_LENGTH = 4_000_000;
 
 async function loadPdf(file: File) {

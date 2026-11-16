@@ -144,6 +144,20 @@ export const tutorial = defineMessages({
     'photo.tip2': '☆ next to a word puts its dictionary form on My words.',
     'photo.mock': 'the result of a photo with underlined words',
 
+    'text.title': 'Text',
+    'text.summary': 'Paste an article: explanations, a translation and exercises',
+    'text.intro':
+      'For a text you found yourself: an article, a story, a post. Paste it instead of taking a screenshot, and work with it here.',
+    'text.step1':
+      'Paste the text and press <pbtn>Read this text</pbtn>. It is saved on this device, with everything you do with it.',
+    'text.step2':
+      'Click a word, or select a few words with the mouse or your finger, then press <pbtn>Explain</pbtn>: you get the translation in this sentence, the dictionary form, the tense and a short explanation. ☆ puts the word on My words.',
+    'text.step3':
+      '<btn>Translate the text</btn> shows a Russian translation under each paragraph; the same button hides it again.',
+    'text.step4':
+      '<pbtn>Make questions and exercises</pbtn>: Claude picks the words worth learning (with the usual Quiz, Flashcards and the other exercises), writes questions about the text, and a true-or-false exercise.',
+    'text.tip1': 'Words you already asked about are underlined with dots in the text.',
+    'text.tip2': 'The words are chosen for your level in that language, set in Settings.',
     'discuss.title': 'Discuss',
     'discuss.summary': 'A discussion question to start the lesson',
     'discuss.intro':
@@ -339,6 +353,20 @@ export const tutorial = defineMessages({
     'photo.tip2': '☆ рядом со словом добавляет его словарную форму в «Мои слова».',
     'photo.mock': 'результат фото с подчёркнутыми словами',
 
+    'text.title': 'Текст',
+    'text.summary': 'Вставьте статью: объяснения, перевод и упражнения',
+    'text.intro':
+      'Для текста, который вы нашли сами: статья, рассказ, пост. Вставьте его вместо скриншота и работайте с ним здесь.',
+    'text.step1':
+      'Вставьте текст и нажмите <pbtn>Читать этот текст</pbtn>. Он сохраняется на этом устройстве вместе со всем, что вы с ним сделали.',
+    'text.step2':
+      'Нажмите на слово или выделите несколько слов мышью или пальцем, затем нажмите <pbtn>Объяснить</pbtn>: вы получите перевод в этом предложении, словарную форму, время и короткое объяснение. ☆ добавляет слово в «Мои слова».',
+    'text.step3':
+      '<btn>Перевести текст</btn> показывает русский перевод под каждым абзацем; та же кнопка его скрывает.',
+    'text.step4':
+      '<pbtn>Составить вопросы и упражнения</pbtn>: Claude выберет слова, которые стоит выучить (с обычными упражнениями — тест, карточки и остальные), составит вопросы по тексту и упражнение «верно или неверно».',
+    'text.tip1': 'Слова, о которых вы уже спрашивали, подчёркнуты в тексте точками.',
+    'text.tip2': 'Слова подбираются под ваш уровень в этом языке, он задаётся в «Настройках».',
     'discuss.title': 'Обсуждение',
     'discuss.summary': 'Вопрос для разговора в начале урока',
     'discuss.intro':
@@ -539,6 +567,20 @@ export const tutorial = defineMessages({
     'photo.tip2': '☆ à côté d’un mot ajoute sa forme du dictionnaire à Mes mots.',
     'photo.mock': 'le résultat d’une photo de mots soulignés',
 
+    'text.title': 'Texte',
+    'text.summary': 'Collez un article : explications, traduction et exercices',
+    'text.intro':
+      'Pour un texte que vous avez trouvé vous-même : un article, une histoire, un post. Collez-le au lieu de faire une capture d’écran, et travaillez-le ici.',
+    'text.step1':
+      'Collez le texte et appuyez sur <pbtn>Lire ce texte</pbtn>. Il est enregistré sur cet appareil, avec tout ce que vous en faites.',
+    'text.step2':
+      'Cliquez sur un mot, ou sélectionnez quelques mots à la souris ou au doigt, puis appuyez sur <pbtn>Expliquer</pbtn> : vous obtenez la traduction dans cette phrase, la forme du dictionnaire, le temps et une courte explication. ☆ ajoute le mot à Mes mots.',
+    'text.step3':
+      '<btn>Traduire le texte</btn> affiche une traduction russe sous chaque paragraphe ; le même bouton la masque.',
+    'text.step4':
+      '<pbtn>Créer des questions et des exercices</pbtn> : Claude choisit les mots à retenir (avec le Quiz, les Cartes et les autres exercices habituels), écrit des questions sur le texte et un exercice « vrai ou faux ».',
+    'text.tip1': 'Les mots que vous avez déjà demandés sont soulignés en pointillé dans le texte.',
+    'text.tip2': 'Les mots sont choisis pour votre niveau dans cette langue, réglé dans Réglages.',
     'discuss.title': 'Discussion',
     'discuss.summary': 'Une question de discussion pour commencer le cours',
     'discuss.intro':
@@ -740,6 +782,21 @@ export const tutorial = defineMessages({
     'photo.tip2': '☆ neben einem Wort fügt seine Grundform zu Meine Wörter hinzu.',
     'photo.mock': 'das Ergebnis eines Fotos mit unterstrichenen Wörtern',
 
+    'text.title': 'Text',
+    'text.summary': 'Einen Artikel einfügen: Erklärungen, Übersetzung und Übungen',
+    'text.intro':
+      'Für einen Text, den du selbst gefunden hast: einen Artikel, eine Geschichte, einen Post. Füge ihn ein, statt einen Screenshot zu machen, und arbeite hier damit.',
+    'text.step1':
+      'Füge den Text ein und tippe auf <pbtn>Diesen Text lesen</pbtn>. Er wird auf diesem Gerät gespeichert, mit allem, was du damit machst.',
+    'text.step2':
+      'Klicke auf ein Wort oder markiere ein paar Wörter mit der Maus oder dem Finger und tippe dann auf <pbtn>Erklären</pbtn>: Du bekommst die Übersetzung in diesem Satz, die Grundform, die Zeitform und eine kurze Erklärung. ☆ fügt das Wort zu Meine Wörter hinzu.',
+    'text.step3':
+      '<btn>Text übersetzen</btn> zeigt eine russische Übersetzung unter jedem Absatz; derselbe Knopf blendet sie wieder aus.',
+    'text.step4':
+      '<pbtn>Fragen und Übungen erstellen</pbtn>: Claude wählt die Wörter, die sich zu lernen lohnen (mit Quiz, Karteikarten und den anderen Übungen), schreibt Fragen zum Text und eine Richtig-oder-falsch-Übung.',
+    'text.tip1': 'Wörter, nach denen du schon gefragt hast, sind im Text gepunktet unterstrichen.',
+    'text.tip2':
+      'Die Wörter werden für dein Niveau in dieser Sprache gewählt; es steht in den Einstellungen.',
     'discuss.title': 'Diskussion',
     'discuss.summary': 'Eine Gesprächsfrage für den Stundenbeginn',
     'discuss.intro':

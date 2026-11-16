@@ -6,6 +6,7 @@ export type Section =
   | 'mistakes'
   | 'stats'
   | 'photo'
+  | 'text'
   | 'discuss'
   | 'document'
   | 'tutorial'
@@ -21,6 +22,7 @@ export const SECTIONS: { id: Section; path: string; inMenu?: false }[] = [
   { id: 'mistakes', path: '/mistakes' },
   { id: 'stats', path: '/stats' },
   { id: 'photo', path: '/photo' },
+  { id: 'text', path: '/text' },
   { id: 'discuss', path: '/discuss' },
   { id: 'document', path: '/document' },
   { id: 'tutorial', path: '/tutorial' },

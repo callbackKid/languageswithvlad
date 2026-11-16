@@ -12,6 +12,7 @@ import MyWords from './components/MyWords';
 import NextLessonBadge from './components/NextLessonBadge';
 import PhotoSection from './components/PhotoSection';
 import Practice from './components/Practice';
+import Reader from './components/Reader';
 import Settings, { Avatar } from './components/Settings';
 import Stats from './components/Stats';
 import Tutorial from './components/Tutorial';
@@ -393,6 +394,7 @@ export default function App() {
           {section === 'settings' && <Settings />}
           {section === 'discuss' && <Discuss bank={bank} ai={ai} />}
           {section === 'photo' && <PhotoSection ai={ai} target={docTarget} />}
+          {section === 'text' && <Reader ai={ai} />}
         </main>
       )}
     </>

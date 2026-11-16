@@ -41,6 +41,10 @@ React + TypeScript + Vite in the browser, small Vercel serverless functions in `
 - **Photo → textbook PDF**: the pages of a textbook chapter become lesson notes (words, phrases, grammar, examples) and then a lesson.
 - Both can be added to the Google Doc as a new lesson (optional setup).
 
+**From a text you found**
+
+- **Text**: paste an article or any text and read it in the app. Click a word or select a phrase to get its translation in that sentence, dictionary form, tense and a short explanation; translate the whole text paragraph by paragraph; and get words worth learning (with all the usual exercises), questions about the text and a true-or-false exercise.
+
 **Around the lessons**
 
 - **Discuss**: a discussion question for the start of a lesson, for a chosen level, a vocabulary topic from the list or the student’s own (“the TV series Dexter”) and a grammar point, with follow-up questions, sentence starters, useful words and a fold-out explanation of the grammar rule.
@@ -166,6 +170,7 @@ Every section has its own address, so links can be shared and the browser’s Ba
 | Discuss     | `/discuss`                                                |
 | Document    | `/document`                                               |
 | Tutorial    | `/tutorial`                                               |
+| Text        | `/text`                                                   |
 | Settings    | `/settings`                                               |
 | Lesson mode | `/call` (opened by **Join call**, not in the menu)        |
 
@@ -210,9 +215,8 @@ api/                serverless functions (Vercel)
   analyze.ts        prepares a lesson: words, pairs, verbs
   conjugate.ts      a verb’s tables
   gaps.ts           fill-the-gap sentences
-  photo.ts          underlined words on a photo
-  transcribe.ts     handwritten notes on photos
-  textbook.ts       a textbook chapter (PDF pages) as lesson notes
+  paper.ts          from paper: underlined words on a photo, handwritten notes, textbook pages
+  text.ts           a pasted text: explaining a word, translating, making exercises
   discussion.ts     a discussion question for the start of a lesson
   append.ts         adds a lesson to the Google Doc
   feedback.ts       bug reports and ideas from students, to Telegram
@@ -227,7 +231,7 @@ src/
 
 ## Costs
 
-Claude is called when a lesson is first prepared, when a verb is first opened, for each new set of gap sentences, and for each photo or PDF. Lessons and verbs are cached in each student’s browser, and warm server instances reuse identical answers, so a class sharing one document mostly pays for each lesson once per student device. Set a monthly spend limit in the Anthropic console.
+Claude is called when a lesson is first prepared, when a verb is first opened, for each new set of gap sentences, for each photo or PDF, for each discussion question, and on the Text page for each explained word, each translation and each set of exercises. Lessons and verbs are cached in each student’s browser, and warm server instances reuse identical answers, so a class sharing one document mostly pays for each lesson once per student device. Set a monthly spend limit in the Anthropic console.
 
 ## Limits
 

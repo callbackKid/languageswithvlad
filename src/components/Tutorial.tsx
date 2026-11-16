@@ -73,6 +73,7 @@ const GUIDES: Guide[] = [
   { section: 'mistakes', id: 'mistakes', icon: '🎯', steps: 1 },
   { section: 'stats', id: 'stats', icon: '📊', steps: 1 },
   { section: 'photo', id: 'photo', icon: '📷', steps: 4, tips: 2, mock: true },
+  { section: 'text', id: 'text', icon: '📰', steps: 4, tips: 2 },
   { section: 'discuss', id: 'discuss', icon: '💬', steps: 4, tips: 1 },
   { section: 'call', id: 'call', icon: '🎥', steps: 5, tips: 3 },
   { section: 'document', id: 'document', icon: '📝', steps: 2, tips: 1 },

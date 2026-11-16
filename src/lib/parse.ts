@@ -5,9 +5,11 @@ import type {
   Discussion,
   Form,
   GapItem,
+  Language,
   Lesson,
   Pair,
   PhotoItem,
+  TextStudy,
   VerbRef,
   Word,
 } from './types';
@@ -243,22 +245,76 @@ export function normalizeGaps(raw: unknown): GapItem[] {
   return items;
 }
 
+function photoItem(raw: unknown, language: Language): PhotoItem {
+  const item = asObject(raw);
+  return {
+    fr: asText(item.fr),
+    context: asText(item.context),
+    ru: asText(item.ru),
+    base: asText(item.base),
+    kind: asText(item.kind) || 'other',
+    tense: asText(item.tense),
+    explanation: asText(item.explanation),
+    language,
+  };
+}
+
 export function normalizePhoto(raw: unknown): PhotoItem[] {
   const data = asObject(raw);
   const language = asLanguage(data.language);
   return asArray(data.items)
+    .map((item) => photoItem(item, language))
+    .filter((item) => item.fr);
+}
+
+/** One marked word or phrase explained; null when the answer has no translation to show. */
+export function normalizeExplanation(raw: unknown, selection: string): PhotoItem | null {
+  const item = photoItem(raw, asLanguage(asObject(raw).language));
+  return item.ru ? { ...item, fr: item.fr || selection } : null;
+}
+
+/** The translated paragraphs; throws when the answer has none. */
+export function normalizeTranslation(raw: unknown): string[] {
+  const paragraphs = asTexts(asObject(raw).paragraphs);
+  if (!paragraphs.length) throw new Error('empty');
+  return paragraphs;
+}
+
+/** Words, questions and statements built from a text, with the text's language. */
+export function normalizeStudy(raw: unknown): { language: Language; study: TextStudy } {
+  const data = asObject(raw);
+  const language = asLanguage(data.language);
+  const seen = new Set<string>();
+  const words: Word[] = asArray(data.words)
     .map(asObject)
-    .map((item) => ({
-      fr: asText(item.fr),
-      context: asText(item.context),
-      ru: asText(item.ru),
-      base: asText(item.base),
-      kind: asText(item.kind) || 'other',
-      tense: asText(item.tense),
-      explanation: asText(item.explanation),
+    .map((word) => ({
+      fr: asText(word.fr),
+      ru: asText(word.ru),
+      tr: '',
+      kind: asText(word.kind) || 'other',
+      added: false,
+      sense: asText(word.sense).toLowerCase() || undefined,
       language,
     }))
-    .filter((item) => item.fr);
+    .filter(
+      (word) =>
+        word.fr && word.ru && !seen.has(word.fr.toLowerCase()) && !!seen.add(word.fr.toLowerCase())
+    );
+  const questions = asArray(data.questions)
+    .map(asObject)
+    .map((item) => ({ question: asText(item.question), ru: asText(item.ru) }))
+    .filter((item) => item.question);
+  const statements = asArray(data.statements)
+    .map(asObject)
+    .map((item) => ({
+      text: asText(item.text),
+      ru: asText(item.ru),
+      correct: item.correct === true,
+      why: asText(item.why),
+    }))
+    .filter((item) => item.text);
+  if (!words.length && !questions.length && !statements.length) throw new Error('empty');
+  return { language, study: { title: asText(data.title), words, questions, statements } };
 }
 
 /** Picks string fields out of an answer, "" for anything missing. */
