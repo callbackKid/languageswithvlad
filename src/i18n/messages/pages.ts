@@ -1,6 +1,6 @@
 import { defineMessages } from '../core';
 
-/** Home, My words, Mistakes, All lessons and Stats. */
+/** Home, Favourite words, Mistakes, Downloaded lessons and Stats. */
 export const pages = defineMessages({
   en: {
     // Home
@@ -9,7 +9,7 @@ export const pages = defineMessages({
       one: '{learned} of {count} word learned',
       other: '{learned} of {count} words learned',
     },
-    homeOnMyWords: ', {hard} on My words',
+    homeOnMyWords: ', {hard} in Favourite words',
     homeIntro:
       '. Each round mixes words from every lesson, with the ones you miss coming back more often.',
     streak: { one: '🔥 {count} day in a row', other: '🔥 {count} days in a row' },
@@ -18,8 +18,8 @@ export const pages = defineMessages({
     goalProgress: 'Today: {count} of {goal} answers',
     randomExercises: 'Random exercises',
     noWordsYet: 'No words yet. Once a lesson has vocabulary, exercises appear here.',
-    // My words
-    myWordsTitle: 'My words',
+    // Favourite words
+    myWordsTitle: 'Favourite words',
     myWordsIntro: {
       one: '{count} word to work on. A word leaves the list after 3 right answers in a row, or when you take its ★ off.',
       other:
@@ -37,7 +37,7 @@ export const pages = defineMessages({
     backToMistakes: 'Back to mistakes',
     words: 'Words',
     verbForms: 'Verb forms',
-    // All lessons
+    // Downloaded lessons
     allTitle: 'All downloaded lessons',
     allIntro: 'Exercises on words and verbs from every lesson. Pick lessons to narrow it down.',
     all: 'All',
@@ -51,7 +51,7 @@ export const pages = defineMessages({
     wordsLearned: 'Words learned',
     leftToLearn: 'Left to learn',
     rightAnswers: 'Right answers',
-    onMyWords: 'On My words',
+    onMyWords: 'In Favourite words',
     vocabulary: 'Vocabulary',
     learnedOf: {
       one: '{learned} of {count} word learned ({percent}%)',
@@ -86,7 +86,7 @@ export const pages = defineMessages({
       many: 'Выучено {learned} из {count} слов',
       other: 'Выучено {learned} из {count} слова',
     },
-    homeOnMyWords: ', в «Моих словах»: {hard}',
+    homeOnMyWords: ', в «Избранных словах»: {hard}',
     homeIntro:
       '. В каждом раунде слова из всех уроков, а те, в которых вы ошибаетесь, возвращаются чаще.',
     streak: {
@@ -100,7 +100,7 @@ export const pages = defineMessages({
     goalProgress: 'Сегодня: {count} из {goal} ответов',
     randomExercises: 'Случайные упражнения',
     noWordsYet: 'Слов пока нет. Как только в уроке появится лексика, здесь будут упражнения.',
-    myWordsTitle: 'Мои слова',
+    myWordsTitle: 'Избранные слова',
     myWordsIntro: {
       one: '{count} слово для повторения. Слово уходит из списка после 3 верных ответов подряд или если снять с него ★.',
       few: '{count} слова для повторения. Слово уходит из списка после 3 верных ответов подряд или если снять с него ★.',
@@ -133,7 +133,7 @@ export const pages = defineMessages({
     wordsLearned: 'Выучено слов',
     leftToLearn: 'Осталось выучить',
     rightAnswers: 'Верных ответов',
-    onMyWords: 'В «Моих словах»',
+    onMyWords: 'В «Избранных словах»',
     vocabulary: 'Словарный запас',
     learnedOf: {
       one: 'Выучено {learned} из {count} слова ({percent}%)',
@@ -168,7 +168,7 @@ export const pages = defineMessages({
       one: '{learned} mot appris sur {count}',
       other: '{learned} mots appris sur {count}',
     },
-    homeOnMyWords: ', {hard} dans Mes mots',
+    homeOnMyWords: ', {hard} dans Mots favoris',
     homeIntro:
       '. Chaque série mélange les mots de toutes les leçons, et ceux que vous ratez reviennent plus souvent.',
     streak: { one: '🔥 {count} jour d’affilée', other: '🔥 {count} jours d’affilée' },
@@ -178,7 +178,7 @@ export const pages = defineMessages({
     randomExercises: 'Exercices au hasard',
     noWordsYet:
       'Pas encore de mots. Dès qu’une leçon contient du vocabulaire, les exercices apparaissent ici.',
-    myWordsTitle: 'Mes mots',
+    myWordsTitle: 'Mots favoris',
     myWordsIntro: {
       one: '{count} mot à travailler. Un mot quitte la liste après 3 bonnes réponses d’affilée, ou quand vous retirez son ★.',
       other:
@@ -209,7 +209,7 @@ export const pages = defineMessages({
     wordsLearned: 'Mots appris',
     leftToLearn: 'Reste à apprendre',
     rightAnswers: 'Bonnes réponses',
-    onMyWords: 'Dans Mes mots',
+    onMyWords: 'Dans Mots favoris',
     vocabulary: 'Vocabulaire',
     learnedOf: {
       one: '{learned} mot appris sur {count} ({percent} %)',
@@ -242,7 +242,7 @@ export const pages = defineMessages({
       one: '{learned} von {count} Wort gelernt',
       other: '{learned} von {count} Wörtern gelernt',
     },
-    homeOnMyWords: ', {hard} in Meine Wörter',
+    homeOnMyWords: ', {hard} in Lieblingswörtern',
     homeIntro:
       '. Jede Runde mischt Wörter aus allen Lektionen; die, bei denen du Fehler machst, kommen öfter.',
     streak: { one: '🔥 {count} Tag in Folge', other: '🔥 {count} Tage in Folge' },
@@ -251,7 +251,7 @@ export const pages = defineMessages({
     goalProgress: 'Heute: {count} von {goal} Antworten',
     randomExercises: 'Gemischte Übungen',
     noWordsYet: 'Noch keine Wörter. Sobald eine Lektion Vokabeln hat, erscheinen hier die Übungen.',
-    myWordsTitle: 'Meine Wörter',
+    myWordsTitle: 'Lieblingswörter',
     myWordsIntro: {
       one: '{count} Wort zum Üben. Ein Wort verlässt die Liste nach 3 richtigen Antworten in Folge oder wenn du den ★ entfernst.',
       other:
@@ -281,7 +281,7 @@ export const pages = defineMessages({
     wordsLearned: 'Gelernte Wörter',
     leftToLearn: 'Noch zu lernen',
     rightAnswers: 'Richtige Antworten',
-    onMyWords: 'In Meine Wörter',
+    onMyWords: 'In Lieblingswörtern',
     vocabulary: 'Wortschatz',
     learnedOf: {
       one: '{learned} von {count} Wort gelernt ({percent} %)',

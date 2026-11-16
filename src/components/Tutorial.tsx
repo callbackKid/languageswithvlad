@@ -69,15 +69,16 @@ const GUIDES: Guide[] = [
   { section: 'lessons', id: 'lessons', icon: '📚', steps: 4, tips: 4, mock: true },
   { section: 'lessons', id: 'verbs', icon: '🔤', steps: 4, tips: 3, mock: true },
   { section: 'practice', id: 'all-lessons', icon: '🗂️', steps: 2, mock: true },
+  { section: 'discuss', id: 'discuss', icon: '💬', steps: 4, tips: 1 },
+  { section: 'document', id: 'document', icon: '📝', steps: 2, tips: 1 },
   { section: 'mine', id: 'my-words', icon: '⭐', steps: 2 },
   { section: 'mistakes', id: 'mistakes', icon: '🎯', steps: 1 },
   { section: 'stats', id: 'stats', icon: '📊', steps: 1 },
-  { section: 'photo', id: 'photo', icon: '📷', steps: 4, tips: 2, mock: true },
   { section: 'text', id: 'text', icon: '📰', steps: 4, tips: 2 },
-  { section: 'discuss', id: 'discuss', icon: '💬', steps: 4, tips: 1 },
+  { section: 'photo', id: 'photo', icon: '📷', steps: 4, tips: 2, mock: true },
   { section: 'call', id: 'call', icon: '🎥', steps: 5, tips: 3 },
-  { section: 'document', id: 'document', icon: '📝', steps: 2, tips: 1 },
   { section: 'settings', id: 'settings', icon: '⚙️', steps: 4, tips: 1 },
+  { section: 'news', id: 'news', icon: '🗞️', steps: 1 },
 ];
 const QUICK_START = [1, 2, 3, 4];
 const range = (count: number) => Array.from({ length: count }, (_value, index) => index + 1);

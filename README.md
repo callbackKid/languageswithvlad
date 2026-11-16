@@ -23,9 +23,9 @@ React + TypeScript + Vite in the browser, small Vercel serverless functions in `
 
 ## Features
 
-**Lessons**
+**Lesson history**
 
-- **Words**: vocabulary extracted by Claude, with Russian translations (ones Claude added are marked ✱), pronunciation 🔊, and ☆ to save a word to My words.
+- **Words**: vocabulary extracted by Claude, with Russian translations (ones Claude added are marked ✱), pronunciation 🔊, and ☆ to save a word to Favourite words.
 - **Exercises**: quiz, flashcards, translation matching, synonym/antonym matching, fill-the-gap sentences, dictation. Words can be exported for Anki.
 - **Verbs**: tables in six tenses, affirmative and negative, a typing drill per tense, and a quick quiz.
 - **My notes** (a notepad per lesson) and **Original** (the lesson exactly as written).
@@ -33,24 +33,25 @@ React + TypeScript + Vite in the browser, small Vercel serverless functions in `
 **Practice across lessons**
 
 - **Home**: a daily round of 10 mixed questions, a 🔥 streak and a daily goal.
-- **All lessons**, **My words**, **Mistakes** and **Stats**.
+- **Downloaded lessons**, **Favourite words**, **Mistakes** and **Stats**.
 
 **From paper**
 
-- **Photo → underlined words**: a photo of a book page gives a translation, dictionary form, tense and short explanation for every underlined word.
-- **Photo → handwritten notes**: photos of handwritten notes become a lesson with the same exercises.
-- **Photo → textbook PDF**: the pages of a textbook chapter become lesson notes (words, phrases, grammar, examples) and then a lesson.
+- **Photo parsing → underlined words**: a photo of a book page gives a translation, dictionary form, tense and short explanation for every underlined word.
+- **Photo parsing → handwritten notes**: photos of handwritten notes become a lesson with the same exercises.
+- **Photo parsing → textbook PDF**: the pages of a textbook chapter become lesson notes (words, phrases, grammar, examples) and then a lesson.
 - Both can be added to the Google Doc as a new lesson (optional setup).
 
 **From a text you found**
 
-- **Text**: paste an article or any text and read it in the app. Click a word or select a phrase to get its translation in that sentence, dictionary form, tense and a short explanation; translate the whole text paragraph by paragraph; and get words worth learning (with all the usual exercises), questions about the text and a true-or-false exercise.
+- **Text analysis**: paste an article or any text and read it in the app. Click a word or select a phrase to get its translation in that sentence, dictionary form, tense and a short explanation; translate the whole text paragraph by paragraph; and get words worth learning (with all the usual exercises), questions about the text and a true-or-false exercise.
 
 **Around the lessons**
 
-- **Discuss**: a discussion question for the start of a lesson, for a chosen level, a vocabulary topic from the list or the student’s own (“the TV series Dexter”) and a grammar point, with follow-up questions, sentence starters, useful words and a fold-out explanation of the grammar rule.
+- **A question for discussion**: a discussion question for the start of a lesson, for a chosen level, a vocabulary topic from the list or the student’s own (“the TV series Dexter”) and a grammar point, with follow-up questions, sentence starters, useful words and a fold-out explanation of the grammar rule.
 - **Document**: the Google Docs editor inside the app.
-- **Top bar:** your picture and the document's name with **↻** (sync) on the left, the **next lesson** widget with **Enter the lesson** in the middle (both read from the document), **Feedback** and **⚙️ Settings** on the right. The menu is a column on the left: **«** folds it to a thin strip, **☰** opens it again, and the choice is remembered. On a phone it is a drop-down list that closes once a section is picked.
+- **Top bar:** your picture and the document's name with **↻** (sync) on the left, the **next lesson** widget with **Enter the lesson** in the middle (both read from the document), **Feedback** and **⚙️ Settings** on the right. The menu is a column on the left: **«** folds it to a thin strip, **☰** opens it again, and the choice is remembered. On a phone it is a drop-down list that closes once a section is picked. Its sections are grouped: lessons, words, reading tools, and help.
+- **News**: what changed in the app, day by day; a dot in the menu marks news not seen yet. Add an entry to `src/lib/news.ts` (all four interface languages) with every change students will notice.
 - **Lesson mode** (`/call`): the call, the teacher’s notes and the lesson’s words on one screen. Google Meet opens as a small window beside the app (Google doesn’t allow Meet inside other sites); Zoom runs inside the page (optional setup). The notes go into the Google Doc as a new lesson with one button. Below them, a **board** (Excalidraw) to write and draw on, shared live between the teacher and the student (optional setup), or shown through screen sharing.
 - **Tutorial**: a guide to every section, written for students.
 - **Settings** (⚙️ on the right of the top bar): the document (open it, copy the student link, change it), interface language (English, Russian, French, German; the browser’s by default), light or dark theme, the languages you learn and your level in each (practice and Discuss then show only those), name and picture, daily goal, speech speed, and which sections the menu shows. Word translations stay in Russian.
@@ -99,7 +100,7 @@ When you add a lesson to the document, students press **↻** (sync) next to the
 
 ## Optional: adding lessons from photos to the Google Doc
 
-The **Photo** section can append what it read (underlined words, handwritten notes) to the end of the document as a new lesson. Google lets the app write only with its own key, so this needs a one-time setup:
+The **Photo parsing** section can append what it read (underlined words, handwritten notes) to the end of the document as a new lesson. Google lets the app write only with its own key, so this needs a one-time setup:
 
 1. Open [console.cloud.google.com](https://console.cloud.google.com), create a project (any name), search for **Google Docs API** and press **Enable**.
 2. Go to **IAM & Admin → Service Accounts → Create service account**. Any name; skip the optional roles.
@@ -172,21 +173,22 @@ During local development without Supabase, two tabs of the same browser share th
 
 Every section has its own address, so links can be shared and the browser’s Back button works.
 
-| Page        | Address                                                   |
-| ----------- | --------------------------------------------------------- |
-| Home        | `/`                                                       |
-| Lessons     | `/lessons` (newest), `/lessons/2026-11-12_7` (one lesson) |
-| All lessons | `/all-lessons`                                            |
-| My words    | `/my-words`                                               |
-| Mistakes    | `/mistakes`                                               |
-| Stats       | `/stats`                                                  |
-| Photo       | `/photo`                                                  |
-| Discuss     | `/discuss`                                                |
-| Document    | `/document`                                               |
-| Tutorial    | `/tutorial`                                               |
-| Text        | `/text`                                                   |
-| Settings    | `/settings`                                               |
-| Lesson mode | `/call` (opened by **Enter the lesson**, not in the menu) |
+| Page                      | Address                                                   |
+| ------------------------- | --------------------------------------------------------- |
+| Home                      | `/`                                                       |
+| Lesson history            | `/lessons` (newest), `/lessons/2026-11-12_7` (one lesson) |
+| Downloaded lessons        | `/all-lessons`                                            |
+| A question for discussion | `/discuss`                                                |
+| Document                  | `/document`                                               |
+| Favourite words           | `/my-words`                                               |
+| Mistakes                  | `/mistakes`                                               |
+| Stats                     | `/stats`                                                  |
+| Text analysis             | `/text`                                                   |
+| Photo parsing             | `/photo`                                                  |
+| Tutorial                  | `/tutorial`                                               |
+| News                      | `/news`                                                   |
+| Settings                  | `/settings`                                               |
+| Lesson mode               | `/call` (opened by **Enter the lesson**, not in the menu) |
 
 `vercel.json` sends every address except `/api/…` to the app, so refreshing any page works.
 

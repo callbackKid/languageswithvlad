@@ -537,7 +537,7 @@ main {
 
 .sidebar {
   flex: none;
-  width: 210px;
+  width: 236px;
   border-right: 1px solid var(--line);
   background: var(--surface);
 }
@@ -595,8 +595,8 @@ main {
   padding: 8px 12px;
   border-radius: 8px;
   font-weight: 500;
+  line-height: 1.3;
   color: var(--muted);
-  white-space: nowrap;
 }
 .section-link:hover {
   color: var(--text);
@@ -606,6 +606,25 @@ main {
   color: var(--ink);
   font-weight: 600;
   background: color-mix(in srgb, var(--accent) 14%, transparent);
+}
+/* the menu's groups: a line above the first section of each */
+.section-link[data-group-start] {
+  margin-top: 13px;
+  position: relative;
+}
+.section-link[data-group-start]::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 12px;
+  right: 12px;
+  border-top: 1px solid var(--line);
+}
+.news-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
 }
 .section-link .count {
   min-width: 20px;
@@ -760,8 +779,10 @@ main.page.wide {
     flex-basis: 100%;
     text-align: center;
   }
+  /* the name keeps its room: the buttons move to the next line instead of squeezing it */
   .doc {
-    flex: 1;
+    flex: 1 1 150px;
+    min-width: 150px;
   }
 
   /* the menu becomes a bar with the current section, and its list drops down over the page */
@@ -1580,7 +1601,7 @@ table.conj input.accent {
 }
 
 /* ==========================================================================
-   Home, All lessons, Mistakes and Stats
+   Home, Downloaded lessons, Mistakes and Stats
    The daily goal, lesson chips, mistake lists and the statistics.
    ========================================================================== */
 
@@ -2864,6 +2885,89 @@ li .open-link {
 @media (max-width: 760px) {
   .board-frame {
     height: 420px;
+  }
+}
+
+/* ==========================================================================
+   News
+   What changed in the app, by day.
+   ========================================================================== */
+
+.news {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.news-day {
+  position: relative;
+  padding: 0 0 26px 24px;
+  border-left: 2px solid var(--line);
+}
+.news-day:last-child {
+  padding-bottom: 0;
+}
+/* a dot on the timeline for each day */
+.news-day::before {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: -7px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 4px var(--bg);
+}
+.news-day h2 {
+  margin: 0 0 10px;
+  font-size: 18px;
+}
+.news-day ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.news-item {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+}
+.news-kind {
+  flex: none;
+  min-width: 84px;
+  padding: 1px 8px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+}
+.news-kind.new {
+  background: color-mix(in srgb, var(--accent) 16%, transparent);
+  color: var(--accent);
+}
+.news-kind.better {
+  background: var(--ok-soft);
+  color: var(--ok);
+}
+.news-kind.fixed {
+  background: var(--warn-soft);
+  color: var(--text);
+}
+
+@media (max-width: 760px) {
+  .news-item {
+    flex-direction: column;
+    gap: 6px;
+  }
+  .news-kind {
+    min-width: 0;
   }
 }
 

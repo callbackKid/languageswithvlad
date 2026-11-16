@@ -3,7 +3,7 @@ import { common } from '../i18n/messages/common';
 import { setHard, useProgress, wordKey } from '../lib/progress';
 import type { Word } from '../lib/types';
 
-/** Adds a word to, or removes it from, the "My words" list. */
+/** Adds a word to, or removes it from, the "Favourite words" list. */
 export default function Star({ word }: { word: Word }) {
   const { t } = useTranslation(common);
   const isStarred = !!useProgress().words[wordKey(word.fr)]?.hard;

@@ -13,7 +13,7 @@ export const paper = defineMessages({
       'Showing words exactly as written in the notes. Translations, pairs, verbs and sentences need Claude.',
     frenchOnlyVerbs: 'Verb tables are only available for French lessons for now.',
     // photo section
-    fromPaper: 'From paper',
+    fromPaper: 'Photo parsing',
     whatToRead: 'What to read',
     'mode.underlined': 'Underlined words',
     'mode.handwritten': 'Handwritten notes',
@@ -31,7 +31,7 @@ export const paper = defineMessages({
     colForm: 'Form',
     colExplanation: 'Explanation',
     colActions: 'Actions',
-    photoStarLegend: '☆ adds the word to My words, so it comes back in exercises.',
+    photoStarLegend: '☆ adds the word to Favourite words, so it comes back in exercises.',
     noUnderlined:
       'No underlined words found. Make sure the marks are visible and the page is in focus.',
     // handwriting and textbook
@@ -81,7 +81,7 @@ export const paper = defineMessages({
     localOnly:
       'Слова показаны так, как они записаны. Для переводов, пар, глаголов и предложений нужен Claude.',
     frenchOnlyVerbs: 'Таблицы глаголов пока есть только для французских уроков.',
-    fromPaper: 'С бумаги',
+    fromPaper: 'Разбор фото',
     whatToRead: 'Что прочитать',
     'mode.underlined': 'Подчёркнутые слова',
     'mode.handwritten': 'Рукописные заметки',
@@ -98,7 +98,7 @@ export const paper = defineMessages({
     colForm: 'Форма',
     colExplanation: 'Объяснение',
     colActions: 'Действия',
-    photoStarLegend: '☆ добавляет слово в «Мои слова», и оно будет попадаться в упражнениях.',
+    photoStarLegend: '☆ добавляет слово в «Избранные слова», и оно будет попадаться в упражнениях.',
     noUnderlined:
       'Подчёркнутые слова не найдены. Проверьте, что пометки хорошо видны, а страница в фокусе.',
     'name.handwritten': 'Рукописные заметки',
@@ -152,7 +152,7 @@ export const paper = defineMessages({
       'Les mots sont affichés tels qu’ils sont écrits. Les traductions, paires, verbes et phrases demandent Claude.',
     frenchOnlyVerbs:
       'Les tableaux de conjugaison ne sont disponibles que pour les leçons de français.',
-    fromPaper: 'Depuis le papier',
+    fromPaper: 'Analyse de photo',
     whatToRead: 'Que lire',
     'mode.underlined': 'Mots soulignés',
     'mode.handwritten': 'Notes manuscrites',
@@ -169,7 +169,7 @@ export const paper = defineMessages({
     colForm: 'Forme',
     colExplanation: 'Explication',
     colActions: 'Actions',
-    photoStarLegend: '☆ ajoute le mot à Mes mots : il reviendra dans les exercices.',
+    photoStarLegend: '☆ ajoute le mot à Mots favoris : il reviendra dans les exercices.',
     noUnderlined:
       'Aucun mot souligné trouvé. Vérifiez que les marques sont visibles et que la page est nette.',
     'name.handwritten': 'Notes manuscrites',
@@ -217,7 +217,7 @@ export const paper = defineMessages({
     localOnly:
       'Die Wörter werden so gezeigt, wie sie in den Notizen stehen. Übersetzungen, Paare, Verben und Sätze brauchen Claude.',
     frenchOnlyVerbs: 'Verbtabellen gibt es vorerst nur für Französisch-Lektionen.',
-    fromPaper: 'Vom Papier',
+    fromPaper: 'Fotoanalyse',
     whatToRead: 'Was gelesen wird',
     'mode.underlined': 'Unterstrichene Wörter',
     'mode.handwritten': 'Handschriftliche Notizen',
@@ -234,7 +234,8 @@ export const paper = defineMessages({
     colForm: 'Form',
     colExplanation: 'Erklärung',
     colActions: 'Aktionen',
-    photoStarLegend: '☆ fügt das Wort zu Meine Wörter hinzu, damit es in Übungen wiederkommt.',
+    photoStarLegend:
+      '☆ fügt das Wort zu den Lieblingswörtern hinzu, damit es in Übungen wiederkommt.',
     noUnderlined:
       'Keine unterstrichenen Wörter gefunden. Achte darauf, dass die Markierungen sichtbar sind und die Seite scharf ist.',
     'name.handwritten': 'Handschriftliche Notizen',

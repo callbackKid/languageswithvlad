@@ -9,6 +9,7 @@ import LessonMode from './components/LessonMode';
 import LessonView from './components/LessonView';
 import Mistakes from './components/Mistakes';
 import MyWords from './components/MyWords';
+import News from './components/News';
 import NextLessonBadge from './components/NextLessonBadge';
 import PhotoSection from './components/PhotoSection';
 import Practice from './components/Practice';
@@ -22,6 +23,7 @@ import { api, ApiError } from './lib/api';
 import { useBank } from './lib/bank';
 import type { BoardServer } from './lib/boardSync';
 import { findCall } from './lib/call';
+import { hasUnseenNews } from './lib/news';
 import { docIdFrom, splitLessons } from './lib/parse';
 import { setProgressDoc, useProgress } from './lib/progress';
 import { followLink, hrefFor, navigate, usePath } from './lib/router';
@@ -77,6 +79,8 @@ export default function App() {
   );
   const [sync, setSync] = useState<Sync>({ state: 'idle' });
   const [changing, setChanging] = useState(false);
+  const [unseenNews, setUnseenNews] = useState(hasUnseenNews);
+  const newsSeen = useCallback(() => setUnseenNews(false), []);
   const [menuOpen, setMenuOpen] = useState(
     () => !onPhone() && load<boolean>('menu-open') !== false
   );
@@ -156,7 +160,7 @@ export default function App() {
   const bank = useBank(lessons, ai);
   // Set while rendering, so the first quiz round already sees this document's progress.
   setProgressDoc(docId);
-  // the same words the My words page lists
+  // the same words the Favourite words page lists
   const hardCount = Object.values(useProgress().words).filter(
     (stat) => stat.hard && isStudied(stat.language, settings)
   ).length;
@@ -308,9 +312,13 @@ export default function App() {
             >
               {SECTIONS.filter(
                 (entry) => entry.inMenu !== false && !settings.hidden.includes(entry.id)
-              ).map((entry) => (
+              ).map((entry, index, shown) => (
                 <a
                   key={entry.id}
+                  // a line above the first section of each group
+                  data-group-start={
+                    index > 0 && shown[index - 1]?.group !== entry.group ? '' : undefined
+                  }
                   className="section-link"
                   href={hrefFor(entry.path)}
                   aria-current={section === entry.id ? 'page' : undefined}
@@ -322,6 +330,14 @@ export default function App() {
                   {t(`section.${entry.id}`)}
                   {entry.id === 'mine' && hardCount > 0 && (
                     <span className="count">{hardCount}</span>
+                  )}
+                  {entry.id === 'news' && unseenNews && (
+                    <span
+                      className="news-dot"
+                      role="img"
+                      aria-label={t('newsUnseen')}
+                      title={t('newsUnseen')}
+                    />
                   )}
                 </a>
               ))}
@@ -437,6 +453,7 @@ export default function App() {
               {section === 'discuss' && <Discuss bank={bank} ai={ai} />}
               {section === 'photo' && <PhotoSection ai={ai} target={docTarget} />}
               {section === 'text' && <Reader ai={ai} />}
+              {section === 'news' && <News onSeen={newsSeen} />}
             </main>
           )}
         </div>

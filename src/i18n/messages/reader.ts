@@ -3,7 +3,7 @@ import { defineMessages } from '../core';
 /** The Text page: a pasted text to read, with explanations, a translation and exercises. */
 export const reader = defineMessages({
   en: {
-    title: 'Text',
+    title: 'Text analysis',
     intro:
       'Paste an article or any other text. Click a word or select a phrase to have it explained, translate the whole text, and get questions and exercises made from it.',
     pasteLabel: 'Your text',
@@ -46,7 +46,7 @@ export const reader = defineMessages({
     trueFalseScore: '{score} of {total} right.',
   },
   ru: {
-    title: 'Текст',
+    title: 'Разбор текста',
     intro:
       'Вставьте статью или любой другой текст. Нажмите на слово или выделите фразу, чтобы получить объяснение, переведите весь текст и получите вопросы и упражнения по нему.',
     pasteLabel: 'Ваш текст',
@@ -88,7 +88,7 @@ export const reader = defineMessages({
     trueFalseScore: 'Правильно {score} из {total}.',
   },
   fr: {
-    title: 'Texte',
+    title: 'Analyse de texte',
     intro:
       'Collez un article ou n’importe quel texte. Cliquez sur un mot ou sélectionnez une expression pour l’expliquer, traduisez tout le texte et obtenez des questions et des exercices à partir de lui.',
     pasteLabel: 'Votre texte',
@@ -131,7 +131,7 @@ export const reader = defineMessages({
     trueFalseScore: '{score} sur {total} justes.',
   },
   de: {
-    title: 'Text',
+    title: 'Textanalyse',
     intro:
       'Füge einen Artikel oder einen anderen Text ein. Klicke auf ein Wort oder markiere eine Wendung, um sie erklärt zu bekommen, übersetze den ganzen Text und erhalte Fragen und Übungen dazu.',
     pasteLabel: 'Dein Text',

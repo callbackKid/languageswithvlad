@@ -18,7 +18,7 @@ export interface WordStat {
   wrong: number;
   streak: number;
   last: number;
-  /** on the "My words" list: starred by hand or missed in an exercise */
+  /** on the "Favourite words" list: starred by hand or missed in an exercise */
   hard: boolean;
 }
 export interface FormStat {

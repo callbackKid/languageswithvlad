@@ -23,7 +23,7 @@ export const tutorial = defineMessages({
     'quick2.text': 'In <lessons>Lessons</lessons>, choose a lesson and look at its words.',
     'quick3.title': 'Practise',
     'quick3.text':
-      'Start with <b>Flashcards</b>, then the <b>Quiz</b>. Missed words go to <mine>My words</mine>.',
+      'Start with <b>Flashcards</b>, then the <b>Quiz</b>. Missed words go to <mine>Favourite words</mine>.',
     'quick4.title': 'Come back every day',
     'quick4.text':
       'A round on <home>Home</home> takes a few minutes and keeps your 🔥 streak going.',
@@ -60,7 +60,7 @@ export const tutorial = defineMessages({
       'Answer at least once a day to keep your 🔥 streak; 20 answers complete the day’s goal.',
     'home.mock': 'the streak and daily goal on Home',
 
-    'lessons.title': 'Lessons',
+    'lessons.title': 'Lesson history',
     'lessons.summary': 'Words, verbs and notes for each lesson',
     'lessons.intro':
       'Every lesson from the document, newest selected. Claude reads it once and prepares the vocabulary with translations, synonym and antonym pairs, and the verbs.',
@@ -70,7 +70,7 @@ export const tutorial = defineMessages({
       'Stay on the <b>Words</b> tab. Every word is ticked; untick the ones you don’t want, or use <b>Pick all</b>, <b>Clear</b> and the filter box.',
     'lessons.step3':
       'Start an exercise from the row of buttons: <pbtn>Quiz</pbtn> <btn>Flashcards</btn> <btn>Match translations</btn> <btn>Synonyms & antonyms</btn> <btn>Fill the gap</btn> <btn>Dictation</btn>',
-    'lessons.step4': 'Press 🔊 to hear a word and ☆ to put it on <b>My words</b>.',
+    'lessons.step4': 'Press 🔊 to hear a word and ☆ to put it on <b>Favourite words</b>.',
     'lessons.tip1': '<added>✱</added> marks a translation Claude added that isn’t in the notes.',
     'lessons.tip2':
       '<b>Flashcards</b>: <key>Space</key> flips the card, <key>←</key> means “again”, <key>→</key> means “I know it”. The toggle on top switches the direction.',
@@ -98,7 +98,7 @@ export const tutorial = defineMessages({
       'If a table looks wrong, <b>Conjugate again</b> (next to the past participle) asks for a fresh one.',
     'verbs.mock': 'a verb table',
 
-    'all-lessons.title': 'All lessons',
+    'all-lessons.title': 'Downloaded lessons',
     'all-lessons.summary': 'The same exercises, on several lessons at once',
     'all-lessons.intro': 'Every word and verb exercise, on all prepared lessons together.',
     'all-lessons.step1':
@@ -107,10 +107,10 @@ export const tutorial = defineMessages({
       'Use the <b>Words</b> and <b>Verbs</b> tabs exactly as in a single lesson.',
     'all-lessons.mock': 'lesson chips',
 
-    'my-words.title': 'My words',
+    'my-words.title': 'Favourite words',
     'my-words.summary': 'Your personal list of words to work on',
     'my-words.intro':
-      'Words you starred with ☆ and words you got wrong in any exercise. The number next to <b>My words</b> in the menu shows how many there are.',
+      'Words you starred with ☆ and words you got wrong in any exercise. The number next to <b>Favourite words</b> in the menu shows how many there are.',
     'my-words.step1': 'Practise them with the same exercises as in a lesson.',
     'my-words.step2':
       'A word leaves the list after <b>3 right answers in a row</b>, or when you take its ★ off.',
@@ -127,7 +127,7 @@ export const tutorial = defineMessages({
       'How many words you’ve learned, which lessons, kinds of words and tenses are hardest for you, and your most common mistakes.',
     'stats.step1': 'Check it now and then to choose what to review next.',
 
-    'photo.title': 'Photo',
+    'photo.title': 'Photo parsing',
     'photo.summary': 'Underlined words, handwritten notes, or a textbook PDF',
     'photo.intro':
       'Three ways to bring words in from paper. Choose one with the switch at the top.',
@@ -141,24 +141,24 @@ export const tutorial = defineMessages({
       '<btn>Add to Google Doc as Leçon 8</btn> adds what was read to the end of the document as a new lesson (needs a one-time setup on the server, see the README).',
     'photo.tip1':
       'Take the photo straight on, in good light, with the whole marked line in the frame.',
-    'photo.tip2': '☆ next to a word puts its dictionary form on My words.',
+    'photo.tip2': '☆ next to a word puts its dictionary form on Favourite words.',
     'photo.mock': 'the result of a photo with underlined words',
 
-    'text.title': 'Text',
+    'text.title': 'Text analysis',
     'text.summary': 'Paste an article: explanations, a translation and exercises',
     'text.intro':
       'For a text you found yourself: an article, a story, a post. Paste it instead of taking a screenshot, and work with it here.',
     'text.step1':
       'Paste the text and press <pbtn>Read this text</pbtn>. It is saved on this device, with everything you do with it.',
     'text.step2':
-      'Click a word, or select a few words with the mouse or your finger, then press <pbtn>Explain</pbtn>: you get the translation in this sentence, the dictionary form, the tense and a short explanation. ☆ puts the word on My words.',
+      'Click a word, or select a few words with the mouse or your finger, then press <pbtn>Explain</pbtn>: you get the translation in this sentence, the dictionary form, the tense and a short explanation. ☆ puts the word on Favourite words.',
     'text.step3':
       '<btn>Translate the text</btn> shows a Russian translation under each paragraph; the same button hides it again.',
     'text.step4':
       '<pbtn>Make questions and exercises</pbtn>: Claude picks the words worth learning (with the usual Quiz, Flashcards and the other exercises), writes questions about the text, and a true-or-false exercise.',
     'text.tip1': 'Words you already asked about are underlined with dots in the text.',
     'text.tip2': 'The words are chosen for your level in that language, set in Settings.',
-    'discuss.title': 'Discuss',
+    'discuss.title': 'A question for discussion',
     'discuss.summary': 'A discussion question to start the lesson',
     'discuss.intro':
       'A question to talk about at the start of a lesson, written for your level and the grammar you are practising.',
@@ -168,7 +168,7 @@ export const tutorial = defineMessages({
     'discuss.step3':
       'Press <pbtn>Write a question</pbtn>. You get the question (🔊 reads it, <b>Show translation</b> shows it in Russian), follow-up questions, sentence beginnings that use the grammar, and useful words. With a grammar topic, <b>📘 The rule</b> opens an explanation with examples.',
     'discuss.step4': '<pbtn>Another question</pbtn> writes a new one with the same settings.',
-    'discuss.tip1': '☆ next to a useful word puts it on My words.',
+    'discuss.tip1': '☆ next to a useful word puts it on Favourite words.',
 
     'settings.title': 'Settings',
     'settings.summary': 'Language, theme, what you learn, your level and the menu',
@@ -179,7 +179,7 @@ export const tutorial = defineMessages({
     'settings.step2':
       '<b>Interface</b>: the language of the app (English, Russian, French, German) and the colour theme: like the system, light or dark.',
     'settings.step3':
-      '<b>Learning</b>: tick the languages you learn and choose your level in each. Exercises, My words, Mistakes, Stats and Discuss then show only those languages, and the level is the default in Discuss and Fill the gap.',
+      '<b>Learning</b>: tick the languages you learn and choose your level in each. Exercises, Favourite words, Mistakes, Stats and the discussion questions then show only those languages, and the level is the default for discussion questions and in Fill the gap.',
     'settings.step4':
       'Also there: the daily goal for the 🔥 streak, the speed of 🔊, and which sections the menu shows.',
     'settings.tip1': 'Translations of words stay in Russian whatever the interface language.',
@@ -210,6 +210,11 @@ export const tutorial = defineMessages({
     'document.step2': 'When you go to another section, the app syncs and the lessons update.',
     'document.tip1':
       'If the editor stays blank or asks you to sign in (often in Safari), use the link above it to open the document in a new tab.',
+    'news.title': 'News',
+    'news.summary': 'What changed in the app, by date',
+    'news.intro': 'Every change to the app, newest first.',
+    'news.step1':
+      'Each day lists what is <b>New</b>, <b>Improved</b> and <b>Fixed</b>. A dot next to <b>News</b> in the menu means there is something you haven’t seen yet.',
   },
   ru: {
     title: 'Инструкция',
@@ -232,7 +237,7 @@ export const tutorial = defineMessages({
     'quick2.text': 'В разделе <lessons>Уроки</lessons> выберите урок и посмотрите его слова.',
     'quick3.title': 'Тренируйтесь',
     'quick3.text':
-      'Начните с <b>Карточек</b>, потом пройдите <b>Тест</b>. Слова с ошибками попадут в <mine>Мои слова</mine>.',
+      'Начните с <b>Карточек</b>, потом пройдите <b>Тест</b>. Слова с ошибками попадут в <mine>Избранные слова</mine>.',
     'quick4.title': 'Возвращайтесь каждый день',
     'quick4.text':
       'Раунд на <home>Главной</home> занимает несколько минут и поддерживает вашу 🔥 серию.',
@@ -270,7 +275,7 @@ export const tutorial = defineMessages({
       'Отвечайте хотя бы раз в день, чтобы не прервать 🔥 серию; 20 ответов — цель на день.',
     'home.mock': 'серия и цель дня на Главной',
 
-    'lessons.title': 'Уроки',
+    'lessons.title': 'История уроков',
     'lessons.summary': 'Слова, глаголы и заметки к каждому уроку',
     'lessons.intro':
       'Все уроки из документа, выбран самый новый. Claude один раз читает урок и готовит лексику с переводами, пары синонимов и антонимов и глаголы.',
@@ -281,7 +286,7 @@ export const tutorial = defineMessages({
     'lessons.step3':
       'Запустите упражнение кнопкой: <pbtn>Тест</pbtn> <btn>Карточки</btn> <btn>Найди перевод</btn> <btn>Синонимы и антонимы</btn> <btn>Вставь слово</btn> <btn>Диктант</btn>',
     'lessons.step4':
-      'Нажмите 🔊, чтобы услышать слово, и ☆, чтобы добавить его в <b>Мои слова</b>.',
+      'Нажмите 🔊, чтобы услышать слово, и ☆, чтобы добавить его в <b>Избранные слова</b>.',
     'lessons.tip1':
       '<added>✱</added> отмечает перевод, который добавил Claude: в записях его не было.',
     'lessons.tip2':
@@ -310,7 +315,7 @@ export const tutorial = defineMessages({
       'Если таблица выглядит неправильно, <b>Проспрягать заново</b> (рядом с причастием) попросит новую.',
     'verbs.mock': 'таблица глагола',
 
-    'all-lessons.title': 'Все уроки',
+    'all-lessons.title': 'Загруженные уроки',
     'all-lessons.summary': 'Те же упражнения сразу по нескольким урокам',
     'all-lessons.intro': 'Все упражнения на слова и глаголы по всем подготовленным урокам вместе.',
     'all-lessons.step1':
@@ -319,10 +324,10 @@ export const tutorial = defineMessages({
       'Пользуйтесь вкладками <b>Слова</b> и <b>Глаголы</b> так же, как в отдельном уроке.',
     'all-lessons.mock': 'выбор уроков',
 
-    'my-words.title': 'Мои слова',
+    'my-words.title': 'Избранные слова',
     'my-words.summary': 'Ваш личный список слов для повторения',
     'my-words.intro':
-      'Слова, отмеченные ☆, и слова, в которых вы ошиблись в любом упражнении. Число рядом с <b>Мои слова</b> в меню показывает, сколько их.',
+      'Слова, отмеченные ☆, и слова, в которых вы ошиблись в любом упражнении. Число рядом с <b>Избранные слова</b> в меню показывает, сколько их.',
     'my-words.step1': 'Тренируйте их теми же упражнениями, что и в уроке.',
     'my-words.step2':
       'Слово уходит из списка после <b>3 верных ответов подряд</b> или если снять с него ★.',
@@ -339,7 +344,7 @@ export const tutorial = defineMessages({
       'Сколько слов вы выучили, какие уроки, части речи и времена даются труднее всего и какие ошибки самые частые.',
     'stats.step1': 'Заглядывайте сюда время от времени, чтобы решить, что повторить.',
 
-    'photo.title': 'Фото',
+    'photo.title': 'Разбор фото',
     'photo.summary': 'Подчёркнутые слова, рукописные заметки или учебник в PDF',
     'photo.intro': 'Три способа перенести слова с бумаги. Выберите нужный переключателем сверху.',
     'photo.step1':
@@ -351,24 +356,24 @@ export const tutorial = defineMessages({
     'photo.step4':
       '<btn>Добавить в Google-документ как Leçon 8</btn> добавляет прочитанное в конец документа новым уроком (нужна разовая настройка на сервере, см. README).',
     'photo.tip1': 'Снимайте прямо, при хорошем свете, чтобы вся отмеченная строка попала в кадр.',
-    'photo.tip2': '☆ рядом со словом добавляет его словарную форму в «Мои слова».',
+    'photo.tip2': '☆ рядом со словом добавляет его словарную форму в «Избранные слова».',
     'photo.mock': 'результат фото с подчёркнутыми словами',
 
-    'text.title': 'Текст',
+    'text.title': 'Разбор текста',
     'text.summary': 'Вставьте статью: объяснения, перевод и упражнения',
     'text.intro':
       'Для текста, который вы нашли сами: статья, рассказ, пост. Вставьте его вместо скриншота и работайте с ним здесь.',
     'text.step1':
       'Вставьте текст и нажмите <pbtn>Читать этот текст</pbtn>. Он сохраняется на этом устройстве вместе со всем, что вы с ним сделали.',
     'text.step2':
-      'Нажмите на слово или выделите несколько слов мышью или пальцем, затем нажмите <pbtn>Объяснить</pbtn>: вы получите перевод в этом предложении, словарную форму, время и короткое объяснение. ☆ добавляет слово в «Мои слова».',
+      'Нажмите на слово или выделите несколько слов мышью или пальцем, затем нажмите <pbtn>Объяснить</pbtn>: вы получите перевод в этом предложении, словарную форму, время и короткое объяснение. ☆ добавляет слово в «Избранные слова».',
     'text.step3':
       '<btn>Перевести текст</btn> показывает русский перевод под каждым абзацем; та же кнопка его скрывает.',
     'text.step4':
       '<pbtn>Составить вопросы и упражнения</pbtn>: Claude выберет слова, которые стоит выучить (с обычными упражнениями — тест, карточки и остальные), составит вопросы по тексту и упражнение «верно или неверно».',
     'text.tip1': 'Слова, о которых вы уже спрашивали, подчёркнуты в тексте точками.',
     'text.tip2': 'Слова подбираются под ваш уровень в этом языке, он задаётся в «Настройках».',
-    'discuss.title': 'Обсуждение',
+    'discuss.title': 'Вопрос для обсуждения',
     'discuss.summary': 'Вопрос для разговора в начале урока',
     'discuss.intro':
       'Вопрос, чтобы поговорить в начале урока, под ваш уровень и грамматику, которую вы тренируете.',
@@ -378,7 +383,7 @@ export const tutorial = defineMessages({
     'discuss.step3':
       'Нажмите <pbtn>Придумать вопрос</pbtn>. Вы получите вопрос (🔊 прочитает его, <b>Показать перевод</b> покажет его по-русски), вопросы для продолжения разговора, начала фраз с нужной грамматикой и полезные слова. Если выбрана грамматика, <b>📘 Правило</b> раскрывает объяснение с примерами.',
     'discuss.step4': '<pbtn>Другой вопрос</pbtn> придумает новый с теми же настройками.',
-    'discuss.tip1': '☆ рядом с полезным словом добавляет его в «Мои слова».',
+    'discuss.tip1': '☆ рядом с полезным словом добавляет его в «Избранные слова».',
 
     'settings.title': 'Настройки',
     'settings.summary': 'Язык, тема, что вы учите, уровень и меню',
@@ -389,7 +394,7 @@ export const tutorial = defineMessages({
     'settings.step2':
       '<b>Интерфейс</b>: язык приложения (английский, русский, французский, немецкий) и цветовая тема: как в системе, светлая или тёмная.',
     'settings.step3':
-      '<b>Обучение</b>: отметьте языки, которые учите, и выберите уровень для каждого. Упражнения, «Мои слова», «Ошибки», «Статистика» и «Обсуждение» покажут только эти языки, а уровень подставится в «Обсуждение» и «Вставь слово».',
+      '<b>Обучение</b>: отметьте языки, которые учите, и выберите уровень для каждого. Упражнения, «Избранные слова», «Ошибки», «Статистика» и «Вопрос для обсуждения» покажут только эти языки, а уровень подставится в «Вопрос для обсуждения» и «Вставь слово».',
     'settings.step4':
       'Ещё там: цель на день для 🔥 серии, скорость озвучки 🔊 и какие разделы показывать в меню.',
     'settings.tip1': 'Переводы слов остаются на русском при любом языке интерфейса.',
@@ -421,6 +426,11 @@ export const tutorial = defineMessages({
       'Когда вы переходите в другой раздел, приложение синхронизируется и уроки обновляются.',
     'document.tip1':
       'Если редактор пустой или просит войти (часто в Safari), откройте документ в новой вкладке по ссылке над ним.',
+    'news.title': 'Новости',
+    'news.summary': 'Что изменилось в приложении, по датам',
+    'news.intro': 'Все изменения в приложении, сначала самые новые.',
+    'news.step1':
+      'Для каждого дня указано, что <b>Новое</b>, что <b>Улучшено</b> и что <b>Исправлено</b>. Точка рядом с <b>Новостями</b> в меню значит, что есть что-то, чего вы ещё не видели.',
   },
   fr: {
     title: 'Guide',
@@ -443,7 +453,7 @@ export const tutorial = defineMessages({
     'quick2.text': 'Dans <lessons>Leçons</lessons>, choisissez une leçon et regardez ses mots.',
     'quick3.title': 'Entraînez-vous',
     'quick3.text':
-      'Commencez par les <b>Cartes</b>, puis le <b>Quiz</b>. Les mots ratés vont dans <mine>Mes mots</mine>.',
+      'Commencez par les <b>Cartes</b>, puis le <b>Quiz</b>. Les mots ratés vont dans <mine>Mots favoris</mine>.',
     'quick4.title': 'Revenez chaque jour',
     'quick4.text':
       'Une série sur l’<home>Accueil</home> prend quelques minutes et entretient votre 🔥 série.',
@@ -481,7 +491,7 @@ export const tutorial = defineMessages({
       'Répondez au moins une fois par jour pour garder votre 🔥 série ; 20 réponses remplissent l’objectif du jour.',
     'home.mock': 'la série et l’objectif du jour sur l’Accueil',
 
-    'lessons.title': 'Leçons',
+    'lessons.title': 'Historique des leçons',
     'lessons.summary': 'Mots, verbes et notes de chaque leçon',
     'lessons.intro':
       'Toutes les leçons du document, la plus récente sélectionnée. Claude la lit une fois et prépare le vocabulaire avec les traductions, les paires de synonymes et d’antonymes, et les verbes.',
@@ -492,7 +502,7 @@ export const tutorial = defineMessages({
     'lessons.step3':
       'Lancez un exercice avec les boutons : <pbtn>Quiz</pbtn> <btn>Cartes</btn> <btn>Associer les traductions</btn> <btn>Synonymes et antonymes</btn> <btn>Texte à trous</btn> <btn>Dictée</btn>',
     'lessons.step4':
-      'Appuyez sur 🔊 pour entendre un mot et sur ☆ pour l’ajouter à <b>Mes mots</b>.',
+      'Appuyez sur 🔊 pour entendre un mot et sur ☆ pour l’ajouter à <b>Mots favoris</b>.',
     'lessons.tip1': '<added>✱</added> marque une traduction ajoutée par Claude, absente des notes.',
     'lessons.tip2':
       '<b>Cartes</b> : <key>Espace</key> retourne la carte, <key>←</key> veut dire « encore », <key>→</key> « je sais ». Le bouton du haut change le sens.',
@@ -521,7 +531,7 @@ export const tutorial = defineMessages({
       'Si un tableau semble faux, <b>Conjuguer de nouveau</b> (à côté du participe passé) en demande un nouveau.',
     'verbs.mock': 'un tableau de conjugaison',
 
-    'all-lessons.title': 'Toutes les leçons',
+    'all-lessons.title': 'Leçons téléchargées',
     'all-lessons.summary': 'Les mêmes exercices, sur plusieurs leçons à la fois',
     'all-lessons.intro':
       'Tous les exercices de mots et de verbes, sur toutes les leçons préparées.',
@@ -531,10 +541,10 @@ export const tutorial = defineMessages({
       'Utilisez les onglets <b>Mots</b> et <b>Verbes</b> comme dans une seule leçon.',
     'all-lessons.mock': 'le choix des leçons',
 
-    'my-words.title': 'Mes mots',
+    'my-words.title': 'Mots favoris',
     'my-words.summary': 'Votre liste personnelle de mots à travailler',
     'my-words.intro':
-      'Les mots marqués d’une ☆ et les mots ratés dans un exercice. Le nombre à côté de <b>Mes mots</b> dans le menu indique combien il y en a.',
+      'Les mots marqués d’une ☆ et les mots ratés dans un exercice. Le nombre à côté de <b>Mots favoris</b> dans le menu indique combien il y en a.',
     'my-words.step1': 'Travaillez-les avec les mêmes exercices que dans une leçon.',
     'my-words.step2':
       'Un mot quitte la liste après <b>3 bonnes réponses d’affilée</b>, ou quand vous retirez son ★.',
@@ -552,7 +562,7 @@ export const tutorial = defineMessages({
       'Combien de mots vous avez appris, quelles leçons, quels types de mots et quels temps vous posent le plus de problèmes, et vos erreurs les plus fréquentes.',
     'stats.step1': 'Consultez-les de temps en temps pour choisir quoi réviser.',
 
-    'photo.title': 'Photo',
+    'photo.title': 'Analyse de photo',
     'photo.summary': 'Mots soulignés, notes manuscrites ou manuel en PDF',
     'photo.intro':
       'Trois façons de passer du papier aux mots. Choisissez-en une avec le sélecteur en haut.',
@@ -566,24 +576,24 @@ export const tutorial = defineMessages({
       '<btn>Ajouter au Google Doc comme Leçon 8</btn> ajoute ce qui a été lu à la fin du document comme nouvelle leçon (une configuration unique du serveur est nécessaire, voir le README).',
     'photo.tip1':
       'Prenez la photo bien en face, avec une bonne lumière, toute la ligne marquée dans le cadre.',
-    'photo.tip2': '☆ à côté d’un mot ajoute sa forme du dictionnaire à Mes mots.',
+    'photo.tip2': '☆ à côté d’un mot ajoute sa forme du dictionnaire à Mots favoris.',
     'photo.mock': 'le résultat d’une photo de mots soulignés',
 
-    'text.title': 'Texte',
+    'text.title': 'Analyse de texte',
     'text.summary': 'Collez un article : explications, traduction et exercices',
     'text.intro':
       'Pour un texte que vous avez trouvé vous-même : un article, une histoire, un post. Collez-le au lieu de faire une capture d’écran, et travaillez-le ici.',
     'text.step1':
       'Collez le texte et appuyez sur <pbtn>Lire ce texte</pbtn>. Il est enregistré sur cet appareil, avec tout ce que vous en faites.',
     'text.step2':
-      'Cliquez sur un mot, ou sélectionnez quelques mots à la souris ou au doigt, puis appuyez sur <pbtn>Expliquer</pbtn> : vous obtenez la traduction dans cette phrase, la forme du dictionnaire, le temps et une courte explication. ☆ ajoute le mot à Mes mots.',
+      'Cliquez sur un mot, ou sélectionnez quelques mots à la souris ou au doigt, puis appuyez sur <pbtn>Expliquer</pbtn> : vous obtenez la traduction dans cette phrase, la forme du dictionnaire, le temps et une courte explication. ☆ ajoute le mot à Mots favoris.',
     'text.step3':
       '<btn>Traduire le texte</btn> affiche une traduction russe sous chaque paragraphe ; le même bouton la masque.',
     'text.step4':
       '<pbtn>Créer des questions et des exercices</pbtn> : Claude choisit les mots à retenir (avec le Quiz, les Cartes et les autres exercices habituels), écrit des questions sur le texte et un exercice « vrai ou faux ».',
     'text.tip1': 'Les mots que vous avez déjà demandés sont soulignés en pointillé dans le texte.',
     'text.tip2': 'Les mots sont choisis pour votre niveau dans cette langue, réglé dans Réglages.',
-    'discuss.title': 'Discussion',
+    'discuss.title': 'Une question à discuter',
     'discuss.summary': 'Une question de discussion pour commencer le cours',
     'discuss.intro':
       'Une question à discuter en début de cours, écrite pour votre niveau et la grammaire que vous travaillez.',
@@ -594,7 +604,7 @@ export const tutorial = defineMessages({
       'Appuyez sur <pbtn>Écrire une question</pbtn>. Vous obtenez la question (🔊 la lit, <b>Afficher la traduction</b> la montre en russe), des questions de relance, des débuts de phrase avec la grammaire, et des mots utiles. Avec un point de grammaire, <b>📘 La règle</b> ouvre une explication avec des exemples.',
     'discuss.step4':
       '<pbtn>Une autre question</pbtn> en écrit une nouvelle avec les mêmes réglages.',
-    'discuss.tip1': '☆ à côté d’un mot utile l’ajoute à Mes mots.',
+    'discuss.tip1': '☆ à côté d’un mot utile l’ajoute à Mots favoris.',
 
     'settings.title': 'Réglages',
     'settings.summary': 'Langue, thème, ce que vous apprenez, votre niveau et le menu',
@@ -605,7 +615,7 @@ export const tutorial = defineMessages({
     'settings.step2':
       '<b>Interface</b> : la langue de l’application (anglais, russe, français, allemand) et le thème : comme le système, clair ou sombre.',
     'settings.step3':
-      '<b>Apprentissage</b> : cochez les langues que vous apprenez et choisissez votre niveau pour chacune. Les exercices, Mes mots, Erreurs, Statistiques et Discussion n’affichent alors que ces langues, et le niveau est choisi par défaut dans Discussion et le Texte à trous.',
+      '<b>Apprentissage</b> : cochez les langues que vous apprenez et choisissez votre niveau pour chacune. Les exercices, Mots favoris, Erreurs, Statistiques et les questions à discuter n’affichent alors que ces langues, et le niveau est choisi par défaut pour les questions à discuter et dans le Texte à trous.',
     'settings.step4':
       'Aussi : l’objectif du jour pour la 🔥 série, la vitesse de 🔊, et les sections affichées dans le menu.',
     'settings.tip1':
@@ -639,6 +649,11 @@ export const tutorial = defineMessages({
       'Quand vous passez à une autre section, l’application se synchronise et les leçons se mettent à jour.',
     'document.tip1':
       'Si l’éditeur reste vide ou demande de se connecter (souvent dans Safari), utilisez le lien au-dessus pour ouvrir le document dans un nouvel onglet.',
+    'news.title': 'Nouveautés',
+    'news.summary': 'Ce qui a changé dans l’application, par date',
+    'news.intro': 'Tous les changements de l’application, du plus récent au plus ancien.',
+    'news.step1':
+      'Chaque jour indique ce qui est <b>Nouveau</b>, <b>Amélioré</b> et <b>Corrigé</b>. Un point à côté de <b>Nouveautés</b> dans le menu signale quelque chose que vous n’avez pas encore vu.',
   },
   de: {
     title: 'Anleitung',
@@ -662,7 +677,7 @@ export const tutorial = defineMessages({
       'Wähle unter <lessons>Lektionen</lessons> eine Lektion und sieh dir ihre Wörter an.',
     'quick3.title': 'Üben',
     'quick3.text':
-      'Fang mit den <b>Karteikarten</b> an, dann das <b>Quiz</b>. Falsche Wörter landen in <mine>Meine Wörter</mine>.',
+      'Fang mit den <b>Karteikarten</b> an, dann das <b>Quiz</b>. Falsche Wörter landen in den <mine>Lieblingswörtern</mine>.',
     'quick4.title': 'Komm jeden Tag wieder',
     'quick4.text':
       'Eine Runde auf <home>Start</home> dauert ein paar Minuten und hält deine 🔥 Serie am Leben.',
@@ -700,7 +715,7 @@ export const tutorial = defineMessages({
       'Antworte mindestens einmal am Tag, damit deine 🔥 Serie hält; 20 Antworten erfüllen das Tagesziel.',
     'home.mock': 'Serie und Tagesziel auf Start',
 
-    'lessons.title': 'Lektionen',
+    'lessons.title': 'Lektionsverlauf',
     'lessons.summary': 'Wörter, Verben und Notizen zu jeder Lektion',
     'lessons.intro':
       'Alle Lektionen aus dem Dokument, die neueste ist ausgewählt. Claude liest sie einmal und bereitet den Wortschatz mit Übersetzungen, Synonym- und Antonympaaren und die Verben vor.',
@@ -711,7 +726,7 @@ export const tutorial = defineMessages({
     'lessons.step3':
       'Starte eine Übung über die Knöpfe: <pbtn>Quiz</pbtn> <btn>Karteikarten</btn> <btn>Übersetzungen zuordnen</btn> <btn>Synonyme & Antonyme</btn> <btn>Lückentext</btn> <btn>Diktat</btn>',
     'lessons.step4':
-      'Tippe auf 🔊, um ein Wort zu hören, und auf ☆, um es zu <b>Meine Wörter</b> hinzuzufügen.',
+      'Tippe auf 🔊, um ein Wort zu hören, und auf ☆, um es zu den <b>Lieblingswörtern</b> hinzuzufügen.',
     'lessons.tip1':
       '<added>✱</added> markiert eine Übersetzung, die Claude ergänzt hat und die nicht in den Notizen steht.',
     'lessons.tip2':
@@ -740,7 +755,7 @@ export const tutorial = defineMessages({
       'Wenn eine Tabelle falsch aussieht, holt <b>Neu konjugieren</b> (neben dem Partizip) eine neue.',
     'verbs.mock': 'eine Verbtabelle',
 
-    'all-lessons.title': 'Alle Lektionen',
+    'all-lessons.title': 'Geladene Lektionen',
     'all-lessons.summary': 'Dieselben Übungen, für mehrere Lektionen auf einmal',
     'all-lessons.intro': 'Alle Wort- und Verbübungen für alle vorbereiteten Lektionen zusammen.',
     'all-lessons.step1':
@@ -749,10 +764,10 @@ export const tutorial = defineMessages({
       'Nutze die Tabs <b>Wörter</b> und <b>Verben</b> wie in einer einzelnen Lektion.',
     'all-lessons.mock': 'die Lektionsauswahl',
 
-    'my-words.title': 'Meine Wörter',
+    'my-words.title': 'Lieblingswörter',
     'my-words.summary': 'Deine persönliche Liste mit Wörtern zum Üben',
     'my-words.intro':
-      'Wörter, die du mit ☆ markiert hast, und Wörter, die du in einer Übung falsch hattest. Die Zahl neben <b>Meine Wörter</b> im Menü zeigt, wie viele es sind.',
+      'Wörter, die du mit ☆ markiert hast, und Wörter, die du in einer Übung falsch hattest. Die Zahl neben <b>Lieblingswörter</b> im Menü zeigt, wie viele es sind.',
     'my-words.step1': 'Übe sie mit denselben Übungen wie in einer Lektion.',
     'my-words.step2':
       'Ein Wort verlässt die Liste nach <b>3 richtigen Antworten in Folge</b> oder wenn du den ★ entfernst.',
@@ -769,7 +784,7 @@ export const tutorial = defineMessages({
       'Wie viele Wörter du gelernt hast, welche Lektionen, Wortarten und Zeitformen dir am schwersten fallen, und deine häufigsten Fehler.',
     'stats.step1': 'Schau ab und zu hinein, um zu entscheiden, was du als Nächstes wiederholst.',
 
-    'photo.title': 'Foto',
+    'photo.title': 'Fotoanalyse',
     'photo.summary': 'Unterstrichene Wörter, handschriftliche Notizen oder ein Lehrbuch-PDF',
     'photo.intro': 'Drei Wege, Wörter vom Papier zu holen. Wähle einen mit dem Schalter oben.',
     'photo.step1':
@@ -782,17 +797,17 @@ export const tutorial = defineMessages({
       '<btn>Als Leçon 8 zum Google-Dokument hinzufügen</btn> hängt das Gelesene als neue Lektion ans Ende des Dokuments (braucht eine einmalige Einrichtung auf dem Server, siehe README).',
     'photo.tip1':
       'Fotografiere gerade von vorn, bei gutem Licht, mit der ganzen markierten Zeile im Bild.',
-    'photo.tip2': '☆ neben einem Wort fügt seine Grundform zu Meine Wörter hinzu.',
+    'photo.tip2': '☆ neben einem Wort fügt seine Grundform zu Lieblingswörter hinzu.',
     'photo.mock': 'das Ergebnis eines Fotos mit unterstrichenen Wörtern',
 
-    'text.title': 'Text',
+    'text.title': 'Textanalyse',
     'text.summary': 'Einen Artikel einfügen: Erklärungen, Übersetzung und Übungen',
     'text.intro':
       'Für einen Text, den du selbst gefunden hast: einen Artikel, eine Geschichte, einen Post. Füge ihn ein, statt einen Screenshot zu machen, und arbeite hier damit.',
     'text.step1':
       'Füge den Text ein und tippe auf <pbtn>Diesen Text lesen</pbtn>. Er wird auf diesem Gerät gespeichert, mit allem, was du damit machst.',
     'text.step2':
-      'Klicke auf ein Wort oder markiere ein paar Wörter mit der Maus oder dem Finger und tippe dann auf <pbtn>Erklären</pbtn>: Du bekommst die Übersetzung in diesem Satz, die Grundform, die Zeitform und eine kurze Erklärung. ☆ fügt das Wort zu Meine Wörter hinzu.',
+      'Klicke auf ein Wort oder markiere ein paar Wörter mit der Maus oder dem Finger und tippe dann auf <pbtn>Erklären</pbtn>: Du bekommst die Übersetzung in diesem Satz, die Grundform, die Zeitform und eine kurze Erklärung. ☆ fügt das Wort zu Lieblingswörter hinzu.',
     'text.step3':
       '<btn>Text übersetzen</btn> zeigt eine russische Übersetzung unter jedem Absatz; derselbe Knopf blendet sie wieder aus.',
     'text.step4':
@@ -800,7 +815,7 @@ export const tutorial = defineMessages({
     'text.tip1': 'Wörter, nach denen du schon gefragt hast, sind im Text gepunktet unterstrichen.',
     'text.tip2':
       'Die Wörter werden für dein Niveau in dieser Sprache gewählt; es steht in den Einstellungen.',
-    'discuss.title': 'Diskussion',
+    'discuss.title': 'Eine Frage zum Diskutieren',
     'discuss.summary': 'Eine Gesprächsfrage für den Stundenbeginn',
     'discuss.intro':
       'Eine Frage zum Reden am Anfang der Stunde, passend zu deinem Niveau und der Grammatik, die du übst.',
@@ -810,7 +825,7 @@ export const tutorial = defineMessages({
     'discuss.step3':
       'Tippe auf <pbtn>Frage schreiben</pbtn>. Du bekommst die Frage (🔊 liest sie vor, <b>Übersetzung zeigen</b> zeigt sie auf Russisch), Anschlussfragen, Satzanfänge mit der Grammatik und nützliche Wörter. Mit einem Grammatikthema öffnet <b>📘 Die Regel</b> eine Erklärung mit Beispielen.',
     'discuss.step4': '<pbtn>Andere Frage</pbtn> schreibt eine neue mit denselben Einstellungen.',
-    'discuss.tip1': '☆ neben einem nützlichen Wort fügt es zu Meine Wörter hinzu.',
+    'discuss.tip1': '☆ neben einem nützlichen Wort fügt es zu Lieblingswörter hinzu.',
 
     'settings.title': 'Einstellungen',
     'settings.summary': 'Sprache, Farbschema, was du lernst, dein Niveau und das Menü',
@@ -821,7 +836,7 @@ export const tutorial = defineMessages({
     'settings.step2':
       '<b>Oberfläche</b>: die Sprache der App (Englisch, Russisch, Französisch, Deutsch) und das Farbschema: wie das System, hell oder dunkel.',
     'settings.step3':
-      '<b>Lernen</b>: Hake die Sprachen an, die du lernst, und wähle für jede dein Niveau. Übungen, Meine Wörter, Fehler, Statistik und Diskussion zeigen dann nur diese Sprachen, und das Niveau ist der Standard in Diskussion und im Lückentext.',
+      '<b>Lernen</b>: Hake die Sprachen an, die du lernst, und wähle für jede dein Niveau. Übungen, Lieblingswörter, Fehler, Statistik und die Diskussionsfragen zeigen dann nur diese Sprachen, und das Niveau ist der Standard für Diskussionsfragen und im Lückentext.',
     'settings.step4':
       'Außerdem: das Tagesziel für die 🔥 Serie, das Tempo von 🔊 und welche Bereiche das Menü zeigt.',
     'settings.tip1':
@@ -854,5 +869,10 @@ export const tutorial = defineMessages({
       'Wenn du in einen anderen Bereich wechselst, synchronisiert die App und die Lektionen werden aktualisiert.',
     'document.tip1':
       'Wenn der Editor leer bleibt oder eine Anmeldung verlangt (oft in Safari), öffne das Dokument über den Link darüber in einem neuen Tab.',
+    'news.title': 'Neuigkeiten',
+    'news.summary': 'Was sich in der App geändert hat, nach Datum',
+    'news.intro': 'Alle Änderungen der App, das Neueste zuerst.',
+    'news.step1':
+      'Jeder Tag zeigt, was <b>Neu</b>, <b>Verbessert</b> und <b>Behoben</b> ist. Ein Punkt neben <b>Neuigkeiten</b> im Menü heißt, dass es etwas gibt, das du noch nicht gesehen hast.',
   },
 });

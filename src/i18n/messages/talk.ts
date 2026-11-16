@@ -3,7 +3,7 @@ import { defineMessages } from '../core';
 /** Discuss (questions for the start of a lesson) and Feedback (messages to the teacher). */
 export const talk = defineMessages({
   en: {
-    discussTitle: 'Discussion question',
+    discussTitle: 'A question for discussion',
     discussIntro:
       'A question to start the lesson with: choose the level, a vocabulary topic and the grammar the answer should use.',
     language: 'Language',
@@ -120,7 +120,7 @@ export const talk = defineMessages({
     writeAnother: 'Написать ещё',
   },
   fr: {
-    discussTitle: 'Question de discussion',
+    discussTitle: 'Une question à discuter',
     discussIntro:
       'Une question pour commencer le cours : choisissez le niveau, un thème de vocabulaire et la grammaire à utiliser dans la réponse.',
     language: 'Langue',
@@ -180,7 +180,7 @@ export const talk = defineMessages({
     writeAnother: 'En écrire un autre',
   },
   de: {
-    discussTitle: 'Gesprächsfrage',
+    discussTitle: 'Eine Frage zum Diskutieren',
     discussIntro:
       'Eine Frage für den Stundenbeginn: Wähle das Niveau, ein Wortschatzthema und die Grammatik, die die Antwort verwenden soll.',
     language: 'Sprache',

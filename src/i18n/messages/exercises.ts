@@ -20,7 +20,7 @@ export const exercises = defineMessages({
     noVocabulary: 'No vocabulary found in this lesson.',
     addedLegend: '{mark} translation added by Claude, not in the teacher’s notes',
     starLegend:
-      '☆ adds a word to My words. Words you miss in exercises are added too, and leave the list after 3 right answers in a row.',
+      '☆ adds a word to Favourite words. Words you miss in exercises are added too, and leave the list after 3 right answers in a row.',
     ankiTitle: 'Tab-separated: word, translation, transcription. In Anki: File → Import.',
     ankiExport: { one: 'Export {count} word for Anki', other: 'Export {count} words for Anki' },
     refreshTitle: 'Reads the lesson with Claude again and replaces the saved words',
@@ -96,7 +96,7 @@ export const exercises = defineMessages({
     noVocabulary: 'В этом уроке не найдено слов.',
     addedLegend: '{mark} перевод добавлен Claude, в записях преподавателя его нет',
     starLegend:
-      '☆ добавляет слово в «Мои слова». Слова с ошибками в упражнениях попадают туда сами и уходят после 3 верных ответов подряд.',
+      '☆ добавляет слово в «Избранные слова». Слова с ошибками в упражнениях попадают туда сами и уходят после 3 верных ответов подряд.',
     ankiTitle: 'Через табуляцию: слово, перевод, транскрипция. В Anki: Файл → Импорт.',
     ankiExport: {
       one: 'Экспорт {count} слова в Anki',
@@ -174,7 +174,7 @@ export const exercises = defineMessages({
     noVocabulary: 'Aucun vocabulaire trouvé dans cette leçon.',
     addedLegend: '{mark} traduction ajoutée par Claude, absente des notes du professeur',
     starLegend:
-      '☆ ajoute un mot à Mes mots. Les mots ratés dans les exercices s’y ajoutent aussi et en sortent après 3 bonnes réponses d’affilée.',
+      '☆ ajoute un mot à Mots favoris. Les mots ratés dans les exercices s’y ajoutent aussi et en sortent après 3 bonnes réponses d’affilée.',
     ankiTitle:
       'Séparé par des tabulations : mot, traduction, transcription. Dans Anki : Fichier → Importer.',
     ankiExport: { one: 'Exporter {count} mot pour Anki', other: 'Exporter {count} mots pour Anki' },
@@ -246,7 +246,7 @@ export const exercises = defineMessages({
     noVocabulary: 'In dieser Lektion wurden keine Vokabeln gefunden.',
     addedLegend: '{mark} Übersetzung von Claude ergänzt, nicht in den Notizen der Lehrkraft',
     starLegend:
-      '☆ fügt ein Wort zu Meine Wörter hinzu. Wörter, die du in Übungen falsch hast, kommen auch dazu und verschwinden nach 3 richtigen Antworten in Folge.',
+      '☆ fügt ein Wort zu den Lieblingswörtern hinzu. Wörter, die du in Übungen falsch hast, kommen auch dazu und verschwinden nach 3 richtigen Antworten in Folge.',
     ankiTitle: 'Tabulatorgetrennt: Wort, Übersetzung, Aussprache. In Anki: Datei → Importieren.',
     ankiExport: {
       one: '{count} Wort für Anki exportieren',

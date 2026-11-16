@@ -27,11 +27,11 @@ export const settingsText = defineMessages({
     learning: 'Learning',
     studying: 'Languages I learn, and my level',
     studyingHint:
-      'Home, All lessons, My words, Mistakes, Stats and Discuss show only these languages. Lessons in other languages stay under Lessons.',
+      'Home, Downloaded lessons, Favourite words, Mistakes, Stats and the discussion questions show only these languages. Lessons in other languages stay in Lesson history.',
     atLeastOne: 'Keep at least one language.',
     level: 'Level',
     levelsHint:
-      'A0 from scratch · A1–A2 basic · B1–B2 independent · C1–C2 advanced. The level is the default in Discuss and for the sentences in Fill the gap.',
+      'A0 from scratch · A1–A2 basic · B1–B2 independent · C1–C2 advanced. The level is the default for discussion questions and for the sentences in Fill the gap.',
     dailyGoal: 'Daily goal',
     goalValue: { one: '{count} answer', other: '{count} answers' },
     speechSpeed: 'Speech speed 🔊',
@@ -67,11 +67,11 @@ export const settingsText = defineMessages({
     learning: 'Обучение',
     studying: 'Языки, которые я учу, и мой уровень',
     studyingHint:
-      'Главная, «Все уроки», «Мои слова», «Ошибки», «Статистика» и «Обсуждение» показывают только эти языки. Уроки на других языках остаются в «Уроках».',
+      'Главная, «Загруженные уроки», «Избранные слова», «Ошибки», «Статистика» и «Вопрос для обсуждения» показывают только эти языки. Уроки на других языках остаются в «Истории уроков».',
     atLeastOne: 'Оставьте хотя бы один язык.',
     level: 'Уровень',
     levelsHint:
-      'A0 — с нуля · A1–A2 — базовый · B1–B2 — средний · C1–C2 — продвинутый. Уровень подставляется по умолчанию в «Обсуждение» и в предложения для «Вставь слово».',
+      'A0 — с нуля · A1–A2 — базовый · B1–B2 — средний · C1–C2 — продвинутый. Уровень подставляется по умолчанию в «Вопрос для обсуждения» и в предложения для «Вставь слово».',
     dailyGoal: 'Цель на день',
     goalValue: {
       one: '{count} ответ',
@@ -113,11 +113,11 @@ export const settingsText = defineMessages({
     learning: 'Apprentissage',
     studying: 'Les langues que j’apprends, et mon niveau',
     studyingHint:
-      'Accueil, Toutes les leçons, Mes mots, Erreurs, Statistiques et Discussion n’affichent que ces langues. Les leçons dans d’autres langues restent dans Leçons.',
+      'Accueil, Leçons téléchargées, Mots favoris, Erreurs, Statistiques et les questions à discuter n’affichent que ces langues. Les leçons dans d’autres langues restent dans Historique des leçons.',
     atLeastOne: 'Gardez au moins une langue.',
     level: 'Niveau',
     levelsHint:
-      'A0 débutant complet · A1–A2 élémentaire · B1–B2 indépendant · C1–C2 avancé. Le niveau est choisi par défaut dans Discussion et pour les phrases du Texte à trous.',
+      'A0 débutant complet · A1–A2 élémentaire · B1–B2 indépendant · C1–C2 avancé. Le niveau est choisi par défaut pour les questions à discuter et pour les phrases du Texte à trous.',
     dailyGoal: 'Objectif du jour',
     goalValue: { one: '{count} réponse', other: '{count} réponses' },
     speechSpeed: 'Vitesse de lecture 🔊',
@@ -154,11 +154,11 @@ export const settingsText = defineMessages({
     learning: 'Lernen',
     studying: 'Sprachen, die ich lerne, und mein Niveau',
     studyingHint:
-      'Start, Alle Lektionen, Meine Wörter, Fehler, Statistik und Diskussion zeigen nur diese Sprachen. Lektionen in anderen Sprachen bleiben unter Lektionen.',
+      'Start, Geladene Lektionen, Lieblingswörter, Fehler, Statistik und die Diskussionsfragen zeigen nur diese Sprachen. Lektionen in anderen Sprachen bleiben im Lektionsverlauf.',
     atLeastOne: 'Behalte mindestens eine Sprache.',
     level: 'Niveau',
     levelsHint:
-      'A0 ohne Vorkenntnisse · A1–A2 Grundstufe · B1–B2 Mittelstufe · C1–C2 fortgeschritten. Das Niveau ist der Standard in Diskussion und für die Sätze im Lückentext.',
+      'A0 ohne Vorkenntnisse · A1–A2 Grundstufe · B1–B2 Mittelstufe · C1–C2 fortgeschritten. Das Niveau ist der Standard für Diskussionsfragen und für die Sätze im Lückentext.',
     dailyGoal: 'Tagesziel',
     goalValue: { one: '{count} Antwort', other: '{count} Antworten' },
     speechSpeed: 'Sprechtempo 🔊',
