@@ -123,6 +123,22 @@ export function withTranscription(word: Omit<Word, 'tr'> & { tr?: string }): Wor
 
 const CYRILLIC = /[А-Яа-яЁё]/;
 /** Fallback when Claude is unavailable: "mot - перевод" lines. */
+// a line that starts with an emoji, or with spaces: still part of a report (src/lib/report.ts)
+const REPORT_LINE = /^(?:\s|\p{Extended_Pictographic})/u;
+
+/** A lesson's text without the student's report: from a line starting with 📝 up to the first
+    line that doesn't start with an emoji or spaces. Its sentences aren't vocabulary. */
+export function withoutReport(body: string): string {
+  const kept: string[] = [];
+  let inReport = false;
+  for (const line of body.split('\n')) {
+    if (line.startsWith('📝')) inReport = true;
+    else if (inReport && !(line.trim() && REPORT_LINE.test(line))) inReport = false;
+    if (!inReport) kept.push(line);
+  }
+  return kept.join('\n');
+}
+
 // "★ la boulangerie — пекарня": the teacher marks a key word of the lesson with a star
 const KEY_MARK = /[★⭐]/u;
 const KEY_MARKS = /[★⭐]\uFE0F?/gu;
@@ -165,7 +181,7 @@ export function markKeyWords(words: Word[], body: string): Word[] {
 export function localParse(body: string): Analysis {
   const words: Word[] = [];
   const seen = new Set<string>();
-  for (let line of body.split('\n')) {
+  for (let line of withoutReport(body).split('\n')) {
     const starred = KEY_MARK.test(line);
     line = line
       .replace(KEY_MARKS, '')

@@ -5,8 +5,10 @@ import { pages } from '../i18n/messages/pages';
 import type { Bank } from '../lib/bank';
 import { isLearned, topMistakes, useProgress, wordKey } from '../lib/progress';
 import { isStudied, useSettings } from '../lib/settings';
+import type { Lesson } from '../lib/types';
 import MistakeList from './MistakeList';
 import PageHead, { BankNote } from './PageHead';
+import SendToTeacher from './SendToTeacher';
 
 /** Fewer answers than this say too little about a topic to call it weak. */
 const MIN_ANSWERS = 4;
@@ -79,7 +81,17 @@ function RankList({ title, rows }: { title: string; rows: Row[] }) {
   );
 }
 
-export default function Stats({ bank }: { bank: Bank }) {
+export default function Stats({
+  bank,
+  lessons,
+  docId,
+  canWrite,
+}: {
+  bank: Bank;
+  lessons: Lesson[];
+  docId: string;
+  canWrite: boolean;
+}) {
   const { t } = useTranslation(pages);
   const progress = useProgress();
   const settings = useSettings();
@@ -246,6 +258,11 @@ export default function Stats({ bank }: { bank: Bank }) {
           ) : (
             <p className="empty">{t('noMistakesRecorded')}</p>
           )}
+        </div>
+      </section>
+      <section className="panel solo">
+        <div className="body">
+          <SendToTeacher lessons={lessons} docId={docId} canWrite={canWrite} />
         </div>
       </section>
     </>

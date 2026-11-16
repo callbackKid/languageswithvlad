@@ -22,6 +22,18 @@ export const NEWS: NewsDay[] = [
       {
         kind: 'new',
         text: {
+          en: 'Send to the teacher: under the homework and in Stats, a short report (homework done, mistakes since the lesson, your corrected written answers) goes into the document under the lesson after you’ve read it.',
+          ru: 'Отправить учителю: под домашкой и в Статистике короткий отчёт (что сделано, ошибки с урока, исправленные письменные ответы) после вашей проверки попадает в документ под урок.',
+          fr: 'Envoyer au professeur : sous les devoirs et dans les Statistiques, un court rapport (devoirs faits, erreurs depuis le cours, vos réponses écrites corrigées) va dans le document sous la leçon, après relecture.',
+          de: 'An die Lehrkraft senden: Unter den Hausaufgaben und in der Statistik kommt ein kurzer Bericht (erledigte Aufgaben, Fehler seit der Stunde, deine korrigierten schriftlichen Antworten) nach dem Durchlesen ins Dokument unter die Lektion.',
+          es: 'Enviar al profesor: debajo de los deberes y en Estadísticas, un breve informe (deberes hechos, errores desde la clase, tus respuestas escritas corregidas) va al documento debajo de la lección, después de que lo leas.',
+          pt: 'Enviar ao professor: por baixo do trabalho de casa e nas Estatísticas, um pequeno relatório (trabalho feito, erros desde a aula, as suas respostas escritas corrigidas) vai para o documento por baixo da lição, depois de o ler.',
+          it: 'Invia all’insegnante: sotto i compiti e nelle Statistiche, un breve resoconto (compiti fatti, errori dalla lezione, le tue risposte scritte corrette) va nel documento sotto la lezione, dopo che l’hai letto.',
+        },
+      },
+      {
+        kind: 'new',
+        text: {
           en: 'Written homework checked by Claude: write your answer to a task like “5 phrases au passé composé”, and Claude fixes the mistakes and explains each one, like a tutor. The teacher sees the corrected answers in lesson mode.',
           ru: 'Письменная домашка с проверкой Claude: напишите ответ на задание вроде «5 phrases au passé composé», и Claude исправит ошибки и объяснит каждую, как репетитор. Учитель видит исправленные ответы в режиме урока.',
           fr: 'Devoirs écrits vérifiés par Claude : écrivez votre réponse à une tâche comme « 5 phrases au passé composé », et Claude corrige les erreurs et explique chacune, comme un professeur particulier. Le professeur voit les réponses corrigées dans le mode cours.',

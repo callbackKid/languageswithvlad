@@ -20,12 +20,14 @@ export default function Home({
   ai,
   docId,
   docText,
+  canWrite,
 }: {
   bank: Bank;
   lessons: Lesson[];
   ai: boolean;
   docId: string;
   docText: string;
+  canWrite: boolean;
 }) {
   const { t } = useTranslation(pages);
   const progress = useProgress();
@@ -82,6 +84,7 @@ export default function Home({
           ai={ai}
           docId={docId}
           docText={docText}
+          canWrite={canWrite}
         />
       )}
       <BankNote bank={bank} />

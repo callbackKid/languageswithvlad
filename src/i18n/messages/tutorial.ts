@@ -62,6 +62,8 @@ export const tutorial = defineMessages({
       'When the teacher writes the homework in the lesson (<ex>Devoirs: verbes être, avoir — présent; mots de la leçon 5; 5 phrases au passé composé</ex>), Home shows it as a checklist, with how long until the next lesson. <btn>Practise the words</btn>, <btn>Fill the gaps</btn> and <btn>Conjugate</btn> open the task’s exercise, and finishing it ticks the task.',
     'home.tip2':
       'A written task (<ex>5 phrases au passé composé</ex>, a translation, “describe your day”) has <btn>Write</btn>: write your answer and press <pbtn>Check</pbtn>. Claude fixes the mistakes, explains each one like a tutor and says whether the answer does what the task asks. In lesson mode, <b>Written homework</b> shows the corrected answers to the teacher.',
+    'home.tip3':
+      '<btn>Prepare the report</btn> under the homework (and at the bottom of Stats) writes a short report for the teacher: the homework done, answers and mistakes since the lesson, your written answers as Claude corrected them. Read it, change it if you like, and <pbtn>Add to the document</pbtn> puts it under the lesson.',
     'home.mock': 'the streak and daily goal on Home',
 
     'lessons.title': 'Lesson history',
@@ -288,6 +290,8 @@ export const tutorial = defineMessages({
       'Когда учитель пишет в уроке домашнее задание (<ex>Devoirs: verbes être, avoir — présent; mots de la leçon 5; 5 phrases au passé composé</ex>), на Главной появляется чек-лист и сколько осталось до урока. <btn>Повторить слова</btn>, <btn>Вставить слова</btn> и <btn>Проспрягать</btn> открывают упражнение к заданию, а когда оно закончено, галочка ставится сама.',
     'home.tip2':
       'У письменного задания (<ex>5 phrases au passé composé</ex>, перевод, «опиши свой день») есть кнопка <btn>Написать</btn>: напишите ответ и нажмите <pbtn>Проверить</pbtn>. Claude исправит ошибки, коротко объяснит каждую, как репетитор, и скажет, выполнено ли задание. В режиме урока <b>Письменная домашка</b> показывает учителю исправленные ответы.',
+    'home.tip3':
+      '<btn>Подготовить отчёт</btn> под домашкой (и внизу Статистики) собирает короткий отчёт для учителя: что сделано, ответы и ошибки с урока, письменные ответы, исправленные Claude. Прочитайте, при желании поправьте, и <pbtn>Добавить в документ</pbtn> поместит его под урок.',
     'home.mock': 'серия и цель дня на Главной',
 
     'lessons.title': 'История уроков',
@@ -515,6 +519,8 @@ export const tutorial = defineMessages({
       'Quand le professeur écrit les devoirs dans la leçon (<ex>Devoirs: verbes être, avoir — présent; mots de la leçon 5; 5 phrases au passé composé</ex>), l’accueil les affiche en liste à cocher, avec le temps restant avant le prochain cours. <btn>Réviser les mots</btn>, <btn>Compléter les trous</btn> et <btn>Conjuguer</btn> ouvrent l’exercice de la tâche, et le finir la coche.',
     'home.tip2':
       'Une tâche écrite (<ex>5 phrases au passé composé</ex>, une traduction, « décris ta journée ») a <btn>Écrire</btn> : écrivez votre réponse et appuyez sur <pbtn>Vérifier</pbtn>. Claude corrige les erreurs, explique chacune comme un professeur particulier et dit si la réponse fait ce que demande la tâche. Dans le mode cours, <b>Devoirs écrits</b> montre les réponses corrigées au professeur.',
+    'home.tip3':
+      '<btn>Préparer le rapport</btn> sous les devoirs (et en bas des Statistiques) rédige un court rapport pour le professeur : les devoirs faits, les réponses et les erreurs depuis le cours, vos réponses écrites corrigées par Claude. Relisez-le, modifiez-le si vous voulez, et <pbtn>Ajouter au document</pbtn> le place sous la leçon.',
     'home.mock': 'la série et l’objectif du jour sur l’Accueil',
 
     'lessons.title': 'Historique des leçons',
@@ -749,6 +755,8 @@ export const tutorial = defineMessages({
       'Wenn die Lehrkraft die Hausaufgaben in die Lektion schreibt (<ex>Devoirs: verbes être, avoir — présent; mots de la leçon 5; 5 phrases au passé composé</ex>), zeigt die Startseite sie als Checkliste, dazu die Zeit bis zur nächsten Stunde. <btn>Wörter üben</btn>, <btn>Lücken füllen</btn> und <btn>Konjugieren</btn> öffnen die Übung zur Aufgabe; ist sie fertig, wird die Aufgabe abgehakt.',
     'home.tip2':
       'Eine schriftliche Aufgabe (<ex>5 phrases au passé composé</ex>, eine Übersetzung, „beschreib deinen Tag“) hat <btn>Schreiben</btn>: Schreib deine Antwort und drück auf <pbtn>Prüfen</pbtn>. Claude korrigiert die Fehler, erklärt jeden wie ein Nachhilfelehrer und sagt, ob die Antwort die Aufgabe erfüllt. Im Unterrichtsmodus zeigt <b>Schriftliche Hausaufgaben</b> der Lehrkraft die korrigierten Antworten.',
+    'home.tip3':
+      '<btn>Bericht vorbereiten</btn> unter den Hausaufgaben (und unten in der Statistik) schreibt einen kurzen Bericht für die Lehrkraft: erledigte Hausaufgaben, Antworten und Fehler seit der Stunde, deine schriftlichen Antworten, wie Claude sie korrigiert hat. Lies ihn, ändere ihn bei Bedarf, und <pbtn>Ins Dokument einfügen</pbtn> setzt ihn unter die Lektion.',
     'home.mock': 'Serie und Tagesziel auf Start',
 
     'lessons.title': 'Lektionsverlauf',
@@ -978,6 +986,8 @@ export const tutorial = defineMessages({
       'Cuando el profesor escribe los deberes en la lección (<ex>Devoirs: verbes être, avoir — présent; mots de la leçon 5; 5 phrases au passé composé</ex>), Inicio los muestra como una lista para marcar, con lo que falta para la próxima clase. <btn>Practicar las palabras</btn>, <btn>Rellenar los huecos</btn> y <btn>Conjugar</btn> abren el ejercicio de la tarea, y al terminarlo se marca.',
     'home.tip2':
       'Una tarea escrita (<ex>5 phrases au passé composé</ex>, una traducción, «describe tu día») tiene <btn>Escribir</btn>: escribe tu respuesta y pulsa <pbtn>Comprobar</pbtn>. Claude corrige los errores, explica cada uno como un profesor particular y dice si la respuesta cumple la tarea. En el modo clase, <b>Deberes escritos</b> muestra las respuestas corregidas al profesor.',
+    'home.tip3':
+      '<btn>Preparar el informe</btn> debajo de los deberes (y al final de Estadísticas) redacta un breve informe para el profesor: los deberes hechos, las respuestas y los errores desde la clase, tus respuestas escritas corregidas por Claude. Léelo, cámbialo si quieres, y <pbtn>Añadir al documento</pbtn> lo pone debajo de la lección.',
     'home.mock': 'la racha y el objetivo diario en Inicio',
 
     'lessons.title': 'Historial de lecciones',
@@ -1210,6 +1220,8 @@ export const tutorial = defineMessages({
       'Quando o professor escreve o trabalho de casa na lição (<ex>Devoirs: verbes être, avoir — présent; mots de la leçon 5; 5 phrases au passé composé</ex>), o Início mostra-o como uma lista para marcar, com o tempo que falta para a próxima aula. <btn>Praticar as palavras</btn>, <btn>Preencher as lacunas</btn> e <btn>Conjugar</btn> abrem o exercício da tarefa, e ao terminá-lo a tarefa fica marcada.',
     'home.tip2':
       'Uma tarefa escrita (<ex>5 phrases au passé composé</ex>, uma tradução, «descreve o teu dia») tem <btn>Escrever</btn>: escreva a resposta e carregue em <pbtn>Verificar</pbtn>. O Claude corrige os erros, explica cada um como um explicador e diz se a resposta cumpre a tarefa. No modo aula, <b>Trabalho de casa escrito</b> mostra as respostas corrigidas ao professor.',
+    'home.tip3':
+      '<btn>Preparar o relatório</btn> por baixo do trabalho de casa (e no fim das Estatísticas) escreve um pequeno relatório para o professor: o trabalho feito, as respostas e os erros desde a aula, as suas respostas escritas corrigidas pelo Claude. Leia-o, altere-o se quiser, e <pbtn>Acrescentar ao documento</pbtn> coloca-o por baixo da lição.',
     'home.mock': 'a série e o objetivo diário no Início',
 
     'lessons.title': 'Histórico de lições',
@@ -1442,6 +1454,8 @@ export const tutorial = defineMessages({
       'Quando l’insegnante scrive i compiti nella lezione (<ex>Devoirs: verbes être, avoir — présent; mots de la leçon 5; 5 phrases au passé composé</ex>), la Home li mostra come lista da spuntare, con il tempo che manca alla prossima lezione. <btn>Ripassare le parole</btn>, <btn>Riempire gli spazi</btn> e <btn>Coniugare</btn> aprono l’esercizio del compito, e finirlo lo spunta.',
     'home.tip2':
       'Un compito scritto (<ex>5 phrases au passé composé</ex>, una traduzione, «descrivi la tua giornata») ha <btn>Scrivere</btn>: scrivi la risposta e premi <pbtn>Controlla</pbtn>. Claude corregge gli errori, spiega ognuno come un insegnante privato e dice se la risposta fa ciò che chiede il compito. Nella modalità lezione, <b>Compiti scritti</b> mostra all’insegnante le risposte corrette.',
+    'home.tip3':
+      '<btn>Prepara il resoconto</btn> sotto i compiti (e in fondo alle Statistiche) scrive un breve resoconto per l’insegnante: i compiti fatti, le risposte e gli errori dalla lezione, le tue risposte scritte corrette da Claude. Leggilo, cambialo se vuoi, e <pbtn>Aggiungi al documento</pbtn> lo mette sotto la lezione.',
     'home.mock': 'la serie e l’obiettivo giornaliero in Home',
 
     'lessons.title': 'Cronologia lezioni',

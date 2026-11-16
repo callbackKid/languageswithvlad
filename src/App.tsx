@@ -451,12 +451,20 @@ export default function App() {
                   ai={ai}
                   docId={docId}
                   docText={doc?.text ?? ''}
+                  canWrite={!!docTarget.docWriter}
                 />
               )}
               {section === 'practice' && <Practice bank={bank} ai={ai} />}
               {section === 'mine' && <MyWords ai={ai} />}
               {section === 'mistakes' && <Mistakes bank={bank} />}
-              {section === 'stats' && <Stats bank={bank} />}
+              {section === 'stats' && (
+                <Stats
+                  bank={bank}
+                  lessons={lessons}
+                  docId={docId}
+                  canWrite={!!docTarget.docWriter}
+                />
+              )}
               {section === 'tutorial' && <Tutorial />}
               {section === 'settings' && (
                 <Settings

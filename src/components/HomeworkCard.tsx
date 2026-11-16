@@ -22,6 +22,7 @@ import { load, save } from '../lib/storage';
 import type { Conjugation, Lesson } from '../lib/types';
 import { shuffle } from '../lib/util';
 import GapFill from './GapFill';
+import SendToTeacher from './SendToTeacher';
 import WaitingFact from './WaitingFact';
 import WordQuiz from './WordQuiz';
 import WritingTask from './WritingTask';
@@ -180,6 +181,7 @@ export default function HomeworkCard({
   ai,
   docId,
   docText,
+  canWrite,
 }: {
   homework: Homework;
   lessons: Lesson[];
@@ -187,6 +189,8 @@ export default function HomeworkCard({
   ai: boolean;
   docId: string;
   docText: string;
+  /** whether the server can write to the document, for the report */
+  canWrite: boolean;
 }) {
   const { t } = useTranslation(homeworkText);
   const storageKey = homeworkKey(docId, homework.lesson.key);
@@ -292,6 +296,7 @@ export default function HomeworkCard({
           );
         })}
       </ul>
+      <SendToTeacher lessons={lessons} docId={docId} canWrite={canWrite} />
     </section>
   );
 }
