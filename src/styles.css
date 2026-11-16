@@ -3219,3 +3219,17 @@ li .open-link {
 .quiz-missed .ru {
   color: var(--muted);
 }
+
+/* a key word of the lesson (★ in the document) */
+.key-word {
+  display: inline-block;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: var(--warn-soft);
+  color: var(--warn);
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 18px;
+  vertical-align: 2px;
+}

@@ -18,6 +18,8 @@ export interface Word {
   language?: Language;
   /** short English gloss of the meaning; words that mean nearly the same share it, so neither is offered as a wrong answer for the other */
   sense?: string;
+  /** a key word of the lesson: the teacher marked its line with ★, and exercises ask it more often */
+  key?: boolean;
 }
 export interface Pair {
   a: string;

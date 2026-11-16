@@ -1,7 +1,13 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { api } from './api';
-import { localParse, normalizeAnalysis, withPerson, withTranscription } from './parse';
+import {
+  localParse,
+  markKeyWords,
+  normalizeAnalysis,
+  withPerson,
+  withTranscription,
+} from './parse';
 import { wordKey } from './progress';
 import { useSettings } from './settings';
 import { load, save } from './storage';
@@ -154,7 +160,7 @@ export function useBank(lessons: Lesson[], ai: boolean): Bank {
         ready: !!analysis,
       });
       if (!analysis) continue;
-      for (const word of analysis.words) {
+      for (const word of markKeyWords(analysis.words, lesson.body)) {
         const identity = wordKey(word.fr);
         if (!seenWords.has(identity)) {
           seenWords.add(identity);

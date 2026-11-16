@@ -21,6 +21,13 @@ export type QuizItem =
   | { kind: 'form'; form: FormQuestion };
 
 const DAY = 86400000;
+/** How much more often a key word of the lesson (★) is asked. */
+const KEY_WEIGHT = 2.5;
+
+/** Key words first, each group in the order given: for exercises that take the first few. */
+export function keyWordsFirst<T extends { key?: boolean }>(items: T[]): T[] {
+  return [...items.filter((item) => item.key), ...items.filter((item) => !item.key)];
+}
 
 /** Draws n items without replacement, each with probability proportional to its weight. */
 function weighted<T>(items: T[], weight: (item: T) => number, count: number): T[] {
@@ -37,19 +44,21 @@ function weighted<T>(items: T[], weight: (item: T) => number, count: number): T[
   return out;
 }
 
-/** Hard words first, then new and half-known ones; learned words come back now and then for review. */
+/** Hard words first, then new and half-known ones; learned words come back now and then for
+    review. The lesson's key words (★) come up more often whatever their state. */
 export function pickWords(words: Word[], progress: Progress, count: number): Word[] {
   const now = Date.now();
+  const weight = (word: Word) => {
+    const stat = progress.words[wordKey(word.fr)];
+    if (!stat) return 2;
+    if (stat.hard) return 5;
+    if (isLearned(stat)) return 0.3 + Math.min((now - stat.last) / (7 * DAY), 2);
+    return 2.5;
+  };
   // a word without a translation can't be asked
   return weighted(
     words.filter((word) => word.ru),
-    (word) => {
-      const stat = progress.words[wordKey(word.fr)];
-      if (!stat) return 2;
-      if (stat.hard) return 5;
-      if (isLearned(stat)) return 0.3 + Math.min((now - stat.last) / (7 * DAY), 2);
-      return 2.5;
-    },
+    (word) => weight(word) * (word.key ? KEY_WEIGHT : 1),
     count
   );
 }

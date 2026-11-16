@@ -8,6 +8,7 @@ import type { BoardServer } from '../lib/boardSync';
 import { findCall, openCallWindow } from '../lib/call';
 import { normalizeAnalysis } from '../lib/parse';
 import { getProgress } from '../lib/progress';
+import { keyWordsFirst } from '../lib/quiz';
 import { followLink, hrefFor } from '../lib/router';
 import { lessonPath } from '../lib/sections';
 import { getSettings } from '../lib/settings';
@@ -20,6 +21,7 @@ import LessonBoard from './LessonBoard';
 import PageHead from './PageHead';
 import Speak from './Speak';
 import WordQuiz from './WordQuiz';
+import { KeyBadge } from './WordsTab';
 import ZoomCall from './ZoomCall';
 
 const NAME_KEY = 'call:name';
@@ -210,7 +212,10 @@ function LessonNotes({ docId, target }: { docId: string; target: DocTarget }) {
 /** The words of the newest lesson, to glance at and say aloud during the call. */
 function LessonWords({ bank, lesson }: { bank: Bank; lesson: Lesson | null }) {
   const { t } = useTranslation(call);
-  const words = lesson ? bank.words.filter((word) => word.lesson === lesson.key) : [];
+  // the key words (★) first
+  const words = keyWordsFirst(
+    lesson ? bank.words.filter((word) => word.lesson === lesson.key) : []
+  );
   return (
     <section className="call-card">
       <div className="call-card-head">
@@ -231,6 +236,12 @@ function LessonWords({ bank, lesson }: { bank: Bank; lesson: Lesson | null }) {
             <li key={word.fr}>
               <span className="fr" lang={word.language ?? 'fr'}>
                 {word.fr}
+                {word.key && (
+                  <>
+                    {' '}
+                    <KeyBadge />
+                  </>
+                )}
               </span>
               <span className="ru" lang="ru">
                 {word.ru}

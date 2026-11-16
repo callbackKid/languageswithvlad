@@ -122,11 +122,52 @@ export function withTranscription(word: Omit<Word, 'tr'> & { tr?: string }): Wor
 
 const CYRILLIC = /[А-Яа-яЁё]/;
 /** Fallback when Claude is unavailable: "mot - перевод" lines. */
+// "★ la boulangerie — пекарня": the teacher marks a key word of the lesson with a star
+const KEY_MARK = /[★⭐]/u;
+const KEY_MARKS = /[★⭐]\uFE0F?/gu;
+// articles and "to", left out when comparing a starred line with a word ("boulangerie" and "la boulangerie")
+const LEADING_ARTICLE =
+  /^(?:(?:le|la|les|un|une|der|die|das|ein|eine|el|los|las|una|o|a|os|as|um|uma|il|lo|i|gli|uno|the|to)\s+|(?:l|un)')/;
+const comparable = (text: string) =>
+  text
+    .toLowerCase()
+    .replace(/[’`ʼ]/g, "'")
+    .replace(/\s+/g, ' ')
+    .trim()
+    .replace(LEADING_ARTICLE, '');
+
+/** The words the teacher starred in a lesson, as written before the translation or transcription. */
+function starredWords(body: string): Set<string> {
+  const starred = new Set<string>();
+  for (const line of body.split('\n')) {
+    if (!KEY_MARK.test(line)) continue;
+    const text = line
+      .replace(KEY_MARKS, '')
+      .replace(/^\s*[-*•]\s*/, '')
+      .trim();
+    const head = comparable(text.split(/\s+[-—–=]\s+|\s*\[/)[0] ?? '');
+    if (head) starred.add(head);
+  }
+  return starred;
+}
+
+/** The lesson's words with the starred ones marked as key words. Claude marks them too, but an
+    analysis kept from before the star was added, or one with a corrected spelling, may miss it. */
+export function markKeyWords(words: Word[], body: string): Word[] {
+  const starred = starredWords(body);
+  if (!starred.size) return words;
+  return words.map((word) =>
+    word.key || !starred.has(comparable(word.fr)) ? word : { ...word, key: true }
+  );
+}
+
 export function localParse(body: string): Analysis {
   const words: Word[] = [];
   const seen = new Set<string>();
   for (let line of body.split('\n')) {
+    const starred = KEY_MARK.test(line);
     line = line
+      .replace(KEY_MARKS, '')
       .replace(/^\s*[-*•]\s*/, '')
       .replace(/\*+/g, '')
       .trim();
@@ -149,7 +190,14 @@ export function localParse(body: string): Analysis {
     const identity = fr.toLowerCase();
     if (seen.has(identity)) continue;
     seen.add(identity);
-    words.push({ fr, ru: ru.trim(), kind: 'other', added: false, tr });
+    words.push({
+      fr,
+      ru: ru.trim(),
+      kind: 'other',
+      added: false,
+      tr,
+      ...(starred && { key: true }),
+    });
   }
   return { language: 'fr', topic: '', words, pairs: [], verbs: [], local: true };
 }
@@ -197,6 +245,7 @@ export function normalizeAnalysis(raw: unknown): Analysis {
         added: !!word.added,
         tr: asText(word.tr),
         sense: asText(word.sense).toLowerCase() || undefined,
+        ...(word.key === true && { key: true }),
       })
     )
     .filter(

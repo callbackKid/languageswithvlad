@@ -6,6 +6,7 @@ import { exercises } from '../i18n/messages/exercises';
 import { api, ApiError } from '../lib/api';
 import { normalizeGaps } from '../lib/parse';
 import { recordWord } from '../lib/progress';
+import { keyWordsFirst } from '../lib/quiz';
 import { getSettings } from '../lib/settings';
 import type { GapItem, Language, Word } from '../lib/types';
 import { shuffle } from '../lib/util';
@@ -34,7 +35,8 @@ export default function GapFill({
       language={language}
       waiting={t('writingSentences')}
       load={() => {
-        const sample = shuffle(startingWords)
+        // key words (★) are always among the words sent
+        const sample = keyWordsFirst(shuffle(startingWords))
           .slice(0, 24)
           .map((word) => ({ fr: word.fr, ru: word.ru }));
         return api.gaps(sample, language, getSettings().levels[language]);

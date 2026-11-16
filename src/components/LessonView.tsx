@@ -5,7 +5,7 @@ import { common } from '../i18n/messages/common';
 import { paper } from '../i18n/messages/paper';
 import { api, ApiError } from '../lib/api';
 import { analysisKey, readAnalysis } from '../lib/bank';
-import { localParse, normalizeAnalysis, normalizeExtras } from '../lib/parse';
+import { localParse, markKeyWords, normalizeAnalysis, normalizeExtras } from '../lib/parse';
 import { load, save } from '../lib/storage';
 import type { Analysis, Lesson, LessonExtras } from '../lib/types';
 import LessonDrawings from './LessonDrawings';
@@ -119,13 +119,13 @@ export default function LessonView({
     () =>
       analysis && {
         ...analysis,
-        words: analysis.words.map((word) => ({
+        words: markKeyWords(analysis.words, lesson.body).map((word) => ({
           ...word,
           lesson: lesson.key,
           language: analysis.language,
         })),
       },
-    [analysis, lesson.key]
+    [analysis, lesson.key, lesson.body]
   );
 
   const tabButton = (id: Tab, label: string, count?: number) => (

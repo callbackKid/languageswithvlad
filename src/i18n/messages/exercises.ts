@@ -19,6 +19,9 @@ export const exercises = defineMessages({
     noMatch: 'No words match that filter.',
     noVocabulary: 'No vocabulary found in this lesson.',
     addedLegend: '{mark} translation added by Claude, not in the teacher’s notes',
+    keyWord: 'key',
+    keyLegend:
+      '{mark}: a key word of the lesson, marked ★ by the teacher; exercises ask it more often',
     starLegend:
       '☆ adds a word to Favourite words. Words you miss in exercises are added too, and leave the list after 3 right answers in a row.',
     ankiTitle: 'Tab-separated: word, translation, transcription. In Anki: File → Import.',
@@ -95,6 +98,9 @@ export const exercises = defineMessages({
     noMatch: 'Ничего не найдено.',
     noVocabulary: 'В этом уроке не найдено слов.',
     addedLegend: '{mark} перевод добавлен Claude, в записях преподавателя его нет',
+    keyWord: 'ключевое',
+    keyLegend:
+      '{mark}: ключевое слово урока, учитель отметил его ★; в упражнениях оно встречается чаще',
     starLegend:
       '☆ добавляет слово в «Избранные слова». Слова с ошибками в упражнениях попадают туда сами и уходят после 3 верных ответов подряд.',
     ankiTitle: 'Через табуляцию: слово, перевод, транскрипция. В Anki: Файл → Импорт.',
@@ -173,6 +179,9 @@ export const exercises = defineMessages({
     noMatch: 'Aucun mot ne correspond.',
     noVocabulary: 'Aucun vocabulaire trouvé dans cette leçon.',
     addedLegend: '{mark} traduction ajoutée par Claude, absente des notes du professeur',
+    keyWord: 'clé',
+    keyLegend:
+      '{mark} : un mot clé de la leçon, marqué ★ par le professeur ; les exercices le demandent plus souvent',
     starLegend:
       '☆ ajoute un mot à Mots favoris. Les mots ratés dans les exercices s’y ajoutent aussi et en sortent après 3 bonnes réponses d’affilée.',
     ankiTitle:
@@ -245,6 +254,9 @@ export const exercises = defineMessages({
     noMatch: 'Kein Wort passt zum Filter.',
     noVocabulary: 'In dieser Lektion wurden keine Vokabeln gefunden.',
     addedLegend: '{mark} Übersetzung von Claude ergänzt, nicht in den Notizen der Lehrkraft',
+    keyWord: 'Schlüssel',
+    keyLegend:
+      '{mark}: ein Schlüsselwort der Lektion, von der Lehrkraft mit ★ markiert; die Übungen fragen es öfter ab',
     starLegend:
       '☆ fügt ein Wort zu den Lieblingswörtern hinzu. Wörter, die du in Übungen falsch hast, kommen auch dazu und verschwinden nach 3 richtigen Antworten in Folge.',
     ankiTitle: 'Tabulatorgetrennt: Wort, Übersetzung, Aussprache. In Anki: Datei → Importieren.',
@@ -319,6 +331,9 @@ export const exercises = defineMessages({
     noMatch: 'Ninguna palabra coincide con ese filtro.',
     noVocabulary: 'No se encontró vocabulario en esta lección.',
     addedLegend: '{mark} traducción añadida por Claude, no está en las notas del profesor',
+    keyWord: 'clave',
+    keyLegend:
+      '{mark}: una palabra clave de la lección, marcada con ★ por el profesor; los ejercicios la preguntan más a menudo',
     starLegend:
       '☆ añade una palabra a Palabras favoritas. Las palabras que fallas en los ejercicios también se añaden y salen de la lista tras 3 aciertos seguidos.',
     ankiTitle:
@@ -394,6 +409,9 @@ export const exercises = defineMessages({
     noMatch: 'Nenhuma palavra corresponde a esse filtro.',
     noVocabulary: 'Não foi encontrado vocabulário nesta lição.',
     addedLegend: '{mark} tradução acrescentada pelo Claude, não está nas notas do professor',
+    keyWord: 'chave',
+    keyLegend:
+      '{mark}: uma palavra-chave da lição, marcada com ★ pelo professor; os exercícios perguntam-na mais vezes',
     starLegend:
       '☆ acrescenta uma palavra às Palavras favoritas. As palavras que erra nos exercícios também entram e saem da lista após 3 respostas certas seguidas.',
     ankiTitle:
@@ -469,6 +487,9 @@ export const exercises = defineMessages({
     noMatch: 'Nessuna parola corrisponde a questo filtro.',
     noVocabulary: 'In questa lezione non c’è lessico.',
     addedLegend: '{mark} traduzione aggiunta da Claude, non presente negli appunti dell’insegnante',
+    keyWord: 'chiave',
+    keyLegend:
+      '{mark}: una parola chiave della lezione, segnata con ★ dall’insegnante; gli esercizi la chiedono più spesso',
     starLegend:
       '☆ aggiunge una parola alle Parole preferite. Ci finiscono anche le parole sbagliate negli esercizi, che escono dalla lista dopo 3 risposte giuste di fila.',
     ankiTitle:

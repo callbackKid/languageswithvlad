@@ -57,7 +57,14 @@ export default function Match({
 }) {
   const { t } = useTranslation(exercises);
   const names = useTranslation(learning);
-  const [{ round, rest, leftIds, rightIds }, setRound] = useState(() => makeRound(shuffle(pairs)));
+  // key words of the lesson (★) in the first rounds
+  const [{ round, rest, leftIds, rightIds }, setRound] = useState(() => {
+    const shuffled = shuffle(pairs);
+    return makeRound([
+      ...shuffled.filter((pair) => pair.word?.key),
+      ...shuffled.filter((pair) => !pair.word?.key),
+    ]);
+  });
   const [done, setDone] = useState<Set<string>>(new Set());
   const [pick, setPick] = useState<Record<Side, string | null>>({ left: null, right: null });
   const [wrong, setWrong] = useState<[string, string] | null>(null);

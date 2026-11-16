@@ -22,6 +22,18 @@ export const NEWS: NewsDay[] = [
       {
         kind: 'new',
         text: {
+          en: 'Key words: the teacher marks a word with ★ in the document (★ la boulangerie — пекарня), and it gets a “key” badge and comes up more often in exercises and the warm-up.',
+          ru: 'Ключевые слова: учитель отмечает слово звёздочкой в документе (★ la boulangerie — пекарня), у него появляется метка «ключевое», и оно чаще встречается в упражнениях и разминке.',
+          fr: 'Mots clés : le professeur marque un mot d’une ★ dans le document (★ la boulangerie — пекарня) ; il reçoit l’étiquette « clé » et revient plus souvent dans les exercices et l’échauffement.',
+          de: 'Schlüsselwörter: Die Lehrkraft markiert ein Wort im Dokument mit ★ (★ la boulangerie — пекарня); es bekommt das Etikett „Schlüssel“ und kommt in Übungen und beim Aufwärmen öfter dran.',
+          es: 'Palabras clave: el profesor marca una palabra con ★ en el documento (★ la boulangerie — пекарня); lleva la etiqueta «clave» y sale más a menudo en los ejercicios y el calentamiento.',
+          pt: 'Palavras-chave: o professor marca uma palavra com ★ no documento (★ la boulangerie — пекарня); fica com a etiqueta «chave» e aparece mais vezes nos exercícios e no aquecimento.',
+          it: 'Parole chiave: l’insegnante segna una parola con ★ nel documento (★ la boulangerie — пекарня); riceve l’etichetta «chiave» e compare più spesso negli esercizi e nel riscaldamento.',
+        },
+      },
+      {
+        kind: 'new',
+        text: {
           en: 'Warm-up in lesson mode: about 5 minutes of questions on the previous lesson and on your mistakes since, with a list of what didn’t stick at the end, for the teacher to see on the shared screen.',
           ru: 'Разминка в режиме урока: минут 5 вопросов по прошлому уроку и вашим ошибкам с тех пор, а в конце — список того, что не закрепилось, чтобы учитель увидел его на общем экране.',
           fr: 'Échauffement dans le mode cours : environ 5 minutes de questions sur la leçon précédente et sur vos erreurs depuis, avec à la fin la liste de ce qui n’est pas acquis, que le professeur voit sur l’écran partagé.',

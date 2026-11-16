@@ -67,6 +67,7 @@ React + TypeScript + Vite in the browser, small Vercel serverless functions in `
 | Start a lesson | `14.10.2026 1 Leçon`, or `Lesson`, `Lektion`, `Lección`, `Clase`, `Lição`, `Aula`, `Lezione` | Everything below it belongs to that lesson.                                                                                     |
 | A word         | `bonjour — привет`                                                                           | Messier notes work too; this is clearest.                                                                                       |
 | Pronunciation  | `bonjour [bɔ̃ʒuʁ] — привет`                                                                   | In square brackets, IPA or Cyrillic.                                                                                            |
+| Key word       | `★ la boulangerie — пекарня`                                                                 | Asked more often in exercises and the warm-up, with a **key** badge. `⭐` works too.                                            |
 | Next lesson    | `le cours prochain: 22.11.2026 18:00 de Paris`                                               | Or `next lesson: …`, `nächste Stunde: …`, `próxima clase: …`, `próxima aula: …`, `prossima lezione: …`. The newest line counts. |
 | Video call     | `https://meet.google.com/abc-defg-hij`                                                       | Anywhere; the newest link is used.                                                                                              |
 

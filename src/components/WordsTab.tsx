@@ -17,6 +17,12 @@ import WordQuiz from './WordQuiz';
 
 type Exercise = null | 'quiz' | 'cards' | 'match' | 'syn' | 'gap' | 'dictation';
 
+/** The mark of a key word of the lesson (★ in the document). */
+export function KeyBadge() {
+  const { t } = useTranslation(exercises);
+  return <span className="key-word">{t('keyWord')}</span>;
+}
+
 /** Tab-separated text Anki imports as cards: word, translation, transcription. */
 function ankiText(words: Analysis['words']): string {
   const clean = (text: string) => text.replace(/[\t\r\n]+/g, ' ').trim();
@@ -199,6 +205,12 @@ export default function WordsTab({
                 />
                 <span className="fr" lang={word.language ?? 'fr'}>
                   {word.fr}
+                  {word.key && (
+                    <>
+                      {' '}
+                      <KeyBadge />
+                    </>
+                  )}
                   {word.tr && (
                     <>
                       {' '}
@@ -228,6 +240,9 @@ export default function WordsTab({
         <p className="legend">
           {rich('addedLegend', {}, { mark: <span className="added">✱</span> })}
         </p>
+      )}
+      {analysis.words.some((word) => word.key) && (
+        <p className="legend">{rich('keyLegend', {}, { mark: <KeyBadge /> })}</p>
       )}
       {analysis.words.length > 0 && <p className="legend">{t('starLegend')}</p>}
       <p className="legend legend-actions">
