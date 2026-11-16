@@ -1,3 +1,4 @@
+import { getSettings } from './settings';
 import type { Language } from './types';
 
 const LOCALES: Record<Language, string> = { fr: 'fr-FR', en: 'en-GB', de: 'de-DE' };
@@ -12,7 +13,8 @@ export function speak(text: string, language: Language = 'fr') {
   const locale = LOCALES[language];
   const utterance = new SpeechSynthesisUtterance(spoken);
   utterance.lang = locale;
-  utterance.rate = 0.9;
+  // Settings → speech speed
+  utterance.rate = getSettings().speechSpeed === 'slow' ? 0.65 : 0.9;
   const voices = window.speechSynthesis.getVoices();
   const voice =
     voices.find((candidate) => candidate.lang === locale) ||

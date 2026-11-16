@@ -1,30 +1,26 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { useTranslation } from '../i18n/core';
 import { call } from '../i18n/messages/call';
+import { isDark, useSettings } from '../lib/settings';
 import type { BoardHandle } from './BoardCanvas';
 
 const BoardCanvas = lazy(() => import('./BoardCanvas'));
-
-const prefersDark = () => window.matchMedia('(prefers-color-scheme: dark)').matches;
 
 /** A drawing board for the lesson: write, draw, paste pictures. The student sees it through
     screen sharing in the call. Saved on this device for each day. */
 export default function LessonBoard({ storageKey }: { storageKey: string }) {
   const { t, language } = useTranslation(call);
+  // the theme chosen in Settings, or the system's
+  const dark = isDark(useSettings());
   const frame = useRef<HTMLDivElement>(null);
   const handle = useRef<BoardHandle | null>(null);
   const [open, setOpen] = useState(false);
   const [fullScreen, setFullScreen] = useState(false);
-  const [dark, setDark] = useState(prefersDark);
 
   useEffect(() => {
-    const media = window.matchMedia('(prefers-color-scheme: dark)');
-    const onTheme = () => setDark(media.matches);
     const onFullScreen = () => setFullScreen(document.fullscreenElement === frame.current);
-    media.addEventListener('change', onTheme);
     document.addEventListener('fullscreenchange', onFullScreen);
     return () => {
-      media.removeEventListener('change', onTheme);
       document.removeEventListener('fullscreenchange', onFullScreen);
     };
   }, []);

@@ -9,6 +9,7 @@ export type Section =
   | 'discuss'
   | 'document'
   | 'tutorial'
+  | 'settings'
   | 'call';
 
 /** The label of each section is translated: app.ts, "section.<id>". */
@@ -23,6 +24,7 @@ export const SECTIONS: { id: Section; label: string; path: string; inMenu?: fals
   { id: 'discuss', label: 'Discuss', path: '/discuss' },
   { id: 'document', label: 'Document', path: '/document' },
   { id: 'tutorial', label: 'Tutorial', path: '/tutorial' },
+  { id: 'settings', label: 'Settings', path: '/settings' },
   // lesson mode opens from Join call, not from the menu
   { id: 'call', label: 'Lesson mode', path: '/call', inMenu: false },
 ];

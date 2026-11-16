@@ -3,7 +3,8 @@ import { api, ApiError } from '../lib/api';
 import type { Bank } from '../lib/bank';
 import { normDiscussion } from '../lib/parse';
 import { load, save } from '../lib/storage';
-import { LANGUAGES, type Discussion, type GrammarRule, type Language } from '../lib/types';
+import { LEVELS, useSettings } from '../lib/settings';
+import type { Discussion, GrammarRule, Language } from '../lib/types';
 import { useTranslation } from '../i18n/core';
 import { common, learning } from '../i18n/messages/common';
 import { talk } from '../i18n/messages/talk';
@@ -12,7 +13,6 @@ import Speak from './Speak';
 import Star from './Star';
 import WaitingFact from './WaitingFact';
 
-const LEVELS = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
 const CUSTOM = '__custom';
 
 const TOPICS: Record<Language, string[]> = {
@@ -276,11 +276,26 @@ export default function Discuss({ bank, ai }: { bank: Bank; ai: boolean }) {
   const { t, language: uiLanguage } = useTranslation(talk);
   const commonText = useTranslation(common);
   const names = useTranslation(learning);
+  const settings = useSettings();
   const [choice, setChoice] = useState<Choice>(() => {
-    const saved = { ...DEFAULT_CHOICE, ...load<Choice>('discuss:choice') };
+    const stored = load<Choice>('discuss:choice');
+    // the first time, start from the student's own language and level (Settings)
+    const first = settings.studying[0] ?? 'fr';
+    const saved = stored
+      ? { ...DEFAULT_CHOICE, ...stored }
+      : {
+          ...DEFAULT_CHOICE,
+          language: first,
+          level: settings.levels[first],
+          topic: TOPICS[first][0] ?? '',
+        };
     // the topic list no longer has "Other…": an own topic lives in its own field
     return saved.topic === CUSTOM ? { ...saved, topic: TOPICS[saved.language][0] ?? '' } : saved;
   });
+  // a language taken out in Settings falls back to the first one still studied
+  const language: Language = settings.studying.includes(choice.language)
+    ? choice.language
+    : (settings.studying[0] ?? 'fr');
   const [discussion, setDiscussion] = useState<Discussion | null>(() =>
     load<Discussion>('discuss:last')
   );
@@ -306,7 +321,7 @@ export default function Discuss({ bank, ai }: { bank: Bank; ai: boolean }) {
     try {
       const next = normDiscussion(
         await api.discussion({
-          language: choice.language,
+          language,
           level: choice.level,
           topic,
           grammar,
@@ -324,7 +339,6 @@ export default function Discuss({ bank, ai }: { bank: Bank; ai: boolean }) {
     }
   }
 
-  const language = choice.language;
   return (
     <>
       <PageHead title={t('discussTitle')}>{t('discussIntro')}</PageHead>
@@ -346,10 +360,15 @@ export default function Discuss({ bank, ai }: { bank: Bank; ai: boolean }) {
                 onChange={(event) => {
                   const next = event.target.value as Language;
                   // the lists differ per language, so start them over
-                  update({ language: next, topic: TOPICS[next][0] ?? '', grammar: '' });
+                  update({
+                    language: next,
+                    level: settings.levels[next],
+                    topic: TOPICS[next][0] ?? '',
+                    grammar: '',
+                  });
                 }}
               >
-                {LANGUAGES.map((code) => (
+                {settings.studying.map((code) => (
                   <option key={code} value={code}>
                     {names.t(`name.${code}`)}
                   </option>

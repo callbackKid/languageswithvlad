@@ -16,10 +16,13 @@ export default async function handler(request: VercelRequest, response: VercelRe
   if (!words.length) return response.status(400).json({ error: 'No words.' });
   const count = Math.min(8, Math.max(4, words.length));
   const language = asLanguage(request.body?.language);
+  const level = ['A0', 'A1', 'A2', 'B1', 'B2', 'C1', 'C2'].includes(request.body?.level)
+    ? String(request.body.level)
+    : 'A1';
   try {
     // Fresh sentences every time, so no caching.
     response.status(200).json(
-      await claudeJSON(gapPrompt(words, count, language), {
+      await claudeJSON(gapPrompt(words, count, language, level), {
         model: FAST_MODEL,
         maxTokens: 3000,
         cache: false,

@@ -136,6 +136,9 @@ export const api = {
     request<unknown>('/api/textbook', { method: 'POST', body: JSON.stringify({ data }) }),
   transcribe: (images: ImagePayload[]) =>
     request<unknown>('/api/transcribe', { method: 'POST', body: JSON.stringify({ images }) }),
-  gaps: (words: { fr: string; ru: string }[], language: Language) =>
-    request<unknown>('/api/gaps', { method: 'POST', body: JSON.stringify({ words, language }) }),
+  gaps: (words: { fr: string; ru: string }[], language: Language, level: string) =>
+    request<unknown>('/api/gaps', {
+      method: 'POST',
+      body: JSON.stringify({ words, language, level }),
+    }),
 };

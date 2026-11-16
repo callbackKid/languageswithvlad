@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { api, ApiError } from '../lib/api';
 import { normGaps } from '../lib/parse';
 import { recordWord } from '../lib/progress';
+import { getSettings } from '../lib/settings';
 import type { GapItem, Word } from '../lib/types';
 import { shuffle } from '../lib/util';
 import { useTranslation } from '../i18n/core';
@@ -35,7 +36,7 @@ export default function GapFill({
       .slice(0, 24)
       .map((word) => ({ fr: word.fr, ru: word.ru }));
     api
-      .gaps(sample, language)
+      .gaps(sample, language, getSettings().levels[language])
       .then((response) => {
         if (alive) setItems(normGaps(response));
       })

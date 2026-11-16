@@ -75,6 +75,7 @@ const GUIDES: Guide[] = [
   { section: 'discuss', id: 'discuss', icon: '💬', steps: 4, tips: 1 },
   { section: 'call', id: 'call', icon: '🎥', steps: 5, tips: 3 },
   { section: 'document', id: 'document', icon: '📝', steps: 2, tips: 1 },
+  { section: 'settings', id: 'settings', icon: '⚙️', steps: 4, tips: 1 },
 ];
 const QUICK_START = [1, 2, 3, 4];
 const range = (count: number) => Array.from({ length: count }, (_value, index) => index + 1);

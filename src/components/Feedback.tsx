@@ -4,6 +4,7 @@ import { shrinkImage, type ImagePayload } from '../lib/image';
 import { useTranslation } from '../i18n/core';
 import { common } from '../i18n/messages/common';
 import { talk } from '../i18n/messages/talk';
+import { getSettings, isDark } from '../lib/settings';
 import { load, save } from '../lib/storage';
 
 const MAX_PICTURES = 3;
@@ -26,7 +27,7 @@ interface Picture extends ImagePayload {
 
 /** Where it happened, so the teacher doesn't have to ask. */
 function browserLine(): string {
-  const theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  const theme = isDark() ? 'dark' : 'light';
   return `${navigator.userAgent.slice(0, 200)} · window ${window.innerWidth}×${window.innerHeight} · ${theme} theme`;
 }
 
@@ -35,7 +36,12 @@ export default function Feedback({ docTitle }: { docTitle: string }) {
   const { t } = useTranslation(talk);
   const { t: tc } = useTranslation(common);
   const dialog = useRef<HTMLDialogElement>(null);
-  const [draft, setDraft] = useState<Draft>(() => ({ ...EMPTY_DRAFT, ...load<Draft>(DRAFT_KEY) }));
+  const [draft, setDraft] = useState<Draft>(() => ({
+    ...EMPTY_DRAFT,
+    // the name from Settings, until the student writes another contact here
+    contact: getSettings().name,
+    ...load<Draft>(DRAFT_KEY),
+  }));
   const [pictures, setPictures] = useState<Picture[]>([]);
   const [state, setState] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
   const [error, setError] = useState('');

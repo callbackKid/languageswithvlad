@@ -5,6 +5,7 @@ import type { Bank } from '../lib/bank';
 import { findCall, openCallWindow } from '../lib/call';
 import { followLink, hrefFor } from '../lib/router';
 import { lessonPath } from '../lib/sections';
+import { getSettings } from '../lib/settings';
 import { load, remove, save } from '../lib/storage';
 import type { Lesson } from '../lib/types';
 import AddToDoc, { type DocTarget } from './AddToDoc';
@@ -25,7 +26,7 @@ function CallPanel({ docText, zoomReady }: { docText: string; zoomReady: boolean
   const { t } = useTranslation(call);
   const link = findCall(docText);
   const [blocked, setBlocked] = useState(false);
-  const [name, setName] = useState(() => load<string>(NAME_KEY) ?? '');
+  const [name, setName] = useState(() => load<string>(NAME_KEY) ?? getSettings().name);
   const [passcode, setPasscode] = useState(link?.kind === 'zoom' ? link.passcode : '');
   const [joined, setJoined] = useState(false);
 

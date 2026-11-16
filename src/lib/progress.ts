@@ -1,5 +1,6 @@
 import { useSyncExternalStore } from 'react';
 import { load, save } from './storage';
+import { getSettings, isStudied } from './settings';
 import type { Language, Word } from './types';
 
 /** Correct answers in a row that make a word learned (and take it off the hard list). */
@@ -37,7 +38,6 @@ export interface Progress {
 }
 
 /** Answers a day that count as a full day of practice. */
-export const DAILY_GOAL = 20;
 
 const EMPTY: Progress = { words: {}, forms: {} };
 let docId: string | null = null;
@@ -188,13 +188,15 @@ export function topMistakes(
   progress: Progress = state,
   limit = 20
 ): { words: WordStat[]; forms: FormStat[] } {
+  // only the languages the student learns (Settings); verb forms are French
+  const settings = getSettings();
   return {
     words: Object.values(progress.words)
-      .filter((stat) => stat.wrong > 0)
+      .filter((stat) => stat.wrong > 0 && isStudied(stat.language, settings))
       .sort(byMisses)
       .slice(0, limit),
     forms: Object.values(progress.forms)
-      .filter((stat) => stat.wrong > 0)
+      .filter((stat) => stat.wrong > 0 && settings.studying.includes('fr'))
       .sort(byMisses)
       .slice(0, limit),
   };

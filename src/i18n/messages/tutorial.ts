@@ -43,7 +43,7 @@ export const tutorial = defineMessages({
     'header.step5':
       '<b>Feedback</b> sends a message to the teacher: a bug, an idea or anything else. Add up to 3 screenshots, or paste one with Ctrl+V / ⌘V. The page you were on is added automatically.',
     'header.step6':
-      'The language menu on the right (🇬🇧 🇷🇺 🇫🇷 🇩🇪) changes the language of the app. Translations of words stay in Russian.',
+      'Your picture on the right opens <b>Settings</b>: the language of the app, the colour theme, the languages you learn and your level.',
     'header.tip1':
       'A lesson in the document starts with a line like <ex>14.10.2026 1 Leçon</ex> (or <ex>Lesson</ex>, <ex>Lektion</ex>). Everything under it, up to the next such line, belongs to that lesson.',
     'header.mock': 'the top bar',
@@ -156,6 +156,19 @@ export const tutorial = defineMessages({
     'discuss.step4': '<pbtn>Another question</pbtn> writes a new one with the same settings.',
     'discuss.tip1': '☆ next to a useful word puts it on My words.',
 
+    'settings.title': 'Settings',
+    'settings.summary': 'Language, theme, what you learn, your level and the menu',
+    'settings.intro':
+      'Opens from your picture in the top bar, or from Settings in the menu. Everything saves straight away.',
+    'settings.step1':
+      '<b>Profile</b>: add a picture and your name; the name is used in Zoom calls and in messages to the teacher.',
+    'settings.step2':
+      '<b>Interface</b>: the language of the app (English, Russian, French, German) and the colour theme: like the system, light or dark.',
+    'settings.step3':
+      '<b>Learning</b>: tick the languages you learn and choose your level in each. Exercises, My words, Mistakes, Stats and Discuss then show only those languages, and the level is the default in Discuss and Fill the gap.',
+    'settings.step4':
+      'Also there: the daily goal for the 🔥 streak, the speed of 🔊, and which sections the menu shows.',
+    'settings.tip1': 'Translations of words stay in Russian whatever the interface language.',
     'call.title': 'Lesson mode',
     'call.summary': 'The call, notes and the lesson’s words on one screen',
     'call.intro':
@@ -225,7 +238,7 @@ export const tutorial = defineMessages({
     'header.step5':
       '<b>Обратная связь</b> отправляет сообщение преподавателю: ошибка, идея или что угодно. Можно приложить до 3 скриншотов или вставить скриншот через Ctrl+V / ⌘V. Страница, на которой вы были, добавится сама.',
     'header.step6':
-      'Меню языка справа (🇬🇧 🇷🇺 🇫🇷 🇩🇪) меняет язык приложения. Переводы слов остаются на русском.',
+      'Ваша картинка справа открывает <b>Настройки</b>: язык приложения, цветовую тему, изучаемые языки и уровень.',
     'header.tip1':
       'Урок в документе начинается со строки вроде <ex>14.10.2026 1 Leçon</ex> (или <ex>Lesson</ex>, <ex>Lektion</ex>). Всё ниже неё, до следующей такой строки, относится к этому уроку.',
     'header.mock': 'верхняя панель',
@@ -338,6 +351,19 @@ export const tutorial = defineMessages({
     'discuss.step4': '<pbtn>Другой вопрос</pbtn> придумает новый с теми же настройками.',
     'discuss.tip1': '☆ рядом с полезным словом добавляет его в «Мои слова».',
 
+    'settings.title': 'Настройки',
+    'settings.summary': 'Язык, тема, что вы учите, уровень и меню',
+    'settings.intro':
+      'Открываются по вашей картинке в верхней панели или из пункта «Настройки» в меню. Всё сохраняется сразу.',
+    'settings.step1':
+      '<b>Профиль</b>: добавьте картинку и имя; имя используется в звонках Zoom и в сообщениях преподавателю.',
+    'settings.step2':
+      '<b>Интерфейс</b>: язык приложения (английский, русский, французский, немецкий) и цветовая тема: как в системе, светлая или тёмная.',
+    'settings.step3':
+      '<b>Обучение</b>: отметьте языки, которые учите, и выберите уровень для каждого. Упражнения, «Мои слова», «Ошибки», «Статистика» и «Обсуждение» покажут только эти языки, а уровень подставится в «Обсуждение» и «Вставь слово».',
+    'settings.step4':
+      'Ещё там: цель на день для 🔥 серии, скорость озвучки 🔊 и какие разделы показывать в меню.',
+    'settings.tip1': 'Переводы слов остаются на русском при любом языке интерфейса.',
     'call.title': 'Режим урока',
     'call.summary': 'Звонок, заметки и слова урока на одном экране',
     'call.intro':
@@ -408,7 +434,7 @@ export const tutorial = defineMessages({
     'header.step5':
       '<b>Avis</b> envoie un message au professeur : un bug, une idée ou autre chose. Ajoutez jusqu’à 3 captures d’écran, ou collez-en une avec Ctrl+V / ⌘V. La page où vous étiez est ajoutée automatiquement.',
     'header.step6':
-      'Le menu de langue à droite (🇬🇧 🇷🇺 🇫🇷 🇩🇪) change la langue de l’application. Les traductions des mots restent en russe.',
+      'Votre image à droite ouvre les <b>Réglages</b> : la langue de l’application, le thème, les langues apprises et votre niveau.',
     'header.tip1':
       'Une leçon commence dans le document par une ligne comme <ex>14.10.2026 1 Leçon</ex> (ou <ex>Lesson</ex>, <ex>Lektion</ex>). Tout ce qui suit, jusqu’à la ligne de ce type suivante, appartient à cette leçon.',
     'header.mock': 'la barre du haut',
@@ -526,6 +552,20 @@ export const tutorial = defineMessages({
       '<pbtn>Une autre question</pbtn> en écrit une nouvelle avec les mêmes réglages.',
     'discuss.tip1': '☆ à côté d’un mot utile l’ajoute à Mes mots.',
 
+    'settings.title': 'Réglages',
+    'settings.summary': 'Langue, thème, ce que vous apprenez, votre niveau et le menu',
+    'settings.intro':
+      'S’ouvrent depuis votre image dans la barre du haut, ou depuis Réglages dans le menu. Tout est enregistré tout de suite.',
+    'settings.step1':
+      '<b>Profil</b> : ajoutez une image et votre nom ; le nom sert dans les appels Zoom et les messages au professeur.',
+    'settings.step2':
+      '<b>Interface</b> : la langue de l’application (anglais, russe, français, allemand) et le thème : comme le système, clair ou sombre.',
+    'settings.step3':
+      '<b>Apprentissage</b> : cochez les langues que vous apprenez et choisissez votre niveau pour chacune. Les exercices, Mes mots, Erreurs, Statistiques et Discussion n’affichent alors que ces langues, et le niveau est choisi par défaut dans Discussion et le Texte à trous.',
+    'settings.step4':
+      'Aussi : l’objectif du jour pour la 🔥 série, la vitesse de 🔊, et les sections affichées dans le menu.',
+    'settings.tip1':
+      'Les traductions des mots restent en russe, quelle que soit la langue de l’interface.',
     'call.title': 'Mode cours',
     'call.summary': 'L’appel, les notes et les mots de la leçon sur un seul écran',
     'call.intro':
@@ -598,7 +638,7 @@ export const tutorial = defineMessages({
     'header.step5':
       '<b>Feedback</b> schickt der Lehrkraft eine Nachricht: einen Fehler, eine Idee oder etwas anderes. Hänge bis zu 3 Screenshots an oder füge einen mit Strg+V / ⌘V ein. Die Seite, auf der du warst, wird automatisch mitgeschickt.',
     'header.step6':
-      'Das Sprachmenü rechts (🇬🇧 🇷🇺 🇫🇷 🇩🇪) ändert die Sprache der App. Die Übersetzungen der Wörter bleiben auf Russisch.',
+      'Dein Bild rechts öffnet die <b>Einstellungen</b>: die Sprache der App, das Farbschema, die Sprachen, die du lernst, und dein Niveau.',
     'header.tip1':
       'Eine Lektion beginnt im Dokument mit einer Zeile wie <ex>14.10.2026 1 Lektion</ex> (oder <ex>Leçon</ex>, <ex>Lesson</ex>). Alles darunter bis zur nächsten solchen Zeile gehört zu dieser Lektion.',
     'header.mock': 'die obere Leiste',
@@ -712,6 +752,20 @@ export const tutorial = defineMessages({
     'discuss.step4': '<pbtn>Andere Frage</pbtn> schreibt eine neue mit denselben Einstellungen.',
     'discuss.tip1': '☆ neben einem nützlichen Wort fügt es zu Meine Wörter hinzu.',
 
+    'settings.title': 'Einstellungen',
+    'settings.summary': 'Sprache, Farbschema, was du lernst, dein Niveau und das Menü',
+    'settings.intro':
+      'Öffnen sich über dein Bild in der oberen Leiste oder über Einstellungen im Menü. Alles wird sofort gespeichert.',
+    'settings.step1':
+      '<b>Profil</b>: Füge ein Bild und deinen Namen hinzu; der Name wird in Zoom-Anrufen und in Nachrichten an die Lehrkraft verwendet.',
+    'settings.step2':
+      '<b>Oberfläche</b>: die Sprache der App (Englisch, Russisch, Französisch, Deutsch) und das Farbschema: wie das System, hell oder dunkel.',
+    'settings.step3':
+      '<b>Lernen</b>: Hake die Sprachen an, die du lernst, und wähle für jede dein Niveau. Übungen, Meine Wörter, Fehler, Statistik und Diskussion zeigen dann nur diese Sprachen, und das Niveau ist der Standard in Diskussion und im Lückentext.',
+    'settings.step4':
+      'Außerdem: das Tagesziel für die 🔥 Serie, das Tempo von 🔊 und welche Bereiche das Menü zeigt.',
+    'settings.tip1':
+      'Die Übersetzungen der Wörter bleiben auf Russisch, egal welche Sprache die Oberfläche hat.',
     'call.title': 'Unterrichtsmodus',
     'call.summary': 'Anruf, Notizen und die Wörter der Lektion auf einem Bildschirm',
     'call.intro':

@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import type { Bank } from '../lib/bank';
 import { isLearned, topMistakes, useProgress, wordKey } from '../lib/progress';
+import { isStudied, useSettings } from '../lib/settings';
 import { useTranslation } from '../i18n/core';
 import { pages } from '../i18n/messages/pages';
 import MistakeList from './MistakeList';
@@ -80,6 +81,7 @@ function RankList({ title, rows }: { title: string; rows: Row[] }) {
 export default function Stats({ bank }: { bank: Bank }) {
   const { t } = useTranslation(pages);
   const progress = useProgress();
+  const settings = useSettings();
   const {
     total,
     learned,
@@ -95,7 +97,10 @@ export default function Stats({ bank }: { bank: Bank }) {
   } = useMemo(() => {
     const total = bank.words.length;
     const learned = bank.words.filter((word) => isLearned(progress.words[wordKey(word.fr)])).length;
-    const stats = Object.values(progress.words);
+    // only the languages the student learns (Settings)
+    const stats = Object.values(progress.words).filter((stat) =>
+      isStudied(stat.language, settings)
+    );
     const right =
       stats.reduce((sum, wordStat) => sum + wordStat.right, 0) +
       Object.values(progress.forms).reduce((sum, formStat) => sum + formStat.right, 0);
@@ -133,7 +138,7 @@ export default function Stats({ bank }: { bank: Bank }) {
         addTo(byLesson, stat.lesson, lessonName.get(stat.lesson)!, stat.right, stat.wrong);
       addTo(byKind, asKind(stat.kind), t(`kind.${asKind(stat.kind)}`), stat.right, stat.wrong);
     }
-    for (const formStat of Object.values(progress.forms))
+    for (const formStat of settings.studying.includes('fr') ? Object.values(progress.forms) : [])
       addTo(byTense, formStat.t, formStat.t, formStat.right, formStat.wrong);
     const tenses = weakest(byTense);
     const weakLessons = weakest(byLesson).slice(0, 5),
@@ -152,7 +157,7 @@ export default function Stats({ bank }: { bank: Bank }) {
       topWords,
       topForms,
     };
-  }, [bank.words, bank.lessons, progress, t]);
+  }, [bank.words, bank.lessons, progress, t, settings]);
 
   return (
     <>

@@ -45,10 +45,11 @@ Each item is {"p": string, "f": string}. For the six persons p is "je" (or "j'" 
 export function gapPrompt(
   words: { fr: string; ru: string }[],
   count: number,
-  language: LearnLanguage
+  language: LearnLanguage,
+  level = 'A1'
 ): string {
   const list = words.map((word) => `- ${word.fr} = ${word.ru}`).join('\n');
-  return `Write ${count} short, simple ${LANGUAGE_NAMES[language]} sentences (A1 level) for a Russian-speaking beginner. Each sentence uses one word from the list below, and that word is the gap to fill. Use each word at most once; reuse words only if the list is shorter than ${count}. The gapped text is the exact form the word takes in the sentence (conjugated verb, agreed adjective, article included for nouns if natural).
+  return `Write ${count} short, simple ${LANGUAGE_NAMES[language]} sentences at CEFR level ${level} (A0 means a complete beginner: very short sentences with the most common words) for a Russian-speaking learner. Each sentence uses one word from the list below, and that word is the gap to fill. Use each word at most once; reuse words only if the list is shorter than ${count}. The gapped text is the exact form the word takes in the sentence (conjugated verb, agreed adjective, article included for nouns if natural).
 Reply with only a JSON array of objects: {"before": string, "after": string, "answer": string, "word": string, "ru": string, "options": [string, string, string]}. before and after are the text around the gap, answer the gapped text, word the list entry it comes from, ru a Russian translation of the whole sentence, options three plausible wrong answers of the same kind (other forms or other words from the list).
 
 Words:

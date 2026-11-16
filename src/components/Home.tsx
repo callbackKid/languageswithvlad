@@ -1,13 +1,7 @@
 import type { Bank } from '../lib/bank';
-import {
-  DAILY_GOAL,
-  dailyStats,
-  getProgress,
-  isLearned,
-  useProgress,
-  wordKey,
-} from '../lib/progress';
+import { dailyStats, getProgress, isLearned, useProgress, wordKey } from '../lib/progress';
 import { buildQuiz, pickForms, pickWords } from '../lib/quiz';
+import { isStudied, useSettings } from '../lib/settings';
 import { useTranslation } from '../i18n/core';
 import { pages } from '../i18n/messages/pages';
 import PageHead, { BankNote } from './PageHead';
@@ -20,8 +14,11 @@ const FORMS = 2;
 export default function Home({ bank }: { bank: Bank }) {
   const { t } = useTranslation(pages);
   const progress = useProgress();
+  const { dailyGoal } = useSettings();
   const learned = bank.words.filter((word) => isLearned(progress.words[wordKey(word.fr)])).length;
-  const hard = Object.values(progress.words).filter((stat) => stat.hard).length;
+  const hard = Object.values(progress.words).filter(
+    (stat) => stat.hard && isStudied(stat.language)
+  ).length;
   const { today, streak } = dailyStats(progress);
 
   const make = () => {
@@ -52,11 +49,11 @@ export default function Home({ bank }: { bank: Bank }) {
           </span>
           <span className="goal">
             <span className="goal-bar" aria-hidden="true">
-              <span style={{ width: `${Math.min(today / DAILY_GOAL, 1) * 100}%` }} />
+              <span style={{ width: `${Math.min(today / dailyGoal, 1) * 100}%` }} />
             </span>
-            {today >= DAILY_GOAL
+            {today >= dailyGoal
               ? t('goalDone', { count: today })
-              : t('goalProgress', { count: today, goal: DAILY_GOAL })}
+              : t('goalProgress', { count: today, goal: dailyGoal })}
           </span>
         </div>
       )}

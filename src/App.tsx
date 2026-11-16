@@ -11,7 +11,8 @@ import { app } from './i18n/messages/app';
 import Connect from './components/Connect';
 import Discuss from './components/Discuss';
 import Feedback from './components/Feedback';
-import LanguagePicker from './components/LanguagePicker';
+import Settings, { Avatar } from './components/Settings';
+import { useSettings } from './lib/settings';
 import LessonMode from './components/LessonMode';
 import { findCall } from './lib/call';
 import { isNotion, sourceUrl } from './lib/source';
@@ -54,6 +55,7 @@ function initialDocId(): string | null {
 
 export default function App() {
   const translation = useTranslation(app);
+  const settings = useSettings();
   const { t, rich, locale } = translation;
   const [needsCode, setNeedsCode] = useState(false);
   const [ai, setAi] = useState(true);
@@ -249,7 +251,16 @@ export default function App() {
             {t('changeDocument')}
           </button>
           {feedback && <Feedback docTitle={doc?.title ?? ''} />}
-          <LanguagePicker />
+          <a
+            className="avatar-link"
+            href={hrefFor('/settings')}
+            title={t('section.settings')}
+            aria-label={t('section.settings')}
+            aria-current={section === 'settings' ? 'page' : undefined}
+            onClick={(event) => followLink(event, '/settings')}
+          >
+            <Avatar />
+          </a>
         </div>
       </header>
 
@@ -278,7 +289,9 @@ export default function App() {
       ) : (
         <>
           <nav className="sections" aria-label={t('sectionsLabel')}>
-            {SECTIONS.filter((entry) => entry.inMenu !== false).map((entry) => (
+            {SECTIONS.filter(
+              (entry) => entry.inMenu !== false && !settings.hidden.includes(entry.id)
+            ).map((entry) => (
               <a
                 key={entry.id}
                 className="section-link"
@@ -363,6 +376,7 @@ export default function App() {
               {section === 'mistakes' && <Mistakes bank={bank} />}
               {section === 'stats' && <Stats bank={bank} />}
               {section === 'tutorial' && <Tutorial />}
+              {section === 'settings' && <Settings />}
               {section === 'discuss' && <Discuss bank={bank} ai={ai} />}
               {section === 'photo' && <PhotoSection ai={ai} target={docTarget} />}
             </main>

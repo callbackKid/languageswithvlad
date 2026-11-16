@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { api } from './api';
 import { localParse, normAnalysis, withPerson, withTr } from './parse';
 import { wordKey } from './progress';
+import { useSettings } from './settings';
 import { load, save } from './storage';
 import {
   TENSES,
@@ -117,6 +118,7 @@ export function useBank(lessons: Lesson[], ai: boolean): Bank {
     []
   );
 
+  const { studying } = useSettings();
   return useMemo(() => {
     const words: Word[] = [],
       pairs: BankPair[] = [],
@@ -126,6 +128,8 @@ export function useBank(lessons: Lesson[], ai: boolean): Bank {
       seenVerbs = new Set<string>();
     for (const lesson of [...lessons].reverse()) {
       const analysis = analyses[lesson.key];
+      // lessons in languages the student doesn't learn stay out of practice (Settings)
+      if (analysis && !studying.includes(analysis.language)) continue;
       lessonInfos.push({
         key: lesson.key,
         n: lesson.n,
@@ -164,5 +168,5 @@ export function useBank(lessons: Lesson[], ai: boolean): Bank {
       waiting,
       put,
     };
-  }, [lessons, analyses, failed, ai, put]);
+  }, [lessons, analyses, failed, ai, put, studying]);
 }

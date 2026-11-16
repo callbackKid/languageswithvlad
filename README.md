@@ -45,7 +45,7 @@ React + TypeScript + Vite in the browser, small Vercel serverless functions in `
 - **Next lesson** date and **Join call** button in the top bar, read from the document.
 - **Lesson mode** (`/call`): the call, the teacher’s notes and the lesson’s words on one screen. Google Meet opens as a small window beside the app (Google doesn’t allow Meet inside other sites); Zoom runs inside the page (optional setup). The notes go into the Google Doc as a new lesson with one button. Below them, a **board** (Excalidraw) to write and draw on; the student sees it through screen sharing.
 - **Tutorial**: a guide to every section, written for students.
-- **Interface in four languages**: English, Russian, French and German, chosen in the top bar (the browser’s language by default). Word translations stay in Russian.
+- **Settings** (your picture in the top bar): interface language (English, Russian, French, German; the browser’s by default), light or dark theme, the languages you learn and your level in each (practice and Discuss then show only those), name and picture, daily goal, speech speed, and which sections the menu shows. Word translations stay in Russian.
 
 ## How to write the lesson document
 
@@ -163,6 +163,7 @@ Every section has its own address, so links can be shared and the browser’s Ba
 | Discuss     | `/discuss`                                                |
 | Document    | `/document`                                               |
 | Tutorial    | `/tutorial`                                               |
+| Settings    | `/settings`                                               |
 | Lesson mode | `/call` (opened by **Join call**, not in the menu)        |
 
 `vercel.json` sends every address except `/api/…` to the app, so refreshing any page works.

@@ -1,4 +1,5 @@
 import { statWord, useProgress } from '../lib/progress';
+import { isStudied, useSettings } from '../lib/settings';
 import type { Analysis } from '../lib/types';
 import { useTranslation } from '../i18n/core';
 import { pages } from '../i18n/messages/pages';
@@ -9,8 +10,9 @@ import WordsTab from './WordsTab';
 export default function MyWords({ ai }: { ai: boolean }) {
   const { t } = useTranslation(pages);
   const progress = useProgress();
+  const settings = useSettings();
   const words = Object.values(progress.words)
-    .filter((stat) => stat.hard)
+    .filter((stat) => stat.hard && isStudied(stat.language, settings))
     .sort((first, second) => second.last - first.last)
     .map(statWord);
   const analysis: Analysis = {
