@@ -1,13 +1,13 @@
-/* "le cours prochain: 22.11.2026 18:00 de Paris", "next lesson: 22/11/2026 18h00 (Moscow)"
-   or "nächste Stunde: 22.11.2026 18:00 Berlin":
+/* "le cours prochain: 22.11.2026 18:00 de Paris", "next lesson: 22/11/2026 18h00 (Moscow)",
+   "nächste Stunde: 22.11.2026 18:00 Berlin", "próxima clase: …", "próxima aula: …" or "prossima lezione: …":
    the last such line in the document says when the next lesson is. */
 
 const LINE =
-  /(?:le\s+)?(?:cours|leçon)\s+prochain(?:e)?|next\s+lesson|n(?:ä|ae)chste\s+(?:stunde|lektion|unterricht)|n(?:ä|ae)chster\s+unterricht/i;
+  /(?:le\s+)?(?:cours|leçon)\s+prochain(?:e)?|next\s+lesson|n(?:ä|ae)chste\s+(?:stunde|lektion|unterricht)|n(?:ä|ae)chster\s+unterricht|pr[óo]xim[ao]\s+(?:clase|lecci[óo]n|aula|li[çc][ãa]o)|prossim[ao]\s+lezione/i;
 const DATE_TIME =
   /(\d{1,2})[./-](\d{1,2})[./-](\d{4})(?:[\s,à@at]+(\d{1,2})\s*[:hH.]\s*(\d{2})?)?(.*)$/;
 
-// cities a time may be given in, French, English and German spellings
+// cities a time may be given in, in the spellings of the app's languages
 const ZONES: [RegExp, string][] = [
   [/paris|france/i, 'Europe/Paris'],
   [/moscou|moscow|moskau|москв|msk/i, 'Europe/Moscow'],
@@ -18,6 +18,12 @@ const ZONES: [RegExp, string][] = [
     /berlin|m[uü]nchen|munich|hamburg|k[öo]ln|frankfurt|deutschland|germany|allemagne/i,
     'Europe/Berlin',
   ],
+  [/madrid|barcelona|espa[ñn]a|spain|espagne|spanien/i, 'Europe/Madrid'],
+  [/lisboa|lisbon|lisbonne|lissabon|portugal/i, 'Europe/Lisbon'],
+  [/\b(?:roma|rome|rom|milano|milan|mailand)\b|itali[ae]|italy|italien/i, 'Europe/Rome'],
+  [/s[ãa]o\s*paulo|rio\s+de\s+janeiro|bra[sz]il|br[ée]sil|brasilien/i, 'America/Sao_Paulo'],
+  [/buenos\s*aires|argentin/i, 'America/Argentina/Buenos_Aires'],
+  [/m[ée]xico|mexiko|cdmx/i, 'America/Mexico_City'],
   [/kyiv|kiev|kiew/i, 'Europe/Kyiv'],
   [/minsk/i, 'Europe/Minsk'],
   [/tbilissi|tbilisi/i, 'Asia/Tbilisi'],

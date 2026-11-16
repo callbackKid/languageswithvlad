@@ -26,4 +26,22 @@ export const newsText = defineMessages({
     'kind.better': 'Verbessert',
     'kind.fixed': 'Behoben',
   },
+  es: {
+    intro: 'Lo que ha cambiado en la aplicación, de lo más nuevo a lo más antiguo.',
+    'kind.new': 'Nuevo',
+    'kind.better': 'Mejorado',
+    'kind.fixed': 'Corregido',
+  },
+  pt: {
+    intro: 'O que mudou na aplicação, do mais recente para o mais antigo.',
+    'kind.new': 'Novo',
+    'kind.better': 'Melhorado',
+    'kind.fixed': 'Corrigido',
+  },
+  it: {
+    intro: 'Cosa è cambiato nell’app, dal più recente.',
+    'kind.new': 'Novità',
+    'kind.better': 'Migliorato',
+    'kind.fixed': 'Corretto',
+  },
 });

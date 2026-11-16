@@ -10,6 +10,9 @@ const ZOOM_LANGUAGES = {
   ru: 'ru-RU',
   fr: 'fr-FR',
   de: 'de-DE',
+  es: 'es-ES',
+  pt: 'pt-PT',
+  it: 'it-IT',
 } as const satisfies Record<UiLanguage, string>;
 
 /** A Zoom meeting running inside the page (Zoom Meeting SDK, component view). The SDK is large,

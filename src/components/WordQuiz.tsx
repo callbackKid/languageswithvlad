@@ -12,8 +12,10 @@ import Speak from './Speak';
 import Transcription from './Transcription';
 
 type Result = 'ok' | 'bad' | 'accent' | 'article';
-// a noun typed without its article is a near miss, not a mistake (French and German)
-const ARTICLE = /^(?:le|la|les|un|une|des|l'|der|die|das|ein|eine)\s*/i;
+// a noun typed without its article is a near miss, not a mistake
+// (a whole word followed by a space, or an elided one like l' that runs into the noun)
+const ARTICLE =
+  /^(?:(?:le|la|les|un|une|des|der|die|das|ein|eine|el|los|las|una|o|a|os|as|um|uma|il|lo|i|gli|uno)\s+|(?:l|un)['’]\s*)/i;
 
 function gradeWord(typed: string, answer: string): Result | null {
   const result = grade(typed, answer);

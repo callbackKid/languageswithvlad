@@ -1,7 +1,14 @@
 import { getSettings } from './settings';
 import type { Language } from './types';
 
-const LOCALES: Record<Language, string> = { fr: 'fr-FR', en: 'en-GB', de: 'de-DE' };
+const LOCALES: Record<Language, string> = {
+  fr: 'fr-FR',
+  en: 'en-GB',
+  de: 'de-DE',
+  es: 'es-ES',
+  pt: 'pt-PT',
+  it: 'it-IT',
+};
 
 export const canSpeak = typeof window !== 'undefined' && 'speechSynthesis' in window;
 

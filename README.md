@@ -1,6 +1,6 @@
 # Cahier de français
 
-A study app for French, English and German lessons kept in a Google Doc or a Notion page. The teacher writes lessons in the document; the app turns each lesson into vocabulary, verb tables and exercises for the student.
+A study app for French, English, German, Spanish, Portuguese and Italian lessons kept in a Google Doc or a Notion page. The teacher writes lessons in the document; the app turns each lesson into vocabulary, verb tables and exercises for the student.
 
 React + TypeScript + Vite in the browser, small Vercel serverless functions in `api/`. The Anthropic API key stays on the server and never reaches the browser.
 
@@ -51,20 +51,20 @@ React + TypeScript + Vite in the browser, small Vercel serverless functions in `
 - **A question for discussion**: a discussion question for the start of a lesson, for a chosen level, a vocabulary topic from the list or the student’s own (“the TV series Dexter”) and a grammar point, with follow-up questions, sentence starters, useful words and a fold-out explanation of the grammar rule.
 - **Document**: the Google Docs editor inside the app.
 - **Top bar:** your picture and the document's name with **↻** (sync) on the left, the **next lesson** widget with **Enter the lesson** in the middle (both read from the document), **Feedback** and **⚙️ Settings** on the right. The menu is a column on the left: **«** folds it to a thin strip, **☰** opens it again, and the choice is remembered. On a phone it is a drop-down list that closes once a section is picked. Its sections are grouped: lessons, words, reading tools, and help.
-- **News**: what changed in the app, day by day; a dot in the menu marks news not seen yet. Add an entry to `src/lib/news.ts` (all four interface languages) with every change students will notice.
+- **News**: what changed in the app, day by day; a dot in the menu marks news not seen yet. Add an entry to `src/lib/news.ts` (all seven interface languages) with every change students will notice.
 - **Lesson mode** (`/call`): the call, the teacher’s notes and the lesson’s words on one screen. Google Meet opens as a small window beside the app (Google doesn’t allow Meet inside other sites); Zoom runs inside the page (optional setup). The notes go into the Google Doc as a new lesson with one button. Below them, a **board** (Excalidraw) to write and draw on, shared live between the teacher and the student (optional setup), or shown through screen sharing.
 - **Tutorial**: a guide to every section, written for students.
-- **Settings** (⚙️ on the right of the top bar): the document (open it, copy the student link, change it), interface language (English, Russian, French, German; the browser’s by default), light or dark theme, the languages you learn and your level in each (practice and Discuss then show only those), name and picture, daily goal, speech speed, and which sections the menu shows. Word translations stay in Russian.
+- **Settings** (⚙️ on the right of the top bar): the document (open it, copy the student link, change it), interface language (English, Russian, French, German, Spanish, Portuguese, Italian; the browser’s by default), light or dark theme, the languages you learn and your level in each (practice and Discuss then show only those), name and picture, daily goal, speech speed, and which sections the menu shows. Word translations stay in Russian.
 
 ## How to write the lesson document
 
-| What           | Write in the document                               | Notes                                                             |
-| -------------- | --------------------------------------------------- | ----------------------------------------------------------------- |
-| Start a lesson | `14.10.2026 1 Leçon`, `… 1 Lesson` or `… 1 Lektion` | Everything below it belongs to that lesson.                       |
-| A word         | `bonjour — привет`                                  | Messier notes work too; this is clearest.                         |
-| Pronunciation  | `bonjour [bɔ̃ʒuʁ] — привет`                          | In square brackets, IPA or Cyrillic.                              |
-| Next lesson    | `le cours prochain: 22.11.2026 18:00 de Paris`      | Or `next lesson: …`, `nächste Stunde: …`. The newest line counts. |
-| Video call     | `https://meet.google.com/abc-defg-hij`              | Anywhere; the newest link is used.                                |
+| What           | Write in the document                                                                        | Notes                                                                                                                           |
+| -------------- | -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| Start a lesson | `14.10.2026 1 Leçon`, or `Lesson`, `Lektion`, `Lección`, `Clase`, `Lição`, `Aula`, `Lezione` | Everything below it belongs to that lesson.                                                                                     |
+| A word         | `bonjour — привет`                                                                           | Messier notes work too; this is clearest.                                                                                       |
+| Pronunciation  | `bonjour [bɔ̃ʒuʁ] — привет`                                                                   | In square brackets, IPA or Cyrillic.                                                                                            |
+| Next lesson    | `le cours prochain: 22.11.2026 18:00 de Paris`                                               | Or `next lesson: …`, `nächste Stunde: …`, `próxima clase: …`, `próxima aula: …`, `prossima lezione: …`. The newest line counts. |
+| Video call     | `https://meet.google.com/abc-defg-hij`                                                       | Anywhere; the newest link is used.                                                                                              |
 
 With a city after the time (`de Paris`, `Moscow`…), students see the next lesson in their own time.
 

@@ -28,7 +28,15 @@ import { load, save } from '../lib/storage';
    when the board is opened. With a connection, every change is sent to the other people on the
    board and theirs are merged in (see src/lib/boardSync.ts for the messages). */
 
-const LANG_CODES: Record<UiLanguage, string> = { en: 'en', ru: 'ru-RU', fr: 'fr-FR', de: 'de-DE' };
+const LANG_CODES: Record<UiLanguage, string> = {
+  en: 'en',
+  ru: 'ru-RU',
+  fr: 'fr-FR',
+  de: 'de-DE',
+  es: 'es-ES',
+  pt: 'pt-PT',
+  it: 'it-IT',
+};
 /** Changes are gathered for this long before they are sent: smooth for the other person,
     and well within the realtime service's message limits. */
 const SEND_EVERY = 100;

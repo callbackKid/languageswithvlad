@@ -3,12 +3,15 @@ import { Fragment, type ReactNode, useSyncExternalStore } from 'react';
 import { load, save } from '../lib/storage';
 
 /** The language of the interface (buttons, hints, the Tutorial). Translations of words stay Russian. */
-export type UiLanguage = 'en' | 'ru' | 'fr' | 'de';
+export type UiLanguage = 'en' | 'ru' | 'fr' | 'de' | 'es' | 'pt' | 'it';
 export const UI_LANGUAGES: { id: UiLanguage; name: string; flag: string }[] = [
   { id: 'en', name: 'English', flag: '🇬🇧' },
   { id: 'ru', name: 'Русский', flag: '🇷🇺' },
   { id: 'fr', name: 'Français', flag: '🇫🇷' },
   { id: 'de', name: 'Deutsch', flag: '🇩🇪' },
+  { id: 'es', name: 'Español', flag: '🇪🇸' },
+  { id: 'pt', name: 'Português', flag: '🇵🇹' },
+  { id: 'it', name: 'Italiano', flag: '🇮🇹' },
 ];
 /** For dates, numbers and plural rules. */
 export const LOCALES: Record<UiLanguage, string> = {
@@ -16,6 +19,9 @@ export const LOCALES: Record<UiLanguage, string> = {
   ru: 'ru-RU',
   fr: 'fr-FR',
   de: 'de-DE',
+  es: 'es-ES',
+  pt: 'pt-PT',
+  it: 'it-IT',
 };
 
 /** A text, or its plural forms picked by {count}: "1 lesson", "2 урока", "5 уроков". */

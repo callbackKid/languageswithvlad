@@ -1,7 +1,7 @@
 /** The language a lesson teaches; translations are always Russian. Its name in each interface
     language is in i18n/messages/common.ts ("name.<code>"). */
-export type Language = 'fr' | 'en' | 'de';
-export const LANGUAGES: Language[] = ['fr', 'en', 'de'];
+export type Language = 'fr' | 'en' | 'de' | 'es' | 'pt' | 'it';
+export const LANGUAGES: Language[] = ['fr', 'en', 'de', 'es', 'pt', 'it'];
 export const asLanguage = (value: unknown): Language =>
   LANGUAGES.includes(value as Language) ? (value as Language) : 'fr';
 
@@ -37,10 +37,13 @@ export interface Analysis {
   /** true when parsed locally without Claude */
   local: boolean;
 }
+/** The word a lesson's heading uses: "14.10.2026 1 Leçon", "… 1 Lección"… */
+export type LessonWord = 'Leçon' | 'Lesson' | 'Lektion' | 'Lección' | 'Lição' | 'Lezione';
+
 export interface Lesson {
   key: string;
   n: number;
-  word: 'Leçon' | 'Lesson' | 'Lektion';
+  word: LessonWord;
   date: Date;
   body: string;
   hash: string;

@@ -11,6 +11,9 @@ const LABELS: Record<Language, string> = {
   fr: 'Le saviez-vous ?',
   en: 'Did you know?',
   de: 'Schon gewusst?',
+  es: '¿Sabías que…?',
+  pt: 'Sabias que…?',
+  it: 'Lo sapevi?',
 };
 
 /** What's happening, plus a fact about the language that changes every few seconds, while the student waits for Claude. */

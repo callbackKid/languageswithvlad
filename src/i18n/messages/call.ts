@@ -220,4 +220,169 @@ export const call = defineMessages({
     noWords: 'Noch keine Wörter vorbereitet.',
     openLesson: 'Lektion öffnen',
   },
+  es: {
+    title: 'Modo clase',
+    intro: 'La llamada, tus notas y las palabras de la lección en un solo lugar.',
+    noCall:
+      'Todavía no hay ningún enlace de Google Meet o Zoom en el documento. Pega en él el enlace de la clase y pulsa ↻ (Sincronizar) arriba.',
+    meetTitle: 'Google Meet',
+    meetExplain:
+      'Google Meet no puede funcionar dentro de otras webs, así que se abre en una ventana pequeña a un lado de la pantalla. Tenla junto a esta página.',
+    openMeet: 'Abrir la llamada en una ventana pequeña',
+    sideBySide: 'Lado a lado (media pantalla)',
+    boardTitle: 'Pizarra',
+    boardHint:
+      'Escribe, dibuja y pega imágenes, como en una pizarra. Comparte la pantalla en la llamada para que el alumno la vea. Se guarda en este dispositivo para cada día.',
+    boardHintShared:
+      'Escribe, dibuja y pega imágenes. El profesor y el alumno ven la misma pizarra y pueden dibujar a la vez. También se guarda en este dispositivo para cada día.',
+    boardLive: '🟢 En directo con: {names}',
+    boardWaiting: 'Pizarra compartida: esperando a que la otra persona la abra…',
+    someone: 'alguien',
+    openBoard: 'Abrir la pizarra',
+    loadingBoard: 'Cargando la pizarra…',
+    fullScreen: 'Pantalla completa',
+    exitFullScreen: 'Salir de pantalla completa',
+    savePicture: 'Guardar como imagen',
+    clearBoard: 'Borrar',
+    clearBoardConfirm: '¿Borrar toda la pizarra?',
+    openInTab: 'Abrir en una pestaña nueva',
+    popupBlocked:
+      'El navegador ha bloqueado la ventana. Permite las ventanas emergentes para este sitio o abre la llamada en una pestaña nueva.',
+    pipTip:
+      'En Chrome, Meet también puede flotar sobre todas las ventanas: en Meet, abre ⋮ (Más opciones) y elige imagen en imagen.',
+    zoomTitle: 'Zoom',
+    zoomExplain:
+      'La llamada de Zoom funciona aquí mismo, en una ventana que puedes mover y cambiar de tamaño.',
+    yourName: 'Tu nombre en la llamada',
+    passcode: 'Código de acceso de la reunión',
+    joinHere: 'Unirse aquí',
+    joining: 'Uniéndose a la llamada…',
+    leave: 'Salir de la llamada',
+    zoomNotSetUp:
+      'Zoom aún no está configurado en este servidor (ZOOM_SDK_KEY, ver README), así que la llamada se abre en Zoom.',
+    zoomNoNumber:
+      'Este enlace de Zoom no tiene número de reunión, así que la llamada se abre en Zoom.',
+    openInZoom: 'Abrir en Zoom',
+    zoomFailed: 'No se pudo unir a la llamada: {reason}',
+    notesTitle: 'Notas de la clase',
+    notesHint:
+      'Escribe durante la clase: palabras nuevas como «palabra — перевод», errores que trabajar, deberes. Se guarda en este dispositivo.',
+    notesPlaceholder: 'la panadería — пекарня\nhacía buen tiempo — была хорошая погода',
+    insertTime: '⏱ Hora',
+    clearNotes: 'Borrar',
+    clearConfirm: '¿Borrar las notas de esta clase?',
+    wordsTitle: 'Palabras de la última lección',
+    noWords: 'Aún no hay palabras preparadas.',
+    openLesson: 'Abrir la lección',
+  },
+  pt: {
+    title: 'Modo aula',
+    intro: 'A chamada, as suas notas e as palavras da lição num só lugar.',
+    noCall:
+      'Ainda não há nenhuma ligação do Google Meet ou do Zoom no documento. Cole lá a ligação da aula e carregue em ↻ (Sincronizar) em cima.',
+    meetTitle: 'Google Meet',
+    meetExplain:
+      'O Google Meet não funciona dentro de outros sites, por isso abre numa janela pequena ao lado do ecrã. Mantenha-a junto a esta página.',
+    openMeet: 'Abrir a chamada numa janela pequena',
+    sideBySide: 'Lado a lado (meio ecrã)',
+    boardTitle: 'Quadro',
+    boardHint:
+      'Escreva, desenhe e cole imagens, como num quadro branco. Partilhe o ecrã na chamada para o aluno o ver. Fica guardado neste dispositivo para cada dia.',
+    boardHintShared:
+      'Escreva, desenhe e cole imagens. O professor e o aluno veem o mesmo quadro e podem desenhar ao mesmo tempo. Também fica guardado neste dispositivo para cada dia.',
+    boardLive: '🟢 Em direto com: {names}',
+    boardWaiting: 'Quadro partilhado: à espera que a outra pessoa o abra…',
+    someone: 'alguém',
+    openBoard: 'Abrir o quadro',
+    loadingBoard: 'A carregar o quadro…',
+    fullScreen: 'Ecrã inteiro',
+    exitFullScreen: 'Sair do ecrã inteiro',
+    savePicture: 'Guardar como imagem',
+    clearBoard: 'Limpar',
+    clearBoardConfirm: 'Limpar o quadro todo?',
+    openInTab: 'Abrir num separador novo',
+    popupBlocked:
+      'O navegador bloqueou a janela. Permita janelas pop-up para este site ou abra a chamada num separador novo.',
+    pipTip:
+      'No Chrome, o Meet também pode flutuar por cima de todas as janelas: no Meet, abra ⋮ (Mais opções) e escolha imagem na imagem.',
+    zoomTitle: 'Zoom',
+    zoomExplain:
+      'A chamada do Zoom funciona aqui mesmo, numa janela que pode mover e redimensionar.',
+    yourName: 'O seu nome na chamada',
+    passcode: 'Código de acesso da reunião',
+    joinHere: 'Entrar aqui',
+    joining: 'A entrar na chamada…',
+    leave: 'Sair da chamada',
+    zoomNotSetUp:
+      'O Zoom ainda não está configurado neste servidor (ZOOM_SDK_KEY, ver README), por isso a chamada abre no Zoom.',
+    zoomNoNumber:
+      'Esta ligação do Zoom não tem número de reunião, por isso a chamada abre no Zoom.',
+    openInZoom: 'Abrir no Zoom',
+    zoomFailed: 'Não foi possível entrar na chamada: {reason}',
+    notesTitle: 'Notas da aula',
+    notesHint:
+      'Escreva durante a aula: palavras novas como «palavra — перевод», erros a trabalhar, trabalhos de casa. Fica guardado neste dispositivo.',
+    notesPlaceholder: 'a padaria — пекарня\nestava bom tempo — была хорошая погода',
+    insertTime: '⏱ Hora',
+    clearNotes: 'Limpar',
+    clearConfirm: 'Limpar as notas desta aula?',
+    wordsTitle: 'Palavras da última lição',
+    noWords: 'Ainda não há palavras preparadas.',
+    openLesson: 'Abrir a lição',
+  },
+  it: {
+    title: 'Modalità lezione',
+    intro: 'La chiamata, i tuoi appunti e le parole della lezione in un unico posto.',
+    noCall:
+      'Nel documento non c’è ancora un link di Google Meet o Zoom. Incolla il link della lezione e premi ↻ (Sincronizza) in alto.',
+    meetTitle: 'Google Meet',
+    meetExplain:
+      'Google Meet non può funzionare dentro altri siti, quindi si apre in una piccola finestra a lato dello schermo. Tienila accanto a questa pagina.',
+    openMeet: 'Apri la chiamata in una piccola finestra',
+    sideBySide: 'Affiancata (metà schermo)',
+    boardTitle: 'Lavagna',
+    boardHint:
+      'Scrivi, disegna e incolla immagini, come su una lavagna. Condividi lo schermo nella chiamata perché lo studente la veda. Si salva su questo dispositivo per ogni giorno.',
+    boardHintShared:
+      'Scrivi, disegna e incolla immagini. Insegnante e studente vedono la stessa lavagna e possono disegnarci insieme. Si salva anche su questo dispositivo per ogni giorno.',
+    boardLive: '🟢 In diretta con: {names}',
+    boardWaiting: 'Lavagna condivisa: in attesa che l’altra persona la apra…',
+    someone: 'qualcuno',
+    openBoard: 'Apri la lavagna',
+    loadingBoard: 'Caricamento della lavagna…',
+    fullScreen: 'Schermo intero',
+    exitFullScreen: 'Esci dallo schermo intero',
+    savePicture: 'Salva come immagine',
+    clearBoard: 'Cancella',
+    clearBoardConfirm: 'Cancellare tutta la lavagna?',
+    openInTab: 'Apri in una nuova scheda',
+    popupBlocked:
+      'Il browser ha bloccato la finestra. Consenti i pop-up per questo sito o apri la chiamata in una nuova scheda.',
+    pipTip:
+      'In Chrome, Meet può anche restare sopra tutte le finestre: in Meet apri ⋮ (Altre opzioni) e scegli picture-in-picture.',
+    zoomTitle: 'Zoom',
+    zoomExplain:
+      'La chiamata Zoom funziona proprio qui, in una finestra che puoi spostare e ridimensionare.',
+    yourName: 'Il tuo nome nella chiamata',
+    passcode: 'Codice della riunione',
+    joinHere: 'Partecipa qui',
+    joining: 'Ingresso nella chiamata…',
+    leave: 'Esci dalla chiamata',
+    zoomNotSetUp:
+      'Zoom non è ancora configurato su questo server (ZOOM_SDK_KEY, vedi README), quindi la chiamata si apre in Zoom.',
+    zoomNoNumber:
+      'Questo link di Zoom non ha un numero di riunione, quindi la chiamata si apre in Zoom.',
+    openInZoom: 'Apri in Zoom',
+    zoomFailed: 'Impossibile entrare nella chiamata: {reason}',
+    notesTitle: 'Appunti della lezione',
+    notesHint:
+      'Scrivi durante la lezione: parole nuove come «parola — перевод», errori su cui lavorare, compiti. Si salva su questo dispositivo.',
+    notesPlaceholder: 'la panetteria — пекарня\nfaceva bel tempo — была хорошая погода',
+    insertTime: '⏱ Ora',
+    clearNotes: 'Cancella',
+    clearConfirm: 'Cancellare gli appunti di questa lezione?',
+    wordsTitle: 'Parole dell’ultima lezione',
+    noWords: 'Nessuna parola ancora pronta.',
+    openLesson: 'Apri la lezione',
+  },
 });

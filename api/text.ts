@@ -2,7 +2,13 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 import { claudeJSON, MODEL } from './_lib/claude.js';
 import { asLevel, checkAccess, fail, onlyPost, text } from './_lib/http.js';
-import { explainPrompt, studyPrompt, translatePrompt } from './_lib/prompts.js';
+import {
+  explainPrompt,
+  LEARN_LANGUAGES,
+  type LearnLanguage,
+  studyPrompt,
+  translatePrompt,
+} from './_lib/prompts.js';
 
 /* Working with a text the learner pasted:
    - "explain": one marked word or phrase, in its sentence;
@@ -38,11 +44,12 @@ export default async function handler(request: VercelRequest, response: VercelRe
     }
     if (body.action === 'study') {
       const levels = (body.levels ?? {}) as Record<string, unknown>;
-      const prompt = studyPrompt(whole, {
-        fr: asLevel(levels.fr) ?? 'A2',
-        en: asLevel(levels.en) ?? 'A2',
-        de: asLevel(levels.de) ?? 'A2',
-      });
+      const prompt = studyPrompt(
+        whole,
+        Object.fromEntries(
+          LEARN_LANGUAGES.map((language) => [language, asLevel(levels[language]) ?? 'A2'])
+        ) as Record<LearnLanguage, string>
+      );
       return response.status(200).json(await claudeJSON(prompt, { model: MODEL, maxTokens: 6000 }));
     }
     return response.status(400).json({ error: 'Unknown action.' });

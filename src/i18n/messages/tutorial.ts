@@ -20,7 +20,7 @@ export const tutorial = defineMessages({
     'quick1.title': 'Open your lesson document',
     'quick1.text': 'Use the link from your teacher. Enter the class code if asked (only once).',
     'quick2.title': 'Pick a lesson',
-    'quick2.text': 'In <lessons>Lessons</lessons>, choose a lesson and look at its words.',
+    'quick2.text': 'In <lessons>Lesson history</lessons>, choose a lesson and look at its words.',
     'quick3.title': 'Practise',
     'quick3.text':
       'Start with <b>Flashcards</b>, then the <b>Quiz</b>. Missed words go to <mine>Favourite words</mine>.',
@@ -45,7 +45,7 @@ export const tutorial = defineMessages({
     'header.step6':
       '<b>⚙️ Settings</b> on the far right: the document, the language of the app, the colour theme, the languages you learn and your level. Your picture, set there, shows on the far left.',
     'header.tip1':
-      'A lesson in the document starts with a line like <ex>14.10.2026 1 Leçon</ex> (or <ex>Lesson</ex>, <ex>Lektion</ex>). Everything under it, up to the next such line, belongs to that lesson.',
+      'A lesson in the document starts with a line like <ex>14.10.2026 1 Leçon</ex> (or <ex>Lesson</ex>, <ex>Lektion</ex>, <ex>Lección</ex>, <ex>Lição</ex>, <ex>Lezione</ex>). Everything under it, up to the next such line, belongs to that lesson.',
     'header.mock': 'the top bar',
 
     'home.title': 'Home',
@@ -177,7 +177,7 @@ export const tutorial = defineMessages({
     'settings.step1':
       '<b>Profile</b>: add a picture and your name; the name is used in Zoom calls and in messages to the teacher.',
     'settings.step2':
-      '<b>Interface</b>: the language of the app (English, Russian, French, German) and the colour theme: like the system, light or dark.',
+      '<b>Interface</b>: the language of the app (English, Russian, French, German, Spanish, Portuguese, Italian) and the colour theme: like the system, light or dark.',
     'settings.step3':
       '<b>Learning</b>: tick the languages you learn and choose your level in each. Exercises, Favourite words, Mistakes, Stats and the discussion questions then show only those languages, and the level is the default for discussion questions and in Fill the gap.',
     'settings.step4':
@@ -234,7 +234,8 @@ export const tutorial = defineMessages({
     'quick1.text':
       'Перейдите по ссылке от преподавателя. Если попросят, введите код класса (один раз).',
     'quick2.title': 'Выберите урок',
-    'quick2.text': 'В разделе <lessons>Уроки</lessons> выберите урок и посмотрите его слова.',
+    'quick2.text':
+      'В разделе <lessons>История уроков</lessons> выберите урок и посмотрите его слова.',
     'quick3.title': 'Тренируйтесь',
     'quick3.text':
       'Начните с <b>Карточек</b>, потом пройдите <b>Тест</b>. Слова с ошибками попадут в <mine>Избранные слова</mine>.',
@@ -260,7 +261,7 @@ export const tutorial = defineMessages({
     'header.step6':
       '<b>⚙️ Настройки</b> справа: документ, язык приложения, цветовая тема, изучаемые языки и уровень. Ваша картинка, выбранная там, видна слева.',
     'header.tip1':
-      'Урок в документе начинается со строки вроде <ex>14.10.2026 1 Leçon</ex> (или <ex>Lesson</ex>, <ex>Lektion</ex>). Всё ниже неё, до следующей такой строки, относится к этому уроку.',
+      'Урок в документе начинается со строки вроде <ex>14.10.2026 1 Leçon</ex> (или <ex>Lesson</ex>, <ex>Lektion</ex>, <ex>Lección</ex>, <ex>Lição</ex>, <ex>Lezione</ex>). Всё ниже неё, до следующей такой строки, относится к этому уроку.',
     'header.mock': 'верхняя панель',
 
     'home.title': 'Главная',
@@ -392,7 +393,7 @@ export const tutorial = defineMessages({
     'settings.step1':
       '<b>Профиль</b>: добавьте картинку и имя; имя используется в звонках Zoom и в сообщениях преподавателю.',
     'settings.step2':
-      '<b>Интерфейс</b>: язык приложения (английский, русский, французский, немецкий) и цветовая тема: как в системе, светлая или тёмная.',
+      '<b>Интерфейс</b>: язык приложения (английский, русский, французский, немецкий, испанский, португальский, итальянский) и цветовая тема: как в системе, светлая или тёмная.',
     'settings.step3':
       '<b>Обучение</b>: отметьте языки, которые учите, и выберите уровень для каждого. Упражнения, «Избранные слова», «Ошибки», «Статистика» и «Вопрос для обсуждения» покажут только эти языки, а уровень подставится в «Вопрос для обсуждения» и «Вставь слово».',
     'settings.step4':
@@ -450,7 +451,8 @@ export const tutorial = defineMessages({
     'quick1.text':
       'Utilisez le lien de votre professeur. Saisissez le code de la classe si on vous le demande (une seule fois).',
     'quick2.title': 'Choisissez une leçon',
-    'quick2.text': 'Dans <lessons>Leçons</lessons>, choisissez une leçon et regardez ses mots.',
+    'quick2.text':
+      'Dans <lessons>Historique des leçons</lessons>, choisissez une leçon et regardez ses mots.',
     'quick3.title': 'Entraînez-vous',
     'quick3.text':
       'Commencez par les <b>Cartes</b>, puis le <b>Quiz</b>. Les mots ratés vont dans <mine>Mots favoris</mine>.',
@@ -476,7 +478,7 @@ export const tutorial = defineMessages({
     'header.step6':
       '<b>⚙️ Réglages</b> tout à droite : le document, la langue de l’application, le thème, les langues apprises et votre niveau. Votre image, choisie là, s’affiche tout à gauche.',
     'header.tip1':
-      'Une leçon commence dans le document par une ligne comme <ex>14.10.2026 1 Leçon</ex> (ou <ex>Lesson</ex>, <ex>Lektion</ex>). Tout ce qui suit, jusqu’à la ligne de ce type suivante, appartient à cette leçon.',
+      'Une leçon commence dans le document par une ligne comme <ex>14.10.2026 1 Leçon</ex> (ou <ex>Lesson</ex>, <ex>Lektion</ex>, <ex>Lección</ex>, <ex>Lição</ex>, <ex>Lezione</ex>). Tout ce qui suit, jusqu’à la ligne de ce type suivante, appartient à cette leçon.',
     'header.mock': 'la barre du haut',
 
     'home.title': 'Accueil',
@@ -613,7 +615,7 @@ export const tutorial = defineMessages({
     'settings.step1':
       '<b>Profil</b> : ajoutez une image et votre nom ; le nom sert dans les appels Zoom et les messages au professeur.',
     'settings.step2':
-      '<b>Interface</b> : la langue de l’application (anglais, russe, français, allemand) et le thème : comme le système, clair ou sombre.',
+      '<b>Interface</b> : la langue de l’application (anglais, russe, français, allemand, espagnol, portugais, italien) et le thème : comme le système, clair ou sombre.',
     'settings.step3':
       '<b>Apprentissage</b> : cochez les langues que vous apprenez et choisissez votre niveau pour chacune. Les exercices, Mots favoris, Erreurs, Statistiques et les questions à discuter n’affichent alors que ces langues, et le niveau est choisi par défaut pour les questions à discuter et dans le Texte à trous.',
     'settings.step4':
@@ -674,7 +676,7 @@ export const tutorial = defineMessages({
       'Nutze den Link deiner Lehrkraft. Gib den Klassencode ein, falls er verlangt wird (nur einmal).',
     'quick2.title': 'Wähle eine Lektion',
     'quick2.text':
-      'Wähle unter <lessons>Lektionen</lessons> eine Lektion und sieh dir ihre Wörter an.',
+      'Wähle unter <lessons>Lektionsverlauf</lessons> eine Lektion und sieh dir ihre Wörter an.',
     'quick3.title': 'Üben',
     'quick3.text':
       'Fang mit den <b>Karteikarten</b> an, dann das <b>Quiz</b>. Falsche Wörter landen in den <mine>Lieblingswörtern</mine>.',
@@ -700,7 +702,7 @@ export const tutorial = defineMessages({
     'header.step6':
       '<b>⚙️ Einstellungen</b> ganz rechts: das Dokument, die Sprache der App, das Farbschema, die Sprachen, die du lernst, und dein Niveau. Dein Bild, dort gewählt, steht ganz links.',
     'header.tip1':
-      'Eine Lektion beginnt im Dokument mit einer Zeile wie <ex>14.10.2026 1 Lektion</ex> (oder <ex>Leçon</ex>, <ex>Lesson</ex>). Alles darunter bis zur nächsten solchen Zeile gehört zu dieser Lektion.',
+      'Eine Lektion beginnt im Dokument mit einer Zeile wie <ex>14.10.2026 1 Lektion</ex> (oder <ex>Leçon</ex>, <ex>Lesson</ex>, <ex>Lección</ex>, <ex>Lição</ex>, <ex>Lezione</ex>). Alles darunter bis zur nächsten solchen Zeile gehört zu dieser Lektion.',
     'header.mock': 'die obere Leiste',
 
     'home.title': 'Start',
@@ -834,7 +836,7 @@ export const tutorial = defineMessages({
     'settings.step1':
       '<b>Profil</b>: Füge ein Bild und deinen Namen hinzu; der Name wird in Zoom-Anrufen und in Nachrichten an die Lehrkraft verwendet.',
     'settings.step2':
-      '<b>Oberfläche</b>: die Sprache der App (Englisch, Russisch, Französisch, Deutsch) und das Farbschema: wie das System, hell oder dunkel.',
+      '<b>Oberfläche</b>: die Sprache der App (Englisch, Russisch, Französisch, Deutsch, Spanisch, Portugiesisch, Italienisch) und das Farbschema: wie das System, hell oder dunkel.',
     'settings.step3':
       '<b>Lernen</b>: Hake die Sprachen an, die du lernst, und wähle für jede dein Niveau. Übungen, Lieblingswörter, Fehler, Statistik und die Diskussionsfragen zeigen dann nur diese Sprachen, und das Niveau ist der Standard für Diskussionsfragen und im Lückentext.',
     'settings.step4':
@@ -874,5 +876,672 @@ export const tutorial = defineMessages({
     'news.intro': 'Alle Änderungen der App, das Neueste zuerst.',
     'news.step1':
       'Jeder Tag zeigt, was <b>Neu</b>, <b>Verbessert</b> und <b>Behoben</b> ist. Ein Punkt neben <b>Neuigkeiten</b> im Menü heißt, dass es etwas gibt, das du noch nicht gesehen hast.',
+  },
+  es: {
+    title: 'Guía',
+    intro:
+      'Cómo funciona la aplicación, en pocos minutos. Cada sección de abajo tiene un enlace que la abre.',
+    quickStart: 'Inicio rápido',
+    map: 'Qué hay y dónde',
+    howTo: 'Cómo se usa',
+    goodToKnow: 'Conviene saber',
+    backToMap: '↑ Volver al mapa',
+    open: 'Abrir {section}',
+    pictureOf: 'Imagen de {label}',
+    storageTitle: 'Dónde se guardan tus datos',
+    storageText:
+      'El progreso, las estrellas, las notas, las rachas y las notas a mano se guardan solo en este navegador. No te siguen a otro dispositivo o navegador, y borrar los datos del sitio en el navegador los elimina.',
+    'quick1.title': 'Abre tu documento de lecciones',
+    'quick1.text':
+      'Usa el enlace de tu profesor. Escribe el código de clase si te lo pide (solo una vez).',
+    'quick2.title': 'Elige una lección',
+    'quick2.text':
+      'En <lessons>Historial de lecciones</lessons>, elige una lección y mira sus palabras.',
+    'quick3.title': 'Practica',
+    'quick3.text':
+      'Empieza con las <b>Tarjetas</b> y luego el <b>Test</b>. Las palabras que falles van a <mine>Palabras favoritas</mine>.',
+    'quick4.title': 'Vuelve cada día',
+    'quick4.text': 'Una ronda en <home>Inicio</home> lleva unos minutos y mantiene tu racha 🔥.',
+
+    'header.title': 'La barra superior',
+    'header.summary':
+      'Tu imagen, el documento, la sincronización, la próxima clase, comentarios y ajustes',
+    'header.intro':
+      'La barra de arriba siempre está ahí. Muestra qué Google Doc lee la aplicación y cuándo se sincronizó por última vez, además de la próxima clase y la videollamada.',
+    'header.step1':
+      '<b>↻</b> junto al nombre del documento sincroniza: vuelve a leer el documento. Púlsalo cuando el profesor añada una lección.',
+    'header.step2':
+      '<b>Próxima clase</b> muestra la fecha de la línea más reciente como <ex>próxima clase: 22.11.2026 18:00 Madrid</ex>. Una hora indicada para una ciudad se convierte a la tuya. Cuando la fecha ha pasado, dice «aún sin confirmar».',
+    'header.step3':
+      '<b>Entrar en la clase</b> aparece en el widget de la próxima clase cuando el documento tiene un enlace de Google Meet o Zoom, y abre el modo clase: la llamada junto a la lección y tus notas.',
+    'header.step4':
+      '<b>Abrir el documento</b>, <b>Copiar el enlace del alumno</b> y <b>Cambiar de documento</b> están en <b>Ajustes</b>, en Documento.',
+    'header.step5':
+      '<b>Comentarios</b> envía un mensaje al profesor: un error, una idea o cualquier otra cosa. Añade hasta 3 capturas o pega una con Ctrl+V / ⌘V. La página en la que estabas se añade sola.',
+    'header.step6':
+      '<b>⚙️ Ajustes</b> a la derecha del todo: el documento, el idioma de la aplicación, el tema de color, los idiomas que aprendes y tu nivel. Tu imagen, elegida allí, aparece a la izquierda del todo.',
+    'header.tip1':
+      'Una lección empieza en el documento con una línea como <ex>14.10.2026 1 Lección</ex> (o <ex>Leçon</ex>, <ex>Lesson</ex>, <ex>Lektion</ex>, <ex>Lição</ex>, <ex>Lezione</ex>). Todo lo que hay debajo, hasta la siguiente línea así, pertenece a esa lección.',
+    'header.mock': 'la barra superior',
+
+    'home.title': 'Inicio',
+    'home.summary': 'Una ronda diaria de 10 preguntas variadas',
+    'home.intro':
+      'La forma más rápida de practicar cada día: 10 preguntas de todas tus lecciones, y las palabras que fallas vuelven más a menudo.',
+    'home.step1':
+      'Responde cada pregunta: elige una traducción, elige la palabra en el idioma que aprendes, escríbela o escribe lo que oyes.',
+    'home.step2':
+      'Después de cada respuesta pulsa <pbtn>Siguiente</pbtn>. Al final ves tu puntuación y <pbtn>Siguiente ronda</pbtn>.',
+    'home.step3':
+      'Responde al menos una vez al día para mantener tu racha 🔥; 20 respuestas cumplen el objetivo del día.',
+    'home.mock': 'la racha y el objetivo diario en Inicio',
+
+    'lessons.title': 'Historial de lecciones',
+    'lessons.summary': 'Palabras, verbos y notas de cada lección',
+    'lessons.intro':
+      'Todas las lecciones del documento, con la más nueva seleccionada. Claude la lee una vez y prepara el vocabulario con traducciones, pares de sinónimos y antónimos, y los verbos.',
+    'lessons.step1':
+      'Elige una lección en la lista de la izquierda (cada lección tiene su propio enlace que puedes compartir).',
+    'lessons.step2':
+      'Quédate en la pestaña <b>Palabras</b>. Todas las palabras están marcadas; desmarca las que no quieras o usa <b>Elegir todas</b>, <b>Quitar</b> y el filtro.',
+    'lessons.step3':
+      'Empieza un ejercicio desde la fila de botones: <pbtn>Test</pbtn> <btn>Tarjetas</btn> <btn>Une las traducciones</btn> <btn>Sinónimos y antónimos</btn> <btn>Rellena el hueco</btn> <btn>Dictado</btn>',
+    'lessons.step4': 'Pulsa 🔊 para oír una palabra y ☆ para ponerla en <b>Palabras favoritas</b>.',
+    'lessons.tip1':
+      '<added>✱</added> marca una traducción que añadió Claude y que no está en las notas.',
+    'lessons.tip2':
+      '<b>Tarjetas</b>: <key>Espacio</key> gira la tarjeta, <key>←</key> significa «otra vez», <key>→</key> significa «me la sé». El interruptor de arriba cambia la dirección.',
+    'lessons.tip3':
+      'Abajo: <b>Exportar palabras para Anki</b> guarda las palabras marcadas en un archivo (en Anki: Archivo → Importar), y <b>Preparar de nuevo esta lección</b> pide a Claude que vuelva a leer una lección editada.',
+    'lessons.tip4':
+      '<b>Mis notas</b> es tu bloc de notas de la lección, se guarda mientras escribes. <b>Original</b> muestra la lección tal como está escrita.',
+    'lessons.mock': 'la pestaña Palabras de una lección',
+
+    'verbs.title': 'Verbos',
+    'verbs.summary': 'Tablas de conjugación y ejercicios (pestaña Verbos de una lección)',
+    'verbs.intro':
+      'La pestaña <b>Verbos</b> de una lección de francés tiene una tabla de conjugación para cada verbo, en seis tiempos, en afirmativa y negativa.',
+    'verbs.step1': 'Pulsa un verbo para abrir su tabla.',
+    'verbs.step2':
+      'Elige un tiempo (présent, passé composé, imparfait, futur simple, conditionnel présent, impératif) y <b>afirmativa</b> o <b>negativa</b>. 🔊 lee cada forma.',
+    'verbs.step3':
+      'Pulsa <pbtn>Practicar este tiempo</pbtn>, rellena todas las personas y luego <pbtn>Comprobar las respuestas</pbtn>. Debajo de las formas incorrectas aparece la correcta.',
+    'verbs.step4':
+      '<btn>Test rápido</btn> pregunta formas al azar de todos los verbos que has abierto.',
+    'verbs.tip1':
+      'Escribe la forma con o sin el pronombre: valen tanto «nous réveillons» como «réveillons».',
+    'verbs.tip2':
+      'Las mayúsculas y la puntuación no cuentan. Un acento que falta cuenta como «casi», no como error.',
+    'verbs.tip3':
+      'Si una tabla parece incorrecta, <b>Conjugar de nuevo</b> (junto al participio pasado) pide una nueva.',
+    'verbs.mock': 'una tabla de verbos',
+
+    'all-lessons.title': 'Lecciones descargadas',
+    'all-lessons.summary': 'Los mismos ejercicios, con varias lecciones a la vez',
+    'all-lessons.intro':
+      'Todos los ejercicios de palabras y verbos, con todas las lecciones preparadas juntas.',
+    'all-lessons.step1':
+      'Deja <b>Todas</b> seleccionado o toca las etiquetas de lecciones para practicar solo algunas.',
+    'all-lessons.step2':
+      'Usa las pestañas <b>Palabras</b> y <b>Verbos</b> igual que en una sola lección.',
+    'all-lessons.mock': 'etiquetas de lecciones',
+
+    'my-words.title': 'Palabras favoritas',
+    'my-words.summary': 'Tu lista personal de palabras que trabajar',
+    'my-words.intro':
+      'Las palabras que marcaste con ☆ y las que fallaste en cualquier ejercicio. El número junto a <b>Palabras favoritas</b> en el menú indica cuántas hay.',
+    'my-words.step1': 'Practícalas con los mismos ejercicios que en una lección.',
+    'my-words.step2':
+      'Una palabra sale de la lista tras <b>3 aciertos seguidos</b> o cuando le quitas la ★.',
+
+    'mistakes.title': 'Errores',
+    'mistakes.summary': 'Las palabras y formas verbales que más fallas',
+    'mistakes.intro':
+      'Tus errores más frecuentes, palabras y formas verbales, con cuántas veces fallaste cada uno.',
+    'mistakes.step1':
+      'Pulsa <pbtn>Practicar mis errores</pbtn> para una ronda hecha solo de ellos.',
+
+    'stats.title': 'Estadísticas',
+    'stats.summary': 'Tu progreso y tus puntos débiles',
+    'stats.intro':
+      'Cuántas palabras has aprendido, qué lecciones, tipos de palabras y tiempos te cuestan más, y tus errores más comunes.',
+    'stats.step1': 'Échale un vistazo de vez en cuando para decidir qué repasar.',
+
+    'photo.title': 'Análisis de fotos',
+    'photo.summary': 'Palabras subrayadas, notas a mano o un PDF del manual',
+    'photo.intro':
+      'Tres formas de traer palabras desde el papel. Elige una con el interruptor de arriba.',
+    'photo.step1':
+      '<b>Palabras subrayadas</b>: subraya palabras en un libro, pulsa <pbtn>Elegir o hacer una foto</pbtn> y obtén una tabla con la traducción en contexto, la forma del diccionario, el tiempo verbal y una breve explicación.',
+    'photo.step2':
+      '<b>Notas a mano</b>: fotografía hasta 4 páginas de notas, corrige lo que se haya leído mal (las palabras ilegibles se marcan con [?]) y pulsa <pbtn>Preparar la lección</pbtn> para obtener palabras, verbos y ejercicios como en cualquier lección.',
+    'photo.step3':
+      '<b>PDF del manual</b>: pulsa <pbtn>Elegir un PDF</pbtn>, indica las páginas de un capítulo (hasta 20) y luego <pbtn>Leer estas páginas</pbtn>. Claude escribe notas de clase: palabras, frases, gramática y ejemplos. Revísalas y pulsa <pbtn>Preparar la lección</pbtn>.',
+    'photo.step4':
+      '<btn>Añadir al Google Doc como Leçon 8</btn> añade lo leído al final del documento como una lección nueva (requiere una configuración única en el servidor, ver el README).',
+    'photo.tip1':
+      'Haz la foto de frente, con buena luz y con toda la línea marcada dentro del encuadre.',
+    'photo.tip2': '☆ junto a una palabra pone su forma del diccionario en Palabras favoritas.',
+    'photo.mock': 'el resultado de una foto con palabras subrayadas',
+
+    'text.title': 'Análisis de texto',
+    'text.summary': 'Pega un artículo: explicaciones, una traducción y ejercicios',
+    'text.intro':
+      'Para un texto que encontraste tú: un artículo, un cuento, una publicación. Pégalo en lugar de hacer una captura y trabaja con él aquí.',
+    'text.step1':
+      'Pega el texto y pulsa <pbtn>Leer este texto</pbtn>. Se guarda en este dispositivo, con todo lo que hagas con él.',
+    'text.step2':
+      'Haz clic en una palabra o selecciona unas cuantas con el ratón o el dedo y pulsa <pbtn>Explicar</pbtn>: obtienes la traducción en esa frase, la forma del diccionario, el tiempo verbal y una breve explicación. ☆ pone la palabra en Palabras favoritas.',
+    'text.step3':
+      '<btn>Traducir el texto</btn> muestra una traducción al ruso debajo de cada párrafo; el mismo botón la vuelve a ocultar.',
+    'text.step4':
+      '<pbtn>Crear preguntas y ejercicios</pbtn>: Claude elige las palabras que vale la pena aprender (con el Test, las Tarjetas y los demás ejercicios de siempre), escribe preguntas sobre el texto y un ejercicio de verdadero o falso.',
+    'text.tip1':
+      'Las palabras por las que ya preguntaste aparecen subrayadas con puntos en el texto.',
+    'text.tip2': 'Las palabras se eligen según tu nivel en ese idioma, fijado en Ajustes.',
+    'discuss.title': 'Una pregunta para debatir',
+    'discuss.summary': 'Una pregunta para debatir al empezar la clase',
+    'discuss.intro':
+      'Una pregunta de la que hablar al principio de la clase, escrita para tu nivel y la gramática que estás practicando.',
+    'discuss.step1': 'Elige el idioma y tu <b>nivel</b> (A1–C2).',
+    'discuss.step2':
+      'Elige un <b>tema de vocabulario</b>: de la lista o de tus lecciones, o escribe cualquier tema propio en <b>O tu propio tema</b>: una serie, un pasatiempo, palabras nuevas de jerga. Elige un <b>tema de gramática</b> o deja <b>Cualquiera</b>.',
+    'discuss.step3':
+      'Pulsa <pbtn>Escribir una pregunta</pbtn>. Recibes la pregunta (🔊 la lee, <b>Mostrar la traducción</b> la muestra en ruso), preguntas para seguir, comienzos de frase que usan la gramática y palabras útiles. Con un tema de gramática, <b>📘 La regla</b> abre una explicación con ejemplos.',
+    'discuss.step4': '<pbtn>Otra pregunta</pbtn> escribe una nueva con los mismos ajustes.',
+    'discuss.tip1': '☆ junto a una palabra útil la pone en Palabras favoritas.',
+
+    'settings.title': 'Ajustes',
+    'settings.summary': 'Idioma, tema, lo que aprendes, tu nivel y el menú',
+    'settings.intro':
+      'Se abren con <b>⚙️ Ajustes</b> a la derecha de la barra superior. Todo se guarda al instante.',
+    'settings.step1':
+      '<b>Perfil</b>: añade una imagen y tu nombre; el nombre se usa en las llamadas de Zoom y en los mensajes al profesor.',
+    'settings.step2':
+      '<b>Interfaz</b>: el idioma de la aplicación (inglés, ruso, francés, alemán, español, portugués, italiano) y el tema de color: como el sistema, claro u oscuro.',
+    'settings.step3':
+      '<b>Aprendizaje</b>: marca los idiomas que aprendes y elige tu nivel en cada uno. Los ejercicios, Palabras favoritas, Errores, Estadísticas y las preguntas para debatir muestran entonces solo esos idiomas, y el nivel se usa por defecto en las preguntas para debatir y en Rellena el hueco.',
+    'settings.step4':
+      'También están allí: el objetivo diario para la racha 🔥, la velocidad de 🔊 y qué secciones muestra el menú.',
+    'settings.tip1':
+      'Las traducciones de las palabras siguen en ruso, sea cual sea el idioma de la interfaz.',
+    'call.title': 'Modo clase',
+    'call.summary': 'La llamada, las notas y las palabras de la lección en una pantalla',
+    'call.intro':
+      'Se abre con <b>Entrar en la clase</b> en el widget de la próxima clase, arriba, cuando el documento tiene un enlace de Google Meet o Zoom. Pensado para la propia clase.',
+    'call.step1':
+      '<b>Google Meet</b>: pulsa <pbtn>Abrir la llamada en una ventana pequeña</pbtn>. Meet no puede funcionar dentro de otras webs, así que se abre en una ventana pequeña a un lado de la pantalla.',
+    'call.step2':
+      '<b>Zoom</b>: escribe tu nombre y pulsa <pbtn>Unirse aquí</pbtn>. La llamada funciona dentro de la página, en una ventana que puedes mover y cambiar de tamaño (requiere configurar Zoom una vez en el servidor, ver el README).',
+    'call.step3':
+      'Escribe en <b>Notas de la clase</b> durante la clase: palabras nuevas como «palabra — перевод», errores, deberes. <btn>⏱ Hora</btn> marca cuándo surgió algo.',
+    'call.step4':
+      'Después de la clase, <btn>Añadir al Google Doc como Leçon 8</btn> pone las notas en el documento como una lección nueva, lista para los ejercicios.',
+    'call.step5':
+      '<pbtn>Abrir la pizarra</pbtn> debajo de las notas: escribe, dibuja y pega imágenes. Con el uso compartido en directo configurado, el profesor y el alumno dibujan a la vez en la misma pizarra y ven el puntero del otro; si no, comparte la pantalla en la llamada. <b>Pantalla completa</b> y <b>Guardar como imagen</b> están encima.',
+    'call.tip3':
+      '<btn>Lado a lado (media pantalla)</btn> abre Meet sobre la mitad derecha de la pantalla, junto a la aplicación.',
+    'call.tip1':
+      'Las notas se guardan en este dispositivo para cada día, así que cerrar la página no hace perder nada.',
+    'call.tip2':
+      'En Chrome, Meet puede flotar sobre todas las ventanas: en Meet, abre ⋮ y elige imagen en imagen.',
+    'document.title': 'Documento',
+    'document.summary': 'Edita el Google Doc sin salir de la aplicación',
+    'document.intro': 'El editor de Google Docs dentro de la aplicación, para escribir lecciones.',
+    'document.step1': 'Edita como siempre: los cambios se guardan en Google Docs.',
+    'document.step2':
+      'Al ir a otra sección, la aplicación sincroniza y las lecciones se actualizan.',
+    'document.tip1':
+      'Si el editor se queda en blanco o pide iniciar sesión (a menudo en Safari), usa el enlace de encima para abrir el documento en una pestaña nueva.',
+    'news.title': 'Novedades',
+    'news.summary': 'Lo que ha cambiado en la aplicación, por fecha',
+    'news.intro': 'Todos los cambios de la aplicación, de lo más nuevo a lo más antiguo.',
+    'news.step1':
+      'Cada día indica qué es <b>Nuevo</b>, qué está <b>Mejorado</b> y qué se ha <b>Corregido</b>. Un punto junto a <b>Novedades</b> en el menú significa que hay algo que aún no has visto.',
+  },
+  pt: {
+    title: 'Guia',
+    intro:
+      'Como funciona a aplicação, em poucos minutos. Cada secção abaixo tem uma ligação que a abre.',
+    quickStart: 'Início rápido',
+    map: 'O que está onde',
+    howTo: 'Como usar',
+    goodToKnow: 'Bom saber',
+    backToMap: '↑ Voltar ao mapa',
+    open: 'Abrir {section}',
+    pictureOf: 'Imagem de {label}',
+    storageTitle: 'Onde ficam os seus dados',
+    storageText:
+      'O progresso, as estrelas, as notas, as séries e as notas à mão ficam guardados só neste navegador. Não passam para outro dispositivo ou navegador, e apagar os dados do site no navegador elimina-os.',
+    'quick1.title': 'Abra o seu documento de lições',
+    'quick1.text':
+      'Use a ligação do seu professor. Introduza o código da turma se lho pedirem (só uma vez).',
+    'quick2.title': 'Escolha uma lição',
+    'quick2.text':
+      'No <lessons>Histórico de lições</lessons>, escolha uma lição e veja as palavras.',
+    'quick3.title': 'Pratique',
+    'quick3.text':
+      'Comece pelos <b>Cartões</b> e depois o <b>Teste</b>. As palavras que errar vão para as <mine>Palavras favoritas</mine>.',
+    'quick4.title': 'Volte todos os dias',
+    'quick4.text': 'Uma ronda no <home>Início</home> leva poucos minutos e mantém a sua série 🔥.',
+
+    'header.title': 'A barra superior',
+    'header.summary':
+      'A sua imagem, o documento, a sincronização, a próxima aula, comentários e definições',
+    'header.intro':
+      'A barra de cima está sempre lá. Mostra que Google Doc a aplicação lê e quando foi sincronizado pela última vez, além da próxima aula e da videochamada.',
+    'header.step1':
+      '<b>↻</b> ao lado do nome do documento sincroniza: volta a ler o documento. Carregue nele depois de o professor acrescentar uma lição.',
+    'header.step2':
+      '<b>Próxima aula</b> mostra a data da linha mais recente como <ex>próxima aula: 22.11.2026 18:00 Lisboa</ex>. Uma hora indicada para uma cidade é convertida para a sua. Quando a data já passou, diz «ainda por confirmar».',
+    'header.step3':
+      '<b>Entrar na aula</b> aparece no widget da próxima aula quando o documento tem uma ligação do Google Meet ou do Zoom, e abre o modo aula: a chamada ao lado da lição e das suas notas.',
+    'header.step4':
+      '<b>Abrir o documento</b>, <b>Copiar a ligação do aluno</b> e <b>Mudar de documento</b> estão nas <b>Definições</b>, em Documento.',
+    'header.step5':
+      '<b>Comentários</b> envia uma mensagem ao professor: um erro, uma ideia ou outra coisa qualquer. Anexe até 3 capturas de ecrã ou cole uma com Ctrl+V / ⌘V. A página onde estava é acrescentada automaticamente.',
+    'header.step6':
+      '<b>⚙️ Definições</b> na ponta direita: o documento, o idioma da aplicação, o tema de cores, as línguas que aprende e o seu nível. A sua imagem, escolhida lá, aparece na ponta esquerda.',
+    'header.tip1':
+      'Uma lição começa no documento com uma linha como <ex>14.10.2026 1 Lição</ex> (ou <ex>Leçon</ex>, <ex>Lesson</ex>, <ex>Lektion</ex>, <ex>Lección</ex>, <ex>Lezione</ex>). Tudo o que está por baixo, até à próxima linha assim, pertence a essa lição.',
+    'header.mock': 'a barra superior',
+
+    'home.title': 'Início',
+    'home.summary': 'Uma ronda diária de 10 perguntas variadas',
+    'home.intro':
+      'A forma mais rápida de praticar todos os dias: 10 perguntas de todas as suas lições, e as palavras que erra voltam mais vezes.',
+    'home.step1':
+      'Responda a cada pergunta: escolha uma tradução, escolha a palavra na língua que aprende, escreva-a ou escreva o que ouve.',
+    'home.step2':
+      'Depois de cada resposta carregue em <pbtn>Seguinte</pbtn>. No fim vê a pontuação e <pbtn>Ronda seguinte</pbtn>.',
+    'home.step3':
+      'Responda pelo menos uma vez por dia para manter a série 🔥; 20 respostas cumprem o objetivo do dia.',
+    'home.mock': 'a série e o objetivo diário no Início',
+
+    'lessons.title': 'Histórico de lições',
+    'lessons.summary': 'Palavras, verbos e notas de cada lição',
+    'lessons.intro':
+      'Todas as lições do documento, com a mais recente selecionada. O Claude lê-a uma vez e prepara o vocabulário com traduções, pares de sinónimos e antónimos, e os verbos.',
+    'lessons.step1':
+      'Escolha uma lição na lista à esquerda (cada lição tem a sua própria ligação, que pode partilhar).',
+    'lessons.step2':
+      'Fique no separador <b>Palavras</b>. Todas as palavras estão marcadas; desmarque as que não quer ou use <b>Escolher todas</b>, <b>Limpar</b> e o filtro.',
+    'lessons.step3':
+      'Comece um exercício na fila de botões: <pbtn>Teste</pbtn> <btn>Cartões</btn> <btn>Ligue as traduções</btn> <btn>Sinónimos e antónimos</btn> <btn>Preencha o espaço</btn> <btn>Ditado</btn>',
+    'lessons.step4':
+      'Carregue em 🔊 para ouvir uma palavra e em ☆ para a pôr nas <b>Palavras favoritas</b>.',
+    'lessons.tip1':
+      '<added>✱</added> marca uma tradução que o Claude acrescentou e que não está nas notas.',
+    'lessons.tip2':
+      '<b>Cartões</b>: <key>Espaço</key> vira o cartão, <key>←</key> quer dizer «outra vez», <key>→</key> quer dizer «já sei». O botão em cima muda o sentido.',
+    'lessons.tip3':
+      'Em baixo: <b>Exportar palavras para o Anki</b> guarda as palavras marcadas num ficheiro (no Anki: Ficheiro → Importar), e <b>Preparar esta lição de novo</b> pede ao Claude que volte a ler uma lição editada.',
+    'lessons.tip4':
+      '<b>As minhas notas</b> é o seu bloco de notas da lição, guardado enquanto escreve. <b>Original</b> mostra a lição exatamente como está escrita.',
+    'lessons.mock': 'o separador Palavras de uma lição',
+
+    'verbs.title': 'Verbos',
+    'verbs.summary': 'Tabelas de conjugação e exercícios (separador Verbos de uma lição)',
+    'verbs.intro':
+      'O separador <b>Verbos</b> de uma lição de francês tem uma tabela de conjugação para cada verbo, em seis tempos, na afirmativa e na negativa.',
+    'verbs.step1': 'Carregue num verbo para abrir a tabela.',
+    'verbs.step2':
+      'Escolha um tempo (présent, passé composé, imparfait, futur simple, conditionnel présent, impératif) e <b>afirmativa</b> ou <b>negativa</b>. 🔊 lê cada forma.',
+    'verbs.step3':
+      'Carregue em <pbtn>Praticar este tempo</pbtn>, preencha todas as pessoas e depois <pbtn>Verificar as respostas</pbtn>. Por baixo das formas erradas aparece a certa.',
+    'verbs.step4':
+      '<btn>Teste rápido</btn> pergunta formas aleatórias de todos os verbos que abriu.',
+    'verbs.tip1':
+      'Escreva a forma com ou sem o pronome: tanto «nous réveillons» como «réveillons» contam.',
+    'verbs.tip2':
+      'Maiúsculas e pontuação não contam. Um acento em falta conta como «quase», não como erro.',
+    'verbs.tip3':
+      'Se uma tabela parecer errada, <b>Conjugar de novo</b> (ao lado do particípio passado) pede uma nova.',
+    'verbs.mock': 'uma tabela de verbos',
+
+    'all-lessons.title': 'Lições descarregadas',
+    'all-lessons.summary': 'Os mesmos exercícios, com várias lições ao mesmo tempo',
+    'all-lessons.intro':
+      'Todos os exercícios de palavras e verbos, com todas as lições preparadas juntas.',
+    'all-lessons.step1':
+      'Deixe <b>Todas</b> selecionado ou toque nas etiquetas das lições para praticar só algumas.',
+    'all-lessons.step2':
+      'Use os separadores <b>Palavras</b> e <b>Verbos</b> tal como numa só lição.',
+    'all-lessons.mock': 'etiquetas das lições',
+
+    'my-words.title': 'Palavras favoritas',
+    'my-words.summary': 'A sua lista pessoal de palavras a trabalhar',
+    'my-words.intro':
+      'As palavras que marcou com ☆ e as que errou em qualquer exercício. O número ao lado de <b>Palavras favoritas</b> no menu mostra quantas são.',
+    'my-words.step1': 'Pratique-as com os mesmos exercícios de uma lição.',
+    'my-words.step2':
+      'Uma palavra sai da lista após <b>3 respostas certas seguidas</b> ou quando lhe tira a ★.',
+
+    'mistakes.title': 'Erros',
+    'mistakes.summary': 'As palavras e formas verbais que mais erra',
+    'mistakes.intro':
+      'Os seus erros mais frequentes, palavras e formas verbais, com quantas vezes errou cada um.',
+    'mistakes.step1': 'Carregue em <pbtn>Praticar os meus erros</pbtn> para uma ronda só com eles.',
+
+    'stats.title': 'Estatísticas',
+    'stats.summary': 'O seu progresso e os pontos fracos',
+    'stats.intro':
+      'Quantas palavras aprendeu, que lições, tipos de palavras e tempos lhe custam mais, e os erros mais comuns.',
+    'stats.step1': 'Veja de vez em quando para escolher o que rever a seguir.',
+
+    'photo.title': 'Análise de fotos',
+    'photo.summary': 'Palavras sublinhadas, notas à mão ou um PDF do manual',
+    'photo.intro': 'Três maneiras de trazer palavras do papel. Escolha uma com o botão em cima.',
+    'photo.step1':
+      '<b>Palavras sublinhadas</b>: sublinhe palavras num livro, carregue em <pbtn>Escolher ou tirar uma foto</pbtn> e obtenha uma tabela com a tradução no contexto, a forma do dicionário, o tempo verbal e uma explicação curta.',
+    'photo.step2':
+      '<b>Notas à mão</b>: fotografe até 4 páginas de notas, corrija o que foi mal lido (as palavras ilegíveis ficam marcadas com [?]) e carregue em <pbtn>Preparar a lição</pbtn> para obter palavras, verbos e exercícios como em qualquer lição.',
+    'photo.step3':
+      '<b>PDF do manual</b>: carregue em <pbtn>Escolher um PDF</pbtn>, indique as páginas de um capítulo (até 20) e depois <pbtn>Ler estas páginas</pbtn>. O Claude escreve notas da aula: palavras, expressões, gramática e exemplos. Reveja-as e carregue em <pbtn>Preparar a lição</pbtn>.',
+    'photo.step4':
+      '<btn>Acrescentar ao Google Doc como Leçon 8</btn> acrescenta o que foi lido ao fim do documento como uma nova lição (precisa de uma configuração única no servidor, ver o README).',
+    'photo.tip1':
+      'Tire a foto de frente, com boa luz e com toda a linha marcada dentro do enquadramento.',
+    'photo.tip2': '☆ ao lado de uma palavra põe a forma do dicionário nas Palavras favoritas.',
+    'photo.mock': 'o resultado de uma foto com palavras sublinhadas',
+
+    'text.title': 'Análise de texto',
+    'text.summary': 'Cole um artigo: explicações, uma tradução e exercícios',
+    'text.intro':
+      'Para um texto que encontrou: um artigo, uma história, uma publicação. Cole-o em vez de tirar uma captura de ecrã e trabalhe com ele aqui.',
+    'text.step1':
+      'Cole o texto e carregue em <pbtn>Ler este texto</pbtn>. Fica guardado neste dispositivo, com tudo o que fizer com ele.',
+    'text.step2':
+      'Clique numa palavra ou selecione algumas com o rato ou o dedo e carregue em <pbtn>Explicar</pbtn>: obtém a tradução nessa frase, a forma do dicionário, o tempo verbal e uma explicação curta. ☆ põe a palavra nas Palavras favoritas.',
+    'text.step3':
+      '<btn>Traduzir o texto</btn> mostra uma tradução em russo por baixo de cada parágrafo; o mesmo botão volta a escondê-la.',
+    'text.step4':
+      '<pbtn>Criar perguntas e exercícios</pbtn>: o Claude escolhe as palavras que vale a pena aprender (com o Teste, os Cartões e os outros exercícios habituais), escreve perguntas sobre o texto e um exercício de verdadeiro ou falso.',
+    'text.tip1':
+      'As palavras sobre as quais já perguntou aparecem sublinhadas com pontos no texto.',
+    'text.tip2':
+      'As palavras são escolhidas para o seu nível nessa língua, definido nas Definições.',
+    'discuss.title': 'Uma pergunta para debate',
+    'discuss.summary': 'Uma pergunta para debater no início da aula',
+    'discuss.intro':
+      'Uma pergunta para conversar no início da aula, escrita para o seu nível e para a gramática que está a praticar.',
+    'discuss.step1': 'Escolha a língua e o seu <b>nível</b> (A1–C2).',
+    'discuss.step2':
+      'Escolha um <b>tema de vocabulário</b>: da lista ou das suas lições, ou escreva qualquer tema seu em <b>Ou o seu próprio tema</b>: uma série, um passatempo, novas palavras de calão. Escolha um <b>tema de gramática</b> ou deixe <b>Qualquer</b>.',
+    'discuss.step3':
+      'Carregue em <pbtn>Escrever uma pergunta</pbtn>. Recebe a pergunta (🔊 lê-a, <b>Mostrar a tradução</b> mostra-a em russo), perguntas para continuar, inícios de frase que usam a gramática e palavras úteis. Com um tema de gramática, <b>📘 A regra</b> abre uma explicação com exemplos.',
+    'discuss.step4': '<pbtn>Outra pergunta</pbtn> escreve uma nova com as mesmas definições.',
+    'discuss.tip1': '☆ ao lado de uma palavra útil põe-na nas Palavras favoritas.',
+
+    'settings.title': 'Definições',
+    'settings.summary': 'Idioma, tema, o que aprende, o seu nível e o menu',
+    'settings.intro':
+      'Abrem-se com <b>⚙️ Definições</b> à direita da barra superior. Tudo fica guardado de imediato.',
+    'settings.step1':
+      '<b>Perfil</b>: acrescente uma imagem e o seu nome; o nome é usado nas chamadas do Zoom e nas mensagens para o professor.',
+    'settings.step2':
+      '<b>Interface</b>: o idioma da aplicação (inglês, russo, francês, alemão, espanhol, português, italiano) e o tema de cores: como o sistema, claro ou escuro.',
+    'settings.step3':
+      '<b>Aprendizagem</b>: marque as línguas que aprende e escolha o seu nível em cada uma. Os exercícios, as Palavras favoritas, os Erros, as Estatísticas e as perguntas para debate mostram então só essas línguas, e o nível é usado por defeito nas perguntas para debate e em Preencha o espaço.',
+    'settings.step4':
+      'Também lá estão: o objetivo diário para a série 🔥, a velocidade do 🔊 e as secções que o menu mostra.',
+    'settings.tip1':
+      'As traduções das palavras ficam em russo, seja qual for o idioma da interface.',
+    'call.title': 'Modo aula',
+    'call.summary': 'A chamada, as notas e as palavras da lição num só ecrã',
+    'call.intro':
+      'Abre-se com <b>Entrar na aula</b> no widget da próxima aula, em cima, quando o documento tem uma ligação do Google Meet ou do Zoom. Feito para a própria aula.',
+    'call.step1':
+      '<b>Google Meet</b>: carregue em <pbtn>Abrir a chamada numa janela pequena</pbtn>. O Meet não funciona dentro de outros sites, por isso abre numa janela pequena ao lado do ecrã.',
+    'call.step2':
+      '<b>Zoom</b>: escreva o seu nome e carregue em <pbtn>Entrar aqui</pbtn>. A chamada funciona dentro da página, numa janela que pode mover e redimensionar (precisa de configurar o Zoom uma vez no servidor, ver o README).',
+    'call.step3':
+      'Escreva nas <b>Notas da aula</b> durante a aula: palavras novas como «palavra — перевод», erros, trabalhos de casa. <btn>⏱ Hora</btn> marca quando algo surgiu.',
+    'call.step4':
+      'Depois da aula, <btn>Acrescentar ao Google Doc como Leçon 8</btn> põe as notas no documento como uma nova lição, pronta para os exercícios.',
+    'call.step5':
+      '<pbtn>Abrir o quadro</pbtn> por baixo das notas: escreva, desenhe e cole imagens. Com a partilha em direto configurada, o professor e o aluno desenham ao mesmo tempo no mesmo quadro e veem o ponteiro um do outro; caso contrário, partilhe o ecrã na chamada. <b>Ecrã inteiro</b> e <b>Guardar como imagem</b> estão por cima.',
+    'call.tip3':
+      '<btn>Lado a lado (meio ecrã)</btn> abre o Meet na metade direita do ecrã, ao lado da aplicação.',
+    'call.tip1':
+      'As notas ficam guardadas neste dispositivo para cada dia, por isso fechar a página não faz perder nada.',
+    'call.tip2':
+      'No Chrome, o Meet pode flutuar por cima de todas as janelas: no Meet, abra ⋮ e escolha imagem na imagem.',
+    'document.title': 'Documento',
+    'document.summary': 'Edite o Google Doc sem sair da aplicação',
+    'document.intro': 'O editor do Google Docs dentro da aplicação, para escrever lições.',
+    'document.step1': 'Edite como de costume: as alterações ficam guardadas no Google Docs.',
+    'document.step2':
+      'Quando passa para outra secção, a aplicação sincroniza e as lições são atualizadas.',
+    'document.tip1':
+      'Se o editor ficar em branco ou pedir para iniciar sessão (muitas vezes no Safari), use a ligação por cima dele para abrir o documento num separador novo.',
+    'news.title': 'Novidades',
+    'news.summary': 'O que mudou na aplicação, por data',
+    'news.intro': 'Todas as alterações da aplicação, da mais recente para a mais antiga.',
+    'news.step1':
+      'Cada dia indica o que é <b>Novo</b>, o que foi <b>Melhorado</b> e o que foi <b>Corrigido</b>. Um ponto ao lado de <b>Novidades</b> no menu significa que há algo que ainda não viu.',
+  },
+  it: {
+    title: 'Guida',
+    intro: 'Come funziona l’app, in pochi minuti. Ogni sezione qui sotto ha un link che la apre.',
+    quickStart: 'Per iniziare',
+    map: 'Cosa c’è e dove',
+    howTo: 'Come si usa',
+    goodToKnow: 'Utile sapere',
+    backToMap: '↑ Torna alla mappa',
+    open: 'Apri {section}',
+    pictureOf: 'Immagine di {label}',
+    storageTitle: 'Dove sono i tuoi dati',
+    storageText:
+      'Progressi, stelle, appunti, serie e appunti a mano sono salvati solo in questo browser. Non ti seguono su un altro dispositivo o browser, e cancellare i dati del sito nel browser li elimina.',
+    'quick1.title': 'Apri il tuo documento delle lezioni',
+    'quick1.text':
+      'Usa il link del tuo insegnante. Inserisci il codice della classe se richiesto (una sola volta).',
+    'quick2.title': 'Scegli una lezione',
+    'quick2.text':
+      'In <lessons>Cronologia lezioni</lessons> scegli una lezione e guarda le sue parole.',
+    'quick3.title': 'Esercitati',
+    'quick3.text':
+      'Comincia con le <b>Flashcard</b>, poi il <b>Quiz</b>. Le parole sbagliate finiscono nelle <mine>Parole preferite</mine>.',
+    'quick4.title': 'Torna ogni giorno',
+    'quick4.text':
+      'Un turno in <home>Home</home> richiede pochi minuti e mantiene viva la tua serie 🔥.',
+
+    'header.title': 'La barra in alto',
+    'header.summary':
+      'La tua immagine, il documento, la sincronizzazione, la prossima lezione, il feedback e le impostazioni',
+    'header.intro':
+      'La barra in alto è sempre lì. Mostra quale Google Doc legge l’app e quando è stato sincronizzato l’ultima volta, oltre alla prossima lezione e alla videochiamata.',
+    'header.step1':
+      '<b>↻</b> accanto al nome del documento sincronizza: rilegge il documento. Premilo dopo che l’insegnante ha aggiunto una lezione.',
+    'header.step2':
+      '<b>Prossima lezione</b> mostra la data della riga più recente come <ex>prossima lezione: 22.11.2026 18:00 Roma</ex>. Un orario indicato per una città viene convertito nel tuo. Quando la data è passata, dice «non ancora confermata».',
+    'header.step3':
+      '<b>Entra nella lezione</b> compare nel widget della prossima lezione quando il documento ha un link di Google Meet o Zoom, e apre la modalità lezione: la chiamata accanto alla lezione e ai tuoi appunti.',
+    'header.step4':
+      '<b>Apri il documento</b>, <b>Copia il link per lo studente</b> e <b>Cambia documento</b> sono nelle <b>Impostazioni</b>, sotto Documento.',
+    'header.step5':
+      '<b>Feedback</b> invia un messaggio all’insegnante: un errore, un’idea o altro. Allega fino a 3 screenshot o incollane uno con Ctrl+V / ⌘V. La pagina in cui eri viene aggiunta da sola.',
+    'header.step6':
+      '<b>⚙️ Impostazioni</b> all’estrema destra: il documento, la lingua dell’app, il tema, le lingue che studi e il tuo livello. La tua immagine, scelta lì, compare all’estrema sinistra.',
+    'header.tip1':
+      'Una lezione inizia nel documento con una riga come <ex>14.10.2026 1 Lezione</ex> (oppure <ex>Leçon</ex>, <ex>Lesson</ex>, <ex>Lektion</ex>, <ex>Lección</ex>, <ex>Lição</ex>). Tutto ciò che c’è sotto, fino alla riga successiva di questo tipo, appartiene a quella lezione.',
+    'header.mock': 'la barra in alto',
+
+    'home.title': 'Home',
+    'home.summary': 'Un turno quotidiano di 10 domande miste',
+    'home.intro':
+      'Il modo più veloce per esercitarsi ogni giorno: 10 domande da tutte le tue lezioni, con le parole che sbagli che tornano più spesso.',
+    'home.step1':
+      'Rispondi a ogni domanda: scegli una traduzione, scegli la parola nella lingua che studi, scrivila o scrivi quello che senti.',
+    'home.step2':
+      'Dopo ogni risposta premi <pbtn>Avanti</pbtn>. Alla fine vedi il punteggio e <pbtn>Prossimo turno</pbtn>.',
+    'home.step3':
+      'Rispondi almeno una volta al giorno per mantenere la serie 🔥; 20 risposte completano l’obiettivo del giorno.',
+    'home.mock': 'la serie e l’obiettivo giornaliero in Home',
+
+    'lessons.title': 'Cronologia lezioni',
+    'lessons.summary': 'Parole, verbi e appunti di ogni lezione',
+    'lessons.intro':
+      'Tutte le lezioni del documento, con la più recente selezionata. Claude la legge una volta e prepara il lessico con le traduzioni, le coppie di sinonimi e contrari, e i verbi.',
+    'lessons.step1':
+      'Scegli una lezione nella lista a sinistra (ogni lezione ha un proprio link che puoi condividere).',
+    'lessons.step2':
+      'Resta nella scheda <b>Parole</b>. Tutte le parole sono spuntate; togli la spunta a quelle che non vuoi, oppure usa <b>Scegli tutte</b>, <b>Togli</b> e il filtro.',
+    'lessons.step3':
+      'Avvia un esercizio dalla fila di pulsanti: <pbtn>Quiz</pbtn> <btn>Flashcard</btn> <btn>Abbina le traduzioni</btn> <btn>Sinonimi e contrari</btn> <btn>Completa la frase</btn> <btn>Dettato</btn>',
+    'lessons.step4':
+      'Premi 🔊 per ascoltare una parola e ☆ per metterla nelle <b>Parole preferite</b>.',
+    'lessons.tip1':
+      '<added>✱</added> segna una traduzione aggiunta da Claude che non c’è negli appunti.',
+    'lessons.tip2':
+      '<b>Flashcard</b>: <key>Spazio</key> gira la carta, <key>←</key> vuol dire «ancora», <key>→</key> vuol dire «la so». L’interruttore in alto cambia la direzione.',
+    'lessons.tip3':
+      'In fondo: <b>Esporta le parole per Anki</b> salva le parole spuntate in un file (in Anki: File → Importa), e <b>Prepara di nuovo questa lezione</b> chiede a Claude di rileggere una lezione modificata.',
+    'lessons.tip4':
+      '<b>I miei appunti</b> è il tuo blocco note per la lezione, salvato mentre scrivi. <b>Originale</b> mostra la lezione esattamente com’è scritta.',
+    'lessons.mock': 'la scheda Parole di una lezione',
+
+    'verbs.title': 'Verbi',
+    'verbs.summary': 'Tabelle di coniugazione ed esercizi (scheda Verbi di una lezione)',
+    'verbs.intro':
+      'La scheda <b>Verbi</b> di una lezione di francese ha una tabella di coniugazione per ogni verbo, in sei tempi, affermativa e negativa.',
+    'verbs.step1': 'Premi un verbo per aprire la sua tabella.',
+    'verbs.step2':
+      'Scegli un tempo (présent, passé composé, imparfait, futur simple, conditionnel présent, impératif) e <b>affermativa</b> o <b>negativa</b>. 🔊 legge ogni forma.',
+    'verbs.step3':
+      'Premi <pbtn>Esercitati su questo tempo</pbtn>, completa tutte le persone, poi <pbtn>Controlla le risposte</pbtn>. Sotto le forme sbagliate compare quella giusta.',
+    'verbs.step4': '<btn>Quiz veloce</btn> chiede forme a caso di tutti i verbi che hai aperto.',
+    'verbs.tip1':
+      'Scrivi la forma con o senza il pronome: valgono sia «nous réveillons» sia «réveillons».',
+    'verbs.tip2':
+      'Maiuscole e punteggiatura non contano. Un accento mancante conta come «quasi», non come errore.',
+    'verbs.tip3':
+      'Se una tabella sembra sbagliata, <b>Coniuga di nuovo</b> (accanto al participio passato) ne chiede una nuova.',
+    'verbs.mock': 'una tabella dei verbi',
+
+    'all-lessons.title': 'Lezioni scaricate',
+    'all-lessons.summary': 'Gli stessi esercizi, su più lezioni insieme',
+    'all-lessons.intro':
+      'Tutti gli esercizi su parole e verbi, con tutte le lezioni preparate insieme.',
+    'all-lessons.step1':
+      'Lascia selezionato <b>Tutte</b> oppure tocca le etichette delle lezioni per esercitarti solo su alcune.',
+    'all-lessons.step2': 'Usa le schede <b>Parole</b> e <b>Verbi</b> come in una singola lezione.',
+    'all-lessons.mock': 'etichette delle lezioni',
+
+    'my-words.title': 'Parole preferite',
+    'my-words.summary': 'La tua lista personale di parole su cui lavorare',
+    'my-words.intro':
+      'Le parole che hai segnato con ☆ e quelle che hai sbagliato in qualsiasi esercizio. Il numero accanto a <b>Parole preferite</b> nel menu indica quante sono.',
+    'my-words.step1': 'Esercitati con gli stessi esercizi di una lezione.',
+    'my-words.step2':
+      'Una parola esce dalla lista dopo <b>3 risposte giuste di fila</b> o quando le togli la ★.',
+
+    'mistakes.title': 'Errori',
+    'mistakes.summary': 'Le parole e le forme verbali che sbagli di più',
+    'mistakes.intro':
+      'I tuoi errori più frequenti, parole e forme verbali, con quante volte hai sbagliato ognuno.',
+    'mistakes.step1':
+      'Premi <pbtn>Esercitati sui miei errori</pbtn> per un turno fatto solo di quelli.',
+
+    'stats.title': 'Statistiche',
+    'stats.summary': 'I tuoi progressi e i punti deboli',
+    'stats.intro':
+      'Quante parole hai imparato, quali lezioni, tipi di parole e tempi ti riescono più difficili, e i tuoi errori più comuni.',
+    'stats.step1': 'Guardale ogni tanto per decidere cosa ripassare.',
+
+    'photo.title': 'Analisi delle foto',
+    'photo.summary': 'Parole sottolineate, appunti a mano o un PDF del manuale',
+    'photo.intro':
+      'Tre modi per portare parole dalla carta. Scegline uno con l’interruttore in alto.',
+    'photo.step1':
+      '<b>Parole sottolineate</b>: sottolinea le parole in un libro, premi <pbtn>Scegli o scatta una foto</pbtn> e ottieni una tabella con la traduzione nel contesto, la forma del dizionario, il tempo verbale e una breve spiegazione.',
+    'photo.step2':
+      '<b>Appunti a mano</b>: fotografa fino a 4 pagine di appunti, correggi ciò che è stato letto male (le parole illeggibili sono segnate con [?]), poi premi <pbtn>Prepara la lezione</pbtn> per avere parole, verbi ed esercizi come in qualsiasi lezione.',
+    'photo.step3':
+      '<b>PDF del manuale</b>: premi <pbtn>Scegli un PDF</pbtn>, indica le pagine di un capitolo (fino a 20), poi <pbtn>Leggi queste pagine</pbtn>. Claude scrive gli appunti della lezione: parole, espressioni, grammatica ed esempi. Controllali e premi <pbtn>Prepara la lezione</pbtn>.',
+    'photo.step4':
+      '<btn>Aggiungi al Google Doc come Leçon 8</btn> aggiunge quanto letto in fondo al documento come nuova lezione (serve una configurazione una tantum sul server, vedi il README).',
+    'photo.tip1':
+      'Scatta la foto di fronte, con buona luce e con tutta la riga segnata nell’inquadratura.',
+    'photo.tip2':
+      '☆ accanto a una parola mette la sua forma del dizionario nelle Parole preferite.',
+    'photo.mock': 'il risultato di una foto con parole sottolineate',
+
+    'text.title': 'Analisi del testo',
+    'text.summary': 'Incolla un articolo: spiegazioni, una traduzione ed esercizi',
+    'text.intro':
+      'Per un testo che hai trovato tu: un articolo, un racconto, un post. Incollalo invece di fare uno screenshot e lavoraci qui.',
+    'text.step1':
+      'Incolla il testo e premi <pbtn>Leggi questo testo</pbtn>. Viene salvato su questo dispositivo, con tutto quello che ci fai.',
+    'text.step2':
+      'Clicca su una parola, o selezionane alcune con il mouse o il dito, poi premi <pbtn>Spiega</pbtn>: ottieni la traduzione in quella frase, la forma del dizionario, il tempo verbale e una breve spiegazione. ☆ mette la parola nelle Parole preferite.',
+    'text.step3':
+      '<btn>Traduci il testo</btn> mostra una traduzione in russo sotto ogni paragrafo; lo stesso pulsante la nasconde di nuovo.',
+    'text.step4':
+      '<pbtn>Crea domande ed esercizi</pbtn>: Claude sceglie le parole che vale la pena imparare (con Quiz, Flashcard e gli altri esercizi di sempre), scrive domande sul testo e un esercizio vero o falso.',
+    'text.tip1': 'Le parole che hai già chiesto sono sottolineate a puntini nel testo.',
+    'text.tip2':
+      'Le parole sono scelte per il tuo livello in quella lingua, impostato nelle Impostazioni.',
+    'discuss.title': 'Una domanda di discussione',
+    'discuss.summary': 'Una domanda di discussione per iniziare la lezione',
+    'discuss.intro':
+      'Una domanda di cui parlare all’inizio della lezione, scritta per il tuo livello e la grammatica che stai esercitando.',
+    'discuss.step1': 'Scegli la lingua e il tuo <b>livello</b> (A1–C2).',
+    'discuss.step2':
+      'Scegli un <b>tema di lessico</b>: dalla lista o dalle tue lezioni, oppure scrivi un tuo tema in <b>Oppure un tuo tema</b>: una serie, un hobby, parole nuove di slang. Scegli un <b>tema di grammatica</b> o lascia <b>Qualsiasi</b>.',
+    'discuss.step3':
+      'Premi <pbtn>Scrivi una domanda</pbtn>. Ricevi la domanda (🔊 la legge, <b>Mostra la traduzione</b> la mostra in russo), domande per continuare, inizi di frase che usano la grammatica e parole utili. Con un tema di grammatica, <b>📘 La regola</b> apre una spiegazione con esempi.',
+    'discuss.step4':
+      '<pbtn>Un’altra domanda</pbtn> ne scrive una nuova con le stesse impostazioni.',
+    'discuss.tip1': '☆ accanto a una parola utile la mette nelle Parole preferite.',
+
+    'settings.title': 'Impostazioni',
+    'settings.summary': 'Lingua, tema, cosa studi, il tuo livello e il menu',
+    'settings.intro':
+      'Si aprono con <b>⚙️ Impostazioni</b> a destra della barra in alto. Tutto si salva subito.',
+    'settings.step1':
+      '<b>Profilo</b>: aggiungi un’immagine e il tuo nome; il nome si usa nelle chiamate Zoom e nei messaggi all’insegnante.',
+    'settings.step2':
+      '<b>Interfaccia</b>: la lingua dell’app (inglese, russo, francese, tedesco, spagnolo, portoghese, italiano) e il tema: come il sistema, chiaro o scuro.',
+    'settings.step3':
+      '<b>Apprendimento</b>: spunta le lingue che studi e scegli il tuo livello in ognuna. Esercizi, Parole preferite, Errori, Statistiche e le domande di discussione mostrano allora solo quelle lingue, e il livello è quello predefinito per le domande di discussione e per Completa la frase.',
+    'settings.step4':
+      'Lì trovi anche: l’obiettivo giornaliero per la serie 🔥, la velocità del 🔊 e quali sezioni mostra il menu.',
+    'settings.tip1':
+      'Le traduzioni delle parole restano in russo, qualunque sia la lingua dell’interfaccia.',
+    'call.title': 'Modalità lezione',
+    'call.summary': 'La chiamata, gli appunti e le parole della lezione in un’unica schermata',
+    'call.intro':
+      'Si apre con <b>Entra nella lezione</b> nel widget della prossima lezione, in alto, quando il documento ha un link di Google Meet o Zoom. Pensata per la lezione stessa.',
+    'call.step1':
+      '<b>Google Meet</b>: premi <pbtn>Apri la chiamata in una piccola finestra</pbtn>. Meet non può funzionare dentro altri siti, quindi si apre in una piccola finestra a lato dello schermo.',
+    'call.step2':
+      '<b>Zoom</b>: inserisci il tuo nome e premi <pbtn>Partecipa qui</pbtn>. La chiamata funziona dentro la pagina, in una finestra che puoi spostare e ridimensionare (serve configurare Zoom una volta sul server, vedi il README).',
+    'call.step3':
+      'Scrivi negli <b>Appunti della lezione</b> durante la lezione: parole nuove come «parola — перевод», errori, compiti. <btn>⏱ Ora</btn> segna quando è venuto fuori qualcosa.',
+    'call.step4':
+      'Dopo la lezione, <btn>Aggiungi al Google Doc come Leçon 8</btn> mette gli appunti nel documento come nuova lezione, pronta per gli esercizi.',
+    'call.step5':
+      '<pbtn>Apri la lavagna</pbtn> sotto gli appunti: scrivi, disegna e incolla immagini. Con la condivisione in diretta configurata, insegnante e studente disegnano insieme sulla stessa lavagna e vedono il puntatore dell’altro; altrimenti condividi lo schermo nella chiamata. <b>Schermo intero</b> e <b>Salva come immagine</b> sono sopra.',
+    'call.tip3':
+      '<btn>Affiancata (metà schermo)</btn> apre Meet sulla metà destra dello schermo, accanto all’app.',
+    'call.tip1':
+      'Gli appunti si salvano su questo dispositivo per ogni giorno, quindi chiudere la pagina non fa perdere nulla.',
+    'call.tip2':
+      'In Chrome, Meet può restare sopra tutte le finestre: in Meet apri ⋮ e scegli picture-in-picture.',
+    'document.title': 'Documento',
+    'document.summary': 'Modifica il Google Doc senza uscire dall’app',
+    'document.intro': 'L’editor di Google Docs dentro l’app, per scrivere le lezioni.',
+    'document.step1': 'Modifica come sempre: le modifiche si salvano in Google Docs.',
+    'document.step2':
+      'Quando passi a un’altra sezione, l’app sincronizza e le lezioni si aggiornano.',
+    'document.tip1':
+      'Se l’editor resta vuoto o chiede di accedere (spesso in Safari), usa il link sopra per aprire il documento in una nuova scheda.',
+    'news.title': 'Novità',
+    'news.summary': 'Cosa è cambiato nell’app, per data',
+    'news.intro': 'Tutte le modifiche all’app, dalla più recente.',
+    'news.step1':
+      'Ogni giorno indica cosa è <b>Novità</b>, cosa è <b>Migliorato</b> e cosa è <b>Corretto</b>. Un punto accanto a <b>Novità</b> nel menu vuol dire che c’è qualcosa che non hai ancora visto.',
   },
 });

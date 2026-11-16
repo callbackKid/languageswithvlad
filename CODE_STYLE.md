@@ -68,7 +68,7 @@ Prettier decides: 100 columns, single quotes, semicolons, trailing commas where 
 
 ## Texts
 
-- No user-visible text in components. Every text is a key in `src/i18n/messages/<area>.ts` with all four languages; a missing translation is a type error 🤖.
+- No user-visible text in components. Every text is a key in `src/i18n/messages/<area>.ts` with all seven interface languages; a missing translation is a type error 🤖.
 - Variables are `{placeholders}`; counts use plural forms (`one`, `few`, `many`, `other`), never `count === 1 ? … : …` in code.
 - Markup inside a sentence uses tags (`<b>…</b>`, `<link>…</link>`) and `rich()`, so each language keeps its own word order. Don't glue a sentence together from pieces.
 - Quotes follow the language: `“ ”` in English, `« »` in Russian and French, `„ “` in German. Apostrophes are `’`.
@@ -119,6 +119,6 @@ Prettier decides: 100 columns, single quotes, semicolons, trailing commas where 
 1. Read the diff top to bottom.
 2. Click through the changed page and the pages next to it, in both themes and at phone width.
 3. Type bad input into every changed form field.
-4. New text: all four languages filled in, and it reads naturally in each.
+4. New text: all seven interface languages filled in, and it reads naturally in each.
 5. New feature: a line in the README, a guide or step in the Tutorial, and its item removed from TODO.md.
 6. A change students will notice: an entry for today in `src/lib/news.ts`, so it shows on the News page.

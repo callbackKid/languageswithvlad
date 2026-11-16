@@ -25,6 +25,9 @@ const SAMPLES: Record<Language, string> = {
   fr: 'Bonjour, comment ça va ?',
   en: 'Hello, how are you today?',
   de: 'Hallo, wie geht es dir?',
+  es: 'Hola, ¿qué tal?',
+  pt: 'Olá, como estás?',
+  it: 'Ciao, come stai?',
 };
 
 /** A picture of the student: the uploaded one, or the first letter of their name. */

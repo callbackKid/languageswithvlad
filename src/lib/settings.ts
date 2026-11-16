@@ -36,7 +36,7 @@ export interface Settings {
 
 const DEFAULTS: Settings = {
   studying: [...LANGUAGES],
-  levels: { fr: 'A2', en: 'A2', de: 'A2' },
+  levels: { fr: 'A2', en: 'A2', de: 'A2', es: 'A2', pt: 'A2', it: 'A2' },
   theme: 'system',
   name: '',
   avatar: '',

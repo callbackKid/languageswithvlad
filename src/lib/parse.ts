@@ -7,6 +7,7 @@ import type {
   GapItem,
   Language,
   Lesson,
+  LessonWord,
   Pair,
   PhotoItem,
   TextStudy,
@@ -38,11 +39,21 @@ export function clean(text: string): string {
     .replace(/\n{3,}/g, '\n\n');
 }
 
-/** Every line like "14.10.2026 1 Leçon", "14.10.2026 1 Lesson" or "14.10.2026 1 Lektion" starts a lesson. */
+/** The heading words a lesson may start with, and how each is shown. */
+const LESSON_WORDS: [RegExp, LessonWord][] = [
+  [/^lesson$/i, 'Lesson'],
+  [/^lektion$/i, 'Lektion'],
+  [/^(?:lecci[óo]n|clase)$/i, 'Lección'],
+  [/^(?:li[çc][ãa]o|aula)$/i, 'Lição'],
+  [/^lezione$/i, 'Lezione'],
+];
+
+/** Every line like "14.10.2026 1 Leçon" (or Lesson, Lektion, Lección, Clase, Lição, Aula, Lezione)
+    starts a lesson. */
 export function splitLessons(text: string): Lesson[] {
   const cleaned = clean(text);
   const headingPattern =
-    /^[ \t]*(\d{1,2})\.(\d{1,2})\.(\d{4})[ \t]+(\d+)[ \t]*(le[çc]on|lesson|lektion)\b[^\n]*$/gim;
+    /^[ \t]*(\d{1,2})\.(\d{1,2})\.(\d{4})[ \t]+(\d+)[ \t]*(le[çc]on|lesson|lektion|lecci[óo]n|clase|li[çc][ãa]o|aula|lezione)(?![\p{L}])[^\n]*$/gimu;
   const marks: {
     start: number;
     end: number;
@@ -54,7 +65,7 @@ export function splitLessons(text: string): Lesson[] {
   }[] = [];
   let match: RegExpExecArray | null;
   while ((match = headingPattern.exec(cleaned))) {
-    const label = (match[5] ?? '').toLowerCase();
+    const label = match[5] ?? '';
     marks.push({
       start: match.index,
       end: match.index + match[0].length,
@@ -62,7 +73,7 @@ export function splitLessons(text: string): Lesson[] {
       month: Number(match[2]),
       year: Number(match[3]),
       number: Number(match[4]),
-      word: label === 'lesson' ? 'Lesson' : label === 'lektion' ? 'Lektion' : 'Leçon',
+      word: LESSON_WORDS.find(([pattern]) => pattern.test(label))?.[1] ?? 'Leçon',
     });
   }
   const pad = (value: number) => String(value).padStart(2, '0');
