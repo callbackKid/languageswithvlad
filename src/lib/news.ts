@@ -22,6 +22,18 @@ export const NEWS: NewsDay[] = [
       {
         kind: 'new',
         text: {
+          en: 'Every lesson now has Grammar (the rules explained, with practice sentences on each), Homework (a list to tick off) and Book exercises (imported from photos or a PDF into the lesson in the document). My notes also shows the board and lesson-mode notes from that day.',
+          ru: 'В каждом уроке теперь есть Грамматика (правила с объяснением и тренировкой на каждое), Домашнее задание (список с галочками) и Упражнения из учебника (с фото или PDF, добавляются в урок в документе). В «Моих заметках» видны доска и заметки из режима урока за тот день.',
+          fr: 'Chaque leçon a maintenant Grammaire (les règles expliquées, avec des phrases d’entraînement sur chacune), Devoirs (une liste à cocher) et Exercices du manuel (importés depuis des photos ou un PDF dans la leçon du document). Mes notes affiche aussi le tableau et les notes du mode cours de ce jour-là.',
+          de: 'Jede Lektion hat jetzt Grammatik (die Regeln erklärt, mit Übungssätzen zu jeder), Hausaufgaben (eine Liste zum Abhaken) und Übungen aus dem Lehrbuch (aus Fotos oder einem PDF in die Lektion im Dokument importiert). Meine Notizen zeigt auch die Tafel und die Notizen aus dem Unterrichtsmodus von diesem Tag.',
+          es: 'Cada lección tiene ahora Gramática (las reglas explicadas, con frases para practicar cada una), Deberes (una lista para marcar) y Ejercicios del libro (importados desde fotos o un PDF a la lección del documento). Mis notas muestra también la pizarra y las notas del modo clase de ese día.',
+          pt: 'Cada lição tem agora Gramática (as regras explicadas, com frases para praticar cada uma), Trabalhos de casa (uma lista para marcar) e Exercícios do manual (importados a partir de fotos ou de um PDF para a lição no documento). As minhas notas mostra também o quadro e as notas do modo aula desse dia.',
+          it: 'Ogni lezione ha ora Grammatica (le regole spiegate, con frasi per esercitarsi su ognuna), Compiti (una lista da spuntare) ed Esercizi dal libro (importati da foto o da un PDF nella lezione del documento). I miei appunti mostra anche la lavagna e gli appunti della modalità lezione di quel giorno.',
+        },
+      },
+      {
+        kind: 'new',
+        text: {
           en: 'Spanish, Portuguese and Italian: as languages to learn, and as interface languages. Lessons can start with Lección, Clase, Lição, Aula or Lezione, and “próxima clase”, “próxima aula” or “prossima lezione” sets the next lesson.',
           ru: 'Испанский, португальский и итальянский: их можно учить, и на них можно переключить интерфейс. Уроки в документе могут начинаться с Lección, Clase, Lição, Aula или Lezione, а следующий урок задаётся строкой «próxima clase», «próxima aula» или «prossima lezione».',
           fr: 'L’espagnol, le portugais et l’italien : comme langues à apprendre et comme langues de l’interface. Les leçons peuvent commencer par Lección, Clase, Lição, Aula ou Lezione, et « próxima clase », « próxima aula » ou « prossima lezione » fixe le prochain cours.',

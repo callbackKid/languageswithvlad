@@ -78,6 +78,27 @@ export interface GapItem {
   word: string;
   ru: string;
   choices: string[];
+  /** why the answer is right, for grammar practice; "" when not given */
+  why: string;
+}
+
+/** A homework task as the teacher wrote it, with what it asks in the interface language. */
+export interface HomeworkTask {
+  task: string;
+  meaning: string;
+}
+/** An exercise from the student's book, copied into the lesson. */
+export interface BookExercise {
+  title: string;
+  instructions: string;
+  items: string[];
+}
+/** What a lesson holds besides its words: read by Claude once, in the interface language. */
+export interface LessonExtras {
+  language: Language;
+  grammar: GrammarRule[];
+  homework: HomeworkTask[];
+  book: BookExercise[];
 }
 
 /** A word or phrase the student marked: underlined on a photo of a book page, or picked in a pasted text. */

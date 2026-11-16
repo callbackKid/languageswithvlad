@@ -1,4 +1,5 @@
 import { HttpError } from './http.js';
+import { findLesson, type LessonTarget } from './lessons.js';
 
 /* Reads a Notion page as plain text in the same shape as the Google Doc export, so the app finds
    lessons in it the same way ("12.11.2026 1 Leçon" and the lines under it), and appends new
@@ -236,6 +237,69 @@ const paragraph = (text: string, type = 'paragraph') => ({
 });
 
 /** Adds a lesson: under the page's last block, or as a new row when the link is a database of lessons. */
+/** The one line a top-level block shows: a sub-page's title, or its text. */
+function blockLine(block: Block): string {
+  if (block.type === 'child_page') return (block.child_page as { title?: string }).title ?? '';
+  const content = (block[block.type] ?? {}) as { rich_text?: RichText[] };
+  return plain(content.rich_text);
+}
+
+/** Adds the lines at the end of one lesson: inside its sub-page or database row, or after its
+    last block on the page. False when the lesson isn't found at the page's top level. */
+export async function insertIntoNotionLesson(
+  id: string,
+  target: LessonTarget,
+  text: string
+): Promise<boolean> {
+  const blocks = text
+    .trim()
+    .split('\n')
+    .map((line) => paragraph(line.trimEnd()));
+  const add = async (parentId: string, after?: string) => {
+    // Notion adds at most 100 blocks per request; later chunks follow the ones just added
+    let previous = after;
+    for (let start = 0; start < blocks.length; start += 100) {
+      const added: List<Block> = await notion(`/blocks/${parentId}/children`, {
+        method: 'PATCH',
+        body: {
+          children: blocks.slice(start, start + 100),
+          ...(previous ? { after: previous } : {}),
+        },
+      });
+      if (previous) previous = added.results[added.results.length - 1]?.id ?? previous;
+    }
+  };
+
+  let topLevel: Block[];
+  try {
+    topLevel = await children(id);
+  } catch (error) {
+    if (!(error instanceof NotionError) || error.message !== 'notion_validation') throw error;
+    // a database: every row is a lesson
+    const rows: List<Page> = await notion(`/databases/${id}/query`, {
+      method: 'POST',
+      body: { page_size: 100, sorts: [{ timestamp: 'created_time', direction: 'ascending' }] },
+    });
+    const titles = rows.results.map(
+      (row, position) => rowTitle(row, position).split('\n')[0] ?? ''
+    );
+    const lesson = findLesson(titles, target);
+    const row = lesson && rows.results[lesson.start];
+    if (!row) return false;
+    await add(row.id);
+    return true;
+  }
+  const lesson = findLesson(topLevel.map(blockLine), target);
+  const heading = lesson && topLevel[lesson.start];
+  if (!lesson || !heading) return false;
+  if (heading.type === 'child_page') await add(heading.id);
+  else {
+    const last = lesson.next === null ? undefined : topLevel[lesson.next - 1]?.id;
+    await add(id, last);
+  }
+  return true;
+}
+
 export async function appendToNotion(id: string, text: string): Promise<void> {
   const lines = text.split('\n').map((line) => line.trimEnd());
   const headingIndex = lines.findIndex((line) => line.trim());

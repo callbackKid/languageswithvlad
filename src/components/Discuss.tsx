@@ -8,7 +8,8 @@ import type { Bank } from '../lib/bank';
 import { normalizeDiscussion } from '../lib/parse';
 import { LEVELS, useSettings } from '../lib/settings';
 import { load, save } from '../lib/storage';
-import type { Discussion, GrammarRule, Language } from '../lib/types';
+import type { Discussion, Language } from '../lib/types';
+import GrammarRuleBox from './GrammarRuleBox';
 import PageHead from './PageHead';
 import Speak from './Speak';
 import Star from './Star';
@@ -336,60 +337,6 @@ function TopicSelect({
   );
 }
 
-/** The chosen grammar point explained, folded away until the student opens it. */
-function GrammarRuleBox({ rule, language }: { rule: GrammarRule; language: Language }) {
-  const { t, language: uiLanguage } = useTranslation(talk);
-  return (
-    <details className="grammar-rule">
-      <summary>📘 {t('ruleSummary', { title: rule.title })}</summary>
-      <div className="grammar-rule-body" lang={uiLanguage}>
-        {rule.summary && <p>{rule.summary}</p>}
-        {rule.formation.length > 0 && (
-          <>
-            <h4>{t('ruleFormation')}</h4>
-            <ul>
-              {rule.formation.map((line) => (
-                <li key={line}>{line}</li>
-              ))}
-            </ul>
-          </>
-        )}
-        {rule.usage.length > 0 && (
-          <>
-            <h4>{t('ruleUsage')}</h4>
-            <ul>
-              {rule.usage.map((line) => (
-                <li key={line}>{line}</li>
-              ))}
-            </ul>
-          </>
-        )}
-        {rule.examples.length > 0 && (
-          <>
-            <h4>{t('ruleExamples')}</h4>
-            <ul className="grammar-examples">
-              {rule.examples.map((example) => (
-                <li key={example.text}>
-                  <span lang={language}>{example.text}</span>{' '}
-                  <Speak text={example.text} language={language} />
-                  {example.translation && (
-                    <span className="translation"> — {example.translation}</span>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </>
-        )}
-        {rule.pitfall && (
-          <p className="grammar-pitfall">
-            <b>⚠️ {t('rulePitfall')}:</b> {rule.pitfall}
-          </p>
-        )}
-      </div>
-    </details>
-  );
-}
-
 /** A discussion question for the start of a lesson: chosen level, vocabulary topic and grammar point. */
 export default function Discuss({ bank, ai }: { bank: Bank; ai: boolean }) {
   const { t, language: uiLanguage } = useTranslation(talk);
@@ -627,7 +574,11 @@ export default function Discuss({ bank, ai }: { bank: Bank; ai: boolean }) {
               </div>
 
               {discussion.grammarRule && (
-                <GrammarRuleBox rule={discussion.grammarRule} language={language} />
+                <GrammarRuleBox
+                  rule={discussion.grammarRule}
+                  language={language}
+                  label={`📘 ${t('ruleSummary', { title: discussion.grammarRule.title })}`}
+                />
               )}
 
               {discussion.vocabulary.length > 0 && (

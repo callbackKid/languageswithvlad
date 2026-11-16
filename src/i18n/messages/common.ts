@@ -75,6 +75,7 @@ export const common = defineMessages({
     addFailed: 'Couldn’t add to the document. Try again.',
     // the fact shown while Claude works
     nextFact: 'Next fact →',
+    lessonNotFound: 'This lesson wasn’t found in the document. Sync and try again.',
   },
   ru: {
     tryAgain: 'Попробовать ещё раз',
@@ -153,6 +154,7 @@ export const common = defineMessages({
     addedAs: 'Добавлено в документ как Leçon {number}.',
     addFailed: 'Не удалось добавить в документ. Попробуйте ещё раз.',
     nextFact: 'Следующий факт →',
+    lessonNotFound: 'Этот урок не найден в документе. Синхронизируйте и попробуйте ещё раз.',
   },
   fr: {
     tryAgain: 'Réessayer',
@@ -226,6 +228,7 @@ export const common = defineMessages({
     addedAs: 'Ajouté au document comme Leçon {number}.',
     addFailed: 'Impossible d’ajouter au document. Réessayez.',
     nextFact: 'Fait suivant →',
+    lessonNotFound: 'Cette leçon est introuvable dans le document. Synchronisez et réessayez.',
   },
   de: {
     tryAgain: 'Nochmal versuchen',
@@ -299,6 +302,8 @@ export const common = defineMessages({
     addedAs: 'Als Leçon {number} zum Dokument hinzugefügt.',
     addFailed: 'Konnte nicht zum Dokument hinzugefügt werden. Versuch es nochmal.',
     nextFact: 'Nächster Fakt →',
+    lessonNotFound:
+      'Diese Lektion wurde im Dokument nicht gefunden. Synchronisiere und versuch es noch einmal.',
   },
   es: {
     tryAgain: 'Intentar de nuevo',
@@ -372,6 +377,7 @@ export const common = defineMessages({
     addedAs: 'Añadido al documento como Leçon {number}.',
     addFailed: 'No se pudo añadir al documento. Inténtalo de nuevo.',
     nextFact: 'Siguiente dato →',
+    lessonNotFound: 'No se encontró esta lección en el documento. Sincroniza e inténtalo de nuevo.',
   },
   pt: {
     tryAgain: 'Tentar de novo',
@@ -445,6 +451,7 @@ export const common = defineMessages({
     addedAs: 'Acrescentado ao documento como Leçon {number}.',
     addFailed: 'Não foi possível acrescentar ao documento. Tente de novo.',
     nextFact: 'Curiosidade seguinte →',
+    lessonNotFound: 'Esta lição não foi encontrada no documento. Sincronize e tente de novo.',
   },
   it: {
     tryAgain: 'Riprova',
@@ -517,6 +524,7 @@ export const common = defineMessages({
     addedAs: 'Aggiunto al documento come Leçon {number}.',
     addFailed: 'Impossibile aggiungere al documento. Riprova.',
     nextFact: 'Curiosità successiva →',
+    lessonNotFound: 'Questa lezione non è stata trovata nel documento. Sincronizza e riprova.',
   },
 });
 

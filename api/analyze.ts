@@ -1,27 +1,56 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 import { claudeJSON, MODEL } from './_lib/claude.js';
-import { checkAccess, fail, onlyPost } from './_lib/http.js';
-import { analysisPrompt } from './_lib/prompts.js';
+import { asLevel, checkAccess, fail, onlyPost, text } from './_lib/http.js';
+import {
+  analysisPrompt,
+  asExplainLanguage,
+  asLanguage,
+  grammarPracticePrompt,
+  lessonExtrasPrompt,
+} from './_lib/prompts.js';
 
 /** Longest lesson read in one go; a longer one is refused instead of being cut silently. */
 const MAX_LESSON_LENGTH = 20_000;
+const PRACTICE_SENTENCES = 8;
 
-/** Prepares a lesson: its words with translations, synonym and antonym pairs, and verbs. */
+/* Everything Claude prepares from one lesson, in one function (Vercel's free plan allows 12):
+   - "words" (the default): its words with translations, synonym and antonym pairs, and verbs;
+   - "extras": its grammar points, homework and exercises from the book;
+   - "practice": gap sentences on one of its grammar points. */
 export default async function handler(request: VercelRequest, response: VercelResponse) {
   if (!onlyPost(request, response) || !checkAccess(request, response)) return;
-  const body = typeof request.body?.body === 'string' ? request.body.body : '';
-  if (!body.trim()) return response.status(400).json({ error: 'Empty lesson.' });
-  if (body.length > MAX_LESSON_LENGTH)
-    return response.status(413).json({ error: 'This lesson is too long to analyze in one go.' });
+  const action: unknown = request.body?.action ?? 'words';
   try {
+    if (action === 'practice') {
+      const title = text(request.body?.title, 200);
+      if (!title) return response.status(400).json({ error: 'Which grammar point?' });
+      const prompt = grammarPracticePrompt({
+        language: asLanguage(request.body?.language),
+        level: asLevel(request.body?.level) ?? 'A2',
+        title,
+        summary: text(request.body?.summary, 600),
+        count: PRACTICE_SENTENCES,
+        explainIn: asExplainLanguage(request.body?.explainIn),
+      });
+      return response.status(200).json(await claudeJSON(prompt, { model: MODEL, maxTokens: 4000 }));
+    }
+    if (action !== 'words' && action !== 'extras')
+      return response.status(400).json({ error: 'Unknown action.' });
+
+    const body = typeof request.body?.body === 'string' ? request.body.body : '';
+    if (!body.trim()) return response.status(400).json({ error: 'Empty lesson.' });
+    if (body.length > MAX_LESSON_LENGTH)
+      return response.status(413).json({ error: 'This lesson is too long to analyze in one go.' });
     const fresh = request.body?.fresh === true;
-    response
+    const prompt =
+      action === 'extras'
+        ? lessonExtrasPrompt(body, asExplainLanguage(request.body?.explainIn))
+        : analysisPrompt(body);
+    return response
       .status(200)
-      .json(
-        await claudeJSON(analysisPrompt(body), { model: MODEL, maxTokens: 16000, cache: !fresh })
-      );
+      .json(await claudeJSON(prompt, { model: MODEL, maxTokens: 16000, cache: !fresh }));
   } catch (error) {
-    fail(response, error);
+    return fail(response, error);
   }
 }

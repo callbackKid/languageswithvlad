@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { type ReactNode, useEffect, useRef, useState } from 'react';
 
 import { translator, useTranslation } from '../i18n/core';
 import { common } from '../i18n/messages/common';
@@ -7,11 +7,12 @@ import { api, ApiError } from '../lib/api';
 import { normalizeGaps } from '../lib/parse';
 import { recordWord } from '../lib/progress';
 import { getSettings } from '../lib/settings';
-import type { GapItem, Word } from '../lib/types';
+import type { GapItem, Language, Word } from '../lib/types';
 import { shuffle } from '../lib/util';
 import ExerciseHead from './ExerciseHead';
 import WaitingFact from './WaitingFact';
 
+/** Fill the gap with the lesson's words: sentences Claude writes around them. */
 export default function GapFill({
   words,
   onClose,
@@ -22,26 +23,72 @@ export default function GapFill({
   onRestart: () => void;
 }) {
   const { t, rich } = useTranslation(exercises);
-  const commonText = useTranslation(common);
   const language = words[0]?.language ?? 'fr';
+  // Asked for once, with the words the exercise started with: the parent may hand over a new
+  // list while it runs (another lesson finishes preparing), and that must not restart it or
+  // pay for a second set of sentences. A new round remounts the exercise.
+  const startingWords = useRef(words).current;
+  return (
+    <GapRound
+      title={t('fillGap')}
+      language={language}
+      waiting={t('writingSentences')}
+      load={() => {
+        const sample = shuffle(startingWords)
+          .slice(0, 24)
+          .map((word) => ({ fr: word.fr, ru: word.ru }));
+        return api.gaps(sample, language, getSettings().levels[language]);
+      }}
+      onAnswer={(item, right) => {
+        const word = startingWords.find((candidate) => candidate.fr === item.word);
+        if (word) recordWord(word, right);
+      }}
+      explain={(item) =>
+        item.word &&
+        rich('fromWord', { i: (chunk) => <i lang={language}>{chunk}</i> }, { word: item.word })
+      }
+      onClose={onClose}
+      onRestart={onRestart}
+    />
+  );
+}
+
+/** A round of gap sentences: pick the right answer for each, then see the score. The
+    sentences are loaded once, when the round starts; a new round remounts it. */
+export function GapRound({
+  title,
+  language,
+  waiting,
+  load,
+  onAnswer,
+  explain,
+  onClose,
+  onRestart,
+}: {
+  title: string;
+  language: Language;
+  /** shown while the sentences are being written */
+  waiting: string;
+  load: () => Promise<unknown>;
+  onAnswer?: (item: GapItem, right: boolean) => void;
+  /** said after the answer, next to right or wrong */
+  explain?: (item: GapItem) => ReactNode;
+  onClose: () => void;
+  onRestart: () => void;
+}) {
+  const { t } = useTranslation(exercises);
+  const commonText = useTranslation(common);
   const [items, setItems] = useState<GapItem[] | null>(null);
   const [error, setError] = useState('');
   const [index, setIndex] = useState(0);
   const [picked, setPicked] = useState<string | null>(null);
   const [showRu, setShowRu] = useState(false);
   const [score, setScore] = useState(0);
+  const loadOnce = useRef(load).current;
 
-  // Asked for once, with the words the exercise started with: the parent may hand over a new
-  // list while it runs (another lesson finishes preparing), and that must not restart it or
-  // pay for a second set of sentences. A new round remounts the exercise.
-  const startingWords = useRef(words).current;
   useEffect(() => {
     let alive = true;
-    const sample = shuffle(startingWords)
-      .slice(0, 24)
-      .map((word) => ({ fr: word.fr, ru: word.ru }));
-    api
-      .gaps(sample, language, getSettings().levels[language])
+    loadOnce()
       .then((response) => {
         if (alive) setItems(normalizeGaps(response));
       })
@@ -55,12 +102,12 @@ export default function GapFill({
     return () => {
       alive = false;
     };
-  }, [startingWords, language]);
+  }, [loadOnce]);
 
   if (error)
     return (
       <div className="ex">
-        <ExerciseHead title={t('fillGap')} onClose={onClose} />
+        <ExerciseHead title={title} onClose={onClose} />
         <div className="note err">
           <p>{error}</p>
           <button type="button" className="btn" onClick={onRestart}>
@@ -72,8 +119,8 @@ export default function GapFill({
   if (!items)
     return (
       <div className="ex">
-        <ExerciseHead title={t('fillGap')} onClose={onClose} />
-        <WaitingFact language={language}>{t('writingSentences')}</WaitingFact>
+        <ExerciseHead title={title} onClose={onClose} />
+        <WaitingFact language={language}>{waiting}</WaitingFact>
       </div>
     );
   const item = items[index];
@@ -81,7 +128,7 @@ export default function GapFill({
   if (!item)
     return (
       <div className="ex">
-        <ExerciseHead title={t('fillGap')} onClose={onClose} />
+        <ExerciseHead title={title} onClose={onClose} />
         <p className="score">{commonText.t('scoreLine', { score, total: items.length })}</p>
         <div className="row-actions">
           <button type="button" className="btn primary" onClick={onRestart}>
@@ -94,7 +141,7 @@ export default function GapFill({
   const right = picked === item.answer;
   return (
     <div className="ex">
-      <ExerciseHead title={t('fillGap')} onClose={onClose}>
+      <ExerciseHead title={title} onClose={onClose}>
         <span className="progress">
           {index + 1} / {items.length}
         </span>
@@ -102,7 +149,7 @@ export default function GapFill({
       <p className="sentence" lang={language}>
         {item.before}{' '}
         <span className={'gap' + (picked == null ? '' : right ? ' ok' : ' bad')}>
-          {picked == null ? '\u00a0' : item.answer}
+          {picked == null ? ' ' : item.answer}
         </span>{' '}
         {item.after}
       </p>
@@ -131,8 +178,7 @@ export default function GapFill({
               onClick={() => {
                 setPicked(choice);
                 if (choice === item.answer) setScore((previous) => previous + 1);
-                const word = words.find((candidate) => candidate.fr === item.word);
-                if (word) recordWord(word, choice === item.answer);
+                onAnswer?.(item, choice === item.answer);
               }}
             >
               {choice}
@@ -144,13 +190,9 @@ export default function GapFill({
         <>
           <p className={'feedback ' + (right ? 'ok' : 'bad')}>
             {right ? commonText.t('right') : t('gapAnswer', { answer: item.answer })}
-            {item.word &&
-              rich(
-                'fromWord',
-                { i: (chunk) => <i lang={language}>{chunk}</i> },
-                { word: item.word }
-              )}
+            {explain?.(item)}
           </p>
+          {item.why && <p className="hint gap-why">{item.why}</p>}
           <div className="row-actions">
             <button
               type="button"

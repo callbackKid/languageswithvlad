@@ -78,6 +78,8 @@ export const tutorial = defineMessages({
       'At the bottom: <b>Export words for Anki</b> saves the ticked words as a file (in Anki: File → Import), and <b>Prepare this lesson again</b> asks Claude to re-read an edited lesson.',
     'lessons.tip4':
       '<b>My notes</b> is your notepad for the lesson, saved as you type. <b>Original</b> shows the lesson exactly as written.',
+    'lessons.tip5':
+      '<b>Grammar</b> explains every grammar point of the lesson, with <pbtn>Practise this rule</pbtn> for sentences on it. <b>Homework</b> lists what to do; tick tasks off as you finish. <b>Book exercises</b> shows exercises from the book, and imports new ones from photos or a PDF into the lesson in the document. Under <b>My notes</b> you find the board and the lesson-mode notes from that day.',
     'lessons.mock': 'the Words tab of a lesson',
 
     'verbs.title': 'Verbs',
@@ -296,6 +298,8 @@ export const tutorial = defineMessages({
       'Внизу: <b>Экспорт слов в Anki</b> сохраняет отмеченные слова в файл (в Anki: Файл → Импорт), а <b>Подготовить урок заново</b> просит Claude перечитать изменённый урок.',
     'lessons.tip4':
       '<b>Мои заметки</b> — ваш блокнот к уроку, сохраняется по мере набора. <b>Оригинал</b> показывает урок так, как он записан.',
+    'lessons.tip5':
+      '<b>Грамматика</b> объясняет каждую тему урока, а <pbtn>Потренировать это правило</pbtn> даёт предложения на неё. <b>Домашнее задание</b> — список того, что нужно сделать; отмечайте выполненное. <b>Упражнения из учебника</b> показывает упражнения из книги и добавляет новые с фото или PDF в урок в документе. В <b>Моих заметках</b> — доска и заметки из режима урока за тот день.',
     'lessons.mock': 'вкладка «Слова» в уроке',
 
     'verbs.title': 'Глаголы',
@@ -512,6 +516,8 @@ export const tutorial = defineMessages({
       'En bas : <b>Exporter les mots pour Anki</b> enregistre les mots cochés dans un fichier (dans Anki : Fichier → Importer), et <b>Préparer de nouveau cette leçon</b> demande à Claude de relire une leçon modifiée.',
     'lessons.tip4':
       '<b>Mes notes</b> est votre bloc-notes pour la leçon, enregistré pendant la saisie. <b>Original</b> montre la leçon telle qu’elle est écrite.',
+    'lessons.tip5':
+      '<b>Grammaire</b> explique chaque point de grammaire de la leçon, avec <pbtn>S’entraîner sur cette règle</pbtn> pour des phrases dessus. <b>Devoirs</b> liste ce qu’il faut faire ; cochez au fur et à mesure. <b>Exercices du manuel</b> affiche les exercices du livre et en importe de nouveaux depuis des photos ou un PDF dans la leçon du document. Sous <b>Mes notes</b>, vous trouvez le tableau et les notes du mode cours de ce jour-là.',
     'lessons.mock': 'l’onglet Mots d’une leçon',
 
     'verbs.title': 'Verbes',
@@ -737,6 +743,8 @@ export const tutorial = defineMessages({
       'Unten: <b>Wörter für Anki exportieren</b> speichert die angehakten Wörter als Datei (in Anki: Datei → Importieren), und <b>Lektion neu vorbereiten</b> lässt Claude eine geänderte Lektion neu lesen.',
     'lessons.tip4':
       '<b>Meine Notizen</b> ist dein Notizblock zur Lektion, wird beim Tippen gespeichert. <b>Original</b> zeigt die Lektion so, wie sie geschrieben ist.',
+    'lessons.tip5':
+      '<b>Grammatik</b> erklärt jedes Grammatikthema der Lektion, mit <pbtn>Diese Regel üben</pbtn> für Sätze dazu. <b>Hausaufgaben</b> zeigt, was zu tun ist; hake Erledigtes ab. <b>Übungen aus dem Lehrbuch</b> zeigt Übungen aus dem Buch und importiert neue aus Fotos oder einem PDF in die Lektion im Dokument. Unter <b>Meine Notizen</b> findest du die Tafel und die Notizen aus dem Unterrichtsmodus von diesem Tag.',
     'lessons.mock': 'der Tab Wörter einer Lektion',
 
     'verbs.title': 'Verben',
@@ -955,6 +963,8 @@ export const tutorial = defineMessages({
       'Abajo: <b>Exportar palabras para Anki</b> guarda las palabras marcadas en un archivo (en Anki: Archivo → Importar), y <b>Preparar de nuevo esta lección</b> pide a Claude que vuelva a leer una lección editada.',
     'lessons.tip4':
       '<b>Mis notas</b> es tu bloc de notas de la lección, se guarda mientras escribes. <b>Original</b> muestra la lección tal como está escrita.',
+    'lessons.tip5':
+      '<b>Gramática</b> explica cada punto de gramática de la lección, con <pbtn>Practicar esta regla</pbtn> para hacer frases. <b>Deberes</b> muestra lo que hay que hacer; marca las tareas al terminarlas. <b>Ejercicios del libro</b> muestra los ejercicios del libro e importa otros nuevos desde fotos o un PDF a la lección del documento. En <b>Mis notas</b> están la pizarra y las notas del modo clase de ese día.',
     'lessons.mock': 'la pestaña Palabras de una lección',
 
     'verbs.title': 'Verbos',
@@ -1178,6 +1188,8 @@ export const tutorial = defineMessages({
       'Em baixo: <b>Exportar palavras para o Anki</b> guarda as palavras marcadas num ficheiro (no Anki: Ficheiro → Importar), e <b>Preparar esta lição de novo</b> pede ao Claude que volte a ler uma lição editada.',
     'lessons.tip4':
       '<b>As minhas notas</b> é o seu bloco de notas da lição, guardado enquanto escreve. <b>Original</b> mostra a lição exatamente como está escrita.',
+    'lessons.tip5':
+      '<b>Gramática</b> explica cada ponto de gramática da lição, com <pbtn>Praticar esta regra</pbtn> para fazer frases. <b>Trabalhos de casa</b> mostra o que há para fazer; marque as tarefas ao terminá-las. <b>Exercícios do manual</b> mostra os exercícios do livro e importa novos a partir de fotos ou de um PDF para a lição no documento. Em <b>As minhas notas</b> estão o quadro e as notas do modo aula desse dia.',
     'lessons.mock': 'o separador Palavras de uma lição',
 
     'verbs.title': 'Verbos',
@@ -1400,6 +1412,8 @@ export const tutorial = defineMessages({
       'In fondo: <b>Esporta le parole per Anki</b> salva le parole spuntate in un file (in Anki: File → Importa), e <b>Prepara di nuovo questa lezione</b> chiede a Claude di rileggere una lezione modificata.',
     'lessons.tip4':
       '<b>I miei appunti</b> è il tuo blocco note per la lezione, salvato mentre scrivi. <b>Originale</b> mostra la lezione esattamente com’è scritta.',
+    'lessons.tip5':
+      '<b>Grammatica</b> spiega ogni punto di grammatica della lezione, con <pbtn>Esercitati su questa regola</pbtn> per fare frasi. <b>Compiti</b> elenca cosa fare; spunta i compiti finiti. <b>Esercizi dal libro</b> mostra gli esercizi del libro e ne importa di nuovi da foto o da un PDF nella lezione del documento. In <b>I miei appunti</b> trovi la lavagna e gli appunti della modalità lezione di quel giorno.',
     'lessons.mock': 'la scheda Parole di una lezione',
 
     'verbs.title': 'Verbi',

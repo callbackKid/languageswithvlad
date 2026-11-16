@@ -5,8 +5,10 @@ import type {
   Discussion,
   Form,
   GapItem,
+  GrammarRule,
   Language,
   Lesson,
+  LessonExtras,
   LessonWord,
   Pair,
   PhotoItem,
@@ -159,6 +161,29 @@ const asArray = (value: unknown): unknown[] => (Array.isArray(value) ? value : [
 /** The non-empty strings of a list. */
 const asTexts = (value: unknown): string[] => asArray(value).map(asText).filter(Boolean);
 
+/** The grammar, homework and book exercises Claude found in a lesson; missing parts are empty. */
+export function normalizeExtras(raw: unknown): LessonExtras {
+  const data = asObject(raw);
+  return {
+    language: asLanguage(data.language),
+    grammar: asArray(data.grammar)
+      .map(normalizeGrammarRule)
+      .filter((rule): rule is GrammarRule => !!rule?.title),
+    homework: asArray(data.homework)
+      .map(asObject)
+      .map((item) => ({ task: asText(item.task), meaning: asText(item.meaning) }))
+      .filter((item) => item.task),
+    book: asArray(data.book)
+      .map(asObject)
+      .map((exercise) => ({
+        title: asText(exercise.title),
+        instructions: asText(exercise.instructions),
+        items: asTexts(exercise.items),
+      }))
+      .filter((exercise) => exercise.title || exercise.instructions || exercise.items.length),
+  };
+}
+
 export function normalizeAnalysis(raw: unknown): Analysis {
   const data = asObject(raw);
   const seen = new Set<string>();
@@ -249,6 +274,7 @@ export function normalizeGaps(raw: unknown): GapItem[] {
         word: asText(item.word),
         ru: asText(item.ru),
         choices: shuffle([answer, ...wrongOptions]),
+        why: asText(item.why),
       };
     })
     .filter((item): item is GapItem => !!item);

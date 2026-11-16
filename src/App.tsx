@@ -427,6 +427,7 @@ export default function App() {
                     lesson={lesson}
                     docId={docId}
                     ai={ai}
+                    docWriter={!!docTarget.docWriter}
                     onAnalysis={bank.put}
                   />
                 )}

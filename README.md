@@ -26,6 +26,10 @@ React + TypeScript + Vite in the browser, small Vercel serverless functions in `
 **Lesson history**
 
 - **Words**: vocabulary extracted by Claude, with Russian translations (ones Claude added are marked ✱), pronunciation 🔊, and ☆ to save a word to Favourite words.
+- **Grammar**: every grammar point of the lesson explained in the interface language (how it's formed, when it's used, examples, the usual mistake), with **Practise this rule** for gap sentences on it.
+- **Homework**: the tasks the teacher set, with what each asks; ticked off on the device.
+- **Book exercises**: exercises from the student's book in the lesson. **Import exercises from the book** reads photos or PDF pages and writes the exercises under that lesson in the document (a block starting with 📖), so the teacher and the student both see them. Needs the same one-time setup as adding lessons from photos.
+- **My notes** also shows the lesson board and the lesson-mode notes from that day, as saved on the device.
 - **Exercises**: quiz, flashcards, translation matching, synonym/antonym matching, fill-the-gap sentences, dictation. Words can be exported for Anki.
 - **Verbs**: tables in six tenses, affirmative and negative, a typing drill per tense, and a quick quiz.
 - **My notes** (a notepad per lesson) and **Original** (the lesson exactly as written).

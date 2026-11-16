@@ -271,9 +271,10 @@ export default function LessonMode({
         <LessonNotes docId={docId} target={target} />
       </div>
       {/* the room is the same for the teacher and the student on this document today; the day is
-          counted in UTC, so people in different time zones still meet on one board */}
+          counted in UTC, so people in different time zones still meet on one board. This device
+          keeps its copy under its own day, like the notes, so the lesson page finds it. */}
       <LessonBoard
-        storageKey={`board:${docId}:${utcDay()}`}
+        storageKey={`board:${docId}:${today()}`}
         room={`board:${hash(docId)}:${utcDay()}`}
         server={boardServer}
       />

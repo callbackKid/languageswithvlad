@@ -46,7 +46,7 @@ Reply with only a JSON object of this shape:
 
 Rules:
 - topic: what the lesson covered, in English, at most 12 words.
-- words: every word or short expression in the lesson's language that the lesson teaches (vocabulary, greetings, question words, set phrases). fr always holds the word being learned, even when the language is not French. For French, write nouns with an article (le, la, l', un, une) when the gender is known; for English, write nouns without an article and verbs without "to"; for German, write nouns capitalised with der, die or das; for Spanish, nouns with el or la; for Portuguese, nouns with o or a; for Italian, nouns with il, lo, la or l'; in every language but English, verbs in the infinitive. Correct obvious spelling mistakes. ru is a short Russian translation: use the teacher's translation when there is one; otherwise write your own and set added to true. tr is the pronunciation the teacher wrote for the word (usually in square brackets, in Cyrillic or IPA), copied without the brackets; never put it inside fr or ru, and use "" when the notes give none. sense is the core meaning as one or two lowercase English words; words whose meanings overlap so that one translation could pass for the other get the same sense (удалить and вырезать: "remove"; выделить and отметить: "mark"; указать and показать: "show"); this holds for expressions too, judged by what they are said for (Bouge ! / Dégage ! / Va-t'en !, проваливай and убирайся: "go away"), so the quiz never offers one as a wrong answer for the other. Skip lines that only show a conjugated form from a verb table, pronunciation rules, numbers written as digits, and words in any other language. Never repeat the same fr.
+- words: every word or short expression in the lesson's language that the lesson teaches (vocabulary, greetings, question words, set phrases). fr always holds the word being learned, even when the language is not French. For French, write nouns with an article (le, la, l', un, une) when the gender is known; for English, write nouns without an article and verbs without "to"; for German, write nouns capitalised with der, die or das; for Spanish, nouns with el or la; for Portuguese, nouns with o or a; for Italian, nouns with il, lo, la or l'; in every language but English, verbs in the infinitive. Correct obvious spelling mistakes. ru is a short Russian translation: use the teacher's translation when there is one; otherwise write your own and set added to true. tr is the pronunciation the teacher wrote for the word (usually in square brackets, in Cyrillic or IPA), copied without the brackets; never put it inside fr or ru, and use "" when the notes give none. sense is the core meaning as one or two lowercase English words; words whose meanings overlap so that one translation could pass for the other get the same sense (удалить and вырезать: "remove"; выделить and отметить: "mark"; указать and показать: "show"); this holds for expressions too, judged by what they are said for (Bouge ! / Dégage ! / Va-t'en !, проваливай and убирайся: "go away"), so the quiz never offers one as a wrong answer for the other. Skip a block that starts with a line beginning with 📖: it holds exercises copied from a book, not vocabulary. Skip lines that only show a conjugated form from a verb table, pronunciation rules, numbers written as digits, and words in any other language. Never repeat the same fr.
 - pairs: 4 to 12 synonym or antonym pairs where both a and b are exact fr values from words. Use pairs the teacher noted first (for example facile / difficile), then obvious ones among the lesson's words. Return [] if there are none.
 - verbs: for a French lesson, every verb in the infinitive, including reflexive ones (se raser) and verbs the lesson conjugates; ru is a short Russian translation. For a lesson in any other language, return [].
 
@@ -191,4 +191,60 @@ Reply with only a JSON object:
 - starters: 3 sentence beginnings in ${languageName} that use the grammar topic, for the student to finish (for example “Quand j’étais petit, je…”).
 - grammarTip: one or two sentences in ${explainName} reminding how to form the grammar point, with a ${languageName} example; "" if there is no grammar topic.
 - grammarRule: null if there is no grammar topic. Otherwise a short, clear explanation of the rule for a student at ${level}, written in ${explainName} (forms and examples in ${languageName}): title is the name of the grammar point; summary is one or two sentences on what it is; formation lists the steps or forms (for a tense, how it is built, with the endings or the auxiliary, and irregular forms worth knowing), each item one short line; usage lists when it is used, each item one short line with a tiny ${languageName} example; examples are 3 or 4 natural ${languageName} sentences on the vocabulary topic, each with its ${explainName} translation; pitfall is the most common mistake learners make with it and how to avoid it, one or two sentences.`;
+}
+
+/** The heading that starts exercises copied from a book into a lesson, in each language. */
+const BOOK_HEADINGS =
+  '"📖 Exercices du manuel" (French), "📖 Textbook exercises" (English), "📖 Übungen aus dem Lehrbuch" (German), "📖 Ejercicios del libro" (Spanish), "📖 Exercícios do manual" (Portuguese), "📖 Esercizi dal libro" (Italian)';
+
+/** The grammar, homework and book exercises of one lesson, explained in the interface language. */
+export function lessonExtrasPrompt(body: string, explainIn: ExplainLanguage): string {
+  const explainName = EXPLAIN_NAMES[explainIn];
+  return `Below are a teacher's notes from one language lesson for a Russian-speaking student. The lesson teaches ${LANGUAGE_LIST}, and the notes mix that language with Russian. Find three things in them.
+
+Reply with only a JSON object:
+{"language": ${LANGUAGE_CODES}, "grammar": [{"title": string, "summary": string, "formation": [string], "usage": [string], "examples": [{"text": string, "translation": string}], "pitfall": string}], "homework": [{"task": string, "meaning": string}], "book": [{"title": string, "instructions": string, "items": [string]}]}
+
+- language: the language the lesson teaches: ${LANGUAGE_KEY}.
+- grammar: every grammar point the lesson teaches or practises: a tense or mood, a construction, agreement, pronouns, prepositions, word order, a conjugation pattern. Not single vocabulary words or set phrases. title is the usual name of the point in the lesson's language ("Le passé composé avec être", "Present perfect", "Wechselpräpositionen"). summary is one or two sentences in ${explainName} on what it is and when it is used. formation lists how it is built (the endings, the auxiliary, irregular forms worth knowing), usage when it is used; each is 2 to 5 short lines in ${explainName}, with tiny examples in the lesson's language. examples are 2 to 4 sentences in the lesson's language, taken from the notes when they have good ones, each with its translation in ${explainName}. pitfall is the most common mistake with it and how to avoid it, one sentence in ${explainName}, or "". Base each point on what the notes show and complete it with standard grammar, so the student can revise from it without the teacher. [] when the lesson has no grammar.
+- homework: every task the teacher set for homework or for next time, usually after a word like Devoirs, Homework, Hausaufgaben, Deberes, Tarea, TPC, Compiti, ДЗ or Домашнее задание. task is the task as written; meaning says what to do in ${explainName}, or "" when the task is already written in ${explainName}. [] when there is none.
+- book: exercises from the student's book or a textbook that are in the notes, usually in a block that starts with a line beginning with 📖, or mentioned like "p. 34 ex. 2". title is the exercise's number and page as written ("Ex. 2, p. 34"); instructions are its instructions as written; items are its items as written, one per entry, without their numbers, keeping blanks as ___; [] when the notes only refer to the exercise. [] when there are none.
+
+Lesson notes:
+"""
+${body}
+"""`;
+}
+
+export interface GrammarPracticeRequest {
+  language: LearnLanguage;
+  level: string;
+  title: string;
+  summary: string;
+  count: number;
+  explainIn: ExplainLanguage;
+}
+
+/** Gap sentences that practise one grammar point. */
+export function grammarPracticePrompt({
+  language,
+  level,
+  title,
+  summary,
+  count,
+  explainIn,
+}: GrammarPracticeRequest): string {
+  const languageName = LANGUAGE_NAMES[language];
+  return `Write ${count} short ${languageName} sentences at CEFR level ${level} that practise this grammar point: "${title}"${summary ? ` (${summary})` : ''}. A Russian-speaking learner fills one gap in each, where the grammar point decides the answer. Vary the sentences: different persons, verbs and situations, from easy to harder.
+Reply with only a JSON array of objects: {"before": string, "after": string, "answer": string, "options": [string, string, string], "ru": string, "why": string}. before and after are the text around the gap, answer the exact text of the gap, options three wrong answers that are typical mistakes with this grammar point (a wrong form, ending, auxiliary, agreement or preposition), never another correct answer. ru is a Russian translation of the whole sentence. why is one short sentence in ${EXPLAIN_NAMES[explainIn]} saying why the answer is right.`;
+}
+
+/** Exercises photographed or scanned from a student's book, copied out as text for a lesson. */
+export function bookExercisesPrompt(): string {
+  return `The pages show exercises from a language student's book (a textbook or a workbook) in ${LANGUAGE_LIST}. Copy out every exercise on them, so the student can do it from the lesson notes.
+Reply with only a JSON object: {"text": string}. text is plain text:
+- the first line is the heading in the book's language: ${BOOK_HEADINGS};
+- then each exercise: one line with its number and page when they are visible and its instructions ("Ex. 2, p. 34 — Mettez les verbes au passé composé."), then its items one per line, numbered "1. ", "2. "…;
+- an empty line between exercises.
+Copy the words exactly as printed, in the book's language. Write each blank as ___ and keep the words in brackets that go with it. Describe a picture an item needs in a few words in square brackets. Leave out printed answers, page headers, page numbers and anything that is not an exercise.`;
 }

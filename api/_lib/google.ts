@@ -1,6 +1,7 @@
 import { createSign } from 'node:crypto';
 
 import { HttpError } from './http.js';
+import { findLesson, type LessonTarget } from './lessons.js';
 
 /* Writing to Google Docs as a service account: a robot Google account whose key lives in
    the GOOGLE_SERVICE_ACCOUNT env variable (the whole JSON key file). It can edit only the
@@ -79,6 +80,57 @@ async function accessToken(account: ServiceAccount): Promise<string> {
 }
 
 /** Adds text at the very end of a Google Doc. */
+interface DocParagraph {
+  startIndex?: number;
+  paragraph?: { elements?: { textRun?: { content?: string } }[] };
+}
+
+/** Inserts the text at the end of one lesson: just before the next lesson's heading, or at the
+    end of the document for the newest one. False when the lesson isn't in the document. */
+export async function insertIntoLesson(
+  documentId: string,
+  target: LessonTarget,
+  text: string
+): Promise<boolean> {
+  const account = serviceAccount();
+  if (!account) throw new GoogleError(501, 'Writing to Google Docs isn’t set up on this server.');
+  const token = await accessToken(account);
+  const url = `https://docs.googleapis.com/v1/documents/${encodeURIComponent(documentId)}`;
+  const documentResponse = await fetch(`${url}?fields=body.content(startIndex,paragraph)`, {
+    headers: { authorization: `Bearer ${token}` },
+  });
+  if (!documentResponse.ok) {
+    if (documentResponse.status === 403 || documentResponse.status === 404)
+      throw new GoogleError(
+        403,
+        `The app can’t edit this document. In Google Docs, share it with ${account.client_email} as Editor.`
+      );
+    throw new GoogleError(502, 'Google Docs didn’t answer. Try again.');
+  }
+  const { body } = (await documentResponse.json()) as { body?: { content?: DocParagraph[] } };
+  const paragraphs = (body?.content ?? []).filter((element) => element.paragraph);
+  const lines = paragraphs.map((element) =>
+    (element.paragraph?.elements ?? []).map((part) => part.textRun?.content ?? '').join('')
+  );
+  const lesson = findLesson(lines, target);
+  if (!lesson) return false;
+  const nextStart = lesson.next === null ? undefined : paragraphs[lesson.next]?.startIndex;
+  // Just before the newline that ends the lesson's last line: the new lines take that line's
+  // plain style instead of the next heading's.
+  const location =
+    nextStart === undefined ? { endOfSegmentLocation: {} } : { location: { index: nextStart - 1 } };
+  const docsResponse = await fetch(`${url}:batchUpdate`, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json', authorization: `Bearer ${token}` },
+    body: JSON.stringify({
+      requests: [{ insertText: { ...location, text: `\n${text.trim()}\n` } }],
+    }),
+  });
+  if (!docsResponse.ok)
+    throw new GoogleError(502, 'Google Docs didn’t accept the change. Try again.');
+  return true;
+}
+
 export async function appendToDoc(documentId: string, text: string): Promise<void> {
   const account = serviceAccount();
   if (!account) throw new GoogleError(501, 'Writing to Google Docs isn’t set up on this server.');

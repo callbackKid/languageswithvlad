@@ -63,6 +63,7 @@ function messageFor(status: number, errorCode: string): string {
   if (errorCode === 'bad_id') return t('badDocLink');
   if (errorCode === 'unreachable') return t('docUnreachable');
   if (errorCode === 'delivery_failed') return t('deliveryFailed');
+  if (errorCode === 'lesson_not_found') return t('lessonNotFound');
   if (errorCode === 'notion_off') return t('notionOff');
   if (errorCode === 'notion_token') return t('notionToken');
   if (errorCode === 'notion_not_shared') return t('notionNotShared');
@@ -112,14 +113,39 @@ export const api = {
     }),
   feedback: (report: FeedbackReport) =>
     request<{ ok: boolean }>('/api/feedback', { method: 'POST', body: JSON.stringify(report) }),
-  append: (docId: string, text: string) =>
+  /** adds a new lesson at the end of the document, or, with a lesson key, lines under that lesson */
+  append: (docId: string, text: string, lesson?: string) =>
     request<{ ok: boolean }>('/api/append', {
       method: 'POST',
-      body: JSON.stringify({ docId, text }),
+      body: JSON.stringify({ docId, text, lesson }),
     }),
   doc: (id: string) =>
     request<{ title: string; text: string }>(`/api/doc?id=${encodeURIComponent(id)}`),
   analyze: (body: string, fresh = false) => analyzeOnce(body, fresh),
+  /** the grammar, homework and book exercises of a lesson, explained in the interface language */
+  lessonExtras: (body: string, explainIn: string, fresh = false) =>
+    request<unknown>('/api/analyze', {
+      method: 'POST',
+      body: JSON.stringify({ action: 'extras', body, explainIn, fresh }),
+    }),
+  /** gap sentences on one grammar point */
+  grammarPractice: (options: {
+    language: Language;
+    level: string;
+    title: string;
+    summary: string;
+    explainIn: string;
+  }) =>
+    request<unknown>('/api/analyze', {
+      method: 'POST',
+      body: JSON.stringify({ action: 'practice', ...options }),
+    }),
+  /** exercises from the student's book, from photos or from PDF pages, copied out as text */
+  bookExercises: (pages: { images: ImagePayload[] } | { data: string }) =>
+    request<unknown>('/api/paper', {
+      method: 'POST',
+      body: JSON.stringify({ kind: 'exercises', ...pages }),
+    }),
   conjugate: (infinitive: string, ru: string, fresh = false) =>
     request<unknown>('/api/conjugate', {
       method: 'POST',
