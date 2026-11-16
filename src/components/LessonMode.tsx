@@ -2,11 +2,9 @@ import { useEffect, useRef, useState } from 'react';
 
 import { useTranslation } from '../i18n/core';
 import { call } from '../i18n/messages/call';
-import { api } from '../lib/api';
-import { analysisKey, type Bank, readAnalysis } from '../lib/bank';
+import { type Bank, usePreparedLesson } from '../lib/bank';
 import type { BoardServer } from '../lib/boardSync';
 import { findCall, openCallWindow } from '../lib/call';
-import { normalizeAnalysis } from '../lib/parse';
 import { getProgress } from '../lib/progress';
 import { keyWordsFirst } from '../lib/quiz';
 import { followLink, hrefFor } from '../lib/router';
@@ -287,39 +285,6 @@ function WarmUpCard({
   );
 }
 
-/** Only the newest lesson is prepared by itself (AUTO_PREPARE). Once today's lesson is in the
-    document, the one before it may not be on this device yet, so lesson mode prepares it for
-    the warm-up. True while Claude is reading it. */
-function usePrepared(lesson: Lesson | null, bank: Bank, ai: boolean): boolean {
-  const ready =
-    !lesson ||
-    bank.lessons.some((info) => info.key === lesson.key && info.ready) ||
-    !!readAnalysis(lesson.hash);
-  const [preparing, setPreparing] = useState(false);
-  const { put } = bank;
-  useEffect(() => {
-    if (!lesson || ready || !ai) return;
-    let alive = true;
-    setPreparing(true);
-    api
-      .analyze(lesson.body)
-      .then((raw) => {
-        const analysis = normalizeAnalysis(raw);
-        save(analysisKey(lesson.hash), analysis);
-        put(lesson.key, analysis);
-      })
-      // the warm-up then asks about the mistakes alone
-      .catch(() => {})
-      .finally(() => {
-        if (alive) setPreparing(false);
-      });
-    return () => {
-      alive = false;
-    };
-  }, [lesson, ready, ai, put]);
-  return preparing;
-}
-
 /** The warm-up round: the previous lesson's words and the student's mistakes since, ending with
     the list of what didn't stick, for the teacher to see on the shared screen. */
 function WarmUp({
@@ -374,7 +339,7 @@ export default function LessonMode({
   const { t } = useTranslation(call);
   const [warmingUp, setWarmingUp] = useState(false);
   const earlier = previousLesson(lessons);
-  const preparing = usePrepared(earlier, bank, ai);
+  const preparing = usePreparedLesson(earlier, bank, ai);
   return (
     <>
       <PageHead title={t('title')}>{t('intro')}</PageHead>

@@ -65,7 +65,7 @@ interface Guide {
 
 const GUIDES: Guide[] = [
   { section: null, id: 'header', icon: '🧭', steps: 6, tips: 1, mock: true },
-  { section: 'home', id: 'home', icon: '🏠', steps: 3, mock: true },
+  { section: 'home', id: 'home', icon: '🏠', steps: 3, tips: 1, mock: true },
   { section: 'lessons', id: 'lessons', icon: '📚', steps: 4, tips: 6, mock: true },
   { section: 'lessons', id: 'verbs', icon: '🔤', steps: 4, tips: 3, mock: true },
   { section: 'practice', id: 'all-lessons', icon: '🗂️', steps: 2, mock: true },

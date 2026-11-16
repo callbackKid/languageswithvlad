@@ -42,6 +42,7 @@ export default function WordQuiz({
   closeLabel,
   empty,
   review,
+  onRoundEnd,
 }: {
   title: string;
   make: () => QuizItem[];
@@ -49,6 +50,8 @@ export default function WordQuiz({
   closeLabel?: string;
   empty?: string;
   review?: { title: string; none: string };
+  /** called once each time a round is over (homework ticks itself) */
+  onRoundEnd?: () => void;
 }) {
   const { t: tx } = useTranslation(exercises);
   const { t, rich } = useTranslation(common);
@@ -70,6 +73,14 @@ export default function WordQuiz({
   }, [result]);
   // dictation reads each word as it appears
   const current = questions[index];
+  const over = questions.length > 0 && !current;
+  const latestRoundEnd = useRef(onRoundEnd);
+  useEffect(() => {
+    latestRoundEnd.current = onRoundEnd;
+  }, [onRoundEnd]);
+  useEffect(() => {
+    if (over) latestRoundEnd.current?.();
+  }, [over]);
   useEffect(() => {
     if (current?.kind === 'listen') speak(current.word.fr, current.word.language ?? 'fr');
   }, [current]);

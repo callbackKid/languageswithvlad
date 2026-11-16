@@ -22,6 +22,18 @@ export const NEWS: NewsDay[] = [
       {
         kind: 'new',
         text: {
+          en: 'Homework on Home: what the teacher writes after “Devoirs:” in the lesson becomes a checklist with the days left until the next lesson. Each task opens its exercise, and finishing it ticks the task.',
+          ru: 'Домашка на Главной: то, что учитель пишет в уроке после «Devoirs:», становится чек-листом, где видно, сколько дней до урока. Каждое задание открывает своё упражнение, а когда оно закончено, галочка ставится сама.',
+          fr: 'Les devoirs sur l’accueil : ce que le professeur écrit après « Devoirs: » dans la leçon devient une liste à cocher, avec les jours restants avant le cours. Chaque tâche ouvre son exercice, et le finir la coche.',
+          de: 'Hausaufgaben auf der Startseite: Was die Lehrkraft in der Lektion nach „Devoirs:“ schreibt, wird zur Checkliste mit den Tagen bis zur nächsten Stunde. Jede Aufgabe öffnet ihre Übung, und ist sie fertig, wird sie abgehakt.',
+          es: 'Deberes en Inicio: lo que el profesor escribe tras «Devoirs:» en la lección se convierte en una lista para marcar, con los días que faltan para la clase. Cada tarea abre su ejercicio, y al terminarlo se marca.',
+          pt: 'Trabalho de casa no Início: o que o professor escreve depois de «Devoirs:» na lição passa a ser uma lista para marcar, com os dias que faltam para a aula. Cada tarefa abre o seu exercício, e ao terminá-lo fica marcada.',
+          it: 'Compiti nella Home: quello che l’insegnante scrive dopo «Devoirs:» nella lezione diventa una lista da spuntare, con i giorni che mancano alla lezione. Ogni compito apre il suo esercizio, e finirlo lo spunta.',
+        },
+      },
+      {
+        kind: 'new',
+        text: {
           en: 'Key words: the teacher marks a word with ★ in the document (★ la boulangerie — пекарня), and it gets a “key” badge and comes up more often in exercises and the warm-up.',
           ru: 'Ключевые слова: учитель отмечает слово звёздочкой в документе (★ la boulangerie — пекарня), у него появляется метка «ключевое», и оно чаще встречается в упражнениях и разминке.',
           fr: 'Mots clés : le professeur marque un mot d’une ★ dans le document (★ la boulangerie — пекарня) ; il reçoit l’étiquette « clé » et revient plus souvent dans les exercices et l’échauffement.',

@@ -3233,3 +3233,52 @@ li .open-link {
   line-height: 18px;
   vertical-align: 2px;
 }
+
+/* the homework on Home: the tasks from "Devoirs:", each with its exercise */
+.homework-card {
+  margin: 0 0 24px;
+  padding: 18px 20px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--bg);
+}
+.homework-card.exercise {
+  padding: 0;
+  border: 0;
+  background: none;
+}
+.homework-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 14px;
+}
+.homework-head h2 {
+  margin: 0 auto 0 0;
+  font-size: 18px;
+}
+.homework-due,
+.homework-progress {
+  font-size: 14px;
+  color: var(--muted);
+}
+.homework-due {
+  color: var(--warn);
+  font-weight: 600;
+}
+.home-homework li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+}
+.home-homework li > label {
+  flex: 1 1 240px;
+  min-width: 0;
+}
+/* one width for every action, so the tasks line up */
+.home-homework li > .btn,
+.home-homework li > .open-link {
+  flex: 0 0 170px;
+  text-align: center;
+}

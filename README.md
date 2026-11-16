@@ -36,7 +36,7 @@ React + TypeScript + Vite in the browser, small Vercel serverless functions in `
 
 **Practice across lessons**
 
-- **Home**: a daily round of 10 mixed questions, a 🔥 streak and a daily goal.
+- **Home**: a daily round of 10 mixed questions, a 🔥 streak and a daily goal. Above it, the **homework** the teacher wrote in the newest lesson (`Devoirs: …`) as a checklist with the days left until the next lesson; each task opens its exercise (the words of a lesson, gap sentences, verb forms), and finishing it ticks the task.
 - **Downloaded lessons**, **Favourite words**, **Mistakes** and **Stats**.
 
 **From paper**
@@ -62,14 +62,15 @@ React + TypeScript + Vite in the browser, small Vercel serverless functions in `
 
 ## How to write the lesson document
 
-| What           | Write in the document                                                                        | Notes                                                                                                                           |
-| -------------- | -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| Start a lesson | `14.10.2026 1 Leçon`, or `Lesson`, `Lektion`, `Lección`, `Clase`, `Lição`, `Aula`, `Lezione` | Everything below it belongs to that lesson.                                                                                     |
-| A word         | `bonjour — привет`                                                                           | Messier notes work too; this is clearest.                                                                                       |
-| Pronunciation  | `bonjour [bɔ̃ʒuʁ] — привет`                                                                   | In square brackets, IPA or Cyrillic.                                                                                            |
-| Key word       | `★ la boulangerie — пекарня`                                                                 | Asked more often in exercises and the warm-up, with a **key** badge. `⭐` works too.                                            |
-| Next lesson    | `le cours prochain: 22.11.2026 18:00 de Paris`                                               | Or `next lesson: …`, `nächste Stunde: …`, `próxima clase: …`, `próxima aula: …`, `prossima lezione: …`. The newest line counts. |
-| Video call     | `https://meet.google.com/abc-defg-hij`                                                       | Anywhere; the newest link is used.                                                                                              |
+| What           | Write in the document                                                                        | Notes                                                                                                                                                                          |
+| -------------- | -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Start a lesson | `14.10.2026 1 Leçon`, or `Lesson`, `Lektion`, `Lección`, `Clase`, `Lição`, `Aula`, `Lezione` | Everything below it belongs to that lesson.                                                                                                                                    |
+| A word         | `bonjour — привет`                                                                           | Messier notes work too; this is clearest.                                                                                                                                      |
+| Pronunciation  | `bonjour [bɔ̃ʒuʁ] — привет`                                                                   | In square brackets, IPA or Cyrillic.                                                                                                                                           |
+| Key word       | `★ la boulangerie — пекарня`                                                                 | Asked more often in exercises and the warm-up, with a **key** badge. `⭐` works too.                                                                                           |
+| Homework       | `Devoirs: verbes être, avoir — présent; mots de la leçon 5; 5 phrases au passé composé`      | Shown on Home as a checklist. Or `Homework:`, `Hausaufgaben:`, `Deberes:`, `Trabalho de casa:`, `Compiti:`, `ДЗ:`; items split by `;` or one per line under the label (`- …`). |
+| Next lesson    | `le cours prochain: 22.11.2026 18:00 de Paris`                                               | Or `next lesson: …`, `nächste Stunde: …`, `próxima clase: …`, `próxima aula: …`, `prossima lezione: …`. The newest line counts.                                                |
+| Video call     | `https://meet.google.com/abc-defg-hij`                                                       | Anywhere; the newest link is used.                                                                                                                                             |
 
 With a city after the time (`de Paris`, `Moscow`…), students see the next lesson in their own time.
 

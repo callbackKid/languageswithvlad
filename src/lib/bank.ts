@@ -192,3 +192,48 @@ export function useBank(lessons: Lesson[], ai: boolean): Bank {
     };
   }, [lessons, analyses, shown, failed, ai, put, studying]);
 }
+
+/** Only the newest lesson is prepared by itself (AUTO_PREPARE). An older one a page needs (the
+    warm-up's previous lesson, "mots de la leçon 5" in the homework) is prepared here if this
+    device doesn't have it yet. True while Claude is reading it. */
+export function usePreparedLesson(lesson: Lesson | null, bank: Bank, ai: boolean): boolean {
+  const ready =
+    !lesson ||
+    bank.lessons.some((info) => info.key === lesson.key && info.ready) ||
+    !!readAnalysis(lesson.hash);
+  const [preparing, setPreparing] = useState(false);
+  const { put } = bank;
+  useEffect(() => {
+    if (!lesson || ready || !ai) return;
+    let alive = true;
+    setPreparing(true);
+    api
+      .analyze(lesson.body)
+      .then((raw) => {
+        const analysis = normalizeAnalysis(raw);
+        save(analysisKey(lesson.hash), analysis);
+        put(lesson.key, analysis);
+      })
+      // the warm-up then asks about the mistakes alone
+      .catch(() => {})
+      .finally(() => {
+        if (alive) setPreparing(false);
+      });
+    return () => {
+      alive = false;
+    };
+  }, [lesson, ready, ai, put]);
+  return preparing;
+}
+
+/** One lesson's own words, with their lesson and language, key words (★) marked. The bank keeps
+    a word under the newest lesson that has it, so this reads the lesson's analysis instead. */
+export function lessonWords(lesson: Lesson, bank: Bank, ai: boolean): Word[] {
+  const analysis = readAnalysis(lesson.hash) ?? (ai ? null : localParse(lesson.body));
+  if (!analysis) return bank.words.filter((word) => word.lesson === lesson.key);
+  return markKeyWords(analysis.words, lesson.body).map((word) => ({
+    ...word,
+    lesson: lesson.key,
+    language: analysis.language,
+  }));
+}

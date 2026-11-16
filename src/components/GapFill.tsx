@@ -18,10 +18,12 @@ export default function GapFill({
   words,
   onClose,
   onRestart,
+  onRoundEnd,
 }: {
   words: Word[];
   onClose: () => void;
   onRestart: () => void;
+  onRoundEnd?: () => void;
 }) {
   const { t, rich } = useTranslation(exercises);
   const language = words[0]?.language ?? 'fr';
@@ -51,6 +53,7 @@ export default function GapFill({
       }
       onClose={onClose}
       onRestart={onRestart}
+      onRoundEnd={onRoundEnd}
     />
   );
 }
@@ -66,6 +69,7 @@ export function GapRound({
   explain,
   onClose,
   onRestart,
+  onRoundEnd,
 }: {
   title: string;
   language: Language;
@@ -77,6 +81,8 @@ export function GapRound({
   explain?: (item: GapItem) => ReactNode;
   onClose: () => void;
   onRestart: () => void;
+  /** called once when the round is over */
+  onRoundEnd?: () => void;
 }) {
   const { t } = useTranslation(exercises);
   const commonText = useTranslation(common);
@@ -87,6 +93,14 @@ export function GapRound({
   const [showRu, setShowRu] = useState(false);
   const [score, setScore] = useState(0);
   const loadOnce = useRef(load).current;
+  const over = !!items?.length && index >= items.length;
+  const latestRoundEnd = useRef(onRoundEnd);
+  useEffect(() => {
+    latestRoundEnd.current = onRoundEnd;
+  }, [onRoundEnd]);
+  useEffect(() => {
+    if (over) latestRoundEnd.current?.();
+  }, [over]);
 
   useEffect(() => {
     let alive = true;

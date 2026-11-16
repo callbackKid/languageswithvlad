@@ -444,7 +444,15 @@ export default function App() {
             </div>
           ) : (
             <main className="page">
-              {section === 'home' && <Home bank={bank} />}
+              {section === 'home' && (
+                <Home
+                  bank={bank}
+                  lessons={lessons}
+                  ai={ai}
+                  docId={docId}
+                  docText={doc?.text ?? ''}
+                />
+              )}
               {section === 'practice' && <Practice bank={bank} ai={ai} />}
               {section === 'mine' && <MyWords ai={ai} />}
               {section === 'mistakes' && <Mistakes bank={bank} />}

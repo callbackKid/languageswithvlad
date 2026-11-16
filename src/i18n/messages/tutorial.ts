@@ -58,6 +58,8 @@ export const tutorial = defineMessages({
       'After each answer press <pbtn>Next</pbtn>. At the end you see your score and <pbtn>Next round</pbtn>.',
     'home.step3':
       'Answer at least once a day to keep your 🔥 streak; 20 answers complete the day’s goal.',
+    'home.tip1':
+      'When the teacher writes the homework in the lesson (<ex>Devoirs: verbes être, avoir — présent; mots de la leçon 5; 5 phrases au passé composé</ex>), Home shows it as a checklist, with how long until the next lesson. <btn>Practise the words</btn>, <btn>Fill the gaps</btn> and <btn>Conjugate</btn> open the task’s exercise, and finishing it ticks the task.',
     'home.mock': 'the streak and daily goal on Home',
 
     'lessons.title': 'Lesson history',
@@ -81,7 +83,7 @@ export const tutorial = defineMessages({
     'lessons.tip5':
       '<b>Grammar</b> explains every grammar point of the lesson, with <pbtn>Practise this rule</pbtn> for sentences on it. <b>Homework</b> lists what to do; tick tasks off as you finish. <b>Book exercises</b> shows exercises from the book, and imports new ones from photos or a PDF into the lesson in the document. Under <b>My notes</b> you find the board and the lesson-mode notes from that day.',
     'lessons.tip6':
-      'A word the teacher marks with ★ in the document (<i>★ la boulangerie — пекарня</i>) is a <b>key word</b>: it has a <b>key</b> badge and comes up more often in exercises.',
+      'A word the teacher marks with ★ in the document (<ex>★ la boulangerie — пекарня</ex>) is a <b>key word</b>: it has a <b>key</b> badge and comes up more often in exercises.',
     'lessons.mock': 'the Words tab of a lesson',
 
     'verbs.title': 'Verbs',
@@ -280,6 +282,8 @@ export const tutorial = defineMessages({
       'После каждого ответа нажимайте <pbtn>Дальше</pbtn>. В конце вы увидите результат и <pbtn>Следующий раунд</pbtn>.',
     'home.step3':
       'Отвечайте хотя бы раз в день, чтобы не прервать 🔥 серию; 20 ответов — цель на день.',
+    'home.tip1':
+      'Когда учитель пишет в уроке домашнее задание (<ex>Devoirs: verbes être, avoir — présent; mots de la leçon 5; 5 phrases au passé composé</ex>), на Главной появляется чек-лист и сколько осталось до урока. <btn>Повторить слова</btn>, <btn>Вставить слова</btn> и <btn>Проспрягать</btn> открывают упражнение к заданию, а когда оно закончено, галочка ставится сама.',
     'home.mock': 'серия и цель дня на Главной',
 
     'lessons.title': 'История уроков',
@@ -305,7 +309,7 @@ export const tutorial = defineMessages({
     'lessons.tip5':
       '<b>Грамматика</b> объясняет каждую тему урока, а <pbtn>Потренировать это правило</pbtn> даёт предложения на неё. <b>Домашнее задание</b> — список того, что нужно сделать; отмечайте выполненное. <b>Упражнения из учебника</b> показывает упражнения из книги и добавляет новые с фото или PDF в урок в документе. В <b>Моих заметках</b> — доска и заметки из режима урока за тот день.',
     'lessons.tip6':
-      'Слово, которое учитель отметил в документе звёздочкой (<i>★ la boulangerie — пекарня</i>), — <b>ключевое</b>: у него метка <b>ключевое</b>, и в упражнениях оно встречается чаще.',
+      'Слово, которое учитель отметил в документе звёздочкой (<ex>★ la boulangerie — пекарня</ex>), — <b>ключевое</b>: у него метка <b>ключевое</b>, и в упражнениях оно встречается чаще.',
     'lessons.mock': 'вкладка «Слова» в уроке',
 
     'verbs.title': 'Глаголы',
@@ -503,6 +507,8 @@ export const tutorial = defineMessages({
       'Après chaque réponse, appuyez sur <pbtn>Suivant</pbtn>. À la fin, vous voyez votre score et <pbtn>Série suivante</pbtn>.',
     'home.step3':
       'Répondez au moins une fois par jour pour garder votre 🔥 série ; 20 réponses remplissent l’objectif du jour.',
+    'home.tip1':
+      'Quand le professeur écrit les devoirs dans la leçon (<ex>Devoirs: verbes être, avoir — présent; mots de la leçon 5; 5 phrases au passé composé</ex>), l’accueil les affiche en liste à cocher, avec le temps restant avant le prochain cours. <btn>Réviser les mots</btn>, <btn>Compléter les trous</btn> et <btn>Conjuguer</btn> ouvrent l’exercice de la tâche, et le finir la coche.',
     'home.mock': 'la série et l’objectif du jour sur l’Accueil',
 
     'lessons.title': 'Historique des leçons',
@@ -527,7 +533,7 @@ export const tutorial = defineMessages({
     'lessons.tip5':
       '<b>Grammaire</b> explique chaque point de grammaire de la leçon, avec <pbtn>S’entraîner sur cette règle</pbtn> pour des phrases dessus. <b>Devoirs</b> liste ce qu’il faut faire ; cochez au fur et à mesure. <b>Exercices du manuel</b> affiche les exercices du livre et en importe de nouveaux depuis des photos ou un PDF dans la leçon du document. Sous <b>Mes notes</b>, vous trouvez le tableau et les notes du mode cours de ce jour-là.',
     'lessons.tip6':
-      'Un mot que le professeur marque d’une ★ dans le document (<i>★ la boulangerie — пекарня</i>) est un <b>mot clé</b> : il porte l’étiquette <b>clé</b> et revient plus souvent dans les exercices.',
+      'Un mot que le professeur marque d’une ★ dans le document (<ex>★ la boulangerie — пекарня</ex>) est un <b>mot clé</b> : il porte l’étiquette <b>clé</b> et revient plus souvent dans les exercices.',
     'lessons.mock': 'l’onglet Mots d’une leçon',
 
     'verbs.title': 'Verbes',
@@ -733,6 +739,8 @@ export const tutorial = defineMessages({
       'Tippe nach jeder Antwort auf <pbtn>Weiter</pbtn>. Am Ende siehst du dein Ergebnis und <pbtn>Nächste Runde</pbtn>.',
     'home.step3':
       'Antworte mindestens einmal am Tag, damit deine 🔥 Serie hält; 20 Antworten erfüllen das Tagesziel.',
+    'home.tip1':
+      'Wenn die Lehrkraft die Hausaufgaben in die Lektion schreibt (<ex>Devoirs: verbes être, avoir — présent; mots de la leçon 5; 5 phrases au passé composé</ex>), zeigt die Startseite sie als Checkliste, dazu die Zeit bis zur nächsten Stunde. <btn>Wörter üben</btn>, <btn>Lücken füllen</btn> und <btn>Konjugieren</btn> öffnen die Übung zur Aufgabe; ist sie fertig, wird die Aufgabe abgehakt.',
     'home.mock': 'Serie und Tagesziel auf Start',
 
     'lessons.title': 'Lektionsverlauf',
@@ -758,7 +766,7 @@ export const tutorial = defineMessages({
     'lessons.tip5':
       '<b>Grammatik</b> erklärt jedes Grammatikthema der Lektion, mit <pbtn>Diese Regel üben</pbtn> für Sätze dazu. <b>Hausaufgaben</b> zeigt, was zu tun ist; hake Erledigtes ab. <b>Übungen aus dem Lehrbuch</b> zeigt Übungen aus dem Buch und importiert neue aus Fotos oder einem PDF in die Lektion im Dokument. Unter <b>Meine Notizen</b> findest du die Tafel und die Notizen aus dem Unterrichtsmodus von diesem Tag.',
     'lessons.tip6':
-      'Ein Wort, das die Lehrkraft im Dokument mit ★ markiert (<i>★ la boulangerie — пекарня</i>), ist ein <b>Schlüsselwort</b>: Es trägt das Etikett <b>Schlüssel</b> und kommt in den Übungen öfter dran.',
+      'Ein Wort, das die Lehrkraft im Dokument mit ★ markiert (<ex>★ la boulangerie — пекарня</ex>), ist ein <b>Schlüsselwort</b>: Es trägt das Etikett <b>Schlüssel</b> und kommt in den Übungen öfter dran.',
     'lessons.mock': 'der Tab Wörter einer Lektion',
 
     'verbs.title': 'Verben',
@@ -958,6 +966,8 @@ export const tutorial = defineMessages({
       'Después de cada respuesta pulsa <pbtn>Siguiente</pbtn>. Al final ves tu puntuación y <pbtn>Siguiente ronda</pbtn>.',
     'home.step3':
       'Responde al menos una vez al día para mantener tu racha 🔥; 20 respuestas cumplen el objetivo del día.',
+    'home.tip1':
+      'Cuando el profesor escribe los deberes en la lección (<ex>Devoirs: verbes être, avoir — présent; mots de la leçon 5; 5 phrases au passé composé</ex>), Inicio los muestra como una lista para marcar, con lo que falta para la próxima clase. <btn>Practicar las palabras</btn>, <btn>Rellenar los huecos</btn> y <btn>Conjugar</btn> abren el ejercicio de la tarea, y al terminarlo se marca.',
     'home.mock': 'la racha y el objetivo diario en Inicio',
 
     'lessons.title': 'Historial de lecciones',
@@ -982,7 +992,7 @@ export const tutorial = defineMessages({
     'lessons.tip5':
       '<b>Gramática</b> explica cada punto de gramática de la lección, con <pbtn>Practicar esta regla</pbtn> para hacer frases. <b>Deberes</b> muestra lo que hay que hacer; marca las tareas al terminarlas. <b>Ejercicios del libro</b> muestra los ejercicios del libro e importa otros nuevos desde fotos o un PDF a la lección del documento. En <b>Mis notas</b> están la pizarra y las notas del modo clase de ese día.',
     'lessons.tip6':
-      'Una palabra que el profesor marca con ★ en el documento (<i>★ la boulangerie — пекарня</i>) es una <b>palabra clave</b>: lleva la etiqueta <b>clave</b> y sale más a menudo en los ejercicios.',
+      'Una palabra que el profesor marca con ★ en el documento (<ex>★ la boulangerie — пекарня</ex>) es una <b>palabra clave</b>: lleva la etiqueta <b>clave</b> y sale más a menudo en los ejercicios.',
     'lessons.mock': 'la pestaña Palabras de una lección',
 
     'verbs.title': 'Verbos',
@@ -1186,6 +1196,8 @@ export const tutorial = defineMessages({
       'Depois de cada resposta carregue em <pbtn>Seguinte</pbtn>. No fim vê a pontuação e <pbtn>Ronda seguinte</pbtn>.',
     'home.step3':
       'Responda pelo menos uma vez por dia para manter a série 🔥; 20 respostas cumprem o objetivo do dia.',
+    'home.tip1':
+      'Quando o professor escreve o trabalho de casa na lição (<ex>Devoirs: verbes être, avoir — présent; mots de la leçon 5; 5 phrases au passé composé</ex>), o Início mostra-o como uma lista para marcar, com o tempo que falta para a próxima aula. <btn>Praticar as palavras</btn>, <btn>Preencher as lacunas</btn> e <btn>Conjugar</btn> abrem o exercício da tarefa, e ao terminá-lo a tarefa fica marcada.',
     'home.mock': 'a série e o objetivo diário no Início',
 
     'lessons.title': 'Histórico de lições',
@@ -1211,7 +1223,7 @@ export const tutorial = defineMessages({
     'lessons.tip5':
       '<b>Gramática</b> explica cada ponto de gramática da lição, com <pbtn>Praticar esta regra</pbtn> para fazer frases. <b>Trabalhos de casa</b> mostra o que há para fazer; marque as tarefas ao terminá-las. <b>Exercícios do manual</b> mostra os exercícios do livro e importa novos a partir de fotos ou de um PDF para a lição no documento. Em <b>As minhas notas</b> estão o quadro e as notas do modo aula desse dia.',
     'lessons.tip6':
-      'Uma palavra que o professor marca com ★ no documento (<i>★ la boulangerie — пекарня</i>) é uma <b>palavra-chave</b>: tem a etiqueta <b>chave</b> e aparece mais vezes nos exercícios.',
+      'Uma palavra que o professor marca com ★ no documento (<ex>★ la boulangerie — пекарня</ex>) é uma <b>palavra-chave</b>: tem a etiqueta <b>chave</b> e aparece mais vezes nos exercícios.',
     'lessons.mock': 'o separador Palavras de uma lição',
 
     'verbs.title': 'Verbos',
@@ -1414,6 +1426,8 @@ export const tutorial = defineMessages({
       'Dopo ogni risposta premi <pbtn>Avanti</pbtn>. Alla fine vedi il punteggio e <pbtn>Prossimo turno</pbtn>.',
     'home.step3':
       'Rispondi almeno una volta al giorno per mantenere la serie 🔥; 20 risposte completano l’obiettivo del giorno.',
+    'home.tip1':
+      'Quando l’insegnante scrive i compiti nella lezione (<ex>Devoirs: verbes être, avoir — présent; mots de la leçon 5; 5 phrases au passé composé</ex>), la Home li mostra come lista da spuntare, con il tempo che manca alla prossima lezione. <btn>Ripassare le parole</btn>, <btn>Riempire gli spazi</btn> e <btn>Coniugare</btn> aprono l’esercizio del compito, e finirlo lo spunta.',
     'home.mock': 'la serie e l’obiettivo giornaliero in Home',
 
     'lessons.title': 'Cronologia lezioni',
@@ -1439,7 +1453,7 @@ export const tutorial = defineMessages({
     'lessons.tip5':
       '<b>Grammatica</b> spiega ogni punto di grammatica della lezione, con <pbtn>Esercitati su questa regola</pbtn> per fare frasi. <b>Compiti</b> elenca cosa fare; spunta i compiti finiti. <b>Esercizi dal libro</b> mostra gli esercizi del libro e ne importa di nuovi da foto o da un PDF nella lezione del documento. In <b>I miei appunti</b> trovi la lavagna e gli appunti della modalità lezione di quel giorno.',
     'lessons.tip6':
-      'Una parola che l’insegnante segna con ★ nel documento (<i>★ la boulangerie — пекарня</i>) è una <b>parola chiave</b>: ha l’etichetta <b>chiave</b> e compare più spesso negli esercizi.',
+      'Una parola che l’insegnante segna con ★ nel documento (<ex>★ la boulangerie — пекарня</ex>) è una <b>parola chiave</b>: ha l’etichetta <b>chiave</b> e compare più spesso negli esercizi.',
     'lessons.mock': 'la scheda Parole di una lezione',
 
     'verbs.title': 'Verbi',
