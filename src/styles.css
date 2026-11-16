@@ -2674,6 +2674,15 @@ li .open-link {
   margin-top: 20px;
 }
 
+.board-status {
+  margin: 4px 0 0;
+  font-size: 14px;
+  color: var(--muted);
+}
+.board-status.live {
+  color: var(--ok);
+  font-weight: 600;
+}
 .board-frame {
   height: 560px;
   margin-top: 8px;

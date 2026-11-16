@@ -1,17 +1,42 @@
 import '@excalidraw/excalidraw/index.css';
 
-import { Excalidraw, exportToBlob } from '@excalidraw/excalidraw';
-import type { ExcalidrawImperativeAPI } from '@excalidraw/excalidraw/types';
+import {
+  CaptureUpdateAction,
+  Excalidraw,
+  exportToBlob,
+  reconcileElements,
+} from '@excalidraw/excalidraw';
+import type {
+  BinaryFileData,
+  BinaryFiles,
+  Collaborator,
+  ExcalidrawImperativeAPI,
+  SocketId,
+} from '@excalidraw/excalidraw/types';
 import { useCallback, useEffect, useRef } from 'react';
 
 import type { UiLanguage } from '../i18n/core';
+import {
+  type BoardConnection,
+  type BoardPeer,
+  type BoardServer,
+  connectBoard,
+} from '../lib/boardSync';
 import { load, save } from '../lib/storage';
 
 /* The drawing itself (Excalidraw, MIT). It's a big library, so LessonBoard loads this file only
-   when the board is opened. */
+   when the board is opened. With a connection, every change is sent to the other people on the
+   board and theirs are merged in (see src/lib/boardSync.ts for the messages). */
 
 const LANG_CODES: Record<UiLanguage, string> = { en: 'en', ru: 'ru-RU', fr: 'fr-FR', de: 'de-DE' };
+/** Changes are gathered for this long before they are sent: smooth for the other person,
+    and well within the realtime service's message limits. */
+const SEND_EVERY = 100;
+const POINTER_EVERY = 60;
+/** Pictures larger than this aren't sent (a broadcast message is limited to about 256 KB). */
+const MAX_SHARED_FILE = 180_000;
 
+type RemoteElements = Parameters<typeof reconcileElements>[1];
 interface Saved {
   elements: unknown[];
   files: Record<string, unknown>;
@@ -27,17 +52,37 @@ export default function BoardCanvas({
   storageKey,
   language,
   dark,
+  server,
+  room,
+  name,
   onReady,
+  onPeers,
 }: {
   storageKey: string;
   language: UiLanguage;
   dark: boolean;
+  /** where the board is shared; null to share only between tabs in development */
+  server: BoardServer | null;
+  /** the shared room's name: the same for everyone on this document's board today */
+  room: string;
+  /** shown next to this person's pointer on the others' boards */
+  name: string;
   onReady: (handle: BoardHandle) => void;
+  onPeers: (peers: BoardPeer[]) => void;
 }) {
+  const api = useRef<ExcalidrawImperativeAPI | null>(null);
+  // opened and closed by the effect below, so React's double mount in development is harmless
+  const connectionRef = useRef<BoardConnection | null>(null);
   const timer = useRef<number>();
   const initial = useRef(load<Saved>(storageKey));
   // the newest drawing not written to storage yet (saving waits for a pause in drawing)
   const unsaved = useRef<Saved | null>(null);
+  // the version of each shape the others already have, so only real changes are sent
+  const shared = useRef(new Map<string, number>());
+  const sentFiles = useRef(new Set<string>());
+  const sendTimer = useRef<number>();
+  const lastPointer = useRef(0);
+  const collaborators = useRef(new Map<SocketId, Collaborator>());
 
   const flush = useCallback(() => {
     window.clearTimeout(timer.current);
@@ -47,10 +92,106 @@ export default function BoardCanvas({
   // the last strokes are kept even when the board closes during the short save delay
   useEffect(() => flush, [flush]);
 
+  /** Sends the shapes whose version the others don't have yet, and pictures they lack. */
+  const sendChanges = useCallback((everything = false) => {
+    const instance = api.current;
+    const connection = connectionRef.current;
+    if (!connection || !instance) return;
+    const elements = instance.getSceneElementsIncludingDeleted();
+    const changed = everything
+      ? elements
+      : elements.filter((element) => (shared.current.get(element.id) ?? -1) < element.version);
+    if (changed.length) {
+      for (const element of changed) shared.current.set(element.id, element.version);
+      connection.send('elements', { elements: changed });
+    }
+    const files = Object.values(instance.getFiles()).filter(
+      (file) =>
+        (everything || !sentFiles.current.has(file.id)) && file.dataURL.length < MAX_SHARED_FILE
+    );
+    for (const file of files) sentFiles.current.add(file.id);
+    if (files.length) connection.send('files', { files });
+  }, []);
+
+  const serverUrl = server?.url ?? '';
+  const serverKey = server?.key ?? '';
+  useEffect(() => {
+    const connection = connectBoard(
+      serverUrl ? { url: serverUrl, key: serverKey } : null,
+      room,
+      name
+    );
+    connectionRef.current = connection;
+    if (!connection) return;
+    const sharedVersions = shared.current;
+    const knownFiles = sentFiles.current;
+    const pointers = collaborators.current;
+    connection.on('elements', (payload) => {
+      const instance = api.current;
+      if (!instance || !Array.isArray(payload.elements)) return;
+      // shapes from the others, in Excalidraw's own format
+      const remote = payload.elements as RemoteElements;
+      for (const element of remote)
+        sharedVersions.set(
+          element.id,
+          Math.max(sharedVersions.get(element.id) ?? -1, element.version)
+        );
+      instance.updateScene({
+        elements: reconcileElements(
+          instance.getSceneElementsIncludingDeleted(),
+          remote,
+          instance.getAppState()
+        ),
+        // someone else's strokes don't go on this person's undo stack
+        captureUpdate: CaptureUpdateAction.NEVER,
+      });
+    });
+    connection.on('files', (payload) => {
+      if (!Array.isArray(payload.files)) return;
+      const files = payload.files as BinaryFileData[];
+      for (const file of files) knownFiles.add(file.id);
+      api.current?.addFiles(files);
+    });
+    // a newcomer gets the whole board
+    connection.on('hello', () => sendChanges(true));
+    connection.on('pointer', (payload) => {
+      const instance = api.current;
+      const from = String(payload.from ?? '') as SocketId;
+      if (!instance || !from) return;
+      pointers.set(from, {
+        pointer: payload.pointer as Collaborator['pointer'],
+        button: payload.button as Collaborator['button'],
+        username: String(payload.name ?? ''),
+        id: from,
+      });
+      instance.updateScene({ collaborators: new Map(pointers) });
+    });
+    connection.onPeers((peers) => {
+      onPeers(peers);
+      // the pointers of people who left disappear
+      const here = new Set<string>(peers.map((peer) => peer.id));
+      for (const id of pointers.keys()) if (!here.has(id)) pointers.delete(id);
+      api.current?.updateScene({ collaborators: new Map(pointers) });
+    });
+    connection.onStatus((status) => {
+      if (status === 'live') connection.send('hello', {});
+    });
+    connection.start();
+    return () => {
+      window.clearTimeout(sendTimer.current);
+      connection.close();
+      connectionRef.current = null;
+      sharedVersions.clear();
+      knownFiles.clear();
+      pointers.clear();
+    };
+  }, [serverUrl, serverKey, room, name, sendChanges, onPeers]);
+
   return (
     <Excalidraw
       langCode={LANG_CODES[language]}
       theme={dark ? 'dark' : 'light'}
+      isCollaborating={!!connectionRef.current}
       initialData={
         initial.current
           ? {
@@ -62,6 +203,7 @@ export default function BoardCanvas({
       }
       UIOptions={{ canvasActions: { loadScene: false, saveToActiveFile: false } }}
       excalidrawAPI={(instance: ExcalidrawImperativeAPI) => {
+        api.current = instance;
         onReady({
           picture: async () => {
             const elements = instance.getSceneElements();
@@ -74,17 +216,38 @@ export default function BoardCanvas({
             });
           },
           clear: () => {
-            instance.resetScene();
-            unsaved.current = { elements: [], files: {} };
-            flush();
+            // every shape is marked deleted with a new version, so the others' boards clear too
+            const cleared = instance.getSceneElementsIncludingDeleted().map((element) => ({
+              ...element,
+              isDeleted: true,
+              version: element.version + 1,
+              versionNonce: Math.floor(Math.random() * 2 ** 31),
+              updated: Date.now(),
+            }));
+            instance.updateScene({
+              elements: cleared,
+              captureUpdate: CaptureUpdateAction.IMMEDIATELY,
+            });
           },
         });
       }}
-      onChange={(elements, _appState, files) => {
+      onPointerUpdate={({ pointer, button }) => {
+        const now = Date.now();
+        const connection = connectionRef.current;
+        if (!connection || now - lastPointer.current < POINTER_EVERY) return;
+        lastPointer.current = now;
+        connection.send('pointer', { pointer, button, name });
+      }}
+      onChange={(elements, _appState, files: BinaryFiles) => {
         // pictures pasted on the board can be large; storage may refuse them, the drawing stays
         unsaved.current = { elements: elements.filter((element) => !element.isDeleted), files };
         window.clearTimeout(timer.current);
         timer.current = window.setTimeout(flush, 400);
+        if (!connectionRef.current || sendTimer.current) return;
+        sendTimer.current = window.setTimeout(() => {
+          sendTimer.current = undefined;
+          sendChanges();
+        }, SEND_EVERY);
       }}
     />
   );

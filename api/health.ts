@@ -18,5 +18,11 @@ export default function handler(_request: VercelRequest, response: VercelRespons
     zoom: zoomConfigured(),
     // whether Notion pages can be read (and lessons added to them)
     notion: notionConfigured(),
+    // where the lesson board is shared live (Supabase Realtime); the key is the project's
+    // public one, made to be used in browsers
+    board:
+      process.env.SUPABASE_URL && process.env.SUPABASE_ANON_KEY
+        ? { url: process.env.SUPABASE_URL, key: process.env.SUPABASE_ANON_KEY }
+        : null,
   });
 }

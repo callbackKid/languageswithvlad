@@ -16,6 +16,11 @@ export const call = defineMessages({
     boardTitle: 'Board',
     boardHint:
       'Write, draw and paste pictures, like on a whiteboard. Share your screen in the call so the student sees it. Saved on this device for each day.',
+    boardHintShared:
+      'Write, draw and paste pictures. The teacher and the student see the same board and can both draw on it at once. It is also saved on this device for each day.',
+    boardLive: '🟢 Live with: {names}',
+    boardWaiting: 'Shared board: waiting for the other person to open it…',
+    someone: 'someone',
     openBoard: 'Open the board',
     loadingBoard: 'Loading the board…',
     fullScreen: 'Full screen',
@@ -67,6 +72,11 @@ export const call = defineMessages({
     boardTitle: 'Доска',
     boardHint:
       'Пишите, рисуйте и вставляйте картинки, как на доске. Покажите экран в звонке, чтобы ученик её видел. Сохраняется на этом устройстве отдельно на каждый день.',
+    boardHintShared:
+      'Пишите, рисуйте и вставляйте картинки. Преподаватель и ученик видят одну и ту же доску и могут рисовать на ней одновременно. Она также сохраняется на этом устройстве отдельно на каждый день.',
+    boardLive: '🟢 Вместе с вами: {names}',
+    boardWaiting: 'Общая доска: ждём, пока её откроет второй участник…',
+    someone: 'участник',
     openBoard: 'Открыть доску',
     loadingBoard: 'Загружаю доску…',
     fullScreen: 'На весь экран',
@@ -115,6 +125,11 @@ export const call = defineMessages({
     boardTitle: 'Tableau',
     boardHint:
       'Écrivez, dessinez et collez des images, comme sur un tableau blanc. Partagez votre écran dans l’appel pour que l’élève le voie. Enregistré sur cet appareil pour chaque jour.',
+    boardHintShared:
+      'Écrivez, dessinez et collez des images. Le professeur et l’élève voient le même tableau et peuvent y dessiner en même temps. Il est aussi enregistré sur cet appareil pour chaque jour.',
+    boardLive: '🟢 En direct avec : {names}',
+    boardWaiting: 'Tableau partagé : en attente que l’autre personne l’ouvre…',
+    someone: 'quelqu’un',
     openBoard: 'Ouvrir le tableau',
     loadingBoard: 'Chargement du tableau…',
     fullScreen: 'Plein écran',
@@ -164,6 +179,11 @@ export const call = defineMessages({
     boardTitle: 'Tafel',
     boardHint:
       'Schreib, zeichne und füge Bilder ein, wie an einem Whiteboard. Teile deinen Bildschirm im Anruf, damit die Schülerin oder der Schüler sie sieht. Wird auf diesem Gerät für jeden Tag gespeichert.',
+    boardHintShared:
+      'Schreib, zeichne und füge Bilder ein. Lehrkraft und Schüler sehen dieselbe Tafel und können gleichzeitig darauf zeichnen. Sie wird außerdem auf diesem Gerät für jeden Tag gespeichert.',
+    boardLive: '🟢 Live mit: {names}',
+    boardWaiting: 'Geteilte Tafel: Es wird gewartet, bis die andere Person sie öffnet…',
+    someone: 'jemand',
     openBoard: 'Tafel öffnen',
     loadingBoard: 'Tafel wird geladen…',
     fullScreen: 'Vollbild',

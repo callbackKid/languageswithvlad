@@ -1,5 +1,6 @@
 import { translator } from '../i18n/core';
 import { common } from '../i18n/messages/common';
+import type { BoardServer } from './boardSync';
 import type { ImagePayload } from './image';
 import { load } from './storage';
 import type { Language } from './types';
@@ -102,6 +103,7 @@ export const api = {
       feedback?: boolean;
       zoom?: boolean;
       notion?: boolean;
+      board?: BoardServer | null;
     }>('/api/health'),
   zoomSignature: (meetingNumber: string) =>
     request<{ signature: string }>('/api/zoom-signature', {

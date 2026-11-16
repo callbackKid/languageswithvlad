@@ -14,6 +14,7 @@ React + TypeScript + Vite in the browser, small Vercel serverless functions in `
 - [Optional: feedback from students in Telegram](#optional-feedback-from-students-in-telegram)
 - [Optional: lessons in Notion](#optional-lessons-in-notion)
 - [Optional: Zoom calls inside the app](#optional-zoom-calls-inside-the-app)
+- [Optional: a live board for teacher and student](#optional-a-live-board-for-teacher-and-student)
 - [Pages](#pages)
 - [Local development](#local-development)
 - [Project structure](#project-structure)
@@ -50,7 +51,7 @@ React + TypeScript + Vite in the browser, small Vercel serverless functions in `
 - **Discuss**: a discussion question for the start of a lesson, for a chosen level, a vocabulary topic from the list or the student’s own (“the TV series Dexter”) and a grammar point, with follow-up questions, sentence starters, useful words and a fold-out explanation of the grammar rule.
 - **Document**: the Google Docs editor inside the app.
 - **Next lesson** date and **Enter the lesson** button in the top bar, read from the document.
-- **Lesson mode** (`/call`): the call, the teacher’s notes and the lesson’s words on one screen. Google Meet opens as a small window beside the app (Google doesn’t allow Meet inside other sites); Zoom runs inside the page (optional setup). The notes go into the Google Doc as a new lesson with one button. Below them, a **board** (Excalidraw) to write and draw on; the student sees it through screen sharing.
+- **Lesson mode** (`/call`): the call, the teacher’s notes and the lesson’s words on one screen. Google Meet opens as a small window beside the app (Google doesn’t allow Meet inside other sites); Zoom runs inside the page (optional setup). The notes go into the Google Doc as a new lesson with one button. Below them, a **board** (Excalidraw) to write and draw on, shared live between the teacher and the student (optional setup), or shown through screen sharing.
 - **Tutorial**: a guide to every section, written for students.
 - **Settings** (your picture in the top bar): interface language (English, Russian, French, German; the browser’s by default), light or dark theme, the languages you learn and your level in each (practice and Discuss then show only those), name and picture, daily goal, speech speed, and which sections the menu shows. Word translations stay in Russian.
 
@@ -83,6 +84,7 @@ About 10 minutes.
    | `GOOGLE_SERVICE_ACCOUNT`                 | no          | Lets the app add lessons to the Google Doc (setup below).               |
    | `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` | no          | Sends students’ bug reports and ideas to your Telegram (setup below).   |
    | `ZOOM_SDK_KEY`, `ZOOM_SDK_SECRET`        | no          | Runs Zoom calls inside the app, in lesson mode (setup below).           |
+   | `SUPABASE_URL`, `SUPABASE_ANON_KEY`      | no          | Shares the lesson board live between teacher and student (setup below). |
    | `NOTION_TOKEN`                           | no          | Reads lessons from Notion pages instead of a Google Doc (setup below).  |
 
 5. **Deploy**, then redeploy once after adding variables so the functions pick them up.
@@ -153,6 +155,18 @@ Limits to know:
 - The app joins as a **participant**. Start the meeting as host from the Zoom app, or turn on **Allow participants to join before host** for the meeting. Hosting from the app would need a Zoom sign-in (OAuth), which isn’t built yet.
 - Zoom only lets an unpublished developer app join meetings of its **own account**. For students joining your meetings that’s fine; joining other people’s meetings needs Zoom’s app review.
 - The SDK is large (about 1 MB compressed), so it downloads only when someone presses **Join here**.
+
+## Optional: a live board for teacher and student
+
+The board in lesson mode works on its own device without any setup; the student sees it when the teacher shares the screen. With [Supabase](https://supabase.com) connected, the teacher and the student draw on **the same board at once** and see each other's pointer and name. Strokes travel through Supabase Realtime and are merged on each device, so drawing at the same time loses nothing; nothing is stored at Supabase.
+
+1. Create a free account at [supabase.com](https://supabase.com) and a **New project** (any name, any region close to you; the database password isn't needed by the app).
+2. Open **Project Settings → API** (or **API Keys**) and copy the **Project URL** and the **anon** / **publishable** key. That key is public by design: it is sent to the browser.
+3. In Vercel, add `SUPABASE_URL` and `SUPABASE_ANON_KEY`. Redeploy.
+
+Then both open lesson mode (**Enter the lesson**) and press **Open the board**; the line above it turns green and lists who is there. Everyone with the student link to the same document joins the same board, one board a day. The free plan's limits (hundreds of people at once, millions of messages a month) are far above a class's needs. Pictures over about 180 KB stay on the device that pasted them.
+
+During local development without Supabase, two tabs of the same browser share the board, to try it out.
 
 ## Pages
 

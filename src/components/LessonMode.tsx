@@ -3,6 +3,7 @@ import { useRef, useState } from 'react';
 import { useTranslation } from '../i18n/core';
 import { call } from '../i18n/messages/call';
 import type { Bank } from '../lib/bank';
+import type { BoardServer } from '../lib/boardSync';
 import { findCall, openCallWindow } from '../lib/call';
 import { followLink, hrefFor } from '../lib/router';
 import { lessonPath } from '../lib/sections';
@@ -22,6 +23,9 @@ const today = () => {
   const now = new Date();
   return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
 };
+
+/** Today's date in UTC, the same for everyone wherever they are. */
+const utcDay = () => new Date().toISOString().slice(0, 10);
 
 /** The call: Meet in a small window beside the app (it can't be embedded), Zoom inside the page. */
 function CallPanel({ docText, zoomReady }: { docText: string; zoomReady: boolean }) {
@@ -245,6 +249,7 @@ export default function LessonMode({
   lessons,
   target,
   zoomReady,
+  boardServer,
 }: {
   docText: string;
   docId: string;
@@ -252,6 +257,7 @@ export default function LessonMode({
   lessons: Lesson[];
   target: DocTarget;
   zoomReady: boolean;
+  boardServer: BoardServer | null;
 }) {
   const { t } = useTranslation(call);
   return (
@@ -264,7 +270,13 @@ export default function LessonMode({
         </div>
         <LessonNotes docId={docId} target={target} />
       </div>
-      <LessonBoard storageKey={`board:${docId}:${today()}`} />
+      {/* the room is the same for the teacher and the student on this document today; the day is
+          counted in UTC, so people in different time zones still meet on one board */}
+      <LessonBoard
+        storageKey={`board:${docId}:${utcDay()}`}
+        room={`board:${hash(docId)}:${utcDay()}`}
+        server={boardServer}
+      />
     </>
   );
 }

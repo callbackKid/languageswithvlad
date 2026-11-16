@@ -196,7 +196,7 @@ export const tutorial = defineMessages({
     'call.step4':
       'After the lesson, <btn>Add to Google Doc as Leçon 8</btn> puts the notes into the document as a new lesson, ready for exercises.',
     'call.step5':
-      '<pbtn>Open the board</pbtn> under the notes: write, draw and paste pictures. Share your screen in the call so the student sees it. <b>Full screen</b> and <b>Save as picture</b> are above it.',
+      '<pbtn>Open the board</pbtn> under the notes: write, draw and paste pictures. With live sharing set up, the teacher and the student draw on the same board at once and see each other’s pointer; otherwise share your screen in the call. <b>Full screen</b> and <b>Save as picture</b> are above it.',
     'call.tip3':
       '<btn>Side by side (half the screen)</btn> opens Meet over the right half of the screen, next to the app.',
     'call.tip1':
@@ -405,7 +405,7 @@ export const tutorial = defineMessages({
     'call.step4':
       'После урока <btn>Добавить в Google-документ как Leçon 8</btn> переносит заметки в документ новым уроком — сразу с упражнениями.',
     'call.step5':
-      '<pbtn>Открыть доску</pbtn> под заметками: пишите, рисуйте, вставляйте картинки. Покажите экран в звонке, чтобы ученик видел доску. Над ней — <b>На весь экран</b> и <b>Сохранить картинкой</b>.',
+      '<pbtn>Открыть доску</pbtn> под заметками: пишите, рисуйте, вставляйте картинки. Если настроен общий доступ, преподаватель и ученик рисуют на одной доске одновременно и видят указатель друг друга; иначе покажите экран в звонке. Над ней — <b>На весь экран</b> и <b>Сохранить картинкой</b>.',
     'call.tip3':
       '<btn>Рядом (половина экрана)</btn> открывает Meet на правой половине экрана, рядом с приложением.',
     'call.tip1':
@@ -621,7 +621,7 @@ export const tutorial = defineMessages({
     'call.step4':
       'Après le cours, <btn>Ajouter au Google Doc comme Leçon 8</btn> met les notes dans le document comme nouvelle leçon, prête pour les exercices.',
     'call.step5':
-      '<pbtn>Ouvrir le tableau</pbtn> sous les notes : écrivez, dessinez, collez des images. Partagez votre écran dans l’appel pour que l’élève le voie. <b>Plein écran</b> et <b>Enregistrer en image</b> sont au-dessus.',
+      '<pbtn>Ouvrir le tableau</pbtn> sous les notes : écrivez, dessinez, collez des images. Avec le partage en direct configuré, le professeur et l’élève dessinent sur le même tableau en même temps et voient le pointeur de l’autre ; sinon, partagez votre écran dans l’appel. <b>Plein écran</b> et <b>Enregistrer en image</b> sont au-dessus.',
     'call.tip3':
       '<btn>Côte à côte (moitié de l’écran)</btn> ouvre Meet sur la moitié droite de l’écran, à côté de l’application.',
     'call.tip1':
@@ -836,7 +836,7 @@ export const tutorial = defineMessages({
     'call.step4':
       'Nach der Stunde legt <btn>Als Leçon 8 zum Google-Dokument hinzufügen</btn> die Notizen als neue Lektion ins Dokument, bereit für Übungen.',
     'call.step5':
-      '<pbtn>Tafel öffnen</pbtn> unter den Notizen: schreiben, zeichnen, Bilder einfügen. Teile deinen Bildschirm im Anruf, damit die Schülerin oder der Schüler sie sieht. <b>Vollbild</b> und <b>Als Bild speichern</b> stehen darüber.',
+      '<pbtn>Tafel öffnen</pbtn> unter den Notizen: schreiben, zeichnen, Bilder einfügen. Ist das Live-Teilen eingerichtet, zeichnen Lehrkraft und Schüler gleichzeitig auf derselben Tafel und sehen den Zeiger des anderen; sonst teile deinen Bildschirm im Anruf. <b>Vollbild</b> und <b>Als Bild speichern</b> stehen darüber.',
     'call.tip3':
       '<btn>Nebeneinander (halber Bildschirm)</btn> öffnet Meet auf der rechten Bildschirmhälfte, neben der App.',
     'call.tip1':

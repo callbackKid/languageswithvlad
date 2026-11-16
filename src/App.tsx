@@ -20,6 +20,7 @@ import { type Translator, translator, useTranslation } from './i18n/core';
 import { app } from './i18n/messages/app';
 import { api, ApiError } from './lib/api';
 import { useBank } from './lib/bank';
+import type { BoardServer } from './lib/boardSync';
 import { findCall } from './lib/call';
 import { docIdFrom, splitLessons } from './lib/parse';
 import { setProgressDoc, useProgress } from './lib/progress';
@@ -65,6 +66,7 @@ export default function App() {
   const [feedback, setFeedback] = useState(false);
   const [zoomReady, setZoomReady] = useState(false);
   const [notionReady, setNotionReady] = useState(false);
+  const [boardServer, setBoardServer] = useState<BoardServer | null>(null);
   const [docId, setDocId] = useState<string | null>(initialDocId);
   const [doc, setDoc] = useState<DocCache | null>(() =>
     docId ? load<DocCache>('doc:' + docId) : null
@@ -89,6 +91,7 @@ export default function App() {
         setFeedback(!!health.feedback);
         setZoomReady(!!health.zoom);
         setNotionReady(!!health.notion);
+        setBoardServer(health.board ?? null);
         if (health.needsCode && !load<string>('code')) setNeedsCode(true);
       })
       .catch(() => {
@@ -353,6 +356,7 @@ export default function App() {
             lessons={lessons}
             target={docTarget}
             zoomReady={zoomReady}
+            boardServer={boardServer}
           />
         </main>
       ) : section === 'lessons' ? (
