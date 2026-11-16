@@ -37,7 +37,7 @@ export const tutorial = defineMessages({
     'header.step2':
       '<b>Next lesson</b> shows the date from the newest line like <ex>le cours prochain: 22.11.2026 18:00 de Paris</ex>. A time given for a city is converted to yours. When the date has passed it says “not confirmed yet”.',
     'header.step3':
-      '<b>Join call</b> appears when the document has a Google Meet or Zoom link and opens lesson mode: the call next to the lesson and your notes.',
+      '<b>Enter the lesson</b> appears when the document has a Google Meet or Zoom link and opens lesson mode: the call next to the lesson and your notes.',
     'header.step4':
       '<b>Open document</b> opens the Google Doc in a new tab. <b>Copy student link</b> copies a link that opens this document straight away. <b>Change document</b> connects another one.',
     'header.step5':
@@ -186,7 +186,7 @@ export const tutorial = defineMessages({
     'call.title': 'Lesson mode',
     'call.summary': 'The call, notes and the lesson’s words on one screen',
     'call.intro':
-      'Opens from <b>Join call</b> in the top bar when the document has a Google Meet or Zoom link. Made for the lesson itself.',
+      'Opens from <b>Enter the lesson</b> in the top bar when the document has a Google Meet or Zoom link. Made for the lesson itself.',
     'call.step1':
       '<b>Google Meet</b>: press <pbtn>Open the call in a small window</pbtn>. Meet can’t run inside other websites, so it opens as a small window at the side of the screen.',
     'call.step2':
@@ -246,7 +246,7 @@ export const tutorial = defineMessages({
     'header.step2':
       '<b>Следующий урок</b> показывает дату из самой новой строки вроде <ex>le cours prochain: 22.11.2026 18:00 de Paris</ex>. Время, указанное для города, переводится в ваше. Если дата прошла, будет написано «не подтверждена».',
     'header.step3':
-      '<b>Войти в звонок</b> появляется, если в документе есть ссылка на Google Meet или Zoom, и открывает режим урока: звонок рядом с уроком и заметками.',
+      '<b>Войти в урок</b> появляется, если в документе есть ссылка на Google Meet или Zoom, и открывает режим урока: звонок рядом с уроком и заметками.',
     'header.step4':
       '<b>Открыть документ</b> открывает Google-документ в новой вкладке. <b>Ссылка для ученика</b> копирует ссылку, по которой сразу открывается этот документ. <b>Сменить документ</b> подключает другой.',
     'header.step5':
@@ -395,7 +395,7 @@ export const tutorial = defineMessages({
     'call.title': 'Режим урока',
     'call.summary': 'Звонок, заметки и слова урока на одном экране',
     'call.intro':
-      'Открывается кнопкой <b>Войти в звонок</b> в верхней панели, если в документе есть ссылка на Google Meet или Zoom. Для самого урока.',
+      'Открывается кнопкой <b>Войти в урок</b> в верхней панели, если в документе есть ссылка на Google Meet или Zoom. Для самого урока.',
     'call.step1':
       '<b>Google Meet</b>: нажмите <pbtn>Открыть звонок в маленьком окне</pbtn>. Meet нельзя встроить в другие сайты, поэтому он открывается маленьким окном сбоку экрана.',
     'call.step2':
@@ -456,7 +456,7 @@ export const tutorial = defineMessages({
     'header.step2':
       '<b>Prochain cours</b> affiche la date de la ligne la plus récente comme <ex>le cours prochain: 22.11.2026 18:00 de Paris</ex>. Une heure donnée pour une ville est convertie dans la vôtre. Une fois la date passée, il est écrit « pas encore confirmée ».',
     'header.step3':
-      '<b>Rejoindre l’appel</b> apparaît quand le document contient un lien Google Meet ou Zoom et ouvre le mode cours : l’appel à côté de la leçon et de vos notes.',
+      '<b>Entrer dans le cours</b> apparaît quand le document contient un lien Google Meet ou Zoom et ouvre le mode cours : l’appel à côté de la leçon et de vos notes.',
     'header.step4':
       '<b>Ouvrir le document</b> ouvre le Google Doc dans un nouvel onglet. <b>Copier le lien élève</b> copie un lien qui ouvre directement ce document. <b>Changer de document</b> en connecte un autre.',
     'header.step5':
@@ -611,7 +611,7 @@ export const tutorial = defineMessages({
     'call.title': 'Mode cours',
     'call.summary': 'L’appel, les notes et les mots de la leçon sur un seul écran',
     'call.intro':
-      'S’ouvre avec <b>Rejoindre l’appel</b> dans la barre du haut quand le document contient un lien Google Meet ou Zoom. Pensé pour le cours lui-même.',
+      'S’ouvre avec <b>Entrer dans le cours</b> dans la barre du haut quand le document contient un lien Google Meet ou Zoom. Pensé pour le cours lui-même.',
     'call.step1':
       '<b>Google Meet</b> : appuyez sur <pbtn>Ouvrir l’appel dans une petite fenêtre</pbtn>. Meet ne peut pas s’afficher dans d’autres sites : il s’ouvre dans une petite fenêtre sur le côté de l’écran.',
     'call.step2':
@@ -674,7 +674,7 @@ export const tutorial = defineMessages({
     'header.step2':
       '<b>Nächste Stunde</b> zeigt das Datum aus der neuesten Zeile wie <ex>nächste Stunde: 22.11.2026 18:00 Berlin</ex>. Eine Uhrzeit für eine Stadt wird in deine umgerechnet. Ist das Datum vorbei, steht dort „noch nicht bestätigt“.',
     'header.step3':
-      '<b>Anruf beitreten</b> erscheint, wenn das Dokument einen Google-Meet- oder Zoom-Link enthält, und öffnet den Unterrichtsmodus: den Anruf neben der Lektion und deinen Notizen.',
+      '<b>Zur Stunde</b> erscheint, wenn das Dokument einen Google-Meet- oder Zoom-Link enthält, und öffnet den Unterrichtsmodus: den Anruf neben der Lektion und deinen Notizen.',
     'header.step4':
       '<b>Dokument öffnen</b> öffnet das Google-Dokument in einem neuen Tab. <b>Schülerlink kopieren</b> kopiert einen Link, der dieses Dokument direkt öffnet. <b>Dokument wechseln</b> verbindet ein anderes.',
     'header.step5':
@@ -826,7 +826,7 @@ export const tutorial = defineMessages({
     'call.title': 'Unterrichtsmodus',
     'call.summary': 'Anruf, Notizen und die Wörter der Lektion auf einem Bildschirm',
     'call.intro':
-      'Öffnet sich über <b>Anruf beitreten</b> in der oberen Leiste, wenn das Dokument einen Google-Meet- oder Zoom-Link enthält. Gemacht für die Stunde selbst.',
+      'Öffnet sich über <b>Zur Stunde</b> in der oberen Leiste, wenn das Dokument einen Google-Meet- oder Zoom-Link enthält. Gemacht für die Stunde selbst.',
     'call.step1':
       '<b>Google Meet</b>: Tippe auf <pbtn>Anruf in kleinem Fenster öffnen</pbtn>. Meet lässt sich nicht in andere Websites einbetten, deshalb öffnet es sich als kleines Fenster am Bildschirmrand.',
     'call.step2':

@@ -49,7 +49,7 @@ React + TypeScript + Vite in the browser, small Vercel serverless functions in `
 
 - **Discuss**: a discussion question for the start of a lesson, for a chosen level, a vocabulary topic from the list or the student’s own (“the TV series Dexter”) and a grammar point, with follow-up questions, sentence starters, useful words and a fold-out explanation of the grammar rule.
 - **Document**: the Google Docs editor inside the app.
-- **Next lesson** date and **Join call** button in the top bar, read from the document.
+- **Next lesson** date and **Enter the lesson** button in the top bar, read from the document.
 - **Lesson mode** (`/call`): the call, the teacher’s notes and the lesson’s words on one screen. Google Meet opens as a small window beside the app (Google doesn’t allow Meet inside other sites); Zoom runs inside the page (optional setup). The notes go into the Google Doc as a new lesson with one button. Below them, a **board** (Excalidraw) to write and draw on; the student sees it through screen sharing.
 - **Tutorial**: a guide to every section, written for students.
 - **Settings** (your picture in the top bar): interface language (English, Russian, French, German; the browser’s by default), light or dark theme, the languages you learn and your level in each (practice and Discuss then show only those), name and picture, daily goal, speech speed, and which sections the menu shows. Word translations stay in Russian.
@@ -126,7 +126,7 @@ Instead of a Google Doc, the app can read a Notion page: paste its link on the f
 - as **sub-pages**, each titled like `12.11.2026 1 Leçon`;
 - as rows of a **database**: a row titled `12.11.2026 1 Leçon`, or any title plus a **Date** column (the app builds the heading from the date).
 
-Tables become “word — translation — transcription” lines, toggles and columns are read too, and a Meet or Zoom link hidden behind text still counts for **Join call**. Notion pages can’t be edited inside the app; the Document page links to Notion instead.
+Tables become “word — translation — transcription” lines, toggles and columns are read too, and a Meet or Zoom link hidden behind text still counts for **Enter the lesson**. Notion pages can’t be edited inside the app; the Document page links to Notion instead.
 
 Notion only lets apps read pages through an integration, so this needs a one-time setup:
 
@@ -172,7 +172,7 @@ Every section has its own address, so links can be shared and the browser’s Ba
 | Tutorial    | `/tutorial`                                               |
 | Text        | `/text`                                                   |
 | Settings    | `/settings`                                               |
-| Lesson mode | `/call` (opened by **Join call**, not in the menu)        |
+| Lesson mode | `/call` (opened by **Enter the lesson**, not in the menu) |
 
 `vercel.json` sends every address except `/api/…` to the app, so refreshing any page works.
 

@@ -246,7 +246,7 @@ export default function App() {
               aria-current={section === 'call' ? 'page' : undefined}
               onClick={(event) => followLink(event, '/call')}
             >
-              {t('joinCall')}
+              {t('enterLesson')}
             </a>
           )}
           <a className="btn" href={docUrl} target="_blank" rel="noopener noreferrer">

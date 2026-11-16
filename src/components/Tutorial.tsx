@@ -99,7 +99,7 @@ function MockBody({ id }: { id: string }) {
               { when: `${appText('tomorrow')}, 18:00` }
             )}
           </span>
-          <Button>{appText('joinCall')}</Button>
+          <Button>{appText('enterLesson')}</Button>
           <Button>{appText('openDocument')}</Button>
           <Button primary>{appText('sync')}</Button>
           <Button>{appText('copyLink')}</Button>

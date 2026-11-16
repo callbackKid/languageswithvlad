@@ -27,7 +27,7 @@ export const SECTIONS: { id: Section; path: string; inMenu?: false }[] = [
   { id: 'document', path: '/document' },
   { id: 'tutorial', path: '/tutorial' },
   { id: 'settings', path: '/settings' },
-  // lesson mode opens from Join call, not from the menu
+  // lesson mode opens from Enter the lesson, not from the menu
   { id: 'call', path: '/call', inMenu: false },
 ];
 
