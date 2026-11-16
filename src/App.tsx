@@ -23,6 +23,7 @@ import { api, ApiError } from './lib/api';
 import { useBank } from './lib/bank';
 import type { BoardServer } from './lib/boardSync';
 import { findCall } from './lib/call';
+import { useLessonOn, useLiveSync } from './lib/liveSync';
 import { hasUnseenNews } from './lib/news';
 import { docIdFrom, splitLessons } from './lib/parse';
 import { setProgressDoc, useProgress } from './lib/progress';
@@ -115,9 +116,10 @@ export default function App() {
   // Only the newest sync may touch the screen: an answer for a document the user has since
   // switched away from is saved for later, never shown.
   const latestSync = useRef(0);
-  const runSync = useCallback(async (id: string) => {
+  // a quiet sync (the live one during a lesson) shows no spinner and keeps the old status if it fails
+  const runSync = useCallback(async (id: string, quiet = false) => {
     const syncNumber = ++latestSync.current;
-    setSync({ state: 'loading' });
+    if (!quiet) setSync({ state: 'loading' });
     try {
       const fetched = await api.doc(id);
       const next = { title: fetched.title, text: fetched.text, fetchedAt: Date.now() };
@@ -126,7 +128,7 @@ export default function App() {
       setDoc(next);
       setSync({ state: 'ok' });
     } catch (error) {
-      if (syncNumber !== latestSync.current) return;
+      if (syncNumber !== latestSync.current || quiet) return;
       setSync({
         state: 'error',
         // read at the moment of failure, so a new interface language doesn't start a sync
@@ -153,10 +155,16 @@ export default function App() {
     return () => window.removeEventListener('cahier:doc-changed', onChanged);
   }, [docId, runSync]);
 
+  // split again only when the text changed: a live sync every minute mostly brings back the same text
+  const docText = doc?.text;
   const lessons = useMemo(
-    () => (typeof doc?.text === 'string' ? splitLessons(doc.text) : []),
-    [doc]
+    () => (typeof docText === 'string' ? splitLessons(docText) : []),
+    [docText]
   );
+  const lessonOn = useLessonOn(docText ?? '');
+  useLiveSync(lessonOn && !!docId, () => {
+    if (docId) void runSync(docId, true);
+  });
   const bank = useBank(lessons, ai);
   // Set while rendering, so the first quiz round already sees this document's progress.
   setProgressDoc(docId);

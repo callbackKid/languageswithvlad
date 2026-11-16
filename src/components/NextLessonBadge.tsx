@@ -56,7 +56,8 @@ export default function NextLessonBadge({ text, action }: { text: string; action
         <span className="live-dot" aria-hidden="true" />
         <span className="next-lesson">{t('lessonNow', { time: localTime })}</span>
       </>,
-      { role: 'status' }
+      // the app reads the document every minute meanwhile (useLiveSync)
+      { role: 'status', title: t('liveSync') }
     );
   // "today", "tomorrow" or "Sun 22 Nov", in the viewer's own calendar
   const startOfDay = (value: Date) =>

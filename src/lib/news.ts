@@ -22,6 +22,18 @@ export const NEWS: NewsDay[] = [
       {
         kind: 'new',
         text: {
+          en: 'Live sync: while the top bar says “Lesson now”, the app reads the document every minute by itself, so the words the teacher writes appear with their exercises without pressing ↻.',
+          ru: 'Живая синхронизация: пока в шапке горит «Урок идёт», приложение само читает документ каждую минуту, и слова, которые пишет учитель, появляются вместе с упражнениями без нажатия ↻.',
+          fr: 'Synchro en direct : tant que la barre du haut affiche « Cours en cours », l’app relit le document chaque minute, et les mots que le professeur écrit apparaissent avec leurs exercices sans appuyer sur ↻.',
+          de: 'Live-Synchronisierung: Solange oben „Stunde läuft“ steht, liest die App das Dokument jede Minute selbst, und die Wörter, die die Lehrkraft schreibt, erscheinen samt Übungen, ohne ↻ zu drücken.',
+          es: 'Sincronización en directo: mientras la barra superior dice «Clase en curso», la app lee el documento cada minuto, y las palabras que escribe el profesor aparecen con sus ejercicios sin pulsar ↻.',
+          pt: 'Sincronização em direto: enquanto a barra de cima diz «Aula a decorrer», a app lê o documento a cada minuto, e as palavras que o professor escreve aparecem com os exercícios sem carregar em ↻.',
+          it: 'Sincronizzazione dal vivo: finché la barra in alto dice «Lezione in corso», l’app rilegge il documento ogni minuto, e le parole che l’insegnante scrive compaiono con i loro esercizi senza premere ↻.',
+        },
+      },
+      {
+        kind: 'new',
+        text: {
           en: 'Every lesson now has Grammar (the rules explained, with practice sentences on each), Homework (a list to tick off) and Book exercises (imported from photos or a PDF into the lesson in the document). My notes also shows the board and lesson-mode notes from that day.',
           ru: 'В каждом уроке теперь есть Грамматика (правила с объяснением и тренировкой на каждое), Домашнее задание (список с галочками) и Упражнения из учебника (с фото или PDF, добавляются в урок в документе). В «Моих заметках» видны доска и заметки из режима урока за тот день.',
           fr: 'Chaque leçon a maintenant Grammaire (les règles expliquées, avec des phrases d’entraînement sur chacune), Devoirs (une liste à cocher) et Exercices du manuel (importés depuis des photos ou un PDF dans la leçon du document). Mes notes affiche aussi le tableau et les notes du mode cours de ce jour-là.',

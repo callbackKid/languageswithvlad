@@ -63,6 +63,15 @@ export interface Bank {
 /** Every prepared lesson's words, verbs and pairs, newest lesson first. The newest lessons are prepared one at a time if missing. */
 export function useBank(lessons: Lesson[], ai: boolean): Bank {
   const [analyses, setAnalyses] = useState<Record<string, Analysis>>({});
+  // The words of a newest lesson the teacher has just edited, kept from before the edit while
+  // Claude reads it again, so they don't drop out of the exercises for those seconds (during a
+  // lesson the document is read every minute).
+  const [stale, setStale] = useState<Record<string, Analysis>>({});
+  const shown = useMemo(() => ({ ...stale, ...analyses }), [stale, analyses]);
+  const latestShown = useRef(shown);
+  useEffect(() => {
+    latestShown.current = shown;
+  }, [shown]);
   const [failed, setFailed] = useState<Set<string>>(new Set());
   const [tick, setTick] = useState(0);
   const busy = useRef(false);
@@ -73,11 +82,17 @@ export function useBank(lessons: Lesson[], ai: boolean): Bank {
   useEffect(() => {
     generation.current++;
     const out: Record<string, Analysis> = {};
+    const kept: Record<string, Analysis> = {};
+    const auto = new Set(lessons.slice(-AUTO_PREPARE).map((lesson) => lesson.key));
     for (const lesson of lessons) {
       const analysis = readAnalysis(lesson.hash) || (ai ? null : localParse(lesson.body));
+      const before = latestShown.current[lesson.key];
       if (analysis) out[lesson.key] = analysis;
+      // only lessons that are prepared again right away
+      else if (ai && auto.has(lesson.key) && before) kept[lesson.key] = before;
     }
     setAnalyses(out);
+    setStale(kept);
     setFailed(new Set());
   }, [lessons, ai]);
 
@@ -128,7 +143,7 @@ export function useBank(lessons: Lesson[], ai: boolean): Bank {
     const seenWords = new Set<string>(),
       seenVerbs = new Set<string>();
     for (const lesson of [...lessons].reverse()) {
-      const analysis = analyses[lesson.key];
+      const analysis = shown[lesson.key];
       // lessons in languages the student doesn't learn stay out of practice (Settings)
       if (analysis && !studying.includes(analysis.language)) continue;
       lessonInfos.push({
@@ -169,5 +184,5 @@ export function useBank(lessons: Lesson[], ai: boolean): Bank {
       waiting,
       put,
     };
-  }, [lessons, analyses, failed, ai, put, studying]);
+  }, [lessons, analyses, shown, failed, ai, put, studying]);
 }

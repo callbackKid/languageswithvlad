@@ -67,6 +67,8 @@ export const app = defineMessages({
     tomorrow: 'tomorrow',
     lessonFinished: 'Lesson finished (it started at {time}). The next date isn’t set yet.',
     lessonNow: 'Lesson now · started {time}',
+    liveSync:
+      'The lesson is on: the app reads the document every minute, so new words and their exercises appear by themselves.',
     nextLesson: 'Next lesson: <b>{when}</b>',
     yourTime: '({written}, {time} your time)',
   },
@@ -138,6 +140,8 @@ export const app = defineMessages({
     tomorrow: 'завтра',
     lessonFinished: 'Урок завершён (начался в {time}). Дата следующего пока не назначена.',
     lessonNow: 'Урок идёт · начался в {time}',
+    liveSync:
+      'Урок идёт: приложение каждую минуту читает документ, и новые слова с упражнениями появляются сами.',
     nextLesson: 'Следующий урок: <b>{when}</b>',
     yourTime: '({written}, у вас {time})',
   },
@@ -208,6 +212,8 @@ export const app = defineMessages({
     tomorrow: 'demain',
     lessonFinished: 'Cours terminé (commencé à {time}). La prochaine date n’est pas encore fixée.',
     lessonNow: 'Cours en cours · commencé à {time}',
+    liveSync:
+      'Le cours a lieu : l’app relit le document chaque minute, les nouveaux mots et leurs exercices apparaissent tout seuls.',
     nextLesson: 'Prochain cours : <b>{when}</b>',
     yourTime: '({written}, {time} chez vous)',
   },
@@ -277,6 +283,8 @@ export const app = defineMessages({
     tomorrow: 'morgen',
     lessonFinished: 'Stunde beendet (Beginn {time}). Der nächste Termin steht noch nicht fest.',
     lessonNow: 'Stunde läuft · seit {time}',
+    liveSync:
+      'Die Stunde läuft: Die App liest das Dokument jede Minute neu, neue Wörter und ihre Übungen erscheinen von selbst.',
     nextLesson: 'Nächste Stunde: <b>{when}</b>',
     yourTime: '({written}, bei dir {time})',
   },
@@ -346,6 +354,8 @@ export const app = defineMessages({
     tomorrow: 'mañana',
     lessonFinished: 'Clase terminada (empezó a las {time}). La próxima fecha aún no está fijada.',
     lessonNow: 'Clase en curso · empezó a las {time}',
+    liveSync:
+      'La clase está en curso: la app lee el documento cada minuto, así que las palabras nuevas y sus ejercicios aparecen solos.',
     nextLesson: 'Próxima clase: <b>{when}</b>',
     yourTime: '({written}, {time} en tu hora)',
   },
@@ -415,6 +425,8 @@ export const app = defineMessages({
     tomorrow: 'amanhã',
     lessonFinished: 'Aula terminada (começou às {time}). A próxima data ainda não está marcada.',
     lessonNow: 'Aula a decorrer · começou às {time}',
+    liveSync:
+      'A aula está a decorrer: a app lê o documento a cada minuto, por isso as palavras novas e os exercícios aparecem sozinhos.',
     nextLesson: 'Próxima aula: <b>{when}</b>',
     yourTime: '({written}, {time} na sua hora)',
   },
@@ -485,6 +497,8 @@ export const app = defineMessages({
     lessonFinished:
       'Lezione finita (è iniziata alle {time}). La prossima data non è ancora fissata.',
     lessonNow: 'Lezione in corso · iniziata alle {time}',
+    liveSync:
+      'La lezione è in corso: l’app rilegge il documento ogni minuto, così le parole nuove e i loro esercizi compaiono da soli.',
     nextLesson: 'Prossima lezione: <b>{when}</b>',
     yourTime: '({written}, {time} nel tuo orario)',
   },

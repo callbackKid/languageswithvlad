@@ -33,7 +33,7 @@ export const tutorial = defineMessages({
     'header.intro':
       'The bar at the top is always there. It shows which Google Doc the app reads and when it last synced, plus the next lesson and the video call.',
     'header.step1':
-      '<b>↻</b> next to the document’s name syncs: it reads the document again. Press it after the teacher adds a lesson.',
+      '<b>↻</b> next to the document’s name syncs: it reads the document again. Press it after the teacher adds a lesson. During a lesson (“Lesson now”) the app does it by itself every minute.',
     'header.step2':
       '<b>Next lesson</b> shows the date from the newest line like <ex>le cours prochain: 22.11.2026 18:00 de Paris</ex>. A time given for a city is converted to yours. When the date has passed it says “not confirmed yet”.',
     'header.step3':
@@ -251,7 +251,7 @@ export const tutorial = defineMessages({
     'header.intro':
       'Панель наверху видна всегда. На ней — какой Google-документ читает приложение и когда он синхронизировался, а также следующий урок и видеозвонок.',
     'header.step1':
-      '<b>↻</b> рядом с названием документа синхронизирует: заново читает документ. Нажмите, когда преподаватель добавил урок.',
+      '<b>↻</b> рядом с названием документа синхронизирует: заново читает документ. Нажмите, когда преподаватель добавил урок. Во время урока («Урок идёт») приложение делает это само каждую минуту.',
     'header.step2':
       '<b>Следующий урок</b> показывает дату из самой новой строки вроде <ex>le cours prochain: 22.11.2026 18:00 de Paris</ex>. Время, указанное для города, переводится в ваше. Если дата прошла, будет написано «не подтверждена».',
     'header.step3':
@@ -470,7 +470,7 @@ export const tutorial = defineMessages({
     'header.intro':
       'La barre du haut est toujours là. Elle montre quel Google Doc l’application lit et quand il a été synchronisé, ainsi que le prochain cours et l’appel vidéo.',
     'header.step1':
-      '<b>↻</b> à côté du nom du document synchronise : il relit le document. Appuyez-y quand le professeur a ajouté une leçon.',
+      '<b>↻</b> à côté du nom du document synchronise : il relit le document. Appuyez-y quand le professeur a ajouté une leçon. Pendant un cours (« Cours en cours »), l’application le fait seule chaque minute.',
     'header.step2':
       '<b>Prochain cours</b> affiche la date de la ligne la plus récente comme <ex>le cours prochain: 22.11.2026 18:00 de Paris</ex>. Une heure donnée pour une ville est convertie dans la vôtre. Une fois la date passée, il est écrit « pas encore confirmée ».',
     'header.step3':
@@ -696,7 +696,7 @@ export const tutorial = defineMessages({
     'header.intro':
       'Die Leiste oben ist immer da. Sie zeigt, welches Google-Dokument die App liest und wann zuletzt synchronisiert wurde, dazu die nächste Stunde und den Videoanruf.',
     'header.step1':
-      '<b>↻</b> neben dem Namen des Dokuments synchronisiert: Es liest das Dokument neu. Tippe darauf, wenn die Lehrkraft eine Lektion hinzugefügt hat.',
+      '<b>↻</b> neben dem Namen des Dokuments synchronisiert: Es liest das Dokument neu. Tippe darauf, wenn die Lehrkraft eine Lektion hinzugefügt hat. Während der Stunde („Stunde läuft“) macht die App das jede Minute von selbst.',
     'header.step2':
       '<b>Nächste Stunde</b> zeigt das Datum aus der neuesten Zeile wie <ex>nächste Stunde: 22.11.2026 18:00 Berlin</ex>. Eine Uhrzeit für eine Stadt wird in deine umgerechnet. Ist das Datum vorbei, steht dort „noch nicht bestätigt“.',
     'header.step3':
@@ -917,7 +917,7 @@ export const tutorial = defineMessages({
     'header.intro':
       'La barra de arriba siempre está ahí. Muestra qué Google Doc lee la aplicación y cuándo se sincronizó por última vez, además de la próxima clase y la videollamada.',
     'header.step1':
-      '<b>↻</b> junto al nombre del documento sincroniza: vuelve a leer el documento. Púlsalo cuando el profesor añada una lección.',
+      '<b>↻</b> junto al nombre del documento sincroniza: vuelve a leer el documento. Púlsalo cuando el profesor añada una lección. Durante la clase («Clase en curso») la app lo hace sola cada minuto.',
     'header.step2':
       '<b>Próxima clase</b> muestra la fecha de la línea más reciente como <ex>próxima clase: 22.11.2026 18:00 Madrid</ex>. Una hora indicada para una ciudad se convierte a la tuya. Cuando la fecha ha pasado, dice «aún sin confirmar».',
     'header.step3':
@@ -1141,7 +1141,7 @@ export const tutorial = defineMessages({
     'header.intro':
       'A barra de cima está sempre lá. Mostra que Google Doc a aplicação lê e quando foi sincronizado pela última vez, além da próxima aula e da videochamada.',
     'header.step1':
-      '<b>↻</b> ao lado do nome do documento sincroniza: volta a ler o documento. Carregue nele depois de o professor acrescentar uma lição.',
+      '<b>↻</b> ao lado do nome do documento sincroniza: volta a ler o documento. Carregue nele depois de o professor acrescentar uma lição. Durante a aula («Aula a decorrer») a app fá-lo sozinha a cada minuto.',
     'header.step2':
       '<b>Próxima aula</b> mostra a data da linha mais recente como <ex>próxima aula: 22.11.2026 18:00 Lisboa</ex>. Uma hora indicada para uma cidade é convertida para a sua. Quando a data já passou, diz «ainda por confirmar».',
     'header.step3':
@@ -1365,7 +1365,7 @@ export const tutorial = defineMessages({
     'header.intro':
       'La barra in alto è sempre lì. Mostra quale Google Doc legge l’app e quando è stato sincronizzato l’ultima volta, oltre alla prossima lezione e alla videochiamata.',
     'header.step1':
-      '<b>↻</b> accanto al nome del documento sincronizza: rilegge il documento. Premilo dopo che l’insegnante ha aggiunto una lezione.',
+      '<b>↻</b> accanto al nome del documento sincronizza: rilegge il documento. Premilo dopo che l’insegnante ha aggiunto una lezione. Durante la lezione («Lezione in corso») l’app lo fa da sola ogni minuto.',
     'header.step2':
       '<b>Prossima lezione</b> mostra la data della riga più recente come <ex>prossima lezione: 22.11.2026 18:00 Roma</ex>. Un orario indicato per una città viene convertito nel tuo. Quando la data è passata, dice «non ancora confermata».',
     'header.step3':
