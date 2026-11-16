@@ -47,6 +47,10 @@ function ago(timestamp: number, { t, locale }: Translator<keyof (typeof app)['en
     : new Date(timestamp).toLocaleDateString(locale);
 }
 
+// phones show the menu as a list that drops down, so it starts closed there
+const PHONE = '(max-width: 760px)';
+const onPhone = () => window.matchMedia(PHONE).matches;
+
 function initialDocId(): string | null {
   const fromUrl = docIdFrom(new URLSearchParams(window.location.search).get('doc') || '');
   if (fromUrl) {
@@ -73,6 +77,9 @@ export default function App() {
   );
   const [sync, setSync] = useState<Sync>({ state: 'idle' });
   const [changing, setChanging] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(
+    () => !onPhone() && load<boolean>('menu-open') !== false
+  );
   const route = parsePath(usePath());
   const section = route?.section ?? 'home';
   // an address the app doesn't have goes to Home
@@ -214,6 +221,12 @@ export default function App() {
   // pages about the lessons have nothing to show until the document has one
   const waitingForLessons = !lessons.length && NEEDS_LESSONS.includes(section);
   const example = (text: string) => <span className="example">{text}</span>;
+  const toggleMenu = () => {
+    const open = !menuOpen;
+    setMenuOpen(open);
+    // the choice is kept for wide screens; on a phone the list just closes again
+    if (!onPhone()) save('menu-open', open);
+  };
 
   return (
     <>
@@ -269,132 +282,165 @@ export default function App() {
         </div>
       </header>
 
-      <nav className="sections" aria-label={t('sectionsLabel')}>
-        {SECTIONS.filter(
-          (entry) => entry.inMenu !== false && !settings.hidden.includes(entry.id)
-        ).map((entry) => (
-          <a
-            key={entry.id}
-            className="section-link"
-            href={hrefFor(entry.path)}
-            aria-current={section === entry.id ? 'page' : undefined}
-            onClick={(event) => followLink(event, entry.path)}
-          >
-            {t(`section.${entry.id}`)}
-            {entry.id === 'mine' && hardCount > 0 && <span className="count">{hardCount}</span>}
-          </a>
-        ))}
-      </nav>
-      {waitingForLessons ? (
-        <main className="page">
-          <p className="empty">
-            {sync.state === 'loading' ? (
-              <>
-                <span className="spinner" /> {t('readingDocument')}
-              </>
-            ) : sync.state === 'error' && !doc ? (
-              sync.message
-            ) : (
-              rich(
-                'noLessons',
-                {},
-                {
-                  leçon: example('14.10.2026 1 Leçon'),
-                  lesson: example('14.10.2026 1 Lesson'),
-                  lektion: example('14.10.2026 1 Lektion'),
-                }
-              )
-            )}
-          </p>
-        </main>
-      ) : section === 'document' && notion ? (
-        <main className="page">
-          <p className="empty">
-            {rich('notionDocument', {
-              link: (chunk) => (
-                <a href={docUrl} target="_blank" rel="noopener noreferrer">
-                  {chunk}
+      <div className={'shell' + (menuOpen ? '' : ' menu-closed')}>
+        <aside className="sidebar">
+          <div className="sidebar-inner">
+            <button
+              type="button"
+              className="sidebar-toggle"
+              aria-expanded={menuOpen}
+              aria-controls="sections-menu"
+              title={menuOpen ? t('hideMenu') : t('showMenu')}
+              aria-label={menuOpen ? t('hideMenu') : t('showMenu')}
+              onClick={toggleMenu}
+            >
+              <span className="icon-button" aria-hidden="true">
+                {menuOpen ? '«' : '☰'}
+              </span>
+              {/* on a phone the closed menu says where you are */}
+              <span className="sidebar-current">{t(`section.${section}`)}</span>
+            </button>
+            <nav
+              id="sections-menu"
+              className="sections"
+              aria-label={t('sectionsLabel')}
+              hidden={!menuOpen}
+            >
+              {SECTIONS.filter(
+                (entry) => entry.inMenu !== false && !settings.hidden.includes(entry.id)
+              ).map((entry) => (
+                <a
+                  key={entry.id}
+                  className="section-link"
+                  href={hrefFor(entry.path)}
+                  aria-current={section === entry.id ? 'page' : undefined}
+                  onClick={(event) => {
+                    if (onPhone()) setMenuOpen(false);
+                    followLink(event, entry.path);
+                  }}
+                >
+                  {t(`section.${entry.id}`)}
+                  {entry.id === 'mine' && hardCount > 0 && (
+                    <span className="count">{hardCount}</span>
+                  )}
                 </a>
-              ),
-            })}
-          </p>
-        </main>
-      ) : section === 'document' ? (
-        <main className="doc-editor">
-          <p className="hint">
-            {rich('editorHint', {
-              link: (chunk) => (
-                <a href={docUrl} target="_blank" rel="noopener noreferrer">
-                  {chunk}
-                </a>
-              ),
-            })}
-          </p>
-          <iframe title="Google Doc" src={docUrl} allow="clipboard-read; clipboard-write" />
-        </main>
-      ) : section === 'call' ? (
-        <main className="page wide">
-          <LessonMode
-            docText={doc?.text ?? ''}
-            docId={docId}
-            bank={bank}
-            lessons={lessons}
-            target={docTarget}
-            zoomReady={zoomReady}
-            boardServer={boardServer}
-          />
-        </main>
-      ) : section === 'lessons' ? (
-        <div className="layout">
-          <nav className="lessons" aria-label={t('lessonsLabel')}>
-            {lessons.map((listedLesson) => (
-              <a
-                key={listedLesson.key}
-                className="lesson-link"
-                href={hrefFor(lessonPath(listedLesson.key))}
-                aria-current={listedLesson.key === currentLessonKey ? 'page' : undefined}
-                onClick={(event) => followLink(event, lessonPath(listedLesson.key))}
-              >
-                <span className="n">{listedLesson.n}</span>
-                <span className="d">{shortDateFormat.format(listedLesson.date)}</span>
-              </a>
-            ))}
-          </nav>
-          <main>
-            {lesson && (
-              <LessonView
-                key={lesson.key}
-                lesson={lesson}
+              ))}
+            </nav>
+          </div>
+        </aside>
+        <div className="shell-content">
+          {waitingForLessons ? (
+            <main className="page">
+              <p className="empty">
+                {sync.state === 'loading' ? (
+                  <>
+                    <span className="spinner" /> {t('readingDocument')}
+                  </>
+                ) : sync.state === 'error' && !doc ? (
+                  sync.message
+                ) : (
+                  rich(
+                    'noLessons',
+                    {},
+                    {
+                      leçon: example('14.10.2026 1 Leçon'),
+                      lesson: example('14.10.2026 1 Lesson'),
+                      lektion: example('14.10.2026 1 Lektion'),
+                    }
+                  )
+                )}
+              </p>
+            </main>
+          ) : section === 'document' && notion ? (
+            <main className="page">
+              <p className="empty">
+                {rich('notionDocument', {
+                  link: (chunk) => (
+                    <a href={docUrl} target="_blank" rel="noopener noreferrer">
+                      {chunk}
+                    </a>
+                  ),
+                })}
+              </p>
+            </main>
+          ) : section === 'document' ? (
+            <main className="doc-editor">
+              <p className="hint">
+                {rich('editorHint', {
+                  link: (chunk) => (
+                    <a href={docUrl} target="_blank" rel="noopener noreferrer">
+                      {chunk}
+                    </a>
+                  ),
+                })}
+              </p>
+              <iframe title="Google Doc" src={docUrl} allow="clipboard-read; clipboard-write" />
+            </main>
+          ) : section === 'call' ? (
+            <main className="page wide">
+              <LessonMode
+                docText={doc?.text ?? ''}
                 docId={docId}
-                ai={ai}
-                onAnalysis={bank.put}
+                bank={bank}
+                lessons={lessons}
+                target={docTarget}
+                zoomReady={zoomReady}
+                boardServer={boardServer}
               />
-            )}
-          </main>
-        </div>
-      ) : (
-        <main className="page">
-          {section === 'home' && <Home bank={bank} />}
-          {section === 'practice' && <Practice bank={bank} ai={ai} />}
-          {section === 'mine' && <MyWords ai={ai} />}
-          {section === 'mistakes' && <Mistakes bank={bank} />}
-          {section === 'stats' && <Stats bank={bank} />}
-          {section === 'tutorial' && <Tutorial />}
-          {section === 'settings' && (
-            <Settings
-              lessonDocument={{
-                title: doc?.title || t('lessonNotes'),
-                url: docUrl,
-                studentLink: `${window.location.origin}/?doc=${encodeURIComponent(docId)}`,
-                onChange: () => setChanging(true),
-              }}
-            />
+            </main>
+          ) : section === 'lessons' ? (
+            <div className="layout">
+              <nav className="lessons" aria-label={t('lessonsLabel')}>
+                {lessons.map((listedLesson) => (
+                  <a
+                    key={listedLesson.key}
+                    className="lesson-link"
+                    href={hrefFor(lessonPath(listedLesson.key))}
+                    aria-current={listedLesson.key === currentLessonKey ? 'page' : undefined}
+                    onClick={(event) => followLink(event, lessonPath(listedLesson.key))}
+                  >
+                    <span className="n">{listedLesson.n}</span>
+                    <span className="d">{shortDateFormat.format(listedLesson.date)}</span>
+                  </a>
+                ))}
+              </nav>
+              <main>
+                {lesson && (
+                  <LessonView
+                    key={lesson.key}
+                    lesson={lesson}
+                    docId={docId}
+                    ai={ai}
+                    onAnalysis={bank.put}
+                  />
+                )}
+              </main>
+            </div>
+          ) : (
+            <main className="page">
+              {section === 'home' && <Home bank={bank} />}
+              {section === 'practice' && <Practice bank={bank} ai={ai} />}
+              {section === 'mine' && <MyWords ai={ai} />}
+              {section === 'mistakes' && <Mistakes bank={bank} />}
+              {section === 'stats' && <Stats bank={bank} />}
+              {section === 'tutorial' && <Tutorial />}
+              {section === 'settings' && (
+                <Settings
+                  lessonDocument={{
+                    title: doc?.title || t('lessonNotes'),
+                    url: docUrl,
+                    studentLink: `${window.location.origin}/?doc=${encodeURIComponent(docId)}`,
+                    onChange: () => setChanging(true),
+                  }}
+                />
+              )}
+              {section === 'discuss' && <Discuss bank={bank} ai={ai} />}
+              {section === 'photo' && <PhotoSection ai={ai} target={docTarget} />}
+              {section === 'text' && <Reader ai={ai} />}
+            </main>
           )}
-          {section === 'discuss' && <Discuss bank={bank} ai={ai} />}
-          {section === 'photo' && <PhotoSection ai={ai} target={docTarget} />}
-          {section === 'text' && <Reader ai={ai} />}
-        </main>
-      )}
+        </div>
+      </div>
     </>
   );
 }
