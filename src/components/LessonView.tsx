@@ -5,11 +5,13 @@ import { common } from '../i18n/messages/common';
 import { paper } from '../i18n/messages/paper';
 import { api, ApiError } from '../lib/api';
 import { analysisKey, readAnalysis } from '../lib/bank';
+import { homeworkKey } from '../lib/homework';
 import { localParse, markKeyWords, normalizeAnalysis, normalizeExtras } from '../lib/parse';
 import { load, save } from '../lib/storage';
 import type { Analysis, Lesson, LessonExtras } from '../lib/types';
 import LessonDrawings from './LessonDrawings';
 import { BookTab, GrammarTab, HomeworkTab } from './LessonExtrasTabs';
+import MakeHomework from './MakeHomework';
 import Notes from './Notes';
 import VerbsTab from './VerbsTab';
 import WaitingFact from './WaitingFact';
@@ -229,8 +231,19 @@ export default function LessonView({
           {tab === 'homework' && extras && (
             <HomeworkTab
               tasks={extras.homework}
-              storageKey={`homework:${docId}:${lesson.key}`}
+              storageKey={homeworkKey(docId, lesson.key)}
               language={extras.language}
+            />
+          )}
+          {/* only for a lesson that is in the document, with Claude to write it */}
+          {tab === 'homework' && ai && docWriter !== undefined && tagged && (
+            <MakeHomework
+              lesson={lesson}
+              words={tagged.words}
+              language={tagged.language}
+              docId={docId}
+              docWriter={docWriter}
+              ai={ai}
             />
           )}
           {tab === 'book' && extrasState !== 'loading' && (

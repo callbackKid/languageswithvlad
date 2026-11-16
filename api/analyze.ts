@@ -7,6 +7,7 @@ import {
   asExplainLanguage,
   asLanguage,
   grammarPracticePrompt,
+  homeworkPrompt,
   lessonExtrasPrompt,
 } from './_lib/prompts.js';
 
@@ -17,7 +18,8 @@ const PRACTICE_SENTENCES = 8;
 /* Everything Claude prepares from one lesson, in one function (Vercel's free plan allows 12):
    - "words" (the default): its words with translations, synonym and antonym pairs, and verbs;
    - "extras": its grammar points, homework and exercises from the book;
-   - "practice": gap sentences on one of its grammar points. */
+   - "practice": gap sentences on one of its grammar points;
+   - "homework": homework for the next lesson, made from its words and grammar. */
 export default async function handler(request: VercelRequest, response: VercelResponse) {
   if (!onlyPost(request, response) || !checkAccess(request, response)) return;
   const action: unknown = request.body?.action ?? 'words';
@@ -34,6 +36,27 @@ export default async function handler(request: VercelRequest, response: VercelRe
         explainIn: asExplainLanguage(request.body?.explainIn),
       });
       return response.status(200).json(await claudeJSON(prompt, { model: MODEL, maxTokens: 4000 }));
+    }
+    if (action === 'homework') {
+      const lesson = typeof request.body?.body === 'string' ? request.body.body : '';
+      if (!lesson.trim()) return response.status(400).json({ error: 'Empty lesson.' });
+      if (lesson.length > MAX_LESSON_LENGTH)
+        return response
+          .status(413)
+          .json({ error: 'This lesson is too long to analyze in one go.' });
+      const keyWords = (Array.isArray(request.body?.keyWords) ? request.body.keyWords : [])
+        .map((word: unknown) => text(word, 80))
+        .filter(Boolean)
+        .slice(0, 20);
+      const prompt = homeworkPrompt({
+        body: lesson,
+        keyWords,
+        level: asLevel(request.body?.level) ?? 'A2',
+      });
+      // asked again for another version: never the same answer twice
+      return response
+        .status(200)
+        .json(await claudeJSON(prompt, { model: MODEL, maxTokens: 3000, cache: false }));
     }
     if (action !== 'words' && action !== 'extras')
       return response.status(400).json({ error: 'Unknown action.' });

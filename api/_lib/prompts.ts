@@ -275,3 +275,33 @@ Reply with only a JSON object: {"language": ${LANGUAGE_CODES}, "corrected": stri
 - mistakes: every fix, in the order they appear. wrong is the fragment exactly as the student wrote it, right is the fixed fragment exactly as it appears in corrected, keeping each fragment short (a few words). why is one short sentence in ${explainName}, the way a tutor would say it, naming the rule (agreement of the past participle with être, a feminine noun takes la, …). Return [] when there are no mistakes.
 - comment: one or two sentences in ${explainName} on the whole answer: does it do what the task asks (the number of sentences, the tense or the topic it names), what went well, and the one thing to revise. Be encouraging and concrete.`;
 }
+
+/** Homework made from one lesson: the parts Claude writes. The app builds the "Devoirs:" block
+    around them (src/lib/makeHomework.ts), in a form its homework checklist reads. */
+export function homeworkPrompt({
+  body,
+  keyWords,
+  level,
+}: {
+  body: string;
+  keyWords: string[];
+  level: string;
+}): string {
+  return `Below are a teacher's notes from one language lesson for a Russian-speaking student at CEFR level ${level}. The lesson teaches ${LANGUAGE_LIST}, and the notes mix that language with Russian. Write homework for the next lesson from this lesson's words and grammar.${
+    keyWords.length
+      ? ` The teacher marked these as the lesson's key words; use them first: ${keyWords.join(', ')}.`
+      : ''
+  } Leave out the student's report (a line beginning with 📝 and the lines after it that begin with an emoji or with spaces) and exercises copied from a book (a block beginning with 📖).
+
+Reply with only a JSON object: {"language": ${LANGUAGE_CODES}, "translate": [string], "writing": string, "verbs": [string], "tense": string}.
+- language: the language the lesson teaches: ${LANGUAGE_KEY}.
+- translate: 3 or 4 short Russian sentences for the student to translate into that language, each using the lesson's words (key words first) and its grammar, at the student's level. No semicolons.
+- writing: one short writing task in the lesson's language, starting with its verb for "write" (écrire, write, schreiben, escribir, escrever, scrivere), that practises the lesson's grammar or topic and says how much to write ("écrire 5 phrases au passé composé sur votre week-end"). No semicolons.
+- verbs: for a French lesson, 2 or 3 verbs of the lesson in the infinitive to conjugate, the ones it teaches or uses most; [] for any other language.
+- tense: for a French lesson, the tense to conjugate them in, exactly one of: présent, passé composé, imparfait, futur simple, conditionnel présent, impératif (the one the lesson practises, présent if none); "" for any other language.
+
+Lesson notes:
+"""
+${body}
+"""`;
+}

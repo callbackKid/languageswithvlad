@@ -3375,3 +3375,20 @@ li .open-link {
   font-size: 14px;
   line-height: 1.5;
 }
+
+/* "Make homework with Claude" in a lesson's Homework tab */
+.make-homework {
+  margin-top: 22px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+.make-homework h3 {
+  margin: 0 0 4px;
+  font-size: 16px;
+}
+.homework-text {
+  min-height: 180px;
+  font-family: var(--serif);
+  font-size: 16px;
+  line-height: 1.5;
+}

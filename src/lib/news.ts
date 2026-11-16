@@ -22,6 +22,18 @@ export const NEWS: NewsDay[] = [
       {
         kind: 'new',
         text: {
+          en: 'For teachers: “Make homework with Claude” in a lesson’s Homework tab writes a Devoirs: block from the lesson’s words and grammar, key words first. After a check it goes under the lesson, and the student gets it on Home as a checklist.',
+          ru: 'Для учителя: «Составить с Claude» во вкладке «Домашнее задание» пишет блок Devoirs: по словам и грамматике урока, сначала ключевые слова. После проверки он попадает под урок, а ученик видит его на Главной чек-листом.',
+          fr: 'Pour les professeurs : « Faire les devoirs avec Claude » dans l’onglet Devoirs d’une leçon rédige un bloc Devoirs: à partir des mots et de la grammaire, mots clés d’abord. Après vérification, il va sous la leçon et l’élève le retrouve sur l’accueil en liste à cocher.',
+          de: 'Für Lehrkräfte: „Mit Claude erstellen“ im Tab Hausaufgaben einer Lektion schreibt einen Block Devoirs: aus den Wörtern und der Grammatik, Schlüsselwörter zuerst. Nach dem Prüfen kommt er unter die Lektion, und die Startseite zeigt ihn als Checkliste.',
+          es: 'Para profesores: «Hacer los deberes con Claude» en la pestaña Deberes de una lección redacta un bloque Devoirs: con sus palabras y su gramática, primero las palabras clave. Tras revisarlo va debajo de la lección, y el alumno lo ve en Inicio como lista.',
+          pt: 'Para professores: «Fazer com o Claude» no separador Trabalho de casa de uma lição escreve um bloco Devoirs: com as palavras e a gramática, primeiro as palavras-chave. Depois de verificado vai para baixo da lição, e o aluno vê-o no Início como lista.',
+          it: 'Per gli insegnanti: «Crea con Claude» nella scheda Compiti di una lezione scrive un blocco Devoirs: con le parole e la grammatica, prima le parole chiave. Dopo il controllo va sotto la lezione, e lo studente lo vede nella Home come lista.',
+        },
+      },
+      {
+        kind: 'new',
+        text: {
           en: 'Send to the teacher: under the homework and in Stats, a short report (homework done, mistakes since the lesson, your corrected written answers) goes into the document under the lesson after you’ve read it.',
           ru: 'Отправить учителю: под домашкой и в Статистике короткий отчёт (что сделано, ошибки с урока, исправленные письменные ответы) после вашей проверки попадает в документ под урок.',
           fr: 'Envoyer au professeur : sous les devoirs et dans les Statistiques, un court rapport (devoirs faits, erreurs depuis le cours, vos réponses écrites corrigées) va dans le document sous la leçon, après relecture.',

@@ -88,6 +88,8 @@ export const tutorial = defineMessages({
       '<b>Grammar</b> explains every grammar point of the lesson, with <pbtn>Practise this rule</pbtn> for sentences on it. <b>Homework</b> lists what to do; tick tasks off as you finish. <b>Book exercises</b> shows exercises from the book, and imports new ones from photos or a PDF into the lesson in the document. Under <b>My notes</b> you find the board and the lesson-mode notes from that day.',
     'lessons.tip6':
       'A word the teacher marks with ★ in the document (<ex>★ la boulangerie — пекарня</ex>) is a <b>key word</b>: it has a <b>key</b> badge and comes up more often in exercises.',
+    'lessons.tip7':
+      'For the teacher: under <b>Homework</b>, <btn>Make homework with Claude</btn> writes a <ex>Devoirs:</ex> block from the lesson’s words and grammar (key words first). Check it, press <pbtn>Add to this lesson</pbtn>, and the student finds it on Home as a checklist.',
     'lessons.mock': 'the Words tab of a lesson',
 
     'verbs.title': 'Verbs',
@@ -318,6 +320,8 @@ export const tutorial = defineMessages({
       '<b>Грамматика</b> объясняет каждую тему урока, а <pbtn>Потренировать это правило</pbtn> даёт предложения на неё. <b>Домашнее задание</b> — список того, что нужно сделать; отмечайте выполненное. <b>Упражнения из учебника</b> показывает упражнения из книги и добавляет новые с фото или PDF в урок в документе. В <b>Моих заметках</b> — доска и заметки из режима урока за тот день.',
     'lessons.tip6':
       'Слово, которое учитель отметил в документе звёздочкой (<ex>★ la boulangerie — пекарня</ex>), — <b>ключевое</b>: у него метка <b>ключевое</b>, и в упражнениях оно встречается чаще.',
+    'lessons.tip7':
+      'Для учителя: во вкладке <b>Домашнее задание</b> кнопка <btn>Составить с Claude</btn> пишет блок <ex>Devoirs:</ex> по словам и грамматике урока (сначала ключевые слова). Проверьте, нажмите <pbtn>Добавить в этот урок</pbtn>, и ученик увидит его на Главной чек-листом.',
     'lessons.mock': 'вкладка «Слова» в уроке',
 
     'verbs.title': 'Глаголы',
@@ -546,6 +550,8 @@ export const tutorial = defineMessages({
       '<b>Grammaire</b> explique chaque point de grammaire de la leçon, avec <pbtn>S’entraîner sur cette règle</pbtn> pour des phrases dessus. <b>Devoirs</b> liste ce qu’il faut faire ; cochez au fur et à mesure. <b>Exercices du manuel</b> affiche les exercices du livre et en importe de nouveaux depuis des photos ou un PDF dans la leçon du document. Sous <b>Mes notes</b>, vous trouvez le tableau et les notes du mode cours de ce jour-là.',
     'lessons.tip6':
       'Un mot que le professeur marque d’une ★ dans le document (<ex>★ la boulangerie — пекарня</ex>) est un <b>mot clé</b> : il porte l’étiquette <b>clé</b> et revient plus souvent dans les exercices.',
+    'lessons.tip7':
+      'Pour le professeur : sous <b>Devoirs</b>, <btn>Faire les devoirs avec Claude</btn> rédige un bloc <ex>Devoirs:</ex> à partir des mots et de la grammaire de la leçon (mots clés d’abord). Vérifiez-le, appuyez sur <pbtn>Ajouter à cette leçon</pbtn>, et l’élève le trouve sur l’accueil en liste à cocher.',
     'lessons.mock': 'l’onglet Mots d’une leçon',
 
     'verbs.title': 'Verbes',
@@ -783,6 +789,8 @@ export const tutorial = defineMessages({
       '<b>Grammatik</b> erklärt jedes Grammatikthema der Lektion, mit <pbtn>Diese Regel üben</pbtn> für Sätze dazu. <b>Hausaufgaben</b> zeigt, was zu tun ist; hake Erledigtes ab. <b>Übungen aus dem Lehrbuch</b> zeigt Übungen aus dem Buch und importiert neue aus Fotos oder einem PDF in die Lektion im Dokument. Unter <b>Meine Notizen</b> findest du die Tafel und die Notizen aus dem Unterrichtsmodus von diesem Tag.',
     'lessons.tip6':
       'Ein Wort, das die Lehrkraft im Dokument mit ★ markiert (<ex>★ la boulangerie — пекарня</ex>), ist ein <b>Schlüsselwort</b>: Es trägt das Etikett <b>Schlüssel</b> und kommt in den Übungen öfter dran.',
+    'lessons.tip7':
+      'Für die Lehrkraft: Unter <b>Hausaufgaben</b> schreibt <btn>Mit Claude erstellen</btn> einen Block <ex>Devoirs:</ex> aus den Wörtern und der Grammatik der Lektion (Schlüsselwörter zuerst). Prüfe ihn, drück auf <pbtn>Zu dieser Lektion hinzufügen</pbtn>, und die Startseite zeigt ihn als Checkliste.',
     'lessons.mock': 'der Tab Wörter einer Lektion',
 
     'verbs.title': 'Verben',
@@ -1013,6 +1021,8 @@ export const tutorial = defineMessages({
       '<b>Gramática</b> explica cada punto de gramática de la lección, con <pbtn>Practicar esta regla</pbtn> para hacer frases. <b>Deberes</b> muestra lo que hay que hacer; marca las tareas al terminarlas. <b>Ejercicios del libro</b> muestra los ejercicios del libro e importa otros nuevos desde fotos o un PDF a la lección del documento. En <b>Mis notas</b> están la pizarra y las notas del modo clase de ese día.',
     'lessons.tip6':
       'Una palabra que el profesor marca con ★ en el documento (<ex>★ la boulangerie — пекарня</ex>) es una <b>palabra clave</b>: lleva la etiqueta <b>clave</b> y sale más a menudo en los ejercicios.',
+    'lessons.tip7':
+      'Para el profesor: en <b>Deberes</b>, <btn>Hacer los deberes con Claude</btn> redacta un bloque <ex>Devoirs:</ex> con las palabras y la gramática de la lección (primero las palabras clave). Revísalo, pulsa <pbtn>Añadir a esta lección</pbtn>, y el alumno lo encuentra en Inicio como lista.',
     'lessons.mock': 'la pestaña Palabras de una lección',
 
     'verbs.title': 'Verbos',
@@ -1248,6 +1258,8 @@ export const tutorial = defineMessages({
       '<b>Gramática</b> explica cada ponto de gramática da lição, com <pbtn>Praticar esta regra</pbtn> para fazer frases. <b>Trabalhos de casa</b> mostra o que há para fazer; marque as tarefas ao terminá-las. <b>Exercícios do manual</b> mostra os exercícios do livro e importa novos a partir de fotos ou de um PDF para a lição no documento. Em <b>As minhas notas</b> estão o quadro e as notas do modo aula desse dia.',
     'lessons.tip6':
       'Uma palavra que o professor marca com ★ no documento (<ex>★ la boulangerie — пекарня</ex>) é uma <b>palavra-chave</b>: tem a etiqueta <b>chave</b> e aparece mais vezes nos exercícios.',
+    'lessons.tip7':
+      'Para o professor: em <b>Trabalho de casa</b>, <btn>Fazer com o Claude</btn> escreve um bloco <ex>Devoirs:</ex> com as palavras e a gramática da lição (primeiro as palavras-chave). Verifique-o, carregue em <pbtn>Acrescentar a esta lição</pbtn>, e o aluno encontra-o no Início como lista.',
     'lessons.mock': 'o separador Palavras de uma lição',
 
     'verbs.title': 'Verbos',
@@ -1482,6 +1494,8 @@ export const tutorial = defineMessages({
       '<b>Grammatica</b> spiega ogni punto di grammatica della lezione, con <pbtn>Esercitati su questa regola</pbtn> per fare frasi. <b>Compiti</b> elenca cosa fare; spunta i compiti finiti. <b>Esercizi dal libro</b> mostra gli esercizi del libro e ne importa di nuovi da foto o da un PDF nella lezione del documento. In <b>I miei appunti</b> trovi la lavagna e gli appunti della modalità lezione di quel giorno.',
     'lessons.tip6':
       'Una parola che l’insegnante segna con ★ nel documento (<ex>★ la boulangerie — пекарня</ex>) è una <b>parola chiave</b>: ha l’etichetta <b>chiave</b> e compare più spesso negli esercizi.',
+    'lessons.tip7':
+      'Per l’insegnante: in <b>Compiti</b>, <btn>Crea con Claude</btn> scrive un blocco <ex>Devoirs:</ex> con le parole e la grammatica della lezione (prima le parole chiave). Controllalo, premi <pbtn>Aggiungi a questa lezione</pbtn>, e lo studente lo trova nella Home come lista.',
     'lessons.mock': 'la scheda Parole di una lezione',
 
     'verbs.title': 'Verbi',

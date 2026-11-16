@@ -191,6 +191,12 @@ export const api = {
       method: 'POST',
       body: JSON.stringify({ action: 'study', text, levels }),
     }),
+  /** homework for the next lesson, made by Claude from a lesson's words and grammar */
+  makeHomework: (input: { body: string; keyWords: string[]; level: string }) =>
+    request<unknown>('/api/analyze', {
+      method: 'POST',
+      body: JSON.stringify({ action: 'homework', ...input }),
+    }),
   /** a written homework answer, its mistakes fixed and explained in the interface language */
   checkWriting: (input: { task: string; text: string; level: string; explainIn: string }) =>
     request<unknown>('/api/text', {

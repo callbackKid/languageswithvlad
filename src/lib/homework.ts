@@ -44,6 +44,7 @@ const WRITING =
   /phrases?|sentences?|\bsätze\b|\bsatz\b|frases?|frasi|écri|rédig|\bwrite\b|schreib|escrib|escrev|scriv|напис|сочин|décri|describe|beschreib|descriv|descrev|опиши|tradu|translat|übersetz|перев(?:ест|ед|од)/iu;
 const WORDS =
   /\b(?:mots|words|wörter|vokabeln|palabras|palavras|parole|vocaboli)\b|vocabula|vokabular|лексик|слова/iu;
+const WORDS_FIRST = new RegExp(`^\\s*(?:${WORDS.source})`, 'iu');
 const NUMBER = /(\d{1,3})/;
 
 /** "verbes être, avoir — présent" → the verbs and the tense, when they can be told. */
@@ -75,6 +76,8 @@ export function readItem(text: string): HomeworkItem {
     const { verbs, tense } = readVerbs(text);
     if (verbs.length) return { text, kind: 'verbs', verbs, tense };
   }
+  // "mots de la leçon 6 — surtout : la phrase": a words task, whatever its words are
+  if (WORDS_FIRST.test(text)) return { text, kind: 'words', lessonNumber: number };
   if (WRITING.test(text)) return { text, kind: 'writing' };
   if (WORDS.test(text)) return { text, kind: 'words', lessonNumber: number };
   return { text, kind: 'other' };

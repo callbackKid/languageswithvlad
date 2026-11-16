@@ -36,7 +36,7 @@ React + TypeScript + Vite in the browser, small Vercel serverless functions in `
 
 **Practice across lessons**
 
-- **Home**: a daily round of 10 mixed questions, a 🔥 streak and a daily goal. Above it, the **homework** the teacher wrote in the newest lesson (`Devoirs: …`) as a checklist with the days left until the next lesson; each task opens its exercise (the words of a lesson, gap sentences, verb forms, or a written answer that Claude corrects and explains like a tutor), and finishing it ticks the task. Lesson mode shows the corrected written answers to the teacher. **Send to the teacher** (under the homework and in Stats) adds a short report under the lesson in the document: the homework done, answers and mistakes since the lesson, and the corrected written answers. Its lines start with 📝 and emojis, and lesson analysis skips them.
+- **Home**: a daily round of 10 mixed questions, a 🔥 streak and a daily goal. Above it, the **homework** the teacher wrote in the newest lesson (`Devoirs: …`) as a checklist with the days left until the next lesson; each task opens its exercise (the words of a lesson, gap sentences, verb forms, or a written answer that Claude corrects and explains like a tutor), and finishing it ticks the task. Lesson mode shows the corrected written answers to the teacher. In a lesson's **Homework** tab, **Make homework with Claude** writes such a block from the lesson's words and grammar (key words ★ first) for the teacher to check and add under the lesson. **Send to the teacher** (under the homework and in Stats) adds a short report under the lesson in the document: the homework done, answers and mistakes since the lesson, and the corrected written answers. Its lines start with 📝 and emojis, and lesson analysis skips them.
 - **Downloaded lessons**, **Favourite words**, **Mistakes** and **Stats**.
 
 **From paper**
@@ -253,7 +253,7 @@ src/
 
 ## Costs
 
-Claude is called when a lesson is first prepared, when a verb is first opened, for each new set of gap sentences, for each photo or PDF, for each discussion question, and on the Text page for each explained word, each translation and each set of exercises. Lessons and verbs are cached in each student’s browser, and warm server instances reuse identical answers, so a class sharing one document mostly pays for each lesson once per student device. Set a monthly spend limit in the Anthropic console.
+Claude is called when a lesson is first prepared, when a verb is first opened, for each new set of gap sentences, for each photo or PDF, for each discussion question, and on the Text page for each explained word, each translation and each set of exercises; for each written homework answer checked and each homework made from a lesson. Lessons and verbs are cached in each student’s browser, and warm server instances reuse identical answers, so a class sharing one document mostly pays for each lesson once per student device. Set a monthly spend limit in the Anthropic console.
 
 ## Limits
 
