@@ -11,7 +11,7 @@ import {
   readConjugation,
   usePreparedLesson,
 } from '../lib/bank';
-import { type Homework, type HomeworkItem, homeworkKey } from '../lib/homework';
+import { type Homework, type HomeworkItem, homeworkKey, writingKey } from '../lib/homework';
 import { parseNextLesson } from '../lib/nextLesson';
 import { normalizeConjugation } from '../lib/parse';
 import { getProgress } from '../lib/progress';
@@ -24,6 +24,7 @@ import { shuffle } from '../lib/util';
 import GapFill from './GapFill';
 import WaitingFact from './WaitingFact';
 import WordQuiz from './WordQuiz';
+import WritingTask from './WritingTask';
 
 const ROUND = 10;
 const VERB_FORMS = 12;
@@ -213,6 +214,7 @@ export default function HomeworkCard({
   const lessonLanguage = readAnalysis(homework.lesson.hash)?.language ?? 'fr';
   const action = (item: HomeworkItem): string | null => {
     if (item.kind === 'words') return t('practiseWords');
+    if (item.kind === 'writing') return t('write');
     if (item.kind === 'gaps' && ai) return t('fillGaps');
     if (item.kind === 'verbs' && lessonLanguage === 'fr') return t('conjugate');
     return null;
@@ -223,7 +225,16 @@ export default function HomeworkCard({
     const finished = () => mark(open.text, true);
     return (
       <section className="homework-card exercise">
-        {open.kind === 'verbs' ? (
+        {open.kind === 'writing' ? (
+          <WritingTask
+            task={open.text}
+            language={lessonLanguage}
+            storageKey={writingKey(docId, homework.lesson.key, open.text)}
+            ai={ai}
+            onClose={close}
+            onChecked={finished}
+          />
+        ) : open.kind === 'verbs' ? (
           <VerbsExercise item={open} ai={ai} onClose={close} onDone={finished} />
         ) : (
           <WordsExercise

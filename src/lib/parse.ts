@@ -15,6 +15,7 @@ import type {
   TextStudy,
   VerbRef,
   Word,
+  WritingCheck,
 } from './types';
 import { asLanguage, TENSES } from './types';
 import { asText, hash, shuffle } from './util';
@@ -210,6 +211,25 @@ const asArray = (value: unknown): unknown[] => (Array.isArray(value) ? value : [
 const asTexts = (value: unknown): string[] => asArray(value).map(asText).filter(Boolean);
 
 /** The grammar, homework and book exercises Claude found in a lesson; missing parts are empty. */
+/** Claude's check of a written answer; null when the reply has no corrected text. */
+export function normalizeWritingCheck(raw: unknown): WritingCheck | null {
+  const data = asObject(raw);
+  const corrected = asText(data.corrected);
+  if (!corrected) return null;
+  return {
+    corrected,
+    mistakes: asArray(data.mistakes)
+      .map(asObject)
+      .map((mistake) => ({
+        wrong: asText(mistake.wrong),
+        right: asText(mistake.right),
+        why: asText(mistake.why),
+      }))
+      .filter((mistake) => mistake.wrong || mistake.right),
+    comment: asText(data.comment),
+  };
+}
+
 export function normalizeExtras(raw: unknown): LessonExtras {
   const data = asObject(raw);
   return {

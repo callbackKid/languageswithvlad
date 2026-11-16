@@ -1,4 +1,5 @@
 import { type Lesson, type Tense, TENSES } from './types';
+import { hash } from './util';
 
 /* "Devoirs: verbes être, avoir — présent; mots de la leçon 5; 5 phrases au passé composé"
    in a lesson: the homework for the next lesson. Read straight from the text, like
@@ -112,3 +113,7 @@ export function findHomework(lessons: Lesson[]): Homework | null {
 /** Where the ticks of a lesson's homework are kept: by the items' text, shared with the
     lesson's Homework tab. */
 export const homeworkKey = (docId: string, lessonKey: string) => `homework:${docId}:${lessonKey}`;
+
+/** Where a written task's answer and its check are kept. */
+export const writingKey = (docId: string, lessonKey: string, task: string) =>
+  `writing:${docId}:${lessonKey}:${hash(task)}`;

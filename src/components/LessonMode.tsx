@@ -2,16 +2,18 @@ import { useEffect, useRef, useState } from 'react';
 
 import { useTranslation } from '../i18n/core';
 import { call } from '../i18n/messages/call';
-import { type Bank, usePreparedLesson } from '../lib/bank';
+import { homework as homeworkText } from '../i18n/messages/homework';
+import { type Bank, readAnalysis, usePreparedLesson } from '../lib/bank';
 import type { BoardServer } from '../lib/boardSync';
 import { findCall, openCallWindow } from '../lib/call';
+import { homeworkItems, readItem, writingKey } from '../lib/homework';
 import { getProgress } from '../lib/progress';
 import { keyWordsFirst } from '../lib/quiz';
 import { followLink, hrefFor } from '../lib/router';
 import { lessonPath } from '../lib/sections';
 import { getSettings } from '../lib/settings';
 import { load, remove, save } from '../lib/storage';
-import type { Lesson } from '../lib/types';
+import type { Lesson, Writing } from '../lib/types';
 import { hash } from '../lib/util';
 import { previousLesson, warmUpRound } from '../lib/warmUp';
 import AddToDoc, { type DocTarget } from './AddToDoc';
@@ -20,6 +22,7 @@ import PageHead from './PageHead';
 import Speak from './Speak';
 import WordQuiz from './WordQuiz';
 import { KeyBadge } from './WordsTab';
+import { WritingResult } from './WritingTask';
 import ZoomCall from './ZoomCall';
 
 const NAME_KEY = 'call:name';
@@ -255,6 +258,45 @@ function LessonWords({ bank, lesson }: { bank: Bank; lesson: Lesson | null }) {
   );
 }
 
+/** The student's answers to the previous lesson's written tasks, as Claude corrected them, for
+    the teacher to go over on the shared screen. Kept on the student's device, so shown there. */
+function WrittenHomework({ lesson, docId }: { lesson: Lesson | null; docId: string }) {
+  const { t } = useTranslation(homeworkText);
+  if (!lesson) return null;
+  const language = readAnalysis(lesson.hash)?.language ?? 'fr';
+  const written = homeworkItems(lesson.body)
+    .map(readItem)
+    .filter((item) => item.kind === 'writing')
+    .map((item) => load<Writing>(writingKey(docId, lesson.key, item.text)))
+    .filter((writing): writing is Writing => !!writing?.text.trim());
+  if (!written.length) return null;
+  return (
+    <section className="call-card written-homework">
+      <h2>{t('writtenTitle')}</h2>
+      <p className="hint">{t('writtenHint', { n: lesson.n })}</p>
+      {written.map((writing) => (
+        <details key={writing.task}>
+          <summary>
+            <span lang={language}>{writing.task}</span>
+            <span className="count">
+              {writing.check
+                ? t('mistakesTitle', { count: writing.check.mistakes.length })
+                : t('notChecked')}
+            </span>
+          </summary>
+          {writing.check ? (
+            <WritingResult check={writing.check} language={language} />
+          ) : (
+            <p className="writing-corrected" lang={language}>
+              {writing.text}
+            </p>
+          )}
+        </details>
+      ))}
+    </section>
+  );
+}
+
 /** The warm-up offered at the start of the lesson. */
 function WarmUpCard({
   lesson,
@@ -351,6 +393,7 @@ export default function LessonMode({
           {!warmingUp && (
             <WarmUpCard lesson={earlier} preparing={preparing} onStart={() => setWarmingUp(true)} />
           )}
+          <WrittenHomework lesson={earlier} docId={docId} />
           <LessonWords bank={bank} lesson={lessons[lessons.length - 1] ?? null} />
         </div>
         <LessonNotes docId={docId} target={target} />

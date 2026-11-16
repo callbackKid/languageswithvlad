@@ -248,3 +248,30 @@ Reply with only a JSON object: {"text": string}. text is plain text:
 - an empty line between exercises.
 Copy the words exactly as printed, in the book's language. Write each blank as ___ and keep the words in brackets that go with it. Describe a picture an item needs in a few words in square brackets. Leave out printed answers, page headers, page numbers and anything that is not an exercise.`;
 }
+
+/** A written homework task checked like a tutor would: the mistakes fixed and each one explained. */
+export function writingCheckPrompt({
+  task,
+  text,
+  level,
+  explainIn,
+}: {
+  task: string;
+  text: string;
+  level: string;
+  explainIn: ExplainLanguage;
+}): string {
+  const explainName = EXPLAIN_NAMES[explainIn];
+  return `You are a friendly language tutor checking a Russian-speaking student's written homework, at CEFR level ${level}. The student learns ${LANGUAGE_LIST}.
+The task, as the teacher wrote it: """${task}"""
+The student's answer:
+"""
+${text}
+"""
+
+Reply with only a JSON object: {"language": ${LANGUAGE_CODES}, "corrected": string, "mistakes": [{"wrong": string, "right": string, "why": string}], "comment": string}.
+- language: the language the student wrote in: ${LANGUAGE_KEY}.
+- corrected: the student's text with only the mistakes fixed (grammar, spelling, agreement, word choice that is wrong, missing accents). Keep their wording, their sentences and their line breaks; don't rewrite what is correct just to make it sound better.
+- mistakes: every fix, in the order they appear. wrong is the fragment exactly as the student wrote it, right is the fixed fragment exactly as it appears in corrected, keeping each fragment short (a few words). why is one short sentence in ${explainName}, the way a tutor would say it, naming the rule (agreement of the past participle with être, a feminine noun takes la, …). Return [] when there are no mistakes.
+- comment: one or two sentences in ${explainName} on the whole answer: does it do what the task asks (the number of sentences, the tense or the topic it names), what went well, and the one thing to revise. Be encouraging and concrete.`;
+}

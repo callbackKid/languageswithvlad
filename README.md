@@ -36,7 +36,7 @@ React + TypeScript + Vite in the browser, small Vercel serverless functions in `
 
 **Practice across lessons**
 
-- **Home**: a daily round of 10 mixed questions, a 🔥 streak and a daily goal. Above it, the **homework** the teacher wrote in the newest lesson (`Devoirs: …`) as a checklist with the days left until the next lesson; each task opens its exercise (the words of a lesson, gap sentences, verb forms), and finishing it ticks the task.
+- **Home**: a daily round of 10 mixed questions, a 🔥 streak and a daily goal. Above it, the **homework** the teacher wrote in the newest lesson (`Devoirs: …`) as a checklist with the days left until the next lesson; each task opens its exercise (the words of a lesson, gap sentences, verb forms, or a written answer that Claude corrects and explains like a tutor), and finishing it ticks the task. Lesson mode shows the corrected written answers to the teacher.
 - **Downloaded lessons**, **Favourite words**, **Mistakes** and **Stats**.
 
 **From paper**

@@ -191,6 +191,12 @@ export const api = {
       method: 'POST',
       body: JSON.stringify({ action: 'study', text, levels }),
     }),
+  /** a written homework answer, its mistakes fixed and explained in the interface language */
+  checkWriting: (input: { task: string; text: string; level: string; explainIn: string }) =>
+    request<unknown>('/api/text', {
+      method: 'POST',
+      body: JSON.stringify({ action: 'correct', ...input }),
+    }),
   gaps: (words: { fr: string; ru: string }[], language: Language, level: string) =>
     request<unknown>('/api/gaps', {
       method: 'POST',

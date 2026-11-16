@@ -22,6 +22,18 @@ export const NEWS: NewsDay[] = [
       {
         kind: 'new',
         text: {
+          en: 'Written homework checked by Claude: write your answer to a task like “5 phrases au passé composé”, and Claude fixes the mistakes and explains each one, like a tutor. The teacher sees the corrected answers in lesson mode.',
+          ru: 'Письменная домашка с проверкой Claude: напишите ответ на задание вроде «5 phrases au passé composé», и Claude исправит ошибки и объяснит каждую, как репетитор. Учитель видит исправленные ответы в режиме урока.',
+          fr: 'Devoirs écrits vérifiés par Claude : écrivez votre réponse à une tâche comme « 5 phrases au passé composé », et Claude corrige les erreurs et explique chacune, comme un professeur particulier. Le professeur voit les réponses corrigées dans le mode cours.',
+          de: 'Schriftliche Hausaufgaben, von Claude geprüft: Schreib deine Antwort auf eine Aufgabe wie „5 phrases au passé composé“, und Claude korrigiert die Fehler und erklärt jeden, wie ein Nachhilfelehrer. Die Lehrkraft sieht die korrigierten Antworten im Unterrichtsmodus.',
+          es: 'Deberes escritos corregidos por Claude: escribe tu respuesta a una tarea como «5 phrases au passé composé», y Claude corrige los errores y explica cada uno, como un profesor particular. El profesor ve las respuestas corregidas en el modo clase.',
+          pt: 'Trabalho de casa escrito verificado pelo Claude: escreva a resposta a uma tarefa como «5 phrases au passé composé», e o Claude corrige os erros e explica cada um, como um explicador. O professor vê as respostas corrigidas no modo aula.',
+          it: 'Compiti scritti controllati da Claude: scrivi la risposta a un compito come «5 phrases au passé composé», e Claude corregge gli errori e spiega ognuno, come un insegnante privato. L’insegnante vede le risposte corrette nella modalità lezione.',
+        },
+      },
+      {
+        kind: 'new',
+        text: {
           en: 'Homework on Home: what the teacher writes after “Devoirs:” in the lesson becomes a checklist with the days left until the next lesson. Each task opens its exercise, and finishing it ticks the task.',
           ru: 'Домашка на Главной: то, что учитель пишет в уроке после «Devoirs:», становится чек-листом, где видно, сколько дней до урока. Каждое задание открывает своё упражнение, а когда оно закончено, галочка ставится сама.',
           fr: 'Les devoirs sur l’accueil : ce que le professeur écrit après « Devoirs: » dans la leçon devient une liste à cocher, avec les jours restants avant le cours. Chaque tâche ouvre son exercice, et le finir la coche.',
