@@ -223,7 +223,6 @@ export default function App() {
           </div>
         </div>
         <div className="top-actions">
-          {doc?.text && <NextLessonBadge text={doc.text} />}
           {callLink && (
             <a
               className="btn"
@@ -304,6 +303,7 @@ export default function App() {
               </a>
             ))}
           </nav>
+          {doc?.text && <NextLessonBadge text={doc.text} />}
           {section === 'document' && notion ? (
             <main className="page">
               <p className="empty">

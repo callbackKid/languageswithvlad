@@ -3,7 +3,8 @@ import { useTranslation } from '../i18n/core';
 import { app } from '../i18n/messages/app';
 import { parseNextLesson } from '../lib/nextLesson';
 
-/** The next lesson's date and time, read from the newest "le cours prochain:" / "next lesson:" line in the document. */
+/** The next lesson's date and time, read from the newest "le cours prochain:" / "next lesson:" line in
+    the document: a small widget on the left, just under the menu. */
 export default function NextLessonBadge({ text }: { text: string }) {
   const { t, rich, locale } = useTranslation(app);
   const [now, setNow] = useState(() => new Date());
@@ -17,9 +18,10 @@ export default function NextLessonBadge({ text }: { text: string }) {
   if (!lesson) return null;
   if (lesson === 'unconfirmed' || lesson.state === 'past') {
     return (
-      <span className="next-lesson muted" title={t('nextUnconfirmedHint')}>
-        {t('nextUnconfirmed')}
-      </span>
+      <div className="next-lesson-widget muted" title={t('nextUnconfirmedHint')}>
+        <span aria-hidden="true">📅</span>
+        <span className="next-lesson">{t('nextUnconfirmed')}</span>
+      </div>
     );
   }
   const timeFormat = (timeZone?: string) =>
@@ -45,17 +47,25 @@ export default function NextLessonBadge({ text }: { text: string }) {
       ? `${timeFormat(lesson.zone).format(lesson.start)} ${lesson.zoneLabel}`
       : null;
   if (lesson.state === 'now')
-    return <span className="next-lesson now">{t('lessonNow', { time: localTime })}</span>;
+    return (
+      <div className="next-lesson-widget now" role="status">
+        <span className="live-dot" aria-hidden="true" />
+        <span className="next-lesson">{t('lessonNow', { time: localTime })}</span>
+      </div>
+    );
   return (
-    <span className="next-lesson" title={lesson.start.toLocaleString(locale)}>
-      {rich(
-        'nextLesson',
-        { b: (chunk) => <b>{chunk}</b> },
-        { when: lesson.hasTime ? `${day}, ${localTime}` : day }
-      )}
-      {writtenTime && (
-        <span className="zone"> {t('yourTime', { written: writtenTime, time: localTime })}</span>
-      )}
-    </span>
+    <div className="next-lesson-widget" title={lesson.start.toLocaleString(locale)}>
+      <span aria-hidden="true">📅</span>
+      <span className="next-lesson">
+        {rich(
+          'nextLesson',
+          { b: (chunk) => <b>{chunk}</b> },
+          { when: lesson.hasTime ? `${day}, ${localTime}` : day }
+        )}
+        {writtenTime && (
+          <span className="zone"> {t('yourTime', { written: writtenTime, time: localTime })}</span>
+        )}
+      </span>
+    </div>
   );
 }
