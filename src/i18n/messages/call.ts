@@ -6,7 +6,7 @@ export const call = defineMessages({
     title: 'Lesson mode',
     intro: 'The call, your notes and the lesson’s words in one place.',
     noCall:
-      'There is no Google Meet or Zoom link in the document yet. Paste the lesson’s link into it and press Sync.',
+      'There is no Google Meet or Zoom link in the document yet. Paste the lesson’s link into it and press ↻ (Sync) at the top.',
     // Meet
     meetTitle: 'Google Meet',
     meetExplain:
@@ -63,7 +63,7 @@ export const call = defineMessages({
     title: 'Режим урока',
     intro: 'Звонок, ваши заметки и слова урока в одном месте.',
     noCall:
-      'В документе пока нет ссылки на Google Meet или Zoom. Вставьте ссылку на урок и нажмите «Синхронизировать».',
+      'В документе пока нет ссылки на Google Meet или Zoom. Вставьте ссылку на урок и нажмите ↻ (синхронизировать) наверху.',
     meetTitle: 'Google Meet',
     meetExplain:
       'Google Meet нельзя встроить в другие сайты, поэтому он открывается маленьким окном сбоку экрана. Держите его рядом с этой страницей.',
@@ -116,7 +116,7 @@ export const call = defineMessages({
     title: 'Mode cours',
     intro: 'L’appel, vos notes et les mots de la leçon au même endroit.',
     noCall:
-      'Le document ne contient pas encore de lien Google Meet ou Zoom. Collez-y le lien du cours et appuyez sur Synchroniser.',
+      'Le document ne contient pas encore de lien Google Meet ou Zoom. Collez-y le lien du cours et appuyez sur ↻ (Synchroniser) en haut.',
     meetTitle: 'Google Meet',
     meetExplain:
       'Google Meet ne peut pas s’afficher dans d’autres sites : il s’ouvre donc dans une petite fenêtre sur le côté de l’écran. Gardez-la à côté de cette page.',
@@ -170,7 +170,7 @@ export const call = defineMessages({
     title: 'Unterrichtsmodus',
     intro: 'Der Anruf, deine Notizen und die Wörter der Lektion an einem Ort.',
     noCall:
-      'Im Dokument steht noch kein Google-Meet- oder Zoom-Link. Füge den Link der Stunde ein und tippe auf Synchronisieren.',
+      'Im Dokument steht noch kein Google-Meet- oder Zoom-Link. Füge den Link der Stunde ein und tippe oben auf ↻ (Synchronisieren).',
     meetTitle: 'Google Meet',
     meetExplain:
       'Google Meet lässt sich nicht in andere Websites einbetten, deshalb öffnet es sich als kleines Fenster am Bildschirmrand. Behalte es neben dieser Seite.',

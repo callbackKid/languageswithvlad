@@ -26,7 +26,8 @@ export const SECTIONS: { id: Section; path: string; inMenu?: false }[] = [
   { id: 'discuss', path: '/discuss' },
   { id: 'document', path: '/document' },
   { id: 'tutorial', path: '/tutorial' },
-  { id: 'settings', path: '/settings' },
+  // opened from ⚙️ on the right of the top bar
+  { id: 'settings', path: '/settings', inMenu: false },
   // lesson mode opens from Enter the lesson, not from the menu
   { id: 'call', path: '/call', inMenu: false },
 ];

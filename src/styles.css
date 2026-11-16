@@ -426,10 +426,11 @@ a.btn {
    The top bar, the menu, the page frame and the next-lesson widget.
    ========================================================================== */
 
+/* picture · document and its sync · the next lesson · feedback and settings */
 .top {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 8px 12px;
   flex-wrap: wrap;
   padding: 14px 24px;
   border-bottom: 1px solid var(--line);
@@ -437,8 +438,9 @@ a.btn {
 }
 
 .doc {
-  flex: 1;
-  min-width: 180px;
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 320px;
 }
 
 .doc-title {
@@ -466,11 +468,48 @@ a.btn {
   color: var(--bad);
 }
 
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--paper);
+  color: var(--text);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+}
+.icon-button:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.icon-button[disabled] {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.top-lesson {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  min-width: 0;
+}
+
 .top-actions {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
   align-items: center;
+  margin-left: auto;
+}
+.top-actions a[aria-current='page'] {
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
 main {
@@ -563,29 +602,23 @@ main.page.wide {
   font-size: 14px;
 }
 
-.avatar-link {
-  display: inline-flex;
-  border-radius: 50%;
-  outline-offset: 2px;
-  text-decoration: none;
-}
-.avatar-link[aria-current='page'] .avatar {
-  box-shadow: 0 0 0 2px var(--accent);
-}
-
 .next-lesson-widget {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  margin: 16px 24px 0;
-  padding: 10px 18px 10px 14px;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  padding: 6px 6px 6px 12px;
   border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--line));
   border-left: 4px solid var(--accent);
   border-radius: 10px;
   background: color-mix(in srgb, var(--accent) 10%, var(--bg));
   box-shadow: 0 1px 3px rgb(0 0 0 / 0.08);
-  font-size: 16px;
+  font-size: 15px;
   color: var(--ink);
+}
+/* "Enter the lesson" */
+.next-lesson-widget .btn {
+  padding: 6px 14px;
 }
 .next-lesson-widget > [aria-hidden] {
   font-size: 20px;
@@ -629,6 +662,15 @@ main.page.wide {
   }
 }
 
+/* not enough room for everything on one line: the next lesson gets a row of its own */
+@media (max-width: 1180px) {
+  .top-lesson {
+    order: 1;
+    flex-basis: 100%;
+    justify-content: flex-start;
+  }
+}
+
 @media (max-width: 760px) {
   main {
     padding: 16px 12px 48px;
@@ -636,6 +678,21 @@ main.page.wide {
 
   .top {
     padding: 12px 16px;
+  }
+
+  .top-lesson .next-lesson-widget {
+    width: 100%;
+  }
+  /* the text wraps beside its icon, and the button takes the row under it */
+  .top-lesson .next-lesson {
+    flex: 1 1 200px;
+  }
+  .top-lesson .next-lesson-widget .btn {
+    flex-basis: 100%;
+    text-align: center;
+  }
+  .doc {
+    flex: 1;
   }
 
   .sections {
@@ -648,10 +705,6 @@ main.page.wide {
 
   .page-head h1 {
     font-size: 32px;
-  }
-
-  .next-lesson-widget {
-    margin: 12px 12px 0;
   }
 }
 
@@ -2731,6 +2784,14 @@ li .open-link {
 }
 .settings-card > .hint {
   margin: 0 0 10px;
+}
+.settings-card > small.hint {
+  display: block;
+  margin: 10px 0 0;
+}
+
+.settings-document {
+  margin: 0 0 12px;
 }
 
 .settings-row {

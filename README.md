@@ -50,10 +50,10 @@ React + TypeScript + Vite in the browser, small Vercel serverless functions in `
 
 - **Discuss**: a discussion question for the start of a lesson, for a chosen level, a vocabulary topic from the list or the student’s own (“the TV series Dexter”) and a grammar point, with follow-up questions, sentence starters, useful words and a fold-out explanation of the grammar rule.
 - **Document**: the Google Docs editor inside the app.
-- **Next lesson** date and **Enter the lesson** button in the top bar, read from the document.
+- **Top bar:** your picture and the document's name with **↻** (sync) on the left, the **next lesson** widget with **Enter the lesson** in the middle (both read from the document), **Feedback** and **⚙️ Settings** on the right.
 - **Lesson mode** (`/call`): the call, the teacher’s notes and the lesson’s words on one screen. Google Meet opens as a small window beside the app (Google doesn’t allow Meet inside other sites); Zoom runs inside the page (optional setup). The notes go into the Google Doc as a new lesson with one button. Below them, a **board** (Excalidraw) to write and draw on, shared live between the teacher and the student (optional setup), or shown through screen sharing.
 - **Tutorial**: a guide to every section, written for students.
-- **Settings** (your picture in the top bar): interface language (English, Russian, French, German; the browser’s by default), light or dark theme, the languages you learn and your level in each (practice and Discuss then show only those), name and picture, daily goal, speech speed, and which sections the menu shows. Word translations stay in Russian.
+- **Settings** (⚙️ on the right of the top bar): the document (open it, copy the student link, change it), interface language (English, Russian, French, German; the browser’s by default), light or dark theme, the languages you learn and your level in each (practice and Discuss then show only those), name and picture, daily goal, speech speed, and which sections the menu shows. Word translations stay in Russian.
 
 ## How to write the lesson document
 
@@ -92,10 +92,10 @@ About 10 minutes.
 ## Using it with students
 
 1. In Google Docs, set the lesson document to **Share → General access → Anyone with the link → Viewer**.
-2. Open the app, paste the document link, then press **Copy student link**. It looks like `https://your-app.vercel.app/?doc=DOCUMENT_ID`.
+2. Open the app, paste the document link, then open **⚙️ Settings → Document** and press **Copy student link**. It looks like `https://your-app.vercel.app/?doc=DOCUMENT_ID`.
 3. Send that link to the student (or the whole class, if they share one document). They open it, enter the class code once, and see every lesson.
 
-When you add a lesson to the document, students press **Sync** to get it. The **Tutorial** page explains the rest of the app to them.
+When you add a lesson to the document, students press **↻** (sync) next to the document's name to get it. The **Tutorial** page explains the rest of the app to them.
 
 ## Optional: adding lessons from photos to the Google Doc
 
@@ -122,7 +122,7 @@ Keep the token private: anyone with it can send messages as the bot.
 
 ## Optional: lessons in Notion
 
-Instead of a Google Doc, the app can read a Notion page: paste its link on the first screen (or in **Change document**). The lessons are written the same way, `12.11.2026 1 Leçon` and everything under it, and the page can hold them in any of these shapes:
+Instead of a Google Doc, the app can read a Notion page: paste its link on the first screen (or in **Settings → Change document**). The lessons are written the same way, `12.11.2026 1 Leçon` and everything under it, and the page can hold them in any of these shapes:
 
 - one under another on the page;
 - as **sub-pages**, each titled like `12.11.2026 1 Leçon`;
@@ -137,7 +137,7 @@ Notion only lets apps read pages through an integration, so this needs a one-tim
 3. Copy the **Internal Integration Secret** and add it in Vercel as `NOTION_TOKEN`. Redeploy.
 4. In Notion, open the lesson page → **•••** (top right) → **Connections** → add the integration. Sub-pages and databases inside it are included.
 
-Every student link for that page (**Copy student link**) works like the Google Doc one. If the app says it can’t see the page, step 4 was skipped for that page.
+Every student link for that page (**Settings → Copy student link**) works like the Google Doc one. If the app says it can’t see the page, step 4 was skipped for that page.
 
 ## Optional: Zoom calls inside the app
 

@@ -16,7 +16,7 @@ export type SpeechSpeed = (typeof SPEECH_SPEEDS)[number];
 export const DAILY_GOALS = [10, 20, 30, 50] as const;
 
 /** Sections that can't be hidden: the way back to everything else. */
-export const ALWAYS_SHOWN: Section[] = ['home', 'settings'];
+export const ALWAYS_SHOWN: Section[] = ['home'];
 
 export interface Settings {
   /** the languages the student learns; exercises and Discuss only offer these */

@@ -39,13 +39,33 @@ export function Avatar({ size = 32 }: { size?: number }) {
   );
 }
 
-/** The student's settings: profile, interface, learning and the menu. */
-export default function Settings() {
+/** The lesson document this app reads, and what can be done with it. */
+export interface DocumentInfo {
+  title: string;
+  url: string;
+  /** the app's address with this document, for the student */
+  studentLink: string;
+  onChange: () => void;
+}
+
+/** The student's settings: profile, document, interface, learning and the menu. */
+export default function Settings({ lessonDocument }: { lessonDocument: DocumentInfo }) {
   const { t, language: uiLanguage } = useTranslation(settingsText);
   const names = useTranslation(learning);
   const sectionNames = useTranslation(app);
   const settings = useSettings();
   const [pictureError, setPictureError] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  async function copyLink() {
+    try {
+      await navigator.clipboard.writeText(lessonDocument.studentLink);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 2500);
+    } catch {
+      window.prompt(sectionNames.t('copyPrompt'), lessonDocument.studentLink);
+    }
+  }
 
   async function choosePicture(file: File) {
     setPictureError(false);
@@ -121,6 +141,26 @@ export default function Settings() {
             <small className="hint">{t('nameHint')}</small>
           </div>
         </div>
+      </section>
+
+      <section className="settings-card">
+        <h2>{t('document')}</h2>
+        <p className="hint">{t('documentHint')}</p>
+        <p className="settings-document">
+          <span aria-hidden="true">📄</span> <b>{lessonDocument.title}</b>
+        </p>
+        <div className="row-actions">
+          <a className="btn" href={lessonDocument.url} target="_blank" rel="noopener noreferrer">
+            {sectionNames.t('openDocument')}
+          </a>
+          <button type="button" className="btn" onClick={() => void copyLink()}>
+            {copied ? sectionNames.t('linkCopied') : sectionNames.t('copyLink')}
+          </button>
+          <button type="button" className="btn ghost" onClick={lessonDocument.onChange}>
+            {sectionNames.t('changeDocument')}
+          </button>
+        </div>
+        <small className="hint">{t('studentLinkHint')}</small>
       </section>
 
       <section className="settings-card">

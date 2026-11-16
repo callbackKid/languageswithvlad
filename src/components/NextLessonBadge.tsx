@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react';
+import { type ReactNode, useEffect, useState } from 'react';
 
 import { useTranslation } from '../i18n/core';
 import { app } from '../i18n/messages/app';
 import { parseNextLesson } from '../lib/nextLesson';
 
 /** The next lesson's date and time, read from the newest "le cours prochain:" / "next lesson:" line in
-    the document: a small widget on the left, just under the menu. */
-export default function NextLessonBadge({ text }: { text: string }) {
+    the document, with the button that enters the lesson: a widget in the middle of the top bar. */
+export default function NextLessonBadge({ text, action }: { text: string; action?: ReactNode }) {
   const { t, rich, locale } = useTranslation(app);
   const [now, setNow] = useState(() => new Date());
   // keeps "today", "now" and "not confirmed" up to date while the page stays open
@@ -16,24 +16,47 @@ export default function NextLessonBadge({ text }: { text: string }) {
   }, []);
 
   const lesson = parseNextLesson(text, now);
-  if (!lesson) return null;
-  if (lesson === 'unconfirmed' || lesson.state === 'past') {
-    return (
-      <div className="next-lesson-widget muted" title={t('nextUnconfirmedHint')}>
+  const widget = (
+    variant: string,
+    content: ReactNode,
+    extra: { title?: string; role?: string }
+  ) => (
+    <div className={'next-lesson-widget' + (variant ? ' ' + variant : '')} {...extra}>
+      {content}
+      {action}
+    </div>
+  );
+  // no date in the document: the button alone, when there is a call to enter
+  if (!lesson) return action ? widget('', null, {}) : null;
+  if (lesson === 'unconfirmed' || lesson.state === 'past')
+    return widget(
+      'muted',
+      <>
         <span aria-hidden="true">📅</span>
         <span className="next-lesson">{t('nextUnconfirmed')}</span>
-      </div>
+      </>,
+      { title: t('nextUnconfirmedHint') }
     );
-  }
   const timeFormat = (timeZone?: string) =>
     new Intl.DateTimeFormat(locale, { hour: '2-digit', minute: '2-digit', timeZone });
   const localTime = timeFormat().format(lesson.start);
   if (lesson.state === 'finished')
-    return (
-      <div className="next-lesson-widget muted" role="status">
+    return widget(
+      'muted',
+      <>
         <span aria-hidden="true">✅</span>
         <span className="next-lesson">{t('lessonFinished', { time: localTime })}</span>
-      </div>
+      </>,
+      { role: 'status' }
+    );
+  if (lesson.state === 'now')
+    return widget(
+      'now',
+      <>
+        <span className="live-dot" aria-hidden="true" />
+        <span className="next-lesson">{t('lessonNow', { time: localTime })}</span>
+      </>,
+      { role: 'status' }
     );
   // "today", "tomorrow" or "Sun 22 Nov", in the viewer's own calendar
   const startOfDay = (value: Date) =>
@@ -54,15 +77,9 @@ export default function NextLessonBadge({ text }: { text: string }) {
     lesson.zone && lesson.zoneLabel
       ? `${timeFormat(lesson.zone).format(lesson.start)} ${lesson.zoneLabel}`
       : null;
-  if (lesson.state === 'now')
-    return (
-      <div className="next-lesson-widget now" role="status">
-        <span className="live-dot" aria-hidden="true" />
-        <span className="next-lesson">{t('lessonNow', { time: localTime })}</span>
-      </div>
-    );
-  return (
-    <div className="next-lesson-widget" title={lesson.start.toLocaleString(locale)}>
+  return widget(
+    '',
+    <>
       <span aria-hidden="true">📅</span>
       <span className="next-lesson">
         {rich(
@@ -74,6 +91,7 @@ export default function NextLessonBadge({ text }: { text: string }) {
           <span className="zone"> {t('yourTime', { written: writtenTime, time: localTime })}</span>
         )}
       </span>
-    </div>
+    </>,
+    { title: lesson.start.toLocaleString(locale) }
   );
 }

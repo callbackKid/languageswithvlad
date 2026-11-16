@@ -29,21 +29,21 @@ export const tutorial = defineMessages({
       'A round on <home>Home</home> takes a few minutes and keeps your 🔥 streak going.',
 
     'header.title': 'The top bar',
-    'header.summary': 'Document, sync, next lesson, the call link, feedback and the language',
+    'header.summary': 'Your picture, the document, sync, the next lesson, feedback and Settings',
     'header.intro':
       'The bar at the top is always there. It shows which Google Doc the app reads and when it last synced, plus the next lesson and the video call.',
     'header.step1':
-      '<b>Sync</b> reads the document again: press it after the teacher adds a lesson.',
+      '<b>↻</b> next to the document’s name syncs: it reads the document again. Press it after the teacher adds a lesson.',
     'header.step2':
       '<b>Next lesson</b> shows the date from the newest line like <ex>le cours prochain: 22.11.2026 18:00 de Paris</ex>. A time given for a city is converted to yours. When the date has passed it says “not confirmed yet”.',
     'header.step3':
-      '<b>Enter the lesson</b> appears when the document has a Google Meet or Zoom link and opens lesson mode: the call next to the lesson and your notes.',
+      '<b>Enter the lesson</b> sits in the next-lesson widget when the document has a Google Meet or Zoom link, and opens lesson mode: the call next to the lesson and your notes.',
     'header.step4':
-      '<b>Open document</b> opens the Google Doc in a new tab. <b>Copy student link</b> copies a link that opens this document straight away. <b>Change document</b> connects another one.',
+      '<b>Open document</b>, <b>Copy student link</b> and <b>Change document</b> are in <b>Settings</b>, under Document.',
     'header.step5':
       '<b>Feedback</b> sends a message to the teacher: a bug, an idea or anything else. Add up to 3 screenshots, or paste one with Ctrl+V / ⌘V. The page you were on is added automatically.',
     'header.step6':
-      'Your picture on the right opens <b>Settings</b>: the language of the app, the colour theme, the languages you learn and your level.',
+      '<b>⚙️ Settings</b> on the far right: the document, the language of the app, the colour theme, the languages you learn and your level. Your picture, set there, shows on the far left.',
     'header.tip1':
       'A lesson in the document starts with a line like <ex>14.10.2026 1 Leçon</ex> (or <ex>Lesson</ex>, <ex>Lektion</ex>). Everything under it, up to the next such line, belongs to that lesson.',
     'header.mock': 'the top bar',
@@ -173,7 +173,7 @@ export const tutorial = defineMessages({
     'settings.title': 'Settings',
     'settings.summary': 'Language, theme, what you learn, your level and the menu',
     'settings.intro':
-      'Opens from your picture in the top bar, or from Settings in the menu. Everything saves straight away.',
+      'Opens from <b>⚙️ Settings</b> on the right of the top bar. Everything saves straight away.',
     'settings.step1':
       '<b>Profile</b>: add a picture and your name; the name is used in Zoom calls and in messages to the teacher.',
     'settings.step2':
@@ -186,7 +186,7 @@ export const tutorial = defineMessages({
     'call.title': 'Lesson mode',
     'call.summary': 'The call, notes and the lesson’s words on one screen',
     'call.intro':
-      'Opens from <b>Enter the lesson</b> in the top bar when the document has a Google Meet or Zoom link. Made for the lesson itself.',
+      'Opens from <b>Enter the lesson</b> in the next-lesson widget at the top when the document has a Google Meet or Zoom link. Made for the lesson itself.',
     'call.step1':
       '<b>Google Meet</b>: press <pbtn>Open the call in a small window</pbtn>. Meet can’t run inside other websites, so it opens as a small window at the side of the screen.',
     'call.step2':
@@ -238,21 +238,22 @@ export const tutorial = defineMessages({
       'Раунд на <home>Главной</home> занимает несколько минут и поддерживает вашу 🔥 серию.',
 
     'header.title': 'Верхняя панель',
-    'header.summary': 'Документ, синхронизация, следующий урок, звонок, обратная связь и язык',
+    'header.summary':
+      'Ваша картинка, документ, синхронизация, следующий урок, обратная связь и настройки',
     'header.intro':
       'Панель наверху видна всегда. На ней — какой Google-документ читает приложение и когда он синхронизировался, а также следующий урок и видеозвонок.',
     'header.step1':
-      '<b>Синхронизировать</b> заново читает документ: нажмите, когда преподаватель добавил урок.',
+      '<b>↻</b> рядом с названием документа синхронизирует: заново читает документ. Нажмите, когда преподаватель добавил урок.',
     'header.step2':
       '<b>Следующий урок</b> показывает дату из самой новой строки вроде <ex>le cours prochain: 22.11.2026 18:00 de Paris</ex>. Время, указанное для города, переводится в ваше. Если дата прошла, будет написано «не подтверждена».',
     'header.step3':
-      '<b>Войти в урок</b> появляется, если в документе есть ссылка на Google Meet или Zoom, и открывает режим урока: звонок рядом с уроком и заметками.',
+      '<b>Войти в урок</b> появляется в виджете следующего урока, если в документе есть ссылка на Google Meet или Zoom, и открывает режим урока: звонок рядом с уроком и заметками.',
     'header.step4':
-      '<b>Открыть документ</b> открывает Google-документ в новой вкладке. <b>Ссылка для ученика</b> копирует ссылку, по которой сразу открывается этот документ. <b>Сменить документ</b> подключает другой.',
+      '<b>Открыть документ</b>, <b>Ссылка для ученика</b> и <b>Сменить документ</b> находятся в <b>Настройках</b>, в разделе «Документ».',
     'header.step5':
       '<b>Обратная связь</b> отправляет сообщение преподавателю: ошибка, идея или что угодно. Можно приложить до 3 скриншотов или вставить скриншот через Ctrl+V / ⌘V. Страница, на которой вы были, добавится сама.',
     'header.step6':
-      'Ваша картинка справа открывает <b>Настройки</b>: язык приложения, цветовую тему, изучаемые языки и уровень.',
+      '<b>⚙️ Настройки</b> справа: документ, язык приложения, цветовая тема, изучаемые языки и уровень. Ваша картинка, выбранная там, видна слева.',
     'header.tip1':
       'Урок в документе начинается со строки вроде <ex>14.10.2026 1 Leçon</ex> (или <ex>Lesson</ex>, <ex>Lektion</ex>). Всё ниже неё, до следующей такой строки, относится к этому уроку.',
     'header.mock': 'верхняя панель',
@@ -382,7 +383,7 @@ export const tutorial = defineMessages({
     'settings.title': 'Настройки',
     'settings.summary': 'Язык, тема, что вы учите, уровень и меню',
     'settings.intro':
-      'Открываются по вашей картинке в верхней панели или из пункта «Настройки» в меню. Всё сохраняется сразу.',
+      'Открываются кнопкой <b>⚙️ Настройки</b> справа в верхней панели. Всё сохраняется сразу.',
     'settings.step1':
       '<b>Профиль</b>: добавьте картинку и имя; имя используется в звонках Zoom и в сообщениях преподавателю.',
     'settings.step2':
@@ -395,7 +396,7 @@ export const tutorial = defineMessages({
     'call.title': 'Режим урока',
     'call.summary': 'Звонок, заметки и слова урока на одном экране',
     'call.intro':
-      'Открывается кнопкой <b>Войти в урок</b> в верхней панели, если в документе есть ссылка на Google Meet или Zoom. Для самого урока.',
+      'Открывается кнопкой <b>Войти в урок</b> в виджете следующего урока наверху, если в документе есть ссылка на Google Meet или Zoom. Для самого урока.',
     'call.step1':
       '<b>Google Meet</b>: нажмите <pbtn>Открыть звонок в маленьком окне</pbtn>. Meet нельзя встроить в другие сайты, поэтому он открывается маленьким окном сбоку экрана.',
     'call.step2':
@@ -448,21 +449,22 @@ export const tutorial = defineMessages({
       'Une série sur l’<home>Accueil</home> prend quelques minutes et entretient votre 🔥 série.',
 
     'header.title': 'La barre du haut',
-    'header.summary': 'Document, synchronisation, prochain cours, appel, avis et langue',
+    'header.summary':
+      'Votre image, le document, la synchronisation, le prochain cours, l’avis et les réglages',
     'header.intro':
       'La barre du haut est toujours là. Elle montre quel Google Doc l’application lit et quand il a été synchronisé, ainsi que le prochain cours et l’appel vidéo.',
     'header.step1':
-      '<b>Synchroniser</b> relit le document : appuyez-y quand le professeur a ajouté une leçon.',
+      '<b>↻</b> à côté du nom du document synchronise : il relit le document. Appuyez-y quand le professeur a ajouté une leçon.',
     'header.step2':
       '<b>Prochain cours</b> affiche la date de la ligne la plus récente comme <ex>le cours prochain: 22.11.2026 18:00 de Paris</ex>. Une heure donnée pour une ville est convertie dans la vôtre. Une fois la date passée, il est écrit « pas encore confirmée ».',
     'header.step3':
-      '<b>Entrer dans le cours</b> apparaît quand le document contient un lien Google Meet ou Zoom et ouvre le mode cours : l’appel à côté de la leçon et de vos notes.',
+      '<b>Entrer dans le cours</b> apparaît dans le widget du prochain cours quand le document contient un lien Google Meet ou Zoom et ouvre le mode cours : l’appel à côté de la leçon et de vos notes.',
     'header.step4':
-      '<b>Ouvrir le document</b> ouvre le Google Doc dans un nouvel onglet. <b>Copier le lien élève</b> copie un lien qui ouvre directement ce document. <b>Changer de document</b> en connecte un autre.',
+      '<b>Ouvrir le document</b>, <b>Copier le lien élève</b> et <b>Changer de document</b> se trouvent dans les <b>Réglages</b>, sous Document.',
     'header.step5':
       '<b>Avis</b> envoie un message au professeur : un bug, une idée ou autre chose. Ajoutez jusqu’à 3 captures d’écran, ou collez-en une avec Ctrl+V / ⌘V. La page où vous étiez est ajoutée automatiquement.',
     'header.step6':
-      'Votre image à droite ouvre les <b>Réglages</b> : la langue de l’application, le thème, les langues apprises et votre niveau.',
+      '<b>⚙️ Réglages</b> tout à droite : le document, la langue de l’application, le thème, les langues apprises et votre niveau. Votre image, choisie là, s’affiche tout à gauche.',
     'header.tip1':
       'Une leçon commence dans le document par une ligne comme <ex>14.10.2026 1 Leçon</ex> (ou <ex>Lesson</ex>, <ex>Lektion</ex>). Tout ce qui suit, jusqu’à la ligne de ce type suivante, appartient à cette leçon.',
     'header.mock': 'la barre du haut',
@@ -597,7 +599,7 @@ export const tutorial = defineMessages({
     'settings.title': 'Réglages',
     'settings.summary': 'Langue, thème, ce que vous apprenez, votre niveau et le menu',
     'settings.intro':
-      'S’ouvrent depuis votre image dans la barre du haut, ou depuis Réglages dans le menu. Tout est enregistré tout de suite.',
+      'S’ouvrent avec <b>⚙️ Réglages</b> à droite de la barre du haut. Tout est enregistré tout de suite.',
     'settings.step1':
       '<b>Profil</b> : ajoutez une image et votre nom ; le nom sert dans les appels Zoom et les messages au professeur.',
     'settings.step2':
@@ -611,7 +613,7 @@ export const tutorial = defineMessages({
     'call.title': 'Mode cours',
     'call.summary': 'L’appel, les notes et les mots de la leçon sur un seul écran',
     'call.intro':
-      'S’ouvre avec <b>Entrer dans le cours</b> dans la barre du haut quand le document contient un lien Google Meet ou Zoom. Pensé pour le cours lui-même.',
+      'S’ouvre avec <b>Entrer dans le cours</b> dans le widget du prochain cours, en haut, quand le document contient un lien Google Meet ou Zoom. Pensé pour le cours lui-même.',
     'call.step1':
       '<b>Google Meet</b> : appuyez sur <pbtn>Ouvrir l’appel dans une petite fenêtre</pbtn>. Meet ne peut pas s’afficher dans d’autres sites : il s’ouvre dans une petite fenêtre sur le côté de l’écran.',
     'call.step2':
@@ -666,21 +668,22 @@ export const tutorial = defineMessages({
       'Eine Runde auf <home>Start</home> dauert ein paar Minuten und hält deine 🔥 Serie am Leben.',
 
     'header.title': 'Die obere Leiste',
-    'header.summary': 'Dokument, Synchronisierung, nächste Stunde, Anruf, Feedback und Sprache',
+    'header.summary':
+      'Dein Bild, das Dokument, Synchronisierung, nächste Stunde, Feedback und Einstellungen',
     'header.intro':
       'Die Leiste oben ist immer da. Sie zeigt, welches Google-Dokument die App liest und wann zuletzt synchronisiert wurde, dazu die nächste Stunde und den Videoanruf.',
     'header.step1':
-      '<b>Synchronisieren</b> liest das Dokument neu: Tippe darauf, wenn die Lehrkraft eine Lektion hinzugefügt hat.',
+      '<b>↻</b> neben dem Namen des Dokuments synchronisiert: Es liest das Dokument neu. Tippe darauf, wenn die Lehrkraft eine Lektion hinzugefügt hat.',
     'header.step2':
       '<b>Nächste Stunde</b> zeigt das Datum aus der neuesten Zeile wie <ex>nächste Stunde: 22.11.2026 18:00 Berlin</ex>. Eine Uhrzeit für eine Stadt wird in deine umgerechnet. Ist das Datum vorbei, steht dort „noch nicht bestätigt“.',
     'header.step3':
-      '<b>Zur Stunde</b> erscheint, wenn das Dokument einen Google-Meet- oder Zoom-Link enthält, und öffnet den Unterrichtsmodus: den Anruf neben der Lektion und deinen Notizen.',
+      '<b>Zur Stunde</b> erscheint im Widget der nächsten Stunde, wenn das Dokument einen Google-Meet- oder Zoom-Link enthält, und öffnet den Unterrichtsmodus: den Anruf neben der Lektion und deinen Notizen.',
     'header.step4':
-      '<b>Dokument öffnen</b> öffnet das Google-Dokument in einem neuen Tab. <b>Schülerlink kopieren</b> kopiert einen Link, der dieses Dokument direkt öffnet. <b>Dokument wechseln</b> verbindet ein anderes.',
+      '<b>Dokument öffnen</b>, <b>Schülerlink kopieren</b> und <b>Dokument wechseln</b> findest du in den <b>Einstellungen</b> unter Dokument.',
     'header.step5':
       '<b>Feedback</b> schickt der Lehrkraft eine Nachricht: einen Fehler, eine Idee oder etwas anderes. Hänge bis zu 3 Screenshots an oder füge einen mit Strg+V / ⌘V ein. Die Seite, auf der du warst, wird automatisch mitgeschickt.',
     'header.step6':
-      'Dein Bild rechts öffnet die <b>Einstellungen</b>: die Sprache der App, das Farbschema, die Sprachen, die du lernst, und dein Niveau.',
+      '<b>⚙️ Einstellungen</b> ganz rechts: das Dokument, die Sprache der App, das Farbschema, die Sprachen, die du lernst, und dein Niveau. Dein Bild, dort gewählt, steht ganz links.',
     'header.tip1':
       'Eine Lektion beginnt im Dokument mit einer Zeile wie <ex>14.10.2026 1 Lektion</ex> (oder <ex>Leçon</ex>, <ex>Lesson</ex>). Alles darunter bis zur nächsten solchen Zeile gehört zu dieser Lektion.',
     'header.mock': 'die obere Leiste',
@@ -812,7 +815,7 @@ export const tutorial = defineMessages({
     'settings.title': 'Einstellungen',
     'settings.summary': 'Sprache, Farbschema, was du lernst, dein Niveau und das Menü',
     'settings.intro':
-      'Öffnen sich über dein Bild in der oberen Leiste oder über Einstellungen im Menü. Alles wird sofort gespeichert.',
+      'Öffnen sich über <b>⚙️ Einstellungen</b> rechts in der oberen Leiste. Alles wird sofort gespeichert.',
     'settings.step1':
       '<b>Profil</b>: Füge ein Bild und deinen Namen hinzu; der Name wird in Zoom-Anrufen und in Nachrichten an die Lehrkraft verwendet.',
     'settings.step2':
@@ -826,7 +829,7 @@ export const tutorial = defineMessages({
     'call.title': 'Unterrichtsmodus',
     'call.summary': 'Anruf, Notizen und die Wörter der Lektion auf einem Bildschirm',
     'call.intro':
-      'Öffnet sich über <b>Zur Stunde</b> in der oberen Leiste, wenn das Dokument einen Google-Meet- oder Zoom-Link enthält. Gemacht für die Stunde selbst.',
+      'Öffnet sich über <b>Zur Stunde</b> im Widget der nächsten Stunde oben, wenn das Dokument einen Google-Meet- oder Zoom-Link enthält. Gemacht für die Stunde selbst.',
     'call.step1':
       '<b>Google Meet</b>: Tippe auf <pbtn>Anruf in kleinem Fenster öffnen</pbtn>. Meet lässt sich nicht in andere Websites einbetten, deshalb öffnet es sich als kleines Fenster am Bildschirmrand.',
     'call.step2':

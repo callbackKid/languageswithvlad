@@ -73,7 +73,6 @@ export default function App() {
   );
   const [sync, setSync] = useState<Sync>({ state: 'idle' });
   const [changing, setChanging] = useState(false);
-  const [copied, setCopied] = useState(false);
   const route = parsePath(usePath());
   const section = route?.section ?? 'home';
   // an address the app doesn't have goes to Home
@@ -174,18 +173,6 @@ export default function App() {
     if (id === docId) void runSync(id);
   }
 
-  async function copyLink() {
-    if (!docId) return;
-    const link = `${window.location.origin}/?doc=${encodeURIComponent(docId)}`;
-    try {
-      await navigator.clipboard.writeText(link);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2500);
-    } catch {
-      window.prompt(t('copyPrompt'), link);
-    }
-  }
-
   if (needsCode)
     return (
       <CodeGate
@@ -231,6 +218,7 @@ export default function App() {
   return (
     <>
       <header className="top">
+        <Avatar size={40} />
         <div className="doc">
           <p className="doc-title">
             <a href={docUrl} target="_blank" rel="noopener noreferrer">
@@ -241,44 +229,42 @@ export default function App() {
             {sync.state === 'loading' && <span className="spinner" aria-hidden="true" />} {status}
           </div>
         </div>
+        <button
+          type="button"
+          className="icon-button"
+          onClick={() => void runSync(docId)}
+          disabled={sync.state === 'loading'}
+          title={t('sync')}
+          aria-label={t('sync')}
+        >
+          <span aria-hidden="true">↻</span>
+        </button>
+        <div className="top-lesson">
+          <NextLessonBadge
+            text={doc?.text ?? ''}
+            action={
+              callLink && (
+                <a
+                  className="btn primary"
+                  href={hrefFor('/call')}
+                  aria-current={section === 'call' ? 'page' : undefined}
+                  onClick={(event) => followLink(event, '/call')}
+                >
+                  {t('enterLesson')}
+                </a>
+              )
+            }
+          />
+        </div>
         <div className="top-actions">
-          {callLink && (
-            <a
-              className="btn"
-              href={hrefFor('/call')}
-              aria-current={section === 'call' ? 'page' : undefined}
-              onClick={(event) => followLink(event, '/call')}
-            >
-              {t('enterLesson')}
-            </a>
-          )}
-          <a className="btn" href={docUrl} target="_blank" rel="noopener noreferrer">
-            {t('openDocument')}
-          </a>
-          <button
-            type="button"
-            className="btn primary"
-            onClick={() => void runSync(docId)}
-            disabled={sync.state === 'loading'}
-          >
-            {t('sync')}
-          </button>
-          <button type="button" className="btn" onClick={() => void copyLink()}>
-            {copied ? t('linkCopied') : t('copyLink')}
-          </button>
-          <button type="button" className="btn ghost" onClick={() => setChanging(true)}>
-            {t('changeDocument')}
-          </button>
           {feedback && <Feedback docTitle={doc?.title ?? ''} />}
           <a
-            className="avatar-link"
+            className="btn ghost"
             href={hrefFor('/settings')}
-            title={t('section.settings')}
-            aria-label={t('section.settings')}
             aria-current={section === 'settings' ? 'page' : undefined}
             onClick={(event) => followLink(event, '/settings')}
           >
-            <Avatar />
+            <span aria-hidden="true">⚙️</span> {t('section.settings')}
           </a>
         </div>
       </header>
@@ -299,7 +285,6 @@ export default function App() {
           </a>
         ))}
       </nav>
-      {doc?.text && <NextLessonBadge text={doc.text} />}
       {waitingForLessons ? (
         <main className="page">
           <p className="empty">
@@ -395,7 +380,16 @@ export default function App() {
           {section === 'mistakes' && <Mistakes bank={bank} />}
           {section === 'stats' && <Stats bank={bank} />}
           {section === 'tutorial' && <Tutorial />}
-          {section === 'settings' && <Settings />}
+          {section === 'settings' && (
+            <Settings
+              lessonDocument={{
+                title: doc?.title || t('lessonNotes'),
+                url: docUrl,
+                studentLink: `${window.location.origin}/?doc=${encodeURIComponent(docId)}`,
+                onChange: () => setChanging(true),
+              }}
+            />
+          )}
           {section === 'discuss' && <Discuss bank={bank} ai={ai} />}
           {section === 'photo' && <PhotoSection ai={ai} target={docTarget} />}
           {section === 'text' && <Reader ai={ai} />}

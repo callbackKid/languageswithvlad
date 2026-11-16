@@ -14,6 +14,10 @@ export const settingsText = defineMessages({
     changePicture: 'Change picture',
     removePicture: 'Remove',
     pictureFailed: 'That picture couldn’t be opened. Try a JPEG or PNG.',
+    document: 'Document',
+    documentHint: 'The lesson notes this app reads: a Google Doc or a Notion page.',
+    studentLinkHint:
+      'The student link opens the app with this same document, so the student sees the same lessons.',
     interface: 'Interface',
     interfaceLanguage: 'Interface language',
     theme: 'Colour theme',
@@ -50,6 +54,10 @@ export const settingsText = defineMessages({
     changePicture: 'Сменить картинку',
     removePicture: 'Убрать',
     pictureFailed: 'Не удалось открыть картинку. Попробуйте JPEG или PNG.',
+    document: 'Документ',
+    documentHint: 'Конспект уроков, из которого читает приложение: Google Doc или страница Notion.',
+    studentLinkHint:
+      'Ссылка для ученика открывает приложение с этим же документом, и ученик видит те же уроки.',
     interface: 'Интерфейс',
     interfaceLanguage: 'Язык интерфейса',
     theme: 'Цветовая тема',
@@ -92,6 +100,10 @@ export const settingsText = defineMessages({
     changePicture: 'Changer d’image',
     removePicture: 'Retirer',
     pictureFailed: 'Cette image n’a pas pu être ouverte. Essayez un JPEG ou un PNG.',
+    document: 'Document',
+    documentHint: 'Les notes de cours que lit l’application : un Google Doc ou une page Notion.',
+    studentLinkHint:
+      'Le lien élève ouvre l’application avec ce même document : l’élève voit les mêmes leçons.',
     interface: 'Interface',
     interfaceLanguage: 'Langue de l’interface',
     theme: 'Thème',
@@ -129,6 +141,10 @@ export const settingsText = defineMessages({
     changePicture: 'Bild ändern',
     removePicture: 'Entfernen',
     pictureFailed: 'Dieses Bild konnte nicht geöffnet werden. Versuch ein JPEG oder PNG.',
+    document: 'Dokument',
+    documentHint: 'Die Stundennotizen, die die App liest: ein Google Doc oder eine Notion-Seite.',
+    studentLinkHint:
+      'Der Schülerlink öffnet die App mit demselben Dokument, so sieht die Schülerin oder der Schüler dieselben Stunden.',
     interface: 'Oberfläche',
     interfaceLanguage: 'Sprache der Oberfläche',
     theme: 'Farbschema',
