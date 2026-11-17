@@ -22,6 +22,18 @@ export const NEWS: NewsDay[] = [
       {
         kind: 'new',
         text: {
+          en: 'Quiz game in lesson mode: 10 questions on the lesson’s words against the clock, more points for a fast answer, and a records table to beat.',
+          ru: 'Игра-квиз в режиме урока: 10 вопросов по словам урока на время, за быстрый ответ больше очков, и таблица рекордов, которые можно побить.',
+          fr: 'Quiz chrono dans le mode cours : 10 questions sur les mots de la leçon contre la montre, plus de points pour une réponse rapide, et un tableau des records à battre.',
+          de: 'Quizspiel im Unterrichtsmodus: 10 Fragen zu den Wörtern der Lektion gegen die Uhr, mehr Punkte für schnelle Antworten und eine Rekordtabelle zum Schlagen.',
+          es: 'Juego de preguntas en el modo clase: 10 preguntas contra el reloj sobre las palabras de la lección, más puntos por responder rápido y una tabla de récords que superar.',
+          pt: 'Jogo de perguntas no modo aula: 10 perguntas contra o relógio sobre as palavras da lição, mais pontos por responder depressa e uma tabela de recordes para bater.',
+          it: 'Gioco a quiz nella modalità lezione: 10 domande contro il tempo sulle parole della lezione, più punti per una risposta veloce e una tabella di record da battere.',
+        },
+      },
+      {
+        kind: 'new',
+        text: {
           en: 'For teachers: “Make homework with Claude” in a lesson’s Homework tab writes a Devoirs: block from the lesson’s words and grammar, key words first. After a check it goes under the lesson, and the student gets it on Home as a checklist.',
           ru: 'Для учителя: «Составить с Claude» во вкладке «Домашнее задание» пишет блок Devoirs: по словам и грамматике урока, сначала ключевые слова. После проверки он попадает под урок, а ученик видит его на Главной чек-листом.',
           fr: 'Pour les professeurs : « Faire les devoirs avec Claude » dans l’onglet Devoirs d’une leçon rédige un bloc Devoirs: à partir des mots et de la grammaire, mots clés d’abord. Après vérification, il va sous la leçon et l’élève le retrouve sur l’accueil en liste à cocher.',

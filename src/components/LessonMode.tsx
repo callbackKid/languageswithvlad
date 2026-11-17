@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
+import { type ReactNode, useEffect, useRef, useState } from 'react';
 
 import { useTranslation } from '../i18n/core';
 import { call } from '../i18n/messages/call';
+import { game } from '../i18n/messages/game';
 import { homework as homeworkText } from '../i18n/messages/homework';
 import { type Bank, readAnalysis, usePreparedLesson } from '../lib/bank';
 import type { BoardServer } from '../lib/boardSync';
@@ -19,6 +20,13 @@ import { previousLesson, warmUpRound } from '../lib/warmUp';
 import AddToDoc, { type DocTarget } from './AddToDoc';
 import LessonBoard from './LessonBoard';
 import PageHead from './PageHead';
+import QuizGame, {
+  GAME_QUESTIONS,
+  GAME_SECONDS,
+  gameWords,
+  readRecords,
+  RecordsTable,
+} from './QuizGame';
 import Speak from './Speak';
 import WordQuiz from './WordQuiz';
 import { KeyBadge } from './WordsTab';
@@ -297,6 +305,37 @@ function WrittenHomework({ lesson, docId }: { lesson: Lesson | null; docId: stri
   );
 }
 
+/** Where the warm-up or the game opens: above the call, scrolled into view, since the button
+    that opened it may be further down. */
+function ActivityPlace({ children }: { children: ReactNode }) {
+  const place = useRef<HTMLElement>(null);
+  useEffect(() => {
+    place.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, []);
+  return (
+    <section ref={place} className="warm-up">
+      {children}
+    </section>
+  );
+}
+
+/** The quiz game offered during the lesson, with the records so far. */
+function GameCard({ docId, onStart }: { docId: string; onStart: () => void }) {
+  const { t } = useTranslation(game);
+  return (
+    <section className="call-card">
+      <h2>{t('title')}</h2>
+      <p className="hint">{t('hint', { count: GAME_QUESTIONS, seconds: GAME_SECONDS })}</p>
+      <RecordsTable records={readRecords(docId)} />
+      <div className="row-actions">
+        <button type="button" className="btn primary" onClick={onStart}>
+          {t('play')}
+        </button>
+      </div>
+    </section>
+  );
+}
+
 /** The warm-up offered at the start of the lesson. */
 function WarmUpCard({
   lesson,
@@ -339,13 +378,8 @@ function WarmUp({
   onClose: () => void;
 }) {
   const { t } = useTranslation(call);
-  const place = useRef<HTMLElement>(null);
-  // it opens above the call, out of view when the button was further down
-  useEffect(() => {
-    place.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }, []);
   return (
-    <section ref={place} className="warm-up">
+    <ActivityPlace>
       <WordQuiz
         title={lesson ? t('warmUpRound', { n: lesson.n }) : t('warmUpTitle')}
         make={() => warmUpRound(bank, lesson, getProgress())}
@@ -354,11 +388,11 @@ function WarmUp({
         empty={t('warmUpEmpty')}
         review={{ title: t('missedTitle'), none: t('allStuck') }}
       />
-    </section>
+    </ActivityPlace>
   );
 }
 
-/** Lesson mode: the call, the warm-up, the teacher's notes and the lesson's words on one screen. */
+/** Lesson mode: the call, the warm-up and the game, the teacher's notes and the lesson's words on one screen. */
 export default function LessonMode({
   docText,
   docId,
@@ -379,20 +413,41 @@ export default function LessonMode({
   ai: boolean;
 }) {
   const { t } = useTranslation(call);
-  const [warmingUp, setWarmingUp] = useState(false);
+  // the warm-up or the game, shown above the call
+  const [activity, setActivity] = useState<'warm-up' | 'game' | null>(null);
   const earlier = previousLesson(lessons);
   const preparing = usePreparedLesson(earlier, bank, ai);
+  const newest = lessons[lessons.length - 1] ?? null;
   return (
     <>
       <PageHead title={t('title')}>{t('intro')}</PageHead>
       {/* above the call rather than instead of it: closing a Zoom call's panel would end the call */}
-      {warmingUp && <WarmUp bank={bank} lesson={earlier} onClose={() => setWarmingUp(false)} />}
+      {activity === 'warm-up' && (
+        <WarmUp bank={bank} lesson={earlier} onClose={() => setActivity(null)} />
+      )}
+      {activity === 'game' && newest && (
+        <ActivityPlace>
+          <QuizGame
+            words={gameWords(lessons, bank, ai)}
+            pool={bank.words}
+            lessonNumber={newest.n}
+            lessonKey={newest.key}
+            docId={docId}
+            onClose={() => setActivity(null)}
+          />
+        </ActivityPlace>
+      )}
       <div className="lesson-mode">
         <div className="lesson-mode-side">
           <CallPanel docText={docText} zoomReady={zoomReady} />
-          {!warmingUp && (
-            <WarmUpCard lesson={earlier} preparing={preparing} onStart={() => setWarmingUp(true)} />
+          {!activity && (
+            <WarmUpCard
+              lesson={earlier}
+              preparing={preparing}
+              onStart={() => setActivity('warm-up')}
+            />
           )}
+          {!activity && newest && <GameCard docId={docId} onStart={() => setActivity('game')} />}
           <WrittenHomework lesson={earlier} docId={docId} />
           <LessonWords bank={bank} lesson={lessons[lessons.length - 1] ?? null} />
         </div>

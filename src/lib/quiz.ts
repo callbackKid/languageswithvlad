@@ -168,3 +168,24 @@ export function buildQuiz(targets: Word[], pool: Word[], forms: FormQuestion[] =
     });
   return shuffle([...items, ...forms.map((form) => ({ kind: 'form' as const, form }))]);
 }
+
+/** A choice question on each word that has three wrong answers to offer, for rounds played
+    against the clock (the quiz game): no typing, about half one way and half the other. */
+export function buildChoiceQuiz(targets: Word[], pool: Word[]): QuizItem[] {
+  const items: QuizItem[] = [];
+  for (const word of targets.filter((target) => target.ru)) {
+    // the other direction when this one has too few wrong answers
+    const sides: ('ru' | 'fr')[] = Math.random() < 0.5 ? ['ru', 'fr'] : ['fr', 'ru'];
+    for (const side of sides) {
+      const wrongAnswers = distractors(word, pool, side);
+      if (!wrongAnswers) continue;
+      items.push(
+        side === 'ru'
+          ? { kind: 'pick-ru', word, choices: shuffle([word.ru, ...wrongAnswers]) }
+          : { kind: 'pick-fr', word, choices: shuffle([word.fr, ...wrongAnswers]) }
+      );
+      break;
+    }
+  }
+  return shuffle(items);
+}
