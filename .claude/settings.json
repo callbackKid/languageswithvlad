@@ -1,4 +1,19 @@
 {
+  "permissions": {
+    "allow": [
+      "Bash(yarn typecheck)",
+      "Bash(yarn -s typecheck)",
+      "Bash(yarn lint)",
+      "Bash(yarn -s lint)",
+      "Bash(yarn verify)",
+      "Bash(yarn -s verify)",
+      "Bash(yarn format:check)",
+      "Bash(yarn -s format:check)",
+      "Bash(npm view *)",
+      "Bash(dig *)",
+      "mcp__Claude_Browser__read_console_messages"
+    ]
+  },
   "hooks": {
     "SessionStart": [
       {
