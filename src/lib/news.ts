@@ -22,6 +22,18 @@ export const NEWS: NewsDay[] = [
       {
         kind: 'new',
         text: {
+          en: 'Lesson summary on Home: on the day of a lesson and the day after, a card with its new words, verbs and grammar, and Start revising.',
+          ru: 'Итог урока на Главной: в день урока и на следующий день — карточка с его новыми словами, глаголами и грамматикой и кнопкой «Начать повторение».',
+          fr: 'Le résumé de la leçon sur l’accueil : le jour du cours et le lendemain, une carte avec ses nouveaux mots, ses verbes et sa grammaire, et « Commencer la révision ».',
+          de: 'Zusammenfassung der Lektion auf der Startseite: am Tag der Stunde und am Tag danach eine Karte mit neuen Wörtern, Verben und Grammatik und „Wiederholung starten“.',
+          es: 'Resumen de la lección en Inicio: el día de la clase y el siguiente, una tarjeta con sus palabras nuevas, verbos y gramática, y «Empezar el repaso».',
+          pt: 'Resumo da lição no Início: no dia da aula e no seguinte, um cartão com as palavras novas, os verbos e a gramática, e «Começar a revisão».',
+          it: 'Riassunto della lezione nella Home: il giorno della lezione e quello dopo, una scheda con parole nuove, verbi e grammatica, e «Inizia il ripasso».',
+        },
+      },
+      {
+        kind: 'new',
+        text: {
           en: 'Questions for the next lesson: ❓ at the top right keeps them as they come up. Add them to the document before the lesson, and lesson mode starts with them.',
           ru: 'Вопросы к следующему уроку: ❓ справа наверху хранит их, как только они появились. Добавьте их в документ перед уроком, и режим урока начнётся с них.',
           fr: 'Questions pour le prochain cours : ❓ en haut à droite les garde dès qu’elles viennent. Ajoutez-les au document avant le cours, et le mode cours commence par elles.',

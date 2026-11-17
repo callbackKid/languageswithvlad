@@ -7,6 +7,7 @@ import { buildQuiz, pickForms, pickWords } from '../lib/quiz';
 import { isStudied, useSettings } from '../lib/settings';
 import type { Lesson } from '../lib/types';
 import HomeworkCard from './HomeworkCard';
+import LessonSummary from './LessonSummary';
 import PageHead, { BankNote } from './PageHead';
 import WordQuiz from './WordQuiz';
 
@@ -38,6 +39,7 @@ export default function Home({
   ).length;
   const { today, streak } = dailyStats(progress);
   const homework = findHomework(lessons);
+  const newest = lessons[lessons.length - 1];
 
   const make = () => {
     const currentProgress = getProgress();
@@ -74,6 +76,9 @@ export default function Home({
               : t('goalProgress', { count: today, goal: dailyGoal })}
           </span>
         </div>
+      )}
+      {newest && (
+        <LessonSummary key={newest.key} lesson={newest} bank={bank} ai={ai} docId={docId} />
       )}
       {homework && (
         <HomeworkCard
