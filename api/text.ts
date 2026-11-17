@@ -1,12 +1,10 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 import { claudeJSON, MODEL } from './_lib/claude.js';
-import { asLevel, checkAccess, fail, onlyPost, text } from './_lib/http.js';
+import { asLevel, asLevels, checkAccess, fail, onlyPost, text } from './_lib/http.js';
 import {
   asExplainLanguage,
   explainPrompt,
-  LEARN_LANGUAGES,
-  type LearnLanguage,
   studyPrompt,
   translatePrompt,
   writingCheckPrompt,
@@ -31,7 +29,11 @@ export default async function handler(request: VercelRequest, response: VercelRe
     if (body.action === 'explain') {
       const selection = text(body.selection, MAX_SELECTION_LENGTH);
       if (!selection) return response.status(400).json({ error: 'Mark a word or phrase first.' });
-      const prompt = explainPrompt(selection, text(body.context, MAX_CONTEXT_LENGTH));
+      const prompt = explainPrompt(
+        selection,
+        text(body.context, MAX_CONTEXT_LENGTH),
+        asLevels(body.levels)
+      );
       return response.status(200).json(await claudeJSON(prompt, { model: MODEL, maxTokens: 1500 }));
     }
 
@@ -61,13 +63,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
         .json(await claudeJSON(prompt, { model: MODEL, maxTokens: 6000, cache: false }));
     }
     if (body.action === 'study') {
-      const levels = (body.levels ?? {}) as Record<string, unknown>;
-      const prompt = studyPrompt(
-        whole,
-        Object.fromEntries(
-          LEARN_LANGUAGES.map((language) => [language, asLevel(levels[language]) ?? 'A2'])
-        ) as Record<LearnLanguage, string>
-      );
+      const prompt = studyPrompt(whole, asLevels(body.levels));
       return response.status(200).json(await claudeJSON(prompt, { model: MODEL, maxTokens: 6000 }));
     }
     return response.status(400).json({ error: 'Unknown action.' });

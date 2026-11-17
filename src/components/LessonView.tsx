@@ -10,7 +10,7 @@ import { localParse, markKeyWords, normalizeAnalysis, normalizeExtras } from '..
 import { LESSON_TABS, type LessonTab, useSettings } from '../lib/settings';
 import { load, save } from '../lib/storage';
 import { useTeacher } from '../lib/teacher';
-import type { Analysis, Lesson, LessonExtras } from '../lib/types';
+import { type Analysis, isVerbLanguage, type Lesson, type LessonExtras } from '../lib/types';
 import HelpLink from './HelpLink';
 import LessonDrawings from './LessonDrawings';
 import { BookTab, GrammarTab, HomeworkTab } from './LessonExtrasTabs';
@@ -212,13 +212,13 @@ export default function LessonView({
               }
             />
           )}
-          {tab === 'verbs' && analysis && analysis.language !== 'fr' && (
-            <p className="empty">{t('frenchOnlyVerbs')}</p>
+          {tab === 'verbs' && analysis && !isVerbLanguage(analysis.language) && (
+            <p className="empty">{t('noEnglishVerbTables')}</p>
           )}
-          {tab === 'verbs' && analysis?.language === 'fr' && (
+          {tab === 'verbs' && analysis && isVerbLanguage(analysis.language) && (
             <VerbsTab
               key={lesson.hash}
-              verbs={analysis.verbs}
+              verbs={analysis.verbs.map((verb) => ({ ...verb, language: analysis.language }))}
               ai={ai && !analysis.local}
               waiting={state === 'loading'}
             />

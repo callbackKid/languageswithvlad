@@ -66,7 +66,7 @@ EOF
 | `classes <selector>`              | Prints the class of every match (`ok`, `bad`, `accent` on drill inputs)                         |
 | `a11y <name>`                     | Runs axe-core on the page; needs axe-core installed, see the `check-a11y` skill                 |
 
-Lines starting with `#` are skipped. A line `---` ends a block: when a step fails, the rest of its block is skipped and the next block runs. Options: `--themes light` (one theme), `--width 1280` (desktop), `--out <dir>`.
+Lines starting with `#` are skipped. A line `---` ends a block: when a step fails, the rest of its block is skipped and the next block runs. Options: `--themes light` (one theme), `--width 1280` (desktop), `--scale 3` (sharp enough to judge an icon's alignment), `--out <dir>`.
 
 ### Test data
 

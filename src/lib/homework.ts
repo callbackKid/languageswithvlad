@@ -50,10 +50,10 @@ const NUMBER = /(\d{1,3})/;
 /** "verbes être, avoir — présent" → the verbs and the tense, when they can be told. */
 function readVerbs(text: string): { verbs: string[]; tense?: Tense } {
   const lower = text.toLowerCase();
-  // the longest name first: "conditionnel présent" before "présent"
+  // the longest name first: "conditionnel présent" before "présent"; German names are capitalised
   const tense = [...TENSES]
     .sort((first, second) => second.length - first.length)
-    .find((name) => lower.includes(name));
+    .find((name) => lower.includes(name.toLowerCase()));
   let rest = text.replace(VERB_WORDS, ' ');
   if (tense) rest = rest.replace(new RegExp(tense, 'iu'), ' ');
   const listed = rest

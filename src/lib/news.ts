@@ -19,6 +19,47 @@ export interface NewsDay {
 
 export const NEWS: NewsDay[] = [
   {
+    date: '2026-11-18',
+    items: [
+      {
+        kind: 'new',
+        text: {
+          en: 'Spanish, Italian and Portuguese verbs: the Verbs tab of their lessons has conjugation tables in the main tenses, with the drill and the quick quiz. Portuguese is the Portuguese of Portugal.',
+          ru: 'Испанские, итальянские и португальские глаголы: на вкладке «Глаголы» их уроков есть таблицы спряжения в основных временах, с тренировкой и быстрым тестом. Португальский — европейский.',
+          fr: 'Verbes espagnols, italiens et portugais : l’onglet Verbes de leurs leçons a des tableaux de conjugaison aux temps principaux, avec l’entraînement et le quiz rapide. Le portugais est celui du Portugal.',
+          de: 'Spanische, italienische und portugiesische Verben: Der Tab Verben ihrer Lektionen hat Konjugationstabellen in den wichtigsten Zeitformen, mit Übung und Schnelltest. Das Portugiesisch ist das aus Portugal.',
+          es: 'Verbos españoles, italianos y portugueses: la pestaña Verbos de sus lecciones tiene tablas de conjugación en los tiempos principales, con la práctica y el test rápido. El portugués es el de Portugal.',
+          pt: 'Verbos espanhóis, italianos e portugueses: o separador Verbos das suas lições tem tabelas de conjugação nos tempos principais, com o treino e o teste rápido. O português é o de Portugal.',
+          it: 'Verbi spagnoli, italiani e portoghesi: la scheda Verbi delle loro lezioni ha le tabelle di coniugazione nei tempi principali, con l’esercizio e il quiz veloce. Il portoghese è quello del Portogallo.',
+        },
+      },
+      {
+        kind: 'new',
+        text: {
+          en: 'German verbs: a German lesson’s Verbs tab has tables in Präsens, Perfekt, Präteritum, Futur I and Konjunktiv II, with the drill and the quick quiz, and homework can ask to conjugate them.',
+          ru: 'Немецкие глаголы: на вкладке «Глаголы» немецкого урока есть таблицы в Präsens, Perfekt, Präteritum, Futur I и Konjunktiv II, с тренировкой и быстрым тестом, а в домашке можно попросить их проспрягать.',
+          fr: 'Verbes allemands : l’onglet Verbes d’une leçon d’allemand a des tableaux au Präsens, Perfekt, Präteritum, Futur I et Konjunktiv II, avec l’entraînement et le quiz rapide, et les devoirs peuvent demander de les conjuguer.',
+          de: 'Deutsche Verben: Der Tab Verben einer Deutsch-Lektion hat Tabellen im Präsens, Perfekt, Präteritum, Futur I und Konjunktiv II, mit Übung und Schnelltest, und Hausaufgaben können das Konjugieren verlangen.',
+          es: 'Verbos alemanes: la pestaña Verbos de una lección de alemán tiene tablas en Präsens, Perfekt, Präteritum, Futur I y Konjunktiv II, con la práctica y el test rápido, y los deberes pueden pedir conjugarlos.',
+          pt: 'Verbos alemães: o separador Verbos de uma lição de alemão tem tabelas em Präsens, Perfekt, Präteritum, Futur I e Konjunktiv II, com o treino e o teste rápido, e os trabalhos de casa podem pedir para os conjugar.',
+          it: 'Verbi tedeschi: la scheda Verbi di una lezione di tedesco ha le tabelle al Präsens, Perfekt, Präteritum, Futur I e Konjunktiv II, con l’esercizio e il quiz veloce, e i compiti possono chiedere di coniugarli.',
+        },
+      },
+      {
+        kind: 'better',
+        text: {
+          en: 'Claude now writes for your level (Settings → Languages I learn) everywhere: lesson words, grammar explanations, Photo parsing, textbook notes and explained words. At A0 it keeps things short and simple; from B1 it uses natural wording.',
+          ru: 'Claude теперь везде пишет под ваш уровень (Настройки → Языки, которые я учу): слова урока, объяснения грамматики, разбор фото, заметки из учебника и объяснения слов. На A0 — коротко и просто, с B1 — естественные формулировки.',
+          fr: 'Claude écrit maintenant partout pour votre niveau (Réglages → Langues que j’apprends) : mots de la leçon, explications de grammaire, analyse de photos, notes du manuel et mots expliqués. En A0, court et simple ; à partir de B1, des tournures naturelles.',
+          de: 'Claude schreibt jetzt überall für dein Niveau (Einstellungen → Sprachen, die ich lerne): Wörter der Lektion, Grammatikerklärungen, Fotoanalyse, Notizen aus dem Lehrbuch und erklärte Wörter. Bei A0 kurz und einfach, ab B1 natürliche Formulierungen.',
+          es: 'Claude ahora escribe para tu nivel en todas partes (Ajustes → Idiomas que aprendo): palabras de la lección, explicaciones de gramática, análisis de fotos, notas del libro y palabras explicadas. En A0, corto y sencillo; desde B1, frases naturales.',
+          pt: 'O Claude escreve agora para o seu nível em todo o lado (Definições → Línguas que aprendo): palavras da lição, explicações de gramática, análise de fotos, notas do manual e palavras explicadas. No A0, curto e simples; a partir do B1, frases naturais.',
+          it: 'Claude ora scrive per il tuo livello ovunque (Impostazioni → Lingue che studio): parole della lezione, spiegazioni di grammatica, analisi delle foto, appunti dal libro e parole spiegate. Ad A0 breve e semplice; da B1 frasi naturali.',
+        },
+      },
+    ],
+  },
+  {
     date: '2026-11-17',
     items: [
       {

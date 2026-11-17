@@ -26,7 +26,23 @@ function lessonText(scenario) {
   const next = new Date(
     Date.now() + (NEXT_LESSON_FROM_NOW[scenario] ?? NEXT_LESSON_FROM_NOW.upcoming)
   );
+  // a German lesson the day before, for German verb tables; the French one stays the newest
+  const yesterday = new Date(Date.now() - 24 * 60 * MINUTE);
+  // Spanish and Portuguese lessons before that, for their verb tables
+  const twoDaysAgo = new Date(Date.now() - 2 * 24 * 60 * MINUTE);
+  const threeDaysAgo = new Date(Date.now() - 3 * 24 * 60 * MINUTE);
   return [
+    `${day(threeDaysAgo)} 1 Lição`,
+    'falar — говорить',
+    '',
+    `${day(twoDaysAgo)} 1 Lección`,
+    'hablar — говорить',
+    '',
+    `${day(yesterday)} 1 Lektion`,
+    'aufstehen — вставать',
+    'sich waschen — умываться',
+    'das Frühstück — завтрак',
+    '',
     `${day(new Date())} 1 Leçon`,
     '★ se lever [sə ləve] — вставать',
     'aimer — любить',
@@ -46,7 +62,131 @@ const persons = (forms) =>
     f: forms[index],
   }));
 
+const germanPersons = (forms) =>
+  ['ich', 'du', 'er/sie/es', 'wir', 'ihr', 'sie/Sie'].map((person, index) => ({
+    p: person,
+    f: forms[index],
+  }));
+
+const personsOf = (persons) => (forms) =>
+  persons.map((person, index) => ({ p: person, f: forms[index] }));
+const spanish = personsOf([
+  'yo',
+  'tú',
+  'él/ella/usted',
+  'nosotros/nosotras',
+  'vosotros/vosotras',
+  'ellos/ellas/ustedes',
+]);
+const portuguese = personsOf(['eu', 'tu', 'ele/ela/você', 'nós', 'eles/elas/vocês']);
+
 const CONJUGATIONS = {
+  hablar: {
+    inf: 'hablar',
+    ru: 'говорить',
+    aux: 'haber',
+    pp: 'hablado',
+    tenses: {
+      'presente de indicativo': spanish([
+        'hablo',
+        'hablas',
+        'habla',
+        'hablamos',
+        'habláis',
+        'hablan',
+      ]),
+      'pretérito perfecto compuesto': spanish([
+        'he hablado',
+        'has hablado',
+        'ha hablado',
+        'hemos hablado',
+        'habéis hablado',
+        'han hablado',
+      ]),
+    },
+  },
+  falar: {
+    inf: 'falar',
+    ru: 'говорить',
+    aux: '',
+    pp: 'falado',
+    tenses: {
+      'presente do indicativo': portuguese(['falo', 'falas', 'fala', 'falamos', 'falam']),
+      'pretérito perfeito': portuguese(['falei', 'falaste', 'falou', 'falámos', 'falaram']),
+    },
+  },
+  aufstehen: {
+    inf: 'aufstehen',
+    ru: 'вставать',
+    aux: 'sein',
+    pp: 'aufgestanden',
+    tenses: {
+      Präsens: germanPersons([
+        'stehe auf',
+        'stehst auf',
+        'steht auf',
+        'stehen auf',
+        'steht auf',
+        'stehen auf',
+      ]),
+      Perfekt: germanPersons([
+        'bin aufgestanden',
+        'bist aufgestanden',
+        'ist aufgestanden',
+        'sind aufgestanden',
+        'seid aufgestanden',
+        'sind aufgestanden',
+      ]),
+      Präteritum: germanPersons([
+        'stand auf',
+        'standest auf',
+        'stand auf',
+        'standen auf',
+        'standet auf',
+        'standen auf',
+      ]),
+      'Futur I': germanPersons([
+        'werde aufstehen',
+        'wirst aufstehen',
+        'wird aufstehen',
+        'werden aufstehen',
+        'werdet aufstehen',
+        'werden aufstehen',
+      ]),
+      'Konjunktiv II': germanPersons([
+        'würde aufstehen',
+        'würdest aufstehen',
+        'würde aufstehen',
+        'würden aufstehen',
+        'würdet aufstehen',
+        'würden aufstehen',
+      ]),
+    },
+  },
+  'sich waschen': {
+    inf: 'sich waschen',
+    ru: 'умываться',
+    aux: 'haben',
+    pp: 'gewaschen',
+    tenses: {
+      Präsens: germanPersons([
+        'wasche mich',
+        'wäschst dich',
+        'wäscht sich',
+        'waschen uns',
+        'wascht euch',
+        'waschen sich',
+      ]),
+      Perfekt: germanPersons([
+        'habe mich gewaschen',
+        'hast dich gewaschen',
+        'hat sich gewaschen',
+        'haben uns gewaschen',
+        'habt euch gewaschen',
+        'haben sich gewaschen',
+      ]),
+    },
+  },
   'se lever': {
     inf: 'se lever',
     ru: 'вставать',
@@ -92,6 +232,29 @@ const CONJUGATIONS = {
       ],
     },
   },
+};
+
+const oneVerbAnalysis = (language, verb) => ({
+  language,
+  topic: 'Talking',
+  pairs: [],
+  words: [{ fr: verb, ru: 'говорить', tr: '', kind: 'verb', added: false }],
+  verbs: [{ inf: verb, ru: 'говорить' }],
+});
+
+const GERMAN_ANALYSIS = {
+  language: 'de',
+  topic: 'Der Morgen',
+  pairs: [],
+  words: [
+    { fr: 'aufstehen', ru: 'вставать', tr: '', kind: 'verb', added: false },
+    { fr: 'sich waschen', ru: 'умываться', tr: '', kind: 'verb', added: false },
+    { fr: 'das Frühstück', ru: 'завтрак', tr: '', kind: 'noun', added: false },
+  ],
+  verbs: [
+    { inf: 'aufstehen', ru: 'вставать' },
+    { inf: 'sich waschen', ru: 'умываться' },
+  ],
 };
 
 const ANALYSIS = {
@@ -196,7 +359,14 @@ export function answerFor(url, body, headers = {}, scenario = 'upcoming') {
   if (path === '/api/doc') return { title: 'Test lesson', text: lessonText(scenario) };
   if (path === '/api/conjugate') return CONJUGATIONS[body?.inf] ?? {};
   if (path === '/api/analyze') {
-    if (!body?.action || body.action === 'words') return ANALYSIS;
+    if (!body?.action || body.action === 'words')
+      return body?.body?.includes('aufstehen')
+        ? GERMAN_ANALYSIS
+        : body?.body?.includes('hablar')
+          ? oneVerbAnalysis('es', 'hablar')
+          : body?.body?.includes('falar')
+            ? oneVerbAnalysis('pt', 'falar')
+            : ANALYSIS;
     if (body.action === 'extras') return EXTRAS;
     if (body.action === 'homework') return MADE_HOMEWORK;
     return {};

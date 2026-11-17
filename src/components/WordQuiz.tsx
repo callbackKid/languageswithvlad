@@ -7,7 +7,7 @@ import { grade } from '../lib/grade';
 import { recordForm, recordWord } from '../lib/progress';
 import type { QuizItem } from '../lib/quiz';
 import { speak } from '../lib/speech';
-import type { Language } from '../lib/types';
+import { type Language, languageOfTense } from '../lib/types';
 import ExerciseHead from './ExerciseHead';
 import Speak from './Speak';
 import Transcription from './Transcription';
@@ -190,8 +190,9 @@ export default function WordQuiz({
       else recordWord(question.word, outcome === 'ok');
     }
   };
-  // verb forms are French only; words carry the language of their lesson
-  const language = question.kind === 'form' ? 'fr' : (question.word.language ?? 'fr');
+  // a verb form's tense names its language; words carry the language of their lesson
+  const language =
+    question.kind === 'form' ? languageOfTense(question.form.t) : (question.word.language ?? 'fr');
   const answer =
     question.kind === 'form'
       ? `${question.form.p} ${question.form.f}`

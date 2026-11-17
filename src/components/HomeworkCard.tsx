@@ -2,10 +2,9 @@ import { useEffect, useState } from 'react';
 
 import { useTranslation } from '../i18n/core';
 import { homework as homeworkText } from '../i18n/messages/homework';
-import { api } from '../lib/api';
 import {
   type Bank,
-  conjugationKey,
+  fetchConjugation,
   lessonWords,
   readAnalysis,
   readConjugation,
@@ -13,13 +12,18 @@ import {
 } from '../lib/bank';
 import { type Homework, type HomeworkItem, homeworkKey, writingKey } from '../lib/homework';
 import { parseNextLesson } from '../lib/nextLesson';
-import { normalizeConjugation } from '../lib/parse';
 import { getProgress } from '../lib/progress';
 import { buildQuiz, pickWords, verbForms } from '../lib/quiz';
 import { followLink, hrefFor } from '../lib/router';
 import { lessonPath } from '../lib/sections';
 import { load, save } from '../lib/storage';
-import type { Conjugation, Lesson } from '../lib/types';
+import {
+  type Conjugation,
+  isVerbLanguage,
+  languageOfTense,
+  type Lesson,
+  type VerbLanguage,
+} from '../lib/types';
 import { shuffle } from '../lib/util';
 import GapFill from './GapFill';
 import SendToTeacher from './SendToTeacher';
@@ -104,30 +108,31 @@ function WordsExercise({
     is named). Tables the device doesn't have are asked from Claude. */
 function VerbsExercise({
   item,
+  language,
   ai,
   onClose,
   onDone,
 }: {
   item: HomeworkItem;
+  language: VerbLanguage;
   ai: boolean;
   onClose: () => void;
   onDone: () => void;
 }) {
   const { t } = useTranslation(homeworkText);
   const verbs = item.verbs ?? [];
+  const tense = item.tense && languageOfTense(item.tense) === language ? item.tense : undefined;
   const [tables, setTables] = useState<Conjugation[] | null>(null);
   const [failed, setFailed] = useState<string[]>([]);
+
   useEffect(() => {
     let alive = true;
     void Promise.all(
       verbs.map(async (verb) => {
-        const cached = readConjugation(verb);
-        if (cached) return cached;
-        if (!ai) return verb;
+        // without Claude only a saved table can be used
+        if (!ai) return readConjugation(verb, language) ?? verb;
         try {
-          const conjugation = normalizeConjugation(await api.conjugate(verb, ''), verb);
-          save(conjugationKey(verb), conjugation);
-          return conjugation;
+          return await fetchConjugation({ inf: verb, ru: '', language });
         } catch {
           return verb;
         }
@@ -143,7 +148,9 @@ function VerbsExercise({
     // the item's verbs don't change while it is open
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  if (!tables) return <WaitingFact language="fr">{t('loadingVerbs')}</WaitingFact>;
+
+  if (!tables) return <WaitingFact language={language}>{t('loadingVerbs')}</WaitingFact>;
+
   return (
     <>
       {failed.length > 0 && (
@@ -163,7 +170,8 @@ function VerbsExercise({
             shuffle(
               tables
                 .flatMap(verbForms)
-                .filter((form) => !form.negative && (!item.tense || form.t === item.tense))
+                // the task's tense when it is one of this language's, every tense otherwise
+                .filter((form) => !form.negative && (!tense || form.t === tense))
             ).slice(0, VERB_FORMS)
           )
         }
@@ -214,13 +222,14 @@ export default function HomeworkCard({
     (item.lessonNumber !== undefined &&
       [...lessons].reverse().find((candidate) => candidate.n === item.lessonNumber)) ||
     homework.lesson;
-  // verb tables are French; a verbs task in another language just opens the lesson
+  // verb tables exist for French and German; a verbs task in another language just opens the lesson
   const lessonLanguage = readAnalysis(homework.lesson.hash)?.language ?? 'fr';
+  const verbLanguage = isVerbLanguage(lessonLanguage) ? lessonLanguage : null;
   const action = (item: HomeworkItem): string | null => {
     if (item.kind === 'words') return t('practiseWords');
     if (item.kind === 'writing') return t('write');
     if (item.kind === 'gaps' && ai) return t('fillGaps');
-    if (item.kind === 'verbs' && lessonLanguage === 'fr') return t('conjugate');
+    if (item.kind === 'verbs' && verbLanguage) return t('conjugate');
     return null;
   };
 
@@ -238,8 +247,16 @@ export default function HomeworkCard({
             onClose={close}
             onChecked={finished}
           />
-        ) : open.kind === 'verbs' ? (
-          <VerbsExercise item={open} ai={ai} onClose={close} onDone={finished} />
+        ) : open.kind === 'verbs' && verbLanguage ? (
+          <VerbsExercise
+            item={open}
+            // the lesson's language: a tense name alone can mislead ("condicional" is Spanish
+            // and Portuguese)
+            language={verbLanguage}
+            ai={ai}
+            onClose={close}
+            onDone={finished}
+          />
         ) : (
           <WordsExercise
             lesson={lessonOf(open)}

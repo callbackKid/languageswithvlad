@@ -3,15 +3,22 @@ import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from '../i18n/core';
 import { common } from '../i18n/messages/common';
 import { exercises } from '../i18n/messages/exercises';
-import { api, ApiError } from '../lib/api';
-import { conjugationKey, readConjugation } from '../lib/bank';
+import { ApiError } from '../lib/api';
+import { fetchConjugation, readConjugation, verbLanguageOf } from '../lib/bank';
 import { type Grade, grade } from '../lib/grade';
 import { negate } from '../lib/negation';
-import { normalizeConjugation } from '../lib/parse';
 import { recordForm } from '../lib/progress';
 import { type FormQuestion, verbForms } from '../lib/quiz';
-import { save } from '../lib/storage';
-import { type Conjugation, type Form, type Tense, TENSES, type VerbRef } from '../lib/types';
+import {
+  COMPOUND_PAST,
+  type Conjugation,
+  type Form,
+  languageOfTense,
+  type Tense,
+  TENSES_BY_LANGUAGE,
+  type VerbLanguage,
+  type VerbRef,
+} from '../lib/types';
 import { keepBracketsTogether, shuffle } from '../lib/util';
 import ExerciseHead from './ExerciseHead';
 import Speak from './Speak';
@@ -34,7 +41,7 @@ export default function VerbsTab({
   const [conjugations, setConjugations] = useState<Record<string, Conjugation>>(() => {
     const out: Record<string, Conjugation> = {};
     for (const verb of verbs) {
-      const conjugation = readConjugation(verb.inf);
+      const conjugation = readConjugation(verb.inf, verbLanguageOf(verb));
       if (conjugation) out[verb.inf] = conjugation;
     }
     return out;
@@ -49,7 +56,7 @@ export default function VerbsTab({
     if (status[verb.inf] === 'loading') return;
     if (!fresh) {
       if (conjugations[verb.inf]) return;
-      const cached = readConjugation(verb.inf);
+      const cached = readConjugation(verb.inf, verbLanguageOf(verb));
       if (cached) {
         setConjugations((previous) => ({ ...previous, [verb.inf]: cached }));
         return;
@@ -64,11 +71,7 @@ export default function VerbsTab({
     }
     setStatus((previous) => ({ ...previous, [verb.inf]: 'loading' }));
     try {
-      const conjugation = normalizeConjugation(
-        await api.conjugate(verb.inf, verb.ru, fresh),
-        verb.inf
-      );
-      save(conjugationKey(verb.inf), conjugation);
+      const conjugation = await fetchConjugation(verb, fresh);
       setConjugations((previous) => ({ ...previous, [verb.inf]: conjugation }));
       setStatus((previous) => {
         const copy = { ...previous };
@@ -99,8 +102,20 @@ export default function VerbsTab({
 
   const shownConjugation = currentVerb ? conjugations[currentVerb] : null;
   const shownStatus = currentVerb ? status[currentVerb] : undefined;
-  const affirmativeRows = shownConjugation ? shownConjugation.tenses[tense] || [] : [];
-  const rows = negative ? affirmativeRows.map((row) => negate(row, tense)) : affirmativeRows;
+  const currentReference = verbs.find((verb) => verb.inf === currentVerb);
+  const language =
+    shownConjugation?.language ?? (currentReference ? verbLanguageOf(currentReference) : 'fr');
+  const tenses: readonly Tense[] = TENSES_BY_LANGUAGE[language];
+  // after a verb of another language the chosen tense may not exist here: the first one instead
+  const shownTense = tenses.includes(tense) ? tense : (tenses[0] ?? tense);
+  const compoundPast = COMPOUND_PAST[language];
+  // negate knows French word order only
+  const canNegate = language === 'fr';
+  const showNegative = negative && canNegate;
+  const affirmativeRows = shownConjugation ? shownConjugation.tenses[shownTense] || [] : [];
+  const rows = showNegative
+    ? affirmativeRows.map((row) => negate(row, shownTense))
+    : affirmativeRows;
 
   return (
     <>
@@ -113,7 +128,7 @@ export default function VerbsTab({
             aria-pressed={currentVerb === verb.inf}
             onClick={() => void open(verb)}
           >
-            <span className="fr" lang="fr">
+            <span className="fr" lang={verbLanguageOf(verb)}>
               {verb.inf}
             </span>
             <span className="ru" lang="ru">
@@ -139,7 +154,11 @@ export default function VerbsTab({
       {!currentVerb && <p className="empty">{t('pickVerb')}</p>}
       {shownStatus === 'loading' && (
         <WaitingFact>
-          {rich('conjugating', { i: (chunk) => <i lang="fr">{chunk}</i> }, { verb: currentVerb })}
+          {rich(
+            'conjugating',
+            { i: (chunk) => <i lang={language}>{chunk}</i> },
+            { verb: currentVerb }
+          )}
         </WaitingFact>
       )}
       {shownStatus && shownStatus !== 'loading' && (
@@ -168,7 +187,7 @@ export default function VerbsTab({
       {shownConjugation && (
         <>
           <div className="conj-head">
-            <h2 lang="fr">{shownConjugation.inf}</h2>
+            <h2 lang={language}>{shownConjugation.inf}</h2>
             <span className="ru" lang="ru">
               {shownConjugation.ru}
             </span>
@@ -177,14 +196,15 @@ export default function VerbsTab({
             {shownConjugation.pp &&
               rich(
                 'pastParticiple',
-                { i: (chunk) => <i lang="fr">{chunk}</i> },
+                { i: (chunk) => <i lang={language}>{chunk}</i> },
                 { pp: shownConjugation.pp }
               )}
             {shownConjugation.aux &&
+              compoundPast &&
               rich(
                 'withAux',
-                { i: (chunk) => <i lang="fr">{chunk}</i> },
-                { aux: shownConjugation.aux }
+                { i: (chunk) => <i lang={language}>{chunk}</i> },
+                { aux: shownConjugation.aux, tense: compoundPast }
               )}
             {ai && (
               <>
@@ -205,11 +225,11 @@ export default function VerbsTab({
             )}
           </p>
           <div className="tense-tabs" role="group" aria-label={t('tense')}>
-            {TENSES.map((tenseOption) => (
+            {tenses.map((tenseOption) => (
               <button
                 type="button"
                 key={tenseOption}
-                aria-pressed={tense === tenseOption}
+                aria-pressed={shownTense === tenseOption}
                 disabled={!(shownConjugation.tenses[tenseOption] || []).length}
                 onClick={() => setTense(tenseOption)}
               >
@@ -217,28 +237,31 @@ export default function VerbsTab({
               </button>
             ))}
           </div>
-          <div className="tense-tabs" role="group" aria-label={t('sentenceType')}>
-            <button type="button" aria-pressed={!negative} onClick={() => setNegative(false)}>
-              {t('affirmative')}
-            </button>
-            <button type="button" aria-pressed={negative} onClick={() => setNegative(true)}>
-              {commonText.t('negative')}
-            </button>
-          </div>
+          {canNegate && (
+            <div className="tense-tabs" role="group" aria-label={t('sentenceType')}>
+              <button type="button" aria-pressed={!negative} onClick={() => setNegative(false)}>
+                {t('affirmative')}
+              </button>
+              <button type="button" aria-pressed={negative} onClick={() => setNegative(true)}>
+                {commonText.t('negative')}
+              </button>
+            </div>
+          )}
           {!rows.length ? (
-            <p className="empty">{t('noTense', { tense })}</p>
+            <p className="empty">{t('noTense', { tense: shownTense })}</p>
           ) : mode === 'drill' ? (
             <Drill
-              key={shownConjugation.inf + tense + negative}
+              key={shownConjugation.inf + shownTense + showNegative}
               inf={shownConjugation.inf}
-              tense={tense}
-              negative={negative}
+              tense={shownTense}
+              language={language}
+              negative={showNegative}
               rows={rows}
               onStop={() => setMode('table')}
             />
           ) : (
             <>
-              <table className="conj" lang="fr">
+              <table className="conj" lang={language}>
                 <tbody>
                   {rows.map((row, index) => (
                     <tr key={index}>
@@ -246,7 +269,7 @@ export default function VerbsTab({
                       <td className="f">
                         <div className="conj-form">
                           <span>{keepBracketsTogether(row.f)}</span>
-                          <Speak text={`${row.p} ${row.f}`} />
+                          <Speak text={`${row.p} ${row.f}`} language={language} />
                         </div>
                       </td>
                     </tr>
@@ -269,12 +292,14 @@ export default function VerbsTab({
 function Drill({
   inf,
   tense,
+  language,
   negative,
   rows,
   onStop,
 }: {
   inf: string;
   tense: Tense;
+  language: VerbLanguage;
   negative: boolean;
   rows: Form[];
   onStop: () => void;
@@ -307,7 +332,7 @@ function Drill({
         });
       }}
     >
-      <table className="conj" lang="fr">
+      <table className="conj" lang={language}>
         <tbody>
           {rows.map((row, index) => {
             const result = results[index];
@@ -439,11 +464,12 @@ function Quiz({ conjugations, onClose }: { conjugations: Conjugation[]; onClose:
     setTyped('');
     setResult(null);
   };
+  const questionLanguage = languageOfTense(question.t);
   return (
     <div className="ex">
       {head}
       <p className="quiz-q">
-        <b lang="fr">{question.inf}</b>, {question.t}
+        <b lang={questionLanguage}>{question.inf}</b>, {question.t}
         {question.negative && `, ${commonText.t('negative')}`}
       </p>
       <form
@@ -466,12 +492,12 @@ function Quiz({ conjugations, onClose }: { conjugations: Conjugation[]; onClose:
             );
         }}
       >
-        <span className="p" lang="fr">
+        <span className="p" lang={questionLanguage}>
           {question.p}
         </span>
         <input
           ref={input}
-          lang="fr"
+          lang={questionLanguage}
           value={typed}
           onChange={(event) => setTyped(event.target.value)}
           readOnly={!!result}
@@ -489,7 +515,7 @@ function Quiz({ conjugations, onClose }: { conjugations: Conjugation[]; onClose:
         <p className="feedback warn">
           {commonText.rich(
             'almostAccents',
-            { b: (chunk) => <b lang="fr">{chunk}</b> },
+            { b: (chunk) => <b lang={questionLanguage}>{chunk}</b> },
             { answer: `${question.p} ${question.f}` }
           )}
         </p>
@@ -498,7 +524,7 @@ function Quiz({ conjugations, onClose }: { conjugations: Conjugation[]; onClose:
         <p className="feedback bad">
           {commonText.rich(
             'answerIs',
-            { b: (chunk) => <b lang="fr">{chunk}</b> },
+            { b: (chunk) => <b lang={questionLanguage}>{chunk}</b> },
             { answer: `${question.p} ${question.f}` }
           )}
         </p>

@@ -66,6 +66,25 @@ function initialDocId(): string | null {
   return load<string>('doc');
 }
 
+/** « to fold the open menu, ☰ to open it, drawn on a 16×16 grid around its centre: the text
+    characters sat off-centre in the round button, by an amount that depends on the font. */
+function MenuIcon({ open }: { open: boolean }) {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      width="16"
+      height="16"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d={open ? 'M7.5 4 3.5 8l4 4M12.5 4l-4 4 4 4' : 'M3 4.5h10M3 8h10M3 11.5h10'} />
+    </svg>
+  );
+}
+
 export default function App() {
   const translation = useTranslation(app);
   const settings = useSettings();
@@ -321,7 +340,7 @@ export default function App() {
               onClick={toggleMenu}
             >
               <span className="icon-button" aria-hidden="true">
-                {menuOpen ? '«' : '☰'}
+                <MenuIcon open={menuOpen} />
               </span>
               {/* on a phone the closed menu says where you are */}
               <span className="sidebar-current">{t(`section.${section}`)}</span>

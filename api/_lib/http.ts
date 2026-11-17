@@ -2,6 +2,8 @@ import { timingSafeEqual } from 'node:crypto';
 
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
+import { LEARN_LANGUAGES, type LearnLanguage } from './prompts.js';
+
 /* What every endpoint shares: the class-code check, the method check, reading request fields
    safely, and turning errors into answers. */
 
@@ -74,4 +76,14 @@ export type Level = (typeof LEVELS)[number];
 export const asLevel = (value: unknown): Level | null => {
   const level = text(value, 2).toUpperCase();
   return LEVELS.includes(level as Level) ? (level as Level) : null;
+};
+
+// the level assumed for a language the request gives none for
+const DEFAULT_LEVEL: Level = 'A2';
+/** The learner's level in every language ({fr: "A1", de: "B1"…}), each checked, A2 when missing. */
+export const asLevels = (value: unknown): Record<LearnLanguage, Level> => {
+  const given = value && typeof value === 'object' ? (value as Record<string, unknown>) : {};
+  return Object.fromEntries(
+    LEARN_LANGUAGES.map((language) => [language, asLevel(given[language]) ?? DEFAULT_LEVEL])
+  ) as Record<LearnLanguage, Level>;
 };

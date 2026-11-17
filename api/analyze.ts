@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 import { claudeJSON, MODEL } from './_lib/claude.js';
-import { asLevel, checkAccess, checkTeacher, fail, onlyPost, text } from './_lib/http.js';
+import { asLevel, asLevels, checkAccess, checkTeacher, fail, onlyPost, text } from './_lib/http.js';
 import {
   analysisPrompt,
   asExplainLanguage,
@@ -68,10 +68,11 @@ export default async function handler(request: VercelRequest, response: VercelRe
     if (body.length > MAX_LESSON_LENGTH)
       return response.status(413).json({ error: 'This lesson is too long to analyze in one go.' });
     const fresh = request.body?.fresh === true;
+    const levels = asLevels(request.body?.levels);
     const prompt =
       action === 'extras'
-        ? lessonExtrasPrompt(body, asExplainLanguage(request.body?.explainIn))
-        : analysisPrompt(body);
+        ? lessonExtrasPrompt(body, asExplainLanguage(request.body?.explainIn), levels)
+        : analysisPrompt(body, levels);
     return response
       .status(200)
       .json(await claudeJSON(prompt, { model: MODEL, maxTokens: 16000, cache: !fresh }));

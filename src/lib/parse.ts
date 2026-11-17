@@ -17,7 +17,7 @@ import type {
   Word,
   WritingCheck,
 } from './types';
-import { asLanguage, TENSES } from './types';
+import { asLanguage, TENSES_BY_LANGUAGE, type VerbLanguage } from './types';
 import { asText, hash, shuffle } from './util';
 
 /** The lessons' source from a pasted link: a Google Docs id, or "notion-<id>" for a Notion page. */
@@ -320,21 +320,29 @@ export function withPerson(form: Form): Form {
   return { p: person, f: /['’]$/.test(pronoun) ? pronoun + form.f : `${pronoun} ${form.f}` };
 }
 
-export function normalizeConjugation(raw: unknown, infinitive: string): Conjugation {
+export function normalizeConjugation(
+  raw: unknown,
+  infinitive: string,
+  language: VerbLanguage
+): Conjugation {
   const data = asObject(raw);
   const rawTenses = asObject(data.tenses);
-  const tenses = {} as Record<(typeof TENSES)[number], Form[]>;
-  for (const tense of TENSES)
+  const tenses: Conjugation['tenses'] = {};
+  for (const tense of TENSES_BY_LANGUAGE[language])
     tenses[tense] = asArray(rawTenses[tense])
       .map(asObject)
-      .map((form) => withPerson({ p: asText(form.p), f: asText(form.f) }))
+      .map((form) => ({ p: asText(form.p), f: asText(form.f) }))
+      // "je me" + "lève" is a French slip only
+      .map((form) => (language === 'fr' ? withPerson(form) : form))
       .filter((form) => form.f);
-  if (!tenses['présent'].length) throw new Error('empty');
+  // the first tense (présent, Präsens) is the one every verb has
+  if (!tenses[TENSES_BY_LANGUAGE[language][0]]?.length) throw new Error('empty');
   return {
     inf: asText(data.inf) || infinitive,
     ru: asText(data.ru),
     aux: asText(data.aux),
     pp: asText(data.pp),
+    language,
     tenses,
   };
 }

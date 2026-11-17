@@ -19,6 +19,8 @@ const STEP_TIMEOUT = 15_000;
 
 const options = {
   width: '390',
+  // pixels per CSS pixel: 3 shows icons sharp enough to judge their alignment
+  scale: '1',
   themes: 'light,dark',
   out: join(tmpdir(), 'languageswithvlad-shots'),
 };
@@ -82,6 +84,7 @@ const nameMatcher = (name) => (/^\/.*\/$/.test(name) ? new RegExp(name.slice(1, 
 for (const theme of options.themes.split(',')) {
   const context = await browser.newContext({
     viewport: { width: Number(options.width), height: 844 },
+    deviceScaleFactor: Number(options.scale),
     colorScheme: theme,
     locale: 'en-US',
   });

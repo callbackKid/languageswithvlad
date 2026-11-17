@@ -1,4 +1,11 @@
-import { asLanguage, type Language, type Tense, TENSES, type Word } from './types';
+import {
+  asLanguage,
+  isVerbLanguage,
+  type Language,
+  type Tense,
+  TENSES_BY_LANGUAGE,
+  type Word,
+} from './types';
 import { asText } from './util';
 
 /* The "Devoirs:" block for homework Claude made from a lesson, in the lesson's language and in
@@ -97,8 +104,12 @@ export function homeworkBlock({
     .filter((word) => word.key)
     .slice(0, KEY_WORDS_SHOWN)
     .map((word) => word.fr);
-  const tense = TENSES.find((name) => name === asText(data.tense)) as Tense | undefined;
-  const verbs = language === 'fr' ? list(data.verbs).slice(0, 3) : [];
+  // verbs to conjugate only where there are verb tables, and only in a tense of that language:
+  // the one Claude chose, or the first (présent, Präsens)
+  const verbLanguage = isVerbLanguage(language) ? language : null;
+  const tenses: readonly Tense[] = verbLanguage ? TENSES_BY_LANGUAGE[verbLanguage] : [];
+  const tense = tenses.find((name) => name === asText(data.tense)) ?? tenses[0];
+  const verbs = verbLanguage ? list(data.verbs).slice(0, 3) : [];
   const translate = list(data.translate).slice(0, 4);
   const writing = oneTask(asText(data.writing));
 
@@ -109,7 +120,7 @@ export function homeworkBlock({
         (keyWords.length ? ` — ${phrases.especially} ${keyWords.join(', ')}` : '')
     );
   if (gaps && words.length) tasks.push(phrases.gaps(lessonNumber));
-  if (verbs.length) tasks.push(`${phrases.verbs} ${verbs.join(', ')} — ${tense ?? 'présent'}`);
+  if (verbs.length && tense) tasks.push(`${phrases.verbs} ${verbs.join(', ')} — ${tense}`);
   if (translate.length) tasks.push(`${phrases.translate} ${translate.join(' / ')}`);
   if (writing) tasks.push(writing);
   return [`${phrases.label}:`, ...tasks.map((task) => `- ${task}`)].join('\n');

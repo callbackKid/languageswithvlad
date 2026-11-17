@@ -5,6 +5,7 @@ import {
   localParse,
   markKeyWords,
   normalizeAnalysis,
+  normalizeConjugation,
   withPerson,
   withTranscription,
 } from './parse';
@@ -14,9 +15,11 @@ import { load, save } from './storage';
 import {
   type Analysis,
   type Conjugation,
+  isVerbLanguage,
   type Lesson,
   type Pair,
-  TENSES,
+  TENSES_BY_LANGUAGE,
+  type VerbLanguage,
   type VerbRef,
   type Word,
 } from './types';
@@ -26,7 +29,14 @@ export const AUTO_PREPARE = 1;
 
 // v2: analyses know the lesson's language; v1 entries treated English lessons as French.
 export const analysisKey = (hash: string) => 'an2:' + hash;
-export const conjugationKey = (infinitive: string) => 'conj:' + infinitive.toLowerCase();
+/** French tables keep the key they always had; another language gets its own, so verbs spelled
+    alike in two languages never share a table. */
+export const conjugationKey = (infinitive: string, language: VerbLanguage) =>
+  (language === 'fr' ? 'conj:' : `conj:${language}:`) + infinitive.toLowerCase();
+
+/** The language of a verb's tables: its lesson's, French for a verb saved before others had any. */
+export const verbLanguageOf = (verb: VerbRef): VerbLanguage =>
+  isVerbLanguage(verb.language) ? verb.language : 'fr';
 
 /** Cached analysis, with transcriptions moved out of older entries. */
 export function readAnalysis(hash: string): Analysis | null {
@@ -34,13 +44,32 @@ export function readAnalysis(hash: string): Analysis | null {
   return analysis ? { ...analysis, words: analysis.words.map(withTranscription) } : null;
 }
 
-/** Cached conjugation, with reflexive pronouns moved out of the person in older entries. */
-export function readConjugation(infinitive: string): Conjugation | null {
-  const conjugation = load<Conjugation>(conjugationKey(infinitive));
+/** Cached conjugation. Older French entries get their language set and their reflexive pronouns
+    moved out of the person. */
+export function readConjugation(infinitive: string, language: VerbLanguage): Conjugation | null {
+  const conjugation = load<Conjugation>(conjugationKey(infinitive, language));
   if (!conjugation) return null;
-  const tenses = {} as Conjugation['tenses'];
-  for (const tense of TENSES) tenses[tense] = (conjugation.tenses[tense] || []).map(withPerson);
-  return { ...conjugation, tenses };
+  const tenses: Conjugation['tenses'] = {};
+  for (const tense of TENSES_BY_LANGUAGE[language]) {
+    const forms = conjugation.tenses[tense] || [];
+    tenses[tense] = language === 'fr' ? forms.map(withPerson) : forms;
+  }
+  return { ...conjugation, language, tenses };
+}
+
+/** A verb's tables: the saved ones, or (fresh, or none saved) Claude's, which are then saved.
+    Throws when Claude's answer can't be used. */
+export async function fetchConjugation(verb: VerbRef, fresh = false): Promise<Conjugation> {
+  const language = verbLanguageOf(verb);
+  const cached = fresh ? null : readConjugation(verb.inf, language);
+  if (cached) return cached;
+  const conjugation = normalizeConjugation(
+    await api.conjugate(verb.inf, verb.ru, language, fresh),
+    verb.inf,
+    language
+  );
+  save(conjugationKey(verb.inf, language), conjugation);
+  return conjugation;
 }
 
 export interface LessonInfo {
@@ -172,7 +201,7 @@ export function useBank(lessons: Lesson[], ai: boolean): Bank {
         const identity = verb.inf.toLowerCase();
         if (!seenVerbs.has(identity)) {
           seenVerbs.add(identity);
-          verbs.push({ ...verb, lesson: lesson.key });
+          verbs.push({ ...verb, language: analysis.language, lesson: lesson.key });
         }
       }
     }

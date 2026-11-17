@@ -11,7 +11,7 @@ export const paper = defineMessages({
     preparing: 'Reading this lesson and preparing words, pairs and verbs…',
     localOnly:
       'Showing words exactly as written in the notes. Translations, pairs, verbs and sentences need Claude.',
-    frenchOnlyVerbs: 'Verb tables are only available for French lessons for now.',
+    noEnglishVerbTables: 'Verb tables aren’t available for English lessons yet.',
     // photo section
     fromPaper: 'Photo parsing',
     whatToRead: 'What to read',
@@ -106,7 +106,7 @@ export const paper = defineMessages({
     preparing: 'Читаю урок и готовлю слова, пары и глаголы…',
     localOnly:
       'Слова показаны так, как они записаны. Для переводов, пар, глаголов и предложений нужен Claude.',
-    frenchOnlyVerbs: 'Таблицы глаголов пока есть только для французских уроков.',
+    noEnglishVerbTables: 'Для английских уроков таблиц глаголов пока нет.',
     fromPaper: 'Разбор фото',
     whatToRead: 'Что прочитать',
     'mode.underlined': 'Подчёркнутые слова',
@@ -201,8 +201,8 @@ export const paper = defineMessages({
     preparing: 'Lecture de la leçon et préparation des mots, paires et verbes…',
     localOnly:
       'Les mots sont affichés tels qu’ils sont écrits. Les traductions, paires, verbes et phrases demandent Claude.',
-    frenchOnlyVerbs:
-      'Les tableaux de conjugaison ne sont disponibles que pour les leçons de français.',
+    noEnglishVerbTables:
+      'Les tableaux de conjugaison n’existent pas encore pour les leçons d’anglais.',
     fromPaper: 'Analyse de photo',
     whatToRead: 'Que lire',
     'mode.underlined': 'Mots soulignés',
@@ -294,7 +294,7 @@ export const paper = defineMessages({
     preparing: 'Die Lektion wird gelesen; Wörter, Paare und Verben werden vorbereitet…',
     localOnly:
       'Die Wörter werden so gezeigt, wie sie in den Notizen stehen. Übersetzungen, Paare, Verben und Sätze brauchen Claude.',
-    frenchOnlyVerbs: 'Verbtabellen gibt es vorerst nur für Französisch-Lektionen.',
+    noEnglishVerbTables: 'Für Englisch-Lektionen gibt es noch keine Verbtabellen.',
     fromPaper: 'Fotoanalyse',
     whatToRead: 'Was gelesen wird',
     'mode.underlined': 'Unterstrichene Wörter',
@@ -389,8 +389,7 @@ export const paper = defineMessages({
     preparing: 'Leyendo esta lección y preparando palabras, pares y verbos…',
     localOnly:
       'Se muestran las palabras tal como están escritas en las notas. Las traducciones, los pares, los verbos y las frases necesitan a Claude.',
-    frenchOnlyVerbs:
-      'Por ahora, las tablas de verbos solo están disponibles para las lecciones de francés.',
+    noEnglishVerbTables: 'Las tablas de verbos aún no existen para las lecciones de inglés.',
     fromPaper: 'Análisis de fotos',
     whatToRead: 'Qué leer',
     'mode.underlined': 'Palabras subrayadas',
@@ -482,7 +481,7 @@ export const paper = defineMessages({
     preparing: 'A ler esta lição e a preparar palavras, pares e verbos…',
     localOnly:
       'As palavras aparecem tal como estão escritas nas notas. As traduções, os pares, os verbos e as frases precisam do Claude.',
-    frenchOnlyVerbs: 'Por agora, as tabelas de verbos só existem para as lições de francês.',
+    noEnglishVerbTables: 'As tabelas de verbos ainda não existem para as lições de inglês.',
     fromPaper: 'Análise de fotos',
     whatToRead: 'O que ler',
     'mode.underlined': 'Palavras sublinhadas',
@@ -575,7 +574,7 @@ export const paper = defineMessages({
     preparing: 'Leggo questa lezione e preparo parole, coppie e verbi…',
     localOnly:
       'Le parole sono mostrate esattamente come scritte negli appunti. Traduzioni, coppie, verbi e frasi richiedono Claude.',
-    frenchOnlyVerbs: 'Per ora le tabelle dei verbi ci sono solo per le lezioni di francese.',
+    noEnglishVerbTables: 'Le tabelle dei verbi non ci sono ancora per le lezioni di inglese.',
     fromPaper: 'Analisi delle foto',
     whatToRead: 'Cosa leggere',
     'mode.underlined': 'Parole sottolineate',

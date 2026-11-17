@@ -31,7 +31,7 @@ React + TypeScript + Vite in the browser, small Vercel serverless functions in `
 - **Book exercises**: exercises from the student's book in the lesson. **Import exercises from the book** reads photos or PDF pages and writes the exercises under that lesson in the document (a block starting with 📖), so the teacher and the student both see them. Needs the same one-time setup as adding lessons from photos.
 - **My notes** also shows the lesson board and the lesson-mode notes from that day, as saved on the device.
 - **Exercises**: quiz, flashcards, translation matching, synonym/antonym matching, fill-the-gap sentences, dictation. Words can be exported for Anki.
-- **Verbs**: tables in six tenses, affirmative and negative, a typing drill per tense, and a quick quiz.
+- **Verbs** (every language but English): conjugation tables in the language's main tenses (French in six, affirmative and negative; German, Spanish, Italian and European Portuguese in five or six), a typing drill per tense, and a quick quiz.
 - **My notes** (a notepad per lesson) and **Original** (the lesson exactly as written).
 
 **Practice across lessons**

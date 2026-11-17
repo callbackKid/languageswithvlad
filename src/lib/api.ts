@@ -2,9 +2,10 @@ import { translator } from '../i18n/core';
 import { common } from '../i18n/messages/common';
 import type { BoardServer } from './boardSync';
 import type { ImagePayload } from './image';
+import { getSettings } from './settings';
 import { load } from './storage';
 import { getTeacherCode } from './teacher';
-import type { Language } from './types';
+import type { Language, VerbLanguage } from './types';
 
 export type FeedbackKind = 'bug' | 'idea' | 'other';
 export interface FeedbackReport {
@@ -84,6 +85,8 @@ function messageFor(status: number, errorCode: string): string {
     : t('somethingWrong');
 }
 
+// Prompts that only learn the language from what they read (a lesson, a photo, a text) get the
+// student's level in every language, from Settings.
 // Identical analyses already on their way share one request (the lesson page and the
 // word bank can ask for the same lesson at once; React's dev mode runs effects twice).
 const inflight = new Map<string, Promise<unknown>>();
@@ -93,7 +96,7 @@ function analyzeOnce(body: string, fresh: boolean): Promise<unknown> {
   if (!pending) {
     pending = request<unknown>('/api/analyze', {
       method: 'POST',
-      body: JSON.stringify({ body, fresh }),
+      body: JSON.stringify({ body, fresh, levels: getSettings().levels }),
     }).finally(() => inflight.delete(cacheKey));
     inflight.set(cacheKey, pending);
   }
@@ -139,7 +142,13 @@ export const api = {
   lessonExtras: (body: string, explainIn: string, fresh = false) =>
     request<unknown>('/api/analyze', {
       method: 'POST',
-      body: JSON.stringify({ action: 'extras', body, explainIn, fresh }),
+      body: JSON.stringify({
+        action: 'extras',
+        body,
+        explainIn,
+        fresh,
+        levels: getSettings().levels,
+      }),
     }),
   /** gap sentences on one grammar point */
   grammarPractice: (options: {
@@ -159,15 +168,15 @@ export const api = {
       method: 'POST',
       body: JSON.stringify({ kind: 'exercises', ...pages }),
     }),
-  conjugate: (infinitive: string, ru: string, fresh = false) =>
+  conjugate: (infinitive: string, ru: string, language: VerbLanguage, fresh = false) =>
     request<unknown>('/api/conjugate', {
       method: 'POST',
-      body: JSON.stringify({ inf: infinitive, ru, fresh }),
+      body: JSON.stringify({ inf: infinitive, ru, language, fresh }),
     }),
   photo: (image: ImagePayload) =>
     request<unknown>('/api/paper', {
       method: 'POST',
-      body: JSON.stringify({ kind: 'underlined', images: [image] }),
+      body: JSON.stringify({ kind: 'underlined', images: [image], levels: getSettings().levels }),
     }),
   discussion: (options: {
     language: Language;
@@ -179,7 +188,7 @@ export const api = {
   textbook: (data: string) =>
     request<unknown>('/api/paper', {
       method: 'POST',
-      body: JSON.stringify({ kind: 'textbook', data }),
+      body: JSON.stringify({ kind: 'textbook', data, levels: getSettings().levels }),
     }),
   transcribe: (images: ImagePayload[]) =>
     request<unknown>('/api/paper', {
@@ -190,7 +199,12 @@ export const api = {
   explain: (selection: string, context: string) =>
     request<unknown>('/api/text', {
       method: 'POST',
-      body: JSON.stringify({ action: 'explain', selection, context }),
+      body: JSON.stringify({
+        action: 'explain',
+        selection,
+        context,
+        levels: getSettings().levels,
+      }),
     }),
   /** a pasted text in Russian, paragraph by paragraph */
   translate: (text: string) =>
