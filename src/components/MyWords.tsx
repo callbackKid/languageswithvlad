@@ -26,7 +26,7 @@ export default function MyWords({ ai }: { ai: boolean }) {
 
   return (
     <>
-      <PageHead title={t('myWordsTitle')}>
+      <PageHead guide="my-words" title={t('myWordsTitle')}>
         {words.length ? t('myWordsIntro', { count: words.length }) : null}
       </PageHead>
       {words.length ? (

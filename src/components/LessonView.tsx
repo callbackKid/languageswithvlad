@@ -10,6 +10,7 @@ import { localParse, markKeyWords, normalizeAnalysis, normalizeExtras } from '..
 import { LESSON_TABS, type LessonTab, useSettings } from '../lib/settings';
 import { load, save } from '../lib/storage';
 import type { Analysis, Lesson, LessonExtras } from '../lib/types';
+import HelpLink from './HelpLink';
 import LessonDrawings from './LessonDrawings';
 import { BookTab, GrammarTab, HomeworkTab } from './LessonExtrasTabs';
 import MakeHomework from './MakeHomework';
@@ -171,7 +172,10 @@ export default function LessonView({
   return (
     <>
       <section className="sheet">
-        <h1>{lesson.title || `${lesson.word} ${lesson.n}`}</h1>
+        <div className="title-row">
+          <h1>{lesson.title || `${lesson.word} ${lesson.n}`}</h1>
+          <HelpLink guide={tab === 'verbs' ? 'verbs' : 'lessons'} />
+        </div>
         <p className="date">
           {new Intl.DateTimeFormat(locale, {
             weekday: 'long',

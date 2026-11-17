@@ -3,11 +3,25 @@ import type { ReactNode } from 'react';
 import { useTranslation } from '../i18n/core';
 import { common } from '../i18n/messages/common';
 import type { Bank } from '../lib/bank';
+import type { GuideId } from '../lib/guides';
+import HelpLink from './HelpLink';
 
-export default function PageHead({ title, children }: { title: string; children?: ReactNode }) {
+/** A page's title and intro; with a guide, a "?" beside the title opens its Tutorial card. */
+export default function PageHead({
+  title,
+  guide,
+  children,
+}: {
+  title: string;
+  guide?: GuideId;
+  children?: ReactNode;
+}) {
   return (
     <section className="page-head">
-      <h1>{title}</h1>
+      <div className="title-row">
+        <h1>{title}</h1>
+        {guide && <HelpLink guide={guide} />}
+      </div>
       {children && <p>{children}</p>}
     </section>
   );

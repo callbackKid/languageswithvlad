@@ -420,7 +420,9 @@ export default function LessonMode({
   const newest = lessons[lessons.length - 1] ?? null;
   return (
     <>
-      <PageHead title={t('title')}>{t('intro')}</PageHead>
+      <PageHead guide="call" title={t('title')}>
+        {t('intro')}
+      </PageHead>
       {/* above the call rather than instead of it: closing a Zoom call's panel would end the call */}
       {activity === 'warm-up' && (
         <WarmUp bank={bank} lesson={earlier} onClose={() => setActivity(null)} />

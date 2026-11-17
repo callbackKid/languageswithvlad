@@ -117,7 +117,9 @@ export default function Settings({ lessonDocument }: { lessonDocument: DocumentI
 
   return (
     <>
-      <PageHead title={t('title')}>{t('intro')}</PageHead>
+      <PageHead guide="settings" title={t('title')}>
+        {t('intro')}
+      </PageHead>
 
       <section className="settings-card">
         <h2>{t('profile')}</h2>

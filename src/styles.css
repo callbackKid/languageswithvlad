@@ -704,6 +704,30 @@ main.page {
   color: var(--muted);
   max-width: 62ch;
 }
+/* a page's or lesson's title with the "?" that opens its Tutorial card */
+.title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.help-link {
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  color: var(--muted);
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+}
+.help-link:hover,
+.help-link:focus-visible {
+  border-color: var(--ink);
+  color: var(--ink);
+}
 
 .next-lesson-widget .zone {
   color: var(--muted);

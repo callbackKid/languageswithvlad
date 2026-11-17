@@ -250,7 +250,9 @@ export default function Reader({ ai }: { ai: boolean }) {
   if (!ai)
     return (
       <>
-        <PageHead title={t('title')}>{t('intro')}</PageHead>
+        <PageHead guide="text" title={t('title')}>
+          {t('intro')}
+        </PageHead>
         <p className="empty">{commonText.t('needsClaude')}</p>
       </>
     );
@@ -264,7 +266,9 @@ export default function Reader({ ai }: { ai: boolean }) {
 
   return (
     <>
-      <PageHead title={t('title')}>{t('intro')}</PageHead>
+      <PageHead guide="text" title={t('title')}>
+        {t('intro')}
+      </PageHead>
 
       {!current ? (
         <form

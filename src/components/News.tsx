@@ -27,7 +27,9 @@ export default function News({ onSeen }: { onSeen: () => void }) {
 
   return (
     <>
-      <PageHead title={sectionNames.t('section.news')}>{t('intro')}</PageHead>
+      <PageHead guide="news" title={sectionNames.t('section.news')}>
+        {t('intro')}
+      </PageHead>
       <ol className="news">
         {NEWS.map((day) => (
           <li key={day.date} className="news-day">

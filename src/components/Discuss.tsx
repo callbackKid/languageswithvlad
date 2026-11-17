@@ -413,7 +413,9 @@ export default function Discuss({ bank, ai }: { bank: Bank; ai: boolean }) {
 
   return (
     <>
-      <PageHead title={t('discussTitle')}>{t('discussIntro')}</PageHead>
+      <PageHead guide="discuss" title={t('discussTitle')}>
+        {t('discussIntro')}
+      </PageHead>
       {!ai ? (
         <p className="empty">{commonText.t('needsClaude')}</p>
       ) : (

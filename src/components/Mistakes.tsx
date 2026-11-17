@@ -47,7 +47,7 @@ export default function Mistakes({ bank }: { bank: Bank }) {
 
   return (
     <>
-      <PageHead title={t('mistakesTitle')}>
+      <PageHead guide="mistakes" title={t('mistakesTitle')}>
         {words.length || forms.length ? t('mistakesIntro') : null}
       </PageHead>
       {!words.length && !forms.length ? (

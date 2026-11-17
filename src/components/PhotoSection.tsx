@@ -22,7 +22,7 @@ export default function PhotoSection({ ai, target }: { ai: boolean; target: DocT
   };
   return (
     <>
-      <PageHead title={t('fromPaper')} />
+      <PageHead guide="photo" title={t('fromPaper')} />
       <div className="seg photo-mode" role="group" aria-label={t('whatToRead')}>
         {MODES.map((entry) => (
           <button

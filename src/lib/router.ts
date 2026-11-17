@@ -19,18 +19,24 @@ export function usePath(): string {
   return useSyncExternalStore(subscribe, () => window.location.pathname);
 }
 
-/** Goes to a path inside the app; replace swaps the current history entry instead of adding one. */
-export function navigate(path: string, { replace = false } = {}) {
-  if (path === window.location.pathname) return;
-  const url = path + window.location.search;
-  if (replace) window.history.replaceState(null, '', url);
-  else window.history.pushState(null, '', url);
-  window.scrollTo(0, 0);
-  window.dispatchEvent(new Event(CHANGE_EVENT));
+/** The href for a path, keeping ?doc=… so a copied link still opens the same document. A #part
+    (the Tutorial's cards) goes after the query, where the browser expects it. */
+export function hrefFor(path: string) {
+  const [pathname = '', part] = path.split('#');
+  return pathname + window.location.search + (part ? '#' + part : '');
 }
 
-/** The href for a path, keeping ?doc=… so a copied link still opens the same document. */
-export const hrefFor = (path: string) => path + window.location.search;
+/** Goes to a path inside the app; replace swaps the current history entry instead of adding one.
+    A path with a #part keeps it, and the page it opens scrolls to that part itself. */
+export function navigate(path: string, { replace = false } = {}) {
+  const part = path.split('#')[1];
+  if (path === window.location.pathname) return;
+  const url = hrefFor(path);
+  if (replace) window.history.replaceState(null, '', url);
+  else window.history.pushState(null, '', url);
+  if (!part) window.scrollTo(0, 0);
+  window.dispatchEvent(new Event(CHANGE_EVENT));
+}
 
 /** Click handler for app links: plain clicks navigate in place, Cmd/Ctrl/Shift/middle clicks open a new tab as usual. */
 export function followLink(event: MouseEvent<HTMLAnchorElement>, path: string) {

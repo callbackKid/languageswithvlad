@@ -54,7 +54,7 @@ export default function Home({
 
   return (
     <>
-      <PageHead title={t('homeTitle')}>
+      <PageHead guide="home" title={t('homeTitle')}>
         {bank.words.length ? (
           <>
             {t('homeLearned', { learned, count: bank.words.length })}

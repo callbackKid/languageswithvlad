@@ -48,7 +48,9 @@ export default function Practice({ bank, ai }: { bank: Bank; ai: boolean }) {
 
   return (
     <>
-      <PageHead title={t('allTitle')}>{t('allIntro')}</PageHead>
+      <PageHead guide="all-lessons" title={t('allTitle')}>
+        {t('allIntro')}
+      </PageHead>
       <BankNote bank={bank} />
       <div className="chips" role="group" aria-label={appText.t('lessonsLabel')}>
         <button

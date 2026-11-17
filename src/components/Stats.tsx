@@ -174,7 +174,7 @@ export default function Stats({
 
   return (
     <>
-      <PageHead title={t('statsTitle')}>
+      <PageHead guide="stats" title={t('statsTitle')}>
         {answers ? t('basedOn', { count: answers }) : null}
       </PageHead>
       <BankNote bank={bank} />

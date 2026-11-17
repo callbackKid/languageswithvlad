@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import { type ReactNode, useEffect } from 'react';
 
 import { useTranslation } from '../i18n/core';
 import { app } from '../i18n/messages/app';
@@ -6,6 +6,7 @@ import { exercises } from '../i18n/messages/exercises';
 import { pages } from '../i18n/messages/pages';
 import { paper } from '../i18n/messages/paper';
 import { tutorial } from '../i18n/messages/tutorial';
+import { GUIDES } from '../lib/guides';
 import { followLink, hrefFor } from '../lib/router';
 import { type Section, SECTIONS } from '../lib/sections';
 import PageHead from './PageHead';
@@ -52,34 +53,6 @@ const TAGS: Record<string, (chunk: ReactNode) => ReactNode> = {
   home: (chunk) => <OpenLink section="home">{chunk}</OpenLink>,
 };
 
-interface Guide {
-  section: Section | null;
-  /** the prefix of its texts: "<id>.title", "<id>.step1"… */
-  id: string;
-  icon: string;
-  steps: number;
-  tips?: number;
-  /** a small drawing of the screen, with the app's own labels */
-  mock?: boolean;
-}
-
-const GUIDES: Guide[] = [
-  { section: null, id: 'header', icon: '🧭', steps: 6, tips: 1, mock: true },
-  { section: 'home', id: 'home', icon: '🏠', steps: 3, tips: 5, mock: true },
-  { section: 'lessons', id: 'lessons', icon: '📚', steps: 4, tips: 7, mock: true },
-  { section: 'lessons', id: 'verbs', icon: '🔤', steps: 4, tips: 3, mock: true },
-  { section: 'practice', id: 'all-lessons', icon: '🗂️', steps: 2, mock: true },
-  { section: 'discuss', id: 'discuss', icon: '💬', steps: 4, tips: 1 },
-  // the Document section is hidden until it is redone; its guide (document.* in tutorial.ts) comes back with it
-  { section: 'mine', id: 'my-words', icon: '⭐', steps: 2 },
-  { section: 'mistakes', id: 'mistakes', icon: '🎯', steps: 1 },
-  { section: 'stats', id: 'stats', icon: '📊', steps: 1 },
-  { section: 'text', id: 'text', icon: '📰', steps: 4, tips: 2 },
-  { section: 'photo', id: 'photo', icon: '📷', steps: 4, tips: 2, mock: true },
-  { section: 'call', id: 'call', icon: '🎥', steps: 7, tips: 3 },
-  { section: 'settings', id: 'settings', icon: '⚙️', steps: 4, tips: 1 },
-  { section: 'news', id: 'news', icon: '🗞️', steps: 1 },
-];
 const QUICK_START = [1, 2, 3, 4];
 const range = (count: number) => Array.from({ length: count }, (_value, index) => index + 1);
 
@@ -209,6 +182,11 @@ export default function Tutorial() {
   const { t, rich } = useTranslation(tutorial);
   const text = (key: string) => rich(key as TutorialKey, TAGS);
   const plain = (key: string) => t(key as TutorialKey);
+  // opened from a page's "?" (/tutorial#guide-verbs): go straight to that card
+  useEffect(() => {
+    const part = window.location.hash.slice(1);
+    if (part) document.getElementById(part)?.scrollIntoView();
+  }, []);
   return (
     <>
       <PageHead title={t('title')}>{t('intro')}</PageHead>
