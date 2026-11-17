@@ -85,15 +85,15 @@ export default function WordQuiz({
   useEffect(() => {
     if (over) latestRoundEnd.current?.();
   }, [over]);
-  // set by the student's own steps (Next, a new round), never by the quiz appearing
-  const mayAutoSpeak = useRef(speakAtOnce);
+  // turned on by the student's own steps (Next, a new round, Listen), never by the quiz appearing
+  const [autoSpeak, setAutoSpeak] = useState(speakAtOnce);
   useEffect(() => {
-    if (current?.kind === 'listen' && mayAutoSpeak.current)
+    if (current?.kind === 'listen' && autoSpeak)
       speak(current.word.fr, current.word.language ?? 'fr');
-  }, [current]);
+  }, [current, autoSpeak]);
 
   const restart = () => {
-    mayAutoSpeak.current = true;
+    setAutoSpeak(true);
     setQuestions(make());
     setIndex(0);
     setScore(0);
@@ -103,7 +103,7 @@ export default function WordQuiz({
     setResult(null);
   };
   const next = () => {
-    mayAutoSpeak.current = true;
+    setAutoSpeak(true);
     setIndex((previous) => previous + 1);
     setTyped('');
     setPicked(null);
@@ -323,12 +323,14 @@ export default function WordQuiz({
       ) : question.kind === 'listen' ? (
         <>
           <p className="quiz-word">
+            {/* nothing has played yet only on Home's quiz, before the student's first step:
+                the first press turns speaking on, which plays the word */}
             <button
               type="button"
               className="btn big"
-              onClick={() => speak(question.word.fr, language)}
+              onClick={() => (autoSpeak ? speak(question.word.fr, language) : setAutoSpeak(true))}
             >
-              {tx('listenAgain')}
+              {autoSpeak ? tx('listenAgain') : tx('listenFirst')}
             </button>
           </p>
           <p className="ru-line">{tx('writeWhatYouHear')}</p>
