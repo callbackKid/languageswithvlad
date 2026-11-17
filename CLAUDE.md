@@ -1,0 +1,28 @@
+# Cahier de français
+
+A study app for language lessons: the teacher writes lessons, the app turns each one into vocabulary, verb tables and exercises for the student. React + TypeScript + Vite in `src/`, Vercel serverless functions in `api/` (Claude calls, Google Docs, Notion, Telegram, Zoom). [README.md](README.md) describes every feature and the project structure; read the relevant part before changing a feature.
+
+## Rules
+
+The code rules are in CODE_STYLE.md and are binding; follow them from the first line you write, not only when the hook complains:
+
+@CODE_STYLE.md
+
+## Commands
+
+- `yarn verify` — lint, format check and typecheck for everything. Run it before saying a change is done.
+- `yarn typecheck` — app and `api/` together. Don't use `tsc -p .` alone, it misses `api/`.
+- `yarn lint:fix`, `yarn format` — fix what can be fixed automatically.
+- `yarn start` — UI with the API functions (needs `.env.local`); `yarn dev` — UI only.
+
+## Working here
+
+- **Check UI changes in the running app**, not just with the typecheck: the changed page and its neighbours, light and dark theme, 390 px wide.
+- **Stored data is in students' browsers.** Field names of stored or Claude-returned data (`fr`, `ru`, `tr`, `p`, `f`, `inf`, `a`, `b`, `n`…) never change. Changing the shape of a cached value needs a migration on read (see `readAnalysis` / `readConjugation` in `src/lib/bank.ts`) or a new key version (`an2:` → `an3:`); a new key makes every student re-pay Claude for every lesson, so ask before bumping it.
+- **Prompts** live only in `api/_lib/prompts.ts`; whatever Claude returns goes through a `normalizeX` function in `src/lib/parse.ts`.
+- **Texts**: every new interface text in all seven languages in `src/i18n/messages/`. A change students will notice gets an entry in `src/lib/news.ts`; a finished TODO item is removed from `TODO.md`.
+- **Tests and the backend**: the owner writes these themselves to learn (Vitest, and a separate Express/Postgres repo). Explain, guide and review; don't write them unless asked.
+- **Direction**: lessons will move from the Google Doc / Notion into the app itself. Don't deepen the document-based flow when designing new features.
+- **Git**: commit only when asked, with a message that says what changed. Never `--no-verify`. Never read, print or commit `.env.local` or keys.
+- **Code review**: `REVIEW.md` is the owner's checklist, partly written for another stack (MUI, tables, `.po` files, `yarn ci:check`); apply only the items that fit this project.
+- Talk to the owner in the language they write in (often Russian); code, comments and docs are in English.
