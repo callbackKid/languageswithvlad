@@ -18,6 +18,18 @@ export const DAILY_GOALS = [10, 20, 30, 50] as const;
 /** Sections that can't be hidden: the way back to everything else. */
 export const ALWAYS_SHOWN: Section[] = ['home'];
 
+/** The tabs of a lesson page, in their order. */
+export const LESSON_TABS = [
+  'words',
+  'verbs',
+  'grammar',
+  'homework',
+  'book',
+  'notes',
+  'source',
+] as const;
+export type LessonTab = (typeof LESSON_TABS)[number];
+
 export interface Settings {
   /** the languages the student learns; exercises and Discuss only offer these */
   studying: Language[];
@@ -32,6 +44,8 @@ export interface Settings {
   speechSpeed: SpeechSpeed;
   /** sections taken out of the menu (their addresses still work) */
   hidden: Section[];
+  /** tabs taken off the lesson page; at least one always stays */
+  hiddenTabs: LessonTab[];
 }
 
 const DEFAULTS: Settings = {
@@ -43,6 +57,7 @@ const DEFAULTS: Settings = {
   dailyGoal: 20,
   speechSpeed: 'normal',
   hidden: [],
+  hiddenTabs: [],
 };
 const KEY = 'settings';
 
@@ -51,6 +66,9 @@ function sanitize(raw: Partial<Settings> | null): Settings {
   const value = { ...DEFAULTS, ...raw };
   const studying = (Array.isArray(value.studying) ? value.studying : []).filter((language) =>
     LANGUAGES.includes(language)
+  );
+  const hiddenTabs = (Array.isArray(value.hiddenTabs) ? value.hiddenTabs : []).filter((tab) =>
+    LESSON_TABS.includes(tab)
   );
   const storedLevels: Partial<Record<Language, unknown>> = value.levels ?? {};
   const levels = { ...DEFAULTS.levels };
@@ -69,6 +87,7 @@ function sanitize(raw: Partial<Settings> | null): Settings {
       : DEFAULTS.dailyGoal,
     speechSpeed: SPEECH_SPEEDS.includes(value.speechSpeed) ? value.speechSpeed : 'normal',
     hidden: Array.isArray(value.hidden) ? value.hidden : [],
+    hiddenTabs: hiddenTabs.length < LESSON_TABS.length ? hiddenTabs : [],
   };
 }
 

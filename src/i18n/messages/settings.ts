@@ -40,6 +40,8 @@ export const settingsText = defineMessages({
     tryIt: 'Try it',
     menu: 'Menu',
     menuHint: 'Untick the sections you don’t use. They leave the menu; their links still work.',
+    lessonTabs: 'Lesson tabs',
+    lessonTabsHint: 'Untick the tabs you don’t need on a lesson page. One always stays.',
     openSettings: 'Settings',
   },
   ru: {
@@ -86,6 +88,9 @@ export const settingsText = defineMessages({
     menu: 'Меню',
     menuHint:
       'Снимите галочки с разделов, которыми не пользуетесь. Они пропадут из меню, а ссылки на них продолжат работать.',
+    lessonTabs: 'Вкладки урока',
+    lessonTabsHint:
+      'Снимите галочки с вкладок, которые не нужны на странице урока. Одна всегда остаётся.',
     openSettings: 'Настройки',
   },
   fr: {
@@ -127,6 +132,9 @@ export const settingsText = defineMessages({
     menu: 'Menu',
     menuHint:
       'Décochez les sections que vous n’utilisez pas. Elles quittent le menu ; leurs liens fonctionnent toujours.',
+    lessonTabs: 'Onglets de la leçon',
+    lessonTabsHint:
+      'Décochez les onglets dont vous n’avez pas besoin sur la page d’une leçon. Il en reste toujours un.',
     openSettings: 'Réglages',
   },
   de: {
@@ -168,6 +176,9 @@ export const settingsText = defineMessages({
     menu: 'Menü',
     menuHint:
       'Entferne die Haken bei Bereichen, die du nicht nutzt. Sie verschwinden aus dem Menü; ihre Links funktionieren weiter.',
+    lessonTabs: 'Tabs der Lektion',
+    lessonTabsHint:
+      'Entferne die Haken bei Tabs, die du auf der Lektionsseite nicht brauchst. Einer bleibt immer.',
     openSettings: 'Einstellungen',
   },
   es: {
@@ -209,6 +220,9 @@ export const settingsText = defineMessages({
     menu: 'Menú',
     menuHint:
       'Desmarca las secciones que no usas. Salen del menú, pero sus enlaces siguen funcionando.',
+    lessonTabs: 'Pestañas de la lección',
+    lessonTabsHint:
+      'Desmarca las pestañas que no necesitas en la página de una lección. Siempre queda una.',
     openSettings: 'Ajustes',
   },
   pt: {
@@ -250,6 +264,9 @@ export const settingsText = defineMessages({
     menu: 'Menu',
     menuHint:
       'Desmarque as secções que não usa. Saem do menu, mas as ligações continuam a funcionar.',
+    lessonTabs: 'Separadores da lição',
+    lessonTabsHint:
+      'Desmarque os separadores de que não precisa na página de uma lição. Fica sempre um.',
     openSettings: 'Definições',
   },
   it: {
@@ -291,6 +308,9 @@ export const settingsText = defineMessages({
     menu: 'Menu',
     menuHint:
       'Togli la spunta alle sezioni che non usi. Escono dal menu, ma i loro link funzionano ancora.',
+    lessonTabs: 'Schede della lezione',
+    lessonTabsHint:
+      'Togli la spunta alle schede che non ti servono nella pagina di una lezione. Ne resta sempre una.',
     openSettings: 'Impostazioni',
   },
 });

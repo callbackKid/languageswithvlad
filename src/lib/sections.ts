@@ -23,7 +23,8 @@ export const SECTIONS: { id: Section; path: string; group: SectionGroup; inMenu?
   { id: 'lessons', path: '/lessons', group: 'lessons' },
   { id: 'practice', path: '/all-lessons', group: 'lessons' },
   { id: 'discuss', path: '/discuss', group: 'lessons' },
-  { id: 'document', path: '/document', group: 'lessons' },
+  // hidden from everyone until it is redone; /document still opens it
+  { id: 'document', path: '/document', group: 'lessons', inMenu: false },
   { id: 'mine', path: '/my-words', group: 'words' },
   { id: 'mistakes', path: '/mistakes', group: 'words' },
   { id: 'stats', path: '/stats', group: 'words' },

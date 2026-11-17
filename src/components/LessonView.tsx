@@ -7,6 +7,7 @@ import { api, ApiError } from '../lib/api';
 import { analysisKey, readAnalysis } from '../lib/bank';
 import { homeworkKey } from '../lib/homework';
 import { localParse, markKeyWords, normalizeAnalysis, normalizeExtras } from '../lib/parse';
+import { LESSON_TABS, type LessonTab, useSettings } from '../lib/settings';
 import { load, save } from '../lib/storage';
 import type { Analysis, Lesson, LessonExtras } from '../lib/types';
 import LessonDrawings from './LessonDrawings';
@@ -17,7 +18,7 @@ import VerbsTab from './VerbsTab';
 import WaitingFact from './WaitingFact';
 import WordsTab from './WordsTab';
 
-type Tab = 'words' | 'verbs' | 'grammar' | 'homework' | 'book' | 'notes' | 'source';
+type Tab = LessonTab;
 const EXTRA_TABS: Tab[] = ['grammar', 'homework', 'book'];
 
 export default function LessonView({
@@ -37,7 +38,11 @@ export default function LessonView({
 }) {
   const { t, locale, language: uiLanguage } = useTranslation(paper);
   const commonText = useTranslation(common);
-  const [tab, setTab] = useState<Tab>('words');
+  const { hiddenTabs } = useSettings();
+  const shownTabs = LESSON_TABS.filter((id) => !hiddenTabs.includes(id));
+  const [chosenTab, setTab] = useState<Tab>('words');
+  // a tab hidden in Settings gives way to the first one shown
+  const tab = shownTabs.includes(chosenTab) ? chosenTab : (shownTabs[0] ?? 'words');
   const [analysis, setAnalysis] = useState<Analysis | null>(null);
   const [state, setState] = useState<'loading' | 'ready' | 'error'>('loading');
   const [error, setError] = useState('');
@@ -130,18 +135,19 @@ export default function LessonView({
     [analysis, lesson.key, lesson.body]
   );
 
-  const tabButton = (id: Tab, label: string, count?: number) => (
-    <button
-      type="button"
-      className="tab"
-      role="tab"
-      aria-selected={tab === id}
-      onClick={() => setTab(id)}
-    >
-      {label}
-      {count !== undefined && <span className="count">{count}</span>}
-    </button>
-  );
+  const tabButton = (id: Tab, label: string, count?: number) =>
+    shownTabs.includes(id) && (
+      <button
+        type="button"
+        className="tab"
+        role="tab"
+        aria-selected={tab === id}
+        onClick={() => setTab(id)}
+      >
+        {label}
+        {count !== undefined && <span className="count">{count}</span>}
+      </button>
+    );
 
   let note = null;
   if (state === 'loading')

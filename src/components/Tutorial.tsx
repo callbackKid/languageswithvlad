@@ -64,13 +64,13 @@ interface Guide {
 }
 
 const GUIDES: Guide[] = [
-  { section: null, id: 'header', icon: '🧭', steps: 6, tips: 2, mock: true },
+  { section: null, id: 'header', icon: '🧭', steps: 6, tips: 1, mock: true },
   { section: 'home', id: 'home', icon: '🏠', steps: 3, tips: 5, mock: true },
   { section: 'lessons', id: 'lessons', icon: '📚', steps: 4, tips: 7, mock: true },
   { section: 'lessons', id: 'verbs', icon: '🔤', steps: 4, tips: 3, mock: true },
   { section: 'practice', id: 'all-lessons', icon: '🗂️', steps: 2, mock: true },
   { section: 'discuss', id: 'discuss', icon: '💬', steps: 4, tips: 1 },
-  { section: 'document', id: 'document', icon: '📝', steps: 2, tips: 1 },
+  // the Document section is hidden until it is redone; its guide (document.* in tutorial.ts) comes back with it
   { section: 'mine', id: 'my-words', icon: '⭐', steps: 2 },
   { section: 'mistakes', id: 'mistakes', icon: '🎯', steps: 1 },
   { section: 'stats', id: 'stats', icon: '📊', steps: 1 },

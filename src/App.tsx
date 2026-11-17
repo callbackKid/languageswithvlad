@@ -13,7 +13,6 @@ import News from './components/News';
 import NextLessonBadge from './components/NextLessonBadge';
 import PhotoSection from './components/PhotoSection';
 import Practice from './components/Practice';
-import { QuestionsButton } from './components/Questions';
 import Reader from './components/Reader';
 import Settings, { Avatar } from './components/Settings';
 import Stats from './components/Stats';
@@ -283,12 +282,6 @@ export default function App() {
           />
         </div>
         <div className="top-actions">
-          <QuestionsButton
-            key={docId}
-            docId={docId}
-            lesson={lessons[lessons.length - 1] ?? null}
-            canWrite={!!docTarget.docWriter}
-          />
           {feedback && <Feedback docTitle={doc?.title ?? ''} />}
           <a
             className="btn ghost"

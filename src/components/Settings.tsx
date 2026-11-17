@@ -3,12 +3,15 @@ import { useState } from 'react';
 import { setUiLanguage, UI_LANGUAGES, useTranslation } from '../i18n/core';
 import { app } from '../i18n/messages/app';
 import { learning } from '../i18n/messages/common';
+import { paper } from '../i18n/messages/paper';
 import { settingsText } from '../i18n/messages/settings';
 import { shrinkImage } from '../lib/image';
 import { type Section, SECTIONS } from '../lib/sections';
 import {
   ALWAYS_SHOWN,
   DAILY_GOALS,
+  LESSON_TABS,
+  type LessonTab,
   type Level,
   LEVELS,
   SPEECH_SPEEDS,
@@ -19,6 +22,17 @@ import {
 import { canSpeak, speak } from '../lib/speech';
 import { type Language, LANGUAGES } from '../lib/types';
 import PageHead from './PageHead';
+
+// each lesson tab under the name it has on the lesson page
+const TAB_NAMES = {
+  words: 'words',
+  verbs: 'verbs',
+  grammar: 'grammar',
+  homework: 'homework',
+  book: 'book',
+  notes: 'myNotes',
+  source: 'original',
+} as const satisfies Record<LessonTab, string>;
 
 // a sentence to try the voice with
 const SAMPLES: Record<Language, string> = {
@@ -56,6 +70,7 @@ export default function Settings({ lessonDocument }: { lessonDocument: DocumentI
   const { t, language: uiLanguage } = useTranslation(settingsText);
   const names = useTranslation(learning);
   const sectionNames = useTranslation(app);
+  const tabNames = useTranslation(paper);
   const settings = useSettings();
   const [pictureError, setPictureError] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -91,6 +106,13 @@ export default function Settings({ lessonDocument }: { lessonDocument: DocumentI
       hidden: settings.hidden.includes(section)
         ? settings.hidden.filter((hidden) => hidden !== section)
         : [...settings.hidden, section],
+    });
+  const shownTabCount = LESSON_TABS.length - settings.hiddenTabs.length;
+  const toggleTab = (tab: LessonTab) =>
+    updateSettings({
+      hiddenTabs: settings.hiddenTabs.includes(tab)
+        ? settings.hiddenTabs.filter((hidden) => hidden !== tab)
+        : [...settings.hiddenTabs, tab],
     });
 
   return (
@@ -303,6 +325,30 @@ export default function Settings({ lessonDocument }: { lessonDocument: DocumentI
                     onChange={() => toggleSection(entry.id)}
                   />
                   {sectionNames.t(`section.${entry.id}`)}
+                </label>
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+
+      <section className="settings-card">
+        <h2>{t('lessonTabs')}</h2>
+        <p className="hint">{t('lessonTabsHint')}</p>
+        <ul className="settings-sections">
+          {LESSON_TABS.map((tab) => {
+            const shown = !settings.hiddenTabs.includes(tab);
+            return (
+              <li key={tab}>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={shown}
+                    // the last tab shown stays
+                    disabled={shown && shownTabCount === 1}
+                    onChange={() => toggleTab(tab)}
+                  />
+                  {tabNames.t(TAB_NAMES[tab])}
                 </label>
               </li>
             );

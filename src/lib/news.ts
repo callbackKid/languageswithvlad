@@ -22,6 +22,18 @@ export const NEWS: NewsDay[] = [
       {
         kind: 'new',
         text: {
+          en: 'Settings → Lesson tabs: untick the lesson tabs you don’t need (Grammar, My notes, Original…) and the lesson page leaves them out.',
+          ru: 'Настройки → Вкладки урока: снимите галочки с ненужных вкладок (Грамматика, Мои заметки, Оригинал…), и страница урока их не покажет.',
+          fr: 'Réglages → Onglets de la leçon : décochez les onglets dont vous n’avez pas besoin (Grammaire, Mes notes, Original…) et la page de la leçon ne les affiche plus.',
+          de: 'Einstellungen → Tabs der Lektion: Entferne die Haken bei Tabs, die du nicht brauchst (Grammatik, Meine Notizen, Original…), und die Lektionsseite lässt sie weg.',
+          es: 'Ajustes → Pestañas de la lección: desmarca las pestañas que no necesitas (Gramática, Mis notas, Original…) y la página de la lección ya no las muestra.',
+          pt: 'Definições → Separadores da lição: desmarque os separadores de que não precisa (Gramática, As minhas notas, Original…) e a página da lição deixa de os mostrar.',
+          it: 'Impostazioni → Schede della lezione: togli la spunta alle schede che non ti servono (Grammatica, I miei appunti, Originale…) e la pagina della lezione non le mostra più.',
+        },
+      },
+      {
+        kind: 'new',
+        text: {
           en: 'Revise before the lesson: in the 24 hours before a lesson, Home offers a round on the last lesson’s words and your hard words.',
           ru: 'Повторить перед уроком: за сутки до урока на Главной появляется раунд по словам прошлого урока и вашим сложным словам.',
           fr: 'Réviser avant le cours : dans les 24 heures avant un cours, l’accueil propose un tour sur les mots de la dernière leçon et vos mots difficiles.',
@@ -41,18 +53,6 @@ export const NEWS: NewsDay[] = [
           es: 'Resumen de la lección en Inicio: el día de la clase y el siguiente, una tarjeta con sus palabras nuevas, verbos y gramática, y «Empezar el repaso».',
           pt: 'Resumo da lição no Início: no dia da aula e no seguinte, um cartão com as palavras novas, os verbos e a gramática, e «Começar a revisão».',
           it: 'Riassunto della lezione nella Home: il giorno della lezione e quello dopo, una scheda con parole nuove, verbi e grammatica, e «Inizia il ripasso».',
-        },
-      },
-      {
-        kind: 'new',
-        text: {
-          en: 'Questions for the next lesson: ❓ at the top right keeps them as they come up. Add them to the document before the lesson, and lesson mode starts with them.',
-          ru: 'Вопросы к следующему уроку: ❓ справа наверху хранит их, как только они появились. Добавьте их в документ перед уроком, и режим урока начнётся с них.',
-          fr: 'Questions pour le prochain cours : ❓ en haut à droite les garde dès qu’elles viennent. Ajoutez-les au document avant le cours, et le mode cours commence par elles.',
-          de: 'Fragen für die nächste Stunde: ❓ oben rechts sammelt sie, sobald sie auftauchen. Füge sie vor der Stunde ins Dokument ein, und der Unterrichtsmodus beginnt mit ihnen.',
-          es: 'Preguntas para la próxima clase: ❓ arriba a la derecha las guarda en cuanto surgen. Añádelas al documento antes de la clase, y el modo clase empieza por ellas.',
-          pt: 'Perguntas para a próxima aula: ❓ no canto superior direito guarda-as assim que surgem. Acrescente-as ao documento antes da aula, e o modo aula começa por elas.',
-          it: 'Domande per la prossima lezione: ❓ in alto a destra le conserva appena ti vengono. Aggiungile al documento prima della lezione, e la modalità lezione comincia da lì.',
         },
       },
       {

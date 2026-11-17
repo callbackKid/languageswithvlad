@@ -46,8 +46,6 @@ export const tutorial = defineMessages({
       '<b>⚙️ Settings</b> on the far right: the document, the language of the app, the colour theme, the languages you learn and your level. Your picture, set there, shows on the far left.',
     'header.tip1':
       'A lesson in the document starts with a line like <ex>14.10.2026 1 Leçon</ex> (or <ex>Lesson</ex>, <ex>Lektion</ex>, <ex>Lección</ex>, <ex>Lição</ex>, <ex>Lezione</ex>). Everything under it, up to the next such line, belongs to that lesson.',
-    'header.tip2':
-      '<b>❓</b> at the top right keeps your questions for the next lesson (“why the subjonctif here?”). Write them whenever they come up; before the lesson, <pbtn>Add to the document</pbtn> puts them under the lesson, and lesson mode shows them so the lesson starts with them.',
     'header.mock': 'the top bar',
 
     'home.title': 'Home',
@@ -199,7 +197,7 @@ export const tutorial = defineMessages({
     'settings.step3':
       '<b>Learning</b>: tick the languages you learn and choose your level in each. Exercises, Favourite words, Mistakes, Stats and the discussion questions then show only those languages, and the level is the default for discussion questions and in Fill the gap.',
     'settings.step4':
-      'Also there: the daily goal for the 🔥 streak, the speed of 🔊, and which sections the menu shows.',
+      'Also there: the daily goal for the 🔥 streak, the speed of 🔊, which sections the menu shows and which tabs a lesson page shows.',
     'settings.tip1': 'Translations of words stay in Russian whatever the interface language.',
     'call.title': 'Lesson mode',
     'call.summary': 'The call, notes and the lesson’s words on one screen',
@@ -284,8 +282,6 @@ export const tutorial = defineMessages({
       '<b>⚙️ Настройки</b> справа: документ, язык приложения, цветовая тема, изучаемые языки и уровень. Ваша картинка, выбранная там, видна слева.',
     'header.tip1':
       'Урок в документе начинается со строки вроде <ex>14.10.2026 1 Leçon</ex> (или <ex>Lesson</ex>, <ex>Lektion</ex>, <ex>Lección</ex>, <ex>Lição</ex>, <ex>Lezione</ex>). Всё ниже неё, до следующей такой строки, относится к этому уроку.',
-    'header.tip2':
-      '<b>❓</b> справа наверху хранит вопросы к следующему уроку («почему здесь subjonctif?»). Записывайте их, когда появятся; перед уроком <pbtn>Добавить в документ</pbtn> помещает их под урок, а режим урока показывает их, чтобы урок начался с них.',
     'header.mock': 'верхняя панель',
 
     'home.title': 'Главная',
@@ -437,7 +433,7 @@ export const tutorial = defineMessages({
     'settings.step3':
       '<b>Обучение</b>: отметьте языки, которые учите, и выберите уровень для каждого. Упражнения, «Избранные слова», «Ошибки», «Статистика» и «Вопрос для обсуждения» покажут только эти языки, а уровень подставится в «Вопрос для обсуждения» и «Вставь слово».',
     'settings.step4':
-      'Ещё там: цель на день для 🔥 серии, скорость озвучки 🔊 и какие разделы показывать в меню.',
+      'Ещё там: цель на день для 🔥 серии, скорость озвучки 🔊, какие разделы показывать в меню и какие вкладки — на странице урока.',
     'settings.tip1': 'Переводы слов остаются на русском при любом языке интерфейса.',
     'call.title': 'Режим урока',
     'call.summary': 'Звонок, заметки и слова урока на одном экране',
@@ -523,8 +519,6 @@ export const tutorial = defineMessages({
       '<b>⚙️ Réglages</b> tout à droite : le document, la langue de l’application, le thème, les langues apprises et votre niveau. Votre image, choisie là, s’affiche tout à gauche.',
     'header.tip1':
       'Une leçon commence dans le document par une ligne comme <ex>14.10.2026 1 Leçon</ex> (ou <ex>Lesson</ex>, <ex>Lektion</ex>, <ex>Lección</ex>, <ex>Lição</ex>, <ex>Lezione</ex>). Tout ce qui suit, jusqu’à la ligne de ce type suivante, appartient à cette leçon.',
-    'header.tip2':
-      '<b>❓</b> en haut à droite garde vos questions pour le prochain cours (« pourquoi le subjonctif ici ? »). Notez-les quand elles viennent ; avant le cours, <pbtn>Ajouter au document</pbtn> les place sous la leçon, et le mode cours les affiche pour commencer par elles.',
     'header.mock': 'la barre du haut',
 
     'home.title': 'Accueil',
@@ -681,7 +675,7 @@ export const tutorial = defineMessages({
     'settings.step3':
       '<b>Apprentissage</b> : cochez les langues que vous apprenez et choisissez votre niveau pour chacune. Les exercices, Mots favoris, Erreurs, Statistiques et les questions à discuter n’affichent alors que ces langues, et le niveau est choisi par défaut pour les questions à discuter et dans le Texte à trous.',
     'settings.step4':
-      'Aussi : l’objectif du jour pour la 🔥 série, la vitesse de 🔊, et les sections affichées dans le menu.',
+      'Aussi : l’objectif du jour pour la 🔥 série, la vitesse de 🔊, les sections affichées dans le menu et les onglets affichés sur la page d’une leçon.',
     'settings.tip1':
       'Les traductions des mots restent en russe, quelle que soit la langue de l’interface.',
     'call.title': 'Mode cours',
@@ -769,8 +763,6 @@ export const tutorial = defineMessages({
       '<b>⚙️ Einstellungen</b> ganz rechts: das Dokument, die Sprache der App, das Farbschema, die Sprachen, die du lernst, und dein Niveau. Dein Bild, dort gewählt, steht ganz links.',
     'header.tip1':
       'Eine Lektion beginnt im Dokument mit einer Zeile wie <ex>14.10.2026 1 Lektion</ex> (oder <ex>Leçon</ex>, <ex>Lesson</ex>, <ex>Lección</ex>, <ex>Lição</ex>, <ex>Lezione</ex>). Alles darunter bis zur nächsten solchen Zeile gehört zu dieser Lektion.',
-    'header.tip2':
-      '<b>❓</b> oben rechts sammelt deine Fragen für die nächste Stunde („warum hier Subjonctif?“). Schreib sie auf, sobald sie auftauchen; vor der Stunde fügt <pbtn>Ins Dokument einfügen</pbtn> sie unter die Lektion ein, und der Unterrichtsmodus zeigt sie, damit die Stunde mit ihnen beginnt.',
     'header.mock': 'die obere Leiste',
 
     'home.title': 'Start',
@@ -924,7 +916,7 @@ export const tutorial = defineMessages({
     'settings.step3':
       '<b>Lernen</b>: Hake die Sprachen an, die du lernst, und wähle für jede dein Niveau. Übungen, Lieblingswörter, Fehler, Statistik und die Diskussionsfragen zeigen dann nur diese Sprachen, und das Niveau ist der Standard für Diskussionsfragen und im Lückentext.',
     'settings.step4':
-      'Außerdem: das Tagesziel für die 🔥 Serie, das Tempo von 🔊 und welche Bereiche das Menü zeigt.',
+      'Außerdem: das Tagesziel für die 🔥 Serie, das Tempo von 🔊, welche Bereiche das Menü und welche Tabs die Lektionsseite zeigt.',
     'settings.tip1':
       'Die Übersetzungen der Wörter bleiben auf Russisch, egal welche Sprache die Oberfläche hat.',
     'call.title': 'Unterrichtsmodus',
@@ -1010,8 +1002,6 @@ export const tutorial = defineMessages({
       '<b>⚙️ Ajustes</b> a la derecha del todo: el documento, el idioma de la aplicación, el tema de color, los idiomas que aprendes y tu nivel. Tu imagen, elegida allí, aparece a la izquierda del todo.',
     'header.tip1':
       'Una lección empieza en el documento con una línea como <ex>14.10.2026 1 Lección</ex> (o <ex>Leçon</ex>, <ex>Lesson</ex>, <ex>Lektion</ex>, <ex>Lição</ex>, <ex>Lezione</ex>). Todo lo que hay debajo, hasta la siguiente línea así, pertenece a esa lección.',
-    'header.tip2':
-      '<b>❓</b> arriba a la derecha guarda tus preguntas para la próxima clase («¿por qué aquí subjonctif?»). Apúntalas cuando surjan; antes de la clase, <pbtn>Añadir al documento</pbtn> las pone debajo de la lección, y el modo clase las muestra para empezar por ellas.',
     'header.mock': 'la barra superior',
 
     'home.title': 'Inicio',
@@ -1168,7 +1158,7 @@ export const tutorial = defineMessages({
     'settings.step3':
       '<b>Aprendizaje</b>: marca los idiomas que aprendes y elige tu nivel en cada uno. Los ejercicios, Palabras favoritas, Errores, Estadísticas y las preguntas para debatir muestran entonces solo esos idiomas, y el nivel se usa por defecto en las preguntas para debatir y en Rellena el hueco.',
     'settings.step4':
-      'También están allí: el objetivo diario para la racha 🔥, la velocidad de 🔊 y qué secciones muestra el menú.',
+      'También están allí: el objetivo diario para la racha 🔥, la velocidad de 🔊, qué secciones muestra el menú y qué pestañas muestra la página de una lección.',
     'settings.tip1':
       'Las traducciones de las palabras siguen en ruso, sea cual sea el idioma de la interfaz.',
     'call.title': 'Modo clase',
@@ -1254,8 +1244,6 @@ export const tutorial = defineMessages({
       '<b>⚙️ Definições</b> na ponta direita: o documento, o idioma da aplicação, o tema de cores, as línguas que aprende e o seu nível. A sua imagem, escolhida lá, aparece na ponta esquerda.',
     'header.tip1':
       'Uma lição começa no documento com uma linha como <ex>14.10.2026 1 Lição</ex> (ou <ex>Leçon</ex>, <ex>Lesson</ex>, <ex>Lektion</ex>, <ex>Lección</ex>, <ex>Lezione</ex>). Tudo o que está por baixo, até à próxima linha assim, pertence a essa lição.',
-    'header.tip2':
-      '<b>❓</b> no canto superior direito guarda as suas perguntas para a próxima aula («porquê subjonctif aqui?»). Anote-as quando surgirem; antes da aula, <pbtn>Acrescentar ao documento</pbtn> coloca-as por baixo da lição, e o modo aula mostra-as para começar por elas.',
     'header.mock': 'a barra superior',
 
     'home.title': 'Início',
@@ -1412,7 +1400,7 @@ export const tutorial = defineMessages({
     'settings.step3':
       '<b>Aprendizagem</b>: marque as línguas que aprende e escolha o seu nível em cada uma. Os exercícios, as Palavras favoritas, os Erros, as Estatísticas e as perguntas para debate mostram então só essas línguas, e o nível é usado por defeito nas perguntas para debate e em Preencha o espaço.',
     'settings.step4':
-      'Também lá estão: o objetivo diário para a série 🔥, a velocidade do 🔊 e as secções que o menu mostra.',
+      'Também lá estão: o objetivo diário para a série 🔥, a velocidade do 🔊, as secções que o menu mostra e os separadores que a página de uma lição mostra.',
     'settings.tip1':
       'As traduções das palavras ficam em russo, seja qual for o idioma da interface.',
     'call.title': 'Modo aula',
@@ -1498,8 +1486,6 @@ export const tutorial = defineMessages({
       '<b>⚙️ Impostazioni</b> all’estrema destra: il documento, la lingua dell’app, il tema, le lingue che studi e il tuo livello. La tua immagine, scelta lì, compare all’estrema sinistra.',
     'header.tip1':
       'Una lezione inizia nel documento con una riga come <ex>14.10.2026 1 Lezione</ex> (oppure <ex>Leçon</ex>, <ex>Lesson</ex>, <ex>Lektion</ex>, <ex>Lección</ex>, <ex>Lição</ex>). Tutto ciò che c’è sotto, fino alla riga successiva di questo tipo, appartiene a quella lezione.',
-    'header.tip2':
-      '<b>❓</b> in alto a destra conserva le tue domande per la prossima lezione («perché qui il subjonctif?»). Scrivile quando ti vengono; prima della lezione, <pbtn>Aggiungi al documento</pbtn> le mette sotto la lezione, e la modalità lezione le mostra per cominciare da lì.',
     'header.mock': 'la barra in alto',
 
     'home.title': 'Home',
@@ -1657,7 +1643,7 @@ export const tutorial = defineMessages({
     'settings.step3':
       '<b>Apprendimento</b>: spunta le lingue che studi e scegli il tuo livello in ognuna. Esercizi, Parole preferite, Errori, Statistiche e le domande di discussione mostrano allora solo quelle lingue, e il livello è quello predefinito per le domande di discussione e per Completa la frase.',
     'settings.step4':
-      'Lì trovi anche: l’obiettivo giornaliero per la serie 🔥, la velocità del 🔊 e quali sezioni mostra il menu.',
+      'Lì trovi anche: l’obiettivo giornaliero per la serie 🔥, la velocità del 🔊, quali sezioni mostra il menu e quali schede mostra la pagina di una lezione.',
     'settings.tip1':
       'Le traduzioni delle parole restano in russo, qualunque sia la lingua dell’interfaccia.',
     'call.title': 'Modalità lezione',
