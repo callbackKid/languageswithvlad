@@ -66,11 +66,19 @@ function initialDocId(): string | null {
   return load<string>('doc');
 }
 
-/** « to fold the open menu, ☰ to open it, drawn on a 16×16 grid around its centre: the text
-    characters sat off-centre in the round button, by an amount that depends on the font. */
-function MenuIcon({ open }: { open: boolean }) {
+// the round buttons' icons, drawn on a 16×16 grid around its centre (8, 8): text characters
+// (« ☰ ↻) sat off-centre in the circle, by an amount that depends on the font
+const ICON_PATHS = {
+  fold: 'M7.5 4 3.5 8l4 4M12.5 4l-4 4 4 4',
+  menu: 'M3 4.5h10M3 8h10M3 11.5h10',
+  sync: 'M14 8a6 6 0 1 1-6-6c1.68 0 3.29.67 4.49 1.83L14 5.33M14 2v3.33h-3.33',
+};
+
+/** An icon for a round icon button, in the text colour. */
+function ButtonIcon({ name }: { name: keyof typeof ICON_PATHS }) {
   return (
     <svg
+      aria-hidden="true"
       viewBox="0 0 16 16"
       width="16"
       height="16"
@@ -80,7 +88,7 @@ function MenuIcon({ open }: { open: boolean }) {
       strokeLinecap="round"
       strokeLinejoin="round"
     >
-      <path d={open ? 'M7.5 4 3.5 8l4 4M12.5 4l-4 4 4 4' : 'M3 4.5h10M3 8h10M3 11.5h10'} />
+      <path d={ICON_PATHS[name]} />
     </svg>
   );
 }
@@ -295,7 +303,7 @@ export default function App() {
           data-tooltip={t('sync')}
           aria-label={t('sync')}
         >
-          <span aria-hidden="true">↻</span>
+          <ButtonIcon name="sync" />
         </button>
         <div className="top-lesson">
           <NextLessonBadge
@@ -340,7 +348,7 @@ export default function App() {
               onClick={toggleMenu}
             >
               <span className="icon-button" aria-hidden="true">
-                <MenuIcon open={menuOpen} />
+                <ButtonIcon name={menuOpen ? 'fold' : 'menu'} />
               </span>
               {/* on a phone the closed menu says where you are */}
               <span className="sidebar-current">{t(`section.${section}`)}</span>
