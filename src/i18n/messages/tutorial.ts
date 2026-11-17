@@ -68,6 +68,8 @@ export const tutorial = defineMessages({
       '<btn>Prepare the report</btn> under the homework (and at the bottom of Stats) writes a short report for the teacher: the homework done, answers and mistakes since the lesson, your written answers as Claude corrected them. Read it, change it if you like, and <pbtn>Add to the document</pbtn> puts it under the lesson.',
     'home.tip4':
       'On the day of a lesson and the day after, Home sums it up: “Today, lesson 7: 12 new words, 2 verbs”, its words (key words first) and grammar, with <pbtn>Start revising</pbtn>. ✕ hides it.',
+    'home.tip5':
+      'In the 24 hours before a lesson (when the document gives its time), Home offers <pbtn>Revise before the lesson</pbtn>: a round on the last lesson’s words and your hard words.',
     'home.mock': 'the streak and daily goal on Home',
 
     'lessons.title': 'Lesson history',
@@ -304,6 +306,8 @@ export const tutorial = defineMessages({
       '<btn>Подготовить отчёт</btn> под домашкой (и внизу Статистики) собирает короткий отчёт для учителя: что сделано, ответы и ошибки с урока, письменные ответы, исправленные Claude. Прочитайте, при желании поправьте, и <pbtn>Добавить в документ</pbtn> поместит его под урок.',
     'home.tip4':
       'В день урока и на следующий день Главная подводит его итог: «Сегодня, урок 7: 12 новых слов, 2 глагола», его слова (сначала ключевые) и грамматика, с кнопкой <pbtn>Начать повторение</pbtn>. ✕ скрывает карточку.',
+    'home.tip5':
+      'За сутки до урока (если в документе указано его время) Главная предлагает <pbtn>Повторить перед уроком</pbtn>: раунд по словам прошлого урока и вашим сложным словам.',
     'home.mock': 'серия и цель дня на Главной',
 
     'lessons.title': 'История уроков',
@@ -541,6 +545,8 @@ export const tutorial = defineMessages({
       '<btn>Préparer le rapport</btn> sous les devoirs (et en bas des Statistiques) rédige un court rapport pour le professeur : les devoirs faits, les réponses et les erreurs depuis le cours, vos réponses écrites corrigées par Claude. Relisez-le, modifiez-le si vous voulez, et <pbtn>Ajouter au document</pbtn> le place sous la leçon.',
     'home.tip4':
       'Le jour d’une leçon et le lendemain, l’accueil la résume : « Aujourd’hui, leçon 7 : 12 nouveaux mots, 2 verbes », ses mots (les mots clés d’abord) et sa grammaire, avec <pbtn>Commencer la révision</pbtn>. ✕ la masque.',
+    'home.tip5':
+      'Dans les 24 heures avant un cours (quand le document donne son heure), l’accueil propose <pbtn>Réviser avant le cours</pbtn> : un tour sur les mots de la dernière leçon et vos mots difficiles.',
     'home.mock': 'la série et l’objectif du jour sur l’Accueil',
 
     'lessons.title': 'Historique des leçons',
@@ -785,6 +791,8 @@ export const tutorial = defineMessages({
       '<btn>Bericht vorbereiten</btn> unter den Hausaufgaben (und unten in der Statistik) schreibt einen kurzen Bericht für die Lehrkraft: erledigte Hausaufgaben, Antworten und Fehler seit der Stunde, deine schriftlichen Antworten, wie Claude sie korrigiert hat. Lies ihn, ändere ihn bei Bedarf, und <pbtn>Ins Dokument einfügen</pbtn> setzt ihn unter die Lektion.',
     'home.tip4':
       'Am Tag einer Lektion und am Tag danach fasst die Startseite sie zusammen: „Heute, Lektion 7: 12 neue Wörter, 2 Verben“, ihre Wörter (Schlüsselwörter zuerst) und Grammatik, mit <pbtn>Wiederholung starten</pbtn>. ✕ blendet sie aus.',
+    'home.tip5':
+      'In den 24 Stunden vor einer Stunde (wenn das Dokument die Uhrzeit nennt) bietet die Startseite <pbtn>Vor der Stunde wiederholen</pbtn> an: eine Runde mit den Wörtern der letzten Lektion und deinen schweren Wörtern.',
     'home.mock': 'Serie und Tagesziel auf Start',
 
     'lessons.title': 'Lektionsverlauf',
@@ -1024,6 +1032,8 @@ export const tutorial = defineMessages({
       '<btn>Preparar el informe</btn> debajo de los deberes (y al final de Estadísticas) redacta un breve informe para el profesor: los deberes hechos, las respuestas y los errores desde la clase, tus respuestas escritas corregidas por Claude. Léelo, cámbialo si quieres, y <pbtn>Añadir al documento</pbtn> lo pone debajo de la lección.',
     'home.tip4':
       'El día de una lección y el siguiente, Inicio la resume: «Hoy, lección 7: 12 palabras nuevas, 2 verbos», sus palabras (primero las clave) y su gramática, con <pbtn>Empezar el repaso</pbtn>. ✕ la oculta.',
+    'home.tip5':
+      'En las 24 horas antes de una clase (si el documento indica la hora), Inicio ofrece <pbtn>Repasar antes de la clase</pbtn>: una ronda con las palabras de la última lección y tus palabras difíciles.',
     'home.mock': 'la racha y el objetivo diario en Inicio',
 
     'lessons.title': 'Historial de lecciones',
@@ -1266,6 +1276,8 @@ export const tutorial = defineMessages({
       '<btn>Preparar o relatório</btn> por baixo do trabalho de casa (e no fim das Estatísticas) escreve um pequeno relatório para o professor: o trabalho feito, as respostas e os erros desde a aula, as suas respostas escritas corrigidas pelo Claude. Leia-o, altere-o se quiser, e <pbtn>Acrescentar ao documento</pbtn> coloca-o por baixo da lição.',
     'home.tip4':
       'No dia de uma lição e no dia seguinte, o Início resume-a: «Hoje, lição 7: 12 palavras novas, 2 verbos», as palavras (primeiro as palavras-chave) e a gramática, com <pbtn>Começar a revisão</pbtn>. ✕ oculta-a.',
+    'home.tip5':
+      'Nas 24 horas antes de uma aula (quando o documento indica a hora), o Início propõe <pbtn>Rever antes da aula</pbtn>: uma ronda com as palavras da última lição e as suas palavras difíceis.',
     'home.mock': 'a série e o objetivo diário no Início',
 
     'lessons.title': 'Histórico de lições',
@@ -1508,6 +1520,8 @@ export const tutorial = defineMessages({
       '<btn>Prepara il resoconto</btn> sotto i compiti (e in fondo alle Statistiche) scrive un breve resoconto per l’insegnante: i compiti fatti, le risposte e gli errori dalla lezione, le tue risposte scritte corrette da Claude. Leggilo, cambialo se vuoi, e <pbtn>Aggiungi al documento</pbtn> lo mette sotto la lezione.',
     'home.tip4':
       'Il giorno di una lezione e quello dopo, la Home la riassume: «Oggi, lezione 7: 12 parole nuove, 2 verbi», le sue parole (prima quelle chiave) e la grammatica, con <pbtn>Inizia il ripasso</pbtn>. ✕ la nasconde.',
+    'home.tip5':
+      'Nelle 24 ore prima di una lezione (se il documento ne indica l’ora), la Home propone <pbtn>Ripassa prima della lezione</pbtn>: un giro sulle parole dell’ultima lezione e sulle tue parole difficili.',
     'home.mock': 'la serie e l’obiettivo giornaliero in Home',
 
     'lessons.title': 'Cronologia lezioni',

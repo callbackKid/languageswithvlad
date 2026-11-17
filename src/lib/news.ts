@@ -22,6 +22,18 @@ export const NEWS: NewsDay[] = [
       {
         kind: 'new',
         text: {
+          en: 'Revise before the lesson: in the 24 hours before a lesson, Home offers a round on the last lesson’s words and your hard words.',
+          ru: 'Повторить перед уроком: за сутки до урока на Главной появляется раунд по словам прошлого урока и вашим сложным словам.',
+          fr: 'Réviser avant le cours : dans les 24 heures avant un cours, l’accueil propose un tour sur les mots de la dernière leçon et vos mots difficiles.',
+          de: 'Vor der Stunde wiederholen: In den 24 Stunden vor einer Stunde bietet die Startseite eine Runde mit den Wörtern der letzten Lektion und deinen schweren Wörtern an.',
+          es: 'Repasar antes de la clase: en las 24 horas antes de una clase, Inicio ofrece una ronda con las palabras de la última lección y tus palabras difíciles.',
+          pt: 'Rever antes da aula: nas 24 horas antes de uma aula, o Início propõe uma ronda com as palavras da última lição e as suas palavras difíceis.',
+          it: 'Ripassa prima della lezione: nelle 24 ore prima di una lezione, la Home propone un giro sulle parole dell’ultima lezione e sulle tue parole difficili.',
+        },
+      },
+      {
+        kind: 'new',
+        text: {
           en: 'Lesson summary on Home: on the day of a lesson and the day after, a card with its new words, verbs and grammar, and Start revising.',
           ru: 'Итог урока на Главной: в день урока и на следующий день — карточка с его новыми словами, глаголами и грамматикой и кнопкой «Начать повторение».',
           fr: 'Le résumé de la leçon sur l’accueil : le jour du cours et le lendemain, une carte avec ses nouveaux mots, ses verbes et sa grammaire, et « Commencer la révision ».',

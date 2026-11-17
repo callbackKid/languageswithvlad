@@ -2,10 +2,13 @@ import type { Bank } from './bank';
 import { isLearned, type Progress, statWord } from './progress';
 import { buildQuiz, type FormQuestion, pickWords, type QuizItem } from './quiz';
 import { getSettings, isStudied } from './settings';
-import type { Lesson, Tense } from './types';
+import type { Lesson, Tense, Word } from './types';
 
 /** About five minutes of questions. */
 export const WARM_UP_QUESTIONS = 12;
+/** The round before a lesson, and at most this many of its questions on the hard words. */
+export const PREPARE_QUESTIONS = 10;
+const PREPARE_HARD = 4;
 // at most this many questions from the mistakes, so the lesson's own words get asked too
 const MISSED_WORDS = 6;
 const MISSED_FORMS = 2;
@@ -77,4 +80,23 @@ export function warmUpRound(
   // wrong answers come from every lesson, so a short lesson still gets four choices
   const pool = bank.words.length >= 4 ? bank.words : targets;
   return buildQuiz(targets, pool, missedForms);
+}
+
+/** The round the day before a lesson: the newest lesson's words and the words still hard, so
+    they are fresh for it. */
+export function prepareRound(words: Word[], bank: Bank, progress: Progress): QuizItem[] {
+  const settings = getSettings();
+  const hard = Object.values(progress.words)
+    .filter((stat) => stat.hard && isStudied(stat.language, settings))
+    .sort((first, second) => second.wrong - first.wrong)
+    .slice(0, PREPARE_HARD)
+    .map(statWord);
+  const asked = new Set(hard.map((word) => word.fr.toLowerCase()));
+  const fromLesson = pickWords(
+    words.filter((word) => !asked.has(word.fr.toLowerCase())),
+    progress,
+    PREPARE_QUESTIONS - hard.length
+  );
+  const targets = [...fromLesson, ...hard];
+  return buildQuiz(targets, bank.words.length >= 4 ? bank.words : targets);
 }

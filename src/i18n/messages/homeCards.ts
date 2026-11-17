@@ -14,6 +14,14 @@ export const homeCards = defineMessages({
     hide: 'Hide',
     revisingTitle: 'Revising lesson {n}',
     backHome: 'Back',
+    prepareTomorrow: 'Lesson tomorrow at {time}: revise before it',
+    prepareToday: 'Lesson today at {time}: revise before it',
+    prepareHint:
+      'A round on the words of lesson {n} and your hard words, so they are fresh for the lesson.',
+    prepareButton: 'Revise before the lesson',
+    prepareAgain: 'Another round',
+    prepareDone: '✓ Revised for this lesson.',
+    prepareTitle: 'Before the lesson',
   },
   ru: {
     summaryToday: 'Сегодня, урок {n}: {counts}',
@@ -37,6 +45,14 @@ export const homeCards = defineMessages({
     hide: 'Скрыть',
     revisingTitle: 'Повторение урока {n}',
     backHome: 'Назад',
+    prepareTomorrow: 'Урок завтра в {time}: повторите перед ним',
+    prepareToday: 'Урок сегодня в {time}: повторите перед ним',
+    prepareHint:
+      'Раунд по словам урока {n} и вашим сложным словам, чтобы к уроку они были свежими.',
+    prepareButton: 'Повторить перед уроком',
+    prepareAgain: 'Ещё раунд',
+    prepareDone: '✓ К этому уроку повторено.',
+    prepareTitle: 'Перед уроком',
   },
   fr: {
     summaryToday: 'Aujourd’hui, leçon {n} : {counts}',
@@ -50,6 +66,14 @@ export const homeCards = defineMessages({
     hide: 'Masquer',
     revisingTitle: 'Révision de la leçon {n}',
     backHome: 'Retour',
+    prepareTomorrow: 'Cours demain à {time} : révisez avant',
+    prepareToday: 'Cours aujourd’hui à {time} : révisez avant',
+    prepareHint:
+      'Un tour sur les mots de la leçon {n} et vos mots difficiles, pour qu’ils soient frais au cours.',
+    prepareButton: 'Réviser avant le cours',
+    prepareAgain: 'Un autre tour',
+    prepareDone: '✓ Révisé pour ce cours.',
+    prepareTitle: 'Avant le cours',
   },
   de: {
     summaryToday: 'Heute, Lektion {n}: {counts}',
@@ -63,6 +87,14 @@ export const homeCards = defineMessages({
     hide: 'Ausblenden',
     revisingTitle: 'Wiederholung der Lektion {n}',
     backHome: 'Zurück',
+    prepareTomorrow: 'Stunde morgen um {time}: wiederhole vorher',
+    prepareToday: 'Stunde heute um {time}: wiederhole vorher',
+    prepareHint:
+      'Eine Runde mit den Wörtern der Lektion {n} und deinen schweren Wörtern, damit sie zur Stunde frisch sind.',
+    prepareButton: 'Vor der Stunde wiederholen',
+    prepareAgain: 'Noch eine Runde',
+    prepareDone: '✓ Für diese Stunde wiederholt.',
+    prepareTitle: 'Vor der Stunde',
   },
   es: {
     summaryToday: 'Hoy, lección {n}: {counts}',
@@ -76,6 +108,14 @@ export const homeCards = defineMessages({
     hide: 'Ocultar',
     revisingTitle: 'Repaso de la lección {n}',
     backHome: 'Volver',
+    prepareTomorrow: 'Clase mañana a las {time}: repasa antes',
+    prepareToday: 'Clase hoy a las {time}: repasa antes',
+    prepareHint:
+      'Una ronda con las palabras de la lección {n} y tus palabras difíciles, para tenerlas frescas en la clase.',
+    prepareButton: 'Repasar antes de la clase',
+    prepareAgain: 'Otra ronda',
+    prepareDone: '✓ Repasado para esta clase.',
+    prepareTitle: 'Antes de la clase',
   },
   pt: {
     summaryToday: 'Hoje, lição {n}: {counts}',
@@ -89,6 +129,14 @@ export const homeCards = defineMessages({
     hide: 'Ocultar',
     revisingTitle: 'Revisão da lição {n}',
     backHome: 'Voltar',
+    prepareTomorrow: 'Aula amanhã às {time}: reveja antes',
+    prepareToday: 'Aula hoje às {time}: reveja antes',
+    prepareHint:
+      'Uma ronda com as palavras da lição {n} e as suas palavras difíceis, para as ter frescas na aula.',
+    prepareButton: 'Rever antes da aula',
+    prepareAgain: 'Outra ronda',
+    prepareDone: '✓ Revisto para esta aula.',
+    prepareTitle: 'Antes da aula',
   },
   it: {
     summaryToday: 'Oggi, lezione {n}: {counts}',
@@ -102,5 +150,13 @@ export const homeCards = defineMessages({
     hide: 'Nascondi',
     revisingTitle: 'Ripasso della lezione {n}',
     backHome: 'Indietro',
+    prepareTomorrow: 'Lezione domani alle {time}: ripassa prima',
+    prepareToday: 'Lezione oggi alle {time}: ripassa prima',
+    prepareHint:
+      'Un giro sulle parole della lezione {n} e sulle tue parole difficili, così sono fresche per la lezione.',
+    prepareButton: 'Ripassa prima della lezione',
+    prepareAgain: 'Un altro giro',
+    prepareDone: '✓ Ripassato per questa lezione.',
+    prepareTitle: 'Prima della lezione',
   },
 });

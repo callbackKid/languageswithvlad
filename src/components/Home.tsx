@@ -9,6 +9,7 @@ import type { Lesson } from '../lib/types';
 import HomeworkCard from './HomeworkCard';
 import LessonSummary from './LessonSummary';
 import PageHead, { BankNote } from './PageHead';
+import PrepareCard from './PrepareCard';
 import WordQuiz from './WordQuiz';
 
 const ROUND = 10;
@@ -76,6 +77,16 @@ export default function Home({
               : t('goalProgress', { count: today, goal: dailyGoal })}
           </span>
         </div>
+      )}
+      {newest && (
+        <PrepareCard
+          key={'prepare' + newest.key}
+          lesson={newest}
+          docText={docText}
+          bank={bank}
+          ai={ai}
+          docId={docId}
+        />
       )}
       {newest && (
         <LessonSummary key={newest.key} lesson={newest} bank={bank} ai={ai} docId={docId} />
