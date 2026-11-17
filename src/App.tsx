@@ -16,6 +16,7 @@ import Practice from './components/Practice';
 import Reader from './components/Reader';
 import Settings, { Avatar } from './components/Settings';
 import Stats from './components/Stats';
+import TooltipLayer from './components/TooltipLayer';
 import Tutorial from './components/Tutorial';
 import { type Translator, translator, useTranslation } from './i18n/core';
 import { app } from './i18n/messages/app';
@@ -259,7 +260,7 @@ export default function App() {
           className="icon-button"
           onClick={() => void runSync(docId)}
           disabled={sync.state === 'loading'}
-          title={t('sync')}
+          data-tooltip={t('sync')}
           aria-label={t('sync')}
         >
           <span aria-hidden="true">↻</span>
@@ -302,7 +303,7 @@ export default function App() {
               className="sidebar-toggle"
               aria-expanded={menuOpen}
               aria-controls="sections-menu"
-              title={menuOpen ? t('hideMenu') : t('showMenu')}
+              data-tooltip={menuOpen ? t('hideMenu') : t('showMenu')}
               aria-label={menuOpen ? t('hideMenu') : t('showMenu')}
               onClick={toggleMenu}
             >
@@ -344,7 +345,7 @@ export default function App() {
                       className="news-dot"
                       role="img"
                       aria-label={t('newsUnseen')}
-                      title={t('newsUnseen')}
+                      data-tooltip={t('newsUnseen')}
                     />
                   )}
                 </a>
@@ -484,6 +485,7 @@ export default function App() {
           )}
         </div>
       </div>
+      <TooltipLayer />
     </>
   );
 }

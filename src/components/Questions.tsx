@@ -72,7 +72,7 @@ export function QuestionsButton({
         type="button"
         className="icon-button questions-button"
         onClick={open}
-        title={t('button')}
+        data-tooltip={t('button')}
         aria-label={t('button')}
       >
         <span aria-hidden="true">❓</span>
@@ -111,7 +111,7 @@ export function QuestionsButton({
                   <button
                     type="button"
                     className="btn ghost"
-                    title={t('remove')}
+                    data-tooltip={t('remove')}
                     aria-label={t('remove')}
                     onClick={() => keep(questions.filter((item) => item.at !== question.at))}
                   >

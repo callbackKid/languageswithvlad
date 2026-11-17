@@ -66,7 +66,7 @@ export default function Practice({ bank, ai }: { bank: Bank; ai: boolean }) {
             className="chip"
             aria-pressed={!!selectedLessons && selectedLessons.has(lesson.key)}
             onClick={() => toggle(lesson.key)}
-            title={lesson.topic || undefined}
+            data-tooltip={lesson.topic || undefined}
           >
             {lesson.word} {lesson.n}
           </button>

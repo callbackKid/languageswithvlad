@@ -13,7 +13,7 @@ export default function Star({ word }: { word: Word }) {
       className={'star' + (isStarred ? ' on' : '')}
       aria-pressed={isStarred}
       onClick={() => setHard(word, !isStarred)}
-      title={isStarred ? t('removeFromMyWords') : t('addToMyWords')}
+      data-tooltip={isStarred ? t('removeFromMyWords') : t('addToMyWords')}
       aria-label={t(isStarred ? 'starLabelRemove' : 'starLabelAdd', { word: word.fr })}
     >
       {isStarred ? '★' : '☆'}

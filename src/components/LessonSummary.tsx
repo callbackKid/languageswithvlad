@@ -80,7 +80,7 @@ export default function LessonSummary({
         <button
           type="button"
           className="btn ghost"
-          title={t('hide')}
+          data-tooltip={t('hide')}
           aria-label={t('hide')}
           onClick={() => {
             save(hiddenKey, true);

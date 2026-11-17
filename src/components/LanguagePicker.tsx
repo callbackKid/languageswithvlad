@@ -9,7 +9,7 @@ export default function LanguagePicker() {
       className="language-picker"
       value={language}
       aria-label={t('interfaceLanguage')}
-      title={t('interfaceLanguage')}
+      data-tooltip={t('interfaceLanguage')}
       onChange={(event) => setUiLanguage(event.target.value as UiLanguage)}
     >
       {UI_LANGUAGES.map((option) => (

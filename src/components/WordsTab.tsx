@@ -146,7 +146,7 @@ export default function WordsTab({
             type="button"
             className="btn"
             disabled={!hasPairs}
-            title={hasPairs ? undefined : t('noPairs')}
+            data-tooltip={hasPairs ? undefined : t('noPairs')}
             onClick={() => start('syn')}
           >
             {t('synonyms')}
@@ -221,7 +221,7 @@ export default function WordsTab({
                 <span className="ru" lang="ru">
                   {word.ru || '—'}
                   {word.added && (
-                    <span className="added" title={t('addedByClaude')}>
+                    <span className="added" data-tooltip={t('addedByClaude')}>
                       {' '}
                       ✱
                     </span>
@@ -251,7 +251,7 @@ export default function WordsTab({
             type="button"
             className="btn ghost flush"
             onClick={() => downloadText('words.txt', ankiText(picked))}
-            title={t('ankiTitle')}
+            data-tooltip={t('ankiTitle')}
           >
             {t('ankiExport', { count: picked.length })}
           </button>
@@ -261,7 +261,7 @@ export default function WordsTab({
             type="button"
             className="btn ghost flush"
             onClick={onRefresh}
-            title={t('refreshTitle')}
+            data-tooltip={t('refreshTitle')}
           >
             {t('refresh')}
           </button>

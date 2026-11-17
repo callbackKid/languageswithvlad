@@ -29,7 +29,7 @@ function Meter({ value, max, label }: { value: number; max: number; label: strin
       aria-valuemax={max}
       aria-valuenow={value}
       aria-label={label}
-      title={t('meterTitle', { label, value, max, percent: share })}
+      data-tooltip={t('meterTitle', { label, value, max, percent: share })}
     >
       <div className="meter-fill" style={{ width: share + '%' }} />
     </div>

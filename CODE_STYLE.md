@@ -105,7 +105,8 @@ Prettier decides: 100 columns, single quotes, semicolons, trailing commas where 
 
 ## Accessibility
 
-- Every input has a visible label or an `aria-label`; icon-only buttons have an `aria-label` and a `title`.
+- Every input has a visible label or an `aria-label`; icon-only buttons have an `aria-label` and a `data-tooltip` (the short visible hint).
+- Tooltips use `data-tooltip`, never `title`: `TooltipLayer` shows them styled, on hover and on keyboard focus, in both themes. `title` stays only where it names something for screen readers, such as an `<iframe>`.
 - Groups of toggle buttons use `role="group"` with a label and `aria-pressed`; the current page link has `aria-current="page"`.
 - Status messages that appear on their own use `role="status"`; errors use `role="alert"`.
 

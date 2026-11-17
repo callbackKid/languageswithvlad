@@ -134,7 +134,7 @@ export default function WritingTask({
           type="button"
           className="btn primary"
           disabled={checking || !ai || !writing.text.trim()}
-          title={ai ? undefined : commonText.t('needsClaude')}
+          data-tooltip={ai ? undefined : commonText.t('needsClaude')}
           onClick={() => void check()}
         >
           {writing.check ? t('checkAgain') : t('check')}

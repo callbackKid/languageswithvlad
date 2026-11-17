@@ -11,7 +11,7 @@ export default function Speak({ text, language = 'fr' }: { text: string; languag
     <button
       type="button"
       className="speak"
-      title={t('listen')}
+      data-tooltip={t('listen')}
       aria-label={t('listenTo', { text })}
       onClick={(event) => {
         event.stopPropagation();

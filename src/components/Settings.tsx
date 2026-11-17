@@ -232,7 +232,7 @@ export default function Settings({ lessonDocument }: { lessonDocument: DocumentI
               const onlyOne = studied && settings.studying.length === 1;
               return (
                 <li key={language}>
-                  <label title={onlyOne ? t('atLeastOne') : undefined}>
+                  <label data-tooltip={onlyOne ? t('atLeastOne') : undefined}>
                     <input
                       type="checkbox"
                       checked={studied}

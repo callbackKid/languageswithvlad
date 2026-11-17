@@ -491,7 +491,7 @@ export default function Discuss({ bank, ai }: { bank: Bank; ai: boolean }) {
                     type="button"
                     className="btn ghost"
                     aria-label={t('clearOwnTopic')}
-                    title={t('clearOwnTopic')}
+                    data-tooltip={t('clearOwnTopic')}
                     onClick={() => update({ customTopic: '' })}
                   >
                     ×

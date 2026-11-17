@@ -193,7 +193,7 @@ export default function VerbsTab({
                 <button
                   type="button"
                   className="btn ghost flush inline"
-                  title={t('conjugateAgainTitle')}
+                  data-tooltip={t('conjugateAgainTitle')}
                   onClick={() => {
                     const verb = verbs.find((candidate) => candidate.inf === currentVerb);
                     if (verb) void open(verb, true);
