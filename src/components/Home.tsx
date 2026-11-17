@@ -89,11 +89,18 @@ export default function Home({
         />
       )}
       {newest && (
-        <LessonSummary key={newest.key} lesson={newest} bank={bank} ai={ai} docId={docId} />
+        <LessonSummary
+          key={'summary' + newest.key}
+          lesson={newest}
+          bank={bank}
+          ai={ai}
+          docId={docId}
+        />
       )}
       {homework && (
+        // the summary and the homework are often of the same lesson: their keys must differ
         <HomeworkCard
-          key={homework.lesson.key}
+          key={'homework' + homework.lesson.key}
           homework={homework}
           lessons={lessons}
           bank={bank}

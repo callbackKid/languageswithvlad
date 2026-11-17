@@ -11,26 +11,33 @@ export default function GrammarRuleBox({
   rule,
   language,
   label,
+  level = 3,
   open = false,
   children,
 }: {
   rule: GrammarRule;
   language: Language;
-  /** the line that opens it */
+  /** the line that opens it, which is also the rule's heading */
   label: ReactNode;
+  /** the heading level of that line where the box stands; its parts are one level below */
+  level?: 2 | 3;
   open?: boolean;
   /** buttons under the explanation */
   children?: ReactNode;
 }) {
   const { t, language: uiLanguage } = useTranslation(talk);
+  const Title = level === 2 ? 'h2' : 'h3';
+  const Part = level === 2 ? 'h3' : 'h4';
   return (
     <details className="grammar-rule" open={open}>
-      <summary>{label}</summary>
+      <summary>
+        <Title className="grammar-rule-title">{label}</Title>
+      </summary>
       <div className="grammar-rule-body" lang={uiLanguage}>
         {rule.summary && <p>{rule.summary}</p>}
         {rule.formation.length > 0 && (
           <>
-            <h4>{t('ruleFormation')}</h4>
+            <Part>{t('ruleFormation')}</Part>
             <ul>
               {rule.formation.map((line) => (
                 <li key={line}>{line}</li>
@@ -40,7 +47,7 @@ export default function GrammarRuleBox({
         )}
         {rule.usage.length > 0 && (
           <>
-            <h4>{t('ruleUsage')}</h4>
+            <Part>{t('ruleUsage')}</Part>
             <ul>
               {rule.usage.map((line) => (
                 <li key={line}>{line}</li>
@@ -50,7 +57,7 @@ export default function GrammarRuleBox({
         )}
         {rule.examples.length > 0 && (
           <>
-            <h4>{t('ruleExamples')}</h4>
+            <Part>{t('ruleExamples')}</Part>
             <ul className="grammar-examples">
               {rule.examples.map((example) => (
                 <li key={example.text}>

@@ -49,6 +49,8 @@ export function GrammarTab({ extras }: { extras: LessonExtras }) {
           rule={rule}
           language={language}
           label={<span lang={language}>{rule.title}</span>}
+          // right under the lesson's title
+          level={2}
           open={index === 0}
         >
           <div className="row-actions">
@@ -139,11 +141,11 @@ export function BookTab({
           <ol className="book-exercises">
             {exercises.map((exercise, index) => (
               <li key={`${exercise.title}-${index}`} className="book-exercise">
-                <h3 lang={extras.language}>
+                <h2 lang={extras.language}>
                   {exercise.title}
                   {exercise.title && exercise.instructions && ' — '}
                   {exercise.instructions}
-                </h3>
+                </h2>
                 {exercise.items.length > 0 && (
                   <ol lang={extras.language}>
                     {exercise.items.map((item, itemIndex) => (

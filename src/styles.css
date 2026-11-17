@@ -24,7 +24,7 @@
   --ok-soft: #edf3ec;
   --bad: #d44c47;
   --bad-soft: #fdebec;
-  --warn: #cb912f;
+  --warn: #8f6219;
   --warn-soft: #fbf3db;
   /* Notion's fonts: the system's own sans-serif, and its "Serif" style for French words */
   --sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial,
@@ -57,7 +57,7 @@
   --ok-soft: #243d30;
   --bad: #df5452;
   --bad-soft: #522e2a;
-  --warn: #ca9849;
+  --warn: #e3b86f;
   --warn-soft: #564328;
 }
 
@@ -1128,12 +1128,22 @@ textarea.notes {
 .grammar-rule[open] summary {
   border-bottom: 1px solid var(--line);
 }
+/* the summary's heading keeps the summary's look: it is a heading for the page's outline only,
+   so it also undoes the small capitals of the section labels around it (.discussion h3) */
+.grammar-rule .grammar-rule-title {
+  display: inline;
+  margin: 0;
+  font: inherit;
+  text-transform: none;
+  letter-spacing: normal;
+  color: inherit;
+}
 
 .grammar-rule-body {
   padding: 4px 16px 14px;
   font-size: 15px;
 }
-.grammar-rule-body h4 {
+.grammar-rule-body :is(h3, h4) {
   margin: 14px 0 6px;
   font-size: 12px;
   font-weight: 600;
@@ -1228,7 +1238,7 @@ textarea.notes {
   border-radius: 10px;
   background: var(--paper);
 }
-.book-exercise h3 {
+.book-exercise h2 {
   margin: 0 0 8px;
   font: 600 16px/1.4 var(--serif);
 }
@@ -3128,6 +3138,21 @@ li .open-link {
   border: 1px solid var(--line);
   border-radius: 10px;
   background: var(--surface);
+}
+.news-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+/* a screenshot of the change, taken at phone width; never wider than the entry */
+.news-picture {
+  display: block;
+  max-width: min(100%, 360px);
+  height: auto;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--bg);
 }
 .news-kind {
   flex: none;

@@ -8,7 +8,7 @@ import { createRequire } from 'node:module';
 import { homedir, tmpdir } from 'node:os';
 import { join } from 'node:path';
 
-import { answerFor, DOCUMENT_ID } from './fixtures.mjs';
+import { answerFor, DOCUMENT_ID, SCENARIOS } from './fixtures.mjs';
 
 // playwright-core is installed outside the repo (SKILL.md, Setup), so the project keeps no browser dependency
 const PLAYWRIGHT_DIR =
@@ -99,19 +99,31 @@ for (const theme of options.themes.split(',')) {
     } catch {
       // GET requests have no body
     }
-    await route.fulfill({ json: answerFor(request.url(), body, request.headers()) });
+    await route.fulfill({ json: answerFor(request.url(), body, request.headers(), scenario) });
   });
+  let scenario = SCENARIOS[0];
 
   // the ?doc= link stores the test document, as a student link does; the app then loads it
   await page.goto(`${BASE_URL}/?doc=${DOCUMENT_ID}`);
   await page.getByText('synced').first().waitFor();
 
+  // after a failed step, the rest of its block (up to the next "---") is skipped
+  let skipping = false;
   for (const step of steps) {
+    if (step === '---') {
+      skipping = false;
+      continue;
+    }
+    if (skipping) continue;
     const [command, ...words] = step.split(' ');
     const rest = words.join(' ');
     try {
       if (command === 'nav') await page.goto(BASE_URL + rest);
-      else if (command === 'click' || command === 'hover') {
+      else if (command === 'scenario') {
+        if (!SCENARIOS.includes(rest))
+          throw new Error(`scenario is one of ${SCENARIOS.join(', ')}`);
+        scenario = rest;
+      } else if (command === 'click' || command === 'hover') {
         const [role, ...nameWords] = words;
         const element = page
           .getByRole(role, { name: nameMatcher(nameWords.join(' ')), exact: true })
@@ -136,14 +148,24 @@ for (const theme of options.themes.split(',')) {
           .nth(Number(words[marker].slice(1)))
           .fill(words.slice(marker + 1).join(' '));
       } else if (command === 'wait-text') await page.getByText(rest).first().waitFor();
+      else if (command === 'wait-for') await page.locator(rest).first().waitFor();
       else if (command === 'shot') {
-        const path = join(options.out, `${theme}-${rest}.png`);
+        const path = join(options.out, `${rest}-${theme}.png`);
         await page.screenshot({ path, fullPage: true });
         const overflow = await page.evaluate(
           () => document.documentElement.scrollWidth - window.innerWidth
         );
         if (overflow > 0)
           problems.push(`[${theme}] ${rest}: page scrolls sideways by ${overflow}px`);
+        report(`[${theme}] screenshot ${path}`);
+      } else if (command === 'shot-element') {
+        // shot-element .home-card.lesson-summary news-summary: the last word is the name
+        const name = words[words.length - 1];
+        const path = join(options.out, `${name}-${theme}.png`);
+        await page
+          .locator(words.slice(0, -1).join(' '))
+          .first()
+          .screenshot({ path, animations: 'disabled' });
         report(`[${theme}] screenshot ${path}`);
       } else if (command === 'classes') {
         const classes = await page
@@ -154,7 +176,7 @@ for (const theme of options.themes.split(',')) {
       else throw new Error(`unknown command "${command}"`);
     } catch (error) {
       problems.push(`[${theme}] step "${step}" failed: ${error.message.split('\n')[0]}`);
-      break;
+      skipping = true;
     }
   }
   await context.close();

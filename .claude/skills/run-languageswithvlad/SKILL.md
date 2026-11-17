@@ -43,31 +43,48 @@ shot verbs-drill
 EOF
 ```
 
-3. **Look at the screenshots** with the Read tool. Paths are printed (`$TMPDIR/languageswithvlad-shots/<theme>-<name>.png`). The last line is `OK: …` or the list of problems; the exit code is 1 when there were any.
+3. **Look at the screenshots** with the Read tool. Paths are printed (`$TMPDIR/languageswithvlad-shots/<name>-<theme>.png`). The last line is `OK: …` or the list of problems; the exit code is 1 when there were any.
 
 4. Stop the server: `lsof -ti:5173 -sTCP:LISTEN | xargs kill`
 
 ### Steps
 
-| Step                              | Does                                                                            |
-| --------------------------------- | ------------------------------------------------------------------------------- |
-| `nav <path>`                      | Opens a page: `/lessons`, `/my-words`, `/stats`… (see README, Pages)            |
-| `click <role> <name>`             | Clicks by accessible role and exact name; `/regex/` for a partial name          |
-| `click-text <text>`               | Clicks the element with exactly this text                                       |
-| `hover <role> <name>`             | Rests the pointer on an element, long enough for its tooltip to appear          |
-| `press <key>`                     | Presses a key: `Tab`, `Enter`, `Escape`…                                        |
-| `eval <expression>`               | Prints the value of a JavaScript expression in the page (for debugging)         |
-| `fill <selector> @<index> <text>` | Types into the n-th match of a CSS selector                                     |
-| `wait-text <text>`                | Waits until the text appears                                                    |
-| `shot <name>`                     | Full-page screenshot, and checks the page doesn't scroll sideways               |
-| `classes <selector>`              | Prints the class of every match (`ok`, `bad`, `accent` on drill inputs)         |
-| `a11y <name>`                     | Runs axe-core on the page; needs axe-core installed, see the `check-a11y` skill |
+| Step                              | Does                                                                                            |
+| --------------------------------- | ----------------------------------------------------------------------------------------------- |
+| `nav <path>`                      | Opens a page: `/lessons`, `/my-words`, `/stats`… (see README, Pages)                            |
+| `click <role> <name>`             | Clicks by accessible role and exact name; `/regex/` for a partial name                          |
+| `click-text <text>`               | Clicks the element with exactly this text                                                       |
+| `hover <role> <name>`             | Rests the pointer on an element, long enough for its tooltip to appear                          |
+| `press <key>`                     | Presses a key: `Tab`, `Enter`, `Escape`…                                                        |
+| `eval <expression>`               | Prints the value of a JavaScript expression in the page (for debugging)                         |
+| `fill <selector> @<index> <text>` | Types into the n-th match of a CSS selector                                                     |
+| `wait-text <text>`                | Waits until the text appears                                                                    |
+| `wait-for <selector>`             | Waits until an element exists (a board, a picture that loads late)                              |
+| `scenario <name>`                 | Switches the test data: `upcoming`, `now`, `finished` (see Test data); then `click button Sync` |
+| `shot <name>`                     | Full-page screenshot, and checks the page doesn't scroll sideways                               |
+| `shot-element <selector> <name>`  | Screenshot cropped to one element (News pictures)                                               |
+| `classes <selector>`              | Prints the class of every match (`ok`, `bad`, `accent` on drill inputs)                         |
+| `a11y <name>`                     | Runs axe-core on the page; needs axe-core installed, see the `check-a11y` skill                 |
 
-Lines starting with `#` are skipped. Options: `--themes light` (one theme), `--width 1280` (desktop), `--out <dir>`.
+Lines starting with `#` are skipped. A line `---` ends a block: when a step fails, the rest of its block is skipped and the next block runs. Options: `--themes light` (one theme), `--width 1280` (desktop), `--out <dir>`.
 
 ### Test data
 
-`fixtures.mjs` serves one lesson (14.11.2026) with the words and verbs `se lever` and `aimer`, their conjugations (présent, passé composé, and impératif for se lever), and `{}` for every other endpoint. A page that needs more (grammar, homework, gap sentences) needs a branch in `answerFor`; copy the response shape from the endpoint in `api/` and its `normalizeX` in `src/lib/parse.ts`.
+`fixtures.mjs` serves one lesson dated today: five words (★ `se lever` is a key word), the verbs `se lever` and `aimer` with their conjugations, a `Devoirs:` line, a Meet link and the next lesson. It also answers grammar and homework (`analyze` extras), Make homework, a written answer's correction, a word's explanation (Text analysis) and a discussion question; `{}` for the rest. A page that needs more needs a branch in `answerFor`; copy the response shape from the endpoint in `api/` and its `normalizeX` in `src/lib/parse.ts`.
+
+The next lesson's time depends on the **scenario**, computed from now: `upcoming` (default; in 20 hours: Home shows the summary and Revise before the lesson), `now` (started 10 minutes ago: Lesson now, lesson mode), `finished` (ended today). The app keeps the document it loaded, so after `scenario` press `click button Sync`.
+
+The server's teacher code is `test-teacher` (Settings → Teacher turns the teacher's tools on).
+
+### News pictures
+
+`news-shots.steps` makes every picture of the News page, light and dark, straight into `public/news/`:
+
+```bash
+node .claude/skills/run-languageswithvlad/driver.mjs --out public/news < .claude/skills/run-languageswithvlad/news-shots.steps
+```
+
+It takes about three minutes and overwrites the pictures, so a changed screen is re-shot by running it again. For a new News entry, add a block ending in `shot-element <selector> news-<name>`, run it, set `image: 'news-<name>'` in `src/lib/news.ts`, and look at both pictures before committing.
 
 ## Run (human path)
 
