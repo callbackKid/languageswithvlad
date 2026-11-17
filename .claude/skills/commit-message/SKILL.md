@@ -52,7 +52,7 @@ Show the message in a code block. Commit only when the request says to commit; o
 
 Committing:
 
-- On `main`, create a branch first, then offer to fast-forward `main` to it (`git checkout main && git merge --ff-only <branch>`).
+- Commit on the branch you are on (normally `main`). No new branch, no pull request, no push: the owner pushes.
 - Stage only the files of this commit (`git add <paths>`), never everything at once when the changes were split.
 - Run `yarn -s verify && git commit -F - <<'EOF' … EOF`, so a failed check stops the commit. Never `--no-verify`.
 - The pre-commit hook may reformat staged files; that is expected. Finish with `git log -1 --stat` and the branch's state.
