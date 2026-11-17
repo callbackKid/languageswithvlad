@@ -224,6 +224,8 @@ In VS Code, the workspace settings in `.vscode/` format and fix files on save (n
 
 The rules for the code are in [CODE_STYLE.md](CODE_STYLE.md). A pre-commit hook (`.husky/pre-commit`, installed by `yarn install`) enforces the checkable ones: it fixes and lints the staged files, then type-checks the whole project. A commit that fails is refused; fix what it reports, or run `yarn lint:fix`, and commit again.
 
+How to work with Claude Code on this project without long, costly sessions: [WORKING-WITH-CLAUDE.md](WORKING-WITH-CLAUDE.md).
+
 ## Project structure
 
 ```

@@ -10,7 +10,6 @@
       "Bash(yarn format:check)",
       "Bash(yarn -s format:check)",
       "Bash(npm view *)",
-      "Bash(dig *)",
       "mcp__Claude_Browser__read_console_messages"
     ]
   },

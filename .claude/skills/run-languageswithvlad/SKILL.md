@@ -70,7 +70,7 @@ Lines starting with `#` are skipped. A line `---` ends a block: when a step fail
 
 ### Test data
 
-`fixtures.mjs` serves one lesson dated today: five words (★ `se lever` is a key word), the verbs `se lever` and `aimer` with their conjugations, a `Devoirs:` line, a Meet link and the next lesson. It also answers grammar and homework (`analyze` extras), Make homework, a written answer's correction, a word's explanation (Text analysis) and a discussion question; `{}` for the rest. A page that needs more needs a branch in `answerFor`; copy the response shape from the endpoint in `api/` and its `normalizeX` in `src/lib/parse.ts`.
+`fixtures.mjs` serves four lessons. The newest, French, is dated today: five words (★ `se lever` is a key word), the verbs `se lever` and `aimer` with their conjugations, a `Devoirs:` line, a Meet link and the next lesson. Before it, one lesson each in German (yesterday: `aufstehen`, `sich waschen`), Spanish (`hablar`) and Portuguese (`falar`), with their verb tables; open them at `/lessons/<date>_1`. It also answers grammar and homework (`analyze` extras), Make homework, a written answer's correction, a word's explanation (Text analysis) and a discussion question; `{}` for the rest. A page that needs more needs a branch in `answerFor`; copy the response shape from the endpoint in `api/` and its `normalizeX` in `src/lib/parse.ts`.
 
 The next lesson's time depends on the **scenario**, computed from now: `upcoming` (default; in 20 hours: Home shows the summary and Revise before the lesson), `now` (started 10 minutes ago: Lesson now, lesson mode), `finished` (ended today). The app keeps the document it loaded, so after `scenario` press `click button Sync`.
 
