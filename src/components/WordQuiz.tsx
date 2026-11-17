@@ -43,6 +43,7 @@ export default function WordQuiz({
   empty,
   review,
   onRoundEnd,
+  speakAtOnce = true,
 }: {
   title: string;
   make: () => QuizItem[];
@@ -52,6 +53,9 @@ export default function WordQuiz({
   review?: { title: string; none: string };
   /** called once each time a round is over (homework ticks itself) */
   onRoundEnd?: () => void;
+  /** false for a quiz that is simply on the page (Home): its first listening question waits for
+      the student instead of speaking as soon as the page opens */
+  speakAtOnce?: boolean;
 }) {
   const { t: tx } = useTranslation(exercises);
   const { t, rich } = useTranslation(common);
@@ -81,11 +85,15 @@ export default function WordQuiz({
   useEffect(() => {
     if (over) latestRoundEnd.current?.();
   }, [over]);
+  // set by the student's own steps (Next, a new round), never by the quiz appearing
+  const mayAutoSpeak = useRef(speakAtOnce);
   useEffect(() => {
-    if (current?.kind === 'listen') speak(current.word.fr, current.word.language ?? 'fr');
+    if (current?.kind === 'listen' && mayAutoSpeak.current)
+      speak(current.word.fr, current.word.language ?? 'fr');
   }, [current]);
 
   const restart = () => {
+    mayAutoSpeak.current = true;
     setQuestions(make());
     setIndex(0);
     setScore(0);
@@ -95,6 +103,7 @@ export default function WordQuiz({
     setResult(null);
   };
   const next = () => {
+    mayAutoSpeak.current = true;
     setIndex((previous) => previous + 1);
     setTyped('');
     setPicked(null);

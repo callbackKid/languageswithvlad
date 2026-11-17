@@ -3139,21 +3139,6 @@ li .open-link {
   border-radius: 10px;
   background: var(--surface);
 }
-.news-body {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  min-width: 0;
-}
-/* a screenshot of the change, taken at phone width; never wider than the entry */
-.news-picture {
-  display: block;
-  max-width: min(100%, 360px);
-  height: auto;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: var(--bg);
-}
 .news-kind {
   flex: none;
   min-width: 84px;

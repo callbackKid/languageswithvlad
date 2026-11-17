@@ -4,7 +4,6 @@ import { useTranslation } from '../i18n/core';
 import { app } from '../i18n/messages/app';
 import { newsText } from '../i18n/messages/news';
 import { markNewsSeen, NEWS } from '../lib/news';
-import { isDark, useSettings } from '../lib/settings';
 import { useTeacher } from '../lib/teacher';
 import PageHead from './PageHead';
 
@@ -12,7 +11,6 @@ import PageHead from './PageHead';
 export default function News({ onSeen }: { onSeen: () => void }) {
   const { t, language, locale } = useTranslation(newsText);
   const sectionNames = useTranslation(app);
-  const settings = useSettings();
   const { isTeacher } = useTeacher();
   useEffect(() => {
     markNewsSeen();
@@ -34,7 +32,6 @@ export default function News({ onSeen }: { onSeen: () => void }) {
     ...day,
     items: day.items.filter((item) => isTeacher || item.audience !== 'teacher'),
   })).filter((day) => day.items.length);
-  const theme = isDark(settings) ? 'dark' : 'light';
 
   return (
     <>
@@ -51,18 +48,7 @@ export default function News({ onSeen }: { onSeen: () => void }) {
               {day.items.map((item) => (
                 <li key={item.text.en} className="news-item">
                   <span className={'news-kind ' + item.kind}>{t(`kind.${item.kind}`)}</span>
-                  <div className="news-body">
-                    <span>{item.text[language]}</span>
-                    {item.image && (
-                      // the text right above says what the picture shows
-                      <img
-                        className="news-picture"
-                        src={`/news/${item.image}-${theme}.png`}
-                        alt=""
-                        loading="lazy"
-                      />
-                    )}
-                  </div>
+                  <span>{item.text[language]}</span>
                 </li>
               ))}
             </ul>

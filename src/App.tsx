@@ -32,6 +32,7 @@ import { followLink, hrefFor, navigate, usePath } from './lib/router';
 import { lessonPath, NEEDS_LESSONS, parsePath, SECTIONS } from './lib/sections';
 import { isStudied, useSettings } from './lib/settings';
 import { isNotion, sourceUrl } from './lib/source';
+import { stopSpeaking } from './lib/speech';
 import { load, remove, save } from './lib/storage';
 import { applyTeacherHealth } from './lib/teacher';
 
@@ -87,7 +88,17 @@ export default function App() {
   const [menuOpen, setMenuOpen] = useState(
     () => !onPhone() && load<boolean>('menu-open') !== false
   );
-  const route = parsePath(usePath());
+  const path = usePath();
+  const route = parsePath(path);
+  // a word still being read aloud stops with the page it belongs to, and when the tab is hidden
+  useEffect(() => stopSpeaking(), [path]);
+  useEffect(() => {
+    const onVisibility = () => {
+      if (document.hidden) stopSpeaking();
+    };
+    document.addEventListener('visibilitychange', onVisibility);
+    return () => document.removeEventListener('visibilitychange', onVisibility);
+  }, []);
   const section = route?.section ?? 'home';
   // an address the app doesn't have goes to Home
   const unknownPath = !route;

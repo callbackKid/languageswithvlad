@@ -62,7 +62,7 @@ EOF
 | `wait-for <selector>`             | Waits until an element exists (a board, a picture that loads late)                              |
 | `scenario <name>`                 | Switches the test data: `upcoming`, `now`, `finished` (see Test data); then `click button Sync` |
 | `shot <name>`                     | Full-page screenshot, and checks the page doesn't scroll sideways                               |
-| `shot-element <selector> <name>`  | Screenshot cropped to one element (News pictures)                                               |
+| `shot-element <selector> <name>`  | Screenshot cropped to one element                                                               |
 | `classes <selector>`              | Prints the class of every match (`ok`, `bad`, `accent` on drill inputs)                         |
 | `a11y <name>`                     | Runs axe-core on the page; needs axe-core installed, see the `check-a11y` skill                 |
 
@@ -75,16 +75,6 @@ Lines starting with `#` are skipped. A line `---` ends a block: when a step fail
 The next lesson's time depends on the **scenario**, computed from now: `upcoming` (default; in 20 hours: Home shows the summary and Revise before the lesson), `now` (started 10 minutes ago: Lesson now, lesson mode), `finished` (ended today). The app keeps the document it loaded, so after `scenario` press `click button Sync`.
 
 The server's teacher code is `test-teacher` (Settings → Teacher turns the teacher's tools on).
-
-### News pictures
-
-`news-shots.steps` makes every picture of the News page, light and dark, straight into `public/news/`:
-
-```bash
-node .claude/skills/run-languageswithvlad/driver.mjs --out public/news < .claude/skills/run-languageswithvlad/news-shots.steps
-```
-
-It takes about three minutes and overwrites the pictures, so a changed screen is re-shot by running it again. For a new News entry, add a block ending in `shot-element <selector> news-<name>`, run it, set `image: 'news-<name>'` in `src/lib/news.ts`, and look at both pictures before committing.
 
 ## Run (human path)
 

@@ -2,17 +2,12 @@ import type { UiLanguage } from '../i18n/core';
 import { load, save } from './storage';
 
 /* What changed in the app, for the News page. Add an entry here with every change students
-   will notice: the newest day goes first, and every text needs all seven interface languages.
-   An entry that shows something on screen has a picture: add a block for it to
-   .claude/skills/run-languageswithvlad/news-shots.steps and run it (see that skill), which saves
-   public/news/<image>-light.png and -dark.png. */
+   will notice: the newest day goes first, and every text needs all seven interface languages. */
 
 export type NewsKind = 'new' | 'better' | 'fixed';
 export interface NewsItem {
   kind: NewsKind;
   text: Record<UiLanguage, string>;
-  /** the picture's file name without "-light.png" / "-dark.png", in public/news/ */
-  image?: string;
   /** "teacher": about the teacher's tools, so only the teacher sees it */
   audience?: 'teacher';
 }
@@ -27,8 +22,19 @@ export const NEWS: NewsDay[] = [
     date: '2026-11-17',
     items: [
       {
+        kind: 'fixed',
+        text: {
+          en: 'Speech: “Slow” in Settings is now clearly slower than “Normal”. Words no longer play by themselves when you open Home, and reading stops when you leave the page or switch tabs.',
+          ru: 'Озвучка: скорость «Медленная» в Настройках теперь заметно медленнее, чем «Обычная». Слова больше не звучат сами, когда открываешь Главную, а чтение останавливается, когда уходишь со страницы или переключаешь вкладку.',
+          fr: 'Lecture à voix haute : « Lente » dans les Réglages est maintenant nettement plus lente que « Normale ». Les mots ne se lisent plus tout seuls à l’ouverture de l’accueil, et la lecture s’arrête quand vous quittez la page ou changez d’onglet.',
+          de: 'Vorlesen: „Langsam“ in den Einstellungen ist jetzt deutlich langsamer als „Normal“. Wörter werden nicht mehr von selbst vorgelesen, wenn du die Startseite öffnest, und das Vorlesen hört auf, wenn du die Seite verlässt oder den Tab wechselst.',
+          es: 'Lectura en voz alta: «Lenta» en Ajustes ahora es claramente más lenta que «Normal». Las palabras ya no suenan solas al abrir Inicio, y la lectura se detiene al salir de la página o cambiar de pestaña.',
+          pt: 'Leitura em voz alta: «Lenta» nas Definições é agora claramente mais lenta do que «Normal». As palavras já não soam sozinhas ao abrir o Início, e a leitura para quando sai da página ou muda de separador.',
+          it: 'Lettura ad alta voce: «Lenta» nelle Impostazioni ora è chiaramente più lenta di «Normale». Le parole non si leggono più da sole quando apri la Home, e la lettura si ferma quando lasci la pagina o cambi scheda.',
+        },
+      },
+      {
         kind: 'new',
-        image: 'news-help',
         text: {
           en: 'A “?” next to every page’s title opens that page’s guide in the Tutorial. Icon buttons show what they do when you point at them or reach them with the Tab key.',
           ru: 'Значок «?» рядом с названием каждой страницы открывает её раздел в Инструкции. Кнопки-значки показывают подсказку, когда на них наводишь указатель или переходишь клавишей Tab.',
@@ -40,21 +46,8 @@ export const NEWS: NewsDay[] = [
         },
       },
       {
-        kind: 'better',
-        text: {
-          en: 'News has pictures: each change shows what it looks like on screen, in your theme.',
-          ru: 'В Новостях появились картинки: каждое изменение показано так, как оно выглядит на экране, в вашей теме.',
-          fr: 'Les Nouveautés ont des images : chaque changement montre à quoi il ressemble à l’écran, dans votre thème.',
-          de: 'Neuigkeiten haben Bilder: Jede Änderung zeigt, wie sie auf dem Bildschirm aussieht, in deinem Design.',
-          es: 'Novedades tiene imágenes: cada cambio muestra cómo se ve en la pantalla, con tu tema.',
-          pt: 'As Novidades têm imagens: cada mudança mostra como fica no ecrã, no seu tema.',
-          it: 'Le Novità hanno le immagini: ogni modifica mostra come appare sullo schermo, nel tuo tema.',
-        },
-      },
-      {
         kind: 'new',
         audience: 'teacher',
-        image: 'news-teacher-settings',
         text: {
           en: 'For teachers: Settings → Teacher turns on the teacher’s tools with the teacher code. Students no longer see Make homework from this lesson.',
           ru: 'Для преподавателя: Настройки → Преподаватель включают инструменты преподавателя по коду преподавателя. Ученики больше не видят «Домашка по этому уроку».',
@@ -67,7 +60,6 @@ export const NEWS: NewsDay[] = [
       },
       {
         kind: 'new',
-        image: 'news-lesson-tabs',
         text: {
           en: 'Settings → Lesson tabs: untick the lesson tabs you don’t need (Grammar, My notes, Original…) and the lesson page leaves them out.',
           ru: 'Настройки → Вкладки урока: снимите галочки с ненужных вкладок (Грамматика, Мои заметки, Оригинал…), и страница урока их не покажет.',
@@ -80,7 +72,6 @@ export const NEWS: NewsDay[] = [
       },
       {
         kind: 'new',
-        image: 'news-revise-before',
         text: {
           en: 'Revise before the lesson: in the 24 hours before a lesson, Home offers a round on the last lesson’s words and your hard words.',
           ru: 'Повторить перед уроком: за сутки до урока на Главной появляется раунд по словам прошлого урока и вашим сложным словам.',
@@ -93,7 +84,6 @@ export const NEWS: NewsDay[] = [
       },
       {
         kind: 'new',
-        image: 'news-lesson-summary',
         text: {
           en: 'Lesson summary on Home: on the day of a lesson and the day after, a card with its new words, verbs and grammar, and Start revising.',
           ru: 'Итог урока на Главной: в день урока и на следующий день — карточка с его новыми словами, глаголами и грамматикой и кнопкой «Начать повторение».',
@@ -106,7 +96,6 @@ export const NEWS: NewsDay[] = [
       },
       {
         kind: 'new',
-        image: 'news-quiz-game',
         text: {
           en: 'Quiz game in lesson mode: 10 questions on the lesson’s words against the clock, more points for a fast answer, and a records table to beat.',
           ru: 'Игра-квиз в режиме урока: 10 вопросов по словам урока на время, за быстрый ответ больше очков, и таблица рекордов, которые можно побить.',
@@ -120,7 +109,6 @@ export const NEWS: NewsDay[] = [
       {
         kind: 'new',
         audience: 'teacher',
-        image: 'news-make-homework',
         text: {
           en: 'For teachers: “Make homework with Claude” in a lesson’s Homework tab writes a Devoirs: block from the lesson’s words and grammar, key words first. After a check it goes under the lesson, and the student gets it on Home as a checklist.',
           ru: 'Для учителя: «Составить с Claude» во вкладке «Домашнее задание» пишет блок Devoirs: по словам и грамматике урока, сначала ключевые слова. После проверки он попадает под урок, а ученик видит его на Главной чек-листом.',
@@ -133,7 +121,6 @@ export const NEWS: NewsDay[] = [
       },
       {
         kind: 'new',
-        image: 'news-send-to-teacher',
         text: {
           en: 'Send to the teacher: under the homework and in Stats, a short report (homework done, mistakes since the lesson, your corrected written answers) goes into the document under the lesson after you’ve read it.',
           ru: 'Отправить учителю: под домашкой и в Статистике короткий отчёт (что сделано, ошибки с урока, исправленные письменные ответы) после вашей проверки попадает в документ под урок.',
@@ -146,7 +133,6 @@ export const NEWS: NewsDay[] = [
       },
       {
         kind: 'new',
-        image: 'news-written-homework',
         text: {
           en: 'Written homework checked by Claude: write your answer to a task like “5 phrases au passé composé”, and Claude fixes the mistakes and explains each one, like a tutor. The teacher sees the corrected answers in lesson mode.',
           ru: 'Письменная домашка с проверкой Claude: напишите ответ на задание вроде «5 phrases au passé composé», и Claude исправит ошибки и объяснит каждую, как репетитор. Учитель видит исправленные ответы в режиме урока.',
@@ -159,7 +145,6 @@ export const NEWS: NewsDay[] = [
       },
       {
         kind: 'new',
-        image: 'news-homework-home',
         text: {
           en: 'Homework on Home: what the teacher writes after “Devoirs:” in the lesson becomes a checklist with the days left until the next lesson. Each task opens its exercise, and finishing it ticks the task.',
           ru: 'Домашка на Главной: то, что учитель пишет в уроке после «Devoirs:», становится чек-листом, где видно, сколько дней до урока. Каждое задание открывает своё упражнение, а когда оно закончено, галочка ставится сама.',
@@ -172,7 +157,6 @@ export const NEWS: NewsDay[] = [
       },
       {
         kind: 'new',
-        image: 'news-key-words',
         text: {
           en: 'Key words: the teacher marks a word with ★ in the document (★ la boulangerie — пекарня), and it gets a “key” badge and comes up more often in exercises and the warm-up.',
           ru: 'Ключевые слова: учитель отмечает слово звёздочкой в документе (★ la boulangerie — пекарня), у него появляется метка «ключевое», и оно чаще встречается в упражнениях и разминке.',
@@ -185,7 +169,6 @@ export const NEWS: NewsDay[] = [
       },
       {
         kind: 'new',
-        image: 'news-warm-up',
         text: {
           en: 'Warm-up in lesson mode: about 5 minutes of questions on the previous lesson and on your mistakes since, with a list of what didn’t stick at the end, for the teacher to see on the shared screen.',
           ru: 'Разминка в режиме урока: минут 5 вопросов по прошлому уроку и вашим ошибкам с тех пор, а в конце — список того, что не закрепилось, чтобы учитель увидел его на общем экране.',
@@ -198,7 +181,6 @@ export const NEWS: NewsDay[] = [
       },
       {
         kind: 'new',
-        image: 'news-live-sync',
         text: {
           en: 'Live sync: while the top bar says “Lesson now”, the app reads the document every minute by itself, so the words the teacher writes appear with their exercises without pressing ↻.',
           ru: 'Живая синхронизация: пока в шапке горит «Урок идёт», приложение само читает документ каждую минуту, и слова, которые пишет учитель, появляются вместе с упражнениями без нажатия ↻.',
@@ -211,7 +193,6 @@ export const NEWS: NewsDay[] = [
       },
       {
         kind: 'new',
-        image: 'news-lesson-extras',
         text: {
           en: 'Every lesson now has Grammar (the rules explained, with practice sentences on each), Homework (a list to tick off) and Book exercises (imported from photos or a PDF into the lesson in the document). My notes also shows the board and lesson-mode notes from that day.',
           ru: 'В каждом уроке теперь есть Грамматика (правила с объяснением и тренировкой на каждое), Домашнее задание (список с галочками) и Упражнения из учебника (с фото или PDF, добавляются в урок в документе). В «Моих заметках» видны доска и заметки из режима урока за тот день.',
@@ -224,7 +205,6 @@ export const NEWS: NewsDay[] = [
       },
       {
         kind: 'new',
-        image: 'news-languages',
         text: {
           en: 'Spanish, Portuguese and Italian: as languages to learn, and as interface languages. Lessons can start with Lección, Clase, Lição, Aula or Lezione, and “próxima clase”, “próxima aula” or “prossima lezione” sets the next lesson.',
           ru: 'Испанский, португальский и итальянский: их можно учить, и на них можно переключить интерфейс. Уроки в документе могут начинаться с Lección, Clase, Lição, Aula или Lezione, а следующий урок задаётся строкой «próxima clase», «próxima aula» или «prossima lezione».',
@@ -254,7 +234,6 @@ export const NEWS: NewsDay[] = [
     items: [
       {
         kind: 'new',
-        image: 'news-menu',
         text: {
           en: 'The menu is now a column on the left, grouped by topic. « folds it away and ☰ brings it back.',
           ru: 'Меню теперь колонка слева, разделённая на группы. « сворачивает его, ☰ возвращает.',
@@ -279,7 +258,6 @@ export const NEWS: NewsDay[] = [
       },
       {
         kind: 'better',
-        image: 'news-menu',
         text: {
           en: 'Clearer section names: Lesson history, Downloaded lessons, A question for discussion, Favourite words, Text analysis and Photo parsing.',
           ru: 'Понятнее названия разделов: «История уроков», «Загруженные уроки», «Вопрос для обсуждения», «Избранные слова», «Разбор текста» и «Разбор фото».',
@@ -292,7 +270,6 @@ export const NEWS: NewsDay[] = [
       },
       {
         kind: 'better',
-        image: 'news-top-bar',
         text: {
           en: 'A new top bar: the next lesson with Enter the lesson in the middle, ↻ to sync, and ⚙️ Settings on the right. Opening, sharing or changing the document is under Settings → Document.',
           ru: 'Новая верхняя панель: следующий урок с кнопкой «Войти в урок» посередине, ↻ для синхронизации и ⚙️ Настройки справа. Открыть, отправить ученику или сменить документ — в «Настройки → Документ».',
@@ -305,7 +282,6 @@ export const NEWS: NewsDay[] = [
       },
       {
         kind: 'new',
-        image: 'news-board',
         text: {
           en: 'A shared board in lesson mode: the teacher and the student draw on it at the same time.',
           ru: 'Общая доска в режиме урока: преподаватель и ученик рисуют на ней одновременно.',
@@ -318,7 +294,6 @@ export const NEWS: NewsDay[] = [
       },
       {
         kind: 'new',
-        image: 'news-text-analysis',
         text: {
           en: 'Text analysis: paste an article, click any word or phrase to have it explained, translate the text paragraph by paragraph, and get questions and exercises on it.',
           ru: 'Разбор текста: вставьте статью, нажмите на слово или фразу, чтобы получить объяснение, переведите текст по абзацам и получите вопросы и упражнения по нему.',
@@ -331,7 +306,6 @@ export const NEWS: NewsDay[] = [
       },
       {
         kind: 'better',
-        image: 'news-lesson-finished',
         text: {
           en: 'After the lesson, the next-lesson widget says it is finished.',
           ru: 'После урока виджет следующего урока показывает, что урок завершён.',
@@ -344,7 +318,6 @@ export const NEWS: NewsDay[] = [
       },
       {
         kind: 'new',
-        image: 'news-settings',
         text: {
           en: 'Settings: your name and picture, the interface language, a light or dark theme, the languages you learn and your level, the daily goal, speech speed and which sections the menu shows.',
           ru: 'Настройки: имя и картинка, язык интерфейса, светлая или тёмная тема, изучаемые языки и уровень, цель на день, скорость озвучки и разделы в меню.',
@@ -357,7 +330,6 @@ export const NEWS: NewsDay[] = [
       },
       {
         kind: 'new',
-        image: 'news-lesson-mode',
         text: {
           en: 'Lesson mode: Google Meet in a window beside the app, or Zoom inside it, with your notes and the lesson’s words next to the call.',
           ru: 'Режим урока: Google Meet в окне рядом с приложением или Zoom прямо в нём, а рядом со звонком — заметки и слова урока.',
@@ -382,7 +354,6 @@ export const NEWS: NewsDay[] = [
       },
       {
         kind: 'new',
-        image: 'news-discussion',
         text: {
           en: 'A question for discussion: write your own topic (a TV show, new words…), and open a short explanation of the grammar rule.',
           ru: 'Вопрос для обсуждения: можно написать свою тему (сериал, новые слова…) и открыть короткое объяснение правила грамматики.',
@@ -412,7 +383,6 @@ export const NEWS: NewsDay[] = [
     items: [
       {
         kind: 'new',
-        image: 'news-languages',
         text: {
           en: 'The app speaks your language: English, Russian, French or German.',
           ru: 'Интерфейс на вашем языке: английский, русский, французский или немецкий.',
@@ -437,7 +407,6 @@ export const NEWS: NewsDay[] = [
       },
       {
         kind: 'new',
-        image: 'news-feedback',
         text: {
           en: 'Feedback: send the teacher a bug, an idea or any message, with up to 3 screenshots.',
           ru: 'Обратная связь: отправьте преподавателю ошибку, идею или любое сообщение, до 3 скриншотов.',
@@ -455,7 +424,6 @@ export const NEWS: NewsDay[] = [
     items: [
       {
         kind: 'new',
-        image: 'news-photo',
         text: {
           en: 'Photo parsing reads PDFs too: handwritten notes and textbook pages.',
           ru: 'Разбор фото понимает и PDF: рукописные заметки и страницы учебника.',

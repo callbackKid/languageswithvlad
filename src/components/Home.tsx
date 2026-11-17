@@ -112,7 +112,7 @@ export default function Home({
       )}
       <BankNote bank={bank} />
       {bank.words.length ? (
-        <WordQuiz title={t('randomExercises')} make={make} />
+        <WordQuiz title={t('randomExercises')} make={make} speakAtOnce={false} />
       ) : (
         !bank.pending && <p className="empty">{t('noWordsYet')}</p>
       )}
