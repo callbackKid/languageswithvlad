@@ -224,7 +224,22 @@ In VS Code, the workspace settings in `.vscode/` format and fix files on save (n
 
 The rules for the code are in [CODE_STYLE.md](CODE_STYLE.md). A pre-commit hook (`.husky/pre-commit`, installed by `yarn install`) enforces the checkable ones: it fixes and lints the staged files, then type-checks the whole project. A commit that fails is refused; fix what it reports, or run `yarn lint:fix`, and commit again.
 
+### Claude Code
+
 How to work with Claude Code on this project without long, costly sessions: [WORKING-WITH-CLAUDE.md](WORKING-WITH-CLAUDE.md).
+
+Already set up in `.claude/`: the rules in `CLAUDE.md`, hooks (format after each edit, guard, typecheck and News reminder at the end of a turn, session briefing), a permission allowlist, and the skills `run-languageswithvlad`, `check-a11y` and `commit-message`.
+
+Not used yet, most useful first:
+
+1. **`/code-review` and `/security-review`** on a change before committing it. `/security-review` matters most for `api/`, which holds the Anthropic key, the class-code check and the Google service account.
+2. **Plan mode** (Shift+Tab) for the big TODO items: the exercise builder, the student roadmap, translation languages beyond Russian.
+3. **A translator subagent** in `.claude/agents/` that fills in all seven languages in `src/i18n/messages/` and follows the quote rules (`« »`, `„ “`, `’`).
+4. **A status line** (`/statusline`): branch, model and how full the context is.
+5. **The Notion connector**, authorised through `/mcp`, so Claude can read lessons from Notion while debugging. Google Docs and Drive are already connected.
+6. **Worktrees** for working on two independent TODO items at the same time.
+7. **Automation:** `/schedule` for a weekly check of outdated or vulnerable dependencies; `claude -p` in GitHub Actions to review every pull request.
+8. **Rewind** (Esc Esc): rolls the conversation and file changes back to an earlier point.
 
 ## Project structure
 
