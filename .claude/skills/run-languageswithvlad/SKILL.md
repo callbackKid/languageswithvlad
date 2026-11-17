@@ -54,6 +54,9 @@ EOF
 | `nav <path>`                      | Opens a page: `/lessons`, `/my-words`, `/stats`… (see README, Pages)            |
 | `click <role> <name>`             | Clicks by accessible role and exact name; `/regex/` for a partial name          |
 | `click-text <text>`               | Clicks the element with exactly this text                                       |
+| `hover <role> <name>`             | Rests the pointer on an element, long enough for its tooltip to appear          |
+| `press <key>`                     | Presses a key: `Tab`, `Enter`, `Escape`…                                        |
+| `eval <expression>`               | Prints the value of a JavaScript expression in the page (for debugging)         |
 | `fill <selector> @<index> <text>` | Types into the n-th match of a CSS selector                                     |
 | `wait-text <text>`                | Waits until the text appears                                                    |
 | `shot <name>`                     | Full-page screenshot, and checks the page doesn't scroll sideways               |

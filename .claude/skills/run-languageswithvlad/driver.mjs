@@ -111,13 +111,21 @@ for (const theme of options.themes.split(',')) {
     const rest = words.join(' ');
     try {
       if (command === 'nav') await page.goto(BASE_URL + rest);
-      else if (command === 'click') {
+      else if (command === 'click' || command === 'hover') {
         const [role, ...nameWords] = words;
-        await page
+        const element = page
           .getByRole(role, { name: nameMatcher(nameWords.join(' ')), exact: true })
-          .first()
-          .click();
-      } else if (command === 'click-text')
+          .first();
+        if (command === 'click') await element.click();
+        else {
+          await element.hover();
+          // the tooltip appears after a short rest (HOVER_DELAY in TooltipLayer)
+          await page.waitForTimeout(600);
+        }
+      } else if (command === 'press') await page.keyboard.press(rest);
+      else if (command === 'eval')
+        report(`[${theme}] eval: ${JSON.stringify(await page.evaluate(rest))}`);
+      else if (command === 'click-text')
         await page.getByText(rest, { exact: true }).first().click();
       else if (command === 'fill') {
         // fill table.conj input @0 je n’aime pas: the selector may contain spaces, @ marks the index
