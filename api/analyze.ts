@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 import { claudeJSON, MODEL } from './_lib/claude.js';
-import { asLevel, checkAccess, fail, onlyPost, text } from './_lib/http.js';
+import { asLevel, checkAccess, checkTeacher, fail, onlyPost, text } from './_lib/http.js';
 import {
   analysisPrompt,
   asExplainLanguage,
@@ -38,6 +38,8 @@ export default async function handler(request: VercelRequest, response: VercelRe
       return response.status(200).json(await claudeJSON(prompt, { model: MODEL, maxTokens: 4000 }));
     }
     if (action === 'homework') {
+      // making homework is the teacher's tool
+      if (!checkTeacher(request, response)) return;
       const lesson = typeof request.body?.body === 'string' ? request.body.body : '';
       if (!lesson.trim()) return response.status(400).json({ error: 'Empty lesson.' });
       if (lesson.length > MAX_LESSON_LENGTH)

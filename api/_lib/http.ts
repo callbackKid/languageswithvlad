@@ -33,6 +33,21 @@ export function checkAccess(request: VercelRequest, response: VercelResponse): b
   return false;
 }
 
+/** True when the request carries the teacher code (APP_TEACHER_CODE), which unlocks the teacher's
+    tools; without the variable nobody is a teacher. */
+export function isTeacher(request: VercelRequest): boolean {
+  const code = process.env.APP_TEACHER_CODE;
+  const given = request.headers['x-teacher-code'];
+  return !!code && typeof given === 'string' && sameSecret(given, code);
+}
+
+/** Rejects a request for a teacher's tool that doesn't carry the teacher code. */
+export function checkTeacher(request: VercelRequest, response: VercelResponse): boolean {
+  if (isTeacher(request)) return true;
+  response.status(403).json({ error: 'teacher_code' });
+  return false;
+}
+
 export function onlyPost(request: VercelRequest, response: VercelResponse): boolean {
   if (request.method === 'POST') return true;
   response.setHeader('Allow', 'POST');

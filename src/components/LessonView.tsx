@@ -9,6 +9,7 @@ import { homeworkKey } from '../lib/homework';
 import { localParse, markKeyWords, normalizeAnalysis, normalizeExtras } from '../lib/parse';
 import { LESSON_TABS, type LessonTab, useSettings } from '../lib/settings';
 import { load, save } from '../lib/storage';
+import { useTeacher } from '../lib/teacher';
 import type { Analysis, Lesson, LessonExtras } from '../lib/types';
 import HelpLink from './HelpLink';
 import LessonDrawings from './LessonDrawings';
@@ -44,6 +45,7 @@ export default function LessonView({
   const [chosenTab, setTab] = useState<Tab>('words');
   // a tab hidden in Settings gives way to the first one shown
   const tab = shownTabs.includes(chosenTab) ? chosenTab : (shownTabs[0] ?? 'words');
+  const { isTeacher } = useTeacher();
   const [analysis, setAnalysis] = useState<Analysis | null>(null);
   const [state, setState] = useState<'loading' | 'ready' | 'error'>('loading');
   const [error, setError] = useState('');
@@ -245,8 +247,8 @@ export default function LessonView({
               language={extras.language}
             />
           )}
-          {/* only for a lesson that is in the document, with Claude to write it */}
-          {tab === 'homework' && ai && docWriter !== undefined && tagged && (
+          {/* the teacher's tool, for a lesson that is in the document, with Claude to write it */}
+          {tab === 'homework' && isTeacher && ai && docWriter !== undefined && tagged && (
             <MakeHomework
               lesson={lesson}
               words={tagged.words}

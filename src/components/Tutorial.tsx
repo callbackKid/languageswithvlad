@@ -9,6 +9,7 @@ import { tutorial } from '../i18n/messages/tutorial';
 import { GUIDES } from '../lib/guides';
 import { followLink, hrefFor } from '../lib/router';
 import { type Section, SECTIONS } from '../lib/sections';
+import { useTeacher } from '../lib/teacher';
 import PageHead from './PageHead';
 
 /* A guide for someone opening the app for the first time: a quick start, a map of the sections,
@@ -182,6 +183,7 @@ export default function Tutorial() {
   const { t, rich } = useTranslation(tutorial);
   const text = (key: string) => rich(key as TutorialKey, TAGS);
   const plain = (key: string) => t(key as TutorialKey);
+  const { isTeacher } = useTeacher();
   // opened from a page's "?" (/tutorial#guide-verbs): go straight to that card
   useEffect(() => {
     const part = window.location.hash.slice(1);
@@ -243,9 +245,11 @@ export default function Tutorial() {
                 <>
                   <h3>{t('goodToKnow')}</h3>
                   <ul className="guide-tips">
-                    {range(guide.tips).map((tip) => (
-                      <li key={tip}>{text(`${guide.id}.tip${tip}`)}</li>
-                    ))}
+                    {range(guide.tips)
+                      .filter((tip) => isTeacher || !guide.teacherTips?.includes(tip))
+                      .map((tip) => (
+                        <li key={tip}>{text(`${guide.id}.tip${tip}`)}</li>
+                      ))}
                   </ul>
                 </>
               )}

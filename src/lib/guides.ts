@@ -13,13 +13,23 @@ export interface Guide {
   tips?: number;
   /** a small drawing of the screen, with the app's own labels */
   mock?: boolean;
+  /** tips about the teacher's tools, shown only to the teacher */
+  teacherTips?: readonly number[];
 }
 
 // written out "as const" only so the ids become a type; pages use GUIDES below
 const GUIDE_LIST = [
   { section: null, id: 'header', icon: '🧭', steps: 6, tips: 1, mock: true },
   { section: 'home', id: 'home', icon: '🏠', steps: 3, tips: 5, mock: true },
-  { section: 'lessons', id: 'lessons', icon: '📚', steps: 4, tips: 7, mock: true },
+  {
+    section: 'lessons',
+    id: 'lessons',
+    icon: '📚',
+    steps: 4,
+    tips: 7,
+    mock: true,
+    teacherTips: [7],
+  },
   { section: 'lessons', id: 'verbs', icon: '🔤', steps: 4, tips: 3, mock: true },
   { section: 'practice', id: 'all-lessons', icon: '🗂️', steps: 2, mock: true },
   { section: 'discuss', id: 'discuss', icon: '💬', steps: 4, tips: 1 },

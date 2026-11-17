@@ -22,6 +22,7 @@ import {
 import { canSpeak, speak } from '../lib/speech';
 import { type Language, LANGUAGES } from '../lib/types';
 import PageHead from './PageHead';
+import TeacherCard from './TeacherCard';
 
 // each lesson tab under the name it has on the lesson page
 const TAB_NAMES = {
@@ -357,6 +358,8 @@ export default function Settings({ lessonDocument }: { lessonDocument: DocumentI
           })}
         </ul>
       </section>
+
+      <TeacherCard />
     </>
   );
 }

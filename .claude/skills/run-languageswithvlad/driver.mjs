@@ -99,7 +99,7 @@ for (const theme of options.themes.split(',')) {
     } catch {
       // GET requests have no body
     }
-    await route.fulfill({ json: answerFor(request.url(), body) });
+    await route.fulfill({ json: answerFor(request.url(), body, request.headers()) });
   });
 
   // the ?doc= link stores the test document, as a student link does; the app then loads it

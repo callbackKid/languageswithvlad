@@ -3,6 +3,7 @@ import { common } from '../i18n/messages/common';
 import type { BoardServer } from './boardSync';
 import type { ImagePayload } from './image';
 import { load } from './storage';
+import { getTeacherCode } from './teacher';
 import type { Language } from './types';
 
 export type FeedbackKind = 'bug' | 'idea' | 'other';
@@ -29,10 +30,13 @@ export class ApiError extends Error {
   }
 }
 
-async function request<T>(path: string, init?: RequestInit): Promise<T> {
+/** teacherCode replaces the saved one, to check a code before it is kept. */
+async function request<T>(path: string, init?: RequestInit, teacherCode?: string): Promise<T> {
   const headers: Record<string, string> = { 'content-type': 'application/json' };
   const code = load<string>('code');
   if (code) headers['x-access-code'] = code;
+  const teacher = teacherCode ?? getTeacherCode();
+  if (teacher) headers['x-teacher-code'] = teacher;
   let response: Response;
   try {
     response = await fetch(path, { ...init, headers });
@@ -58,6 +62,7 @@ function messageFor(status: number, errorCode: string): string {
     window.dispatchEvent(new Event('cahier:need-code'));
     return t('enterCode');
   }
+  if (errorCode === 'teacher_code') return t('teacherOnly');
   if (errorCode === 'not_shared') return t('notShared');
   if (errorCode === 'not_found') return t('docNotFound');
   if (errorCode === 'bad_id') return t('badDocLink');
@@ -95,17 +100,25 @@ function analyzeOnce(body: string, fresh: boolean): Promise<unknown> {
   return pending;
 }
 
+interface Health {
+  needsCode: boolean;
+  /** a teacher code is set up on the server */
+  teacherCode?: boolean;
+  /** the request carried the right teacher code */
+  teacher?: boolean;
+  ai: boolean;
+  docWriter?: string | null;
+  feedback?: boolean;
+  zoom?: boolean;
+  notion?: boolean;
+  board?: BoardServer | null;
+}
+
 export const api = {
-  health: () =>
-    request<{
-      needsCode: boolean;
-      ai: boolean;
-      docWriter?: string | null;
-      feedback?: boolean;
-      zoom?: boolean;
-      notion?: boolean;
-      board?: BoardServer | null;
-    }>('/api/health'),
+  health: () => request<Health>('/api/health'),
+  /** whether the server accepts this teacher code */
+  checkTeacher: async (teacherCode: string) =>
+    !!(await request<Health>('/api/health', undefined, teacherCode)).teacher,
   zoomSignature: (meetingNumber: string) =>
     request<{ signature: string }>('/api/zoom-signature', {
       method: 'POST',

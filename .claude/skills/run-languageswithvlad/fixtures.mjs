@@ -3,6 +3,8 @@
 // Add words, verbs or endpoints here when a page you check needs them.
 
 export const DOCUMENT_ID = 'testdocument_run_skill_0001';
+// the teacher code this test server accepts (Settings → Teacher)
+export const TEACHER_CODE = 'test-teacher';
 
 const LESSON = '14.11.2026 1 Leçon\nse lever — вставать\naimer — любить\n';
 
@@ -75,9 +77,15 @@ const ANALYSIS = {
 };
 
 /** The JSON body for one API request; {} for endpoints this fixture doesn't cover. */
-export function answerFor(url, body) {
+export function answerFor(url, body, headers = {}) {
   const path = new URL(url).pathname;
-  if (path === '/api/health') return { needsCode: false, ai: true };
+  if (path === '/api/health')
+    return {
+      needsCode: false,
+      ai: true,
+      teacherCode: true,
+      teacher: headers['x-teacher-code'] === TEACHER_CODE,
+    };
   if (path === '/api/doc') return { title: 'Test lesson', text: LESSON };
   if (path === '/api/conjugate') return CONJUGATIONS[body?.inf] ?? {};
   // grammar, homework and the other analyze actions get an empty answer

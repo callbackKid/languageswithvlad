@@ -33,6 +33,7 @@ import { lessonPath, NEEDS_LESSONS, parsePath, SECTIONS } from './lib/sections';
 import { isStudied, useSettings } from './lib/settings';
 import { isNotion, sourceUrl } from './lib/source';
 import { load, remove, save } from './lib/storage';
+import { applyTeacherHealth } from './lib/teacher';
 
 interface DocCache {
   title: string;
@@ -104,6 +105,7 @@ export default function App() {
         setZoomReady(!!health.zoom);
         setNotionReady(!!health.notion);
         setBoardServer(health.board ?? null);
+        applyTeacherHealth(!!health.teacherCode, !!health.teacher);
         if (health.needsCode && !load<string>('code')) setNeedsCode(true);
       })
       .catch(() => {

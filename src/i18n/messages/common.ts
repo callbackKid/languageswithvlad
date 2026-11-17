@@ -23,6 +23,7 @@ export const common = defineMessages({
     listen: 'Listen',
     transcription: 'Transcription',
     howItWorks: 'How this section works',
+    teacherOnly: 'Only the teacher can do this. The teacher turns on teacher tools in Settings.',
     listenTo: 'Listen: {text}',
     addToMyWords: 'Add to Favourite words',
     removeFromMyWords: 'Remove from Favourite words',
@@ -100,6 +101,8 @@ export const common = defineMessages({
     listen: 'Послушать',
     transcription: 'Транскрипция',
     howItWorks: 'Как работает этот раздел',
+    teacherOnly:
+      'Это может только преподаватель. Инструменты преподавателя включаются в Настройках.',
     listenTo: 'Послушать: {text}',
     addToMyWords: 'Добавить в «Избранные слова»',
     removeFromMyWords: 'Убрать из «Избранных слов»',
@@ -181,6 +184,8 @@ export const common = defineMessages({
     listen: 'Écouter',
     transcription: 'Transcription',
     howItWorks: 'Comment fonctionne cette section',
+    teacherOnly:
+      'Seul le professeur peut faire cela. Le professeur active ses outils dans les Réglages.',
     listenTo: 'Écouter : {text}',
     addToMyWords: 'Ajouter à Mots favoris',
     removeFromMyWords: 'Retirer de Mots favoris',
@@ -257,6 +262,8 @@ export const common = defineMessages({
     listen: 'Anhören',
     transcription: 'Lautschrift',
     howItWorks: 'So funktioniert dieser Bereich',
+    teacherOnly:
+      'Das kann nur die Lehrkraft. Die Lehrkraft schaltet ihre Werkzeuge in den Einstellungen ein.',
     listenTo: 'Anhören: {text}',
     addToMyWords: 'Zu Lieblingswörtern hinzufügen',
     removeFromMyWords: 'Aus Lieblingswörtern entfernen',
@@ -334,6 +341,8 @@ export const common = defineMessages({
     listen: 'Escuchar',
     transcription: 'Transcripción',
     howItWorks: 'Cómo funciona esta sección',
+    teacherOnly:
+      'Solo el profesor puede hacer esto. El profesor activa sus herramientas en Ajustes.',
     listenTo: 'Escuchar: {text}',
     addToMyWords: 'Añadir a Palabras favoritas',
     removeFromMyWords: 'Quitar de Palabras favoritas',
@@ -410,6 +419,8 @@ export const common = defineMessages({
     listen: 'Ouvir',
     transcription: 'Transcrição',
     howItWorks: 'Como funciona esta secção',
+    teacherOnly:
+      'Só o professor pode fazer isto. O professor ativa as suas ferramentas nas Definições.',
     listenTo: 'Ouvir: {text}',
     addToMyWords: 'Acrescentar às Palavras favoritas',
     removeFromMyWords: 'Retirar das Palavras favoritas',
@@ -486,6 +497,8 @@ export const common = defineMessages({
     listen: 'Ascolta',
     transcription: 'Trascrizione',
     howItWorks: 'Come funziona questa sezione',
+    teacherOnly:
+      'Solo l’insegnante può farlo. L’insegnante attiva i suoi strumenti nelle Impostazioni.',
     listenTo: 'Ascolta: {text}',
     addToMyWords: 'Aggiungi alle Parole preferite',
     removeFromMyWords: 'Togli dalle Parole preferite',

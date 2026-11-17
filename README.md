@@ -36,7 +36,7 @@ React + TypeScript + Vite in the browser, small Vercel serverless functions in `
 
 **Practice across lessons**
 
-- **Home**: a daily round of 10 mixed questions, a 🔥 streak and a daily goal. On the day of a lesson and the day after, a **summary** of it (new words, verbs, grammar) with **Start revising**; in the 24 hours before the next lesson, **Revise before the lesson** (the last lesson's words and the hard words). Above it, the **homework** the teacher wrote in the newest lesson (`Devoirs: …`) as a checklist with the days left until the next lesson; each task opens its exercise (the words of a lesson, gap sentences, verb forms, or a written answer that Claude corrects and explains like a tutor), and finishing it ticks the task. Lesson mode shows the corrected written answers to the teacher. In a lesson's **Homework** tab, **Make homework with Claude** writes such a block from the lesson's words and grammar (key words ★ first) for the teacher to check and add under the lesson. **Send to the teacher** (under the homework and in Stats) adds a short report under the lesson in the document: the homework done, answers and mistakes since the lesson, and the corrected written answers. Its lines start with 📝 and emojis, and lesson analysis skips them.
+- **Home**: a daily round of 10 mixed questions, a 🔥 streak and a daily goal. On the day of a lesson and the day after, a **summary** of it (new words, verbs, grammar) with **Start revising**; in the 24 hours before the next lesson, **Revise before the lesson** (the last lesson's words and the hard words). Above it, the **homework** the teacher wrote in the newest lesson (`Devoirs: …`) as a checklist with the days left until the next lesson; each task opens its exercise (the words of a lesson, gap sentences, verb forms, or a written answer that Claude corrects and explains like a tutor), and finishing it ticks the task. Lesson mode shows the corrected written answers to the teacher. In a lesson's **Homework** tab, **Make homework with Claude** writes such a block from the lesson's words and grammar (key words ★ first) for the teacher to check and add under the lesson; it is a teacher's tool, shown only after the teacher code is entered in Settings (see `APP_TEACHER_CODE`). **Send to the teacher** (under the homework and in Stats) adds a short report under the lesson in the document: the homework done, answers and mistakes since the lesson, and the corrected written answers. Its lines start with 📝 and emojis, and lesson analysis skips them.
 - **Downloaded lessons**, **Favourite words**, **Mistakes** and **Stats**.
 
 **From paper**
@@ -83,16 +83,17 @@ About 10 minutes.
 3. **Import it on vercel.com** (New Project → pick the repo). Vercel detects Vite; keep the defaults.
 4. **Add environment variables** (Project → Settings → Environment Variables):
 
-   | Variable                                 | Required    | What it is                                                              |
-   | ---------------------------------------- | ----------- | ----------------------------------------------------------------------- |
-   | `ANTHROPIC_API_KEY`                      | yes         | Your Anthropic key.                                                     |
-   | `APP_ACCESS_CODE`                        | recommended | A class code students enter once, so strangers can’t spend your credit. |
-   | `CLAUDE_MODEL`, `CLAUDE_FAST_MODEL`      | no          | Model overrides.                                                        |
-   | `GOOGLE_SERVICE_ACCOUNT`                 | no          | Lets the app add lessons to the Google Doc (setup below).               |
-   | `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` | no          | Sends students’ bug reports and ideas to your Telegram (setup below).   |
-   | `ZOOM_SDK_KEY`, `ZOOM_SDK_SECRET`        | no          | Runs Zoom calls inside the app, in lesson mode (setup below).           |
-   | `SUPABASE_URL`, `SUPABASE_ANON_KEY`      | no          | Shares the lesson board live between teacher and student (setup below). |
-   | `NOTION_TOKEN`                           | no          | Reads lessons from Notion pages instead of a Google Doc (setup below).  |
+   | Variable                                 | Required    | What it is                                                                                                                                                |
+   | ---------------------------------------- | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+   | `ANTHROPIC_API_KEY`                      | yes         | Your Anthropic key.                                                                                                                                       |
+   | `APP_ACCESS_CODE`                        | recommended | A class code students enter once, so strangers can’t spend your credit.                                                                                   |
+   | `APP_TEACHER_CODE`                       | no          | The teacher's own code, entered once in **Settings → Teacher**; it unlocks the teacher's tools (Make homework with Claude). Without it, nobody sees them. |
+   | `CLAUDE_MODEL`, `CLAUDE_FAST_MODEL`      | no          | Model overrides.                                                                                                                                          |
+   | `GOOGLE_SERVICE_ACCOUNT`                 | no          | Lets the app add lessons to the Google Doc (setup below).                                                                                                 |
+   | `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` | no          | Sends students’ bug reports and ideas to your Telegram (setup below).                                                                                     |
+   | `ZOOM_SDK_KEY`, `ZOOM_SDK_SECRET`        | no          | Runs Zoom calls inside the app, in lesson mode (setup below).                                                                                             |
+   | `SUPABASE_URL`, `SUPABASE_ANON_KEY`      | no          | Shares the lesson board live between teacher and student (setup below).                                                                                   |
+   | `NOTION_TOKEN`                           | no          | Reads lessons from Notion pages instead of a Google Doc (setup below).                                                                                    |
 
 5. **Deploy**, then redeploy once after adding variables so the functions pick them up.
 
@@ -101,6 +102,7 @@ About 10 minutes.
 1. In Google Docs, set the lesson document to **Share → General access → Anyone with the link → Viewer**.
 2. Open the app, paste the document link, then open **⚙️ Settings → Document** and press **Copy student link**. It looks like `https://your-app.vercel.app/?doc=DOCUMENT_ID`.
 3. Send that link to the student (or the whole class, if they share one document). They open it, enter the class code once, and see every lesson.
+4. On your own device, open **⚙️ Settings → Teacher** and enter the teacher code (`APP_TEACHER_CODE`) to turn on the teacher's tools. Don't give this code to students.
 
 When you add a lesson to the document, students press **↻** (sync) next to the document's name to get it. The **Tutorial** page explains the rest of the app to them.
 

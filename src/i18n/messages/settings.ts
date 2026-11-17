@@ -43,6 +43,14 @@ export const settingsText = defineMessages({
     lessonTabs: 'Lesson tabs',
     lessonTabsHint: 'Untick the tabs you don’t need on a lesson page. One always stays.',
     openSettings: 'Settings',
+    teacher: 'Teacher',
+    teacherHint:
+      'Teacher tools (“Make homework from this lesson”) are only for the teacher. Enter the teacher code once on your own device.',
+    teacherCode: 'Teacher code',
+    teacherTurnOn: 'Turn on teacher tools',
+    teacherOn: 'This device has the teacher tools on.',
+    teacherTurnOff: 'Turn off',
+    teacherWrong: 'That isn’t the teacher code.',
   },
   ru: {
     title: 'Настройки',
@@ -92,6 +100,14 @@ export const settingsText = defineMessages({
     lessonTabsHint:
       'Снимите галочки с вкладок, которые не нужны на странице урока. Одна всегда остаётся.',
     openSettings: 'Настройки',
+    teacher: 'Преподаватель',
+    teacherHint:
+      'Инструменты преподавателя («Домашка по этому уроку») видит только преподаватель. Введите код преподавателя один раз на своём устройстве.',
+    teacherCode: 'Код преподавателя',
+    teacherTurnOn: 'Включить инструменты преподавателя',
+    teacherOn: 'Инструменты преподавателя включены на этом устройстве.',
+    teacherTurnOff: 'Выключить',
+    teacherWrong: 'Это не код преподавателя.',
   },
   fr: {
     title: 'Réglages',
@@ -136,6 +152,14 @@ export const settingsText = defineMessages({
     lessonTabsHint:
       'Décochez les onglets dont vous n’avez pas besoin sur la page d’une leçon. Il en reste toujours un.',
     openSettings: 'Réglages',
+    teacher: 'Professeur',
+    teacherHint:
+      'Les outils du professeur (« Des devoirs à partir de cette leçon ») sont réservés au professeur. Saisissez le code du professeur une seule fois sur votre appareil.',
+    teacherCode: 'Code du professeur',
+    teacherTurnOn: 'Activer les outils du professeur',
+    teacherOn: 'Les outils du professeur sont activés sur cet appareil.',
+    teacherTurnOff: 'Désactiver',
+    teacherWrong: 'Ce n’est pas le code du professeur.',
   },
   de: {
     title: 'Einstellungen',
@@ -180,6 +204,14 @@ export const settingsText = defineMessages({
     lessonTabsHint:
       'Entferne die Haken bei Tabs, die du auf der Lektionsseite nicht brauchst. Einer bleibt immer.',
     openSettings: 'Einstellungen',
+    teacher: 'Lehrkraft',
+    teacherHint:
+      'Die Werkzeuge der Lehrkraft („Hausaufgaben aus dieser Lektion“) sind nur für die Lehrkraft. Gib den Code der Lehrkraft einmal auf deinem eigenen Gerät ein.',
+    teacherCode: 'Code der Lehrkraft',
+    teacherTurnOn: 'Werkzeuge der Lehrkraft einschalten',
+    teacherOn: 'Die Werkzeuge der Lehrkraft sind auf diesem Gerät eingeschaltet.',
+    teacherTurnOff: 'Ausschalten',
+    teacherWrong: 'Das ist nicht der Code der Lehrkraft.',
   },
   es: {
     title: 'Ajustes',
@@ -224,6 +256,14 @@ export const settingsText = defineMessages({
     lessonTabsHint:
       'Desmarca las pestañas que no necesitas en la página de una lección. Siempre queda una.',
     openSettings: 'Ajustes',
+    teacher: 'Profesor',
+    teacherHint:
+      'Las herramientas del profesor («Deberes a partir de esta lección») son solo para el profesor. Introduce el código del profesor una vez en tu propio dispositivo.',
+    teacherCode: 'Código del profesor',
+    teacherTurnOn: 'Activar las herramientas del profesor',
+    teacherOn: 'Las herramientas del profesor están activadas en este dispositivo.',
+    teacherTurnOff: 'Desactivar',
+    teacherWrong: 'Ese no es el código del profesor.',
   },
   pt: {
     title: 'Definições',
@@ -268,6 +308,14 @@ export const settingsText = defineMessages({
     lessonTabsHint:
       'Desmarque os separadores de que não precisa na página de uma lição. Fica sempre um.',
     openSettings: 'Definições',
+    teacher: 'Professor',
+    teacherHint:
+      'As ferramentas do professor («Trabalho de casa a partir desta lição») são só para o professor. Introduza o código do professor uma vez no seu próprio dispositivo.',
+    teacherCode: 'Código do professor',
+    teacherTurnOn: 'Ativar as ferramentas do professor',
+    teacherOn: 'As ferramentas do professor estão ativadas neste dispositivo.',
+    teacherTurnOff: 'Desativar',
+    teacherWrong: 'Esse não é o código do professor.',
   },
   it: {
     title: 'Impostazioni',
@@ -312,5 +360,13 @@ export const settingsText = defineMessages({
     lessonTabsHint:
       'Togli la spunta alle schede che non ti servono nella pagina di una lezione. Ne resta sempre una.',
     openSettings: 'Impostazioni',
+    teacher: 'Insegnante',
+    teacherHint:
+      'Gli strumenti dell’insegnante («Compiti da questa lezione») sono solo per l’insegnante. Inserisci il codice dell’insegnante una volta sul tuo dispositivo.',
+    teacherCode: 'Codice dell’insegnante',
+    teacherTurnOn: 'Attiva gli strumenti dell’insegnante',
+    teacherOn: 'Gli strumenti dell’insegnante sono attivi su questo dispositivo.',
+    teacherTurnOff: 'Disattiva',
+    teacherWrong: 'Questo non è il codice dell’insegnante.',
   },
 });
