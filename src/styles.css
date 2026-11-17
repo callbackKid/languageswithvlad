@@ -573,18 +573,18 @@ main {
 .sidebar-toggle .icon-button {
   font-size: 16px;
 }
-/* open, the « sits at the end of the first section's row instead of on a row of its own */
+/* open, the « sits where the closed menu's ☰ is, at the start of the first section's row */
 .sidebar-inner {
   position: relative;
 }
 .shell:not(.menu-closed) .sidebar-toggle {
   position: absolute;
-  top: 14px;
-  right: 12px;
+  top: 12px;
+  left: 12px;
   margin: 0;
 }
 .shell:not(.menu-closed) .section-link:first-child {
-  margin-right: 42px;
+  margin-left: 42px;
 }
 /* the current section's name is for the phone's closed menu */
 .sidebar-current {
@@ -822,7 +822,7 @@ main.page.wide {
     margin: 0;
   }
   .shell:not(.menu-closed) .section-link:first-child {
-    margin-right: 0;
+    margin-left: 0;
   }
   .sidebar-current {
     display: inline;
