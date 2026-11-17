@@ -46,6 +46,8 @@ export const tutorial = defineMessages({
       '<b>⚙️ Settings</b> on the far right: the document, the language of the app, the colour theme, the languages you learn and your level. Your picture, set there, shows on the far left.',
     'header.tip1':
       'A lesson in the document starts with a line like <ex>14.10.2026 1 Leçon</ex> (or <ex>Lesson</ex>, <ex>Lektion</ex>, <ex>Lección</ex>, <ex>Lição</ex>, <ex>Lezione</ex>). Everything under it, up to the next such line, belongs to that lesson.',
+    'header.tip2':
+      '<b>❓</b> at the top right keeps your questions for the next lesson (“why the subjonctif here?”). Write them whenever they come up; before the lesson, <pbtn>Add to the document</pbtn> puts them under the lesson, and lesson mode shows them so the lesson starts with them.',
     'header.mock': 'the top bar',
 
     'home.title': 'Home',
@@ -278,6 +280,8 @@ export const tutorial = defineMessages({
       '<b>⚙️ Настройки</b> справа: документ, язык приложения, цветовая тема, изучаемые языки и уровень. Ваша картинка, выбранная там, видна слева.',
     'header.tip1':
       'Урок в документе начинается со строки вроде <ex>14.10.2026 1 Leçon</ex> (или <ex>Lesson</ex>, <ex>Lektion</ex>, <ex>Lección</ex>, <ex>Lição</ex>, <ex>Lezione</ex>). Всё ниже неё, до следующей такой строки, относится к этому уроку.',
+    'header.tip2':
+      '<b>❓</b> справа наверху хранит вопросы к следующему уроку («почему здесь subjonctif?»). Записывайте их, когда появятся; перед уроком <pbtn>Добавить в документ</pbtn> помещает их под урок, а режим урока показывает их, чтобы урок начался с них.',
     'header.mock': 'верхняя панель',
 
     'home.title': 'Главная',
@@ -511,6 +515,8 @@ export const tutorial = defineMessages({
       '<b>⚙️ Réglages</b> tout à droite : le document, la langue de l’application, le thème, les langues apprises et votre niveau. Votre image, choisie là, s’affiche tout à gauche.',
     'header.tip1':
       'Une leçon commence dans le document par une ligne comme <ex>14.10.2026 1 Leçon</ex> (ou <ex>Lesson</ex>, <ex>Lektion</ex>, <ex>Lección</ex>, <ex>Lição</ex>, <ex>Lezione</ex>). Tout ce qui suit, jusqu’à la ligne de ce type suivante, appartient à cette leçon.',
+    'header.tip2':
+      '<b>❓</b> en haut à droite garde vos questions pour le prochain cours (« pourquoi le subjonctif ici ? »). Notez-les quand elles viennent ; avant le cours, <pbtn>Ajouter au document</pbtn> les place sous la leçon, et le mode cours les affiche pour commencer par elles.',
     'header.mock': 'la barre du haut',
 
     'home.title': 'Accueil',
@@ -751,6 +757,8 @@ export const tutorial = defineMessages({
       '<b>⚙️ Einstellungen</b> ganz rechts: das Dokument, die Sprache der App, das Farbschema, die Sprachen, die du lernst, und dein Niveau. Dein Bild, dort gewählt, steht ganz links.',
     'header.tip1':
       'Eine Lektion beginnt im Dokument mit einer Zeile wie <ex>14.10.2026 1 Lektion</ex> (oder <ex>Leçon</ex>, <ex>Lesson</ex>, <ex>Lección</ex>, <ex>Lição</ex>, <ex>Lezione</ex>). Alles darunter bis zur nächsten solchen Zeile gehört zu dieser Lektion.',
+    'header.tip2':
+      '<b>❓</b> oben rechts sammelt deine Fragen für die nächste Stunde („warum hier Subjonctif?“). Schreib sie auf, sobald sie auftauchen; vor der Stunde fügt <pbtn>Ins Dokument einfügen</pbtn> sie unter die Lektion ein, und der Unterrichtsmodus zeigt sie, damit die Stunde mit ihnen beginnt.',
     'header.mock': 'die obere Leiste',
 
     'home.title': 'Start',
@@ -986,6 +994,8 @@ export const tutorial = defineMessages({
       '<b>⚙️ Ajustes</b> a la derecha del todo: el documento, el idioma de la aplicación, el tema de color, los idiomas que aprendes y tu nivel. Tu imagen, elegida allí, aparece a la izquierda del todo.',
     'header.tip1':
       'Una lección empieza en el documento con una línea como <ex>14.10.2026 1 Lección</ex> (o <ex>Leçon</ex>, <ex>Lesson</ex>, <ex>Lektion</ex>, <ex>Lição</ex>, <ex>Lezione</ex>). Todo lo que hay debajo, hasta la siguiente línea así, pertenece a esa lección.',
+    'header.tip2':
+      '<b>❓</b> arriba a la derecha guarda tus preguntas para la próxima clase («¿por qué aquí subjonctif?»). Apúntalas cuando surjan; antes de la clase, <pbtn>Añadir al documento</pbtn> las pone debajo de la lección, y el modo clase las muestra para empezar por ellas.',
     'header.mock': 'la barra superior',
 
     'home.title': 'Inicio',
@@ -1224,6 +1234,8 @@ export const tutorial = defineMessages({
       '<b>⚙️ Definições</b> na ponta direita: o documento, o idioma da aplicação, o tema de cores, as línguas que aprende e o seu nível. A sua imagem, escolhida lá, aparece na ponta esquerda.',
     'header.tip1':
       'Uma lição começa no documento com uma linha como <ex>14.10.2026 1 Lição</ex> (ou <ex>Leçon</ex>, <ex>Lesson</ex>, <ex>Lektion</ex>, <ex>Lección</ex>, <ex>Lezione</ex>). Tudo o que está por baixo, até à próxima linha assim, pertence a essa lição.',
+    'header.tip2':
+      '<b>❓</b> no canto superior direito guarda as suas perguntas para a próxima aula («porquê subjonctif aqui?»). Anote-as quando surgirem; antes da aula, <pbtn>Acrescentar ao documento</pbtn> coloca-as por baixo da lição, e o modo aula mostra-as para começar por elas.',
     'header.mock': 'a barra superior',
 
     'home.title': 'Início',
@@ -1462,6 +1474,8 @@ export const tutorial = defineMessages({
       '<b>⚙️ Impostazioni</b> all’estrema destra: il documento, la lingua dell’app, il tema, le lingue che studi e il tuo livello. La tua immagine, scelta lì, compare all’estrema sinistra.',
     'header.tip1':
       'Una lezione inizia nel documento con una riga come <ex>14.10.2026 1 Lezione</ex> (oppure <ex>Leçon</ex>, <ex>Lesson</ex>, <ex>Lektion</ex>, <ex>Lección</ex>, <ex>Lição</ex>). Tutto ciò che c’è sotto, fino alla riga successiva di questo tipo, appartiene a quella lezione.',
+    'header.tip2':
+      '<b>❓</b> in alto a destra conserva le tue domande per la prossima lezione («perché qui il subjonctif?»). Scrivile quando ti vengono; prima della lezione, <pbtn>Aggiungi al documento</pbtn> le mette sotto la lezione, e la modalità lezione le mostra per cominciare da lì.',
     'header.mock': 'la barra in alto',
 
     'home.title': 'Home',

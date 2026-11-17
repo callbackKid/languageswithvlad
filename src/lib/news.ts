@@ -22,6 +22,18 @@ export const NEWS: NewsDay[] = [
       {
         kind: 'new',
         text: {
+          en: 'Questions for the next lesson: ❓ at the top right keeps them as they come up. Add them to the document before the lesson, and lesson mode starts with them.',
+          ru: 'Вопросы к следующему уроку: ❓ справа наверху хранит их, как только они появились. Добавьте их в документ перед уроком, и режим урока начнётся с них.',
+          fr: 'Questions pour le prochain cours : ❓ en haut à droite les garde dès qu’elles viennent. Ajoutez-les au document avant le cours, et le mode cours commence par elles.',
+          de: 'Fragen für die nächste Stunde: ❓ oben rechts sammelt sie, sobald sie auftauchen. Füge sie vor der Stunde ins Dokument ein, und der Unterrichtsmodus beginnt mit ihnen.',
+          es: 'Preguntas para la próxima clase: ❓ arriba a la derecha las guarda en cuanto surgen. Añádelas al documento antes de la clase, y el modo clase empieza por ellas.',
+          pt: 'Perguntas para a próxima aula: ❓ no canto superior direito guarda-as assim que surgem. Acrescente-as ao documento antes da aula, e o modo aula começa por elas.',
+          it: 'Domande per la prossima lezione: ❓ in alto a destra le conserva appena ti vengono. Aggiungile al documento prima della lezione, e la modalità lezione comincia da lì.',
+        },
+      },
+      {
+        kind: 'new',
+        text: {
           en: 'Quiz game in lesson mode: 10 questions on the lesson’s words against the clock, more points for a fast answer, and a records table to beat.',
           ru: 'Игра-квиз в режиме урока: 10 вопросов по словам урока на время, за быстрый ответ больше очков, и таблица рекордов, которые можно побить.',
           fr: 'Quiz chrono dans le mode cours : 10 questions sur les mots de la leçon contre la montre, plus de points pour une réponse rapide, et un tableau des records à battre.',

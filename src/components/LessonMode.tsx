@@ -20,6 +20,7 @@ import { previousLesson, warmUpRound } from '../lib/warmUp';
 import AddToDoc, { type DocTarget } from './AddToDoc';
 import LessonBoard from './LessonBoard';
 import PageHead from './PageHead';
+import { QuestionsCard } from './Questions';
 import QuizGame, {
   GAME_QUESTIONS,
   GAME_SECONDS,
@@ -448,6 +449,7 @@ export default function LessonMode({
             />
           )}
           {!activity && newest && <GameCard docId={docId} onStart={() => setActivity('game')} />}
+          <QuestionsCard docId={docId} lessons={lessons} />
           <WrittenHomework lesson={earlier} docId={docId} />
           <LessonWords bank={bank} lesson={lessons[lessons.length - 1] ?? null} />
         </div>

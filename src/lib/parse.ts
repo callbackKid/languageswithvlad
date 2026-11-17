@@ -126,13 +126,14 @@ const CYRILLIC = /[А-Яа-яЁё]/;
 // a line that starts with an emoji, or with spaces: still part of a report (src/lib/report.ts)
 const REPORT_LINE = /^(?:\s|\p{Extended_Pictographic})/u;
 
-/** A lesson's text without the student's report: from a line starting with 📝 up to the first
-    line that doesn't start with an emoji or spaces. Its sentences aren't vocabulary. */
+/** A lesson's text without the student's report and questions: from a line starting with 📝
+    or ❓ up to the first line that doesn't start with an emoji or spaces. Their sentences
+    aren't vocabulary. */
 export function withoutReport(body: string): string {
   const kept: string[] = [];
   let inReport = false;
   for (const line of body.split('\n')) {
-    if (line.startsWith('📝')) inReport = true;
+    if (line.startsWith('📝') || line.startsWith('❓')) inReport = true;
     else if (inReport && !(line.trim() && REPORT_LINE.test(line))) inReport = false;
     if (!inReport) kept.push(line);
   }
