@@ -17,6 +17,10 @@ export const hash = (text: string): string => {
 };
 export const asText = (value: unknown): string => (typeof value === 'string' ? value.trim() : '');
 
+/** Keeps "levé(e)(s)" on one line: browsers may break before "(", so a word joiner (U+2060) glues it
+    to the letter before. For display only; grading and speech use the plain form. */
+export const keepBracketsTogether = (text: string): string => text.replace(/(\S)\(/g, '$1⁠(');
+
 /** Saves text as a file in the browser's downloads. */
 export function downloadText(filename: string, text: string, type = 'text/plain') {
   const url = URL.createObjectURL(new Blob([text], { type: type + ';charset=utf-8' }));

@@ -12,7 +12,7 @@ import { recordForm } from '../lib/progress';
 import { type FormQuestion, verbForms } from '../lib/quiz';
 import { save } from '../lib/storage';
 import { type Conjugation, type Form, type Tense, TENSES, type VerbRef } from '../lib/types';
-import { shuffle } from '../lib/util';
+import { keepBracketsTogether, shuffle } from '../lib/util';
 import ExerciseHead from './ExerciseHead';
 import Speak from './Speak';
 import WaitingFact from './WaitingFact';
@@ -244,7 +244,10 @@ export default function VerbsTab({
                     <tr key={index}>
                       <td className="p">{row.p}</td>
                       <td className="f">
-                        {row.f} <Speak text={`${row.p} ${row.f}`} />
+                        <div className="conj-form">
+                          <span>{keepBracketsTogether(row.f)}</span>
+                          <Speak text={`${row.p} ${row.f}`} />
+                        </div>
                       </td>
                     </tr>
                   ))}
@@ -341,7 +344,7 @@ function Drill({
                     }}
                   />
                   {(result === 'bad' || result === 'empty') && (
-                    <div className="fix bad">{row.f}</div>
+                    <div className="fix bad">{keepBracketsTogether(row.f)}</div>
                   )}
                   {result === 'accent' && (
                     <div className="fix accent">{t('mindAccents', { form: row.f })}</div>

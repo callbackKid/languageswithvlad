@@ -101,7 +101,7 @@ export default function BookImport({
 
   return (
     <section className="book-import">
-      <h3>{t('importBook')}</h3>
+      <h2>{t('importBook')}</h2>
       {!docWriter ? (
         <p className="hint">{commonText.t('docWriterMissing')}</p>
       ) : (

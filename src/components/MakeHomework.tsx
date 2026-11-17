@@ -71,7 +71,7 @@ export default function MakeHomework({
 
   return (
     <section className="make-homework">
-      <h3>{t('makeTitle')}</h3>
+      <h2>{t('makeTitle')}</h2>
       {!docWriter ? (
         <p className="hint">{commonText.t('docWriterMissing')}</p>
       ) : (

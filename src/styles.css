@@ -11,12 +11,16 @@
   /* strongest text: headings, selected items */
   --ink: #37352f;
   --text: #37352f;
-  --muted: #787774;
+  /* Colours that carry text are a little darker than Notion's, so text reaches the WCAG AA
+     contrast of 4.5:1 (the check-a11y skill measures it). */
+  --muted: #6b6a67;
   /* Notion's blue: main buttons, selected verbs and chips, progress bars */
-  --accent: #2383e2;
-  --accent-hover: #0077d4;
+  --accent: #1b74ca;
+  --accent-hover: #155fa8;
+  /* blue text and links: the fill colour is too light for text on the light backgrounds */
+  --accent-text: #185ea3;
   --on-accent: #ffffff;
-  --ok: #448361;
+  --ok: #3d7657;
   --ok-soft: #edf3ec;
   --bad: #d44c47;
   --bad-soft: #fdebec;
@@ -44,10 +48,12 @@
   --ink: #e6e6e5;
   --text: #d4d4d4;
   --muted: #9b9b9b;
-  --accent: #2383e2;
-  --accent-hover: #3b91e6;
+  --accent: #1b74ca;
+  --accent-hover: #1868b6;
+  /* lighter than the fill: blue text on the dark backgrounds */
+  --accent-text: #529fea;
   --on-accent: #ffffff;
-  --ok: #529e72;
+  --ok: #6bb58a;
   --ok-soft: #243d30;
   --bad: #df5452;
   --bad-soft: #522e2a;
@@ -366,7 +372,7 @@ a.btn {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--accent);
+  color: var(--accent-text);
 }
 
 .fact-phrase {
@@ -493,7 +499,7 @@ a.btn {
 }
 .icon-button:hover {
   border-color: var(--accent);
-  color: var(--accent);
+  color: var(--accent-text);
 }
 .icon-button[disabled] {
   opacity: 0.5;
@@ -516,7 +522,7 @@ a.btn {
 }
 .top-actions a[aria-current='page'] {
   border-color: var(--accent);
-  color: var(--accent);
+  color: var(--accent-text);
 }
 
 main {
@@ -568,7 +574,7 @@ main {
 }
 .sidebar-toggle:hover .icon-button {
   border-color: var(--accent);
-  color: var(--accent);
+  color: var(--accent-text);
 }
 .sidebar-toggle .icon-button {
   font-size: 16px;
@@ -644,7 +650,7 @@ main {
   padding: 0 6px;
   border-radius: 10px;
   background: color-mix(in srgb, var(--accent) 18%, transparent);
-  color: var(--accent);
+  color: var(--accent-text);
   font-size: 12px;
   font-weight: 600;
   text-align: center;
@@ -725,7 +731,7 @@ main.page.wide {
   font-size: 20px;
 }
 .next-lesson-widget .next-lesson b {
-  color: var(--accent);
+  color: var(--accent-text);
   font-weight: 700;
 }
 .next-lesson-widget.muted {
@@ -1187,12 +1193,12 @@ textarea.notes {
   padding-top: 18px;
   border-top: 1px solid var(--line);
 }
-.book-import h3,
+.book-import h2,
 .lesson-drawings h3 {
   margin: 16px 0 8px;
   font-size: 16px;
 }
-.book-import h3 {
+.book-import h2 {
   margin-top: 0;
 }
 textarea.notes.book-text {
@@ -1668,7 +1674,6 @@ pre.source {
 }
 .verb[aria-pressed='true'] .ru {
   color: var(--on-accent);
-  opacity: 0.8;
 }
 .verb:hover {
   border-color: var(--ink);
@@ -1718,6 +1723,11 @@ pre.source {
   color: var(--ink);
   font-weight: 600;
 }
+/* a tense the verb doesn't have, such as the impératif of pouvoir */
+.tense-tabs button[disabled] {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
 
 table.conj {
   border-collapse: collapse;
@@ -1737,6 +1747,12 @@ table.conj td.p {
 table.conj td.f {
   font-family: var(--serif);
   font-size: 19px;
+}
+/* the 🔈 button stays beside the form when a long form wraps, instead of on a line of its own */
+.conj-form {
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 table.conj input {
   width: 100%;
@@ -3074,7 +3090,7 @@ li .open-link {
 }
 .news-kind.new {
   background: color-mix(in srgb, var(--accent) 16%, transparent);
-  color: var(--accent);
+  color: var(--accent-text);
 }
 .news-kind.better {
   background: var(--ok-soft);
@@ -3400,7 +3416,7 @@ li .open-link {
   padding-top: 16px;
   border-top: 1px solid var(--line);
 }
-.make-homework h3 {
+.make-homework h2 {
   margin: 0 0 4px;
   font-size: 16px;
 }
@@ -3462,7 +3478,7 @@ li .open-link {
 }
 .game-records tr.current td {
   font-weight: 700;
-  color: var(--accent);
+  color: var(--accent-text);
 }
 
 /* questions for the next lesson: ❓ in the top bar, its dialog, and the card in lesson mode */
