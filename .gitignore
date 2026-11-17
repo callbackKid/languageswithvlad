@@ -5,3 +5,6 @@ node_modules/
 dist/
 
 *.tsbuildinfo
+
+# local notes, kept out of git
+TODO*.md
