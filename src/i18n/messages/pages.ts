@@ -27,6 +27,11 @@ export const pages = defineMessages({
     },
     myWordsEmpty:
       'Your list is empty. Press ☆ next to a word in any lesson to add it here. Words you get wrong in exercises are added automatically.',
+    myWordsHidden: {
+      one: '{count} starred word is hidden here. To see it, tick {languages} under “Languages I learn, and my level” in <link>Settings</link>.',
+      other:
+        '{count} starred words are hidden here. To see them, tick {languages} under “Languages I learn, and my level” in <link>Settings</link>.',
+    },
     // Mistakes
     mistakesTitle: 'Mistakes',
     mistakesIntro: 'What you get wrong most often. Practise these until they stop showing up.',
@@ -110,6 +115,13 @@ export const pages = defineMessages({
     },
     myWordsEmpty:
       'Список пуст. Нажмите ☆ рядом со словом в любом уроке, чтобы добавить его сюда. Слова, в которых вы ошиблись в упражнениях, добавляются сами.',
+    myWordsHidden: {
+      one: 'Здесь скрыто {count} избранное слово. Чтобы его увидеть, в <link>Настройках</link> в разделе «Языки, которые я учу, и мой уровень» отметьте: {languages}.',
+      few: 'Здесь скрыты {count} избранных слова. Чтобы их увидеть, в <link>Настройках</link> в разделе «Языки, которые я учу, и мой уровень» отметьте: {languages}.',
+      many: 'Здесь скрыто {count} избранных слов. Чтобы их увидеть, в <link>Настройках</link> в разделе «Языки, которые я учу, и мой уровень» отметьте: {languages}.',
+      other:
+        'Здесь скрыто {count} избранного слова. Чтобы их увидеть, в <link>Настройках</link> в разделе «Языки, которые я учу, и мой уровень» отметьте: {languages}.',
+    },
     mistakesTitle: 'Ошибки',
     mistakesIntro: 'То, в чём вы ошибаетесь чаще всего. Тренируйте, пока ошибки не исчезнут.',
     mistakesEmpty:
@@ -186,6 +198,11 @@ export const pages = defineMessages({
     },
     myWordsEmpty:
       'Votre liste est vide. Appuyez sur ☆ à côté d’un mot dans une leçon pour l’ajouter ici. Les mots ratés dans les exercices s’ajoutent automatiquement.',
+    myWordsHidden: {
+      one: '{count} mot favori est masqué ici. Pour le voir, cochez {languages} sous « Les langues que j’apprends, et mon niveau » dans les <link>Réglages</link>.',
+      other:
+        '{count} mots favoris sont masqués ici. Pour les voir, cochez {languages} sous « Les langues que j’apprends, et mon niveau » dans les <link>Réglages</link>.',
+    },
     mistakesTitle: 'Erreurs',
     mistakesIntro:
       'Ce que vous ratez le plus souvent. Entraînez-vous jusqu’à ce que ça ne revienne plus.',
@@ -259,6 +276,11 @@ export const pages = defineMessages({
     },
     myWordsEmpty:
       'Deine Liste ist leer. Tippe in einer Lektion auf ☆ neben einem Wort, um es hier hinzuzufügen. Wörter, die du in Übungen falsch hast, kommen automatisch dazu.',
+    myWordsHidden: {
+      one: '{count} Lieblingswort ist hier ausgeblendet. Um es zu sehen, hake in den <link>Einstellungen</link> unter „Sprachen, die ich lerne, und mein Niveau“ {languages} an.',
+      other:
+        '{count} Lieblingswörter sind hier ausgeblendet. Um sie zu sehen, hake in den <link>Einstellungen</link> unter „Sprachen, die ich lerne, und mein Niveau“ {languages} an.',
+    },
     mistakesTitle: 'Fehler',
     mistakesIntro: 'Was du am häufigsten falsch machst. Übe das, bis es nicht mehr auftaucht.',
     mistakesEmpty:
@@ -332,6 +354,11 @@ export const pages = defineMessages({
     },
     myWordsEmpty:
       'Tu lista está vacía. Pulsa ☆ junto a una palabra en cualquier lección para añadirla. Las palabras que fallas en los ejercicios se añaden solas.',
+    myWordsHidden: {
+      one: '{count} palabra favorita está oculta aquí. Para verla, marca {languages} en «Idiomas que aprendo y mi nivel», en <link>Ajustes</link>.',
+      other:
+        '{count} palabras favoritas están ocultas aquí. Para verlas, marca {languages} en «Idiomas que aprendo y mi nivel», en <link>Ajustes</link>.',
+    },
     mistakesTitle: 'Errores',
     mistakesIntro: 'Lo que más fallas. Practícalo hasta que deje de aparecer.',
     mistakesEmpty:
@@ -404,6 +431,11 @@ export const pages = defineMessages({
     },
     myWordsEmpty:
       'A sua lista está vazia. Carregue em ☆ ao lado de uma palavra em qualquer lição para a acrescentar. As palavras que erra nos exercícios entram automaticamente.',
+    myWordsHidden: {
+      one: '{count} palavra favorita está oculta aqui. Para a ver, marque {languages} em «Línguas que aprendo e o meu nível», nas <link>Definições</link>.',
+      other:
+        '{count} palavras favoritas estão ocultas aqui. Para as ver, marque {languages} em «Línguas que aprendo e o meu nível», nas <link>Definições</link>.',
+    },
     mistakesTitle: 'Erros',
     mistakesIntro: 'O que erra mais vezes. Pratique até deixar de aparecer.',
     mistakesEmpty:
@@ -477,6 +509,11 @@ export const pages = defineMessages({
     },
     myWordsEmpty:
       'La tua lista è vuota. Premi ☆ accanto a una parola in qualsiasi lezione per aggiungerla. Le parole che sbagli negli esercizi si aggiungono da sole.',
+    myWordsHidden: {
+      one: '{count} parola preferita è nascosta qui. Per vederla, spunta {languages} in «Lingue che studio e il mio livello» nelle <link>Impostazioni</link>.',
+      other:
+        '{count} parole preferite sono nascoste qui. Per vederle, spunta {languages} in «Lingue che studio e il mio livello» nelle <link>Impostazioni</link>.',
+    },
     mistakesTitle: 'Errori',
     mistakesIntro: 'Quello che sbagli più spesso. Esercitati finché non smette di comparire.',
     mistakesEmpty:

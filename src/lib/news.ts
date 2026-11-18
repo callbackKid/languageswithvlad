@@ -19,6 +19,23 @@ export interface NewsDay {
 
 export const NEWS: NewsDay[] = [
   {
+    date: '2026-11-19',
+    items: [
+      {
+        kind: 'fixed',
+        text: {
+          en: 'Favourite words no longer looks empty when your starred words are in a language not ticked in Settings: it says how many are hidden and which language to tick to see them.',
+          ru: '«Избранные слова» больше не выглядят пустыми, если слова со звёздочкой — на языке, который не отмечен в Настройках: страница пишет, сколько слов скрыто и какой язык отметить, чтобы их увидеть.',
+          fr: 'La page Mots favoris ne paraît plus vide quand vos mots marqués d’une ★ sont dans une langue non cochée dans les Réglages : elle indique combien sont masqués et quelle langue cocher pour les voir.',
+          de: 'Die Seite Lieblingswörter sieht nicht mehr leer aus, wenn deine Wörter mit ★ in einer Sprache sind, die in den Einstellungen nicht angehakt ist: Sie zeigt, wie viele ausgeblendet sind und welche Sprache du anhaken musst, um sie zu sehen.',
+          es: 'La página Palabras favoritas ya no parece vacía cuando tus palabras con ★ están en un idioma no marcado en Ajustes: indica cuántas están ocultas y qué idioma marcar para verlas.',
+          pt: 'A página Palavras favoritas já não parece vazia quando as suas palavras com ★ estão numa língua não marcada nas Definições: indica quantas estão ocultas e que língua marcar para as ver.',
+          it: 'La pagina Parole preferite non sembra più vuota quando le tue parole con la ★ sono in una lingua non spuntata nelle Impostazioni: indica quante sono nascoste e quale lingua spuntare per vederle.',
+        },
+      },
+    ],
+  },
+  {
     date: '2026-11-18',
     items: [
       {
