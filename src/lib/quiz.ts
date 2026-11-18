@@ -2,7 +2,8 @@ import { readConjugation, verbLanguageOf } from './bank';
 import { negate } from './negation';
 import { formKey, isLearned, type Progress, wordKey } from './progress';
 import { canSpeak } from './speech';
-import { type Conjugation, type Tense, TENSES_BY_LANGUAGE, type VerbRef, type Word } from './types';
+import { knownTenses } from './tenses';
+import { type Conjugation, type Tense, type VerbRef, type Word } from './types';
 import { shuffle } from './util';
 
 export interface FormQuestion {
@@ -63,11 +64,12 @@ export function pickWords(words: Word[], progress: Progress, count: number): Wor
   );
 }
 
-/** Every form of a verb; French verbs also in the negative (negate knows French only). */
+/** Every form of a verb in the tenses the student has learned (Settings, or their level); French
+    verbs also in the negative (negate knows French only). */
 export function verbForms(conjugation: Conjugation): FormQuestion[] {
   const language = conjugation.language ?? 'fr';
   const all: FormQuestion[] = [];
-  for (const tense of TENSES_BY_LANGUAGE[language])
+  for (const tense of knownTenses(language))
     for (const form of conjugation.tenses[tense] || []) {
       all.push({ inf: conjugation.inf, t: tense, p: form.p, f: form.f });
       if (language === 'fr')

@@ -3267,6 +3267,30 @@ li .open-link {
   gap: 6px;
   cursor: pointer;
 }
+.settings-tenses {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+.settings-tenses legend {
+  padding: 0;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+.settings-tenses ul {
+  list-style: none;
+  margin: 0 0 4px;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+}
+.settings-tenses label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
 .settings-languages select {
   padding: 4px 6px;
   border: 1px solid var(--line);

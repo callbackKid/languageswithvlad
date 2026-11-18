@@ -2,7 +2,14 @@ import { useSyncExternalStore } from 'react';
 
 import type { Section } from './sections';
 import { load, save } from './storage';
-import { type Language, LANGUAGES } from './types';
+import {
+  type Language,
+  LANGUAGES,
+  type Tense,
+  TENSES_BY_LANGUAGE,
+  VERB_LANGUAGES,
+  type VerbLanguage,
+} from './types';
 
 /* The student's settings, saved in this browser. The interface language has its own store
    (src/i18n/core.tsx); everything else lives here. */
@@ -46,6 +53,8 @@ export interface Settings {
   hidden: Section[];
   /** tabs taken off the lesson page; at least one always stays */
   hiddenTabs: LessonTab[];
+  /** the tenses quizzes ask, ticked by hand; a language missing here follows its level */
+  tenses: Partial<Record<VerbLanguage, Tense[]>>;
 }
 
 const DEFAULTS: Settings = {
@@ -58,6 +67,7 @@ const DEFAULTS: Settings = {
   speechSpeed: 'normal',
   hidden: [],
   hiddenTabs: [],
+  tenses: {},
 };
 const KEY = 'settings';
 
@@ -88,7 +98,21 @@ function sanitize(raw: Partial<Settings> | null): Settings {
     speechSpeed: SPEECH_SPEEDS.includes(value.speechSpeed) ? value.speechSpeed : 'normal',
     hidden: Array.isArray(value.hidden) ? value.hidden : [],
     hiddenTabs: hiddenTabs.length < LESSON_TABS.length ? hiddenTabs : [],
+    tenses: sanitizeTenses(value.tenses),
   };
+}
+
+/** Only known tenses of each language, and never an empty list (that language then follows its level). */
+function sanitizeTenses(raw: unknown): Settings['tenses'] {
+  const stored: Partial<Record<string, unknown>> = raw && typeof raw === 'object' ? raw : {};
+  const tenses: Settings['tenses'] = {};
+  for (const language of VERB_LANGUAGES) {
+    const list = stored[language];
+    const all: readonly Tense[] = TENSES_BY_LANGUAGE[language];
+    const kept = Array.isArray(list) ? all.filter((tense) => list.includes(tense)) : [];
+    if (kept.length) tenses[language] = kept;
+  }
+  return tenses;
 }
 
 let current = sanitize(load<Partial<Settings>>(KEY));

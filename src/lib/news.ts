@@ -23,6 +23,18 @@ export const NEWS: NewsDay[] = [
     items: [
       {
         kind: 'new',
+        text: {
+          en: 'Quizzes ask verb forms only in the tenses you have learned: by default those of your level (at A0 only the present), or the ones you tick in Settings → Tenses in quizzes.',
+          ru: 'Тесты спрашивают формы глаголов только во временах, которые вы уже прошли: по умолчанию — во временах вашего уровня (на A0 только настоящее), или в тех, что вы отметите в «Настройках» → «Времена в тестах».',
+          fr: 'Les quiz ne demandent les formes verbales qu’aux temps que vous avez appris : par défaut ceux de votre niveau (en A0, seulement le présent), ou ceux que vous cochez dans Réglages → Temps dans les quiz.',
+          de: 'Im Quiz werden Verbformen nur in den Zeitformen abgefragt, die du gelernt hast: standardmäßig in denen deines Niveaus (bei A0 nur im Präsens) oder in denen, die du unter Einstellungen → Zeitformen im Quiz anhakst.',
+          es: 'Los tests solo preguntan formas verbales en los tiempos que has aprendido: por defecto, los de tu nivel (en A0, solo el presente), o los que marques en Ajustes → Tiempos en los tests.',
+          pt: 'Os testes só pedem formas verbais nos tempos que já aprendeu: por predefinição, os do seu nível (no A0, só o presente), ou os que marcar em Definições → Tempos nos testes.',
+          it: 'I quiz chiedono le forme verbali solo nei tempi che hai imparato: in automatico quelli del tuo livello (all’A0 solo il presente), oppure quelli che spunti in Impostazioni → Tempi nei quiz.',
+        },
+      },
+      {
+        kind: 'new',
         audience: 'teacher',
         text: {
           en: 'Make homework with Claude: choose how many sentences to translate (2 to 8) and the level before Claude writes the homework.',

@@ -20,7 +20,15 @@ import {
   useSettings,
 } from '../lib/settings';
 import { canSpeak, speak } from '../lib/speech';
-import { type Language, LANGUAGES } from '../lib/types';
+import { knownTenses, tensesForLevel } from '../lib/tenses';
+import {
+  type Language,
+  LANGUAGES,
+  type Tense,
+  TENSES_BY_LANGUAGE,
+  VERB_LANGUAGES,
+  type VerbLanguage,
+} from '../lib/types';
 import PageHead from './PageHead';
 import TeacherCard from './TeacherCard';
 
@@ -96,6 +104,29 @@ export default function Settings({ lessonDocument }: { lessonDocument: DocumentI
       setPictureError(true);
     }
   }
+  const toggleTense = (language: VerbLanguage, tense: Tense) => {
+    const known = knownTenses(language, settings);
+    const all: readonly Tense[] = TENSES_BY_LANGUAGE[language];
+    const ticked = all.filter((name) =>
+      name === tense ? !known.includes(name) : known.includes(name)
+    );
+    if (!ticked.length) return;
+    // the same as the level's: follow the level again, so a new level brings its tenses
+    const sameAsLevel =
+      ticked.join('|') === tensesForLevel(language, settings.levels[language]).join('|');
+    updateSettings({
+      tenses: sameAsLevel ? withoutTenses(language) : { ...settings.tenses, [language]: ticked },
+    });
+  };
+  // the tenses ticked by hand, without one language's: that language follows its level
+  const withoutTenses = (language: VerbLanguage) => {
+    const others = { ...settings.tenses };
+    delete others[language];
+    return others;
+  };
+  const followLevel = (language: VerbLanguage) =>
+    updateSettings({ tenses: withoutTenses(language) });
+  const verbLanguages = VERB_LANGUAGES.filter((language) => settings.studying.includes(language));
   const toggleLanguage = (language: Language) => {
     const studying = settings.studying.includes(language)
       ? settings.studying.filter((studied) => studied !== language)
@@ -268,6 +299,48 @@ export default function Settings({ lessonDocument }: { lessonDocument: DocumentI
           <small className="hint">{t('studyingHint')}</small>
           <small className="hint">{t('levelsHint')}</small>
         </div>
+        {verbLanguages.length > 0 && (
+          <div className="settings-row column">
+            <span className="settings-label">{t('quizTenses')}</span>
+            {verbLanguages.map((language) => {
+              const known = knownTenses(language, settings);
+              return (
+                <fieldset key={language} className="settings-tenses">
+                  <legend>{names.t(`name.${language}`)}</legend>
+                  <ul>
+                    {TENSES_BY_LANGUAGE[language].map((tense: Tense) => {
+                      const ticked = known.includes(tense);
+                      const lastOne = ticked && known.length === 1;
+                      return (
+                        <li key={tense}>
+                          <label data-tooltip={lastOne ? t('atLeastOneTense') : undefined}>
+                            <input
+                              type="checkbox"
+                              checked={ticked}
+                              disabled={lastOne}
+                              onChange={() => toggleTense(language, tense)}
+                            />
+                            <span lang={language}>{tense}</span>
+                          </label>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                  {settings.tenses[language] && (
+                    <button
+                      type="button"
+                      className="btn ghost flush"
+                      onClick={() => followLevel(language)}
+                    >
+                      {t('tensesByLevel', { level: settings.levels[language] })}
+                    </button>
+                  )}
+                </fieldset>
+              );
+            })}
+            <small className="hint">{t('quizTensesHint')}</small>
+          </div>
+        )}
         <div className="settings-row">
           <span className="settings-label">{t('dailyGoal')}</span>
           <div className="seg" role="group" aria-label={t('dailyGoal')}>

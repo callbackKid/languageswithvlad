@@ -29,6 +29,11 @@ export const settingsText = defineMessages({
     studyingHint:
       'Home, Downloaded lessons, Favourite words, Mistakes, Stats and the discussion questions show only these languages. Lessons in other languages stay in Lesson history.',
     atLeastOne: 'Keep at least one language.',
+    quizTenses: 'Tenses in quizzes',
+    quizTensesHint:
+      'The quick quiz and Home’s random exercises ask verb forms only in these tenses. They follow your level until you tick them yourself; the Verbs tab still shows every tense.',
+    atLeastOneTense: 'Keep at least one tense.',
+    tensesByLevel: 'Use the tenses of {level} again',
     level: 'Level',
     levelsHint:
       'A0 from scratch · A1–A2 basic · B1–B2 independent · C1–C2 advanced. The level is the default for discussion questions and for the sentences in Fill the gap.',
@@ -79,6 +84,11 @@ export const settingsText = defineMessages({
     studyingHint:
       'Главная, «Загруженные уроки», «Избранные слова», «Ошибки», «Статистика» и «Вопрос для обсуждения» показывают только эти языки. Уроки на других языках остаются в «Истории уроков».',
     atLeastOne: 'Оставьте хотя бы один язык.',
+    quizTenses: 'Времена в тестах',
+    quizTensesHint:
+      '«Быстрый тест» и «Случайные упражнения» на Главной спрашивают формы глаголов только в этих временах. Пока вы не отметите их сами, они подбираются по вашему уровню; на вкладке «Глаголы» по-прежнему видны все времена.',
+    atLeastOneTense: 'Оставьте хотя бы одно время.',
+    tensesByLevel: 'Вернуть времена уровня {level}',
     level: 'Уровень',
     levelsHint:
       'A0 — с нуля · A1–A2 — базовый · B1–B2 — средний · C1–C2 — продвинутый. Уровень подставляется по умолчанию в «Вопрос для обсуждения» и в предложения для «Вставь слово».',
@@ -136,6 +146,11 @@ export const settingsText = defineMessages({
     studyingHint:
       'Accueil, Leçons téléchargées, Mots favoris, Erreurs, Statistiques et les questions à discuter n’affichent que ces langues. Les leçons dans d’autres langues restent dans Historique des leçons.',
     atLeastOne: 'Gardez au moins une langue.',
+    quizTenses: 'Temps dans les quiz',
+    quizTensesHint:
+      'Le quiz rapide et les exercices au hasard de l’Accueil ne demandent les formes verbales qu’à ces temps. Tant que vous ne les cochez pas vous-même, ils suivent votre niveau ; l’onglet Verbes montre toujours tous les temps.',
+    atLeastOneTense: 'Gardez au moins un temps.',
+    tensesByLevel: 'Revenir aux temps du niveau {level}',
     level: 'Niveau',
     levelsHint:
       'A0 débutant complet · A1–A2 élémentaire · B1–B2 indépendant · C1–C2 avancé. Le niveau est choisi par défaut pour les questions à discuter et pour les phrases du Texte à trous.',
@@ -188,6 +203,11 @@ export const settingsText = defineMessages({
     studyingHint:
       'Start, Geladene Lektionen, Lieblingswörter, Fehler, Statistik und die Diskussionsfragen zeigen nur diese Sprachen. Lektionen in anderen Sprachen bleiben im Lektionsverlauf.',
     atLeastOne: 'Behalte mindestens eine Sprache.',
+    quizTenses: 'Zeitformen im Quiz',
+    quizTensesHint:
+      'Das Schnellquiz und die gemischten Übungen auf der Startseite fragen Verbformen nur in diesen Zeitformen ab. Bis du selbst welche anhakst, richtet sich die Auswahl nach deinem Niveau; der Tab Verben zeigt weiterhin alle Zeitformen.',
+    atLeastOneTense: 'Behalte mindestens eine Zeitform.',
+    tensesByLevel: 'Zurück zu den Zeitformen von {level}',
     level: 'Niveau',
     levelsHint:
       'A0 ohne Vorkenntnisse · A1–A2 Grundstufe · B1–B2 Mittelstufe · C1–C2 fortgeschritten. Das Niveau ist der Standard für Diskussionsfragen und für die Sätze im Lückentext.',
@@ -240,6 +260,11 @@ export const settingsText = defineMessages({
     studyingHint:
       'Inicio, Lecciones descargadas, Palabras favoritas, Errores, Estadísticas y las preguntas para debatir muestran solo estos idiomas. Las lecciones en otros idiomas siguen en Historial de lecciones.',
     atLeastOne: 'Deja al menos un idioma.',
+    quizTenses: 'Tiempos en los tests',
+    quizTensesHint:
+      'El test rápido y los ejercicios al azar de Inicio solo preguntan formas verbales en estos tiempos. Hasta que los marques tú, siguen tu nivel; la pestaña Verbos sigue mostrando todos los tiempos.',
+    atLeastOneTense: 'Deja al menos un tiempo.',
+    tensesByLevel: 'Volver a los tiempos de {level}',
     level: 'Nivel',
     levelsHint:
       'A0 desde cero · A1–A2 básico · B1–B2 intermedio · C1–C2 avanzado. El nivel se usa por defecto en las preguntas para debatir y en las frases de Rellena el hueco.',
@@ -292,6 +317,11 @@ export const settingsText = defineMessages({
     studyingHint:
       'Início, Lições descarregadas, Palavras favoritas, Erros, Estatísticas e as perguntas para debate mostram só estas línguas. As lições noutras línguas ficam no Histórico de lições.',
     atLeastOne: 'Mantenha pelo menos uma língua.',
+    quizTenses: 'Tempos nos testes',
+    quizTensesHint:
+      'O teste rápido e os exercícios aleatórios do Início só pedem formas verbais nestes tempos. Até os marcar por si, seguem o seu nível; o separador Verbos continua a mostrar todos os tempos.',
+    atLeastOneTense: 'Mantenha pelo menos um tempo.',
+    tensesByLevel: 'Voltar aos tempos de {level}',
     level: 'Nível',
     levelsHint:
       'A0 do zero · A1–A2 básico · B1–B2 independente · C1–C2 avançado. O nível é usado por defeito nas perguntas para debate e nas frases de Preencha o espaço.',
@@ -344,6 +374,11 @@ export const settingsText = defineMessages({
     studyingHint:
       'Home, Lezioni scaricate, Parole preferite, Errori, Statistiche e le domande di discussione mostrano solo queste lingue. Le lezioni in altre lingue restano in Cronologia lezioni.',
     atLeastOne: 'Tieni almeno una lingua.',
+    quizTenses: 'Tempi nei quiz',
+    quizTensesHint:
+      'Il quiz veloce e gli esercizi casuali della Home chiedono le forme verbali solo in questi tempi. Finché non li spunti tu, seguono il tuo livello; la scheda Verbi mostra comunque tutti i tempi.',
+    atLeastOneTense: 'Tieni almeno un tempo.',
+    tensesByLevel: 'Torna ai tempi di {level}',
     level: 'Livello',
     levelsHint:
       'A0 da zero · A1–A2 base · B1–B2 intermedio · C1–C2 avanzato. Il livello è quello predefinito per le domande di discussione e per le frasi di Completa la frase.',
