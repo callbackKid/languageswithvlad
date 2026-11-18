@@ -5,7 +5,8 @@ import { common } from '../i18n/messages/common';
 import { FACTS } from '../lib/facts';
 import type { Language } from '../lib/types';
 
-const ROTATE_EVERY = 8000;
+// long enough to read a phrase and its note; "Next fact" is there for faster readers
+const ROTATE_EVERY = 20_000;
 // "Did you know?" in the language being learned
 const LABELS: Record<Language, string> = {
   fr: 'Le saviez-vous ?',
@@ -16,7 +17,7 @@ const LABELS: Record<Language, string> = {
   it: 'Lo sapevi?',
 };
 
-/** What's happening, plus a fact about the language that changes every few seconds, while the student waits for Claude. */
+/** What's happening, plus a fact about the language that changes every 20 seconds, while the student waits for Claude. */
 export default function WaitingFact({
   children,
   language = 'fr',
@@ -29,13 +30,14 @@ export default function WaitingFact({
   // a different first fact each time, so waiting twice doesn't show the same one
   const [position, setPosition] = useState(() => Math.floor(Math.random() * facts.length));
   const next = () => setPosition((previous) => (previous + 1) % facts.length);
+  // restarted with every fact, so one picked with "Next fact" also gets its full time
   useEffect(() => {
-    const timer = window.setInterval(
+    const timer = window.setTimeout(
       () => setPosition((previous) => (previous + 1) % facts.length),
       ROTATE_EVERY
     );
-    return () => window.clearInterval(timer);
-  }, [facts.length]);
+    return () => window.clearTimeout(timer);
+  }, [position, facts.length]);
   const fact = facts[position % facts.length];
 
   return (

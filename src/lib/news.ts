@@ -22,6 +22,18 @@ export const NEWS: NewsDay[] = [
     date: '2026-11-19',
     items: [
       {
+        kind: 'better',
+        text: {
+          en: 'While Claude is working, each “Did you know?” fact now stays 20 seconds instead of 8, long enough to read; “Next fact →” still shows another one at once.',
+          ru: 'Пока Claude работает, каждый интересный факт теперь держится 20 секунд вместо 8 — этого хватает, чтобы его прочитать; «Следующий факт →» по-прежнему сразу показывает другой.',
+          fr: 'Pendant que Claude travaille, chaque fait du « Le saviez-vous ? » reste maintenant 20 secondes au lieu de 8, le temps de le lire ; « Fait suivant → » en montre toujours un autre tout de suite.',
+          de: 'Während Claude arbeitet, bleibt jeder „Schon gewusst?“-Fakt jetzt 20 statt 8 Sekunden stehen, lang genug zum Lesen; „Nächster Fakt →“ zeigt weiterhin sofort einen anderen.',
+          es: 'Mientras Claude trabaja, cada dato curioso se queda ahora 20 segundos en vez de 8, tiempo suficiente para leerlo; «Siguiente dato →» sigue mostrando otro al instante.',
+          pt: 'Enquanto o Claude trabalha, cada curiosidade fica agora 20 segundos em vez de 8, o suficiente para a ler; «Curiosidade seguinte →» continua a mostrar outra de imediato.',
+          it: 'Mentre Claude lavora, ogni curiosità ora resta 20 secondi invece di 8, abbastanza per leggerla; «Curiosità successiva →» ne mostra comunque subito un’altra.',
+        },
+      },
+      {
         kind: 'fixed',
         text: {
           en: 'Favourite words no longer looks empty when your starred words are in a language not ticked in Settings: it says how many are hidden and which language to tick to see them.',
