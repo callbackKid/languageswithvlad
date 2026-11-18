@@ -22,6 +22,19 @@ export const NEWS: NewsDay[] = [
     date: '2026-11-19',
     items: [
       {
+        kind: 'new',
+        audience: 'teacher',
+        text: {
+          en: 'Make homework with Claude: choose how many sentences to translate (2 to 8) and the level before Claude writes the homework.',
+          ru: '«Составить с Claude»: теперь можно выбрать, сколько фраз дать на перевод (от 2 до 8) и уровень, прежде чем Claude напишет домашку.',
+          fr: 'Faire les devoirs avec Claude : choisissez le nombre de phrases à traduire (de 2 à 8) et le niveau avant que Claude rédige les devoirs.',
+          de: 'Mit Claude erstellen: Wähle vorher, wie viele Sätze zu übersetzen sind (2 bis 8) und auf welchem Niveau Claude die Hausaufgaben schreibt.',
+          es: 'Hacer los deberes con Claude: elige cuántas frases hay que traducir (de 2 a 8) y el nivel antes de que Claude escriba los deberes.',
+          pt: 'Fazer com o Claude: escolha quantas frases há para traduzir (de 2 a 8) e o nível antes de o Claude escrever o trabalho de casa.',
+          it: 'Crea con Claude: scegli quante frasi far tradurre (da 2 a 8) e il livello prima che Claude scriva i compiti.',
+        },
+      },
+      {
         kind: 'fixed',
         text: {
           en: 'With an interface language other than English, lesson topics are no longer shown in English: under a lesson’s title, in Stats and in A question for discussion.',

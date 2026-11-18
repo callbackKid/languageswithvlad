@@ -378,10 +378,13 @@ export function homeworkPrompt({
   body,
   keyWords,
   level,
+  sentences,
 }: {
   body: string;
   keyWords: string[];
   level: string;
+  /** how many sentences to translate */
+  sentences: number;
 }): string {
   return `Below are a teacher's notes from one language lesson for a Russian-speaking student at CEFR level ${level}. The lesson teaches ${LANGUAGE_LIST}, and the notes mix that language with Russian. Write homework for the next lesson from this lesson's words and grammar.${
     keyWords.length
@@ -391,7 +394,7 @@ export function homeworkPrompt({
 
 Reply with only a JSON object: {"language": ${LANGUAGE_CODES}, "translate": [string], "writing": string, "verbs": [string], "tense": string}.
 - language: the language the lesson teaches: ${LANGUAGE_KEY}.
-- translate: 3 or 4 short Russian sentences for the student to translate into that language, each using the lesson's words (key words first) and its grammar, at the student's level. No semicolons.
+- translate: exactly ${sentences} short Russian sentences for the student to translate into that language, each using the lesson's words (key words first) and its grammar, at the student's level. No semicolons.
 - writing: one short writing task in the lesson's language, starting with its verb for "write" (écrire, write, schreiben, escribir, escrever, scrivere), that practises the lesson's grammar or topic and says how much to write ("écrire 5 phrases au passé composé sur votre week-end"). No semicolons.
 - verbs: for a lesson in any language but English, 2 or 3 verbs of the lesson in the infinitive to conjugate, the ones it teaches or uses most; [] for English.
 - tense: the tense to conjugate them in, the one the lesson practises: ${TENSE_CHOICES}; "" for English.

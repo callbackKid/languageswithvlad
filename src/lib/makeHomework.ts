@@ -77,6 +77,9 @@ const PHRASES: Record<Language, Phrases> = {
   },
 };
 
+/** How many sentences to translate the teacher can ask for; the server keeps to the same range. */
+export const MIN_TRANSLATE_SENTENCES = 2;
+export const MAX_TRANSLATE_SENTENCES = 8;
 /** At most this many key words named in the words task. */
 const KEY_WORDS_SHOWN = 5;
 // a semicolon would split a task in two (homeworkItems)
@@ -110,7 +113,7 @@ export function homeworkBlock({
   const tenses: readonly Tense[] = verbLanguage ? TENSES_BY_LANGUAGE[verbLanguage] : [];
   const tense = tenses.find((name) => name === asText(data.tense)) ?? tenses[0];
   const verbs = verbLanguage ? list(data.verbs).slice(0, 3) : [];
-  const translate = list(data.translate).slice(0, 4);
+  const translate = list(data.translate).slice(0, MAX_TRANSLATE_SENTENCES);
   const writing = oneTask(asText(data.writing));
 
   const tasks: string[] = [];

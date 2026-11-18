@@ -14,6 +14,11 @@ import {
 /** Longest lesson read in one go; a longer one is refused instead of being cut silently. */
 const MAX_LESSON_LENGTH = 20_000;
 const PRACTICE_SENTENCES = 8;
+/** Sentences to translate in made homework: what the teacher picks, within the app's range
+    (src/lib/makeHomework.ts). */
+const MIN_TRANSLATE_SENTENCES = 2;
+const MAX_TRANSLATE_SENTENCES = 8;
+const DEFAULT_TRANSLATE_SENTENCES = 4;
 
 /* Everything Claude prepares from one lesson, in one function (Vercel's free plan allows 12):
    - "words" (the default): its words with translations, synonym and antonym pairs, and verbs;
@@ -54,6 +59,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
         body: lesson,
         keyWords,
         level: asLevel(request.body?.level) ?? 'A2',
+        sentences: sentenceCount(request.body?.sentences),
       });
       // asked again for another version: never the same answer twice
       return response
@@ -79,4 +85,10 @@ export default async function handler(request: VercelRequest, response: VercelRe
   } catch (error) {
     return fail(response, error);
   }
+}
+
+/** The number of sentences to translate the teacher asked for, kept within the range. */
+function sentenceCount(value: unknown): number {
+  if (typeof value !== 'number' || !Number.isInteger(value)) return DEFAULT_TRANSLATE_SENTENCES;
+  return Math.min(MAX_TRANSLATE_SENTENCES, Math.max(MIN_TRANSLATE_SENTENCES, value));
 }

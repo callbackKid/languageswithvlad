@@ -219,7 +219,7 @@ export const api = {
       body: JSON.stringify({ action: 'study', text, levels }),
     }),
   /** homework for the next lesson, made by Claude from a lesson's words and grammar */
-  makeHomework: (input: { body: string; keyWords: string[]; level: string }) =>
+  makeHomework: (input: { body: string; keyWords: string[]; level: string; sentences: number }) =>
     request<unknown>('/api/analyze', {
       method: 'POST',
       body: JSON.stringify({ action: 'homework', ...input }),

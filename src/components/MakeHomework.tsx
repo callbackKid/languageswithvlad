@@ -4,12 +4,23 @@ import { translator, useTranslation } from '../i18n/core';
 import { common } from '../i18n/messages/common';
 import { homework as homeworkText } from '../i18n/messages/homework';
 import { api, ApiError } from '../lib/api';
-import { homeworkBlock, homeworkLabel } from '../lib/makeHomework';
-import { getSettings } from '../lib/settings';
+import {
+  homeworkBlock,
+  homeworkLabel,
+  MAX_TRANSLATE_SENTENCES,
+  MIN_TRANSLATE_SENTENCES,
+} from '../lib/makeHomework';
+import { getSettings, type Level, LEVELS } from '../lib/settings';
 import type { Language, Lesson, Word } from '../lib/types';
 import WaitingFact from './WaitingFact';
 
 type Step = 'idle' | 'making' | 'review' | 'saving' | 'done';
+
+const DEFAULT_TRANSLATE_SENTENCES = 4;
+const SENTENCE_COUNTS = Array.from(
+  { length: MAX_TRANSLATE_SENTENCES - MIN_TRANSLATE_SENTENCES + 1 },
+  (_empty, position) => MIN_TRANSLATE_SENTENCES + position
+);
 
 /** "Make homework with Claude": a Devoirs: block from the lesson's words and grammar, key words
     first, checked and edited by the teacher, then written under the lesson in the document. */
@@ -35,6 +46,9 @@ export default function MakeHomework({
   const [step, setStep] = useState<Step>('idle');
   const [text, setText] = useState('');
   const [error, setError] = useState('');
+  const [sentences, setSentences] = useState(DEFAULT_TRANSLATE_SENTENCES);
+  // the teacher's own level for this language to start with; the student's may differ
+  const [level, setLevel] = useState<Level>(() => getSettings().levels[language]);
 
   async function make() {
     setStep('making');
@@ -43,7 +57,8 @@ export default function MakeHomework({
       const raw = await api.makeHomework({
         body: lesson.body,
         keyWords: words.filter((word) => word.key).map((word) => word.fr),
-        level: getSettings().levels[language],
+        level,
+        sentences,
       });
       setText(homeworkBlock({ raw, lessonNumber: lesson.n, words, gaps: ai }));
       setStep('review');
@@ -77,6 +92,42 @@ export default function MakeHomework({
       ) : (
         <>
           <p className="hint">{t('makeHint', { label: homeworkLabel(language) })}</p>
+          {(step === 'idle' || step === 'done' || step === 'review') && (
+            <div className="make-homework-options">
+              <label className="form-field">
+                <span>{t('makeSentences')}</span>
+                <select
+                  value={sentences}
+                  onChange={(event) => setSentences(Number(event.target.value))}
+                >
+                  {SENTENCE_COUNTS.map((count) => (
+                    <option key={count} value={count}>
+                      {count}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label className="form-field">
+                <span>{t('makeLevel')}</span>
+                <select
+                  value={level}
+                  onChange={(event) =>
+                    setLevel(
+                      LEVELS.includes(event.target.value as Level)
+                        ? (event.target.value as Level)
+                        : level
+                    )
+                  }
+                >
+                  {LEVELS.map((choice) => (
+                    <option key={choice} value={choice}>
+                      {choice}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            </div>
+          )}
           {(step === 'idle' || step === 'done') && (
             <div className="row-actions">
               <button type="button" className="btn" onClick={() => void make()}>
