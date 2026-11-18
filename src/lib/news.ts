@@ -39,9 +39,9 @@ export const NEWS: NewsDay[] = [
         text: {
           en: 'Make homework with Claude: choose how many sentences to translate (2 to 8) and the level before Claude writes the homework.',
           ru: '«Составить с Claude»: теперь можно выбрать, сколько фраз дать на перевод (от 2 до 8) и уровень, прежде чем Claude напишет домашку.',
-          fr: 'Faire les devoirs avec Claude : choisissez le nombre de phrases à traduire (de 2 à 8) et le niveau avant que Claude rédige les devoirs.',
+          fr: 'Préparer les devoirs avec Claude : choisissez le nombre de phrases à traduire (de 2 à 8) et le niveau avant que Claude rédige les devoirs.',
           de: 'Mit Claude erstellen: Wähle vorher, wie viele Sätze zu übersetzen sind (2 bis 8) und auf welchem Niveau Claude die Hausaufgaben schreibt.',
-          es: 'Hacer los deberes con Claude: elige cuántas frases hay que traducir (de 2 a 8) y el nivel antes de que Claude escriba los deberes.',
+          es: 'Preparar los deberes con Claude: elige cuántas frases hay que traducir (de 2 a 8) y el nivel antes de que Claude escriba los deberes.',
           pt: 'Fazer com o Claude: escolha quantas frases há para traduzir (de 2 a 8) e o nível antes de o Claude escrever o trabalho de casa.',
           it: 'Crea con Claude: scegli quante frasi far tradurre (da 2 a 8) e il livello prima che Claude scriva i compiti.',
         },
@@ -243,9 +243,9 @@ export const NEWS: NewsDay[] = [
         text: {
           en: 'For teachers: “Make homework with Claude” in a lesson’s Homework tab writes a Devoirs: block from the lesson’s words and grammar, key words first. After a check it goes under the lesson, and the student gets it on Home as a checklist.',
           ru: 'Для учителя: «Составить с Claude» во вкладке «Домашнее задание» пишет блок Devoirs: по словам и грамматике урока, сначала ключевые слова. После проверки он попадает под урок, а ученик видит его на Главной чек-листом.',
-          fr: 'Pour les professeurs : « Faire les devoirs avec Claude » dans l’onglet Devoirs d’une leçon rédige un bloc Devoirs: à partir des mots et de la grammaire, mots clés d’abord. Après vérification, il va sous la leçon et l’élève le retrouve sur l’accueil en liste à cocher.',
+          fr: 'Pour les professeurs : « Préparer les devoirs avec Claude » dans l’onglet Devoirs d’une leçon rédige un bloc Devoirs: à partir des mots et de la grammaire, mots clés d’abord. Après vérification, il va sous la leçon et l’élève le retrouve sur l’accueil en liste à cocher.',
           de: 'Für Lehrkräfte: „Mit Claude erstellen“ im Tab Hausaufgaben einer Lektion schreibt einen Block Devoirs: aus den Wörtern und der Grammatik, Schlüsselwörter zuerst. Nach dem Prüfen kommt er unter die Lektion, und die Startseite zeigt ihn als Checkliste.',
-          es: 'Para profesores: «Hacer los deberes con Claude» en la pestaña Deberes de una lección redacta un bloque Devoirs: con sus palabras y su gramática, primero las palabras clave. Tras revisarlo va debajo de la lección, y el alumno lo ve en Inicio como lista.',
+          es: 'Para profesores: «Preparar los deberes con Claude» en la pestaña Deberes de una lección redacta un bloque Devoirs: con sus palabras y su gramática, primero las palabras clave. Tras revisarlo va debajo de la lección, y el alumno lo ve en Inicio como lista.',
           pt: 'Para professores: «Fazer com o Claude» no separador Trabalho de casa de uma lição escreve um bloco Devoirs: com as palavras e a gramática, primeiro as palavras-chave. Depois de verificado vai para baixo da lição, e o aluno vê-o no Início como lista.',
           it: 'Per gli insegnanti: «Crea con Claude» nella scheda Compiti di una lezione scrive un blocco Devoirs: con le parole e la grammatica, prima le parole chiave. Dopo il controllo va sotto la lezione, e lo studente lo vede nella Home come lista.',
         },

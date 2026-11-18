@@ -567,7 +567,7 @@ export const tutorial = defineMessages({
     'lessons.tip6':
       'Un mot que le professeur marque d’une ★ dans le document (<ex>★ la boulangerie — пекарня</ex>) est un <b>mot clé</b> : il porte l’étiquette <b>clé</b> et revient plus souvent dans les exercices.',
     'lessons.tip7':
-      'Pour le professeur : sous <b>Devoirs</b>, <btn>Faire les devoirs avec Claude</btn> rédige un bloc <ex>Devoirs:</ex> à partir des mots et de la grammaire de la leçon (mots clés d’abord). Vérifiez-le, appuyez sur <pbtn>Ajouter à cette leçon</pbtn>, et l’élève le trouve sur l’accueil en liste à cocher.',
+      'Pour le professeur : sous <b>Devoirs</b>, <btn>Préparer les devoirs avec Claude</btn> rédige un bloc <ex>Devoirs:</ex> à partir des mots et de la grammaire de la leçon (mots clés d’abord). Vérifiez-le, appuyez sur <pbtn>Ajouter à cette leçon</pbtn>, et l’élève le trouve sur l’accueil en liste à cocher.',
     'lessons.mock': 'l’onglet Mots d’une leçon',
 
     'verbs.title': 'Verbes',
@@ -1050,7 +1050,7 @@ export const tutorial = defineMessages({
     'lessons.tip6':
       'Una palabra que el profesor marca con ★ en el documento (<ex>★ la boulangerie — пекарня</ex>) es una <b>palabra clave</b>: lleva la etiqueta <b>clave</b> y sale más a menudo en los ejercicios.',
     'lessons.tip7':
-      'Para el profesor: en <b>Deberes</b>, <btn>Hacer los deberes con Claude</btn> redacta un bloque <ex>Devoirs:</ex> con las palabras y la gramática de la lección (primero las palabras clave). Revísalo, pulsa <pbtn>Añadir a esta lección</pbtn>, y el alumno lo encuentra en Inicio como lista.',
+      'Para el profesor: en <b>Deberes</b>, <btn>Preparar los deberes con Claude</btn> redacta un bloque <ex>Devoirs:</ex> con las palabras y la gramática de la lección (primero las palabras clave). Revísalo, pulsa <pbtn>Añadir a esta lección</pbtn>, y el alumno lo encuentra en Inicio como lista.',
     'lessons.mock': 'la pestaña Palabras de una lección',
 
     'verbs.title': 'Verbos',
