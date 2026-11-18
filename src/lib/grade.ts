@@ -24,7 +24,9 @@ function variants(answer: string): string[] {
 
 export function grade(input: string, answer: string, pronoun = ''): Grade {
   const typed = normalize(input);
-  if (!typed) return 'empty';
+  // only a blank field is empty; an answer of only punctuation ("?" for "I don't know") is wrong,
+  // so the right answer is shown instead of Check doing nothing
+  if (!typed) return /[^\s\p{Cf}]/u.test(input) ? 'bad' : 'empty';
   // The answer may be typed with or without the subject pronoun. Both readings are tried,
   // since in "nous nous levons" the reflexive pronoun looks like the subject one.
   const readings = [typed];

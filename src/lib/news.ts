@@ -22,6 +22,18 @@ export const NEWS: NewsDay[] = [
     date: '2026-11-19',
     items: [
       {
+        kind: 'fixed',
+        text: {
+          en: 'An answer of only “?” (or other punctuation) now counts as “I don’t know”: the right answer is shown, instead of Check doing nothing.',
+          ru: 'Ответ из одного «?» (или других знаков препинания) теперь считается ответом «не знаю»: приложение показывает правильный ответ, а раньше кнопка «Проверить» просто ничего не делала.',
+          fr: 'Une réponse faite seulement d’un « ? » (ou d’autres signes de ponctuation) compte désormais comme « je ne sais pas » : la bonne réponse s’affiche, alors qu’avant Vérifier ne faisait rien.',
+          de: 'Eine Antwort nur aus „?“ (oder anderen Satzzeichen) zählt jetzt als „weiß ich nicht“: Die richtige Antwort erscheint, statt dass Prüfen nichts tut.',
+          es: 'Una respuesta de solo «?» (u otros signos de puntuación) ahora cuenta como «no lo sé»: se muestra la respuesta correcta, en vez de que Comprobar no haga nada.',
+          pt: 'Uma resposta só com «?» (ou outra pontuação) passa a contar como «não sei»: a resposta certa aparece, em vez de Verificar não fazer nada.',
+          it: 'Una risposta fatta solo di «?» (o di altra punteggiatura) ora conta come «non lo so»: compare la risposta giusta, mentre prima Controlla non faceva nulla.',
+        },
+      },
+      {
         kind: 'better',
         text: {
           en: 'While Claude is working, each “Did you know?” fact now stays 20 seconds instead of 8, long enough to read; “Next fact →” still shows another one at once.',
