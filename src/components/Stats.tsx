@@ -6,6 +6,7 @@ import type { Bank } from '../lib/bank';
 import { isLearned, topMistakes, useProgress, wordKey } from '../lib/progress';
 import { isStudied, useSettings } from '../lib/settings';
 import type { Lesson } from '../lib/types';
+import { shownTopic } from '../lib/util';
 import MistakeList from './MistakeList';
 import PageHead, { BankNote } from './PageHead';
 import SendToTeacher from './SendToTeacher';
@@ -92,7 +93,7 @@ export default function Stats({
   docId: string;
   canWrite: boolean;
 }) {
-  const { t } = useTranslation(pages);
+  const { t, language: uiLanguage } = useTranslation(pages);
   const progress = useProgress();
   const settings = useSettings();
   const {
@@ -130,6 +131,7 @@ export default function Stats({
         const lessonWords = bank.words.filter((word) => word.lesson === lesson.key);
         return {
           ...lesson,
+          topic: shownTopic(lesson.topic, uiLanguage),
           total: lessonWords.length,
           learned: lessonWords.filter((word) => isLearned(progress.words[wordKey(word.fr)])).length,
         };
@@ -141,10 +143,10 @@ export default function Stats({
       byKind = new Map<string, Row>(),
       byTense = new Map<string, Row>();
     const lessonName = new Map(
-      bank.lessons.map((lesson) => [
-        lesson.key,
-        `${lesson.word} ${lesson.n}${lesson.topic ? `: ${lesson.topic}` : ''}`,
-      ])
+      bank.lessons.map((lesson) => {
+        const topic = shownTopic(lesson.topic, uiLanguage);
+        return [lesson.key, `${lesson.word} ${lesson.n}${topic ? `: ${topic}` : ''}`];
+      })
     );
     for (const stat of stats) {
       const name = lessonName.get(stat.lesson);
@@ -170,7 +172,7 @@ export default function Stats({
       topWords,
       topForms,
     };
-  }, [bank.words, bank.lessons, progress, t, settings]);
+  }, [bank.words, bank.lessons, progress, t, settings, uiLanguage]);
 
   return (
     <>

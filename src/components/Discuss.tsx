@@ -9,6 +9,7 @@ import { normalizeDiscussion } from '../lib/parse';
 import { LEVELS, useSettings } from '../lib/settings';
 import { load, save } from '../lib/storage';
 import type { Discussion, Language } from '../lib/types';
+import { shownTopic } from '../lib/util';
 import GrammarRuleBox from './GrammarRuleBox';
 import PageHead from './PageHead';
 import Speak from './Speak';
@@ -374,7 +375,9 @@ export default function Discuss({ bank, ai }: { bank: Bank; ai: boolean }) {
     setChoice(next);
     save('discuss:choice', next);
   };
-  const lessonTopics = [...new Set(bank.lessons.map((lesson) => lesson.topic).filter(Boolean))];
+  const lessonTopics = [
+    ...new Set(bank.lessons.map((lesson) => shownTopic(lesson.topic, uiLanguage)).filter(Boolean)),
+  ];
   // a topic of their own ("the TV series Dexter") wins over the list
   const ownTopic = choice.customTopic.trim();
   // a saved choice can belong to another language (it was taken out in Settings): fall back

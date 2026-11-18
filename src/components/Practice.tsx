@@ -5,6 +5,7 @@ import { app } from '../i18n/messages/app';
 import { pages } from '../i18n/messages/pages';
 import type { Bank } from '../lib/bank';
 import type { Analysis } from '../lib/types';
+import { shownTopic } from '../lib/util';
 import PageHead, { BankNote } from './PageHead';
 import VerbsTab from './VerbsTab';
 import WordsTab from './WordsTab';
@@ -13,6 +14,7 @@ import WordsTab from './WordsTab';
 export default function Practice({ bank, ai }: { bank: Bank; ai: boolean }) {
   const { t } = useTranslation(pages);
   const appText = useTranslation(app);
+  const uiLanguage = appText.language;
   // null means every lesson, including ones still being prepared
   const [selectedLessons, setSelectedLessons] = useState<Set<string> | null>(null);
   const [tab, setTab] = useState<'words' | 'verbs'>('words');
@@ -68,7 +70,7 @@ export default function Practice({ bank, ai }: { bank: Bank; ai: boolean }) {
             className="chip"
             aria-pressed={!!selectedLessons && selectedLessons.has(lesson.key)}
             onClick={() => toggle(lesson.key)}
-            data-tooltip={lesson.topic || undefined}
+            data-tooltip={shownTopic(lesson.topic, uiLanguage) || undefined}
           >
             {lesson.word} {lesson.n}
           </button>

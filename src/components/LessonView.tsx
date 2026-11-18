@@ -11,6 +11,7 @@ import { LESSON_TABS, type LessonTab, useSettings } from '../lib/settings';
 import { load, save } from '../lib/storage';
 import { useTeacher } from '../lib/teacher';
 import { type Analysis, isVerbLanguage, type Lesson, type LessonExtras } from '../lib/types';
+import { shownTopic } from '../lib/util';
 import HelpLink from './HelpLink';
 import LessonDrawings from './LessonDrawings';
 import { BookTab, GrammarTab, HomeworkTab } from './LessonExtrasTabs';
@@ -186,7 +187,9 @@ export default function LessonView({
             year: 'numeric',
           }).format(lesson.date)}
         </p>
-        {analysis?.topic && <p className="topic">{analysis.topic}</p>}
+        {analysis && shownTopic(analysis.topic, uiLanguage) && (
+          <p className="topic">{analysis.topic}</p>
+        )}
       </section>
       <section className="panel">
         <div className="tabs" role="tablist">

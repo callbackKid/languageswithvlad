@@ -9,6 +9,7 @@ import { followLink, hrefFor } from '../lib/router';
 import { lessonPath } from '../lib/sections';
 import { load, save } from '../lib/storage';
 import type { Lesson, LessonExtras } from '../lib/types';
+import { shownTopic } from '../lib/util';
 import WordQuiz from './WordQuiz';
 
 const ROUND = 10;
@@ -90,8 +91,7 @@ export default function LessonSummary({
           ✕
         </button>
       </div>
-      {/* Claude writes the topic in English */}
-      {uiLanguage === 'en' && analysis.topic && (
+      {shownTopic(analysis.topic, uiLanguage) && (
         <p className="hint">{t('topic', { topic: analysis.topic })}</p>
       )}
       {grammar.length > 0 && (

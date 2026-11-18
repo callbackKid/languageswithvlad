@@ -1,3 +1,10 @@
+import type { UiLanguage } from '../i18n/core';
+
+/** A lesson's topic as shown: Claude writes it in English only, so with another interface
+    language it is left out rather than shown in English. */
+export const shownTopic = (topic: string, uiLanguage: UiLanguage): string =>
+  uiLanguage === 'en' ? topic : '';
+
 export const shuffle = <T>(items: readonly T[]): T[] => {
   const copy = items.slice();
   for (let index = copy.length - 1; index > 0; index--) {

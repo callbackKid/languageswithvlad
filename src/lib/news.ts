@@ -22,6 +22,18 @@ export const NEWS: NewsDay[] = [
     date: '2026-11-19',
     items: [
       {
+        kind: 'fixed',
+        text: {
+          en: 'With an interface language other than English, lesson topics are no longer shown in English: under a lesson’s title, in Stats and in A question for discussion.',
+          ru: 'Если язык интерфейса не английский, темы уроков больше не показываются по-английски: под названием урока, в «Статистике» и в «Вопросе для обсуждения».',
+          fr: 'Avec une langue d’interface autre que l’anglais, les thèmes des leçons ne s’affichent plus en anglais : sous le titre d’une leçon, dans Statistiques et dans Une question à discuter.',
+          de: 'Ist die Sprache der Oberfläche nicht Englisch, erscheinen die Themen der Lektionen nicht mehr auf Englisch: unter dem Titel einer Lektion, in Statistik und in Eine Frage zum Diskutieren.',
+          es: 'Con un idioma de la interfaz distinto del inglés, los temas de las lecciones ya no aparecen en inglés: bajo el título de una lección, en Estadísticas y en Una pregunta para debatir.',
+          pt: 'Com um idioma da interface diferente do inglês, os temas das lições já não aparecem em inglês: por baixo do título de uma lição, em Estatísticas e em Uma pergunta para debate.',
+          it: 'Con una lingua dell’interfaccia diversa dall’inglese, gli argomenti delle lezioni non compaiono più in inglese: sotto il titolo di una lezione, in Statistiche e in Una domanda di discussione.',
+        },
+      },
+      {
         kind: 'new',
         text: {
           en: 'Listening questions in the exercises have a “Can’t listen now” button: it skips the round’s listening questions without counting them as mistakes.',
