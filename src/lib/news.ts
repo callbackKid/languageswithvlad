@@ -22,6 +22,18 @@ export const NEWS: NewsDay[] = [
     date: '2026-11-19',
     items: [
       {
+        kind: 'new',
+        text: {
+          en: 'Listening questions in the exercises have a “Can’t listen now” button: it skips the round’s listening questions without counting them as mistakes.',
+          ru: 'У вопросов на слух в упражнениях появилась кнопка «Сейчас не могу слушать»: она пропускает вопросы на слух в этом раунде и не считает их ошибками.',
+          fr: 'Les questions d’écoute des exercices ont un bouton « Je ne peux pas écouter maintenant » : il passe les questions d’écoute de la série sans les compter comme des erreurs.',
+          de: 'Hörfragen in den Übungen haben eine Schaltfläche „Kann gerade nicht zuhören“: Sie überspringt die Hörfragen der Runde, ohne sie als Fehler zu zählen.',
+          es: 'Las preguntas de escucha de los ejercicios tienen un botón «Ahora no puedo escuchar»: salta las preguntas de escucha de la ronda sin contarlas como errores.',
+          pt: 'As perguntas de audição dos exercícios têm um botão «Agora não posso ouvir»: salta as perguntas de audição da ronda sem as contar como erros.',
+          it: 'Le domande di ascolto negli esercizi hanno un pulsante «Ora non posso ascoltare»: salta le domande di ascolto del turno senza contarle come errori.',
+        },
+      },
+      {
         kind: 'fixed',
         text: {
           en: 'An answer of only “?” (or other punctuation) now counts as “I don’t know”: the right answer is shown, instead of Check doing nothing.',

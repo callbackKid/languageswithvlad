@@ -109,6 +109,14 @@ export default function WordQuiz({
     setPicked(null);
     setResult(null);
   };
+  // the student can't listen now (no headphones, a quiet room): this and the round's other
+  // listening questions go, uncounted, and the next question takes this one's place
+  const skipListening = () => {
+    setQuestions((previous) =>
+      previous.filter((item, position) => position < index || item.kind !== 'listen')
+    );
+    setTyped('');
+  };
   const head = (
     <ExerciseHead title={title} onClose={onClose} closeLabel={closeLabel}>
       {questions.length > 0 && (
@@ -366,6 +374,16 @@ export default function WordQuiz({
           </button>
         )}
       </form>
+      {/* only in a mixed round: a dictation round would be left empty, and it can be closed */}
+      {question.kind === 'listen' &&
+        !result &&
+        questions.some((item) => item.kind !== 'listen') && (
+          <div className="row-actions">
+            <button type="button" className="btn ghost" onClick={skipListening}>
+              {tx('cantListen')}
+            </button>
+          </div>
+        )}
       {feedback}
     </>
   );
