@@ -365,6 +365,7 @@ export default function WordQuiz({
           readOnly={!!result}
           autoComplete="off"
           autoCapitalize="off"
+          autoCorrect="off"
           spellCheck={false}
           aria-label={t('yourAnswer')}
         />

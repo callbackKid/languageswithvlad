@@ -12,6 +12,21 @@ const LOCALES: Record<Language, string> = {
 
 export const canSpeak = typeof window !== 'undefined' && 'speechSynthesis' in window;
 
+// Safari's Audio Session API (16.4 and later), not yet in TypeScript's DOM types.
+declare global {
+  interface Navigator {
+    audioSession?: { type: string };
+  }
+}
+
+/** On an iPhone the browser's voice counts as a ringer sound, so the silent switch mutes it while
+    other apps still play: "playback" makes Safari treat the page as media, like those apps. It is
+    set on the tap that asks for speech, as Safari wants. Other browsers don't have it. */
+function playEvenWhenSilenced() {
+  if (navigator.audioSession && navigator.audioSession.type !== 'playback')
+    navigator.audioSession.type = 'playback';
+}
+
 // Settings → speech speed. Far apart on purpose: the browsers' voices change speed less than the
 // number says, and 0.9 against 0.65 was hard to tell apart.
 const RATES: Record<SpeechSpeed, number> = { normal: 1, slow: 0.55 };
@@ -30,6 +45,7 @@ export function speak(text: string, language: Language = 'fr') {
     voices.find((candidate) => candidate.lang === locale) ||
     voices.find((candidate) => candidate.lang.startsWith(language));
   if (voice) utterance.voice = voice;
+  playEvenWhenSilenced();
   window.speechSynthesis.cancel();
   window.speechSynthesis.speak(utterance);
 }

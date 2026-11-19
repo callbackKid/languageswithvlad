@@ -126,6 +126,9 @@ export default function WritingTask({
         lang={language}
         value={writing.text}
         aria-label={t('yourAnswer')}
+        // the phone must not fix the mistakes Claude is about to check
+        autoComplete="off"
+        autoCorrect="off"
         spellCheck={false}
         onChange={(event) => keep({ ...writing, text: event.target.value })}
       />

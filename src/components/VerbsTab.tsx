@@ -361,6 +361,7 @@ function Drill({
                     aria-label={row.p}
                     autoComplete="off"
                     autoCapitalize="off"
+                    autoCorrect="off"
                     spellCheck={false}
                     readOnly={checked}
                     onChange={(event) =>
@@ -516,6 +517,7 @@ function Quiz({ conjugations, onClose }: { conjugations: Conjugation[]; onClose:
           readOnly={!!result}
           autoComplete="off"
           autoCapitalize="off"
+          autoCorrect="off"
           spellCheck={false}
           aria-label={commonText.t('yourAnswer')}
         />

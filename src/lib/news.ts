@@ -99,6 +99,18 @@ export const NEWS: NewsDay[] = [
           it: 'Analisi delle foto → Parole sottolineate accetta fino a 10 foto alla volta e raccoglie le loro parole in un’unica tabella. «Aggiungi a» le mette sotto la lezione che scegli, o in una nuova lezione come prima.',
         },
       },
+      {
+        kind: 'better',
+        text: {
+          en: 'On a phone, the keyboard no longer corrects or completes your answers in exercises, verb drills and written homework, so the answer checked is the one you typed.',
+          ru: 'На телефоне клавиатура больше не исправляет и не дополняет ваши ответы в упражнениях, тренировке глаголов и письменных домашних заданиях, так что проверяется именно тот ответ, который вы ввели.',
+          fr: 'Sur un téléphone, le clavier ne corrige plus et ne complète plus vos réponses dans les exercices, l’entraînement aux verbes et les devoirs écrits : la réponse vérifiée est bien celle que vous avez tapée.',
+          de: 'Auf dem Handy korrigiert oder ergänzt die Tastatur deine Antworten in Übungen, beim Verbtraining und in schriftlichen Hausaufgaben nicht mehr, also wird genau die Antwort geprüft, die du getippt hast.',
+          es: 'En el móvil, el teclado ya no corrige ni completa tus respuestas en los ejercicios, la práctica de verbos y los deberes escritos, así que se comprueba justo la respuesta que has escrito.',
+          pt: 'No telemóvel, o teclado já não corrige nem completa as suas respostas nos exercícios, no treino de verbos e nos trabalhos de casa escritos, por isso a resposta verificada é exatamente a que escreveu.',
+          it: 'Sul telefono la tastiera non corregge né completa più le tue risposte negli esercizi, nell’allenamento sui verbi e nei compiti scritti, così viene controllata proprio la risposta che hai digitato.',
+        },
+      },
     ],
   },
   {
