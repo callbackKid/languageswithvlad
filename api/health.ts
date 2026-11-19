@@ -2,6 +2,7 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 import { serviceAccount } from './_lib/google.js';
 import { isTeacher } from './_lib/http.js';
+import { jitsiAppId } from './_lib/jitsi.js';
 import { notionConfigured } from './_lib/notion.js';
 import { telegramConfigured } from './_lib/telegram.js';
 import { zoomConfigured } from './_lib/zoom.js';
@@ -21,6 +22,8 @@ export default function handler(request: VercelRequest, response: VercelResponse
     feedback: telegramConfigured(),
     // whether Zoom calls can run inside the app
     zoom: zoomConfigured(),
+    // the JaaS AppID when video calls on Jitsi can run inside the app (it is part of every call's address)
+    jitsi: jitsiAppId(),
     // whether Notion pages can be read (and lessons added to them)
     notion: notionConfigured(),
     // where the lesson board is shared live (Supabase Realtime); the key is the project's

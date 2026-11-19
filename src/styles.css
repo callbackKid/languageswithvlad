@@ -3415,6 +3415,23 @@ li .open-link {
   min-height: 60px;
 }
 
+/* the Jitsi call inside the page: it fills a fixed box, as tall as a video and its buttons need */
+.jitsi-call {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+}
+.jitsi-root {
+  width: 100%;
+}
+.jitsi-root.in {
+  height: 480px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+}
+
 .lesson-board {
   margin-top: 20px;
 }
@@ -3565,6 +3582,9 @@ li .open-link {
 @media (max-width: 760px) {
   .board-frame {
     height: 420px;
+  }
+  .jitsi-root.in {
+    height: 60vh;
   }
 }
 

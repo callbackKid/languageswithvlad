@@ -223,6 +223,8 @@ export const tutorial = defineMessages({
       '<pbtn>Play</pbtn> under <b>Quiz game</b>: 10 questions on the lesson’s words, 15 seconds each, and a fast right answer scores more. Play it on the shared screen; the best rounds go into the <b>Records</b> table.',
     'call.tip3':
       '<btn>Side by side (half the screen)</btn> opens Meet over the right half of the screen, next to the app.',
+    'call.tip4':
+      '<b>Video call</b>: when the server is set up for Jitsi, press <pbtn>Join the call</pbtn>. The teacher and the student meet in the same room inside the page, with nothing to install (a one-time setup on the server, see the README).',
     'call.tip1':
       'The notes are saved on this device for each day, so closing the page loses nothing.',
     'call.tip2':
@@ -465,6 +467,8 @@ export const tutorial = defineMessages({
       '<pbtn>Играть</pbtn> в карточке <b>Игра-квиз</b>: 10 вопросов по словам урока, на каждый 15 секунд, и чем быстрее верный ответ, тем больше очков. Играйте на общем экране; лучшие раунды попадают в таблицу <b>Рекорды</b>.',
     'call.tip3':
       '<btn>Рядом (половина экрана)</btn> открывает Meet на правой половине экрана, рядом с приложением.',
+    'call.tip4':
+      '<b>Видеозвонок</b>: если сервер настроен для Jitsi, нажмите <pbtn>Подключиться к звонку</pbtn>. Преподаватель и ученик встречаются в одной комнате прямо на странице, ничего не устанавливая (нужна разовая настройка на сервере, см. README).',
     'call.tip1':
       'Заметки сохраняются на этом устройстве отдельно на каждый день — если закрыть страницу, ничего не пропадёт.',
     'call.tip2':
@@ -715,6 +719,8 @@ export const tutorial = defineMessages({
       '<pbtn>Jouer</pbtn> sous <b>Quiz chrono</b> : 10 questions sur les mots de la leçon, 15 secondes chacune, et une bonne réponse rapide rapporte plus. Jouez sur l’écran partagé ; les meilleurs tours vont dans le tableau <b>Records</b>.',
     'call.tip3':
       '<btn>Côte à côte (moitié de l’écran)</btn> ouvre Meet sur la moitié droite de l’écran, à côté de l’application.',
+    'call.tip4':
+      '<b>Appel vidéo</b> : quand le serveur est configuré pour Jitsi, appuyez sur <pbtn>Rejoindre l’appel</pbtn>. Le professeur et l’élève se retrouvent dans la même salle, dans la page, sans rien installer (une configuration unique est nécessaire sur le serveur, voir le README).',
     'call.tip1':
       'Les notes sont enregistrées sur cet appareil pour chaque jour : fermer la page ne fait rien perdre.',
     'call.tip2':
@@ -962,6 +968,8 @@ export const tutorial = defineMessages({
       '<pbtn>Spielen</pbtn> unter <b>Quizspiel</b>: 10 Fragen zu den Wörtern der Lektion, je 15 Sekunden, und eine schnelle richtige Antwort bringt mehr Punkte. Spielt auf dem geteilten Bildschirm; die besten Runden kommen in die Tabelle <b>Rekorde</b>.',
     'call.tip3':
       '<btn>Nebeneinander (halber Bildschirm)</btn> öffnet Meet auf der rechten Bildschirmhälfte, neben der App.',
+    'call.tip4':
+      '<b>Videoanruf</b>: Wenn der Server für Jitsi eingerichtet ist, tippe auf <pbtn>Anruf beitreten</pbtn>. Lehrkraft und Schüler treffen sich im selben Raum direkt auf der Seite, ohne etwas zu installieren (braucht eine einmalige Einrichtung auf dem Server, siehe README).',
     'call.tip1':
       'Die Notizen werden auf diesem Gerät für jeden Tag gespeichert; wenn du die Seite schließt, geht nichts verloren.',
     'call.tip2':
@@ -1211,6 +1219,8 @@ export const tutorial = defineMessages({
       '<pbtn>Jugar</pbtn> en <b>Juego de preguntas</b>: 10 preguntas sobre las palabras de la lección, 15 segundos cada una, y una respuesta correcta rápida da más puntos. Jugad en la pantalla compartida; las mejores rondas van a la tabla <b>Récords</b>.',
     'call.tip3':
       '<btn>Lado a lado (media pantalla)</btn> abre Meet sobre la mitad derecha de la pantalla, junto a la aplicación.',
+    'call.tip4':
+      '<b>Videollamada</b>: cuando el servidor esté configurado para Jitsi, pulsa <pbtn>Unirse a la llamada</pbtn>. El profesor y el alumno se encuentran en la misma sala dentro de la página, sin instalar nada (requiere una configuración única en el servidor, ver el README).',
     'call.tip1':
       'Las notas se guardan en este dispositivo para cada día, así que cerrar la página no hace perder nada.',
     'call.tip2':
@@ -1459,6 +1469,8 @@ export const tutorial = defineMessages({
       '<pbtn>Jogar</pbtn> em <b>Jogo de perguntas</b>: 10 perguntas sobre as palavras da lição, 15 segundos cada, e uma resposta certa rápida vale mais. Joguem no ecrã partilhado; as melhores rondas vão para a tabela <b>Recordes</b>.',
     'call.tip3':
       '<btn>Lado a lado (meio ecrã)</btn> abre o Meet na metade direita do ecrã, ao lado da aplicação.',
+    'call.tip4':
+      '<b>Videochamada</b>: quando o servidor estiver configurado para o Jitsi, carregue em <pbtn>Entrar na chamada</pbtn>. O professor e o aluno encontram-se na mesma sala dentro da página, sem instalar nada (requer uma configuração única no servidor, ver o README).',
     'call.tip1':
       'As notas ficam guardadas neste dispositivo para cada dia, por isso fechar a página não faz perder nada.',
     'call.tip2':
@@ -1708,6 +1720,8 @@ export const tutorial = defineMessages({
       '<pbtn>Gioca</pbtn> in <b>Gioco a quiz</b>: 10 domande sulle parole della lezione, 15 secondi ciascuna, e una risposta giusta veloce vale di più. Giocate sullo schermo condiviso; i giri migliori finiscono nella tabella <b>Record</b>.',
     'call.tip3':
       '<btn>Affiancata (metà schermo)</btn> apre Meet sulla metà destra dello schermo, accanto all’app.',
+    'call.tip4':
+      '<b>Videochiamata</b>: quando il server è configurato per Jitsi, premi <pbtn>Partecipa alla chiamata</pbtn>. Insegnante e studente si ritrovano nella stessa stanza dentro la pagina, senza installare nulla (serve una configurazione una tantum sul server, vedi il README).',
     'call.tip1':
       'Gli appunti si salvano su questo dispositivo per ogni giorno, quindi chiudere la pagina non fa perdere nulla.',
     'call.tip2':

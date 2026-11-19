@@ -89,6 +89,8 @@ const ERROR_TEXTS: Record<string, CommonKey> = {
   too_many_pictures: 'tooManyPictures',
   zoom_off: 'zoomOff',
   bad_meeting_number: 'badMeetingNumber',
+  jitsi_off: 'jitsiOff',
+  bad_room: 'badRoom',
   feedback_off: 'feedbackOff',
   claude_off: 'claudeOff',
   claude_busy: 'busy',
@@ -149,6 +151,8 @@ interface Health {
   docWriter?: string | null;
   feedback?: boolean;
   zoom?: boolean;
+  // the JaaS AppID when Jitsi calls run inside the app
+  jitsi?: string | null;
   notion?: boolean;
   board?: BoardServer | null;
 }
@@ -159,9 +163,15 @@ export const api = {
   checkTeacher: async (teacherCode: string) =>
     !!(await request<Health>('/api/health', undefined, teacherCode)).teacher,
   zoomSignature: (meetingNumber: string) =>
-    request<{ signature: string }>('/api/zoom-signature', {
+    request<{ signature: string }>('/api/call-token', {
       method: 'POST',
-      body: JSON.stringify({ meetingNumber }),
+      body: JSON.stringify({ kind: 'zoom', meetingNumber }),
+    }),
+  // a token for one Jitsi room; the server makes the teacher its moderator
+  jitsiToken: (room: string, name: string) =>
+    request<{ token: string; roomName: string }>('/api/call-token', {
+      method: 'POST',
+      body: JSON.stringify({ kind: 'jitsi', room, name }),
     }),
   feedback: (report: FeedbackReport) =>
     request<{ ok: boolean }>('/api/feedback', { method: 'POST', body: JSON.stringify(report) }),

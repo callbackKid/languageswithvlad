@@ -46,6 +46,11 @@ export const call = defineMessages({
     zoomNoNumber: 'This Zoom link has no meeting number, so the call opens in Zoom.',
     openInZoom: 'Open in Zoom',
     zoomFailed: 'Couldn’t join the call: {reason}',
+    jitsiTitle: 'Video call',
+    jitsiExplain:
+      'The teacher and the student both open lesson mode and press “Join the call”: they meet in the same room, with nothing to install. Allow the camera and the microphone when the browser asks.',
+    joinCall: 'Join the call',
+    jitsiFailed: 'The call couldn’t start. Check the connection and try again.',
     // notes
     notesTitle: 'Lesson notes',
     notesHint:
@@ -114,6 +119,11 @@ export const call = defineMessages({
     zoomNoNumber: 'В этой ссылке Zoom нет номера конференции, поэтому звонок откроется в Zoom.',
     openInZoom: 'Открыть в Zoom',
     zoomFailed: 'Не удалось подключиться к звонку: {reason}',
+    jitsiTitle: 'Видеозвонок',
+    jitsiExplain:
+      'Преподаватель и ученик открывают режим урока и нажимают «Подключиться к звонку»: они встречаются в одной комнате, ничего не нужно устанавливать. Когда браузер спросит, разрешите доступ к камере и микрофону.',
+    joinCall: 'Подключиться к звонку',
+    jitsiFailed: 'Звонок не запустился. Проверьте соединение и попробуйте ещё раз.',
     notesTitle: 'Заметки урока',
     notesHint:
       'Пишите во время урока: новые слова в виде «mot — перевод», ошибки для работы, домашнее задание. Сохраняется на этом устройстве.',
@@ -181,6 +191,11 @@ export const call = defineMessages({
     zoomNoNumber: 'Ce lien Zoom n’a pas de numéro de réunion : l’appel s’ouvre donc dans Zoom.',
     openInZoom: 'Ouvrir dans Zoom',
     zoomFailed: 'Impossible de rejoindre l’appel : {reason}',
+    jitsiTitle: 'Appel vidéo',
+    jitsiExplain:
+      'Le professeur et l’élève ouvrent tous les deux le mode cours et appuient sur « Rejoindre l’appel » : ils se retrouvent dans la même salle, sans rien installer. Autorisez la caméra et le micro quand le navigateur le demande.',
+    joinCall: 'Rejoindre l’appel',
+    jitsiFailed: 'L’appel n’a pas pu démarrer. Vérifiez la connexion et réessayez.',
     notesTitle: 'Notes du cours',
     notesHint:
       'Écrivez pendant le cours : les nouveaux mots sous la forme « mot — перевод », les erreurs à travailler, les devoirs. Enregistré sur cet appareil.',
@@ -249,6 +264,11 @@ export const call = defineMessages({
     zoomNoNumber: 'Dieser Zoom-Link hat keine Meeting-ID, deshalb öffnet sich der Anruf in Zoom.',
     openInZoom: 'In Zoom öffnen',
     zoomFailed: 'Beitritt zum Anruf nicht möglich: {reason}',
+    jitsiTitle: 'Videoanruf',
+    jitsiExplain:
+      'Lehrkraft und Schüler öffnen beide den Unterrichtsmodus und tippen auf „Anruf beitreten“: Sie treffen sich im selben Raum, ohne etwas zu installieren. Erlaube Kamera und Mikrofon, wenn der Browser fragt.',
+    joinCall: 'Anruf beitreten',
+    jitsiFailed: 'Der Anruf konnte nicht starten. Prüfe die Verbindung und versuch es noch einmal.',
     notesTitle: 'Notizen zur Stunde',
     notesHint:
       'Schreib während der Stunde: neue Wörter als „Wort — перевод“, Fehler zum Üben, Hausaufgaben. Wird auf diesem Gerät gespeichert.',
@@ -318,6 +338,11 @@ export const call = defineMessages({
       'Este enlace de Zoom no tiene número de reunión, así que la llamada se abre en Zoom.',
     openInZoom: 'Abrir en Zoom',
     zoomFailed: 'No se ha podido entrar en la llamada: {reason}',
+    jitsiTitle: 'Videollamada',
+    jitsiExplain:
+      'El profesor y el alumno abren los dos el modo clase y pulsan «Unirse a la llamada»: se encuentran en la misma sala, sin instalar nada. Permite la cámara y el micrófono cuando el navegador lo pida.',
+    joinCall: 'Unirse a la llamada',
+    jitsiFailed: 'No se ha podido iniciar la llamada. Comprueba la conexión y vuelve a intentarlo.',
     notesTitle: 'Notas de la clase',
     notesHint:
       'Escribe durante la clase: palabras nuevas como «palabra — перевод», errores que trabajar, deberes. Se guarda en este dispositivo.',
@@ -387,6 +412,12 @@ export const call = defineMessages({
       'Esta ligação do Zoom não tem número de reunião, por isso a chamada abre no Zoom.',
     openInZoom: 'Abrir no Zoom',
     zoomFailed: 'Não foi possível entrar na chamada: {reason}',
+    jitsiTitle: 'Videochamada',
+    jitsiExplain:
+      'O professor e o aluno abrem os dois o modo aula e carregam em «Entrar na chamada»: encontram-se na mesma sala, sem instalar nada. Permita a câmara e o microfone quando o navegador pedir.',
+    joinCall: 'Entrar na chamada',
+    jitsiFailed:
+      'Não foi possível iniciar a chamada. Verifique a ligação à internet e tente de novo.',
     notesTitle: 'Notas da aula',
     notesHint:
       'Escreva durante a aula: palavras novas como «palavra — перевод», erros a trabalhar, trabalhos de casa. Fica guardado neste dispositivo.',
@@ -456,6 +487,11 @@ export const call = defineMessages({
       'Questo link di Zoom non ha un numero di riunione, quindi la chiamata si apre in Zoom.',
     openInZoom: 'Apri in Zoom',
     zoomFailed: 'Impossibile entrare nella chiamata: {reason}',
+    jitsiTitle: 'Videochiamata',
+    jitsiExplain:
+      'L’insegnante e lo studente aprono entrambi la modalità lezione e premono «Partecipa alla chiamata»: si ritrovano nella stessa stanza, senza installare nulla. Consenti fotocamera e microfono quando il browser lo chiede.',
+    joinCall: 'Partecipa alla chiamata',
+    jitsiFailed: 'Impossibile avviare la chiamata. Controlla la connessione e riprova.',
     notesTitle: 'Appunti della lezione',
     notesHint:
       'Scrivi durante la lezione: parole nuove come «parola — перевод», errori su cui lavorare, compiti. Si salva su questo dispositivo.',

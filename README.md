@@ -14,6 +14,7 @@ React + TypeScript + Vite in the browser, small Vercel serverless functions in `
 - [Optional: feedback from students in Telegram](#optional-feedback-from-students-in-telegram)
 - [Optional: lessons in Notion](#optional-lessons-in-notion)
 - [Optional: Zoom calls inside the app](#optional-zoom-calls-inside-the-app)
+- [Optional: video calls on Jitsi inside the app](#optional-video-calls-on-jitsi-inside-the-app)
 - [Optional: a live board for teacher and student](#optional-a-live-board-for-teacher-and-student)
 - [Pages](#pages)
 - [Local development](#local-development)
@@ -85,17 +86,18 @@ About 10 minutes.
 3. **Import it on vercel.com** (New Project → pick the repo). Vercel detects Vite; keep the defaults.
 4. **Add environment variables** (Project → Settings → Environment Variables):
 
-   | Variable                                 | Required    | What it is                                                                                                                                                |
-   | ---------------------------------------- | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-   | `ANTHROPIC_API_KEY`                      | yes         | Your Anthropic key.                                                                                                                                       |
-   | `APP_ACCESS_CODE`                        | recommended | A class code students enter once, so strangers can’t spend your credit.                                                                                   |
-   | `APP_TEACHER_CODE`                       | no          | The teacher's own code, entered once in **Settings → Teacher**; it unlocks the teacher's tools (Make homework with Claude). Without it, nobody sees them. |
-   | `CLAUDE_MODEL`, `CLAUDE_FAST_MODEL`      | no          | Model overrides.                                                                                                                                          |
-   | `GOOGLE_SERVICE_ACCOUNT`                 | no          | Lets the app add lessons to the Google Doc (setup below).                                                                                                 |
-   | `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` | no          | Sends students’ bug reports and ideas to your Telegram (setup below).                                                                                     |
-   | `ZOOM_SDK_KEY`, `ZOOM_SDK_SECRET`        | no          | Runs Zoom calls inside the app, in lesson mode (setup below).                                                                                             |
-   | `SUPABASE_URL`, `SUPABASE_ANON_KEY`      | no          | Shares the lesson board live between teacher and student (setup below).                                                                                   |
-   | `NOTION_TOKEN`                           | no          | Reads lessons from Notion pages instead of a Google Doc (setup below).                                                                                    |
+   | Variable                                         | Required    | What it is                                                                                                                                                |
+   | ------------------------------------------------ | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+   | `ANTHROPIC_API_KEY`                              | yes         | Your Anthropic key.                                                                                                                                       |
+   | `APP_ACCESS_CODE`                                | recommended | A class code students enter once, so strangers can’t spend your credit.                                                                                   |
+   | `APP_TEACHER_CODE`                               | no          | The teacher's own code, entered once in **Settings → Teacher**; it unlocks the teacher's tools (Make homework with Claude). Without it, nobody sees them. |
+   | `CLAUDE_MODEL`, `CLAUDE_FAST_MODEL`              | no          | Model overrides.                                                                                                                                          |
+   | `GOOGLE_SERVICE_ACCOUNT`                         | no          | Lets the app add lessons to the Google Doc (setup below).                                                                                                 |
+   | `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`         | no          | Sends students’ bug reports and ideas to your Telegram (setup below).                                                                                     |
+   | `ZOOM_SDK_KEY`, `ZOOM_SDK_SECRET`                | no          | Runs Zoom calls inside the app, in lesson mode (setup below).                                                                                             |
+   | `JAAS_APP_ID`, `JAAS_KEY_ID`, `JAAS_PRIVATE_KEY` | no          | Video calls on Jitsi inside the app, in lesson mode, with nothing to install (setup below).                                                               |
+   | `SUPABASE_URL`, `SUPABASE_ANON_KEY`              | no          | Shares the lesson board live between teacher and student (setup below).                                                                                   |
+   | `NOTION_TOKEN`                                   | no          | Reads lessons from Notion pages instead of a Google Doc (setup below).                                                                                    |
 
 5. **Deploy**, then redeploy once after adding variables so the functions pick them up.
 
@@ -166,6 +168,18 @@ Limits to know:
 - The app joins as a **participant**. Start the meeting as host from the Zoom app, or turn on **Allow participants to join before host** for the meeting. Hosting from the app would need a Zoom sign-in (OAuth), which isn’t built yet.
 - Zoom only lets an unpublished developer app join meetings of its **own account**. For students joining your meetings that’s fine; joining other people’s meetings needs Zoom’s app review.
 - The SDK is large (about 1 MB compressed), so it downloads only when someone presses **Join here**.
+
+## Optional: video calls on Jitsi inside the app
+
+Lesson mode can run the call itself, on Jitsi as a Service (JaaS, by 8x8): the teacher and the student open lesson mode on the same document and press **Join the call**, with nothing to install and no account. Both land in the same room, a new one each day; the teacher (with the teacher code on that device) joins as its moderator. The free **Developer** plan covers **25 monthly active users** (everyone who joins at least one call that month, the teacher included) with unlimited minutes; above that, plans start at $99 a month for 300 (see 8x8's prices).
+
+1. Create a free account at [jaas.8x8.vc](https://jaas.8x8.vc) and copy the **AppID** (`vpaas-magic-cookie-…`).
+2. Make a key pair on your computer:
+   `ssh-keygen -t rsa -b 4096 -m PEM -f jaas-key` and then `openssl rsa -in jaas-key -pubout -outform PEM -out jaas-key.pub`.
+3. In the JaaS console, **API Keys → Add API key**: upload `jaas-key.pub`, and copy the **Key ID** it shows (`vpaas-magic-cookie-…/1a2b3c`).
+4. In Vercel, add `JAAS_APP_ID`, `JAAS_KEY_ID` and `JAAS_PRIVATE_KEY` (the whole content of `jaas-key`, from `-----BEGIN` to `-----END`). Redeploy. Keep `jaas-key` private and out of the repository.
+
+Without these variables lesson mode shows the document's Meet or Zoom link as before; with them, the Jitsi call comes first and the document's link stays below it. Recording, streaming and phone dial-in are off: they cost extra on JaaS.
 
 ## Optional: a live board for teacher and student
 
@@ -253,6 +267,7 @@ api/                serverless functions (Vercel)
   _lib/prompts.ts   every prompt sent to Claude
   _lib/telegram.ts  sending feedback to the teacher’s Telegram
   _lib/zoom.ts      signing Zoom Meeting SDK joins
+  _lib/jitsi.ts     signing Jitsi (JaaS) call tokens
   _lib/notion.ts    reading a Notion page as lesson text, adding lessons to it
   _lib/lessons.ts   finding one lesson's heading in a document, to write under it
   doc.ts            reads the Google Doc (or the Notion page)
@@ -260,11 +275,11 @@ api/                serverless functions (Vercel)
   conjugate.ts      a verb’s tables
   gaps.ts           fill-the-gap sentences
   paper.ts          from paper: underlined words on a photo, handwritten notes, textbook pages
-  text.ts           a pasted text: explaining a word, translating, making exercises
+  text.ts           a selected word's card (the word menu); a pasted text translated, exercises
   discussion.ts     a discussion question for the start of a lesson
   append.ts         adds a lesson to the Google Doc
   feedback.ts       bug reports and ideas from students, to Telegram
-  zoom-signature.ts a signature for joining a Zoom call inside the app
+  call-token.ts     a Zoom signature or a Jitsi (JaaS) token for joining a call inside the app
   health.ts         what the server is set up for
 src/
   App.tsx           top bar, menu and pages

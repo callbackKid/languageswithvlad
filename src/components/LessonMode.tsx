@@ -20,6 +20,7 @@ import type { Lesson, Writing } from '../lib/types';
 import { hash } from '../lib/util';
 import { previousLesson, warmUpRound } from '../lib/warmUp';
 import AddToDoc, { type DocTarget } from './AddToDoc';
+import JitsiCall from './JitsiCall';
 import LessonBoard from './LessonBoard';
 import PageHead from './PageHead';
 import QuizGame, {
@@ -44,8 +45,67 @@ const today = () => dayKey(new Date());
 // Today's date in UTC, the same for everyone wherever they are.
 const utcDay = () => new Date().toISOString().slice(0, 10);
 
+/** A video call on Jitsi inside the page, when the server is set up for it (JaaS): the teacher and
+    the student join the same room for this document, a new one each day (in UTC, like the board). */
+function JitsiCard({ appId, docId }: { appId: string; docId: string }) {
+  const { t } = useTranslation(call);
+  const [name, setName] = useState(() => load<string>(NAME_KEY) ?? getSettings().name);
+  const [joined, setJoined] = useState(false);
+  return (
+    <section className="call-card">
+      <h2>{t('jitsiTitle')}</h2>
+      {joined ? (
+        <JitsiCall
+          appId={appId}
+          room={`lesson-${hash(docId)}-${utcDay()}`}
+          userName={name.trim()}
+          onLeave={() => setJoined(false)}
+        />
+      ) : (
+        <>
+          <p className="hint">{t('jitsiExplain')}</p>
+          <form
+            className="call-join"
+            onSubmit={(event) => {
+              event.preventDefault();
+              if (!name.trim()) return;
+              save(NAME_KEY, name.trim());
+              setJoined(true);
+            }}
+          >
+            <label className="form-field">
+              <span>{t('yourName')}</span>
+              <input
+                type="text"
+                required
+                maxLength={MAX_NAME_LENGTH}
+                value={name}
+                onChange={(event) => setName(event.target.value)}
+              />
+            </label>
+            <div className="row-actions">
+              <button type="submit" className="btn primary" disabled={!name.trim()}>
+                {t('joinCall')}
+              </button>
+            </div>
+          </form>
+        </>
+      )}
+    </section>
+  );
+}
+
 // The call: Meet in a small window beside the app (it can't be embedded), Zoom inside the page.
-function CallPanel({ docText, zoomReady }: { docText: string; zoomReady: boolean }) {
+function CallPanel({
+  docText,
+  zoomReady,
+  hasJitsi,
+}: {
+  docText: string;
+  zoomReady: boolean;
+  // a Jitsi call is offered above: the document's link is then a second way, not a must
+  hasJitsi: boolean;
+}) {
   const { t } = useTranslation(call);
   const link = findCall(docText);
   const [blocked, setBlocked] = useState(false);
@@ -53,7 +113,7 @@ function CallPanel({ docText, zoomReady }: { docText: string; zoomReady: boolean
   const [passcode, setPasscode] = useState(link?.kind === 'zoom' ? link.passcode : '');
   const [joined, setJoined] = useState(false);
 
-  if (!link) return <p className="empty">{t('noCall')}</p>;
+  if (!link) return hasJitsi ? null : <p className="empty">{t('noCall')}</p>;
 
   const newTab = (label: string) => (
     <a className="btn" href={link.url} target="_blank" rel="noopener noreferrer">
@@ -400,6 +460,7 @@ export default function LessonMode({
   lessons,
   target,
   zoomReady,
+  jitsiAppId,
   boardServer,
   hasClaude,
 }: {
@@ -409,6 +470,8 @@ export default function LessonMode({
   lessons: Lesson[];
   target: DocTarget;
   zoomReady: boolean;
+  // the JaaS AppID when video calls on Jitsi run inside the app
+  jitsiAppId: string | null;
   boardServer: BoardServer | null;
   hasClaude: boolean;
 }) {
@@ -441,7 +504,8 @@ export default function LessonMode({
       )}
       <div className="lesson-mode">
         <div className="lesson-mode-side">
-          <CallPanel docText={docText} zoomReady={zoomReady} />
+          {jitsiAppId && <JitsiCard appId={jitsiAppId} docId={docId} />}
+          <CallPanel docText={docText} zoomReady={zoomReady} hasJitsi={!!jitsiAppId} />
           {!activity && (
             <WarmUpCard
               lesson={earlier}

@@ -397,6 +397,8 @@ export function answerFor(url, body, headers = {}, scenario = 'upcoming') {
       // adding to the document needs the service account's email (Make homework, Send to the teacher)
       docWriter: 'cahier@test-project.iam.gserviceaccount.com',
       teacher: headers['x-teacher-code'] === TEACHER_CODE,
+      // Jitsi calls in lesson mode: a made-up AppID, so the card shows (8x8 refuses its token)
+      jitsi: 'vpaas-magic-cookie-test',
     };
   if (path === '/api/doc') return { title: 'Test lesson', text: lessonText(scenario) };
   if (path === '/api/conjugate') return CONJUGATIONS[body?.inf] ?? {};
@@ -420,6 +422,8 @@ export function answerFor(url, body, headers = {}, scenario = 'upcoming') {
   }
   if (path === '/api/discussion') return DISCUSSION;
   if (path === '/api/append') return { ok: true };
+  if (path === '/api/call-token' && body?.kind === 'jitsi')
+    return { token: 'test-token', roomName: `vpaas-magic-cookie-test/${body.room}` };
   if (path === '/api/paper' && body?.kind === 'underlined') return UNDERLINED;
   // handwritten notes: one line per request, so a test sees how the pages were split
   if (path === '/api/paper' && body?.kind === 'handwritten')

@@ -109,6 +109,8 @@ export default function App() {
   const [docWriter, setDocWriter] = useState<string | null>(null);
   const [hasFeedback, setHasFeedback] = useState(false);
   const [zoomReady, setZoomReady] = useState(false);
+  // the JaaS AppID when video calls on Jitsi run inside the app
+  const [jitsiAppId, setJitsiAppId] = useState<string | null>(null);
   const [notionReady, setNotionReady] = useState(false);
   const [boardServer, setBoardServer] = useState<BoardServer | null>(null);
   const [docId, setDocId] = useState<string | null>(initialDocId);
@@ -146,6 +148,7 @@ export default function App() {
         setDocWriter(health.docWriter ?? null);
         setHasFeedback(!!health.feedback);
         setZoomReady(!!health.zoom);
+        setJitsiAppId(health.jitsi ?? null);
         setNotionReady(!!health.notion);
         setBoardServer(health.board ?? null);
         applyTeacherHealth(!!health.teacherCode, !!health.teacher);
@@ -467,6 +470,7 @@ export default function App() {
                 lessons={lessons}
                 target={docTarget}
                 zoomReady={zoomReady}
+                jitsiAppId={jitsiAppId}
                 boardServer={boardServer}
                 hasClaude={hasClaude}
               />

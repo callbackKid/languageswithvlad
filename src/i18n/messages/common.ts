@@ -90,6 +90,8 @@ export const common = defineMessages({
     zoomOff:
       'Zoom calls inside the app aren’t set up on this server yet (ZOOM_SDK_KEY, see README).',
     badMeetingNumber: 'This isn’t a Zoom meeting number. Check the Zoom link in the document.',
+    jitsiOff: 'Video calls aren’t set up on this server.',
+    badRoom: 'This call room isn’t valid. Reload the page and try again.',
     feedbackOff: 'Feedback isn’t set up on this server yet (TELEGRAM_BOT_TOKEN, see README).',
     claudeOff: 'Claude isn’t set up on this server yet (ANTHROPIC_API_KEY, see README).',
     deliveryFailed: 'The message couldn’t be delivered. Try again later.',
@@ -212,6 +214,8 @@ export const common = defineMessages({
     zoomOff:
       'Звонки Zoom внутри приложения ещё не настроены на сервере (ZOOM_SDK_KEY, см. README).',
     badMeetingNumber: 'Это не номер конференции Zoom. Проверьте ссылку Zoom в документе.',
+    jitsiOff: 'Видеозвонки на этом сервере не настроены.',
+    badRoom: 'Неверная комната звонка. Перезагрузите страницу и попробуйте ещё раз.',
     feedbackOff: 'Обратная связь ещё не настроена на сервере (TELEGRAM_BOT_TOKEN, см. README).',
     claudeOff: 'Claude ещё не настроен на сервере (ANTHROPIC_API_KEY, см. README).',
     deliveryFailed: 'Сообщение не удалось доставить. Попробуйте позже.',
@@ -323,6 +327,8 @@ export const common = defineMessages({
       'Les appels Zoom dans l’application ne sont pas encore configurés sur ce serveur (ZOOM_SDK_KEY, voir README).',
     badMeetingNumber:
       'Ce n’est pas un numéro de réunion Zoom. Vérifiez le lien Zoom dans le document.',
+    jitsiOff: 'Les appels vidéo ne sont pas configurés sur ce serveur.',
+    badRoom: 'Cette salle d’appel n’est pas valide. Rechargez la page et réessayez.',
     feedbackOff:
       'L’envoi d’avis n’est pas encore configuré sur ce serveur (TELEGRAM_BOT_TOKEN, voir README).',
     claudeOff: 'Claude n’est pas encore configuré sur ce serveur (ANTHROPIC_API_KEY, voir README).',
@@ -434,6 +440,8 @@ export const common = defineMessages({
     zoomOff:
       'Zoom-Anrufe in der App sind auf diesem Server noch nicht eingerichtet (ZOOM_SDK_KEY, siehe README).',
     badMeetingNumber: 'Das ist keine Zoom-Meeting-ID. Prüfe den Zoom-Link im Dokument.',
+    jitsiOff: 'Videoanrufe sind auf diesem Server nicht eingerichtet.',
+    badRoom: 'Dieser Anrufraum ist ungültig. Lade die Seite neu und versuch es noch einmal.',
     feedbackOff:
       'Feedback ist auf diesem Server noch nicht eingerichtet (TELEGRAM_BOT_TOKEN, siehe README).',
     claudeOff:
@@ -547,6 +555,8 @@ export const common = defineMessages({
       'Las llamadas de Zoom dentro de la aplicación aún no están configuradas en este servidor (ZOOM_SDK_KEY, ver README).',
     badMeetingNumber:
       'Esto no es un número de reunión de Zoom. Comprueba el enlace de Zoom en el documento.',
+    jitsiOff: 'Las videollamadas no están configuradas en este servidor.',
+    badRoom: 'Esta sala de llamada no es válida. Recarga la página y vuelve a intentarlo.',
     feedbackOff:
       'Enviar comentarios aún no está configurado en este servidor (TELEGRAM_BOT_TOKEN, ver README).',
     claudeOff: 'Claude aún no está configurado en este servidor (ANTHROPIC_API_KEY, ver README).',
@@ -658,6 +668,8 @@ export const common = defineMessages({
       'As chamadas do Zoom dentro da aplicação ainda não estão configuradas neste servidor (ZOOM_SDK_KEY, ver README).',
     badMeetingNumber:
       'Isto não é um número de reunião do Zoom. Verifique a ligação do Zoom no documento.',
+    jitsiOff: 'As videochamadas não estão configuradas neste servidor.',
+    badRoom: 'Esta sala de chamada não é válida. Recarregue a página e tente de novo.',
     feedbackOff:
       'Enviar comentários ainda não está configurado neste servidor (TELEGRAM_BOT_TOKEN, ver README).',
     claudeOff:
@@ -769,6 +781,8 @@ export const common = defineMessages({
       'Le chiamate Zoom nell’app non sono ancora configurate su questo server (ZOOM_SDK_KEY, vedi README).',
     badMeetingNumber:
       'Questo non è un numero di riunione Zoom. Controlla il link Zoom nel documento.',
+    jitsiOff: 'Le videochiamate non sono configurate su questo server.',
+    badRoom: 'Questa stanza della chiamata non è valida. Ricarica la pagina e riprova.',
     feedbackOff:
       'Il feedback non è ancora configurato su questo server (TELEGRAM_BOT_TOKEN, vedi README).',
     claudeOff: 'Claude non è ancora configurato su questo server (ANTHROPIC_API_KEY, vedi README).',
