@@ -5,6 +5,7 @@ import { statWord, useProgress } from '../lib/progress';
 import { followLink, hrefFor } from '../lib/router';
 import { isStudied, useSettings } from '../lib/settings';
 import type { Analysis } from '../lib/types';
+import LookUpWord from './LookUpWord';
 import PageHead from './PageHead';
 import WordsTab from './WordsTab';
 
@@ -41,6 +42,7 @@ export default function MyWords({ hasClaude }: { hasClaude: boolean }) {
       <PageHead guide="my-words" title={t('myWordsTitle')}>
         {words.length ? t('myWordsIntro', { count: words.length }) : null}
       </PageHead>
+      {hasClaude && <LookUpWord />}
       {hidden.length > 0 && (
         <div className="note info">
           <p>

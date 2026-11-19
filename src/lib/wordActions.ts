@@ -15,6 +15,16 @@ const CARDS_KEY = 'words:cards';
 // The oldest cards are dropped beyond this many, so storage doesn't fill up.
 const MAX_CARDS = 150;
 
+// Keep in step with the width of .word-actions in styles.css.
+const MENU_WIDTH = 380;
+// Space between the menu and the edges of the window or the selected text, in pixels.
+const GAP = 8;
+// Where the menu goes under something on the screen, kept inside the window, in page coordinates.
+export function menuPlace(box: DOMRect): { top: number; left: number } {
+  const left = Math.max(GAP, Math.min(box.left, window.innerWidth - MENU_WIDTH - GAP));
+  return { top: box.bottom + window.scrollY + GAP, left: left + window.scrollX };
+}
+
 // The sentence of the paragraph that holds the selection; the paragraph's start when it spans several.
 export function sentenceAround(paragraph: string, selection: string): string {
   const sentences = paragraph.split(/(?<=[.!?…»"])\s+/);
@@ -69,6 +79,59 @@ export function saveWordCard(selection: string, context: string, card: WordCard)
     .slice(0, MAX_CARDS);
   save(CARDS_KEY, Object.fromEntries(entries));
 }
+
+/** Opens the word menu on a word that wasn't selected: one clicked on the Text page, or typed in
+    Look up a word. Its detail is a LookUp. */
+export const LOOK_UP_EVENT = 'cahier:look-up';
+/** Sent by the menu when it has a card for a word from a part of a page marked
+    data-word-source="…" (the Text page keeps the words asked about). Its detail is a CardFound. */
+export const CARD_EVENT = 'cahier:word-card';
+
+export interface LookUp {
+  text: string;
+  context: string;
+  language: Language;
+  // where the menu goes on a wide screen, in page coordinates
+  top: number;
+  left: number;
+  source: string | null;
+}
+export interface CardFound {
+  card: WordCard;
+  source: string;
+}
+
+// Asks the menu to open on a word.
+export const lookUp = (detail: LookUp) =>
+  window.dispatchEvent(new CustomEvent(LOOK_UP_EVENT, { detail }));
+
+// A look-up from an event, checked: it comes from page code, but through the untyped DOM.
+export function asLookUp(raw: unknown): LookUp | null {
+  const fields = asFields(raw, {
+    text: 'string',
+    context: 'string',
+    language: 'string',
+    top: 'number',
+    left: 'number',
+  });
+  const language = learnedLanguage(fields?.language);
+  const text = cleanSelection(fields?.text ?? '');
+  if (!fields || !language || !text) return null;
+  const source = (raw as { source?: unknown }).source;
+  return { ...fields, text, language, source: typeof source === 'string' ? source : null };
+}
+
+// The fields of a card that a list of explained words keeps (the Text page's saved notes).
+export const cardNote = (card: WordCard): PhotoItem => ({
+  fr: card.fr,
+  context: card.context,
+  ru: card.ru,
+  base: card.base,
+  kind: card.kind,
+  tense: card.tense,
+  explanation: card.explanation,
+  language: card.language,
+});
 
 // "avoir raison — был прав (avait raison, imparfait, il)": one line of a lesson in the document.
 export function docLine(item: PhotoItem): string {

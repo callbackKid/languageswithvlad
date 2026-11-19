@@ -135,6 +135,18 @@ export const NEWS: NewsDay[] = [
           it: 'Le Parole preferite ora si chiamano Parole da imparare, perché è così che funziona la lista: una parola che sbagli o segni con ☆ ci resta finché non la indovini 3 volte di fila in qualsiasi esercizio (vale anche «La so» su una flashcard). I puntini accanto a ogni parola, come ●●○, mostrano a che punto è.',
         },
       },
+      {
+        kind: 'better',
+        text: {
+          en: 'The word menu is on the Text page too: click a word or select a phrase, and the words you look up are listed under the text. On Words to learn, type a word that isn’t in any text and press Look up.',
+          ru: 'Меню слова появилось и в «Разборе текста»: нажмите на слово или выделите фразу, а слова, которые вы посмотрели, соберутся в список под текстом. В «Словах на изучении» можно ввести слово, которого нет ни в одном тексте, и нажать «Найти».',
+          fr: 'Le menu des mots est aussi sur la page Analyse de texte : cliquez sur un mot ou sélectionnez une expression, et les mots consultés sont listés sous le texte. Dans Mots à apprendre, tapez un mot qui n’est dans aucun texte et appuyez sur « Chercher ».',
+          de: 'Das Wortmenü gibt es jetzt auch in der Textanalyse: Klicke auf ein Wort oder markiere eine Wendung, und die Wörter, die du nachschlägst, stehen in einer Liste unter dem Text. In den Lernwörtern gibst du ein Wort ein, das in keinem Text vorkommt, und tippst auf „Nachschlagen“.',
+          es: 'El menú de palabras también está en Análisis de texto: haz clic en una palabra o selecciona una frase, y las palabras que consultas aparecen en una lista bajo el texto. En Palabras por aprender, escribe una palabra que no esté en ningún texto y pulsa «Buscar».',
+          pt: 'O menu das palavras também está na Análise de texto: clique numa palavra ou selecione uma expressão, e as palavras que consultar ficam numa lista por baixo do texto. Nas Palavras por aprender, escreva uma palavra que não esteja em nenhum texto e carregue em «Procurar».',
+          it: 'Il menu delle parole c’è anche in Analisi del testo: clicca su una parola o seleziona una frase, e le parole che cerchi compaiono in un elenco sotto il testo. In Parole da imparare, scrivi una parola che non è in nessun testo e premi «Cerca».',
+        },
+      },
     ],
   },
   {

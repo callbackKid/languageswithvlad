@@ -1,19 +1,19 @@
-import { type SyntheticEvent, useEffect, useMemo, useState } from 'react';
+import { type MouseEvent, useEffect, useMemo, useState } from 'react';
 
 import { translator, useTranslation } from '../i18n/core';
 import { common } from '../i18n/messages/common';
 import { reader } from '../i18n/messages/reader';
 import { api, ApiError } from '../lib/api';
 import {
-  normalizeExplanation,
   normalizeReaderText,
   normalizeStudy,
   normalizeTranslation,
+  normalizeWordCard,
 } from '../lib/parse';
 import { getSettings } from '../lib/settings';
 import { asList, load, save } from '../lib/storage';
 import type { Analysis, Language, ReaderText, TextStudy } from '../lib/types';
-import { MAX_SELECTION_LENGTH, sentenceAround } from '../lib/wordActions';
+import { CARD_EVENT, cardNote, lookUp, menuPlace, sentenceAround } from '../lib/wordActions';
 import PageHead from './PageHead';
 import Speak from './Speak';
 import WaitingFact from './WaitingFact';
@@ -29,11 +29,8 @@ const MAX_TEXTS = 20;
 const WORD = /(\p{L}[\p{L}\p{M}'’-]*)/u;
 
 type Busy = 'idle' | 'loading' | 'error';
-interface Selection {
-  text: string;
-  // the sentence around it, which tells Claude which meaning is meant
-  context: string;
-}
+// what the word menu calls the words it explains from this page's text
+const WORD_SOURCE = 'reader';
 
 // The first words of a text, for the list of saved texts until Claude names it.
 const firstWords = (text: string) => {
@@ -96,18 +93,17 @@ function TrueFalse({
   );
 }
 
-/** A pasted text to read: any word or phrase explained on request, a translation of the whole
-    text, and words, questions and a true-or-false exercise built from it. */
+/** A pasted text to read: any word or phrase explained by the word menu (a click on a word, or a
+    selection) and kept in a list under the text, a translation of the whole text, and words,
+    questions and a true-or-false exercise built from it. */
 export default function Reader({ hasClaude }: { hasClaude: boolean }) {
-  const { t, rich } = useTranslation(reader);
+  const { t } = useTranslation(reader);
   const commonText = useTranslation(common);
   const [texts, setTexts] = useState<ReaderText[]>(() =>
     asList(load<unknown>(STORAGE_KEY), normalizeReaderText)
   );
   const [currentId, setCurrentId] = useState<string | null>(() => texts[0]?.id ?? null);
   const [draft, setDraft] = useState('');
-  const [selection, setSelection] = useState<Selection | null>(null);
-  const [explaining, setExplaining] = useState<Busy>('idle');
   const [translating, setTranslating] = useState<Busy>('idle');
   const [studying, setStudying] = useState<Busy>('idle');
   const [error, setError] = useState('');
@@ -128,6 +124,31 @@ export default function Reader({ hasClaude }: { hasClaude: boolean }) {
 
   // saved whenever the list changes, so answers that arrive together never overwrite each other
   useEffect(() => save(STORAGE_KEY, texts), [texts]);
+  // every word the menu explains from this text joins its list; asked again, it moves to the top
+  useEffect(() => {
+    const onCard = (event: Event) => {
+      const detail: unknown = event instanceof CustomEvent ? event.detail : null;
+      const source = (detail as { source?: unknown } | null)?.source;
+      const card = normalizeWordCard((detail as { card?: unknown } | null)?.card, '');
+      if (source !== WORD_SOURCE || !card || !currentId) return;
+      setTexts((previous) =>
+        previous.map((entry) =>
+          entry.id === currentId
+            ? {
+                ...entry,
+                notes: [
+                  cardNote(card),
+                  ...entry.notes.filter((note) => note.fr.toLowerCase() !== card.fr.toLowerCase()),
+                ],
+                language: card.language,
+              }
+            : entry
+        )
+      );
+    };
+    window.addEventListener(CARD_EVENT, onCard);
+    return () => window.removeEventListener(CARD_EVENT, onCard);
+  }, [currentId]);
   // Changes one text, starting from its newest state (an answer may arrive while another is on its way).
   const patch = (id: string, change: (entry: ReaderText) => Partial<ReaderText>) =>
     setTexts((previous) =>
@@ -135,16 +156,12 @@ export default function Reader({ hasClaude }: { hasClaude: boolean }) {
     );
   const open = (id: string | null) => {
     setCurrentId(id);
-    setSelection(null);
     setError('');
-    setExplaining('idle');
     setTranslating('idle');
     setStudying('idle');
   };
-  const failure = (
-    problem: unknown,
-    fallback: 'explainFailed' | 'translateFailed' | 'studyFailed'
-  ) => setError(problem instanceof ApiError ? problem.message : translator(reader).t(fallback));
+  const failure = (problem: unknown, fallback: 'translateFailed' | 'studyFailed') =>
+    setError(problem instanceof ApiError ? problem.message : translator(reader).t(fallback));
 
   function addText() {
     const text = draft.trim();
@@ -172,46 +189,19 @@ export default function Reader({ hasClaude }: { hasClaude: boolean }) {
     open(next[0]?.id ?? null);
   }
 
-  // A click picks the word under it; a drag picks whatever was selected.
-  function pick(event: SyntheticEvent<HTMLElement>) {
-    const target = event.target as HTMLElement;
-    // the translation under a paragraph isn't something to explain
-    if (target.closest('.reader-translation')) return;
-    const paragraph = target.closest('p')?.textContent ?? '';
-    const dragged = window.getSelection()?.toString().replace(/\s+/g, ' ').trim() ?? '';
-    const text =
-      dragged || (target.classList.contains('reader-word') ? (target.textContent ?? '') : '');
-    if (!text || text.length > MAX_SELECTION_LENGTH) return;
-    setSelection({ text, context: sentenceAround(paragraph, text) });
-    setExplaining('idle');
-    setError('');
-  }
-
-  async function explain() {
-    if (!current || !selection) return;
-    setExplaining('loading');
-    setError('');
-    try {
-      const item = normalizeExplanation(
-        await api.explain(selection.text, selection.context),
-        selection.text
-      );
-      if (!item) throw new Error('empty');
-      patch(current.id, (entry) => ({
-        // asked again: the new answer replaces the old one, at the top
-        notes: [
-          item,
-          ...entry.notes.filter((note) => note.fr.toLowerCase() !== item.fr.toLowerCase()),
-        ],
-        language: item.language,
-      }));
-      setExplaining('idle');
-      setSelection(null);
-      window.getSelection()?.removeAllRanges();
-    } catch (problem) {
-      setExplaining('error');
-      failure(problem, 'explainFailed');
-    }
+  // A click on a word opens the word menu on it; a selection opens it by itself.
+  function lookUpWord(event: MouseEvent<HTMLElement>) {
+    const target = event.target;
+    if (!(target instanceof HTMLElement) || !target.classList.contains('reader-word')) return;
+    if (!window.getSelection()?.isCollapsed) return;
+    const word = target.textContent ?? '';
+    lookUp({
+      text: word,
+      context: sentenceAround(target.closest('p')?.textContent ?? '', word),
+      language,
+      ...menuPlace(target.getBoundingClientRect()),
+      source: WORD_SOURCE,
+    });
   }
 
   async function translate() {
@@ -356,14 +346,13 @@ export default function Reader({ hasClaude }: { hasClaude: boolean }) {
               {translating === 'loading' && (
                 <WaitingFact language={language}>{t('translating')}</WaitingFact>
               )}
-              {/* a click or a selection inside the text picks what to explain; this page has its
-                  own explain bar, so the word menu stays away */}
+              {/* a click on a word, or a selection, opens the word menu; its answers come back to
+                  this page as the list of words asked about */}
               <div
                 className="reader-text"
                 lang={language}
-                data-no-word-actions
-                onMouseUp={pick}
-                onTouchEnd={pick}
+                data-word-source={WORD_SOURCE}
+                onClick={lookUpWord}
               >
                 {paragraphs.map((paragraph, index) => (
                   <div key={index} className="reader-paragraph">
@@ -400,26 +389,6 @@ export default function Reader({ hasClaude }: { hasClaude: boolean }) {
                 )}
               </div>
 
-              <div className="reader-bar" role="status">
-                <span className="reader-selected">
-                  {selection
-                    ? rich(
-                        'selected',
-                        { b: (chunk) => <b lang={language}>{chunk}</b> },
-                        { selection: selection.text }
-                      )
-                    : t('nothingSelected')}
-                </span>
-                {selection && <Speak text={selection.text} language={language} />}
-                <button
-                  type="button"
-                  className="btn primary"
-                  disabled={!selection || explaining === 'loading'}
-                  onClick={() => void explain()}
-                >
-                  {explaining === 'loading' ? t('explaining') : t('explain')}
-                </button>
-              </div>
               {error && (
                 <div className="note err" role="alert">
                   <p>{error}</p>

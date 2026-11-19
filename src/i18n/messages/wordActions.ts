@@ -15,6 +15,10 @@ export const wordActions = defineMessages({
     notAVerb: '“{word}” isn’t a verb, so it has no tables.',
     addToLesson: 'Add to lesson {n}',
     addedToLesson: 'Added under lesson {n}: it reaches the exercises with the next sync.',
+    lookUpLabel: 'Look up a word',
+    lookUpPlaceholder: 'Look up a word or phrase…',
+    lookUpLanguage: 'Language of the word',
+    lookUp: 'Look up',
   },
   ru: {
     dialogLabel: 'Действия с «{word}»',
@@ -29,6 +33,10 @@ export const wordActions = defineMessages({
     notAVerb: '«{word}» — не глагол, поэтому таблиц спряжения нет.',
     addToLesson: 'Добавить в урок {n}',
     addedToLesson: 'Добавлено в урок {n}: попадёт в упражнения после следующей синхронизации.',
+    lookUpLabel: 'Найти слово',
+    lookUpPlaceholder: 'Найти слово или фразу…',
+    lookUpLanguage: 'Язык слова',
+    lookUp: 'Найти',
   },
   fr: {
     dialogLabel: 'Actions pour « {word} »',
@@ -44,6 +52,10 @@ export const wordActions = defineMessages({
     addToLesson: 'Ajouter à la leçon {n}',
     addedToLesson:
       'Ajouté sous la leçon {n} : il rejoindra les exercices à la prochaine synchronisation.',
+    lookUpLabel: 'Chercher un mot',
+    lookUpPlaceholder: 'Chercher un mot ou une expression…',
+    lookUpLanguage: 'Langue du mot',
+    lookUp: 'Chercher',
   },
   de: {
     dialogLabel: 'Aktionen für „{word}“',
@@ -59,6 +71,10 @@ export const wordActions = defineMessages({
     addToLesson: 'Zu Lektion {n} hinzufügen',
     addedToLesson:
       'Unter Lektion {n} hinzugefügt: Beim nächsten Synchronisieren kommt es in die Übungen.',
+    lookUpLabel: 'Wort nachschlagen',
+    lookUpPlaceholder: 'Wort oder Wendung nachschlagen…',
+    lookUpLanguage: 'Sprache des Wortes',
+    lookUp: 'Nachschlagen',
   },
   es: {
     dialogLabel: 'Acciones para «{word}»',
@@ -74,6 +90,10 @@ export const wordActions = defineMessages({
     addToLesson: 'Añadir a la lección {n}',
     addedToLesson:
       'Añadido a la lección {n}: llegará a los ejercicios con la próxima sincronización.',
+    lookUpLabel: 'Buscar una palabra',
+    lookUpPlaceholder: 'Buscar una palabra o expresión…',
+    lookUpLanguage: 'Idioma de la palabra',
+    lookUp: 'Buscar',
   },
   pt: {
     dialogLabel: 'Ações para «{word}»',
@@ -88,6 +108,10 @@ export const wordActions = defineMessages({
     notAVerb: '«{word}» não é um verbo, por isso não tem tabelas de conjugação.',
     addToLesson: 'Acrescentar à lição {n}',
     addedToLesson: 'Acrescentado à lição {n}: entra nos exercícios na próxima sincronização.',
+    lookUpLabel: 'Procurar uma palavra',
+    lookUpPlaceholder: 'Procurar uma palavra ou expressão…',
+    lookUpLanguage: 'Língua da palavra',
+    lookUp: 'Procurar',
   },
   it: {
     dialogLabel: 'Azioni per «{word}»',
@@ -103,5 +127,9 @@ export const wordActions = defineMessages({
     addToLesson: 'Aggiungi alla lezione {n}',
     addedToLesson:
       'Aggiunto alla lezione {n}: entrerà negli esercizi con la prossima sincronizzazione.',
+    lookUpLabel: 'Cerca una parola',
+    lookUpPlaceholder: 'Cerca una parola o un’espressione…',
+    lookUpLanguage: 'Lingua della parola',
+    lookUp: 'Cerca',
   },
 });

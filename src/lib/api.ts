@@ -231,17 +231,6 @@ export const api = {
       method: 'POST',
       body: JSON.stringify({ kind: 'handwritten', images }),
     }),
-  // a word or phrase marked in a pasted text, explained in its sentence
-  explain: (selection: string, context: string) =>
-    request<unknown>('/api/text', {
-      method: 'POST',
-      body: JSON.stringify({
-        action: 'explain',
-        selection,
-        context,
-        levels: getSettings().levels,
-      }),
-    }),
   // a word or phrase selected anywhere in the app: explained in its sentence, defined, with examples
   word: (selection: string, context: string) =>
     request<unknown>('/api/text', {

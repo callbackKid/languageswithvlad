@@ -5,12 +5,18 @@ import { common } from '../i18n/messages/common';
 import { wordActions } from '../i18n/messages/wordActions';
 import { api, ApiError } from '../lib/api';
 import { normalizeWordCard } from '../lib/parse';
-import { type Language, type Lesson, TENSES_BY_LANGUAGE, type WordCard } from '../lib/types';
+import { type Lesson, TENSES_BY_LANGUAGE, type WordCard } from '../lib/types';
 import {
+  asLookUp,
+  CARD_EVENT,
+  type CardFound,
   cardWord,
   cleanSelection,
   docLine,
   learnedLanguage,
+  LOOK_UP_EVENT,
+  type LookUp,
+  menuPlace,
   readWordCard,
   saveWordCard,
   sentenceAround,
@@ -20,33 +26,20 @@ import Star from './Star';
 import VerbsTab from './VerbsTab';
 import WaitingFact from './WaitingFact';
 
-// Where the menu never opens: exercises (it would give the answers away), form fields, the Text
-// page's own explain bar, and the menu itself.
+// Where the menu never opens on a selection: exercises (it would give the answers away), form
+// fields, places marked data-no-word-actions, and the menu itself.
 const SKIPPED =
   '.ex, input, textarea, select, [contenteditable], [data-no-word-actions], .word-actions';
 // The element whose text holds the sentence around a selection.
 const BLOCK = 'p, li, td, th, dd, dt, h1, h2, h3, h4, blockquote, pre, label, div';
-// Keep in step with the width of .word-actions in styles.css.
-const MENU_WIDTH = 380;
-// Space between the menu and the edges of the window or the selected text, in pixels.
-const GAP = 8;
 // On a touch screen the selection is adjusted with handles: the menu waits until it rests this long.
 const TOUCH_PAUSE_MS = 600;
 
 const VIEWS = ['translate', 'define', 'examples', 'conjugate'] as const;
 type View = (typeof VIEWS)[number];
 
-interface Picked {
-  text: string;
-  context: string;
-  language: Language;
-  // where the menu goes on a wide screen, in page coordinates
-  top: number;
-  left: number;
-}
-
 // The selection on the page, when it is text in a language being learned outside the skipped places.
-function pickedNow(): Picked | null {
+function pickedNow(): LookUp | null {
   const selection = window.getSelection();
   if (!selection || selection.isCollapsed || !selection.rangeCount) return null;
   const text = cleanSelection(selection.toString());
@@ -62,14 +55,12 @@ function pickedNow(): Picked | null {
   if (!language) return null;
   const block = element.closest(BLOCK) ?? marked;
   const paragraph = (block.textContent ?? '').replace(/\s+/g, ' ');
-  const box = range.getBoundingClientRect();
-  const left = Math.max(GAP, Math.min(box.left, window.innerWidth - MENU_WIDTH - GAP));
   return {
     text,
     context: sentenceAround(paragraph, text),
     language,
-    top: box.bottom + window.scrollY + GAP,
-    left: left + window.scrollX,
+    ...menuPlace(range.getBoundingClientRect()),
+    source: element.closest('[data-word-source]')?.getAttribute('data-word-source') ?? null,
   };
 }
 
@@ -91,7 +82,7 @@ export default function WordActions({
 }) {
   const { t, rich } = useTranslation(wordActions);
   const commonText = useTranslation(common);
-  const [picked, setPicked] = useState<Picked | null>(null);
+  const [picked, setPicked] = useState<LookUp | null>(null);
   const [card, setCard] = useState<WordCard | null>(null);
   const [view, setView] = useState<View | null>(null);
   const [state, setState] = useState<'idle' | 'loading' | 'error'>('idle');
@@ -107,8 +98,7 @@ export default function WordActions({
     let timer = 0;
     const inMenu = (target: EventTarget | null) =>
       target instanceof Node && !!menu.current?.contains(target);
-    const open = () => {
-      const next = pickedNow();
+    const show = (next: LookUp | null) => {
       if (!next) return;
       pickCount.current += 1;
       setPicked(next);
@@ -119,6 +109,9 @@ export default function WordActions({
       setAdding('idle');
       setAddError('');
     };
+    const open = () => show(pickedNow());
+    const onLookUp = (event: Event) =>
+      show(asLookUp(event instanceof CustomEvent ? event.detail : null));
     const onPointerDown = (event: PointerEvent) => {
       pointer = event.pointerType;
       if (!inMenu(event.target)) setPicked(null);
@@ -139,12 +132,14 @@ export default function WordActions({
     document.addEventListener('mouseup', onMouseUp);
     document.addEventListener('selectionchange', onSelectionChange);
     document.addEventListener('keydown', onKeyDown);
+    window.addEventListener(LOOK_UP_EVENT, onLookUp);
     return () => {
       window.clearTimeout(timer);
       document.removeEventListener('pointerdown', onPointerDown);
       document.removeEventListener('mouseup', onMouseUp);
       document.removeEventListener('selectionchange', onSelectionChange);
       document.removeEventListener('keydown', onKeyDown);
+      window.removeEventListener(LOOK_UP_EVENT, onLookUp);
     };
   }, []);
 
@@ -155,9 +150,19 @@ export default function WordActions({
     menu.current.style.setProperty('--word-left', `${picked.left}px`);
   }, [picked]);
 
+  // Tells the part of the page the word came from that it now has a card (the Text page lists them).
+  function report(found: WordCard) {
+    if (!picked?.source) return;
+    const detail: CardFound = { card: found, source: picked.source };
+    window.dispatchEvent(new CustomEvent(CARD_EVENT, { detail }));
+  }
+
   // The card for the selection: the saved one, or Claude's answer; null while it fails.
   async function cardNow(): Promise<WordCard | null> {
-    if (card) return card;
+    if (card) {
+      report(card);
+      return card;
+    }
     if (!picked) return null;
     const pick = pickCount.current;
     setState('loading');
@@ -169,6 +174,7 @@ export default function WordActions({
       if (pick !== pickCount.current) return null;
       setCard(answer);
       setState('idle');
+      report(answer);
       return answer;
     } catch (failure) {
       if (pick !== pickCount.current) return null;

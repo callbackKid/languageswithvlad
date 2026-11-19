@@ -485,12 +485,6 @@ export function mergePhotoItems(scans: PhotoItem[][]): PhotoItem[] {
   });
 }
 
-// One marked word or phrase explained; null when the answer has no translation to show.
-export function normalizeExplanation(raw: unknown, selection: string): PhotoItem | null {
-  const item = photoItem(raw, asLanguage(asObject(raw).language));
-  return item.ru ? { ...item, fr: item.fr || selection } : null;
-}
-
 // A selected word's card; null when Claude gave no translation.
 export function normalizeWordCard(raw: unknown, selection: string): WordCard | null {
   const data = asObject(raw);

@@ -153,7 +153,7 @@ a {
 }
 
 /* the menu on a selected word (WordActions): under the selection on a wide screen, a sheet at
-   the bottom on a phone; the width is MENU_WIDTH in WordActions.tsx */
+   the bottom on a phone; the width is MENU_WIDTH in src/lib/wordActions.ts */
 .word-actions {
   position: absolute;
   top: var(--word-top, 0);
@@ -208,6 +208,25 @@ a {
   display: block;
   font-size: 14px;
   color: var(--muted);
+}
+/* a word typed by hand for the menu (Look up a word, on Words to learn) */
+.look-up {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+.look-up input {
+  flex: 1 1 220px;
+  min-width: 0;
+}
+.look-up select {
+  padding: 7px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
 }
 .word-actions-add {
   margin-top: 12px;

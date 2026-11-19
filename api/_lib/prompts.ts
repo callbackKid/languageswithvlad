@@ -192,17 +192,6 @@ Reply with only a JSON object: {"language": ${LANGUAGE_CODES}, "items": [{"fr": 
 ${MARKED_ITEM_RULES}`;
 }
 
-// One word or phrase the learner marked while reading a pasted text.
-export function explainPrompt(selection: string, context: string, levels: Levels): string {
-  return `A Russian-speaking learner is reading a text in ${LANGUAGE_LIST} and marked a word or phrase they don't understand. Explain it as it is used in this sentence.
-${levelLine(levels)} ${LEVEL_STYLE}
-Marked: """${selection}"""
-The sentence around it: """${context}"""
-Reply with only a JSON object: {"language": ${LANGUAGE_CODES}, "fr": string, "context": string, "ru": string, "base": string, "kind": string, "tense": string, "explanation": string}.
-- language: the language of the text: ${LANGUAGE_KEY}.
-${MARKED_ITEM_RULES}`;
-}
-
 /** A word or phrase selected anywhere in the app, for its menu of actions: the translation and
     explanation in its sentence (as for a marked word in a pasted text), a definition in its own
     language and examples, all in one answer so switching between them needs no new request. */

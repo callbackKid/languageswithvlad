@@ -5,7 +5,7 @@ export const reader = defineMessages({
   en: {
     title: 'Text analysis',
     intro:
-      'Paste an article or any other text. Click a word or select a phrase to have it explained, translate the whole text, and get questions and exercises made from it.',
+      'Paste an article or any other text. Click a word or select a phrase to open its menu, translate the whole text, and get questions and exercises made from it.',
     pasteLabel: 'Your text',
     pastePlaceholder: 'Paste a text in the language you’re learning…',
     read: 'Read this text',
@@ -14,12 +14,8 @@ export const reader = defineMessages({
     savedTexts: 'Saved texts',
     delete: 'Delete',
     deleteConfirm: 'Delete “{title}”?',
-    readingHint: 'Click a word, or select a few words, then press Explain.',
-    selected: 'Selected: <b>{selection}</b>',
-    nothingSelected: 'Nothing selected yet.',
-    explain: 'Explain',
-    explaining: 'Explaining…',
-    explainFailed: 'Couldn’t explain that. Try again.',
+    readingHint:
+      'Click a word, or select a few words, to open the menu: translation, definition, examples. The words you look up are listed under the text.',
     translate: 'Translate the text',
     translating: 'Translating the text…',
     translateFailed: 'Couldn’t translate the text. Try again.',
@@ -48,7 +44,7 @@ export const reader = defineMessages({
   ru: {
     title: 'Разбор текста',
     intro:
-      'Вставьте статью или любой другой текст. Нажмите на слово или выделите фразу, чтобы получить объяснение, переведите весь текст и получите вопросы и упражнения по нему.',
+      'Вставьте статью или любой другой текст. Нажмите на слово или выделите фразу, чтобы открыть меню, переведите весь текст и получите вопросы и упражнения по нему.',
     pasteLabel: 'Ваш текст',
     pastePlaceholder: 'Вставьте текст на языке, который вы учите…',
     read: 'Читать этот текст',
@@ -57,12 +53,8 @@ export const reader = defineMessages({
     savedTexts: 'Сохранённые тексты',
     delete: 'Удалить',
     deleteConfirm: 'Удалить «{title}»?',
-    readingHint: 'Нажмите на слово или выделите несколько слов, затем нажмите «Объяснить».',
-    selected: 'Выбрано: <b>{selection}</b>',
-    nothingSelected: 'Пока ничего не выбрано.',
-    explain: 'Объяснить',
-    explaining: 'Объясняю…',
-    explainFailed: 'Не удалось объяснить. Попробуйте ещё раз.',
+    readingHint:
+      'Нажмите на слово или выделите несколько слов, чтобы открыть меню: перевод, определение, примеры. Под текстом — список слов, которые вы уже посмотрели.',
     translate: 'Перевести текст',
     translating: 'Перевожу текст…',
     translateFailed: 'Не удалось перевести текст. Попробуйте ещё раз.',
@@ -90,7 +82,7 @@ export const reader = defineMessages({
   fr: {
     title: 'Analyse de texte',
     intro:
-      'Collez un article ou n’importe quel texte. Cliquez sur un mot ou sélectionnez une expression pour en avoir l’explication, traduisez tout le texte et obtenez des questions et des exercices tirés du texte.',
+      'Collez un article ou n’importe quel texte. Cliquez sur un mot ou sélectionnez une expression pour ouvrir son menu, traduisez tout le texte et obtenez des questions et des exercices tirés du texte.',
     pasteLabel: 'Votre texte',
     pastePlaceholder: 'Collez un texte dans la langue que vous apprenez…',
     read: 'Lire ce texte',
@@ -100,12 +92,8 @@ export const reader = defineMessages({
     savedTexts: 'Textes enregistrés',
     delete: 'Supprimer',
     deleteConfirm: 'Supprimer « {title} » ?',
-    readingHint: 'Cliquez sur un mot, ou sélectionnez quelques mots, puis appuyez sur Expliquer.',
-    selected: 'Sélection : <b>{selection}</b>',
-    nothingSelected: 'Rien n’est sélectionné pour l’instant.',
-    explain: 'Expliquer',
-    explaining: 'Explication…',
-    explainFailed: 'Impossible d’expliquer cela. Réessayez.',
+    readingHint:
+      'Cliquez sur un mot, ou sélectionnez quelques mots, pour ouvrir le menu : traduction, définition, exemples. Les mots consultés sont listés sous le texte.',
     translate: 'Traduire le texte',
     translating: 'Traduction du texte…',
     translateFailed: 'Impossible de traduire le texte. Réessayez.',
@@ -134,7 +122,7 @@ export const reader = defineMessages({
   de: {
     title: 'Textanalyse',
     intro:
-      'Füge einen Artikel oder einen anderen Text ein. Klicke auf ein Wort oder markiere eine Wendung, um eine Erklärung zu bekommen, übersetze den ganzen Text und erhalte Fragen und Übungen dazu.',
+      'Füge einen Artikel oder einen anderen Text ein. Klicke auf ein Wort oder markiere eine Wendung, um das Menü dazu zu öffnen, übersetze den ganzen Text und erhalte Fragen und Übungen dazu.',
     pasteLabel: 'Dein Text',
     pastePlaceholder: 'Füge einen Text in der Sprache ein, die du lernst…',
     read: 'Diesen Text lesen',
@@ -143,12 +131,8 @@ export const reader = defineMessages({
     savedTexts: 'Gespeicherte Texte',
     delete: 'Löschen',
     deleteConfirm: '„{title}“ löschen?',
-    readingHint: 'Klicke auf ein Wort oder markiere ein paar Wörter und tippe dann auf Erklären.',
-    selected: 'Ausgewählt: <b>{selection}</b>',
-    nothingSelected: 'Noch nichts ausgewählt.',
-    explain: 'Erklären',
-    explaining: 'Wird erklärt…',
-    explainFailed: 'Das konnte nicht erklärt werden. Versuch es nochmal.',
+    readingHint:
+      'Klicke auf ein Wort oder markiere ein paar Wörter, um das Menü zu öffnen: Übersetzung, Definition, Beispiele. Die Wörter, die du nachschlägst, stehen in einer Liste unter dem Text.',
     translate: 'Text übersetzen',
     translating: 'Der Text wird übersetzt…',
     translateFailed: 'Der Text konnte nicht übersetzt werden. Versuch es nochmal.',
@@ -177,7 +161,7 @@ export const reader = defineMessages({
   es: {
     title: 'Análisis de texto',
     intro:
-      'Pega un artículo o cualquier otro texto. Haz clic en una palabra o selecciona una frase para ver su explicación, traduce el texto entero y consigue preguntas y ejercicios hechos con él.',
+      'Pega un artículo o cualquier otro texto. Haz clic en una palabra o selecciona una frase para abrir su menú, traduce el texto entero y consigue preguntas y ejercicios hechos con él.',
     pasteLabel: 'Tu texto',
     pastePlaceholder: 'Pega un texto en el idioma que estás aprendiendo…',
     read: 'Leer este texto',
@@ -187,12 +171,8 @@ export const reader = defineMessages({
     savedTexts: 'Textos guardados',
     delete: 'Eliminar',
     deleteConfirm: '¿Eliminar «{title}»?',
-    readingHint: 'Haz clic en una palabra o selecciona unas cuantas y pulsa Explicar.',
-    selected: 'Seleccionado: <b>{selection}</b>',
-    nothingSelected: 'Aún no hay nada seleccionado.',
-    explain: 'Explicar',
-    explaining: 'Explicando…',
-    explainFailed: 'No se pudo explicar. Inténtalo de nuevo.',
+    readingHint:
+      'Haz clic en una palabra o selecciona unas cuantas para abrir el menú: traducción, definición, ejemplos. Las palabras que consultas aparecen en una lista bajo el texto.',
     translate: 'Traducir el texto',
     translating: 'Traduciendo el texto…',
     translateFailed: 'No se pudo traducir el texto. Inténtalo de nuevo.',
@@ -221,7 +201,7 @@ export const reader = defineMessages({
   pt: {
     title: 'Análise de texto',
     intro:
-      'Cole um artigo ou qualquer outro texto. Clique numa palavra ou selecione uma expressão para a ver explicada, traduza o texto inteiro e obtenha perguntas e exercícios feitos a partir dele.',
+      'Cole um artigo ou qualquer outro texto. Clique numa palavra ou selecione uma expressão para abrir o menu, traduza o texto inteiro e obtenha perguntas e exercícios feitos a partir dele.',
     pasteLabel: 'O seu texto',
     pastePlaceholder: 'Cole um texto na língua que está a aprender…',
     read: 'Ler este texto',
@@ -231,12 +211,8 @@ export const reader = defineMessages({
     savedTexts: 'Textos guardados',
     delete: 'Apagar',
     deleteConfirm: 'Apagar «{title}»?',
-    readingHint: 'Clique numa palavra ou selecione algumas e carregue em Explicar.',
-    selected: 'Selecionado: <b>{selection}</b>',
-    nothingSelected: 'Ainda não há nada selecionado.',
-    explain: 'Explicar',
-    explaining: 'A explicar…',
-    explainFailed: 'Não foi possível explicar. Tente de novo.',
+    readingHint:
+      'Clique numa palavra ou selecione algumas para abrir o menu: tradução, definição, exemplos. As palavras que consultar ficam numa lista por baixo do texto.',
     translate: 'Traduzir o texto',
     translating: 'A traduzir o texto…',
     translateFailed: 'Não foi possível traduzir o texto. Tente de novo.',
@@ -265,7 +241,7 @@ export const reader = defineMessages({
   it: {
     title: 'Analisi del testo',
     intro:
-      'Incolla un articolo o qualsiasi altro testo. Clicca su una parola o seleziona una frase per fartela spiegare, traduci tutto il testo e ottieni domande ed esercizi ricavati dal testo.',
+      'Incolla un articolo o qualsiasi altro testo. Clicca su una parola o seleziona una frase per aprire il suo menu, traduci tutto il testo e ottieni domande ed esercizi ricavati dal testo.',
     pasteLabel: 'Il tuo testo',
     pastePlaceholder: 'Incolla un testo nella lingua che stai imparando…',
     read: 'Leggi questo testo',
@@ -275,12 +251,8 @@ export const reader = defineMessages({
     savedTexts: 'Testi salvati',
     delete: 'Elimina',
     deleteConfirm: 'Eliminare «{title}»?',
-    readingHint: 'Clicca su una parola, o selezionane alcune, poi premi Spiega.',
-    selected: 'Selezionato: <b>{selection}</b>',
-    nothingSelected: 'Ancora niente di selezionato.',
-    explain: 'Spiega',
-    explaining: 'Spiegazione in corso…',
-    explainFailed: 'Impossibile spiegarlo. Riprova.',
+    readingHint:
+      'Clicca su una parola, o selezionane alcune, per aprire il menu: traduzione, definizione, esempi. Le parole che cerchi compaiono in un elenco sotto il testo.',
     translate: 'Traduci il testo',
     translating: 'Traduzione del testo…',
     translateFailed: 'Impossibile tradurre il testo. Riprova.',

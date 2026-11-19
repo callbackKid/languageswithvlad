@@ -415,7 +415,6 @@ export function answerFor(url, body, headers = {}, scenario = 'upcoming') {
   }
   if (path === '/api/text') {
     if (body?.action === 'correct') return WRITING_CHECK;
-    if (body?.action === 'explain') return EXPLANATION;
     if (body?.action === 'word') return /l[eè]v/.test(body.selection ?? '') ? VERB_CARD : WORD_CARD;
     return {};
   }

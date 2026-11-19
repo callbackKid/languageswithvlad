@@ -132,6 +132,8 @@ export const tutorial = defineMessages({
     'my-words.step1': 'Practise them with the same exercises as in a lesson.',
     'my-words.step2':
       'A word leaves the list after <b>3 right answers in a row</b> in any exercise (<b>I know it</b> on a flashcard counts too), or when you take its ★ off. The dots next to it, like ●●○, show how far it has got; a mistake starts the count again.',
+    'my-words.step3':
+      'A word that isn’t in any text: type it in the field at the top and press <pbtn>Look up</pbtn> for the same menu as on a selected word, with ☆ to put it on the list.',
 
     'mistakes.title': 'Mistakes',
     'mistakes.summary': 'The words and verb forms you miss most',
@@ -169,7 +171,7 @@ export const tutorial = defineMessages({
     'text.step1':
       'Paste the text and press <pbtn>Read this text</pbtn>. It is saved on this device, with everything you do with it.',
     'text.step2':
-      'Click a word, or select a few words with the mouse or your finger, then press <pbtn>Explain</pbtn>: you get the translation in this sentence, the dictionary form, the tense and a short explanation. ☆ puts the word on Words to learn.',
+      'Click a word, or select a few words with the mouse or your finger, to open the menu: <b>Translate</b> in this sentence (with the dictionary form, the tense and a short explanation), <b>Define</b>, <b>Examples</b> and, for a verb, <b>Conjugate</b>. The words you look up are listed under the text. ☆ puts the word on Words to learn.',
     'text.step3':
       '<btn>Translate the text</btn> shows a Russian translation under each paragraph; the same button hides it again.',
     'text.step4':
@@ -374,6 +376,8 @@ export const tutorial = defineMessages({
     'my-words.step1': 'Тренируйте их теми же упражнениями, что и в уроке.',
     'my-words.step2':
       'Слово уходит из списка после <b>3 верных ответов подряд</b> в любом упражнении (<b>Знаю</b> на карточке тоже считается) или если снять с него ★. Точки рядом со словом, например ●●○, показывают, сколько уже пройдено; после ошибки счёт начинается заново.',
+    'my-words.step3':
+      'Слово, которого нет ни в одном тексте: введите его в поле вверху и нажмите <pbtn>Найти</pbtn> — откроется то же меню, что и для выделенного слова, с ☆, чтобы добавить его в список.',
 
     'mistakes.title': 'Ошибки',
     'mistakes.summary': 'Слова и формы глаголов, в которых вы ошибаетесь чаще всего',
@@ -409,7 +413,7 @@ export const tutorial = defineMessages({
     'text.step1':
       'Вставьте текст и нажмите <pbtn>Читать этот текст</pbtn>. Он сохраняется на этом устройстве вместе со всем, что вы с ним сделали.',
     'text.step2':
-      'Нажмите на слово или выделите несколько слов мышью или пальцем, затем нажмите <pbtn>Объяснить</pbtn>: вы получите перевод в этом предложении, словарную форму, время и короткое объяснение. ☆ добавляет слово в «Слова на изучении».',
+      'Нажмите на слово или выделите несколько слов мышью или пальцем, чтобы открыть меню: <b>Перевести</b> — перевод в этом предложении (со словарной формой, временем и коротким объяснением), <b>Определение</b>, <b>Примеры</b> и, для глагола, <b>Проспрягать</b>. Под текстом — список слов, которые вы уже посмотрели. ☆ добавляет слово в «Слова на изучении».',
     'text.step3':
       '<btn>Перевести текст</btn> показывает русский перевод под каждым абзацем; та же кнопка его скрывает.',
     'text.step4':
@@ -616,6 +620,8 @@ export const tutorial = defineMessages({
     'my-words.step1': 'Travaillez-les avec les mêmes exercices que dans une leçon.',
     'my-words.step2':
       'Un mot quitte la liste après <b>3 bonnes réponses d’affilée</b> dans n’importe quel exercice (<b>Je sais</b> sur une carte compte aussi), ou quand vous retirez son ★. Les points à côté, comme ●●○, montrent où il en est ; une erreur remet le compteur à zéro.',
+    'my-words.step3':
+      'Un mot qui n’est dans aucun texte : tapez-le dans le champ en haut et appuyez sur <pbtn>Chercher</pbtn> pour avoir le même menu que sur un mot sélectionné, avec ☆ pour l’ajouter à la liste.',
 
     'mistakes.title': 'Erreurs',
     'mistakes.summary': 'Les mots et formes verbales que vous ratez le plus',
@@ -654,7 +660,7 @@ export const tutorial = defineMessages({
     'text.step1':
       'Collez le texte et appuyez sur <pbtn>Lire ce texte</pbtn>. Il est enregistré sur cet appareil, avec tout ce que vous en faites.',
     'text.step2':
-      'Cliquez sur un mot, ou sélectionnez quelques mots à la souris ou au doigt, puis appuyez sur <pbtn>Expliquer</pbtn> : vous obtenez la traduction dans cette phrase, la forme du dictionnaire, le temps et une courte explication. ☆ ajoute le mot aux Mots à apprendre.',
+      'Cliquez sur un mot, ou sélectionnez quelques mots à la souris ou au doigt, pour ouvrir son menu : <b>Traduire</b> dans cette phrase (avec la forme du dictionnaire, le temps et une courte explication), <b>Définir</b>, <b>Exemples</b> et, pour un verbe, <b>Conjuguer</b>. Les mots consultés sont listés sous le texte. ☆ ajoute le mot aux Mots à apprendre.',
     'text.step3':
       '<btn>Traduire le texte</btn> affiche une traduction russe sous chaque paragraphe ; le même bouton la masque.',
     'text.step4':
@@ -864,6 +870,8 @@ export const tutorial = defineMessages({
     'my-words.step1': 'Übe sie mit denselben Übungen wie in einer Lektion.',
     'my-words.step2':
       'Ein Wort verlässt die Liste nach <b>3 richtigen Antworten in Folge</b> in einer beliebigen Übung (auch <b>Weiß ich</b> auf einer Karteikarte zählt) oder wenn du den ★ entfernst. Die Punkte daneben, etwa ●●○, zeigen, wie weit es schon ist; nach einem Fehler geht es von vorn los.',
+    'my-words.step3':
+      'Ein Wort, das in keinem Text vorkommt: Gib es oben in das Feld ein und tippe auf <pbtn>Nachschlagen</pbtn>. Du bekommst dasselbe Menü wie bei einem markierten Wort, mit ☆, um es auf die Liste zu setzen.',
 
     'mistakes.title': 'Fehler',
     'mistakes.summary': 'Die Wörter und Verbformen, die du am häufigsten falsch machst',
@@ -900,7 +908,7 @@ export const tutorial = defineMessages({
     'text.step1':
       'Füge den Text ein und tippe auf <pbtn>Diesen Text lesen</pbtn>. Er wird auf diesem Gerät gespeichert, mit allem, was du damit machst.',
     'text.step2':
-      'Klicke auf ein Wort oder markiere ein paar Wörter mit der Maus oder dem Finger und tippe dann auf <pbtn>Erklären</pbtn>: Du bekommst die Übersetzung in diesem Satz, die Grundform, die Zeitform und eine kurze Erklärung. ☆ fügt das Wort zu den Lernwörtern hinzu.',
+      'Klicke auf ein Wort oder markiere ein paar Wörter mit der Maus oder dem Finger, um das Menü zu öffnen: <b>Übersetzen</b> in diesem Satz (mit Grundform, Zeitform und einer kurzen Erklärung), <b>Definieren</b>, <b>Beispiele</b> und bei einem Verb <b>Konjugieren</b>. Die Wörter, die du nachschlägst, stehen in einer Liste unter dem Text. ☆ fügt das Wort zu den Lernwörtern hinzu.',
     'text.step3':
       '<btn>Text übersetzen</btn> zeigt eine russische Übersetzung unter jedem Absatz; derselbe Knopf blendet sie wieder aus.',
     'text.step4':
@@ -1109,6 +1117,8 @@ export const tutorial = defineMessages({
     'my-words.step1': 'Practícalas con los mismos ejercicios que en una lección.',
     'my-words.step2':
       'Una palabra sale de la lista tras <b>3 aciertos seguidos</b> en cualquier ejercicio (<b>Me la sé</b> en una tarjeta también cuenta) o cuando le quitas la ★. Los puntos a su lado, como ●●○, muestran cuánto ha avanzado; con un fallo, la cuenta vuelve a empezar.',
+    'my-words.step3':
+      'Una palabra que no está en ningún texto: escríbela en el campo de arriba y pulsa <pbtn>Buscar</pbtn> para abrir el mismo menú que con una palabra seleccionada, con ☆ para ponerla en la lista.',
 
     'mistakes.title': 'Errores',
     'mistakes.summary': 'Las palabras y formas verbales que más fallas',
@@ -1147,7 +1157,7 @@ export const tutorial = defineMessages({
     'text.step1':
       'Pega el texto y pulsa <pbtn>Leer este texto</pbtn>. Se guarda en este dispositivo, con todo lo que hagas con él.',
     'text.step2':
-      'Haz clic en una palabra o selecciona unas cuantas con el ratón o el dedo y pulsa <pbtn>Explicar</pbtn>: obtienes la traducción en esa frase, la forma del diccionario, el tiempo verbal y una breve explicación. ☆ pone la palabra en Palabras por aprender.',
+      'Haz clic en una palabra o selecciona unas cuantas con el ratón o el dedo para abrir su menú: <b>Traducir</b> en esa frase (con la forma del diccionario, el tiempo verbal y una breve explicación), <b>Definir</b>, <b>Ejemplos</b> y, si es un verbo, <b>Conjugar</b>. Las palabras que consultas aparecen en una lista bajo el texto. ☆ pone la palabra en Palabras por aprender.',
     'text.step3':
       '<btn>Traducir el texto</btn> muestra una traducción al ruso debajo de cada párrafo; el mismo botón la vuelve a ocultar.',
     'text.step4':
@@ -1356,6 +1366,8 @@ export const tutorial = defineMessages({
     'my-words.step1': 'Pratique-as com os mesmos exercícios de uma lição.',
     'my-words.step2':
       'Uma palavra sai da lista após <b>3 respostas certas seguidas</b> em qualquer exercício (<b>Já sei</b> num cartão também conta) ou quando lhe tira a ★. Os pontos ao lado, como ●●○, mostram quanto já avançou; um erro recomeça a contagem.',
+    'my-words.step3':
+      'Uma palavra que não está em nenhum texto: escreva-a no campo em cima e carregue em <pbtn>Procurar</pbtn> para abrir o mesmo menu que numa palavra selecionada, com ☆ para a pôr na lista.',
 
     'mistakes.title': 'Erros',
     'mistakes.summary': 'As palavras e formas verbais que mais erra',
@@ -1392,7 +1404,7 @@ export const tutorial = defineMessages({
     'text.step1':
       'Cole o texto e carregue em <pbtn>Ler este texto</pbtn>. Fica guardado neste dispositivo, com tudo o que fizer com ele.',
     'text.step2':
-      'Clique numa palavra ou selecione algumas com o rato ou o dedo e carregue em <pbtn>Explicar</pbtn>: obtém a tradução nessa frase, a forma do dicionário, o tempo verbal e uma explicação curta. ☆ põe a palavra nas Palavras por aprender.',
+      'Clique numa palavra ou selecione algumas com o rato ou o dedo para abrir o menu: <b>Traduzir</b> nessa frase (com a forma do dicionário, o tempo verbal e uma explicação curta), <b>Definir</b>, <b>Exemplos</b> e, se for um verbo, <b>Conjugar</b>. As palavras que consultar ficam numa lista por baixo do texto. ☆ põe a palavra nas Palavras por aprender.',
     'text.step3':
       '<btn>Traduzir o texto</btn> mostra uma tradução em russo por baixo de cada parágrafo; o mesmo botão volta a escondê-la.',
     'text.step4':
@@ -1600,6 +1612,8 @@ export const tutorial = defineMessages({
     'my-words.step1': 'Esercitati con gli stessi esercizi di una lezione.',
     'my-words.step2':
       'Una parola esce dalla lista dopo <b>3 risposte giuste di fila</b> in qualsiasi esercizio (vale anche <b>La so</b> su una flashcard) o quando le togli la ★. I puntini accanto, come ●●○, mostrano a che punto è; un errore fa ripartire il conteggio da capo.',
+    'my-words.step3':
+      'Una parola che non è in nessun testo: scrivila nel campo in alto e premi <pbtn>Cerca</pbtn> per aprire lo stesso menu di una parola selezionata, con ☆ per metterla nella lista.',
 
     'mistakes.title': 'Errori',
     'mistakes.summary': 'Le parole e le forme verbali che sbagli di più',
@@ -1639,7 +1653,7 @@ export const tutorial = defineMessages({
     'text.step1':
       'Incolla il testo e premi <pbtn>Leggi questo testo</pbtn>. Viene salvato su questo dispositivo, con tutto quello che ci fai.',
     'text.step2':
-      'Clicca su una parola, o selezionane alcune con il mouse o il dito, poi premi <pbtn>Spiega</pbtn>: ottieni la traduzione in quella frase, la forma del dizionario, il tempo verbale e una breve spiegazione. ☆ mette la parola nelle Parole da imparare.',
+      'Clicca su una parola, o selezionane alcune con il mouse o il dito, per aprire il suo menu: <b>Traduci</b> in quella frase (con la forma del dizionario, il tempo verbale e una breve spiegazione), <b>Definisci</b>, <b>Esempi</b> e, per un verbo, <b>Coniuga</b>. Le parole che cerchi compaiono in un elenco sotto il testo. ☆ mette la parola nelle Parole da imparare.',
     'text.step3':
       '<btn>Traduci il testo</btn> mostra una traduzione in russo sotto ogni paragrafo; lo stesso pulsante la nasconde di nuovo.',
     'text.step4':
