@@ -73,6 +73,14 @@ section 'Server: request fields read without text()/asLevel/asLanguage or a size
 grep -nE 'request\.body\??\.[a-zA-Z]+' api/*.ts |
   grep -vE 'text\(|as[A-Z][a-zA-Z]*\(|readImages|typeof request\.body|=== (true|.[a-z]+.)|Array\.isArray|lessonTarget|sentenceCount|: unknown = request|request\.body\?\.(action|lesson) (===|!==|\?\?)'
 
+section 'Server: errors sent as sentences instead of snake_case codes (shown in English to everyone)'
+grep -rnE "(error: |Error\([0-9]+, )['\`][^'\`]*[ A-Z.][^'\`]*['\`]" api
+
+section 'Server: error codes the app has no text for (ERROR_TEXTS in src/lib/api.ts)'
+for code in $(grep -rhoE "(error: |Error\([0-9]+, )'[a-z_]+'" api | grep -oE "'[a-z_]+'" | tr -d "'" | sort -u); do
+  grep -qE "^\s+$code: '" src/lib/api.ts || [ "$code" = access_code ] || echo "$code"
+done
+
 section 'Server: limits written as numbers instead of named constants'
 grep -nE 'text\([^,]+, [0-9]+\)|\.slice\(0, [0-9]+\)' api/*.ts api/_lib/*.ts | grep -v 'console\.'
 

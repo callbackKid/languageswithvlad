@@ -51,38 +51,67 @@ async function request<T>(path: string, init?: RequestInit, teacherCode?: string
   if (!response.ok) {
     const fields = data && typeof data === 'object' ? (data as Record<string, unknown>) : {};
     const errorCode = typeof fields.error === 'string' ? fields.error : '';
-    const email = typeof fields.email === 'string' ? fields.email : '';
-    throw new ApiError(response.status, errorCode, messageFor(response.status, errorCode, email));
+    throw new ApiError(response.status, errorCode, messageFor(response.status, errorCode, fields));
   }
   return data as T;
 }
 
-/** The error in the interface language. Codes and common statuses are translated here; the
-    rare input errors the server explains in its own words (in English) are shown as they are. */
-function messageFor(status: number, errorCode: string, email = ''): string {
+type CommonKey = keyof (typeof common)['en'];
+// The text in common.ts for each error code the server sends (api/), so every error the student
+// sees is in the interface language.
+const ERROR_TEXTS: Record<string, CommonKey> = {
+  teacher_code: 'teacherOnly',
+  not_shared: 'notShared',
+  not_found: 'docNotFound',
+  bad_id: 'badDocLink',
+  unreachable: 'docUnreachable',
+  delivery_failed: 'deliveryFailed',
+  lesson_not_found: 'lessonNotFound',
+  google_off: 'googleOff',
+  google_key: 'googleKey',
+  google_no_edit: 'googleNoEdit',
+  google_unreachable: 'googleUnreachable',
+  google_rejected: 'googleRejected',
+  notion_off: 'notionOff',
+  notion_token: 'notionToken',
+  notion_not_shared: 'notionNotShared',
+  notion_no_write: 'notionNoWrite',
+  notion_unreachable: 'notionUnreachable',
+  notion_validation: 'notionUnreachable',
+  nothing_sent: 'nothingSent',
+  bad_request: 'badRequest',
+  method: 'badRequest',
+  lesson_too_long: 'lessonTooLong',
+  too_long: 'tooLong',
+  not_pdf: 'notPdf',
+  picture_type: 'pictureType',
+  pictures_too_large: 'picturesTooLarge',
+  too_many_pictures: 'tooManyPictures',
+  zoom_off: 'zoomOff',
+  bad_meeting_number: 'badMeetingNumber',
+  feedback_off: 'feedbackOff',
+  claude_off: 'claudeOff',
+  claude_busy: 'busy',
+  claude_unreadable: 'unreadable',
+  claude_failed: 'somethingWrong',
+  too_many: 'tooMany',
+  server_error: 'somethingWrong',
+};
+
+/** The error in the interface language: by its code, or by the status for an answer without one
+    (a timeout, a proxy). An English sentence from a server older than the app is shown as it is. */
+function messageFor(status: number, errorCode: string, fields: Record<string, unknown>): string {
   const { t } = translator(common);
   if (status === 401) {
     window.dispatchEvent(new Event('cahier:need-code'));
     return t('enterCode');
   }
-  if (errorCode === 'teacher_code') return t('teacherOnly');
-  if (errorCode === 'not_shared') return t('notShared');
-  if (errorCode === 'not_found') return t('docNotFound');
-  if (errorCode === 'bad_id') return t('badDocLink');
-  if (errorCode === 'unreachable') return t('docUnreachable');
-  if (errorCode === 'delivery_failed') return t('deliveryFailed');
-  if (errorCode === 'lesson_not_found') return t('lessonNotFound');
-  if (errorCode === 'google_off') return t('googleOff');
-  if (errorCode === 'google_key') return t('googleKey');
-  if (errorCode === 'google_no_edit') return t('googleNoEdit', { email });
-  if (errorCode === 'google_unreachable') return t('googleUnreachable');
-  if (errorCode === 'google_rejected') return t('googleRejected');
-  if (errorCode === 'notion_off') return t('notionOff');
-  if (errorCode === 'notion_token') return t('notionToken');
-  if (errorCode === 'notion_not_shared') return t('notionNotShared');
-  if (errorCode === 'notion_no_write') return t('notionNoWrite');
-  if (errorCode === 'notion_unreachable' || errorCode === 'notion_validation')
-    return t('notionUnreachable');
+  const key = ERROR_TEXTS[errorCode];
+  if (key)
+    return t(key, {
+      email: typeof fields.email === 'string' ? fields.email : '',
+      count: Number(fields.count) || 0,
+    });
   if (status === 429) return t('tooMany');
   if (status === 503) return t('busy');
   if (status === 502) return t('unreadable');

@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 import { claudeJSON, MODEL, readImages } from './_lib/claude.js';
-import { asLevels, checkAccess, fail, onlyPost } from './_lib/http.js';
+import { asLevels, checkAccess, fail, HttpError, onlyPost } from './_lib/http.js';
 import {
   bookExercisesPrompt,
   photoPrompt,
@@ -28,14 +28,11 @@ export default async function handler(request: VercelRequest, response: VercelRe
   try {
     const data = typeof request.body?.data === 'string' ? request.body.data : '';
     if (kind === 'textbook' || (kind === 'exercises' && data)) {
-      if (!data) return response.status(400).json({ error: 'Send a PDF.' });
+      if (!data) return response.status(400).json({ error: 'nothing_sent' });
       if (data.length > MAX_PDF_BASE64_LENGTH)
-        return response
-          .status(413)
-          .json({ error: 'These pages are too large. Choose fewer pages.' });
+        return response.status(413).json({ error: 'too_long' });
       // a real PDF starts with "%PDF", which is "JVBERi" in base64
-      if (!data.startsWith('JVBERi'))
-        return response.status(400).json({ error: 'This isn’t a PDF.' });
+      if (!data.startsWith('JVBERi')) return response.status(400).json({ error: 'not_pdf' });
       const prompt =
         kind === 'textbook'
           ? textbookPrompt(asLevels(request.body?.levels))
@@ -45,10 +42,10 @@ export default async function handler(request: VercelRequest, response: VercelRe
         .json(await claudeJSON(prompt, { model: MODEL, maxTokens: 16000, pdfs: [data] }));
     }
     if (kind !== 'underlined' && kind !== 'handwritten' && kind !== 'exercises')
-      return response.status(400).json({ error: 'Unknown kind of page.' });
+      return response.status(400).json({ error: 'bad_request' });
 
     const images = readImages(request.body, kind === 'underlined' ? 1 : MAX_HANDWRITTEN_PAGES);
-    if (typeof images === 'string') return response.status(400).json({ error: images });
+    if (images instanceof HttpError) return fail(response, images);
     const prompt =
       kind === 'handwritten'
         ? transcribePrompt(images.length)

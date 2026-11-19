@@ -65,7 +65,7 @@ export function fail(response: VercelResponse, error: unknown) {
   if (error instanceof HttpError)
     return response.status(error.status).json({ ...error.details, error: error.message });
   console.error(error);
-  return response.status(500).json({ error: 'Something went wrong on the server.' });
+  return response.status(500).json({ error: 'server_error' });
 }
 
 // A request field as trimmed text of at most maxLength characters; "" when it isn't a string.

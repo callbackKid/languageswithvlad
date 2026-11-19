@@ -80,7 +80,7 @@ Prettier decides: 100 columns, single quotes, semicolons, trailing commas where 
 
 - An endpoint is thin: check the method and the class code first (`onlyPost`, `checkAccess`), validate the input, call a helper in `api/_lib/`, answer. Logic lives in `_lib/`.
 - Every field of a request is read defensively (`text(value, maxLength)`, `asLevel`, `asLanguage`) and limited in size. Limits are named constants.
-- Errors are `HttpError`s (`ClaudeError`, `GoogleError`, `NotionError`, `TelegramError`) and every handler ends with `fail(response, error)`. An error the app should translate is a `snake_case` code (`not_shared`, `notion_token`); add its text to `common.ts` and its code to `messageFor` in `src/lib/api.ts`.
+- Errors are `HttpError`s (`ClaudeError`, `GoogleError`, `NotionError`, `TelegramError`) and every handler ends with `fail(response, error)`. Every error the server sends is a `snake_case` code (`not_shared`, `lesson_too_long`), never an English sentence, so the student reads it in the interface language: add its text to `common.ts` and its code to `ERROR_TEXTS` in `src/lib/api.ts`. A value the text needs goes along in the error's `details` (`{ email }`, `{ count }`).
 - Secrets come only from environment variables, are never sent to the browser and never logged. New variables are documented in the README table.
 - All prompts are in `api/_lib/prompts.ts`. A prompt says what JSON to return; the app never trusts that JSON without a `normalizeX` function.
 - Only `console.error` and `console.warn`, and only for real problems 🤖.

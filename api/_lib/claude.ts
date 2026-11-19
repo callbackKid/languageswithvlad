@@ -22,12 +22,13 @@ const MEDIA_TYPES = new Set<string>(['image/jpeg', 'image/png', 'image/webp', 'i
 // The app shrinks photos before sending them; Vercel refuses bodies over 4.5 MB anyway.
 const MAX_TOTAL_BASE64 = 4_000_000;
 
-// Reads up to maxCount photos from the request body ({images: [{mediaType, data}]}); a string is the error to send back.
-export function readImages(body: unknown, maxCount: number): ImageInput[] | string {
+// Reads up to maxCount photos from the request body ({images: [{mediaType, data}]}); an HttpError is the answer to send back.
+export function readImages(body: unknown, maxCount: number): ImageInput[] | HttpError {
   const raw = (body as { images?: unknown } | null)?.images;
   const list = Array.isArray(raw) ? raw : [];
-  if (!list.length) return 'Send at least one photo.';
-  if (list.length > maxCount) return `Send at most ${maxCount} photos at once.`;
+  if (!list.length) return new HttpError(400, 'nothing_sent');
+  if (list.length > maxCount)
+    return new HttpError(400, 'too_many_pictures', { count: String(maxCount) });
   const images: ImageInput[] = [];
   let total = 0;
   for (const entry of list) {
@@ -38,11 +39,11 @@ export function readImages(body: unknown, maxCount: number): ImageInput[] | stri
       typeof mediaType !== 'string' ||
       !MEDIA_TYPES.has(mediaType)
     )
-      return 'Send JPEG, PNG or WebP photos.';
+      return new HttpError(400, 'picture_type');
     total += data.length;
     images.push({ mediaType: mediaType as ImageInput['mediaType'], data });
   }
-  if (total > MAX_TOTAL_BASE64) return 'These photos are too large. Try fewer pages at once.';
+  if (total > MAX_TOTAL_BASE64) return new HttpError(413, 'pictures_too_large');
   return images;
 }
 
@@ -77,7 +78,7 @@ export async function claudeJSON(
   if (useCache && cache.has(key)) return cache.get(key);
 
   const apiKey = process.env.ANTHROPIC_API_KEY;
-  if (!apiKey) throw new ClaudeError(500, 'ANTHROPIC_API_KEY is not set on the server.');
+  if (!apiKey) throw new ClaudeError(500, 'claude_off');
 
   const apiResponse = await fetch(API_URL, {
     method: 'POST',
@@ -101,8 +102,8 @@ export async function claudeJSON(
     const detail = await apiResponse.text().catch(() => '');
     console.error('Claude API error', apiResponse.status, detail.slice(0, LOGGED_DETAIL));
     if (apiResponse.status === 429 || apiResponse.status === 529)
-      throw new ClaudeError(503, 'Claude is busy. Try again in a minute.');
-    throw new ClaudeError(502, 'Claude request failed.');
+      throw new ClaudeError(503, 'claude_busy');
+    throw new ClaudeError(502, 'claude_failed');
   }
   const data = (await apiResponse.json()) as { content?: { type: string; text?: string }[] };
   const text = (data.content || [])
@@ -110,7 +111,7 @@ export async function claudeJSON(
     .map((block) => block.text || '')
     .join('\n');
   const value = extractJSON(text);
-  if (value === undefined) throw new ClaudeError(502, 'Claude’s answer could not be read.');
+  if (value === undefined) throw new ClaudeError(502, 'claude_unreadable');
 
   if (useCache) {
     if (cache.size >= MAX_CACHE) cache.delete(cache.keys().next().value as string);

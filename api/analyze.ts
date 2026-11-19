@@ -37,7 +37,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
   try {
     if (action === 'practice') {
       const title = text(request.body?.title, MAX_TITLE_LENGTH);
-      if (!title) return response.status(400).json({ error: 'Which grammar point?' });
+      if (!title) return response.status(400).json({ error: 'nothing_sent' });
       const prompt = grammarPracticePrompt({
         language: asLanguage(request.body?.language),
         level: asLevel(request.body?.level) ?? 'A2',
@@ -52,11 +52,9 @@ export default async function handler(request: VercelRequest, response: VercelRe
       // making homework is the teacher's tool
       if (!checkTeacher(request, response)) return;
       const lesson = typeof request.body?.body === 'string' ? request.body.body : '';
-      if (!lesson.trim()) return response.status(400).json({ error: 'Empty lesson.' });
+      if (!lesson.trim()) return response.status(400).json({ error: 'nothing_sent' });
       if (lesson.length > MAX_LESSON_LENGTH)
-        return response
-          .status(413)
-          .json({ error: 'This lesson is too long to analyze in one go.' });
+        return response.status(413).json({ error: 'lesson_too_long' });
       const keyWords = (Array.isArray(request.body?.keyWords) ? request.body.keyWords : [])
         .map((word: unknown) => text(word, MAX_KEY_WORD_LENGTH))
         .filter(Boolean)
@@ -73,12 +71,12 @@ export default async function handler(request: VercelRequest, response: VercelRe
         .json(await claudeJSON(prompt, { model: MODEL, maxTokens: 3000, cache: false }));
     }
     if (action !== 'words' && action !== 'extras')
-      return response.status(400).json({ error: 'Unknown action.' });
+      return response.status(400).json({ error: 'bad_request' });
 
     const body = typeof request.body?.body === 'string' ? request.body.body : '';
-    if (!body.trim()) return response.status(400).json({ error: 'Empty lesson.' });
+    if (!body.trim()) return response.status(400).json({ error: 'nothing_sent' });
     if (body.length > MAX_LESSON_LENGTH)
-      return response.status(413).json({ error: 'This lesson is too long to analyze in one go.' });
+      return response.status(413).json({ error: 'lesson_too_long' });
     const fresh = request.body?.fresh === true;
     const levels = asLevels(request.body?.levels);
     const prompt =

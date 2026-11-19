@@ -29,7 +29,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
   try {
     if (body.action === 'explain') {
       const selection = text(body.selection, MAX_SELECTION_LENGTH);
-      if (!selection) return response.status(400).json({ error: 'Mark a word or phrase first.' });
+      if (!selection) return response.status(400).json({ error: 'nothing_sent' });
       const prompt = explainPrompt(
         selection,
         text(body.context, MAX_CONTEXT_LENGTH),
@@ -39,9 +39,8 @@ export default async function handler(request: VercelRequest, response: VercelRe
     }
 
     const whole = typeof body.text === 'string' ? body.text.trim() : '';
-    if (!whole) return response.status(400).json({ error: 'Paste a text first.' });
-    if (whole.length > MAX_TEXT_LENGTH)
-      return response.status(413).json({ error: 'This text is too long. Paste a shorter part.' });
+    if (!whole) return response.status(400).json({ error: 'nothing_sent' });
+    if (whole.length > MAX_TEXT_LENGTH) return response.status(413).json({ error: 'too_long' });
 
     if (body.action === 'translate') {
       const paragraphs = whole.split(/\n+/).filter((paragraph) => paragraph.trim());
@@ -51,7 +50,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
     }
     if (body.action === 'correct') {
       const task = text(body.task, MAX_TASK_LENGTH);
-      if (!task) return response.status(400).json({ error: 'Which task?' });
+      if (!task) return response.status(400).json({ error: 'nothing_sent' });
       const prompt = writingCheckPrompt({
         task,
         text: whole,
@@ -67,7 +66,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
       const prompt = studyPrompt(whole, asLevels(body.levels));
       return response.status(200).json(await claudeJSON(prompt, { model: MODEL, maxTokens: 6000 }));
     }
-    return response.status(400).json({ error: 'Unknown action.' });
+    return response.status(400).json({ error: 'bad_request' });
   } catch (error) {
     return fail(response, error);
   }

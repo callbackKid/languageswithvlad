@@ -49,7 +49,10 @@ export const talk = defineMessages({
     removePicture: 'Remove picture {count}',
     addPicture: '+ Add a picture',
     picturesHint: 'Up to {count}. You can also paste a screenshot (Ctrl+V / ⌘V) or drop it here.',
-    tooManyPictures: 'You can attach up to {count} pictures.',
+    tooManyPictures: {
+      one: 'You can attach up to {count} picture.',
+      other: 'You can attach up to {count} pictures.',
+    },
     pictureFailed: 'That picture couldn’t be opened. Try a JPEG or PNG.',
     contact: 'Your name or how to reach you (optional)',
     contactPlaceholder: 'Anna, @anna_tg or anna@mail.com',
@@ -106,7 +109,12 @@ export const talk = defineMessages({
     removePicture: 'Убрать картинку {count}',
     addPicture: '+ Добавить картинку',
     picturesHint: 'До {count}. Скриншот можно также вставить (Ctrl+V / ⌘V) или перетащить сюда.',
-    tooManyPictures: 'Можно прикрепить не больше {count} картинок.',
+    tooManyPictures: {
+      one: 'Можно прикрепить не больше {count} картинки.',
+      few: 'Можно прикрепить не больше {count} картинок.',
+      many: 'Можно прикрепить не больше {count} картинок.',
+      other: 'Можно прикрепить не больше {count} картинки.',
+    },
     pictureFailed: 'Не удалось открыть картинку. Попробуйте JPEG или PNG.',
     contact: 'Ваше имя или как с вами связаться (необязательно)',
     contactPlaceholder: 'Анна, @anna_tg или anna@mail.ru',
@@ -166,7 +174,10 @@ export const talk = defineMessages({
     addPicture: '+ Ajouter une image',
     picturesHint:
       'Jusqu’à {count}. Vous pouvez aussi coller une capture d’écran (Ctrl+V / ⌘V) ou la déposer ici.',
-    tooManyPictures: 'Vous pouvez joindre jusqu’à {count} images.',
+    tooManyPictures: {
+      one: 'Vous pouvez joindre jusqu’à {count} image.',
+      other: 'Vous pouvez joindre jusqu’à {count} images.',
+    },
     pictureFailed: 'Cette image n’a pas pu être ouverte. Essayez un JPEG ou un PNG.',
     contact: 'Votre nom ou comment vous joindre (facultatif)',
     contactPlaceholder: 'Anna, @anna_tg ou anna@mail.fr',
@@ -226,7 +237,10 @@ export const talk = defineMessages({
     addPicture: '+ Bild hinzufügen',
     picturesHint:
       'Bis zu {count}. Du kannst auch einen Screenshot einfügen (Strg+V / ⌘V) oder hierher ziehen.',
-    tooManyPictures: 'Du kannst bis zu {count} Bilder anhängen.',
+    tooManyPictures: {
+      one: 'Du kannst bis zu {count} Bild anhängen.',
+      other: 'Du kannst bis zu {count} Bilder anhängen.',
+    },
     pictureFailed: 'Dieses Bild konnte nicht geöffnet werden. Versuch ein JPEG oder PNG.',
     contact: 'Dein Name oder wie man dich erreicht (optional)',
     contactPlaceholder: 'Anna, @anna_tg oder anna@mail.de',
@@ -285,7 +299,10 @@ export const talk = defineMessages({
     removePicture: 'Quitar la imagen {count}',
     addPicture: '+ Añadir una imagen',
     picturesHint: 'Hasta {count}. También puedes pegar una captura (Ctrl+V / ⌘V) o soltarla aquí.',
-    tooManyPictures: 'Puedes adjuntar hasta {count} imágenes.',
+    tooManyPictures: {
+      one: 'Puedes adjuntar hasta {count} imagen.',
+      other: 'Puedes adjuntar hasta {count} imágenes.',
+    },
     pictureFailed: 'No se pudo abrir esa imagen. Prueba con un JPEG o PNG.',
     contact: 'Tu nombre o cómo contactarte (opcional)',
     contactPlaceholder: 'Ana, @ana_tg o ana@mail.com',
@@ -344,7 +361,10 @@ export const talk = defineMessages({
     addPicture: '+ Adicionar uma imagem',
     picturesHint:
       'Até {count}. Também pode colar uma captura de ecrã (Ctrl+V / ⌘V) ou largá-la aqui.',
-    tooManyPictures: 'Pode anexar até {count} imagens.',
+    tooManyPictures: {
+      one: 'Pode anexar até {count} imagem.',
+      other: 'Pode anexar até {count} imagens.',
+    },
     pictureFailed: 'Não foi possível abrir essa imagem. Experimente um JPEG ou PNG.',
     contact: 'O seu nome ou como o contactar (opcional)',
     contactPlaceholder: 'Ana, @ana_tg ou ana@mail.com',
@@ -404,7 +424,10 @@ export const talk = defineMessages({
     addPicture: '+ Aggiungi un’immagine',
     picturesHint:
       'Fino a {count}. Puoi anche incollare uno screenshot (Ctrl+V / ⌘V) o trascinarlo qui.',
-    tooManyPictures: 'Puoi allegare fino a {count} immagini.',
+    tooManyPictures: {
+      one: 'Puoi allegare fino a {count} immagine.',
+      other: 'Puoi allegare fino a {count} immagini.',
+    },
     pictureFailed: 'Impossibile aprire quell’immagine. Prova con un JPEG o un PNG.',
     contact: 'Il tuo nome o come contattarti (facoltativo)',
     contactPlaceholder: 'Anna, @anna_tg o anna@mail.com',

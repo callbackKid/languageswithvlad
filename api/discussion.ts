@@ -12,7 +12,7 @@ const MAX_TOPIC_LENGTH = 120;
 export default async function handler(request: VercelRequest, response: VercelResponse) {
   if (!onlyPost(request, response) || !checkAccess(request, response)) return;
   const level = asLevel(request.body?.level);
-  if (!level) return response.status(400).json({ error: 'Choose a level.' });
+  if (!level) return response.status(400).json({ error: 'bad_request' });
   try {
     const prompt = discussionPrompt({
       language: asLanguage(request.body?.language),

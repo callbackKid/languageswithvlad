@@ -24,7 +24,7 @@ export function telegramConfigured(): boolean {
 async function call(method: string, body: FormData): Promise<void> {
   const token = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID;
-  if (!token || !chatId) throw new TelegramError(501, 'Telegram isn’t set up on this server.');
+  if (!token || !chatId) throw new TelegramError(501, 'feedback_off');
   body.set('chat_id', chatId);
   const response = await fetch(`${API_URL}${token}/${method}`, { method: 'POST', body });
   if (!response.ok) {

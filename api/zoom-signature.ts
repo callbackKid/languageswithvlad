@@ -11,13 +11,12 @@ export default function handler(request: VercelRequest, response: VercelResponse
   if (!onlyPost(request, response) || !checkAccess(request, response)) return;
   const sdkKey = process.env.ZOOM_SDK_KEY;
   const secret = process.env.ZOOM_SDK_SECRET;
-  if (!sdkKey || !secret)
-    return response.status(501).json({ error: 'Zoom isn’t set up on this server.' });
+  if (!sdkKey || !secret) return response.status(501).json({ error: 'zoom_off' });
   const meetingNumber = String(request.body?.meetingNumber ?? '').replace(/\D/g, '');
   if (
     meetingNumber.length < MEETING_NUMBER_DIGITS.min ||
     meetingNumber.length > MEETING_NUMBER_DIGITS.max
   )
-    return response.status(400).json({ error: 'That isn’t a Zoom meeting number.' });
+    return response.status(400).json({ error: 'bad_meeting_number' });
   response.status(200).json({ signature: zoomSignature(meetingNumber, sdkKey, secret) });
 }

@@ -24,6 +24,18 @@ export const NEWS: NewsDay[] = [
       {
         kind: 'fixed',
         text: {
+          en: 'Messages from the server are in your language too: a lesson too long to read, a picture of the wrong kind, a link that isn’t a Zoom meeting. After an update, a message asks you to reload the page instead of showing an error in English.',
+          ru: 'Сообщения сервера теперь тоже на вашем языке: слишком длинный урок, картинка не того формата, ссылка, которая не ведёт на конференцию Zoom. После обновления приложения сообщение просит перезагрузить страницу, а не показывает ошибку на английском.',
+          fr: 'Les messages du serveur sont eux aussi dans votre langue : une leçon trop longue à lire, une image au mauvais format, un lien qui n’est pas une réunion Zoom. Après une mise à jour, un message vous demande de recharger la page au lieu d’afficher une erreur en anglais.',
+          de: 'Auch die Meldungen des Servers sind jetzt in deiner Sprache: eine Lektion, die zu lang zum Lesen ist, ein Bild im falschen Format, ein Link, der zu keinem Zoom-Meeting führt. Nach einem Update bittet dich eine Meldung, die Seite neu zu laden, statt einen Fehler auf Englisch zu zeigen.',
+          es: 'Los mensajes del servidor también están en tu idioma: una lección demasiado larga para leerla, una imagen de un formato no admitido, un enlace que no es de una reunión de Zoom. Después de una actualización, un mensaje te pide que recargues la página en vez de mostrar un error en inglés.',
+          pt: 'As mensagens do servidor também estão na sua língua: uma lição demasiado longa para ler, uma imagem num formato errado, uma ligação que não é de uma reunião do Zoom. Depois de uma atualização, uma mensagem pede-lhe que recarregue a página, em vez de mostrar um erro em inglês.',
+          it: 'Anche i messaggi del server sono nella tua lingua: una lezione troppo lunga da leggere, un’immagine del tipo sbagliato, un link che non è una riunione Zoom. Dopo un aggiornamento, un messaggio ti chiede di ricaricare la pagina invece di mostrare un errore in inglese.',
+        },
+      },
+      {
+        kind: 'fixed',
+        text: {
           en: 'A word spelled the same in two of your languages (“la casa” in Spanish and in Italian, the verb “ser” in Spanish and in Portuguese) stays in the exercises in both, instead of only in the newer lesson’s.',
           ru: 'Слово, которое пишется одинаково в двух ваших языках («la casa» в испанском и итальянском, глагол «ser» в испанском и португальском), остаётся в упражнениях на обоих языках, а не только на языке более нового урока.',
           fr: 'Un mot qui s’écrit pareil dans deux de vos langues (« la casa » en espagnol et en italien, le verbe « ser » en espagnol et en portugais) reste dans les exercices des deux langues, et plus seulement dans ceux de la leçon la plus récente.',

@@ -24,7 +24,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
       ru: text(word.ru, MAX_TRANSLATION_LENGTH),
     }))
     .filter((word) => word.fr);
-  if (!words.length) return response.status(400).json({ error: 'No words.' });
+  if (!words.length) return response.status(400).json({ error: 'nothing_sent' });
   const count = Math.min(MAX_SENTENCES, Math.max(MIN_SENTENCES, words.length));
   const language = asLanguage(request.body?.language);
   const level = asLevel(request.body?.level) ?? 'A1';

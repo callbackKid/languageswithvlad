@@ -14,11 +14,11 @@ export default async function handler(request: VercelRequest, response: VercelRe
   const infinitive = typeof request.body?.inf === 'string' ? request.body.inf.trim() : '';
   const ru = text(request.body?.ru, MAX_TRANSLATION_LENGTH);
   if (!infinitive || infinitive.length > MAX_INFINITIVE_LENGTH)
-    return response.status(400).json({ error: 'Bad verb.' });
+    return response.status(400).json({ error: 'bad_request' });
   // an app from before German verb tables sends no language: its verbs are French
   const language =
     request.body?.language === undefined ? 'fr' : asVerbLanguage(request.body.language);
-  if (!language) return response.status(400).json({ error: 'No verb tables for this language.' });
+  if (!language) return response.status(400).json({ error: 'bad_request' });
   try {
     const fresh = request.body?.fresh === true;
     response.status(200).json(

@@ -17,12 +17,11 @@ export default async function handler(request: VercelRequest, response: VercelRe
   const notionId = documentId.match(NOTION_ID)?.[1];
   if (!notionId && !GOOGLE_DOC_ID.test(documentId))
     return response.status(400).json({ error: 'bad_id' });
-  if (!text.trim()) return response.status(400).json({ error: 'Nothing to add.' });
-  if (text.length > MAX_TEXT_LENGTH)
-    return response.status(413).json({ error: 'This is too long to add in one go.' });
+  if (!text.trim()) return response.status(400).json({ error: 'nothing_sent' });
+  if (text.length > MAX_TEXT_LENGTH) return response.status(413).json({ error: 'too_long' });
   const lesson = request.body?.lesson === undefined ? null : lessonTarget(request.body.lesson);
   if (request.body?.lesson !== undefined && !lesson)
-    return response.status(400).json({ error: 'bad_lesson' });
+    return response.status(400).json({ error: 'bad_request' });
   try {
     if (lesson) {
       const found = notionId

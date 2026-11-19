@@ -74,6 +74,24 @@ export const common = defineMessages({
       'The app can’t edit this document. In Google Docs, share it with {email} as Editor, then try again.',
     googleUnreachable: 'Google Docs didn’t answer. Try again in a moment.',
     googleRejected: 'Google Docs didn’t accept the change. Try again in a moment.',
+    nothingSent: 'Something the server needs didn’t come through. Fill it in and try again.',
+    badRequest:
+      'The app and the server don’t understand each other: the app may be out of date. Reload the page and try again.',
+    lessonTooLong:
+      'This lesson is too long to read in one go. In the document, split it into two lessons.',
+    tooLong: 'This is too much to send in one go. Try a shorter part.',
+    notPdf: 'This file isn’t a PDF. Choose a PDF file.',
+    pictureType: 'Only JPEG, PNG or WebP pictures can be sent.',
+    picturesTooLarge: 'These pictures are too large. Send fewer at once.',
+    tooManyPictures: {
+      one: 'Send at most {count} picture at once.',
+      other: 'Send at most {count} pictures at once.',
+    },
+    zoomOff:
+      'Zoom calls inside the app aren’t set up on this server yet (ZOOM_SDK_KEY, see README).',
+    badMeetingNumber: 'This isn’t a Zoom meeting number. Check the Zoom link in the document.',
+    feedbackOff: 'Feedback isn’t set up on this server yet (TELEGRAM_BOT_TOKEN, see README).',
+    claudeOff: 'Claude isn’t set up on this server yet (ANTHROPIC_API_KEY, see README).',
     deliveryFailed: 'The message couldn’t be delivered. Try again later.',
     // adding to the Google Doc
     docWriterMissing:
@@ -166,6 +184,26 @@ export const common = defineMessages({
       'Приложение не может редактировать этот документ. В Google Docs откройте доступ для {email} с ролью «Редактор», затем попробуйте ещё раз.',
     googleUnreachable: 'Google Docs не отвечает. Попробуйте через минуту.',
     googleRejected: 'Google Docs не принял изменение. Попробуйте через минуту.',
+    nothingSent: 'Сервер получил не всё, что нужно. Заполните пропущенное и попробуйте ещё раз.',
+    badRequest:
+      'Приложение и сервер не понимают друг друга: возможно, приложение устарело. Перезагрузите страницу и попробуйте ещё раз.',
+    lessonTooLong:
+      'Этот урок слишком длинный, чтобы прочитать его за один раз. Разделите его в документе на два урока.',
+    tooLong: 'Это слишком много, чтобы отправить за один раз. Попробуйте часть покороче.',
+    notPdf: 'Этот файл — не PDF. Выберите файл PDF.',
+    pictureType: 'Отправлять можно только картинки JPEG, PNG или WebP.',
+    picturesTooLarge: 'Эти картинки слишком большие. Отправьте меньше за один раз.',
+    tooManyPictures: {
+      one: 'Отправьте за один раз не больше {count} картинки.',
+      few: 'Отправьте за один раз не больше {count} картинок.',
+      many: 'Отправьте за один раз не больше {count} картинок.',
+      other: 'Отправьте за один раз не больше {count} картинки.',
+    },
+    zoomOff:
+      'Звонки Zoom внутри приложения ещё не настроены на сервере (ZOOM_SDK_KEY, см. README).',
+    badMeetingNumber: 'Это не номер конференции Zoom. Проверьте ссылку Zoom в документе.',
+    feedbackOff: 'Обратная связь ещё не настроена на сервере (TELEGRAM_BOT_TOKEN, см. README).',
+    claudeOff: 'Claude ещё не настроен на сервере (ANTHROPIC_API_KEY, см. README).',
     deliveryFailed: 'Сообщение не удалось доставить. Попробуйте позже.',
     docWriterMissing:
       'Добавление в Google-документ ещё не настроено на сервере (GOOGLE_SERVICE_ACCOUNT, см. README).',
@@ -252,6 +290,27 @@ export const common = defineMessages({
       'L’application ne peut pas modifier ce document. Dans Google Docs, partagez-le avec {email} en tant qu’Éditeur, puis réessayez.',
     googleUnreachable: 'Google Docs ne répond pas. Réessayez dans un instant.',
     googleRejected: 'Google Docs n’a pas accepté la modification. Réessayez dans un instant.',
+    nothingSent:
+      'Une information nécessaire n’est pas parvenue au serveur. Renseignez-la et réessayez.',
+    badRequest:
+      'L’application et le serveur ne se comprennent pas : l’application n’est peut-être pas à jour. Rechargez la page et réessayez.',
+    lessonTooLong:
+      'Cette leçon est trop longue pour être lue d’un seul coup. Dans le document, divisez-la en deux leçons.',
+    tooLong: 'C’est trop pour un seul envoi. Essayez avec un passage plus court.',
+    notPdf: 'Ce fichier n’est pas un PDF. Choisissez un fichier PDF.',
+    pictureType: 'Seules les images JPEG, PNG ou WebP peuvent être envoyées.',
+    picturesTooLarge: 'Ces images sont trop lourdes. Envoyez-en moins à la fois.',
+    tooManyPictures: {
+      one: 'Envoyez au plus {count} image à la fois.',
+      other: 'Envoyez au plus {count} images à la fois.',
+    },
+    zoomOff:
+      'Les appels Zoom dans l’application ne sont pas encore configurés sur ce serveur (ZOOM_SDK_KEY, voir README).',
+    badMeetingNumber:
+      'Ce n’est pas un numéro de réunion Zoom. Vérifiez le lien Zoom dans le document.',
+    feedbackOff:
+      'L’envoi d’avis n’est pas encore configuré sur ce serveur (TELEGRAM_BOT_TOKEN, voir README).',
+    claudeOff: 'Claude n’est pas encore configuré sur ce serveur (ANTHROPIC_API_KEY, voir README).',
     deliveryFailed: 'Le message n’a pas pu être envoyé. Réessayez plus tard.',
     docWriterMissing:
       'L’ajout au Google Doc n’est pas encore configuré sur le serveur (GOOGLE_SERVICE_ACCOUNT, voir README).',
@@ -338,6 +397,27 @@ export const common = defineMessages({
       'Die App kann dieses Dokument nicht bearbeiten. Gib es in Google Docs für {email} als Bearbeiter frei, dann versuch es nochmal.',
     googleUnreachable: 'Google Docs antwortet nicht. Versuch es gleich nochmal.',
     googleRejected: 'Google Docs hat die Änderung nicht angenommen. Versuch es gleich nochmal.',
+    nothingSent:
+      'Etwas, das der Server braucht, ist nicht angekommen. Füll es aus und versuch es nochmal.',
+    badRequest:
+      'Die App und der Server verstehen sich nicht: Die App ist vielleicht veraltet. Lade die Seite neu und versuch es nochmal.',
+    lessonTooLong:
+      'Diese Lektion ist zu lang, um sie auf einmal zu lesen. Teile sie im Dokument in zwei Lektionen auf.',
+    tooLong: 'Das ist zu viel, um es auf einmal zu senden. Versuch es mit einem kürzeren Teil.',
+    notPdf: 'Diese Datei ist kein PDF. Wähle eine PDF-Datei.',
+    pictureType: 'Nur JPEG-, PNG- oder WebP-Bilder können gesendet werden.',
+    picturesTooLarge: 'Diese Bilder sind zu groß. Sende weniger auf einmal.',
+    tooManyPictures: {
+      one: 'Sende höchstens {count} Bild auf einmal.',
+      other: 'Sende höchstens {count} Bilder auf einmal.',
+    },
+    zoomOff:
+      'Zoom-Anrufe in der App sind auf diesem Server noch nicht eingerichtet (ZOOM_SDK_KEY, siehe README).',
+    badMeetingNumber: 'Das ist keine Zoom-Meeting-ID. Prüfe den Zoom-Link im Dokument.',
+    feedbackOff:
+      'Feedback ist auf diesem Server noch nicht eingerichtet (TELEGRAM_BOT_TOKEN, siehe README).',
+    claudeOff:
+      'Claude ist auf diesem Server noch nicht eingerichtet (ANTHROPIC_API_KEY, siehe README).',
     deliveryFailed: 'Die Nachricht konnte nicht zugestellt werden. Versuch es später nochmal.',
     docWriterMissing:
       'Das Hinzufügen zum Google-Dokument ist auf dem Server noch nicht eingerichtet (GOOGLE_SERVICE_ACCOUNT, siehe README).',
@@ -425,6 +505,26 @@ export const common = defineMessages({
       'La aplicación no puede editar este documento. En Google Docs, compártelo con {email} como Editor e inténtalo de nuevo.',
     googleUnreachable: 'Google Docs no ha respondido. Inténtalo de nuevo en un momento.',
     googleRejected: 'Google Docs no ha aceptado el cambio. Inténtalo de nuevo en un momento.',
+    nothingSent: 'No ha llegado algo que el servidor necesita. Rellénalo e inténtalo de nuevo.',
+    badRequest:
+      'La aplicación y el servidor no se entienden: puede que la aplicación esté desactualizada. Recarga la página e inténtalo de nuevo.',
+    lessonTooLong:
+      'Esta lección es demasiado larga para leerla de una vez. En el documento, divídela en dos lecciones.',
+    tooLong: 'Es demasiado para enviarlo de una vez. Prueba con una parte más corta.',
+    notPdf: 'Este archivo no es un PDF. Elige un archivo PDF.',
+    pictureType: 'Solo se pueden enviar imágenes JPEG, PNG o WebP.',
+    picturesTooLarge: 'Estas imágenes son demasiado grandes. Envía menos a la vez.',
+    tooManyPictures: {
+      one: 'Envía como máximo {count} imagen a la vez.',
+      other: 'Envía como máximo {count} imágenes a la vez.',
+    },
+    zoomOff:
+      'Las llamadas de Zoom dentro de la aplicación aún no están configuradas en este servidor (ZOOM_SDK_KEY, ver README).',
+    badMeetingNumber:
+      'Esto no es un número de reunión de Zoom. Comprueba el enlace de Zoom en el documento.',
+    feedbackOff:
+      'Enviar comentarios aún no está configurado en este servidor (TELEGRAM_BOT_TOKEN, ver README).',
+    claudeOff: 'Claude aún no está configurado en este servidor (ANTHROPIC_API_KEY, ver README).',
     deliveryFailed: 'No se pudo entregar el mensaje. Inténtalo más tarde.',
     docWriterMissing:
       'Añadir al Google Doc aún no está configurado en el servidor (GOOGLE_SERVICE_ACCOUNT, ver README).',
@@ -511,6 +611,27 @@ export const common = defineMessages({
       'A aplicação não consegue editar este documento. No Google Docs, partilhe-o com {email} como Editor e tente de novo.',
     googleUnreachable: 'O Google Docs não respondeu. Tente de novo daqui a pouco.',
     googleRejected: 'O Google Docs não aceitou a alteração. Tente de novo daqui a pouco.',
+    nothingSent: 'Falta uma informação de que o servidor precisa. Preencha-a e tente de novo.',
+    badRequest:
+      'A aplicação e o servidor não se entendem: a aplicação pode estar desatualizada. Recarregue a página e tente de novo.',
+    lessonTooLong:
+      'Esta lição é demasiado longa para ser lida de uma só vez. No documento, divida-a em duas lições.',
+    tooLong: 'Isto é demasiado para enviar de uma só vez. Experimente uma parte mais curta.',
+    notPdf: 'Este ficheiro não é um PDF. Escolha um ficheiro PDF.',
+    pictureType: 'Só é possível enviar imagens JPEG, PNG ou WebP.',
+    picturesTooLarge: 'Estas imagens são demasiado grandes. Envie menos de cada vez.',
+    tooManyPictures: {
+      one: 'Envie no máximo {count} imagem de cada vez.',
+      other: 'Envie no máximo {count} imagens de cada vez.',
+    },
+    zoomOff:
+      'As chamadas do Zoom dentro da aplicação ainda não estão configuradas neste servidor (ZOOM_SDK_KEY, ver README).',
+    badMeetingNumber:
+      'Isto não é um número de reunião do Zoom. Verifique a ligação do Zoom no documento.',
+    feedbackOff:
+      'Enviar comentários ainda não está configurado neste servidor (TELEGRAM_BOT_TOKEN, ver README).',
+    claudeOff:
+      'O Claude ainda não está configurado neste servidor (ANTHROPIC_API_KEY, ver README).',
     deliveryFailed: 'Não foi possível entregar a mensagem. Tente mais tarde.',
     docWriterMissing:
       'Acrescentar ao Google Doc ainda não está configurado no servidor (GOOGLE_SERVICE_ACCOUNT, ver README).',
@@ -596,6 +717,26 @@ export const common = defineMessages({
       'L’app non può modificare questo documento. In Google Docs condividilo con {email} come Editor, poi riprova.',
     googleUnreachable: 'Google Docs non ha risposto. Riprova tra un momento.',
     googleRejected: 'Google Docs non ha accettato la modifica. Riprova tra un momento.',
+    nothingSent: 'Al server manca un dato che gli serve. Inseriscilo e riprova.',
+    badRequest:
+      'L’app e il server non si capiscono: forse l’app non è aggiornata. Ricarica la pagina e riprova.',
+    lessonTooLong:
+      'Questa lezione è troppo lunga per leggerla tutta in una volta. Nel documento, dividila in due lezioni.',
+    tooLong: 'È troppo da inviare in una volta. Prova con una parte più breve.',
+    notPdf: 'Questo file non è un PDF. Scegli un file PDF.',
+    pictureType: 'Si possono inviare solo immagini JPEG, PNG o WebP.',
+    picturesTooLarge: 'Queste immagini sono troppo grandi. Inviane meno alla volta.',
+    tooManyPictures: {
+      one: 'Invia al massimo {count} immagine alla volta.',
+      other: 'Invia al massimo {count} immagini alla volta.',
+    },
+    zoomOff:
+      'Le chiamate Zoom nell’app non sono ancora configurate su questo server (ZOOM_SDK_KEY, vedi README).',
+    badMeetingNumber:
+      'Questo non è un numero di riunione Zoom. Controlla il link Zoom nel documento.',
+    feedbackOff:
+      'Il feedback non è ancora configurato su questo server (TELEGRAM_BOT_TOKEN, vedi README).',
+    claudeOff: 'Claude non è ancora configurato su questo server (ANTHROPIC_API_KEY, vedi README).',
     deliveryFailed: 'Impossibile consegnare il messaggio. Riprova più tardi.',
     docWriterMissing:
       'L’aggiunta al Google Doc non è ancora configurata sul server (GOOGLE_SERVICE_ACCOUNT, vedi README).',

@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
-import { checkAccess, fail, onlyPost, text } from './_lib/http.js';
+import { checkAccess, fail, HttpError, onlyPost, text } from './_lib/http.js';
 import { sendWithPhotos, telegramConfigured, type TelegramPhoto } from './_lib/telegram.js';
 
 const KINDS: Record<string, string> = {
@@ -36,9 +36,10 @@ function tooMany(visitor: string): boolean {
   return times.length > RECENT_LIMIT;
 }
 
-function readPhotos(raw: unknown): TelegramPhoto[] | string {
+function readPhotos(raw: unknown): TelegramPhoto[] | HttpError {
   const list = Array.isArray(raw) ? raw : [];
-  if (list.length > MAX_PHOTOS) return `Attach at most ${MAX_PHOTOS} pictures.`;
+  if (list.length > MAX_PHOTOS)
+    return new HttpError(400, 'too_many_pictures', { count: String(MAX_PHOTOS) });
   const photos: TelegramPhoto[] = [];
   let total = 0;
   for (const entry of list) {
@@ -49,34 +50,30 @@ function readPhotos(raw: unknown): TelegramPhoto[] | string {
       typeof mediaType !== 'string' ||
       !PHOTO_TYPES.has(mediaType)
     )
-      return 'Attach JPEG, PNG or WebP pictures.';
+      return new HttpError(400, 'picture_type');
     total += data.length;
     photos.push({ mediaType, data });
   }
-  if (total > MAX_PHOTOS_BASE64) return 'These pictures are too large. Attach fewer.';
+  if (total > MAX_PHOTOS_BASE64) return new HttpError(413, 'pictures_too_large');
   return photos;
 }
 
 // A bug report, suggestion or any message from a student, with optional screenshots, sent to the teacher's Telegram.
 export default async function handler(request: VercelRequest, response: VercelResponse) {
   if (!onlyPost(request, response) || !checkAccess(request, response)) return;
-  if (!telegramConfigured())
-    return response.status(501).json({ error: 'Feedback isn’t set up on this server.' });
+  if (!telegramConfigured()) return response.status(501).json({ error: 'feedback_off' });
 
   const body = (request.body ?? {}) as Record<string, unknown>;
   const message = text(body.message, MAX_MESSAGE_LENGTH);
-  if (!message) return response.status(400).json({ error: 'Write a few words first.' });
+  if (!message) return response.status(400).json({ error: 'nothing_sent' });
   const photos = readPhotos(body.images);
-  if (typeof photos === 'string') return response.status(400).json({ error: photos });
+  if (photos instanceof HttpError) return fail(response, photos);
 
   const visitor =
     String(request.headers['x-forwarded-for'] ?? '')
       .split(',')[0]
       ?.trim() || 'unknown';
-  if (tooMany(visitor))
-    return response
-      .status(429)
-      .json({ error: 'Too many messages in a short time. Try again in a few minutes.' });
+  if (tooMany(visitor)) return response.status(429).json({ error: 'too_many' });
 
   const details = [
     ['From', text(body.contact, MAX_DETAIL_LENGTH) || 'not given'],
