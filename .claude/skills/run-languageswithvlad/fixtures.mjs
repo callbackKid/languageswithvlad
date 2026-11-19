@@ -343,7 +343,7 @@ const DISCUSSION = {
   grammarRule: EXTRAS.grammar[0],
 };
 
-/** The JSON body for one API request; {} for endpoints this fixture doesn't cover. */
+// The JSON body for one API request; {} for endpoints this fixture doesn't cover.
 export function answerFor(url, body, headers = {}, scenario = 'upcoming') {
   const path = new URL(url).pathname;
   if (path === '/api/health')

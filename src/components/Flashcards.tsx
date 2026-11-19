@@ -9,6 +9,7 @@ import ExerciseHead from './ExerciseHead';
 import Speak from './Speak';
 import Transcription from './Transcription';
 
+// Cards with a word on one side and its translation on the other; a card not known comes back later.
 export default function Flashcards({
   words,
   onClose,

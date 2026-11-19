@@ -1,6 +1,6 @@
 import { defineMessages } from '../core';
 
-/** The lesson page and everything that starts from paper: photos, handwriting, textbook PDFs. */
+// The lesson page and everything that starts from paper: photos, handwriting, textbook PDFs.
 export const paper = defineMessages({
   en: {
     // lesson

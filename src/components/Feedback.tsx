@@ -41,13 +41,13 @@ interface Picture extends ImagePayload {
   preview: string;
 }
 
-/** Where it happened, so the teacher doesn't have to ask. */
+// Where it happened, so the teacher doesn't have to ask.
 function browserLine(): string {
   const theme = isDark() ? 'dark' : 'light';
   return `${navigator.userAgent.slice(0, MAX_BROWSER_LENGTH)} · window ${window.innerWidth}×${window.innerHeight} · ${theme} theme`;
 }
 
-/** A "Feedback" button that opens a form: report a bug, suggest a change or write anything, with screenshots. Goes to the teacher's Telegram. */
+// A "Feedback" button that opens a form: report a bug, suggest a change or write anything, with screenshots. Goes to the teacher's Telegram.
 export default function Feedback({ docTitle }: { docTitle: string }) {
   const { t } = useTranslation(talk);
   const { t: tc } = useTranslation(common);

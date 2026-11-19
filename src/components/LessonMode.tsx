@@ -41,10 +41,10 @@ const MAX_NAME_LENGTH = 60;
 const MAX_PASSCODE_LENGTH = 40;
 const today = () => dayKey(new Date());
 
-/** Today's date in UTC, the same for everyone wherever they are. */
+// Today's date in UTC, the same for everyone wherever they are.
 const utcDay = () => new Date().toISOString().slice(0, 10);
 
-/** The call: Meet in a small window beside the app (it can't be embedded), Zoom inside the page. */
+// The call: Meet in a small window beside the app (it can't be embedded), Zoom inside the page.
 function CallPanel({ docText, zoomReady }: { docText: string; zoomReady: boolean }) {
   const { t } = useTranslation(call);
   const link = findCall(docText);
@@ -156,7 +156,7 @@ function CallPanel({ docText, zoomReady }: { docText: string; zoomReady: boolean
   );
 }
 
-/** Notes taken during the lesson, saved per day, with a button that adds them to the Google Doc. */
+// Notes taken during the lesson, saved per day, with a button that adds them to the Google Doc.
 function LessonNotes({ docId, target }: { docId: string; target: DocTarget }) {
   const { t } = useTranslation(call);
   const storageKey = `call-notes:${docId}:${today()}`;
@@ -167,7 +167,7 @@ function LessonNotes({ docId, target }: { docId: string; target: DocTarget }) {
     setText(value);
     save(storageKey, value);
   };
-  /** "[18:05] " at the cursor, to mark when something came up */
+  // "[18:05] " at the cursor, to mark when something came up
   const insertTime = () => {
     const stamp = `[${clockTime(new Date())}] `;
     const element = area.current;
@@ -218,7 +218,7 @@ function LessonNotes({ docId, target }: { docId: string; target: DocTarget }) {
   );
 }
 
-/** The words of the newest lesson, to glance at and say aloud during the call. */
+// The words of the newest lesson, to glance at and say aloud during the call.
 function LessonWords({ bank, lesson }: { bank: Bank; lesson: Lesson | null }) {
   const { t } = useTranslation(call);
   // the key words (★) first
@@ -319,7 +319,7 @@ function ActivityPlace({ children }: { children: ReactNode }) {
   );
 }
 
-/** The quiz game offered during the lesson, with the records so far. */
+// The quiz game offered during the lesson, with the records so far.
 function GameCard({ docId, onStart }: { docId: string; onStart: () => void }) {
   const { t } = useTranslation(game);
   return (
@@ -336,7 +336,7 @@ function GameCard({ docId, onStart }: { docId: string; onStart: () => void }) {
   );
 }
 
-/** The warm-up offered at the start of the lesson. */
+// The warm-up offered at the start of the lesson.
 function WarmUpCard({
   lesson,
   preparing,
@@ -392,7 +392,7 @@ function WarmUp({
   );
 }
 
-/** Lesson mode: the call, the warm-up and the game, the teacher's notes and the lesson's words on one screen. */
+// Lesson mode: the call, the warm-up and the game, the teacher's notes and the lesson's words on one screen.
 export default function LessonMode({
   docText,
   docId,

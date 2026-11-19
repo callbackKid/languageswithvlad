@@ -1,7 +1,7 @@
 import type { UiLanguage } from '../i18n/core';
 import type { Language } from './types';
 
-/** A short fact or expression shown while Claude is working: the phrase in the language being learned, then a note in the interface language. */
+// A short fact or expression shown while Claude is working: the phrase in the language being learned, then a note in the interface language.
 export interface Fact {
   phrase: string;
   note: Record<UiLanguage, string>;

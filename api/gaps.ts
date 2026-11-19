@@ -12,7 +12,7 @@ const MAX_TRANSLATION_LENGTH = 120;
 const MIN_SENTENCES = 4;
 const MAX_SENTENCES = 8;
 
-/** Sentences with a gap for some of the lesson's words, at the student's level. */
+// Sentences with a gap for some of the lesson's words, at the student's level.
 export default async function handler(request: VercelRequest, response: VercelResponse) {
   if (!onlyPost(request, response) || !checkAccess(request, response)) return;
   const raw: unknown[] = Array.isArray(request.body?.words) ? request.body.words : [];

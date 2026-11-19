@@ -3,7 +3,7 @@ import { common } from '../i18n/messages/common';
 import { type GuideId, guidePath } from '../lib/guides';
 import { followLink, hrefFor } from '../lib/router';
 
-/** A round "?" next to a page's title that opens the page's card in the Tutorial. */
+// A round "?" next to a page's title that opens the page's card in the Tutorial.
 export default function HelpLink({ guide }: { guide: GuideId }) {
   const { t } = useTranslation(common);
   const path = guidePath(guide);

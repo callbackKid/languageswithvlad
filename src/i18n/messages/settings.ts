@@ -1,6 +1,6 @@
 import { defineMessages } from '../core';
 
-/** The Settings page. */
+// The Settings page.
 export const settingsText = defineMessages({
   en: {
     title: 'Settings',

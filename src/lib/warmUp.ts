@@ -5,9 +5,9 @@ import { buildQuiz, type FormQuestion, pickWords, type QuizItem } from './quiz';
 import { getSettings, isStudied } from './settings';
 import { languageOfTense, type Lesson, type Tense, type Word } from './types';
 
-/** About five minutes of questions. */
+// About five minutes of questions.
 export const WARM_UP_QUESTIONS = 12;
-/** The round before a lesson, and at most this many of its questions on the hard words. */
+// The round before a lesson, and at most this many of its questions on the hard words.
 export const PREPARE_QUESTIONS = 10;
 const PREPARE_HARD = 4;
 // at most this many questions from the mistakes, so the lesson's own words get asked too

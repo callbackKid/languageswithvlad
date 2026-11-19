@@ -1,6 +1,6 @@
 import { defineMessages } from '../core';
 
-/** Lesson mode: the video call, the teacher's notes and the lesson's words side by side. */
+// Lesson mode: the video call, the teacher's notes and the lesson's words side by side.
 export const call = defineMessages({
   en: {
     title: 'Lesson mode',

@@ -4,7 +4,7 @@ import type { FormStat, WordStat } from '../lib/progress';
 import { languageOfTense } from '../lib/types';
 import Transcription from './Transcription';
 
-/** Missed words and verb forms with how often each was missed. */
+// Missed words and verb forms with how often each was missed.
 export default function MistakeList({
   words = [],
   forms = [],

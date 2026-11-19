@@ -24,6 +24,7 @@ import ExerciseHead from './ExerciseHead';
 import Speak from './Speak';
 import WaitingFact from './WaitingFact';
 
+// A lesson's verbs: a table in each tense, a typing drill per tense and a quick quiz.
 export default function VerbsTab({
   verbs,
   hasClaude,
@@ -49,7 +50,7 @@ export default function VerbsTab({
   const [status, setStatus] = useState<Record<string, string>>({});
   const [mode, setMode] = useState<'table' | 'drill' | 'quiz'>('table');
 
-  /** fresh: ignore the saved table and ask Claude again */
+  // fresh: ignore the saved table and ask Claude again
   async function open(verb: VerbRef, fresh = false) {
     setCurrentVerb(verb.inf);
     setMode('table');

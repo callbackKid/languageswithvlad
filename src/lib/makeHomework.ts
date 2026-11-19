@@ -77,15 +77,15 @@ const PHRASES: Record<Language, Phrases> = {
   },
 };
 
-/** How many sentences to translate the teacher can ask for; the server keeps to the same range. */
+// How many sentences to translate the teacher can ask for; the server keeps to the same range.
 export const MIN_TRANSLATE_SENTENCES = 2;
 export const MAX_TRANSLATE_SENTENCES = 8;
-/** At most this many key words named in the words task. */
+// At most this many key words named in the words task.
 const KEY_WORDS_SHOWN = 5;
 // a semicolon would split a task in two (homeworkItems)
 const oneTask = (text: string) => text.replace(/;/g, ',').replace(/\s+/g, ' ').trim();
 
-/** The homework block for a lesson, from Claude's reply and the lesson's words. */
+// The homework block for a lesson, from Claude's reply and the lesson's words.
 export function homeworkBlock({
   raw,
   lessonNumber,
@@ -95,7 +95,7 @@ export function homeworkBlock({
   raw: unknown;
   lessonNumber: number;
   words: Word[];
-  /** gap sentences need Claude, so they are offered only when the app has it */
+  // gap sentences need Claude, so they are offered only when the app has it
   gaps: boolean;
 }): string {
   const data = (raw && typeof raw === 'object' ? raw : {}) as Record<string, unknown>;
@@ -129,5 +129,5 @@ export function homeworkBlock({
   return [`${phrases.label}:`, ...tasks.map((task) => `- ${task}`)].join('\n');
 }
 
-/** "Devoirs", "Homework", …: the label a homework block starts with in a language. */
+// "Devoirs", "Homework", …: the label a homework block starts with in a language.
 export const homeworkLabel = (language: Language) => PHRASES[language].label;

@@ -17,7 +17,7 @@ const LABELS: Record<Language, string> = {
   it: 'Lo sapevi?',
 };
 
-/** What's happening, plus a fact about the language that changes every 20 seconds, while the student waits for Claude. */
+// What's happening, plus a fact about the language that changes every 20 seconds, while the student waits for Claude.
 export default function WaitingFact({
   children,
   language = 'fr',

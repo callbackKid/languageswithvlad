@@ -1,6 +1,6 @@
 import { defineMessages } from '../core';
 
-/** The quiz game in lesson mode: a round against the clock on the lesson’s words, with records. */
+// The quiz game in lesson mode: a round against the clock on the lesson’s words, with records.
 export const game = defineMessages({
   en: {
     title: 'Quiz game',

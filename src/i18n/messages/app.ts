@@ -1,6 +1,6 @@
 import { defineMessages } from '../core';
 
-/** The app shell: top bar, sections, the first screens and the next-lesson badge. */
+// The app shell: top bar, sections, the first screens and the next-lesson badge.
 export const app = defineMessages({
   en: {
     'section.home': 'Home',

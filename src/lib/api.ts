@@ -11,10 +11,10 @@ export type FeedbackKind = 'bug' | 'idea' | 'other';
 export interface FeedbackReport {
   kind: FeedbackKind;
   message: string;
-  /** how to reach the student: a name, Telegram or email; optional */
+  // how to reach the student: a name, Telegram or email; optional
   contact: string;
   images: ImagePayload[];
-  /** filled in by the app, so the teacher knows where it happened */
+  // filled in by the app, so the teacher knows where it happened
   page: string;
   docTitle: string;
   browser: string;
@@ -31,7 +31,7 @@ export class ApiError extends Error {
   }
 }
 
-/** teacherCode replaces the saved one, to check a code before it is kept. */
+// teacherCode replaces the saved one, to check a code before it is kept.
 async function request<T>(path: string, init?: RequestInit, teacherCode?: string): Promise<T> {
   const headers: Record<string, string> = { 'content-type': 'application/json' };
   const code = load<string>('code');
@@ -112,9 +112,9 @@ function analyzeOnce(body: string, fresh: boolean): Promise<unknown> {
 
 interface Health {
   needsCode: boolean;
-  /** a teacher code is set up on the server */
+  // a teacher code is set up on the server
   teacherCode?: boolean;
-  /** the request carried the right teacher code */
+  // the request carried the right teacher code
   teacher?: boolean;
   ai: boolean;
   docWriter?: string | null;
@@ -126,7 +126,7 @@ interface Health {
 
 export const api = {
   health: () => request<Health>('/api/health'),
-  /** whether the server accepts this teacher code */
+  // whether the server accepts this teacher code
   checkTeacher: async (teacherCode: string) =>
     !!(await request<Health>('/api/health', undefined, teacherCode)).teacher,
   zoomSignature: (meetingNumber: string) =>
@@ -136,7 +136,7 @@ export const api = {
     }),
   feedback: (report: FeedbackReport) =>
     request<{ ok: boolean }>('/api/feedback', { method: 'POST', body: JSON.stringify(report) }),
-  /** adds a new lesson at the end of the document, or, with a lesson key, lines under that lesson */
+  // adds a new lesson at the end of the document, or, with a lesson key, lines under that lesson
   append: (docId: string, text: string, lesson?: string) =>
     request<{ ok: boolean }>('/api/append', {
       method: 'POST',
@@ -145,7 +145,7 @@ export const api = {
   doc: (id: string) =>
     request<{ title: string; text: string }>(`/api/doc?id=${encodeURIComponent(id)}`),
   analyze: (body: string, fresh = false) => analyzeOnce(body, fresh),
-  /** the grammar, homework and book exercises of a lesson, explained in the interface language */
+  // the grammar, homework and book exercises of a lesson, explained in the interface language
   lessonExtras: (body: string, explainIn: string, fresh = false) =>
     request<unknown>('/api/analyze', {
       method: 'POST',
@@ -157,7 +157,7 @@ export const api = {
         levels: getSettings().levels,
       }),
     }),
-  /** gap sentences on one grammar point */
+  // gap sentences on one grammar point
   grammarPractice: (options: {
     language: Language;
     level: string;
@@ -169,7 +169,7 @@ export const api = {
       method: 'POST',
       body: JSON.stringify({ action: 'practice', ...options }),
     }),
-  /** exercises from the student's book, from photos or from PDF pages, copied out as text */
+  // exercises from the student's book, from photos or from PDF pages, copied out as text
   bookExercises: (pages: { images: ImagePayload[] } | { data: string }) =>
     request<unknown>('/api/paper', {
       method: 'POST',
@@ -202,7 +202,7 @@ export const api = {
       method: 'POST',
       body: JSON.stringify({ kind: 'handwritten', images }),
     }),
-  /** a word or phrase marked in a pasted text, explained in its sentence */
+  // a word or phrase marked in a pasted text, explained in its sentence
   explain: (selection: string, context: string) =>
     request<unknown>('/api/text', {
       method: 'POST',
@@ -213,25 +213,25 @@ export const api = {
         levels: getSettings().levels,
       }),
     }),
-  /** a pasted text in Russian, paragraph by paragraph */
+  // a pasted text in Russian, paragraph by paragraph
   translate: (text: string) =>
     request<unknown>('/api/text', {
       method: 'POST',
       body: JSON.stringify({ action: 'translate', text }),
     }),
-  /** vocabulary, questions and true-or-false statements built from a pasted text */
+  // vocabulary, questions and true-or-false statements built from a pasted text
   study: (text: string, levels: Record<Language, string>) =>
     request<unknown>('/api/text', {
       method: 'POST',
       body: JSON.stringify({ action: 'study', text, levels }),
     }),
-  /** homework for the next lesson, made by Claude from a lesson's words and grammar */
+  // homework for the next lesson, made by Claude from a lesson's words and grammar
   makeHomework: (input: { body: string; keyWords: string[]; level: string; sentences: number }) =>
     request<unknown>('/api/analyze', {
       method: 'POST',
       body: JSON.stringify({ action: 'homework', ...input }),
     }),
-  /** a written homework answer, its mistakes fixed and explained in the interface language */
+  // a written homework answer, its mistakes fixed and explained in the interface language
   checkWriting: (input: { task: string; text: string; level: string; explainIn: string }) =>
     request<unknown>('/api/text', {
       method: 'POST',

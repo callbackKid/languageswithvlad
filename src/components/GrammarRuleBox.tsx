@@ -17,12 +17,12 @@ export default function GrammarRuleBox({
 }: {
   rule: GrammarRule;
   language: Language;
-  /** the line that opens it, which is also the rule's heading */
+  // the line that opens it, which is also the rule's heading
   label: ReactNode;
-  /** the heading level of that line where the box stands; its parts are one level below */
+  // the heading level of that line where the box stands; its parts are one level below
   level?: 2 | 3;
   open?: boolean;
-  /** buttons under the explanation */
+  // buttons under the explanation
   children?: ReactNode;
 }) {
   const { t, language: uiLanguage } = useTranslation(talk);

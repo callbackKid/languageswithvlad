@@ -12,10 +12,11 @@ export class TelegramError extends HttpError {}
 
 export interface TelegramPhoto {
   mediaType: string;
-  /** base64, without the data: prefix */
+  // base64, without the data: prefix
   data: string;
 }
 
+// Whether the bot token and the chat are set, so feedback can reach the teacher's Telegram.
 export function telegramConfigured(): boolean {
   return !!(process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_CHAT_ID);
 }
@@ -38,6 +39,7 @@ const photoFile = (photo: TelegramPhoto) =>
   new Blob([Buffer.from(photo.data, 'base64')], { type: photo.mediaType || 'image/jpeg' });
 const fileName = (index: number) => `screenshot-${index + 1}.jpg`;
 
+// Sends one message, without photos, to the teacher's chat.
 export async function sendText(text: string): Promise<void> {
   const body = new FormData();
   body.set('text', text.slice(0, MAX_TEXT));
@@ -45,7 +47,7 @@ export async function sendText(text: string): Promise<void> {
   await call('sendMessage', body);
 }
 
-/** The text with the photos under it: as a caption when it fits, otherwise as its own message first. */
+// The text with the photos under it: as a caption when it fits, otherwise as its own message first.
 export async function sendWithPhotos(text: string, photos: TelegramPhoto[]): Promise<void> {
   if (!photos.length) return sendText(text);
   const fitsCaption = text.length <= MAX_CAPTION;

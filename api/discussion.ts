@@ -8,7 +8,7 @@ import { asExplainLanguage, asLanguage, discussionPrompt } from './_lib/prompts.
 // MAX_TOPIC_LENGTH in src/components/Discuss.tsx.
 const MAX_TOPIC_LENGTH = 120;
 
-/** A discussion question for the start of a lesson, for a chosen level, vocabulary topic and grammar point. */
+// A discussion question for the start of a lesson, for a chosen level, vocabulary topic and grammar point.
 export default async function handler(request: VercelRequest, response: VercelResponse) {
   if (!onlyPost(request, response) || !checkAccess(request, response)) return;
   const level = asLevel(request.body?.level);

@@ -19,9 +19,9 @@ export default function LessonBoard({
   server,
 }: {
   storageKey: string;
-  /** the shared room's name: the same for everyone on this document's board today */
+  // the shared room's name: the same for everyone on this document's board today
   room: string;
-  /** where the board is shared (Supabase), or null when it isn't set up */
+  // where the board is shared (Supabase), or null when it isn't set up
   server: BoardServer | null;
 }) {
   const { t, language } = useTranslation(call);

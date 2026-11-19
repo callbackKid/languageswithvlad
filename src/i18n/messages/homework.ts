@@ -1,6 +1,6 @@
 import { defineMessages } from '../core';
 
-/** Homework on Home: the tasks the teacher wrote under “Devoirs:”, with their exercises. */
+// Homework on Home: the tasks the teacher wrote under “Devoirs:”, with their exercises.
 export const homework = defineMessages({
   en: {
     title: 'Homework for lesson {n}',

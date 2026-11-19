@@ -11,7 +11,7 @@ import MistakeList from './MistakeList';
 import PageHead from './PageHead';
 import WordQuiz from './WordQuiz';
 
-/** The words and verb forms missed most often, and a quiz on just those. */
+// The words and verb forms missed most often, and a quiz on just those.
 export default function Mistakes({ bank }: { bank: Bank }) {
   const { t } = useTranslation(pages);
   const progress = useProgress();

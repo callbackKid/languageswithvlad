@@ -5,14 +5,14 @@ import { common } from '../i18n/messages/common';
 import { api, ApiError } from '../lib/api';
 import { documentDate } from '../lib/dates';
 
-/** Where new lessons go: the connected document, the lesson number to use next, and whether the server can write. */
+// Where new lessons go: the connected document, the lesson number to use next, and whether the server can write.
 export interface DocTarget {
   docId: string;
   nextLessonNumber: number;
   docWriter: string | null;
 }
 
-/** "13.11.2026 8 Leçon" and the lines under it, in the format the app reads lessons from. */
+// "13.11.2026 8 Leçon" and the lines under it, in the format the app reads lessons from.
 export function lessonText(lessonNumber: number, lines: string[]): string {
   const heading = `${documentDate(new Date())} ${lessonNumber} Leçon`;
   return `\n\n${heading}\n${lines
@@ -21,7 +21,7 @@ export function lessonText(lessonNumber: number, lines: string[]): string {
     .join('\n')}\n`;
 }
 
-/** Appends the lines to the Google Doc as a new lesson, then asks the app to sync. */
+// Appends the lines to the Google Doc as a new lesson, then asks the app to sync.
 export default function AddToDoc({ target, lines }: { target: DocTarget; lines: string[] }) {
   const { t } = useTranslation(common);
   const [state, setState] = useState<'idle' | 'saving' | 'done' | 'error'>('idle');

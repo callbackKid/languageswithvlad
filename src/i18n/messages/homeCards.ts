@@ -1,6 +1,6 @@
 import { defineMessages } from '../core';
 
-/** The cards on Home around a lesson: the summary after it and the round to prepare for the next one. */
+// The cards on Home around a lesson: the summary after it and the round to prepare for the next one.
 export const homeCards = defineMessages({
   en: {
     summaryToday: 'Today, lesson {n}: {counts}',

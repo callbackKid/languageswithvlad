@@ -4,7 +4,7 @@ import type { PhotoItem, Word } from '../lib/types';
 import Speak from './Speak';
 import Star from './Star';
 
-/** What goes onto Favourite words: the dictionary form when there is one. */
+// What goes onto Favourite words: the dictionary form when there is one.
 const asWord = (item: PhotoItem): Word => ({
   fr: item.base || item.fr,
   ru: item.ru,
@@ -21,7 +21,7 @@ export default function WordNotesTable({
   firstColumn,
 }: {
   items: PhotoItem[];
-  /** the heading of the first column: "Underlined", "Word or phrase" */
+  // the heading of the first column: "Underlined", "Word or phrase"
   firstColumn: string;
 }) {
   const { t } = useTranslation(paper);

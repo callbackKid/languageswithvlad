@@ -13,7 +13,7 @@ import { shuffle } from '../lib/util';
 import ExerciseHead from './ExerciseHead';
 import WaitingFact from './WaitingFact';
 
-/** Fill the gap with the lesson's words: sentences Claude writes around them. */
+// Fill the gap with the lesson's words: sentences Claude writes around them.
 export default function GapFill({
   words,
   onClose,
@@ -73,15 +73,15 @@ export function GapRound({
 }: {
   title: string;
   language: Language;
-  /** shown while the sentences are being written */
+  // shown while the sentences are being written
   waiting: string;
   load: () => Promise<unknown>;
   onAnswer?: (item: GapItem, right: boolean) => void;
-  /** said after the answer, next to right or wrong */
+  // said after the answer, next to right or wrong
   explain?: (item: GapItem) => ReactNode;
   onClose: () => void;
   onRestart: () => void;
-  /** called once when the round is over */
+  // called once when the round is over
   onRoundEnd?: () => void;
 }) {
   const { t } = useTranslation(exercises);

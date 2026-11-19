@@ -22,9 +22,10 @@ const MAX_ROWS = 500;
 
 export const NOTION_ID = /^notion-([0-9a-f]{32})$/;
 
-/** Ends up as the error code the app translates (notion_not_shared and so on). */
+// Ends up as the error code the app translates (notion_not_shared and so on).
 export class NotionError extends HttpError {}
 
+// Whether NOTION_TOKEN is set, so Notion pages can be read.
 export function notionConfigured(): boolean {
   return !!process.env.NOTION_TOKEN;
 }
@@ -92,7 +93,7 @@ interface Database {
   properties: Record<string, { type: string }>;
 }
 
-/** The text of a rich-text run; a call link hidden behind other words is kept, so "Join call" finds it. */
+// The text of a rich-text run; a call link hidden behind other words is kept, so "Join call" finds it.
 function plain(texts: RichText[] | undefined): string {
   return (texts ?? [])
     .map((text) => {
@@ -120,7 +121,7 @@ async function children(blockId: string): Promise<Block[]> {
 const pad = (value: number) => String(value).padStart(2, '0');
 const HEADING = /^\s*\d{1,2}\.\d{1,2}\.\d{4}\s+\d+/;
 
-/** A database row's title; when it isn't a lesson heading but the row has a date, one is made from it. */
+// A database row's title; when it isn't a lesson heading but the row has a date, one is made from it.
 function rowTitle(row: Page, position: number): string {
   const properties = Object.values(row.properties);
   const title = plain(properties.find((property) => property.type === 'title')?.title);
@@ -136,7 +137,7 @@ function rowTitle(row: Page, position: number): string {
 class Reader {
   private count = 0;
 
-  /** The lines of a list of blocks, with their children indented one level deeper. */
+  // The lines of a list of blocks, with their children indented one level deeper.
   async lines(blocks: Block[], depth: number): Promise<string[]> {
     const out: string[] = [];
     for (const block of blocks) {
@@ -178,7 +179,7 @@ class Reader {
     return out;
   }
 
-  /** Every row of a database as its own part: the title line (a lesson heading), then its page. */
+  // Every row of a database as its own part: the title line (a lesson heading), then its page.
   async database(databaseId: string, depth: number): Promise<string[]> {
     const rows: Page[] = [];
     let cursor: string | null = null;
@@ -212,7 +213,7 @@ const tidy = (lines: string[]) =>
     .replace(/\n{3,}/g, '\n\n')
     .trim();
 
-/** The page (or database of lessons) as { title, text }. */
+// The page (or database of lessons) as { title, text }.
 export async function readNotion(id: string): Promise<{ title: string; text: string }> {
   const reader = new Reader();
   try {
@@ -243,8 +244,8 @@ const paragraph = (text: string, type = 'paragraph') => ({
   [type]: { rich_text: [{ type: 'text', text: { content: text.slice(0, MAX_TEXT_RUN) } }] },
 });
 
-/** Adds a lesson: under the page's last block, or as a new row when the link is a database of lessons. */
-/** The one line a top-level block shows: a sub-page's title, or its text. */
+// Adds a lesson: under the page's last block, or as a new row when the link is a database of lessons.
+// The one line a top-level block shows: a sub-page's title, or its text.
 function blockLine(block: Block): string {
   if (block.type === 'child_page') return (block.child_page as { title?: string }).title ?? '';
   const content = (block[block.type] ?? {}) as { rich_text?: RichText[] };
@@ -310,6 +311,7 @@ export async function insertIntoNotionLesson(
   return true;
 }
 
+// Adds a new lesson (its heading and lines) at the end of a Notion page, or as a row of a lesson database.
 export async function appendToNotion(id: string, text: string): Promise<void> {
   const lines = text.split('\n').map((line) => line.trimEnd());
   const headingIndex = lines.findIndex((line) => line.trim());

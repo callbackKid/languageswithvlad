@@ -21,7 +21,7 @@ export default function SendToTeacher({
 }: {
   lessons: Lesson[];
   docId: string;
-  /** whether the server can write to the document */
+  // whether the server can write to the document
   canWrite: boolean;
 }) {
   const { t, locale } = useTranslation(homeworkText);

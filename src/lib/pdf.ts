@@ -4,7 +4,7 @@ import { paper } from '../i18n/messages/paper';
    at most 4.5 MB per request and whole textbooks are much larger. pdf-lib is loaded only when
    a PDF is actually opened, so it doesn't slow down the rest of the app. */
 
-/** Most pages read at once; a chapter is usually 4–15. */
+// Most pages read at once; a chapter is usually 4–15.
 export const MAX_PDF_PAGES = 20;
 // keep in step with MAX_PDF_BASE64_LENGTH in api/paper.ts
 const MAX_BASE64_LENGTH = 4_000_000;
@@ -18,6 +18,7 @@ async function loadPdf(file: File) {
   };
 }
 
+// How many pages a PDF has, read in the browser.
 export async function pdfPageCount(file: File): Promise<number> {
   return (await loadPdf(file)).source.getPageCount();
 }
@@ -31,7 +32,7 @@ function toBase64(bytes: Uint8Array): string {
   return btoa(binary);
 }
 
-/** Pages firstPage…lastPage (counting from 1) as a new PDF, in base64; a string error when it can't be sent. */
+// Pages firstPage…lastPage (counting from 1) as a new PDF, in base64; a string error when it can't be sent.
 export async function extractPages(
   file: File,
   firstPage: number,

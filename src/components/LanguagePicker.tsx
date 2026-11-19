@@ -1,7 +1,7 @@
 import { setUiLanguage, UI_LANGUAGES, type UiLanguage, useTranslation } from '../i18n/core';
 import { app } from '../i18n/messages/app';
 
-/** The dropdown in the top bar that changes the language of the interface. */
+// The dropdown in the top bar that changes the language of the interface.
 export default function LanguagePicker() {
   const { t, language } = useTranslation(app);
   return (

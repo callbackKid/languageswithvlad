@@ -11,7 +11,7 @@ import MistakeList from './MistakeList';
 import PageHead, { BankNote } from './PageHead';
 import SendToTeacher from './SendToTeacher';
 
-/** Fewer answers than this say too little about a topic to call it weak. */
+// Fewer answers than this say too little about a topic to call it weak.
 const MIN_ANSWERS = 4;
 const KINDS = ['noun', 'verb', 'adjective', 'adverb', 'expression', 'other'] as const;
 type Kind = (typeof KINDS)[number];
@@ -50,7 +50,7 @@ function addTo(rowsById: Map<string, Row>, id: string, name: string, right: numb
   rowsById.set(id, row);
 }
 
-/** Lowest accuracy first, leaving out topics with too few answers to judge. */
+// Lowest accuracy first, leaving out topics with too few answers to judge.
 const weakest = (rowsById: Map<string, Row>) =>
   [...rowsById.values()]
     .filter((row) => row.total >= MIN_ANSWERS)
@@ -82,6 +82,7 @@ function RankList({ title, rows }: { title: string; rows: Row[] }) {
   );
 }
 
+// The Stats page: words learned, right answers, progress per lesson, weak topics and common mistakes.
 export default function Stats({
   bank,
   lessons,

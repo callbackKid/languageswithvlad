@@ -20,12 +20,12 @@ import WordNotesTable from './WordNotesTable';
 import WordsTab from './WordsTab';
 
 const STORAGE_KEY = 'reader:texts';
-/** Keep in step with MAX_TEXT_LENGTH in api/text.ts. */
+// Keep in step with MAX_TEXT_LENGTH in api/text.ts.
 const MAX_TEXT_LENGTH = 8000;
 const MAX_SELECTION_LENGTH = 200;
 // the sentence sent with a marked word; the server takes up to 600 (MAX_CONTEXT_LENGTH in api/text.ts)
 const MAX_CONTEXT_LENGTH = 500;
-/** The oldest texts are dropped beyond this many, so storage doesn't fill up. */
+// The oldest texts are dropped beyond this many, so storage doesn't fill up.
 const MAX_TEXTS = 20;
 // a word: letters, with apostrophes and hyphens inside (l'ami, peut-être)
 const WORD = /(\p{L}[\p{L}\p{M}'’-]*)/u;
@@ -33,24 +33,24 @@ const WORD = /(\p{L}[\p{L}\p{M}'’-]*)/u;
 type Busy = 'idle' | 'loading' | 'error';
 interface Selection {
   text: string;
-  /** the sentence around it, which tells Claude which meaning is meant */
+  // the sentence around it, which tells Claude which meaning is meant
   context: string;
 }
 
-/** The first words of a text, for the list of saved texts until Claude names it. */
+// The first words of a text, for the list of saved texts until Claude names it.
 const firstWords = (text: string) => {
   const line = text.trim().split('\n')[0] ?? '';
   return line.length > 60 ? line.slice(0, 57).trimEnd() + '…' : line;
 };
 
-/** The sentence of the paragraph that holds the selection; the paragraph's start when it spans several. */
+// The sentence of the paragraph that holds the selection; the paragraph's start when it spans several.
 function sentenceAround(paragraph: string, selection: string): string {
   const sentences = paragraph.split(/(?<=[.!?…»"])\s+/);
   const found = sentences.find((sentence) => sentence.includes(selection));
   return (found ?? paragraph).slice(0, MAX_CONTEXT_LENGTH);
 }
 
-/** True-or-false statements about the text: each is answered once, then explained. */
+// True-or-false statements about the text: each is answered once, then explained.
 function TrueFalse({
   statements,
   language,
@@ -137,7 +137,7 @@ export default function Reader({ hasClaude }: { hasClaude: boolean }) {
 
   // saved whenever the list changes, so answers that arrive together never overwrite each other
   useEffect(() => save(STORAGE_KEY, texts), [texts]);
-  /** Changes one text, starting from its newest state (an answer may arrive while another is on its way). */
+  // Changes one text, starting from its newest state (an answer may arrive while another is on its way).
   const patch = (id: string, change: (entry: ReaderText) => Partial<ReaderText>) =>
     setTexts((previous) =>
       previous.map((entry) => (entry.id === id ? { ...entry, ...change(entry) } : entry))
@@ -181,7 +181,7 @@ export default function Reader({ hasClaude }: { hasClaude: boolean }) {
     open(next[0]?.id ?? null);
   }
 
-  /** A click picks the word under it; a drag picks whatever was selected. */
+  // A click picks the word under it; a drag picks whatever was selected.
   function pick(event: SyntheticEvent<HTMLElement>) {
     const target = event.target as HTMLElement;
     // the translation under a paragraph isn't something to explain

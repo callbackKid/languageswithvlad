@@ -35,7 +35,7 @@ import WritingTask from './WritingTask';
 const ROUND = 10;
 const VERB_FORMS = 12;
 
-/** "Next lesson in 2 days", read from the document's "le cours prochain:" line. */
+// "Next lesson in 2 days", read from the document's "le cours prochain:" line.
 function DueLine({ docText }: { docText: string }) {
   const { t } = useTranslation(homeworkText);
   const next = parseNextLesson(docText);
@@ -196,7 +196,7 @@ export default function HomeworkCard({
   hasClaude: boolean;
   docId: string;
   docText: string;
-  /** whether the server can write to the document, for the report */
+  // whether the server can write to the document, for the report
   canWrite: boolean;
 }) {
   const { t } = useTranslation(homeworkText);

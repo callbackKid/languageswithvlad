@@ -14,10 +14,10 @@ export type Section =
   | 'settings'
   | 'call';
 
-/** The menu's groups, drawn with a line between them. */
+// The menu's groups, drawn with a line between them.
 export type SectionGroup = 'start' | 'lessons' | 'words' | 'tools' | 'help';
 
-/** Every page of the app, in menu order. Their names are translated: app.ts, "section.<id>". */
+// Every page of the app, in menu order. Their names are translated: app.ts, "section.<id>".
 export const SECTIONS: { id: Section; path: string; group: SectionGroup; inMenu?: false }[] = [
   { id: 'home', path: '/', group: 'start' },
   { id: 'lessons', path: '/lessons', group: 'lessons' },
@@ -38,7 +38,7 @@ export const SECTIONS: { id: Section; path: string; group: SectionGroup; inMenu?
   { id: 'call', path: '/call', group: 'lessons', inMenu: false },
 ];
 
-/** Sections that show the lessons' content, so they need at least one lesson in the document. */
+// Sections that show the lessons' content, so they need at least one lesson in the document.
 export const NEEDS_LESSONS: Section[] = [
   'home',
   'lessons',
@@ -48,7 +48,7 @@ export const NEEDS_LESSONS: Section[] = [
   'stats',
 ];
 
-/** "/lessons/2026-11-12_7" → the Lessons section and that lesson; null for a path the app doesn't have. */
+// "/lessons/2026-11-12_7" → the Lessons section and that lesson; null for a path the app doesn't have.
 export function parsePath(path: string): { section: Section; lessonKey: string | null } | null {
   const [first = '', second] = path.split('/').filter(Boolean);
   const entry = SECTIONS.find((candidate) => candidate.path === '/' + first);
@@ -62,4 +62,5 @@ export function parsePath(path: string): { section: Section; lessonKey: string |
   }
 }
 
+// The address of one lesson's page.
 export const lessonPath = (key: string) => '/lessons/' + encodeURIComponent(key);

@@ -7,11 +7,12 @@ import { createHmac } from 'node:crypto';
 
 const base64url = (value: string | Buffer) => Buffer.from(value).toString('base64url');
 
+// Whether the Zoom SDK key and secret are set, so Zoom calls can run inside the app.
 export function zoomConfigured(): boolean {
   return !!(process.env.ZOOM_SDK_KEY && process.env.ZOOM_SDK_SECRET);
 }
 
-/** A signed JWT (HS256) that lets the Meeting SDK join one meeting as a participant. */
+// A signed JWT (HS256) that lets the Meeting SDK join one meeting as a participant.
 export function zoomSignature(meetingNumber: string, sdkKey: string, secret: string): string {
   // a little in the past, so a server clock slightly ahead of Zoom's doesn't make it "not yet valid"
   const issuedAt = Math.floor(Date.now() / 1000) - 30;

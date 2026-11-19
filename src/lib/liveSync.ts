@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import { parseNextLesson } from './nextLesson';
 
-/** How often the document is read again while a lesson is on. */
+// How often the document is read again while a lesson is on.
 export const LIVE_SYNC_INTERVAL = 60_000;
 
 /** Whether the document's next lesson is happening now (the header shows "Lesson now"); checked

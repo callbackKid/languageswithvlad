@@ -15,7 +15,7 @@ import WordQuiz from './WordQuiz';
 const ROUND = 10;
 const FORMS = 2;
 
-/** The landing page: a round of random questions from every lesson, weighted towards what the student doesn't know yet. */
+// The landing page: a round of random questions from every lesson, weighted towards what the student doesn't know yet.
 export default function Home({
   bank,
   lessons,

@@ -8,11 +8,11 @@ export type NewsKind = 'new' | 'better' | 'fixed';
 export interface NewsItem {
   kind: NewsKind;
   text: Record<UiLanguage, string>;
-  /** "teacher": about the teacher's tools, so only the teacher sees it */
+  // "teacher": about the teacher's tools, so only the teacher sees it
   audience?: 'teacher';
 }
 export interface NewsDay {
-  /** YYYY-MM-DD */
+  // YYYY-MM-DD
   date: string;
   items: NewsItem[];
 }
@@ -716,6 +716,7 @@ export const NEWS: NewsDay[] = [
 const LATEST = NEWS[0]?.date ?? '';
 const SEEN_KEY = 'news-seen';
 
-/** Whether there is news this device hasn't opened the News page for yet. */
+// Whether there is news this device hasn't opened the News page for yet.
 export const hasUnseenNews = () => (load<string>(SEEN_KEY) ?? '') < LATEST;
+// Marks every News entry as seen on this device: the dot in the menu goes away.
 export const markNewsSeen = () => save(SEEN_KEY, LATEST);

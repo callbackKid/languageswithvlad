@@ -12,10 +12,10 @@
 
 import { createClient, type RealtimeChannel } from '@supabase/supabase-js';
 
-/** Where the board is shared: the Supabase project, from /api/health. */
+// Where the board is shared: the Supabase project, from /api/health.
 export interface BoardServer {
   url: string;
-  /** the project's public (anon / publishable) key; it is meant to be in the browser */
+  // the project's public (anon / publishable) key; it is meant to be in the browser
   key: string;
 }
 
@@ -25,24 +25,24 @@ export interface BoardPeer {
   name: string;
 }
 
-/** What the board needs from a connection, whichever service carries it. */
+// What the board needs from a connection, whichever service carries it.
 export interface BoardConnection {
-  /** this device's id in the room */
+  // this device's id in the room
   id: string;
   send: (event: BoardEvent, payload: Record<string, unknown>) => void;
   on: (event: BoardEvent, handler: (payload: Record<string, unknown>) => void) => void;
-  /** called with everyone in the room, this device included, whenever someone comes or goes */
+  // called with everyone in the room, this device included, whenever someone comes or goes
   onPeers: (handler: (peers: BoardPeer[]) => void) => void;
-  /** called once the room is joined, and when the connection drops */
+  // called once the room is joined, and when the connection drops
   onStatus: (handler: (status: 'live' | 'offline') => void) => void;
-  /** joins the room; call it once every handler above is in place */
+  // joins the room; call it once every handler above is in place
   start: () => void;
   close: () => void;
 }
 
 const randomId = () => Math.random().toString(36).slice(2, 10);
 
-/** A room on Supabase Realtime: works between any two devices. */
+// A room on Supabase Realtime: works between any two devices.
 function supabaseConnection(server: BoardServer, room: string, name: string): BoardConnection {
   const id = randomId();
   const client = createClient(server.url, server.key, {
@@ -91,7 +91,7 @@ function supabaseConnection(server: BoardServer, room: string, name: string): Bo
   };
 }
 
-/** Tabs of one browser, for trying the board during development without Supabase. */
+// Tabs of one browser, for trying the board during development without Supabase.
 function localConnection(room: string, name: string): BoardConnection {
   const id = randomId();
   const channel = new BroadcastChannel('cahier-board:' + room);
@@ -146,7 +146,7 @@ function localConnection(room: string, name: string): BoardConnection {
   };
 }
 
-/** Opens a board room: through Supabase when it's set up, between tabs in development, or null. */
+// Opens a board room: through Supabase when it's set up, between tabs in development, or null.
 export function connectBoard(
   server: BoardServer | null,
   room: string,

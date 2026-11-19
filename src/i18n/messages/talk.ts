@@ -1,6 +1,6 @@
 import { defineMessages } from '../core';
 
-/** Discuss (questions for the start of a lesson) and Feedback (messages to the teacher). */
+// Discuss (questions for the start of a lesson) and Feedback (messages to the teacher).
 export const talk = defineMessages({
   en: {
     discussTitle: 'A question for discussion',

@@ -26,7 +26,7 @@ function gradeWord(typed: string, answer: string): Result | null {
   return bare !== answer && grade(typed, bare) !== 'bad' ? 'article' : 'bad';
 }
 
-/** An answer the student got wrong, for the list at the end of a round. */
+// An answer the student got wrong, for the list at the end of a round.
 interface Missed {
   asked: string;
   answer: string;
@@ -51,7 +51,7 @@ export default function WordQuiz({
   closeLabel?: string;
   empty?: string;
   review?: { title: string; none: string };
-  /** called once each time a round is over (homework ticks itself) */
+  // called once each time a round is over (homework ticks itself)
   onRoundEnd?: () => void;
   /** false for a quiz that is simply on the page (Home): its first listening question waits for
       the student instead of speaking as soon as the page opens */

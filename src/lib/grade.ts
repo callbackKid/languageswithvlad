@@ -9,7 +9,7 @@ const strip = (text: string) =>
     .replace(/œ/g, 'oe')
     .replace(/æ/g, 'ae')
     .replace(/ß/g, 'ss');
-/** Case, punctuation ("Je t'aime." = "je t'aime") and invisible characters don't count; apostrophes, hyphens and the (e)s brackets do. */
+// Case, punctuation ("Je t'aime." = "je t'aime") and invisible characters don't count; apostrophes, hyphens and the (e)s brackets do.
 const normalize = (text: string) =>
   String(text || '')
     .normalize('NFC')
@@ -20,7 +20,7 @@ const normalize = (text: string) =>
     .replace(/\s+/g, ' ')
     .trim();
 
-/** "allé(e)s" → allés, allées … every optional part on or off. */
+// "allé(e)s" → allés, allées … every optional part on or off.
 function variants(answer: string): string[] {
   const normalized = normalize(answer);
   const match = normalized.match(/\(([^)]*)\)/);
@@ -30,6 +30,7 @@ function variants(answer: string): string[] {
   return [...variants(before + after), ...variants(before + match[1] + after)];
 }
 
+// How close a typed answer is: right, right but for the accents, wrong, or not answered.
 export function grade(input: string, answer: string, pronoun = ''): Grade {
   const typed = normalize(input);
   // only a blank field is empty; an answer of only punctuation ("?" for "I don't know") is wrong,

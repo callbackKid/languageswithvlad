@@ -40,7 +40,7 @@ const problems = [];
 // a command-line report, so plain stdout rather than console (which the lint rules keep for real problems)
 const report = (line) => process.stdout.write(line + '\n');
 
-/** Runs axe-core (installed next to playwright-core) on the page as it is now; every violation is a problem. */
+// Runs axe-core (installed next to playwright-core) on the page as it is now; every violation is a problem.
 async function checkAccessibility(page, theme, name) {
   const axePath = join(PLAYWRIGHT_DIR, 'node_modules', 'axe-core', 'axe.min.js');
   await page.addScriptTag({ content: readFileSync(axePath, 'utf8') });
@@ -78,7 +78,7 @@ async function checkAccessibility(page, theme, name) {
   }
 }
 
-/** "Verbs" matches exactly; "/se lever/" is a regular expression. */
+// "Verbs" matches exactly; "/se lever/" is a regular expression.
 const nameMatcher = (name) => (/^\/.*\/$/.test(name) ? new RegExp(name.slice(1, -1)) : name);
 
 for (const theme of options.themes.split(',')) {

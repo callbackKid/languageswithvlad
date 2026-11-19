@@ -30,7 +30,7 @@ export default function BoardPicture({
         holder.current.replaceChildren(svg);
       })
       .catch(() => {
-        /* a board that can't be drawn just isn't shown */
+        // a board that can't be drawn just isn't shown
       });
     return () => {
       alive = false;

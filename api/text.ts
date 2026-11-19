@@ -16,12 +16,13 @@ import {
    - "study": vocabulary, questions and true-or-false statements built from the text;
    - "correct": a written homework answer, its mistakes fixed and explained. */
 
-/** Longest text taken at once: a long article. Keep in step with MAX_TEXT_LENGTH in src/components/Reader.tsx. */
+// Longest text taken at once: a long article. Keep in step with MAX_TEXT_LENGTH in src/components/Reader.tsx.
 const MAX_TEXT_LENGTH = 8000;
 const MAX_SELECTION_LENGTH = 200;
 const MAX_CONTEXT_LENGTH = 600;
 const MAX_TASK_LENGTH = 600;
 
+// One of the four actions above, chosen by body.action.
 export default async function handler(request: VercelRequest, response: VercelResponse) {
   if (!onlyPost(request, response) || !checkAccess(request, response)) return;
   const body = (request.body ?? {}) as Record<string, unknown>;

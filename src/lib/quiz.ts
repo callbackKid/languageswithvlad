@@ -17,20 +17,20 @@ export type QuizItem =
   | { kind: 'pick-ru'; word: Word; choices: string[] }
   | { kind: 'pick-fr'; word: Word; choices: string[] }
   | { kind: 'type-fr'; word: Word }
-  /** dictation: the word is read aloud and typed */
+  // dictation: the word is read aloud and typed
   | { kind: 'listen'; word: Word }
   | { kind: 'form'; form: FormQuestion };
 
 const DAY = 86400000;
-/** How much more often a key word of the lesson (★) is asked. */
+// How much more often a key word of the lesson (★) is asked.
 const KEY_WEIGHT = 2.5;
 
-/** Key words first, each group in the order given: for exercises that take the first few. */
+// Key words first, each group in the order given: for exercises that take the first few.
 export function keyWordsFirst<T extends { key?: boolean }>(items: T[]): T[] {
   return [...items.filter((item) => item.key), ...items.filter((item) => !item.key)];
 }
 
-/** Draws n items without replacement, each with probability proportional to its weight. */
+// Draws n items without replacement, each with probability proportional to its weight.
 function weighted<T>(items: T[], weight: (item: T) => number, count: number): T[] {
   const pool = items.map((item) => ({ item, weight: Math.max(weight(item), 0.01) }));
   const out: T[] = [];
@@ -78,7 +78,7 @@ export function verbForms(conjugation: Conjugation): FormQuestion[] {
   return all;
 }
 
-/** Forms of the verbs whose tables the student has opened, missed forms more often. */
+// Forms of the verbs whose tables the student has opened, missed forms more often.
 export function pickForms(verbs: VerbRef[], progress: Progress, count: number): FormQuestion[] {
   const all: FormQuestion[] = [];
   for (const verb of verbs) {
@@ -120,14 +120,14 @@ const russianWords = (text: string) =>
     .split(/[^а-я]+/)
     .filter((part) => part.length > 2 && !FILLER.has(part));
 
-/** True when the candidate could also be a right answer: same sense, or translations sharing a word (выделить, отметить / отметить). */
+// True when the candidate could also be a right answer: same sense, or translations sharing a word (выделить, отметить / отметить).
 function overlaps(word: Word, sense: string | undefined, candidate: Word): boolean {
   if (sense && sense === candidate.sense) return true;
   const own = new Set(russianWords(word.ru));
   return russianWords(candidate.ru).some((part) => own.has(part));
 }
 
-/** Three wrong answers of the same kind of word when possible, none of them close in meaning. */
+// Three wrong answers of the same kind of word when possible, none of them close in meaning.
 function distractors(word: Word, pool: Word[], side: 'fr' | 'ru'): string[] | null {
   const seen = new Set([word[side].toLowerCase()]);
   const out: string[] = [];
@@ -146,11 +146,12 @@ function distractors(word: Word, pool: Word[], side: 'fr' | 'ru'): string[] | nu
   return null;
 }
 
-/** Every word read aloud once, to be typed. */
+// Every word read aloud once, to be typed.
 export function buildDictation(targets: Word[]): QuizItem[] {
   return shuffle(targets).map((word) => ({ kind: 'listen' as const, word }));
 }
 
+// A round of mixed questions on these words (pick, type, listen) and on these verb forms.
 export function buildQuiz(targets: Word[], pool: Word[], forms: FormQuestion[] = []): QuizItem[] {
   // every question starts from or ends at the translation
   const items: QuizItem[] = targets

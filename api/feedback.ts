@@ -57,7 +57,7 @@ function readPhotos(raw: unknown): TelegramPhoto[] | string {
   return photos;
 }
 
-/** A bug report, suggestion or any message from a student, with optional screenshots, sent to the teacher's Telegram. */
+// A bug report, suggestion or any message from a student, with optional screenshots, sent to the teacher's Telegram.
 export default async function handler(request: VercelRequest, response: VercelResponse) {
   if (!onlyPost(request, response) || !checkAccess(request, response)) return;
   if (!telegramConfigured())

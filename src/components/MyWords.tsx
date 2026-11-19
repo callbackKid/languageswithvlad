@@ -8,7 +8,7 @@ import type { Analysis } from '../lib/types';
 import PageHead from './PageHead';
 import WordsTab from './WordsTab';
 
-/** The student's list of unfamiliar words: starred by hand or missed in an exercise. */
+// The student's list of unfamiliar words: starred by hand or missed in an exercise.
 export default function MyWords({ hasClaude }: { hasClaude: boolean }) {
   const { t, rich, locale } = useTranslation(pages);
   const names = useTranslation(learning);

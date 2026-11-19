@@ -10,7 +10,7 @@ import type { Lesson } from '../lib/types';
 import { prepareRound } from '../lib/warmUp';
 import WordQuiz from './WordQuiz';
 
-/** How long before a lesson the round is offered. */
+// How long before a lesson the round is offered.
 const AHEAD = 24 * 60 * 60 * 1000;
 
 /** The day before a lesson, on Home: a round on the newest lesson's words and the hard words,
@@ -22,7 +22,7 @@ export default function PrepareCard({
   hasClaude,
   docId,
 }: {
-  /** the newest lesson in the document: the one before the next */
+  // the newest lesson in the document: the one before the next
   lesson: Lesson;
   docText: string;
   bank: Bank;

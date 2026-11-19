@@ -1,11 +1,11 @@
-/* The video call of the lesson: the newest Google Meet or Zoom link written in the document. */
+// The video call of the lesson: the newest Google Meet or Zoom link written in the document.
 
 export type CallLink =
   | { kind: 'meet'; url: string }
   | {
       kind: 'zoom';
       url: string;
-      /** null for links without a number, like a personal room zoom.us/my/name */
+      // null for links without a number, like a personal room zoom.us/my/name
       meetingNumber: string | null;
       passcode: string;
     };
@@ -37,7 +37,7 @@ function zoomDetails(url: string, text: string, position: number) {
   return { meetingNumber, passcode: written ?? fromLink };
 }
 
-/** The last Meet or Zoom link in the document (the newest lesson is at the end), or null. */
+// The last Meet or Zoom link in the document (the newest lesson is at the end), or null.
 export function findCall(text: string): CallLink | null {
   let newest: { url: string; kind: 'meet' | 'zoom'; position: number } | null = null;
   for (const [pattern, kind] of [

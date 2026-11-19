@@ -6,7 +6,7 @@ import { notionConfigured } from './_lib/notion.js';
 import { telegramConfigured } from './_lib/telegram.js';
 import { zoomConfigured } from './_lib/zoom.js';
 
-/** Lets the app know whether it should ask students for an access code, and what the server can do. */
+// Lets the app know whether it should ask students for an access code, and what the server can do.
 export default function handler(request: VercelRequest, response: VercelResponse) {
   response.status(200).json({
     needsCode: !!process.env.APP_ACCESS_CODE,

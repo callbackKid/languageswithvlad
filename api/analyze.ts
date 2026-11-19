@@ -11,7 +11,7 @@ import {
   lessonExtrasPrompt,
 } from './_lib/prompts.js';
 
-/** Longest lesson read in one go; a longer one is refused instead of being cut silently. */
+// Longest lesson read in one go; a longer one is refused instead of being cut silently.
 const MAX_LESSON_LENGTH = 20_000;
 const PRACTICE_SENTENCES = 8;
 // a grammar point's title and its summary, as the Grammar tab shows them
@@ -93,7 +93,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
   }
 }
 
-/** The number of sentences to translate the teacher asked for, kept within the range. */
+// The number of sentences to translate the teacher asked for, kept within the range.
 function sentenceCount(value: unknown): number {
   if (typeof value !== 'number' || !Number.isInteger(value)) return DEFAULT_TRANSLATE_SENTENCES;
   return Math.min(MAX_TRANSLATE_SENTENCES, Math.max(MIN_TRANSLATE_SENTENCES, value));

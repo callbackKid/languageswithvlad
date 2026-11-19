@@ -33,11 +33,11 @@ export default function MakeHomework({
   hasClaude,
 }: {
   lesson: Lesson;
-  /** the lesson's words, key words (★) marked */
+  // the lesson's words, key words (★) marked
   words: Word[];
   language: Language;
   docId: string;
-  /** whether the server can write to this document */
+  // whether the server can write to this document
   docWriter: boolean;
   hasClaude: boolean;
 }) {

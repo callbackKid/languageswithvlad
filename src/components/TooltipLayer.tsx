@@ -14,7 +14,7 @@ interface Shown {
   anchor: DOMRect;
 }
 
-/** Mounted once in App; reads data-tooltip from whatever the pointer or focus is on. */
+// Mounted once in App; reads data-tooltip from whatever the pointer or focus is on.
 export default function TooltipLayer() {
   const [shown, setShown] = useState<Shown | null>(null);
   const [position, setPosition] = useState<{ left: number; top: number } | null>(null);

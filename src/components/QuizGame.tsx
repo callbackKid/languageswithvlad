@@ -10,7 +10,7 @@ import type { Lesson, Word } from '../lib/types';
 import ExerciseHead from './ExerciseHead';
 import Speak from './Speak';
 
-/** Questions in a round, and seconds for each. */
+// Questions in a round, and seconds for each.
 export const GAME_QUESTIONS = 10;
 export const GAME_SECONDS = 15;
 // a right answer is worth this much, plus a bonus for every second left
@@ -58,7 +58,7 @@ export function gameWords(lessons: Lesson[], bank: Bank, hasClaude: boolean): Wo
   ];
 }
 
-/** The best rounds on this device, best first. */
+// The best rounds on this device, best first.
 export function RecordsTable({
   records,
   highlight,
@@ -112,7 +112,7 @@ export default function QuizGame({
   onClose,
 }: {
   words: Word[];
-  /** where wrong answers come from */
+  // where wrong answers come from
   pool: Word[];
   lessonNumber: number;
   lessonKey: string;

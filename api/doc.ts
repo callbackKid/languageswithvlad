@@ -4,7 +4,7 @@ import { GOOGLE_DOC_ID } from './_lib/google.js';
 import { checkAccess, fail } from './_lib/http.js';
 import { NOTION_ID, readNotion } from './_lib/notion.js';
 
-/** Reads a Google Doc shared as "Anyone with the link can view", or a Notion page, as plain text. */
+// Reads a Google Doc shared as "Anyone with the link can view", or a Notion page, as plain text.
 export default async function handler(request: VercelRequest, response: VercelResponse) {
   // the class code guards the lessons too: with Notion connected, this reads private pages
   if (!checkAccess(request, response)) return;

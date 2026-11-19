@@ -9,9 +9,9 @@ import { load, remove, save } from './storage';
 const KEY = 'teacherCode';
 
 export interface TeacherState {
-  /** the server has a teacher code set up, so Settings can offer to enter it */
+  // the server has a teacher code set up, so Settings can offer to enter it
   available: boolean;
-  /** this device holds the right code */
+  // this device holds the right code
   isTeacher: boolean;
 }
 
@@ -26,10 +26,10 @@ function publish(next: TeacherState) {
   listeners.forEach((listener) => listener());
 }
 
-/** The code sent with every request, or null on a student's device. */
+// The code sent with every request, or null on a student's device.
 export const getTeacherCode = () => code;
 
-/** Called with the server's answer at start-up: a saved code it no longer accepts is dropped. */
+// Called with the server's answer at start-up: a saved code it no longer accepts is dropped.
 export function applyTeacherHealth(available: boolean, confirmed: boolean) {
   if (code && !confirmed) {
     code = null;
@@ -38,13 +38,14 @@ export function applyTeacherHealth(available: boolean, confirmed: boolean) {
   publish({ available, isTeacher: !!code && confirmed });
 }
 
-/** Keeps a code the server has just confirmed. */
+// Keeps a code the server has just confirmed.
 export function saveTeacherCode(confirmedCode: string) {
   code = confirmedCode;
   save(KEY, confirmedCode);
   publish({ ...current, isTeacher: true });
 }
 
+// Turns the teacher's tools off on this device.
 export function forgetTeacherCode() {
   code = null;
   remove(KEY);
@@ -56,4 +57,5 @@ function subscribe(listener: () => void) {
   return () => listeners.delete(listener);
 }
 const getTeacherState = () => current;
+// Whether the teacher's tools are on; the component re-renders when that changes.
 export const useTeacher = () => useSyncExternalStore(subscribe, getTeacherState, getTeacherState);

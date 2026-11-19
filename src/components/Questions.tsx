@@ -19,7 +19,7 @@ export function QuestionsButton({
   canWrite,
 }: {
   docId: string;
-  /** the newest lesson: the questions go under it */
+  // the newest lesson: the questions go under it
   lesson: Lesson | null;
   canWrite: boolean;
 }) {

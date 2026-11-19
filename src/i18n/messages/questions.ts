@@ -1,6 +1,6 @@
 import { defineMessages } from '../core';
 
-/** Questions for the next lesson: the ❓ dialog in the top bar and the card in lesson mode. */
+// Questions for the next lesson: the ❓ dialog in the top bar and the card in lesson mode.
 export const questionsText = defineMessages({
   en: {
     button: 'Questions for the next lesson',

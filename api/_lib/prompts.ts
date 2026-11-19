@@ -7,34 +7,34 @@ export const LANGUAGE_NAMES: Record<LearnLanguage, string> = {
   pt: 'Portuguese',
   it: 'Italian',
 };
-/** The language a request asks for; French when it's missing or unknown. */
+// The language a request asks for; French when it's missing or unknown.
 export const asLanguage = (value: unknown): LearnLanguage =>
   typeof value === 'string' && value in LANGUAGE_NAMES ? (value as LearnLanguage) : 'fr';
 
 export const LEARN_LANGUAGES = Object.keys(LANGUAGE_NAMES) as LearnLanguage[];
 const CODES = LEARN_LANGUAGES;
-/** "French, English, German, Spanish, Portuguese or Italian" */
+// "French, English, German, Spanish, Portuguese or Italian"
 const LANGUAGE_LIST = `${CODES.slice(0, -1)
   .map((code) => LANGUAGE_NAMES[code])
   .join(', ')} or ${LANGUAGE_NAMES[CODES[CODES.length - 1] ?? 'fr']}`;
-/** "fr"|"en"|… for the JSON shapes */
+// "fr"|"en"|… for the JSON shapes
 const LANGUAGE_CODES = CODES.map((code) => `"${code}"`).join('|');
-/** "fr" for French, "en" for English, … */
+// "fr" for French, "en" for English, …
 const LANGUAGE_KEY = CODES.map((code) => `"${code}" for ${LANGUAGE_NAMES[code]}`).join(', ');
 /** The learner's level in each language, for prompts that only learn the language from what
     they read (a lesson, a photo, a text). */
 export type Levels = Record<LearnLanguage, string>;
 const levelLine = (levels: Levels) =>
   `The learner's CEFR level (A0 is a complete beginner): ${CODES.map((code) => `${LANGUAGE_NAMES[code]} ${levels[code]}`).join(', ')}; use the level of the language at hand.`;
-/** What the level changes in what Claude writes for the learner. */
+// What the level changes in what Claude writes for the learner.
 const LEVEL_STYLE =
   'Match that level in everything you write for the learner: at A0 and A1 short and simple, the most common meaning first, explanations in plain Russian with an everyday example and nothing a beginner doesn’t need yet; at A2 simple but complete; at B1 and above natural, idiomatic wording and the nuances (register, near-synonyms, exceptions) a learner at that level is ready for.';
 
-/** How nouns are written in their dictionary form, for every language that has articles. */
+// How nouns are written in their dictionary form, for every language that has articles.
 const NOUN_FORMS =
   'for French nouns with le, la, l’ or un/une; for German nouns capitalised with der, die or das; for Spanish nouns with el or la; for Portuguese nouns with o or a; for Italian nouns with il, lo, la or l’; for English nouns without an article';
 
-/** How dictionary forms are written in each language. */
+// How dictionary forms are written in each language.
 const WORD_FORMS: Record<LearnLanguage, string> = {
   fr: 'nouns with le, la, l’ or un/une, verbs in the infinitive',
   en: 'nouns without an article, verbs without “to”',
@@ -44,7 +44,7 @@ const WORD_FORMS: Record<LearnLanguage, string> = {
   it: 'nouns with il, lo, la or l’, verbs in the infinitive',
 };
 
-/** body is one lesson's notes; the endpoint has already refused anything too long to read whole. */
+// body is one lesson's notes; the endpoint has already refused anything too long to read whole.
 export function analysisPrompt(body: string, levels: Levels): string {
   return `You are helping a Russian-speaking learner learn a foreign language: ${LANGUAGE_LIST}. ${levelLine(levels)} The level shapes only the translations you write yourself (see words), never which words you list. Below are raw notes from one lesson, written by the teacher in that language and Russian. They are messy: some words have no translation, and some lines are conjugation tables, example sentences or pronunciation rules.
 
@@ -128,11 +128,13 @@ const VERB_TABLES = {
   },
 } as const;
 
-/** The languages with verb tables. */
+// The languages with verb tables.
 export type VerbLanguage = keyof typeof VERB_TABLES;
+// The language of a verb's tables; null for one without tables (English).
 export const asVerbLanguage = (value: unknown): VerbLanguage | null =>
   typeof value === 'string' && value in VERB_TABLES ? (value as VerbLanguage) : null;
 
+// The prompt for a verb's tables, in the tenses of its language.
 export function conjugationPrompt(infinitive: string, ru: string, language: VerbLanguage): string {
   const table = VERB_TABLES[language];
   const shape = table.tenses.map(([name, persons]) => `"${name}": [..${persons}]`).join(', ');
@@ -142,7 +144,7 @@ Reply with only a JSON object:
 Each item is {"p": string, "f": string}. ${table.rules} ru is a short Russian translation.`;
 }
 
-/** "for French exactly one of présent, passé composé, …" for every language with verb tables. */
+// "for French exactly one of présent, passé composé, …" for every language with verb tables.
 const TENSE_CHOICES = (Object.keys(VERB_TABLES) as VerbLanguage[])
   .map(
     (language) =>
@@ -150,6 +152,7 @@ const TENSE_CHOICES = (Object.keys(VERB_TABLES) as VerbLanguage[])
   )
   .join('; ');
 
+// The prompt for fill-the-gap sentences on a lesson's words, at the student's level.
 export function gapPrompt(
   words: { fr: string; ru: string }[],
   count: number,
@@ -164,7 +167,7 @@ Words:
 ${list}`;
 }
 
-/** How one word or phrase the learner marked is described: shared by the photo and the reader. */
+// How one word or phrase the learner marked is described: shared by the photo and the reader.
 const MARKED_ITEM_RULES = `- fr: the marked text exactly as it is written (a single marked phrase stays one item).
 - context: the clause it appears in, copied from the text, at most about 12 words.
 - ru: a Russian translation that fits this context, in plain everyday Russian (шваб, not швабец; фиксированная плата, not паушальная сумма).
@@ -173,6 +176,7 @@ const MARKED_ITEM_RULES = `- fr: the marked text exactly as it is written (a sin
 - tense: for a conjugated verb or a phrase built around one, the name of the tense or mood in the text's language, with the person when useful (French: "imparfait, il", "passé composé", "subjonctif présent"; English: "past simple", "present perfect"; German: "Präteritum, er", "Perfekt", "Konjunktiv II"; Spanish: "pretérito indefinido, él", "subjuntivo presente"; Portuguese: "pretérito perfeito", "futuro do conjuntivo"; Italian: "passato prossimo", "congiuntivo presente"); the participle or infinitive by its name in that language for those forms; "" for anything without a verb.
 - explanation: one or two short sentences in Russian on what it means here and anything worth knowing: register (разговорное, книжное), literal meaning or origin, a common related expression, why this tense is used.`;
 
+// The prompt for the underlined words on a photo of a book page.
 export function photoPrompt(levels: Levels): string {
   return `The image is a photo of a page from a book in ${LANGUAGE_LIST}. A Russian-speaking learner has underlined (or highlighted, or circled) some words and phrases. Find every marked word or phrase, in reading order. Ignore text that is not marked.
 ${levelLine(levels)} ${LEVEL_STYLE}
@@ -181,7 +185,7 @@ Reply with only a JSON object: {"language": ${LANGUAGE_CODES}, "items": [{"fr": 
 ${MARKED_ITEM_RULES}`;
 }
 
-/** One word or phrase the learner marked while reading a pasted text. */
+// One word or phrase the learner marked while reading a pasted text.
 export function explainPrompt(selection: string, context: string, levels: Levels): string {
   return `A Russian-speaking learner is reading a text in ${LANGUAGE_LIST} and marked a word or phrase they don't understand. Explain it as it is used in this sentence.
 ${levelLine(levels)} ${LEVEL_STYLE}
@@ -192,7 +196,7 @@ Reply with only a JSON object: {"language": ${LANGUAGE_CODES}, "fr": string, "co
 ${MARKED_ITEM_RULES}`;
 }
 
-/** A natural Russian translation of a text, paragraph by paragraph. */
+// A natural Russian translation of a text, paragraph by paragraph.
 export function translatePrompt(paragraphs: string[]): string {
   return `Translate this text into natural, fluent Russian, the way a good translator would: keep the meaning, tone and register, don't translate word for word, and don't add or leave out anything. It has ${paragraphs.length} paragraph${paragraphs.length === 1 ? '' : 's'}, numbered below.
 Reply with only a JSON object: {"paragraphs": [string]} with exactly ${paragraphs.length} item${paragraphs.length === 1 ? '' : 's'}: the translation of each paragraph, in the same order, without the numbers.
@@ -200,7 +204,7 @@ Reply with only a JSON object: {"paragraphs": [string]} with exactly ${paragraph
 ${paragraphs.map((paragraph, index) => `[${index + 1}] ${paragraph}`).join('\n\n')}`;
 }
 
-/** Vocabulary, questions and true-or-false statements built from a text the learner pasted. */
+// Vocabulary, questions and true-or-false statements built from a text the learner pasted.
 export function studyPrompt(body: string, levels: Levels): string {
   return `A Russian-speaking learner pasted the text below (an article, a story, a post) to study with. It is in ${LANGUAGE_LIST}. ${levelLine(levels)}
 Reply with only a JSON object:
@@ -217,12 +221,14 @@ ${body}
 """`;
 }
 
+// The prompt for photos of handwritten notes, copied out as the text of a lesson.
 export function transcribePrompt(pageCount: number): string {
   return `${pageCount === 1 ? 'The image is a photo' : `The ${pageCount} images are photos, in order,`} of handwritten notes from a language lesson: ${LANGUAGE_LIST} words and phrases, Russian translations, conjugation tables, example sentences, pronunciation in square brackets.
 Transcribe every line exactly as written, top to bottom, keeping the writer's line breaks, punctuation, dashes, arrows (→) and square brackets. Keep the writer's spelling and accents; do not correct, translate or add anything. Write a word you cannot read as [?]. Leave out crossed-out text, page numbers and doodles. Separate pages with an empty line.
 Reply with only a JSON object: {"title": string, "text": string}. title is what the notes are about, in English, at most 6 words; text is the transcription.`;
 }
 
+// The prompt for the pages of a textbook (a PDF), turned into lesson notes.
 export function textbookPrompt(levels: Levels): string {
   return `The PDF holds a few pages from a ${LANGUAGE_LIST} textbook, usually one chapter. Write the lesson notes a teacher would write from them for a Russian-speaking learner, as plain text, one item per line, using only what these pages teach.
 ${levelLine(levels)} ${LEVEL_STYLE} The level decides how the rules are explained and which example sentences you choose, not which of the chapter's words you list.
@@ -240,7 +246,7 @@ export interface DiscussionRequest {
   level: string;
   topic: string;
   grammar: string;
-  /** the interface language: the grammar explanation is written in it */
+  // the interface language: the grammar explanation is written in it
   explainIn: ExplainLanguage;
 }
 
@@ -254,10 +260,11 @@ const EXPLAIN_NAMES = {
   it: 'Italian',
 } as const;
 export type ExplainLanguage = keyof typeof EXPLAIN_NAMES;
-/** The language to explain grammar in; Russian when it's missing or unknown. */
+// The language to explain grammar in; Russian when it's missing or unknown.
 export const asExplainLanguage = (value: unknown): ExplainLanguage =>
   typeof value === 'string' && value in EXPLAIN_NAMES ? (value as ExplainLanguage) : 'ru';
 
+// The prompt for a discussion question, with follow-ups, sentence starters and useful words.
 export function discussionPrompt({
   language,
   level,
@@ -284,11 +291,11 @@ Reply with only a JSON object:
 - grammarRule: null if there is no grammar topic. Otherwise a short, clear explanation of the rule for a student at ${level}, written in ${explainName} (forms and examples in ${languageName}): title is the name of the grammar point; summary is one or two sentences on what it is; formation lists the steps or forms (for a tense, how it is built, with the endings or the auxiliary, and irregular forms worth knowing), each item one short line; usage lists when it is used, each item one short line with a tiny ${languageName} example; examples are 3 or 4 natural ${languageName} sentences on the vocabulary topic, each with its ${explainName} translation; pitfall is the most common mistake learners make with it and how to avoid it, one or two sentences.`;
 }
 
-/** The heading that starts exercises copied from a book into a lesson, in each language. */
+// The heading that starts exercises copied from a book into a lesson, in each language.
 const BOOK_HEADINGS =
   '"📖 Exercices du manuel" (French), "📖 Textbook exercises" (English), "📖 Übungen aus dem Lehrbuch" (German), "📖 Ejercicios del libro" (Spanish), "📖 Exercícios do manual" (Portuguese), "📖 Esercizi dal libro" (Italian)';
 
-/** The grammar, homework and book exercises of one lesson, explained in the interface language. */
+// The grammar, homework and book exercises of one lesson, explained in the interface language.
 export function lessonExtrasPrompt(
   body: string,
   explainIn: ExplainLanguage,
@@ -321,7 +328,7 @@ export interface GrammarPracticeRequest {
   explainIn: ExplainLanguage;
 }
 
-/** Gap sentences that practise one grammar point. */
+// Gap sentences that practise one grammar point.
 export function grammarPracticePrompt({
   language,
   level,
@@ -335,7 +342,7 @@ export function grammarPracticePrompt({
 Reply with only a JSON array of objects: {"before": string, "after": string, "answer": string, "options": [string, string, string], "ru": string, "why": string}. before and after are the text around the gap, answer the exact text of the gap, options three wrong answers that are typical mistakes with this grammar point (a wrong form, ending, auxiliary, agreement or preposition), never another correct answer. ru is a Russian translation of the whole sentence. why is one short sentence in ${EXPLAIN_NAMES[explainIn]} saying why the answer is right.`;
 }
 
-/** Exercises photographed or scanned from a student's book, copied out as text for a lesson. */
+// Exercises photographed or scanned from a student's book, copied out as text for a lesson.
 export function bookExercisesPrompt(): string {
   return `The pages show exercises from a language student's book (a textbook or a workbook) in ${LANGUAGE_LIST}. Copy out every exercise on them, so the student can do it from the lesson notes.
 Reply with only a JSON object: {"text": string}. text is plain text:
@@ -345,7 +352,7 @@ Reply with only a JSON object: {"text": string}. text is plain text:
 Copy the words exactly as printed, in the book's language. Write each blank as ___ and keep the words in brackets that go with it. Describe a picture an item needs in a few words in square brackets. Leave out printed answers, page headers, page numbers and anything that is not an exercise.`;
 }
 
-/** A written homework task checked like a tutor would: the mistakes fixed and each one explained. */
+// A written homework task checked like a tutor would: the mistakes fixed and each one explained.
 export function writingCheckPrompt({
   task,
   text,
@@ -383,7 +390,7 @@ export function homeworkPrompt({
   body: string;
   keyWords: string[];
   level: string;
-  /** how many sentences to translate */
+  // how many sentences to translate
   sentences: number;
 }): string {
   return `Below are a teacher's notes from one language lesson for a Russian-speaking student at CEFR level ${level}. The lesson teaches ${LANGUAGE_LIST}, and the notes mix that language with Russian. Write homework for the next lesson from this lesson's words and grammar.${

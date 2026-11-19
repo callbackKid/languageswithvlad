@@ -49,7 +49,7 @@ const SEND_EVERY = 100;
 const POINTER_EVERY = 60;
 // the drawing is saved on the device this many milliseconds after the last stroke
 const SAVE_AFTER = 400;
-/** Pictures larger than this aren't sent (a broadcast message is limited to about 256 KB). */
+// Pictures larger than this aren't sent (a broadcast message is limited to about 256 KB).
 const MAX_SHARED_FILE = 180_000;
 
 type RemoteElements = Parameters<typeof reconcileElements>[1];
@@ -59,11 +59,12 @@ interface Saved {
 }
 
 export interface BoardHandle {
-  /** the drawing as a PNG, or null when the board is empty */
+  // the drawing as a PNG, or null when the board is empty
   picture: () => Promise<Blob | null>;
   clear: () => void;
 }
 
+// The board itself: saved on this device per day, and shared live when a connection is given.
 export default function BoardCanvas({
   storageKey,
   language,
@@ -77,11 +78,11 @@ export default function BoardCanvas({
   storageKey: string;
   language: UiLanguage;
   dark: boolean;
-  /** where the board is shared; null to share only between tabs in development */
+  // where the board is shared; null to share only between tabs in development
   server: BoardServer | null;
-  /** the shared room's name: the same for everyone on this document's board today */
+  // the shared room's name: the same for everyone on this document's board today
   room: string;
-  /** shown next to this person's pointer on the others' boards */
+  // shown next to this person's pointer on the others' boards
   name: string;
   onReady: (handle: BoardHandle) => void;
   onPeers: (peers: BoardPeer[]) => void;
@@ -108,7 +109,7 @@ export default function BoardCanvas({
   // the last strokes are kept even when the board closes during the short save delay
   useEffect(() => flush, [flush]);
 
-  /** Sends the shapes whose version the others don't have yet, and pictures they lack. */
+  // Sends the shapes whose version the others don't have yet, and pictures they lack.
   const sendChanges = useCallback((everything = false) => {
     const instance = api.current;
     const connection = connectionRef.current;

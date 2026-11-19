@@ -1,6 +1,6 @@
 import { defineMessages } from '../core';
 
-/** The word list, quizzes, flashcards, matching, gap fill and verb tables. */
+// The word list, quizzes, flashcards, matching, gap fill and verb tables.
 export const exercises = defineMessages({
   en: {
     // word list

@@ -22,7 +22,7 @@ import type {
 import { asLanguage, TENSES_BY_LANGUAGE, type VerbLanguage } from './types';
 import { asText, hash, shuffle } from './util';
 
-/** The lessons' source from a pasted link: a Google Docs id, or "notion-<id>" for a Notion page. */
+// The lessons' source from a pasted link: a Google Docs id, or "notion-<id>" for a Notion page.
 export function docIdFrom(input: string): string | null {
   const text = input.trim();
   const notion = notionIdFrom(text);
@@ -34,6 +34,7 @@ export function docIdFrom(input: string): string | null {
   return /^[a-zA-Z0-9_-]{20,100}$/.test(text) ? text : null;
 }
 
+// The document's text without Markdown escapes, trailing spaces and runs of blank lines.
 export function clean(text: string): string {
   return text
     .replace(/\r/g, '')
@@ -44,7 +45,7 @@ export function clean(text: string): string {
     .replace(/\n{3,}/g, '\n\n');
 }
 
-/** The heading words a lesson may start with, and how each is shown. */
+// The heading words a lesson may start with, and how each is shown.
 const LESSON_WORDS: [RegExp, LessonWord][] = [
   [/^lesson$/i, 'Lesson'],
   [/^lektion$/i, 'Lektion'],
@@ -107,7 +108,7 @@ export function splitLessons(text: string): Lesson[] {
   });
 }
 
-/** Pulls a "[bɔ̃ʒuʁ]" or "[бонжур]" transcription out of a string. */
+// Pulls a "[bɔ̃ʒuʁ]" or "[бонжур]" transcription out of a string.
 export function splitTranscription(source: string): { text: string; tr: string } {
   const match = source.match(/\[([^\]]+)\]/);
   if (!match || match.index === undefined) return { text: source, tr: '' };
@@ -117,7 +118,7 @@ export function splitTranscription(source: string): { text: string; tr: string }
   return { text, tr: (match[1] ?? '').trim() };
 }
 
-/** Moves a transcription Claude left in fr or ru (older cached lessons) into tr. */
+// Moves a transcription Claude left in fr or ru (older cached lessons) into tr.
 export function withTranscription(word: Omit<Word, 'tr'> & { tr?: string }): Word {
   const frenchParts = splitTranscription(word.fr),
     russianParts = splitTranscription(word.ru);
@@ -130,7 +131,7 @@ export function withTranscription(word: Omit<Word, 'tr'> & { tr?: string }): Wor
 }
 
 const CYRILLIC = /[А-Яа-яЁё]/;
-/** Fallback when Claude is unavailable: "mot - перевод" lines. */
+// Fallback when Claude is unavailable: "mot - перевод" lines.
 // a line that starts with an emoji, or with spaces: still part of a report (src/lib/report.ts)
 const REPORT_LINE = /^(?:\s|\p{Extended_Pictographic})/u;
 
@@ -162,7 +163,7 @@ const comparable = (text: string) =>
     .trim()
     .replace(LEADING_ARTICLE, '');
 
-/** The words the teacher starred in a lesson, as written before the translation or transcription. */
+// The words the teacher starred in a lesson, as written before the translation or transcription.
 function starredWords(body: string): Set<string> {
   const starred = new Set<string>();
   for (const line of body.split('\n')) {
@@ -197,6 +198,7 @@ const LESSON_WORD_LANGUAGES: Record<LessonWord, Language> = {
   Lição: 'pt',
   Lezione: 'it',
 };
+// The language a lesson's heading word stands for.
 export const languageOfLesson = (lesson: Pick<Lesson, 'word'>): Language =>
   LESSON_WORD_LANGUAGES[lesson.word];
 
@@ -246,10 +248,10 @@ type JsonObject = Record<string, unknown>;
 const asObject = (value: unknown): JsonObject =>
   value && typeof value === 'object' ? (value as JsonObject) : {};
 const asArray = (value: unknown): unknown[] => (Array.isArray(value) ? value : []);
-/** The non-empty strings of a list. */
+// The non-empty strings of a list.
 const asTexts = (value: unknown): string[] => asArray(value).map(asText).filter(Boolean);
 
-/** Claude's check of a written answer; null when the reply has no corrected text. */
+// Claude's check of a written answer; null when the reply has no corrected text.
 export function normalizeWritingCheck(raw: unknown): WritingCheck | null {
   const data = asObject(raw);
   const corrected = asText(data.corrected);
@@ -268,7 +270,7 @@ export function normalizeWritingCheck(raw: unknown): WritingCheck | null {
   };
 }
 
-/** The grammar, homework and book exercises Claude found in a lesson; missing parts are empty. */
+// The grammar, homework and book exercises Claude found in a lesson; missing parts are empty.
 export function normalizeExtras(raw: unknown): LessonExtras {
   const data = asObject(raw);
   return {
@@ -291,6 +293,7 @@ export function normalizeExtras(raw: unknown): LessonExtras {
   };
 }
 
+// A lesson's words, pairs and verbs from Claude's answer or the device's copy; throws when the words are missing.
 export function normalizeAnalysis(raw: unknown): Analysis {
   const data = asObject(raw);
   const seen = new Set<string>();
@@ -334,7 +337,7 @@ export function normalizeAnalysis(raw: unknown): Analysis {
   return { language, topic: asText(data.topic), words, pairs, verbs, local: false };
 }
 
-/** "je me" "lève" → "je" "me lève": the reflexive pronoun belongs to the answer, not the person. */
+// "je me" "lève" → "je" "me lève": the reflexive pronoun belongs to the answer, not the person.
 export function withPerson(form: Form): Form {
   const match = form.p.match(/^(\S+)\s+(me|te|se|nous|vous|[mts]['’])$/i);
   if (!match) return form;
@@ -342,6 +345,7 @@ export function withPerson(form: Form): Form {
   return { p: person, f: /['’]$/.test(pronoun) ? pronoun + form.f : `${pronoun} ${form.f}` };
 }
 
+// A verb's tables in the tenses of its language; throws when even the first tense is missing.
 export function normalizeConjugation(
   raw: unknown,
   infinitive: string,
@@ -369,6 +373,7 @@ export function normalizeConjugation(
   };
 }
 
+// Gap sentences with their choices shuffled; throws when there are none.
 export function normalizeGaps(raw: unknown): GapItem[] {
   const normalize = (text: string) => text.toLowerCase().replace(/[’']/g, "'").trim();
   const items = asArray(raw)
@@ -459,6 +464,7 @@ export function normalizeReaderText(raw: unknown): ReaderText | null {
   };
 }
 
+// The underlined words Claude read on a photo, all in the book's language.
 export function normalizePhoto(raw: unknown): PhotoItem[] {
   const data = asObject(raw);
   const language = asLanguage(data.language);
@@ -467,20 +473,20 @@ export function normalizePhoto(raw: unknown): PhotoItem[] {
     .filter((item) => item.fr);
 }
 
-/** One marked word or phrase explained; null when the answer has no translation to show. */
+// One marked word or phrase explained; null when the answer has no translation to show.
 export function normalizeExplanation(raw: unknown, selection: string): PhotoItem | null {
   const item = photoItem(raw, asLanguage(asObject(raw).language));
   return item.ru ? { ...item, fr: item.fr || selection } : null;
 }
 
-/** The translated paragraphs; throws when the answer has none. */
+// The translated paragraphs; throws when the answer has none.
 export function normalizeTranslation(raw: unknown): string[] {
   const paragraphs = asTexts(asObject(raw).paragraphs);
   if (!paragraphs.length) throw new Error('empty');
   return paragraphs;
 }
 
-/** Words, questions and statements built from a text, with the text's language. */
+// Words, questions and statements built from a text, with the text's language.
 export function normalizeStudy(raw: unknown): { language: Language; study: TextStudy } {
   const data = asObject(raw);
   const language = asLanguage(data.language);
@@ -517,12 +523,13 @@ export function normalizeStudy(raw: unknown): { language: Language; study: TextS
   return { language, study: { title: asText(data.title), words, questions, statements } };
 }
 
-/** Picks string fields out of an answer, "" for anything missing. */
+// Picks string fields out of an answer, "" for anything missing.
 export function asObjectText<K extends string>(raw: unknown, keys: K[]): Record<K, string> {
   const object = asObject(raw);
   return Object.fromEntries(keys.map((key) => [key, asText(object[key])])) as Record<K, string>;
 }
 
+// A discussion question and what comes with it; null when the answer has no question.
 export function normalizeDiscussion(raw: unknown): Discussion | null {
   const data = asObject(raw);
   const question = asText(data.question);

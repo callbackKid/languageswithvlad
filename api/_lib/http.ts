@@ -20,14 +20,14 @@ export class HttpError extends Error {
   }
 }
 
-/** Compares in constant time, so the answer's timing doesn't leak how much of a guess was right. */
+// Compares in constant time, so the answer's timing doesn't leak how much of a guess was right.
 function sameSecret(given: string, expected: string): boolean {
   const givenBytes = Buffer.from(given);
   const expectedBytes = Buffer.from(expected);
   return givenBytes.length === expectedBytes.length && timingSafeEqual(givenBytes, expectedBytes);
 }
 
-/** Rejects requests without the shared access code (when one is configured). */
+// Rejects requests without the shared access code (when one is configured).
 export function checkAccess(request: VercelRequest, response: VercelResponse): boolean {
   const code = process.env.APP_ACCESS_CODE;
   if (!code) return true;
@@ -45,13 +45,14 @@ export function isTeacher(request: VercelRequest): boolean {
   return !!code && typeof given === 'string' && sameSecret(given, code);
 }
 
-/** Rejects a request for a teacher's tool that doesn't carry the teacher code. */
+// Rejects a request for a teacher's tool that doesn't carry the teacher code.
 export function checkTeacher(request: VercelRequest, response: VercelResponse): boolean {
   if (isTeacher(request)) return true;
   response.status(403).json({ error: 'teacher_code' });
   return false;
 }
 
+// Rejects every method but POST, the only one the endpoints that change or cost something take.
 export function onlyPost(request: VercelRequest, response: VercelResponse): boolean {
   if (request.method === 'POST') return true;
   response.setHeader('Allow', 'POST');
@@ -59,7 +60,7 @@ export function onlyPost(request: VercelRequest, response: VercelResponse): bool
   return false;
 }
 
-/** Answers with the error's own status and message when it is one of ours, 500 otherwise. */
+// Answers with the error's own status and message when it is one of ours, 500 otherwise.
 export function fail(response: VercelResponse, error: unknown) {
   if (error instanceof HttpError)
     return response.status(error.status).json({ ...error.details, error: error.message });
@@ -67,14 +68,14 @@ export function fail(response: VercelResponse, error: unknown) {
   return response.status(500).json({ error: 'Something went wrong on the server.' });
 }
 
-/** A request field as trimmed text of at most maxLength characters; "" when it isn't a string. */
+// A request field as trimmed text of at most maxLength characters; "" when it isn't a string.
 export const text = (value: unknown, maxLength: number): string =>
   typeof value === 'string' ? value.trim().slice(0, maxLength) : '';
 
-/** CEFR levels, with A0 for a complete beginner. Keep in step with LEVELS in src/lib/settings.ts. */
+// CEFR levels, with A0 for a complete beginner. Keep in step with LEVELS in src/lib/settings.ts.
 export const LEVELS = ['A0', 'A1', 'A2', 'B1', 'B2', 'C1', 'C2'] as const;
 export type Level = (typeof LEVELS)[number];
-/** The level a request asks for, or null when it isn't one. */
+// The level a request asks for, or null when it isn't one.
 export const asLevel = (value: unknown): Level | null => {
   const level = text(value, 2).toUpperCase();
   return LEVELS.includes(level as Level) ? (level as Level) : null;
@@ -82,7 +83,7 @@ export const asLevel = (value: unknown): Level | null => {
 
 // the level assumed for a language the request gives none for
 const DEFAULT_LEVEL: Level = 'A2';
-/** The learner's level in every language ({fr: "A1", de: "B1"…}), each checked, A2 when missing. */
+// The learner's level in every language ({fr: "A1", de: "B1"…}), each checked, A2 when missing.
 export const asLevels = (value: unknown): Record<LearnLanguage, Level> => {
   const given = value && typeof value === 'object' ? (value as Record<string, unknown>) : {};
   return Object.fromEntries(

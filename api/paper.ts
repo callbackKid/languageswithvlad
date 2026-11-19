@@ -21,6 +21,7 @@ const MAX_HANDWRITTEN_PAGES = 4;
 // Keep in step with MAX_BASE64_LENGTH in src/lib/pdf.ts.
 const MAX_PDF_BASE64_LENGTH = 4_000_000;
 
+// From paper: underlined words on a photo, handwritten notes, textbook pages or exercises from the book (body.kind).
 export default async function handler(request: VercelRequest, response: VercelResponse) {
   if (!onlyPost(request, response) || !checkAccess(request, response)) return;
   const kind: unknown = request.body?.kind;

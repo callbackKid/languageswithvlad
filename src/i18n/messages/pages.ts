@@ -1,6 +1,6 @@
 import { defineMessages } from '../core';
 
-/** Home, Favourite words, Mistakes, Downloaded lessons and Stats. */
+// Home, Favourite words, Mistakes, Downloaded lessons and Stats.
 export const pages = defineMessages({
   en: {
     // Home

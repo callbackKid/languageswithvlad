@@ -22,10 +22,10 @@ export const SPEECH_SPEEDS = ['normal', 'slow'] as const;
 export type SpeechSpeed = (typeof SPEECH_SPEEDS)[number];
 export const DAILY_GOALS = [10, 20, 30, 50] as const;
 
-/** Sections that can't be hidden: the way back to everything else. */
+// Sections that can't be hidden: the way back to everything else.
 export const ALWAYS_SHOWN: Section[] = ['home'];
 
-/** The tabs of a lesson page, in their order. */
+// The tabs of a lesson page, in their order.
 export const LESSON_TABS = [
   'words',
   'verbs',
@@ -38,22 +38,22 @@ export const LESSON_TABS = [
 export type LessonTab = (typeof LESSON_TABS)[number];
 
 export interface Settings {
-  /** the languages the student learns; exercises and Discuss only offer these */
+  // the languages the student learns; exercises and Discuss only offer these
   studying: Language[];
-  /** the student's level in each language, the default for Discuss and exercise sentences */
+  // the student's level in each language, the default for Discuss and exercise sentences
   levels: Record<Language, Level>;
   theme: Theme;
   name: string;
-  /** a small square picture as a data: URL, or "" */
+  // a small square picture as a data: URL, or ""
   avatar: string;
-  /** answers a day for the 🔥 streak's daily goal */
+  // answers a day for the 🔥 streak's daily goal
   dailyGoal: number;
   speechSpeed: SpeechSpeed;
-  /** sections taken out of the menu (their addresses still work) */
+  // sections taken out of the menu (their addresses still work)
   hidden: Section[];
-  /** tabs taken off the lesson page; at least one always stays */
+  // tabs taken off the lesson page; at least one always stays
   hiddenTabs: LessonTab[];
-  /** the tenses quizzes ask, ticked by hand; a language missing here follows its level */
+  // the tenses quizzes ask, ticked by hand; a language missing here follows its level
   tenses: Partial<Record<VerbLanguage, Tense[]>>;
 }
 
@@ -71,7 +71,7 @@ const DEFAULTS: Settings = {
 };
 const KEY = 'settings';
 
-/** Older or hand-edited values never break the app: anything unknown falls back to the default. */
+// Older or hand-edited values never break the app: anything unknown falls back to the default.
 function sanitize(raw: Partial<Settings> | null): Settings {
   const value = { ...DEFAULTS, ...raw };
   const studying = (Array.isArray(value.studying) ? value.studying : []).filter((language) =>
@@ -102,7 +102,7 @@ function sanitize(raw: Partial<Settings> | null): Settings {
   };
 }
 
-/** Only known tenses of each language, and never an empty list (that language then follows its level). */
+// Only known tenses of each language, and never an empty list (that language then follows its level).
 function sanitizeTenses(raw: unknown): Settings['tenses'] {
   const stored: Partial<Record<string, unknown>> = raw && typeof raw === 'object' ? raw : {};
   const tenses: Settings['tenses'] = {};
@@ -121,14 +121,14 @@ const listeners = new Set<() => void>();
 const prefersDark = () =>
   typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-/** The theme actually shown, after "system" is resolved. */
+// The theme actually shown, after "system" is resolved.
 export const isDark = (settings: Settings = current) =>
   settings.theme === 'dark' || (settings.theme === 'system' && prefersDark());
 
-/** The browser bar and the phone's status bar take the page background (--bg in styles.css). */
+// The browser bar and the phone's status bar take the page background (--bg in styles.css).
 const THEME_COLOR = { light: '#ffffff', dark: '#191919' } as const;
 
-/** The page reads data-theme ("light" or "dark"): the chosen theme, or the system's. */
+// The page reads data-theme ("light" or "dark"): the chosen theme, or the system's.
 function applyTheme(settings: Settings) {
   if (typeof document === 'undefined') return;
   const theme = isDark(settings) ? 'dark' : 'light';
@@ -145,8 +145,10 @@ if (typeof window !== 'undefined')
     listeners.forEach((listener) => listener());
   });
 
+// The settings, for code outside React.
 export const getSettings = () => current;
 
+// Changes some settings, saves them and applies the theme.
 export function updateSettings(changes: Partial<Settings>) {
   current = sanitize({ ...current, ...changes });
   save(KEY, current);
@@ -158,8 +160,9 @@ function subscribe(listener: () => void) {
   listeners.add(listener);
   return () => listeners.delete(listener);
 }
+// The settings; the component re-renders when they change.
 export const useSettings = () => useSyncExternalStore(subscribe, getSettings, getSettings);
 
-/** Whether a word in this language should appear in exercises. */
+// Whether a word in this language should appear in exercises.
 export const isStudied = (language: Language | undefined, settings: Settings = current) =>
   settings.studying.includes(language ?? 'fr');

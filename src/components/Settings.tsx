@@ -60,7 +60,7 @@ const SAMPLES: Record<Language, string> = {
   it: 'Ciao, come stai?',
 };
 
-/** A picture of the student: the uploaded one, or the first letter of their name. */
+// A picture of the student: the uploaded one, or the first letter of their name.
 export function Avatar({ size = 32 }: { size?: number }) {
   const { avatar, name } = useSettings();
   return avatar ? (
@@ -72,16 +72,16 @@ export function Avatar({ size = 32 }: { size?: number }) {
   );
 }
 
-/** The lesson document this app reads, and what can be done with it. */
+// The lesson document this app reads, and what can be done with it.
 export interface DocumentInfo {
   title: string;
   url: string;
-  /** the app's address with this document, for the student */
+  // the app's address with this document, for the student
   studentLink: string;
   onChange: () => void;
 }
 
-/** The student's settings: profile, document, interface, learning and the menu. */
+// The student's settings: profile, document, interface, learning and the menu.
 export default function Settings({ lessonDocument }: { lessonDocument: DocumentInfo }) {
   const { t, language: uiLanguage } = useTranslation(settingsText);
   const names = useTranslation(learning);

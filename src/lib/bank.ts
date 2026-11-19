@@ -22,7 +22,7 @@ import {
   type Word,
 } from './types';
 
-/** Only the newest lessons are prepared on their own; older ones wait until the student opens them. */
+// Only the newest lessons are prepared on their own; older ones wait until the student opens them.
 export const AUTO_PREPARE = 1;
 
 // v2: analyses know the lesson's language; v1 entries treated English lessons as French.
@@ -32,11 +32,11 @@ export const analysisKey = (hash: string) => 'an2:' + hash;
 export const conjugationKey = (infinitive: string, language: VerbLanguage) =>
   (language === 'fr' ? 'conj:' : `conj:${language}:`) + infinitive.toLowerCase();
 
-/** The language of a verb's tables: its lesson's, French for a verb saved before others had any. */
+// The language of a verb's tables: its lesson's, French for a verb saved before others had any.
 export const verbLanguageOf = (verb: VerbRef): VerbLanguage =>
   isVerbLanguage(verb.language) ? verb.language : 'fr';
 
-/** Cached analysis, with transcriptions moved out of older entries. */
+// Cached analysis, with transcriptions moved out of older entries.
 export function readAnalysis(hash: string): Analysis | null {
   // the same check as Claude's answer, which also moves old transcriptions out (withTranscription)
   return loadChecked(analysisKey(hash), normalizeAnalysis);
@@ -80,16 +80,16 @@ export interface Bank {
   pairs: BankPair[];
   verbs: BankVerb[];
   lessons: LessonInfo[];
-  /** newest lessons still being prepared by Claude */
+  // newest lessons still being prepared by Claude
   pending: number;
   failed: number;
-  /** older lessons not prepared yet, left until the student opens them */
+  // older lessons not prepared yet, left until the student opens them
   waiting: number;
-  /** call when a lesson view prepares or re-prepares a lesson */
+  // call when a lesson view prepares or re-prepares a lesson
   put: (lessonKey: string, analysis: Analysis) => void;
 }
 
-/** Every prepared lesson's words, verbs and pairs, newest lesson first. The newest lessons are prepared one at a time if missing. */
+// Every prepared lesson's words, verbs and pairs, newest lesson first. The newest lessons are prepared one at a time if missing.
 export function useBank(lessons: Lesson[], hasClaude: boolean): Bank {
   const [analyses, setAnalyses] = useState<Record<string, Analysis>>({});
   // The words of a newest lesson the teacher has just edited, kept from before the edit while

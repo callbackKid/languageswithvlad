@@ -6,7 +6,7 @@ import type { Bank } from '../lib/bank';
 import type { GuideId } from '../lib/guides';
 import HelpLink from './HelpLink';
 
-/** A page's title and intro; with a guide, a "?" beside the title opens its Tutorial card. */
+// A page's title and intro; with a guide, a "?" beside the title opens its Tutorial card.
 export default function PageHead({
   title,
   guide,
@@ -27,7 +27,7 @@ export default function PageHead({
   );
 }
 
-/** Says when some lessons aren't in the cross-lesson pages yet: still preparing, failed, or never opened. */
+// Says when some lessons aren't in the cross-lesson pages yet: still preparing, failed, or never opened.
 export function BankNote({ bank }: { bank: Bank }) {
   const { t } = useTranslation(common);
   if (bank.pending)

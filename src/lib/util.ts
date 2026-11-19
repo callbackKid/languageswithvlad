@@ -8,6 +8,7 @@ const RELEASE_AFTER = 1000;
 export const shownTopic = (topic: string, uiLanguage: UiLanguage): string =>
   uiLanguage === 'en' ? topic : '';
 
+// A shuffled copy (Fisher–Yates).
 export const shuffle = <T>(items: readonly T[]): T[] => {
   const copy = items.slice();
   for (let index = copy.length - 1; index > 0; index--) {
@@ -19,19 +20,21 @@ export const shuffle = <T>(items: readonly T[]): T[] => {
   }
   return copy;
 };
+// A short hash of a text (djb2): the key of a lesson's cached analysis.
 export const hash = (text: string): string => {
   let digest = 5381;
   for (let index = 0; index < text.length; index++)
     digest = ((digest << 5) + digest + text.charCodeAt(index)) | 0;
   return (digest >>> 0).toString(36);
 };
+// A string from outside data, trimmed; "" for anything else.
 export const asText = (value: unknown): string => (typeof value === 'string' ? value.trim() : '');
 
 /** Keeps "levé(e)(s)" on one line: browsers may break before "(", so a word joiner (U+2060) glues it
     to the letter before. For display only; grading and speech use the plain form. */
 export const keepBracketsTogether = (text: string): string => text.replace(/(\S)\(/g, '$1⁠(');
 
-/** Saves text as a file in the browser's downloads. */
+// Saves text as a file in the browser's downloads.
 export function downloadText(filename: string, text: string, type = 'text/plain') {
   const url = URL.createObjectURL(new Blob([text], { type: type + ';charset=utf-8' }));
   const link = document.createElement('a');

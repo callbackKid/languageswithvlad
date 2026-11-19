@@ -8,7 +8,7 @@ const PRONOUNS = /^(?:(?:me|te|se|nous|vous|y|en)\s+|[mts]['’]\s*)*/i;
 // lève-toi → ne te lève pas, va-t'en → ne t'en va pas
 const IMPERATIVE_PRONOUN = /-(toi|nous|vous|t['’]en)$/i;
 
-/** "je" "mange" → "je" "ne mange pas"; "j'" "ai mangé" → "je" "n'ai pas mangé". */
+// "je" "mange" → "je" "ne mange pas"; "j'" "ai mangé" → "je" "n'ai pas mangé".
 export function negate(form: Form, tense: Tense): Form {
   let text = form.f.trim();
   if (tense === 'impératif') {

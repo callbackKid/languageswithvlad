@@ -16,7 +16,7 @@ export const canSpeak = typeof window !== 'undefined' && 'speechSynthesis' in wi
 // number says, and 0.9 against 0.65 was hard to tell apart.
 const RATES: Record<SpeechSpeed, number> = { normal: 1, slow: 0.55 };
 
-/** Reads text aloud in the browser's own voice for the language; nothing is sent to a server. */
+// Reads text aloud in the browser's own voice for the language; nothing is sent to a server.
 export function speak(text: string, language: Language = 'fr') {
   if (!canSpeak) return;
   const spoken = forSpeech(text);
@@ -40,7 +40,7 @@ export function stopSpeaking() {
   if (canSpeak) window.speechSynthesis.cancel();
 }
 
-/** "il/elle/on se lève" → "il se lève", "allé(e)s" → "allés": read one natural form, not the notation. */
+// "il/elle/on se lève" → "il se lève", "allé(e)s" → "allés": read one natural form, not the notation.
 export function forSpeech(text: string): string {
   return text
     .replace(/(\p{L}+)(?:\/\p{L}+)+/gu, '$1')

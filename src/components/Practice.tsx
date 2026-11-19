@@ -10,7 +10,7 @@ import PageHead, { BankNote } from './PageHead';
 import VerbsTab from './VerbsTab';
 import WordsTab from './WordsTab';
 
-/** Every exercise, run on the words and verbs of all lessons or the ones picked. */
+// Every exercise, run on the words and verbs of all lessons or the ones picked.
 export default function Practice({ bank, hasClaude }: { bank: Bank; hasClaude: boolean }) {
   const { t } = useTranslation(pages);
   const appText = useTranslation(app);

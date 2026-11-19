@@ -3,9 +3,10 @@
 
 const NOTION_PREFIX = 'notion-';
 
+// Whether a document id is a Notion page's ("notion-…") rather than a Google Doc's.
 export const isNotion = (id: string) => id.startsWith(NOTION_PREFIX);
 
-/** notion.so/…/Lessons-0123…cdef?pvs=4, xyz.notion.site/…, also with a dashed id → "notion-0123…cdef". */
+// notion.so/…/Lessons-0123…cdef?pvs=4, xyz.notion.site/…, also with a dashed id → "notion-0123…cdef".
 export function notionIdFrom(input: string): string | null {
   const text = input.trim();
   if (!/notion\.(?:so|site)\//i.test(text)) return null;
@@ -18,7 +19,7 @@ export function notionIdFrom(input: string): string | null {
   return id ? NOTION_PREFIX + id.toLowerCase() : null;
 }
 
-/** The page to open for editing. */
+// The page to open for editing.
 export function sourceUrl(id: string): string {
   return isNotion(id)
     ? `https://www.notion.so/${id.slice(NOTION_PREFIX.length)}`

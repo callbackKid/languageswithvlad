@@ -25,10 +25,11 @@ export const readQuestions = (docId: string): Question[] =>
   asList(load<unknown>(storageKey(docId)), (raw) =>
     asFields(raw, { text: 'string', at: 'number' })
   );
+// Keeps the questions not yet added to the document.
 export const saveQuestions = (docId: string, questions: Question[]) =>
   save(storageKey(docId), questions);
 
-/** The block added to the document; the heading line is in the interface language. */
+// The block added to the document; the heading line is in the interface language.
 export function questionsBlock(heading: string, questions: Question[]): string {
   return [
     `${QUESTIONS_MARK} ${heading}`,
@@ -36,7 +37,7 @@ export function questionsBlock(heading: string, questions: Question[]): string {
   ].join('\n');
 }
 
-/** The questions in a lesson's ❓ blocks, in order. */
+// The questions in a lesson's ❓ blocks, in order.
 export function lessonQuestions(lesson: Lesson | null): string[] {
   if (!lesson) return [];
   const found: string[] = [];

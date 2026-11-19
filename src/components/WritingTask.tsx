@@ -11,7 +11,7 @@ import type { Language, Writing, WritingCheck } from '../lib/types';
 import ExerciseHead from './ExerciseHead';
 import WaitingFact from './WaitingFact';
 
-/** The corrected text with every fix marked, in order. */
+// The corrected text with every fix marked, in order.
 function markFixes(corrected: string, check: WritingCheck): ReactNode[] {
   const parts: ReactNode[] = [];
   let position = 0;
@@ -25,7 +25,7 @@ function markFixes(corrected: string, check: WritingCheck): ReactNode[] {
   return parts;
 }
 
-/** What Claude said about an answer: the corrected text, each mistake with its rule, a comment. */
+// What Claude said about an answer: the corrected text, each mistake with its rule, a comment.
 export function WritingResult({ check, language }: { check: WritingCheck; language: Language }) {
   const { t } = useTranslation(homeworkText);
   return (

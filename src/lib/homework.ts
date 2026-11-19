@@ -23,19 +23,19 @@ const LIST_ITEM = /^\s*(?:[-•*]|\d{1,2}[.)])\s+/;
 
 export type HomeworkKind = 'words' | 'gaps' | 'verbs' | 'writing' | 'other';
 export interface HomeworkItem {
-  /** as the teacher wrote it */
+  // as the teacher wrote it
   text: string;
   kind: HomeworkKind;
-  /** words, gaps: "mots de la leçon 5" → 5; otherwise the lesson the homework is in */
+  // words, gaps: "mots de la leçon 5" → 5; otherwise the lesson the homework is in
   lessonNumber?: number;
-  /** verbs: "verbes être, avoir — présent" → être, avoir in the présent */
+  // verbs: "verbes être, avoir — présent" → être, avoir in the présent
   verbs?: string[];
   /** every tense the item names, in each language that has one by that name ("presente" is
       Spanish, Italian and Portuguese): the exercise keeps those of the lesson's language */
   tenses?: Tense[];
 }
 export interface Homework {
-  /** the lesson the homework was written in */
+  // the lesson the homework was written in
   lesson: Lesson;
   items: HomeworkItem[];
 }
@@ -180,7 +180,7 @@ function readVerbs(text: string): { verbs: string[]; tenses: Tense[] } {
   return { verbs, tenses };
 }
 
-/** What one item asks for. */
+// What one item asks for.
 export function readItem(text: string): HomeworkItem {
   const number = Number(text.match(NUMBER)?.[1]) || undefined;
   if (GAPS.test(text)) return { text, kind: 'gaps', lessonNumber: number };
@@ -195,7 +195,7 @@ export function readItem(text: string): HomeworkItem {
   return { text, kind: 'other' };
 }
 
-/** The items of the last homework block in a lesson's text; none when it has no block. */
+// The items of the last homework block in a lesson's text; none when it has no block.
 export function homeworkItems(body: string): string[] {
   const lines = body.split('\n');
   let items: string[] = [];
@@ -229,6 +229,6 @@ export function findHomework(lessons: Lesson[]): Homework | null {
     lesson's Homework tab. */
 export const homeworkKey = (docId: string, lessonKey: string) => `homework:${docId}:${lessonKey}`;
 
-/** Where a written task's answer and its check are kept. */
+// Where a written task's answer and its check are kept.
 export const writingKey = (docId: string, lessonKey: string, task: string) =>
   `writing:${docId}:${lessonKey}:${hash(task)}`;

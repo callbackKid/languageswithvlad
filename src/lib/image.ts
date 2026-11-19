@@ -3,7 +3,7 @@ export interface ImagePayload {
   data: string;
 }
 
-/** Shrinks a photo so its long side is at most maxSide pixels and returns it as base64 JPEG, without the data: prefix. */
+// Shrinks a photo so its long side is at most maxSide pixels and returns it as base64 JPEG, without the data: prefix.
 export async function shrinkImage(file: File, maxSide: number): Promise<ImagePayload> {
   const bitmap = await createImageBitmap(file);
   const scale = Math.min(1, maxSide / Math.max(bitmap.width, bitmap.height));

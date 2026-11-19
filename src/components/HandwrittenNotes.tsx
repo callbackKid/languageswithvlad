@@ -14,7 +14,7 @@ import AddToDoc, { type DocTarget } from './AddToDoc';
 import LessonView from './LessonView';
 import WaitingFact from './WaitingFact';
 
-/** Where the lesson comes from: photos of handwritten notes, or pages of a textbook PDF. */
+// Where the lesson comes from: photos of handwritten notes, or pages of a textbook PDF.
 export type PaperSource = 'handwritten' | 'textbook';
 
 const SOURCES: Record<PaperSource, { storageKey: string; keyPrefix: string }> = {
@@ -48,7 +48,7 @@ const toLesson = (
   title: entry.title || `${name} ${position + 1}`,
 });
 
-/** Photos of handwritten notes, or pages of a textbook PDF → text the student can correct → the same words, verbs and exercises as a lesson from the document. */
+// Photos of handwritten notes, or pages of a textbook PDF → text the student can correct → the same words, verbs and exercises as a lesson from the document.
 export default function HandwrittenNotes({
   hasClaude,
   target,
@@ -84,7 +84,7 @@ export default function HandwrittenNotes({
   const currentIndex = entries.findIndex((entry) => entry.id === currentId);
   const current = currentIndex >= 0 ? entries[currentIndex] : null;
 
-  /** Adds the notes Claude wrote as a new saved lesson and opens them for checking. */
+  // Adds the notes Claude wrote as a new saved lesson and opens them for checking.
   function addEntry(answer: unknown, nothingFound: string) {
     const { title, text } = asObjectText(answer, ['title', 'text']);
     if (!text) throw new ApiError(0, 'empty', nothingFound);

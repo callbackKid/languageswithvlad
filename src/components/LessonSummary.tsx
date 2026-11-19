@@ -16,7 +16,7 @@ import WordQuiz from './WordQuiz';
 
 const ROUND = 10;
 const SHOWN_WORDS = 8;
-/** Days from the lesson's date to today: 0 on the day of the lesson. */
+// Days from the lesson's date to today: 0 on the day of the lesson.
 export const daysSince = (lesson: Lesson, now = new Date()) => daysBetween(lesson.date, now);
 
 /** After a lesson, on Home: what it brought ("Today, lesson 6: 12 new words, 2 verbs"), its

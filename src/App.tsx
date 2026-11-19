@@ -79,7 +79,7 @@ const ICON_PATHS = {
   sync: 'M14 8a6 6 0 1 1-6-6c1.68 0 3.29.67 4.49 1.83L14 5.33M14 2v3.33h-3.33',
 };
 
-/** An icon for a round icon button, in the text colour. */
+// An icon for a round icon button, in the text colour.
 function ButtonIcon({ name }: { name: keyof typeof ICON_PATHS }) {
   return (
     <svg
@@ -98,6 +98,7 @@ function ButtonIcon({ name }: { name: keyof typeof ICON_PATHS }) {
   );
 }
 
+// The whole app: the top bar, the menu and the page of the current address.
 export default function App() {
   const translation = useTranslation(app);
   const settings = useSettings();
@@ -150,7 +151,7 @@ export default function App() {
         if (health.needsCode && !load<string>('code')) setNeedsCode(true);
       })
       .catch(() => {
-        /* keep defaults */
+        // keep defaults
       });
     const onCode = () => setNeedsCode(true);
     window.addEventListener('cahier:need-code', onCode);

@@ -14,7 +14,7 @@ import GrammarRuleBox from './GrammarRuleBox';
 /* The lesson's Grammar, Homework and Book exercises tabs. What they show comes from one reading
    of the lesson by Claude (LessonView keeps it), explained in the interface language. */
 
-/** The grammar points to revise, each with a round of practice sentences. */
+// The grammar points to revise, each with a round of practice sentences.
 export function GrammarTab({ extras }: { extras: LessonExtras }) {
   const { t } = useTranslation(paper);
   const [practising, setPractising] = useState<GrammarRule | null>(null);
@@ -72,7 +72,7 @@ export function GrammarTab({ extras }: { extras: LessonExtras }) {
   );
 }
 
-/** The homework, ticked off on this device. */
+// The homework, ticked off on this device.
 export function HomeworkTab({
   tasks,
   storageKey,
@@ -128,7 +128,7 @@ export function HomeworkTab({
   );
 }
 
-/** The exercises from the student's book that are in the lesson, and a way to add more. */
+// The exercises from the student's book that are in the lesson, and a way to add more.
 export function BookTab({
   extras,
   docId,
@@ -139,7 +139,7 @@ export function BookTab({
   extras: LessonExtras | null;
   docId: string;
   lessonKey: string;
-  /** whether the server can write to this document; undefined: the lesson isn't in it */
+  // whether the server can write to this document; undefined: the lesson isn't in it
   docWriter: boolean | undefined;
   hasClaude: boolean;
 }) {

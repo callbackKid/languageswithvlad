@@ -19,7 +19,7 @@ import PageHead from './PageHead';
 
 type TutorialKey = keyof (typeof tutorial)['en'];
 
-/** A drawn button, looking like the real one. */
+// A drawn button, looking like the real one.
 const Button = ({ children, primary }: { children: ReactNode; primary?: boolean }) => (
   <span className={'mock-btn' + (primary ? ' primary' : '')}>{children}</span>
 );
@@ -41,7 +41,7 @@ function OpenLink({ section, children }: { section: Section; children?: ReactNod
   );
 }
 
-/** The markup the tutorial texts may use. */
+// The markup the tutorial texts may use.
 const TAGS: Record<string, (chunk: ReactNode) => ReactNode> = {
   b: (chunk) => <b>{chunk}</b>,
   ex: (chunk) => <span className="example">{chunk}</span>,
@@ -57,7 +57,7 @@ const TAGS: Record<string, (chunk: ReactNode) => ReactNode> = {
 const QUICK_START = [1, 2, 3, 4];
 const range = (count: number) => Array.from({ length: count }, (_value, index) => index + 1);
 
-/** The drawings of the screen, labelled with the same texts the app shows. */
+// The drawings of the screen, labelled with the same texts the app shows.
 function MockBody({ id }: { id: string }) {
   const { t: appText, rich: appRich } = useTranslation(app);
   const exercise = useTranslation(exercises).t;
@@ -178,7 +178,7 @@ function MockBody({ id }: { id: string }) {
   }
 }
 
-/** A guide to every part of the app, for someone using it for the first time. */
+// A guide to every part of the app, for someone using it for the first time.
 export default function Tutorial() {
   const { t, rich } = useTranslation(tutorial);
   const text = (key: string) => rich(key as TutorialKey, TAGS);

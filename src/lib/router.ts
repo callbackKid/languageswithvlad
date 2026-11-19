@@ -14,7 +14,7 @@ function subscribe(listener: () => void) {
   };
 }
 
-/** The current path, e.g. "/lessons/2026-11-12_7"; re-renders when it changes. */
+// The current path, e.g. "/lessons/2026-11-12_7"; re-renders when it changes.
 export function usePath(): string {
   return useSyncExternalStore(subscribe, () => window.location.pathname);
 }
@@ -38,7 +38,7 @@ export function navigate(path: string, { replace = false } = {}) {
   window.dispatchEvent(new Event(CHANGE_EVENT));
 }
 
-/** Click handler for app links: plain clicks navigate in place, Cmd/Ctrl/Shift/middle clicks open a new tab as usual. */
+// Click handler for app links: plain clicks navigate in place, Cmd/Ctrl/Shift/middle clicks open a new tab as usual.
 export function followLink(event: MouseEvent<HTMLAnchorElement>, path: string) {
   if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey)
     return;

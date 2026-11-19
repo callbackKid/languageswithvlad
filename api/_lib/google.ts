@@ -12,7 +12,7 @@ interface ServiceAccount {
   private_key: string;
 }
 
-/** What a Google Docs id looks like; only such ids ever reach a Google URL. */
+// What a Google Docs id looks like; only such ids ever reach a Google URL.
 export const GOOGLE_DOC_ID = /^[a-zA-Z0-9_-]{20,100}$/;
 
 const SCOPE = 'https://www.googleapis.com/auth/documents';
@@ -22,6 +22,7 @@ const LOGGED_DETAIL = 300;
 
 export class GoogleError extends HttpError {}
 
+// The service account in GOOGLE_SERVICE_ACCOUNT; null when it isn't set or can't be read.
 export function serviceAccount(): ServiceAccount | null {
   const raw = process.env.GOOGLE_SERVICE_ACCOUNT;
   if (!raw) return null;
@@ -39,7 +40,7 @@ const base64Url = (input: string | Buffer) => Buffer.from(input).toString('base6
 
 let cachedToken: { value: string; expiresAt: number } | null = null;
 
-/** A short-lived access token, reused while it is valid. */
+// A short-lived access token, reused while it is valid.
 async function accessToken(account: ServiceAccount): Promise<string> {
   if (cachedToken && cachedToken.expiresAt > Date.now() + 60_000) return cachedToken.value;
   const now = Math.floor(Date.now() / 1000);
@@ -125,7 +126,7 @@ export async function insertIntoLesson(
   return true;
 }
 
-/** Adds text at the very end of a Google Doc. */
+// Adds text at the very end of a Google Doc.
 export async function appendToDoc(documentId: string, text: string): Promise<void> {
   const account = serviceAccount();
   if (!account) throw new GoogleError(501, 'google_off');

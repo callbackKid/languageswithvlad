@@ -4,6 +4,7 @@ import { useTranslation } from '../i18n/core';
 import { app } from '../i18n/messages/app';
 import LanguagePicker from './LanguagePicker';
 
+// Asks for the class code once, when the server wants one (APP_ACCESS_CODE).
 export default function CodeGate({
   onDone,
   onClear,

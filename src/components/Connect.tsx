@@ -7,6 +7,7 @@ import { docIdFrom } from '../lib/parse';
 import { sourceUrl } from '../lib/source';
 import LanguagePicker from './LanguagePicker';
 
+// The first screen: paste the link of the lesson document (a Google Doc or a Notion page).
 export default function Connect({
   current,
   onConnect,

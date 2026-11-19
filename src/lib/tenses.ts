@@ -4,7 +4,7 @@
 import { getSettings, type Level, LEVELS, type Settings } from './settings';
 import { type Tense, TENSES_BY_LANGUAGE, type VerbLanguage } from './types';
 
-/** The level at which each tense is usually taught: a quiz asks the tenses up to the student's. */
+// The level at which each tense is usually taught: a quiz asks the tenses up to the student's.
 const FIRST_LEVEL: {
   [Key in VerbLanguage]: Record<(typeof TENSES_BY_LANGUAGE)[Key][number], Level>;
 } = {
@@ -41,7 +41,7 @@ const FIRST_LEVEL: {
   },
 };
 
-/** The tenses usually learned by a level, in the order the Verbs tab shows them. */
+// The tenses usually learned by a level, in the order the Verbs tab shows them.
 export function tensesForLevel(language: VerbLanguage, level: Level): Tense[] {
   const reached = LEVELS.indexOf(level);
   const firstLevels: Record<string, Level> = FIRST_LEVEL[language];
@@ -50,6 +50,6 @@ export function tensesForLevel(language: VerbLanguage, level: Level): Tense[] {
   );
 }
 
-/** The tenses quizzes ask in a language: the ones ticked in Settings, or those of the level. */
+// The tenses quizzes ask in a language: the ones ticked in Settings, or those of the level.
 export const knownTenses = (language: VerbLanguage, settings: Settings = getSettings()): Tense[] =>
   settings.tenses[language] ?? tensesForLevel(language, settings.levels[language]);

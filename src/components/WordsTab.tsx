@@ -17,18 +17,19 @@ import WordQuiz from './WordQuiz';
 
 type Exercise = null | 'quiz' | 'cards' | 'match' | 'syn' | 'gap' | 'dictation';
 
-/** The mark of a key word of the lesson (★ in the document). */
+// The mark of a key word of the lesson (★ in the document).
 export function KeyBadge() {
   const { t } = useTranslation(exercises);
   return <span className="key-word">{t('keyWord')}</span>;
 }
 
-/** Tab-separated text Anki imports as cards: word, translation, transcription. */
+// Tab-separated text Anki imports as cards: word, translation, transcription.
 function ankiText(words: Analysis['words']): string {
   const clean = (text: string) => text.replace(/[\t\r\n]+/g, ' ').trim();
   return words.map((word) => [word.fr, word.ru, word.tr].map(clean).join('\t')).join('\n') + '\n';
 }
 
+// A lesson's words, with the exercises on the ones ticked.
 export default function WordsTab({
   analysis,
   hasClaude,

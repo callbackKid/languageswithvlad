@@ -1,6 +1,6 @@
 import { defineMessages } from '../core';
 
-/** The Text page: a pasted text to read, with explanations, a translation and exercises. */
+// The Text page: a pasted text to read, with explanations, a translation and exercises.
 export const reader = defineMessages({
   en: {
     title: 'Text analysis',

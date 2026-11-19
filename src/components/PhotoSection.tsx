@@ -11,7 +11,7 @@ import PhotoWords from './PhotoWords';
 const MODES = ['underlined', 'handwritten', 'textbook'] as const;
 type Mode = (typeof MODES)[number];
 
-/** Everything that starts from paper: underlined words in a book, handwritten lesson notes, or a textbook chapter. */
+// Everything that starts from paper: underlined words in a book, handwritten lesson notes, or a textbook chapter.
 export default function PhotoSection({
   hasClaude,
   target,

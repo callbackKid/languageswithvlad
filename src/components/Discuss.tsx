@@ -279,7 +279,7 @@ const DEFAULT_CHOICE: Choice = {
   customGrammar: '',
 };
 
-/** A topic or grammar dropdown with an "Other…" choice that opens a text field. */
+// A topic or grammar dropdown with an "Other…" choice that opens a text field.
 function TopicSelect({
   label,
   options,
@@ -294,14 +294,14 @@ function TopicSelect({
 }: {
   label: string;
   options: string[];
-  /** more choices in their own group, e.g. the topics of the lessons */
+  // more choices in their own group, e.g. the topics of the lessons
   extra?: { label: string; options: string[] };
   value: string;
   custom: string;
   noneLabel?: string;
-  /** offer "Other…" with a text field (the vocabulary topic has its own field instead) */
+  // offer "Other…" with a text field (the vocabulary topic has its own field instead)
   allowCustom?: boolean;
-  /** shown greyed out: something else (the student's own topic) is used instead */
+  // shown greyed out: something else (the student's own topic) is used instead
   dimmed?: boolean;
   onChange: (value: string) => void;
   onCustom: (value: string) => void;
@@ -341,7 +341,7 @@ function TopicSelect({
   );
 }
 
-/** A discussion question for the start of a lesson: chosen level, vocabulary topic and grammar point. */
+// A discussion question for the start of a lesson: chosen level, vocabulary topic and grammar point.
 export default function Discuss({ bank, hasClaude }: { bank: Bank; hasClaude: boolean }) {
   const { t, language: uiLanguage } = useTranslation(talk);
   const commonText = useTranslation(common);

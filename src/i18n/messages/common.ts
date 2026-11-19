@@ -1,6 +1,6 @@
 import { defineMessages } from '../core';
 
-/** Texts used across the app: buttons, answers, the notes and stars, errors. */
+// Texts used across the app: buttons, answers, the notes and stars, errors.
 export const common = defineMessages({
   en: {
     tryAgain: 'Try again',
@@ -609,7 +609,7 @@ export const common = defineMessages({
   },
 });
 
-/** Names of the languages being learned, and the phrases that depend on them, in each interface language. */
+// Names of the languages being learned, and the phrases that depend on them, in each interface language.
 export const learning = defineMessages({
   en: {
     'name.fr': 'French',

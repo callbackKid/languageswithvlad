@@ -3,7 +3,7 @@ import { common } from '../i18n/messages/common';
 import { canSpeak, speak } from '../lib/speech';
 import type { Language } from '../lib/types';
 
-/** A small 🔊 button that reads the text aloud; hidden where the browser has no speech. */
+// A small 🔊 button that reads the text aloud; hidden where the browser has no speech.
 export default function Speak({ text, language = 'fr' }: { text: string; language?: Language }) {
   const { t } = useTranslation(common);
   if (!canSpeak) return null;

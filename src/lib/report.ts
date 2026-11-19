@@ -18,7 +18,7 @@ const MAX_WORDS = 12;
 const MAX_FORMS = 8;
 const INDENT = '   ';
 
-/** The report on everything since the lesson: homework, answers, mistakes, written answers. */
+// The report on everything since the lesson: homework, answers, mistakes, written answers.
 export function buildReport({
   lesson,
   homework,
@@ -27,7 +27,7 @@ export function buildReport({
   now = new Date(),
 }: {
   lesson: Lesson;
-  /** the homework written in that lesson, if any */
+  // the homework written in that lesson, if any
   homework: Homework | null;
   docId: string;
   progress: Progress;

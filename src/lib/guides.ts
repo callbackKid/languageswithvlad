@@ -6,14 +6,14 @@ import type { Section } from './sections';
 
 export interface Guide {
   section: Section | null;
-  /** the prefix of its texts, and of its anchor */
+  // the prefix of its texts, and of its anchor
   id: string;
   icon: string;
   steps: number;
   tips?: number;
-  /** a small drawing of the screen, with the app's own labels */
+  // a small drawing of the screen, with the app's own labels
   mock?: boolean;
-  /** tips about the teacher's tools, shown only to the teacher */
+  // tips about the teacher's tools, shown only to the teacher
   teacherTips?: readonly number[];
 }
 
@@ -47,5 +47,5 @@ const GUIDE_LIST = [
 export type GuideId = (typeof GUIDE_LIST)[number]['id'];
 export const GUIDES: readonly (Guide & { id: GuideId })[] = GUIDE_LIST;
 
-/** The Tutorial, opened at one card. */
+// The Tutorial, opened at one card.
 export const guidePath = (id: GuideId) => `/tutorial#guide-${id}`;

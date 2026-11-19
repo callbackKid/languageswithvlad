@@ -22,7 +22,7 @@ const MEDIA_TYPES = new Set<string>(['image/jpeg', 'image/png', 'image/webp', 'i
 // The app shrinks photos before sending them; Vercel refuses bodies over 4.5 MB anyway.
 const MAX_TOTAL_BASE64 = 4_000_000;
 
-/** Reads up to maxCount photos from the request body ({images: [{mediaType, data}]}); a string is the error to send back. */
+// Reads up to maxCount photos from the request body ({images: [{mediaType, data}]}); a string is the error to send back.
 export function readImages(body: unknown, maxCount: number): ImageInput[] | string {
   const raw = (body as { images?: unknown } | null)?.images;
   const list = Array.isArray(raw) ? raw : [];
@@ -46,6 +46,7 @@ export function readImages(body: unknown, maxCount: number): ImageInput[] | stri
   return images;
 }
 
+// Asks Claude and returns the JSON in its answer; a warm instance answers an identical prompt from its cache.
 export async function claudeJSON(
   prompt: string,
   options: {
@@ -53,7 +54,7 @@ export async function claudeJSON(
     maxTokens?: number;
     cache?: boolean;
     images?: ImageInput[];
-    /** base64 PDFs, read before the prompt */
+    // base64 PDFs, read before the prompt
     pdfs?: string[];
   } = {}
 ): Promise<unknown> {
@@ -118,6 +119,7 @@ export async function claudeJSON(
   return value;
 }
 
+// The JSON in Claude's reply, also when it comes in a ```json fence or after a sentence; undefined when there is none.
 export function extractJSON(text: string): unknown {
   const trimmed = text.trim();
   const tries = [trimmed];
@@ -130,7 +132,7 @@ export function extractJSON(text: string): unknown {
     try {
       return JSON.parse(candidate);
     } catch {
-      /* next */
+      // next
     }
   }
   return undefined;

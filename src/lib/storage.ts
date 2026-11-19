@@ -1,4 +1,5 @@
 const PREFIX = 'cahier-fr:';
+// A saved value as it was stored, or null. Only a cast: check anything but plain values (loadChecked).
 export function load<T>(key: string): T | null {
   try {
     const stored = localStorage.getItem(PREFIX + key);
@@ -7,18 +8,20 @@ export function load<T>(key: string): T | null {
     return null;
   }
 }
+// Saves a value; a full or blocked storage is ignored.
 export function save(key: string, value: unknown): void {
   try {
     localStorage.setItem(PREFIX + key, JSON.stringify(value));
   } catch {
-    /* storage full or blocked */
+    // storage full or blocked
   }
 }
+// Removes a saved value.
 export function remove(key: string): void {
   try {
     localStorage.removeItem(PREFIX + key);
   } catch {
-    /* ignore */
+    // ignore
   }
 }
 

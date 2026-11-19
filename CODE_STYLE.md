@@ -89,7 +89,8 @@ Prettier decides: 100 columns, single quotes, semicolons, trailing commas where 
 ## Comments
 
 - A comment says **why**, or what isn't obvious from the code; it doesn't repeat the code.
-- Exported functions, components and non-obvious constants get a one-line `/** … */`. Longer explanations of a file's purpose go in a `/* … */` block at its top.
+- Exported functions, components and non-obvious constants get a comment above them.
+- **A comment that fits on one line is `//`**, wherever it is: above a function, a type, a field or a line of code. `/** … */` only for a comment of several lines; a file's purpose goes in a `/* … */` block at its top. Two exceptions, where `//` doesn't work: JSX keeps `{/* … */}`, and CSS keeps `/* … */`.
 - Comments are in English and stay true: when the code changes, change or delete the comment.
 - An `eslint-disable` needs a reason on the same line, and is the last resort.
 

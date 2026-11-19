@@ -5,7 +5,7 @@ import { checkAccess, fail, onlyPost } from './_lib/http.js';
 import { lessonTarget } from './_lib/lessons.js';
 import { appendToNotion, insertIntoNotionLesson, NOTION_ID } from './_lib/notion.js';
 
-/** Longest text added in one request: a lesson is a few thousand characters. */
+// Longest text added in one request: a lesson is a few thousand characters.
 const MAX_TEXT_LENGTH = 20_000;
 
 /** Appends a new lesson (heading and lines, built by the app) to the end of the Google Doc or

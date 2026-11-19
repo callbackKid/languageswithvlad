@@ -7,7 +7,7 @@ import { markNewsSeen, NEWS } from '../lib/news';
 import { useTeacher } from '../lib/teacher';
 import PageHead from './PageHead';
 
-/** What changed in the app, by day. Opening it clears the dot next to News in the menu. */
+// What changed in the app, by day. Opening it clears the dot next to News in the menu.
 export default function News({ onSeen }: { onSeen: () => void }) {
   const { t, language, locale } = useTranslation(newsText);
   const sectionNames = useTranslation(app);

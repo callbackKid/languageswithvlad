@@ -8,7 +8,7 @@ import type { Word } from '../lib/types';
 import { shuffle } from '../lib/util';
 import ExerciseHead from './ExerciseHead';
 
-/** word is set for translation pairs, so results count towards progress. */
+// word is set for translation pairs, so results count towards progress.
 export interface MatchPair {
   id: string;
   a: string;
@@ -44,6 +44,7 @@ function makeRound(pool: MatchPair[]) {
   };
 }
 
+// Two columns to match, words and their translations or synonyms and antonyms, a few pairs at a time.
 export default function Match({
   pairs,
   mode,

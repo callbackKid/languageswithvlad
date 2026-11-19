@@ -21,8 +21,8 @@ interface LastScan {
   at: number;
 }
 
-/** Photo of a book page with underlined words → translation, dictionary form, tense and a short explanation for each. */
-/** "avoir raison — был прав (avait raison, imparfait, il)": one line of a lesson in the document. */
+// Photo of a book page with underlined words → translation, dictionary form, tense and a short explanation for each.
+// "avoir raison — был прав (avait raison, imparfait, il)": one line of a lesson in the document.
 function docLine(item: PhotoItem): string {
   const notes = [item.base && item.base !== item.fr ? item.fr : '', item.tense]
     .filter(Boolean)
@@ -30,6 +30,7 @@ function docLine(item: PhotoItem): string {
   return `${item.base || item.fr} — ${item.ru}${notes ? ` (${notes})` : ''}`;
 }
 
+// The underlined words on a photo of a book page, each with its translation, dictionary form and tense.
 export default function PhotoWords({
   hasClaude,
   target,

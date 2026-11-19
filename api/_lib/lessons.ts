@@ -8,13 +8,13 @@ const HEADING =
 const KEY = /^(\d{4})-(\d{2})-(\d{2})_(\d+)(?:-(\d+))?$/;
 
 export interface LessonTarget {
-  /** "2026-11-12_7" without the repeat number */
+  // "2026-11-12_7" without the repeat number
   base: string;
-  /** 1 for the first lesson with that date and number, 2 for the second… */
+  // 1 for the first lesson with that date and number, 2 for the second…
   occurrence: number;
 }
 
-/** The lesson a key names, or null when it isn't a lesson key. */
+// The lesson a key names, or null when it isn't a lesson key.
 export function lessonTarget(key: unknown): LessonTarget | null {
   const match = typeof key === 'string' ? key.match(KEY) : null;
   if (!match) return null;
@@ -22,7 +22,7 @@ export function lessonTarget(key: unknown): LessonTarget | null {
   return { base: `${year}-${month}-${day}_${Number(number)}`, occurrence: Number(repeat ?? 1) };
 }
 
-/** The key part of a heading line ("2026-11-12_7"), or null when the line doesn't start a lesson. */
+// The key part of a heading line ("2026-11-12_7"), or null when the line doesn't start a lesson.
 export function headingKey(line: string): string | null {
   const match = line.match(HEADING);
   if (!match) return null;
@@ -31,7 +31,7 @@ export function headingKey(line: string): string | null {
   return `${year}-${pad(month)}-${pad(day)}_${Number(number)}`;
 }
 
-/** Which of these lines is the lesson's heading, and which is the next lesson's (null: none). */
+// Which of these lines is the lesson's heading, and which is the next lesson's (null: none).
 export function findLesson(
   lines: string[],
   target: LessonTarget

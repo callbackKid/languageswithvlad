@@ -30,6 +30,7 @@ import WordsTab from './WordsTab';
 type Tab = LessonTab;
 const EXTRA_TABS: Tab[] = ['grammar', 'homework', 'book'];
 
+// One lesson's page: its heading and its tabs (Words, Verbs, Grammar, Homework, Book exercises, My notes, Original).
 export default function LessonView({
   lesson,
   docId,
