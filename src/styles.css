@@ -713,10 +713,17 @@ main.page {
   max-width: 62ch;
 }
 /* a page's or lesson's title with the "?" that opens its Tutorial card */
+/* the title flows as text, so the "?" follows its last word when it wraps onto two lines */
 .title-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+  margin-bottom: 6px;
+}
+.title-row h1 {
+  display: inline;
+}
+.title-row .help-link {
+  margin-left: 12px;
+  /* about the middle of the capitals, at both the page and the lesson title sizes */
+  vertical-align: 2px;
 }
 .help-link {
   flex: none;
@@ -1710,6 +1717,11 @@ pre.source {
 
   .quiz-word {
     font-size: 26px;
+  }
+
+  /* the title on its own row: beside the counter and the way back it wraps word by word */
+  .ex-head h2 {
+    flex-basis: 100%;
   }
 }
 
