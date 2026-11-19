@@ -4,10 +4,14 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>Cahier de français</title>
-    <link
-      rel="icon"
-      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📓</text></svg>"
-    />
+    <!-- Icons: public/icon.svg is the source; the PNGs are drawn from it at their sizes. -->
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="apple-mobile-web-app-title" content="Cahier" />
+    <!-- The colour of the browser bar and the phone's status bar: the page background (--bg),
+         set by the script below and by applyTheme in settings.ts -->
+    <meta name="theme-color" content="#ffffff" />
     <script>
       // The theme, set before the first paint so a dark screen never flashes white.
       // src/lib/settings.ts keeps it up to date afterwards; keep the two in step.
@@ -21,6 +25,9 @@
         var systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         var dark = theme === 'dark' || (theme !== 'light' && systemDark);
         document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        document
+          .querySelector('meta[name="theme-color"]')
+          .setAttribute('content', dark ? '#191919' : '#ffffff');
       })();
     </script>
   </head>

@@ -125,10 +125,15 @@ const prefersDark = () =>
 export const isDark = (settings: Settings = current) =>
   settings.theme === 'dark' || (settings.theme === 'system' && prefersDark());
 
+/** The browser bar and the phone's status bar take the page background (--bg in styles.css). */
+const THEME_COLOR = { light: '#ffffff', dark: '#191919' } as const;
+
 /** The page reads data-theme ("light" or "dark"): the chosen theme, or the system's. */
 function applyTheme(settings: Settings) {
   if (typeof document === 'undefined') return;
-  document.documentElement.dataset.theme = isDark(settings) ? 'dark' : 'light';
+  const theme = isDark(settings) ? 'dark' : 'light';
+  document.documentElement.dataset.theme = theme;
+  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', THEME_COLOR[theme]);
 }
 applyTheme(current);
 if (typeof window !== 'undefined')

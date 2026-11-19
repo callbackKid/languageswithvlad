@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Two people over one book: the teacher and the student. White on black on a light tab,
+       black on white on a dark one, so the square never disappears into the tab. -->
+  <style>
+    .square { fill: #141414; }
+    .art { fill: #ffffff; }
+    @media (prefers-color-scheme: dark) {
+      .square { fill: #ffffff; }
+      .art { fill: #141414; }
+    }
+  </style>
+  <rect class="square" width="512" height="512" rx="112"/>
+  <g class="art">
+  <circle cx="178" cy="160" r="46"/>
+  <circle cx="334" cy="160" r="46"/>
+  <path d="M248 268C208 240 156 232 100 240V380C156 372 208 380 248 406Z"/>
+  <path d="M264 268C304 240 356 232 412 240V380C356 372 304 380 264 406Z"/>
+  </g>
+</svg>
