@@ -111,6 +111,18 @@ export const NEWS: NewsDay[] = [
           it: 'Sul telefono la tastiera non corregge né completa più le tue risposte negli esercizi, nell’allenamento sui verbi e nei compiti scritti, così viene controllata proprio la risposta che hai digitato.',
         },
       },
+      {
+        kind: 'fixed',
+        text: {
+          en: 'A lesson’s nouns and their translations are in the same number, with the right article: “la colline — холм”, not “холмы”; “la vis”, not “le vis”. To fix a lesson read before, use Prepare this lesson again at the bottom of its Words tab.',
+          ru: 'Существительные урока и их переводы стоят в одном числе и с правильным артиклем: «la colline — холм», а не «холмы»; «la vis», а не «le vis». Чтобы исправить урок, прочитанный раньше, нажмите «Подготовить урок заново» внизу его вкладки «Слова».',
+          fr: 'Les noms d’une leçon et leurs traductions sont au même nombre, avec le bon article : « la colline — холм », et non « холмы » ; « la vis », et non « le vis ». Pour corriger une leçon lue auparavant, utilisez « Préparer de nouveau cette leçon » en bas de son onglet Mots.',
+          de: 'Die Substantive einer Lektion und ihre Übersetzungen stehen im selben Numerus und mit dem richtigen Artikel: „la colline — холм“, nicht „холмы“; „la vis“, nicht „le vis“. Um eine schon gelesene Lektion zu korrigieren, nutze „Lektion neu vorbereiten“ unten in ihrem Tab Wörter.',
+          es: 'Los sustantivos de una lección y sus traducciones van en el mismo número, con el artículo correcto: «la colline — холм», no «холмы»; «la vis», no «le vis». Para corregir una lección que ya leíste, usa «Preparar de nuevo esta lección» al final de su pestaña Palabras.',
+          pt: 'Os substantivos de uma lição e as suas traduções ficam no mesmo número, com o artigo certo: «la colline — холм», e não «холмы»; «la vis», e não «le vis». Para corrigir uma lição lida antes, use «Preparar esta lição de novo» no fim do separador Palavras dessa lição.',
+          it: 'I sostantivi di una lezione e le loro traduzioni sono nello stesso numero, con l’articolo giusto: «la colline — холм», non «холмы»; «la vis», non «le vis». Per correggere una lezione letta prima, usa «Prepara di nuovo questa lezione» in fondo alla sua scheda Parole.',
+        },
+      },
     ],
   },
   {
