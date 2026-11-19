@@ -5,6 +5,7 @@ import { call } from '../i18n/messages/call';
 import type { BoardPeer, BoardServer } from '../lib/boardSync';
 import { isDark, useSettings } from '../lib/settings';
 import type { BoardHandle } from './BoardCanvas';
+import CallCard from './CallCard';
 
 // the download has started by then, so the file's address can be let go (milliseconds)
 const RELEASE_AFTER = 1000;
@@ -58,37 +59,42 @@ export default function LessonBoard({
   }
 
   return (
-    <section className="call-card lesson-board">
-      <div className="call-card-head">
-        <h2>{t('boardTitle')}</h2>
-        {isOpen && (
-          <>
-            <button
-              type="button"
-              className="btn ghost"
-              onClick={() =>
-                isFullScreen
-                  ? void document.exitFullscreen()
-                  : void frame.current?.requestFullscreen()
-              }
-            >
-              {isFullScreen ? t('exitFullScreen') : t('fullScreen')}
-            </button>
-            <button type="button" className="btn ghost" onClick={() => void savePicture()}>
-              {t('savePicture')}
-            </button>
-            <button
-              type="button"
-              className="btn ghost"
-              onClick={() => {
-                if (window.confirm(t('clearBoardConfirm'))) handle.current?.clear();
-              }}
-            >
-              {t('clearBoard')}
-            </button>
-          </>
-        )}
-      </div>
+    <CallCard
+      id="board"
+      title={t('boardTitle')}
+      className="lesson-board"
+      actions={
+        <>
+          {isOpen && (
+            <>
+              <button
+                type="button"
+                className="btn ghost"
+                onClick={() =>
+                  isFullScreen
+                    ? void document.exitFullscreen()
+                    : void frame.current?.requestFullscreen()
+                }
+              >
+                {isFullScreen ? t('exitFullScreen') : t('fullScreen')}
+              </button>
+              <button type="button" className="btn ghost" onClick={() => void savePicture()}>
+                {t('savePicture')}
+              </button>
+              <button
+                type="button"
+                className="btn ghost"
+                onClick={() => {
+                  if (window.confirm(t('clearBoardConfirm'))) handle.current?.clear();
+                }}
+              >
+                {t('clearBoard')}
+              </button>
+            </>
+          )}
+        </>
+      }
+    >
       <p className="hint">{shared ? t('boardHintShared') : t('boardHint')}</p>
       {isOpen && shared && (
         <p className={'board-status' + (others ? ' live' : '')} role="status">
@@ -129,6 +135,6 @@ export default function LessonBoard({
           </button>
         </div>
       )}
-    </section>
+    </CallCard>
   );
 }

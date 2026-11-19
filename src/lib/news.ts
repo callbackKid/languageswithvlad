@@ -159,6 +159,18 @@ export const NEWS: NewsDay[] = [
           it: 'Analisi delle foto → Appunti a mano accetta fino a 10 pagine alla volta.',
         },
       },
+      {
+        kind: 'better',
+        text: {
+          en: 'Lesson mode: press a card’s title to fold it away, and it stays folded on your device. A question for discussion is there too, to start the lesson with a conversation.',
+          ru: 'Режим урока: нажмите на заголовок карточки, чтобы свернуть её, и она останется свёрнутой на вашем устройстве. Там же теперь и «Вопрос для обсуждения», чтобы начать урок с разговора.',
+          fr: 'Mode cours : appuyez sur le titre d’une carte pour la replier, et elle reste repliée sur votre appareil. « Une question à discuter » y est aussi, pour commencer le cours par une conversation.',
+          de: 'Unterrichtsmodus: Tippe auf den Titel einer Karte, um sie einzuklappen, und sie bleibt auf deinem Gerät eingeklappt. Auch „Eine Frage zum Diskutieren“ ist jetzt dort, um die Stunde mit einem Gespräch zu beginnen.',
+          es: 'Modo clase: pulsa el título de una tarjeta para contraerla, y se queda así en tu dispositivo. «Una pregunta para debatir» también está ahí, para empezar la clase con una conversación.',
+          pt: 'Modo aula: carregue no título de um cartão para o recolher, e ele fica assim no seu dispositivo. «Uma pergunta para debate» também lá está, para começar a aula com uma conversa.',
+          it: 'Modalità lezione: premi il titolo di un riquadro per comprimerlo, e resta così sul tuo dispositivo. C’è anche «Una domanda di discussione», per iniziare la lezione con una conversazione.',
+        },
+      },
     ],
   },
   {

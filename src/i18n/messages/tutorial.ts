@@ -225,6 +225,10 @@ export const tutorial = defineMessages({
       '<btn>Side by side (half the screen)</btn> opens Meet over the right half of the screen, next to the app.',
     'call.tip4':
       '<b>Video call</b>: when the server is set up for Jitsi, press <pbtn>Join the call</pbtn>. The teacher and the student meet in the same room inside the page, with nothing to install (a one-time setup on the server, see the README).',
+    'call.tip5':
+      'Press a card’s title to fold it away; a folded card stays folded on this device until you open it again. A call or the board in a folded card goes on.',
+    'call.tip6':
+      '<b>A question for discussion</b> is here too, to start the lesson with a conversation, as on its own page.',
     'call.tip1':
       'The notes are saved on this device for each day, so closing the page loses nothing.',
     'call.tip2':
@@ -469,6 +473,10 @@ export const tutorial = defineMessages({
       '<btn>Рядом (половина экрана)</btn> открывает Meet на правой половине экрана, рядом с приложением.',
     'call.tip4':
       '<b>Видеозвонок</b>: если сервер настроен для Jitsi, нажмите <pbtn>Подключиться к звонку</pbtn>. Преподаватель и ученик встречаются в одной комнате прямо на странице, ничего не устанавливая (нужна разовая настройка на сервере, см. README).',
+    'call.tip5':
+      'Нажмите на заголовок карточки, чтобы свернуть её; свёрнутая карточка остаётся свёрнутой на этом устройстве, пока вы снова её не откроете. Звонок или доска в свёрнутой карточке продолжают работать.',
+    'call.tip6':
+      '<b>Вопрос для обсуждения</b> тоже здесь — чтобы начать урок с разговора, как на его отдельной странице.',
     'call.tip1':
       'Заметки сохраняются на этом устройстве отдельно на каждый день — если закрыть страницу, ничего не пропадёт.',
     'call.tip2':
@@ -721,6 +729,10 @@ export const tutorial = defineMessages({
       '<btn>Côte à côte (moitié de l’écran)</btn> ouvre Meet sur la moitié droite de l’écran, à côté de l’application.',
     'call.tip4':
       '<b>Appel vidéo</b> : quand le serveur est configuré pour Jitsi, appuyez sur <pbtn>Rejoindre l’appel</pbtn>. Le professeur et l’élève se retrouvent dans la même salle, dans la page, sans rien installer (une configuration unique est nécessaire sur le serveur, voir le README).',
+    'call.tip5':
+      'Appuyez sur le titre d’une carte pour la replier ; une carte repliée le reste sur cet appareil jusqu’à ce que vous la rouvriez. Un appel ou le tableau dans une carte repliée continue de fonctionner.',
+    'call.tip6':
+      '<b>Une question à discuter</b> est là aussi, pour commencer le cours par une conversation, comme sur sa propre page.',
     'call.tip1':
       'Les notes sont enregistrées sur cet appareil pour chaque jour : fermer la page ne fait rien perdre.',
     'call.tip2':
@@ -970,6 +982,10 @@ export const tutorial = defineMessages({
       '<btn>Nebeneinander (halber Bildschirm)</btn> öffnet Meet auf der rechten Bildschirmhälfte, neben der App.',
     'call.tip4':
       '<b>Videoanruf</b>: Wenn der Server für Jitsi eingerichtet ist, tippe auf <pbtn>Anruf beitreten</pbtn>. Lehrkraft und Schüler treffen sich im selben Raum direkt auf der Seite, ohne etwas zu installieren (braucht eine einmalige Einrichtung auf dem Server, siehe README).',
+    'call.tip5':
+      'Tippe auf den Titel einer Karte, um sie einzuklappen; eine eingeklappte Karte bleibt auf diesem Gerät eingeklappt, bis du sie wieder öffnest. Ein Anruf oder die Tafel in einer eingeklappten Karte läuft weiter.',
+    'call.tip6':
+      '<b>Eine Frage zum Diskutieren</b> gibt es hier auch, um die Stunde mit einem Gespräch zu beginnen, wie auf ihrer eigenen Seite.',
     'call.tip1':
       'Die Notizen werden auf diesem Gerät für jeden Tag gespeichert; wenn du die Seite schließt, geht nichts verloren.',
     'call.tip2':
@@ -1221,6 +1237,10 @@ export const tutorial = defineMessages({
       '<btn>Lado a lado (media pantalla)</btn> abre Meet sobre la mitad derecha de la pantalla, junto a la aplicación.',
     'call.tip4':
       '<b>Videollamada</b>: cuando el servidor esté configurado para Jitsi, pulsa <pbtn>Unirse a la llamada</pbtn>. El profesor y el alumno se encuentran en la misma sala dentro de la página, sin instalar nada (requiere una configuración única en el servidor, ver el README).',
+    'call.tip5':
+      'Pulsa el título de una tarjeta para contraerla; una tarjeta contraída se queda así en este dispositivo hasta que la vuelvas a abrir. Una llamada o la pizarra en una tarjeta contraída siguen en marcha.',
+    'call.tip6':
+      '<b>Una pregunta para debatir</b> también está aquí, para empezar la clase con una conversación, como en su propia página.',
     'call.tip1':
       'Las notas se guardan en este dispositivo para cada día, así que cerrar la página no hace perder nada.',
     'call.tip2':
@@ -1471,6 +1491,10 @@ export const tutorial = defineMessages({
       '<btn>Lado a lado (meio ecrã)</btn> abre o Meet na metade direita do ecrã, ao lado da aplicação.',
     'call.tip4':
       '<b>Videochamada</b>: quando o servidor estiver configurado para o Jitsi, carregue em <pbtn>Entrar na chamada</pbtn>. O professor e o aluno encontram-se na mesma sala dentro da página, sem instalar nada (requer uma configuração única no servidor, ver o README).',
+    'call.tip5':
+      'Carregue no título de um cartão para o recolher; um cartão recolhido fica assim neste dispositivo até o voltar a abrir. Uma chamada ou o quadro num cartão recolhido continuam a funcionar.',
+    'call.tip6':
+      '<b>Uma pergunta para debate</b> também está aqui, para começar a aula com uma conversa, como na sua própria página.',
     'call.tip1':
       'As notas ficam guardadas neste dispositivo para cada dia, por isso fechar a página não faz perder nada.',
     'call.tip2':
@@ -1722,6 +1746,10 @@ export const tutorial = defineMessages({
       '<btn>Affiancata (metà schermo)</btn> apre Meet sulla metà destra dello schermo, accanto all’app.',
     'call.tip4':
       '<b>Videochiamata</b>: quando il server è configurato per Jitsi, premi <pbtn>Partecipa alla chiamata</pbtn>. Insegnante e studente si ritrovano nella stessa stanza dentro la pagina, senza installare nulla (serve una configurazione una tantum sul server, vedi il README).',
+    'call.tip5':
+      'Premi il titolo di un riquadro per comprimerlo; un riquadro compresso resta così su questo dispositivo finché non lo riapri. Una chiamata o la lavagna in un riquadro compresso vanno avanti.',
+    'call.tip6':
+      '<b>Una domanda di discussione</b> c’è anche qui, per iniziare la lezione con una conversazione, come nella sua pagina.',
     'call.tip1':
       'Gli appunti si salvano su questo dispositivo per ogni giorno, quindi chiudere la pagina non fa perdere nulla.',
     'call.tip2':

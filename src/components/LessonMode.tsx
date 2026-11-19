@@ -4,6 +4,7 @@ import { useTranslation } from '../i18n/core';
 import { call } from '../i18n/messages/call';
 import { game } from '../i18n/messages/game';
 import { homework as homeworkText } from '../i18n/messages/homework';
+import { talk } from '../i18n/messages/talk';
 import { type Bank, readAnalysis, usePreparedLesson } from '../lib/bank';
 import type { BoardServer } from '../lib/boardSync';
 import { findCall, openCallWindow } from '../lib/call';
@@ -20,6 +21,8 @@ import type { Lesson, Writing } from '../lib/types';
 import { hash } from '../lib/util';
 import { previousLesson, warmUpRound } from '../lib/warmUp';
 import AddToDoc, { type DocTarget } from './AddToDoc';
+import CallCard from './CallCard';
+import Discuss from './Discuss';
 import JitsiCall from './JitsiCall';
 import LessonBoard from './LessonBoard';
 import PageHead from './PageHead';
@@ -52,8 +55,7 @@ function JitsiCard({ appId, docId }: { appId: string; docId: string }) {
   const [name, setName] = useState(() => load<string>(NAME_KEY) ?? getSettings().name);
   const [joined, setJoined] = useState(false);
   return (
-    <section className="call-card">
-      <h2>{t('jitsiTitle')}</h2>
+    <CallCard id="jitsi" title={t('jitsiTitle')}>
       {joined ? (
         <JitsiCall
           appId={appId}
@@ -91,7 +93,7 @@ function JitsiCard({ appId, docId }: { appId: string; docId: string }) {
           </form>
         </>
       )}
-    </section>
+    </CallCard>
   );
 }
 
@@ -123,8 +125,7 @@ function CallPanel({
 
   if (link.kind === 'meet')
     return (
-      <section className="call-card">
-        <h2>{t('meetTitle')}</h2>
+      <CallCard id="meet" title={t('meetTitle')}>
         <p className="hint">{t('meetExplain')}</p>
         <div className="row-actions">
           <button
@@ -149,22 +150,20 @@ function CallPanel({
           </div>
         )}
         <p className="legend">{t('pipTip')}</p>
-      </section>
+      </CallCard>
     );
 
   // Zoom: inside the page when the server can sign, otherwise in Zoom itself
   const { meetingNumber } = link;
   if (!zoomReady || !meetingNumber)
     return (
-      <section className="call-card">
-        <h2>{t('zoomTitle')}</h2>
+      <CallCard id="zoom" title={t('zoomTitle')}>
         <p className="hint">{!meetingNumber ? t('zoomNoNumber') : t('zoomNotSetUp')}</p>
         <div className="row-actions">{newTab(t('openInZoom'))}</div>
-      </section>
+      </CallCard>
     );
   return (
-    <section className="call-card">
-      <h2>{t('zoomTitle')}</h2>
+    <CallCard id="zoom" title={t('zoomTitle')}>
       {joined ? (
         <ZoomCall
           meetingNumber={meetingNumber}
@@ -212,7 +211,7 @@ function CallPanel({
           </form>
         </>
       )}
-    </section>
+    </CallCard>
   );
 }
 
@@ -244,25 +243,30 @@ function LessonNotes({ docId, target }: { docId: string; target: DocTarget }) {
   };
 
   return (
-    <section className="call-card call-notes">
-      <div className="call-card-head">
-        <h2>{t('notesTitle')}</h2>
-        <button type="button" className="btn ghost" onClick={insertTime}>
-          {t('insertTime')}
-        </button>
-        <button
-          type="button"
-          className="btn ghost"
-          disabled={!text}
-          onClick={() => {
-            if (!window.confirm(t('clearConfirm'))) return;
-            setText('');
-            remove(storageKey);
-          }}
-        >
-          {t('clearNotes')}
-        </button>
-      </div>
+    <CallCard
+      id="notes"
+      title={t('notesTitle')}
+      className="call-notes"
+      actions={
+        <>
+          <button type="button" className="btn ghost" onClick={insertTime}>
+            {t('insertTime')}
+          </button>
+          <button
+            type="button"
+            className="btn ghost"
+            disabled={!text}
+            onClick={() => {
+              if (!window.confirm(t('clearConfirm'))) return;
+              setText('');
+              remove(storageKey);
+            }}
+          >
+            {t('clearNotes')}
+          </button>
+        </>
+      }
+    >
       <p className="hint">{t('notesHint')}</p>
       <textarea
         ref={area}
@@ -274,7 +278,7 @@ function LessonNotes({ docId, target }: { docId: string; target: DocTarget }) {
       />
       {/* a new key per text: after "Added", editing the notes makes the button live again */}
       <AddToDoc key={hash(text)} target={target} lines={text.split('\n')} />
-    </section>
+    </CallCard>
   );
 }
 
@@ -286,19 +290,23 @@ function LessonWords({ bank, lesson }: { bank: Bank; lesson: Lesson | null }) {
     lesson ? bank.words.filter((word) => word.lesson === lesson.key) : []
   );
   return (
-    <section className="call-card">
-      <div className="call-card-head">
-        <h2>{t('wordsTitle')}</h2>
-        {lesson && (
-          <a
-            className="open-link"
-            href={hrefFor(lessonPath(lesson.key))}
-            onClick={(event) => followLink(event, lessonPath(lesson.key))}
-          >
-            {t('openLesson')} →
-          </a>
-        )}
-      </div>
+    <CallCard
+      id="words"
+      title={t('wordsTitle')}
+      actions={
+        <>
+          {lesson && (
+            <a
+              className="open-link"
+              href={hrefFor(lessonPath(lesson.key))}
+              onClick={(event) => followLink(event, lessonPath(lesson.key))}
+            >
+              {t('openLesson')} →
+            </a>
+          )}
+        </>
+      }
+    >
       {words.length ? (
         <ul className="call-words">
           {words.map((word) => (
@@ -322,7 +330,7 @@ function LessonWords({ bank, lesson }: { bank: Bank; lesson: Lesson | null }) {
       ) : (
         <p className="empty">{t('noWords')}</p>
       )}
-    </section>
+    </CallCard>
   );
 }
 
@@ -339,8 +347,7 @@ function WrittenHomework({ lesson, docId }: { lesson: Lesson | null; docId: stri
     .filter((writing): writing is Writing => !!writing?.text.trim());
   if (!written.length) return null;
   return (
-    <section className="call-card written-homework">
-      <h2>{t('writtenTitle')}</h2>
+    <CallCard id="written" title={t('writtenTitle')} className="written-homework">
       <p className="hint">{t('writtenHint', { n: lesson.n })}</p>
       {written.map((writing) => (
         <details key={writing.task}>
@@ -361,7 +368,7 @@ function WrittenHomework({ lesson, docId }: { lesson: Lesson | null; docId: stri
           )}
         </details>
       ))}
-    </section>
+    </CallCard>
   );
 }
 
@@ -379,12 +386,21 @@ function ActivityPlace({ children }: { children: ReactNode }) {
   );
 }
 
+// A discussion question for the start of the lesson, made here as on its own page.
+function DiscussCard({ bank, hasClaude }: { bank: Bank; hasClaude: boolean }) {
+  const { t } = useTranslation(talk);
+  return (
+    <CallCard id="discuss" title={t('discussTitle')} className="discuss-card">
+      <Discuss bank={bank} hasClaude={hasClaude} embedded />
+    </CallCard>
+  );
+}
+
 // The quiz game offered during the lesson, with the records so far.
 function GameCard({ docId, onStart }: { docId: string; onStart: () => void }) {
   const { t } = useTranslation(game);
   return (
-    <section className="call-card">
-      <h2>{t('title')}</h2>
+    <CallCard id="game" title={t('title')}>
       <p className="hint">{t('hint', { count: GAME_QUESTIONS, seconds: GAME_SECONDS })}</p>
       <RecordsTable records={readRecords(docId)} />
       <div className="row-actions">
@@ -392,7 +408,7 @@ function GameCard({ docId, onStart }: { docId: string; onStart: () => void }) {
           {t('play')}
         </button>
       </div>
-    </section>
+    </CallCard>
   );
 }
 
@@ -410,8 +426,7 @@ function WarmUpCard({
   const date = (value: Date) =>
     new Intl.DateTimeFormat(locale, { day: 'numeric', month: 'long' }).format(value);
   return (
-    <section className="call-card">
-      <h2>{t('warmUpTitle')}</h2>
+    <CallCard id="warm-up" title={t('warmUpTitle')}>
       <p className="hint">
         {lesson
           ? t('warmUpHint', { n: lesson.n, date: date(lesson.date) })
@@ -422,7 +437,7 @@ function WarmUpCard({
           {preparing && lesson ? t('preparingWarmUp', { n: lesson.n }) : t('startWarmUp')}
         </button>
       </div>
-    </section>
+    </CallCard>
   );
 }
 
@@ -513,6 +528,7 @@ export default function LessonMode({
               onStart={() => setActivity('warm-up')}
             />
           )}
+          <DiscussCard bank={bank} hasClaude={hasClaude} />
           {!activity && newest && <GameCard docId={docId} onStart={() => setActivity('game')} />}
           <WrittenHomework lesson={earlier} docId={docId} />
           <LessonWords bank={bank} lesson={lessons[lessons.length - 1] ?? null} />

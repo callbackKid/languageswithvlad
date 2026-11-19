@@ -341,8 +341,17 @@ function TopicSelect({
   );
 }
 
-// A discussion question for the start of a lesson: chosen level, vocabulary topic and grammar point.
-export default function Discuss({ bank, hasClaude }: { bank: Bank; hasClaude: boolean }) {
+/** A discussion question for the start of a lesson: chosen level, vocabulary topic and grammar
+    point. Embedded, it leaves out the page heading: lesson mode shows it in a card of its own. */
+export default function Discuss({
+  bank,
+  hasClaude,
+  embedded = false,
+}: {
+  bank: Bank;
+  hasClaude: boolean;
+  embedded?: boolean;
+}) {
   const { t, language: uiLanguage } = useTranslation(talk);
   const commonText = useTranslation(common);
   const names = useTranslation(learning);
@@ -429,9 +438,11 @@ export default function Discuss({ bank, hasClaude }: { bank: Bank; hasClaude: bo
 
   return (
     <>
-      <PageHead guide="discuss" title={t('discussTitle')}>
-        {t('discussIntro')}
-      </PageHead>
+      {!embedded && (
+        <PageHead guide="discuss" title={t('discussTitle')}>
+          {t('discussIntro')}
+        </PageHead>
+      )}
       {!hasClaude ? (
         <p className="empty">{commonText.t('needsClaude')}</p>
       ) : (

@@ -3373,6 +3373,34 @@ li .open-link {
 .call-card-head h2 {
   margin: 0 auto 0 0;
 }
+/* the title folds the card (CallCard); a folded card keeps only its title row */
+.fold-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.fold-mark {
+  display: inline-block;
+  color: var(--muted);
+  transition: transform 0.15s ease;
+}
+.call-card.folded .fold-mark {
+  transform: rotate(-90deg);
+}
+.call-card-body {
+  margin-top: 6px;
+}
+/* the discussion question in lesson mode: the card already frames it */
+.discuss-card .discuss-form:last-child {
+  margin-bottom: 0;
+}
 
 .call-notes textarea.notes {
   min-height: 420px;
@@ -3591,6 +3619,9 @@ li .open-link {
 @media (prefers-reduced-motion: reduce) {
   /* the bar still shrinks, in steps, without gliding */
   .game-clock span {
+    transition: none;
+  }
+  .fold-mark {
     transition: none;
   }
 }
