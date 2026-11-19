@@ -421,5 +421,8 @@ export function answerFor(url, body, headers = {}, scenario = 'upcoming') {
   if (path === '/api/discussion') return DISCUSSION;
   if (path === '/api/append') return { ok: true };
   if (path === '/api/paper' && body?.kind === 'underlined') return UNDERLINED;
+  // handwritten notes: one line per request, so a test sees how the pages were split
+  if (path === '/api/paper' && body?.kind === 'handwritten')
+    return { title: 'Notes', text: `la page — страница (${body.images?.length ?? 0} pages)` };
   return {};
 }

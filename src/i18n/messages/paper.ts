@@ -49,6 +49,7 @@ export const paper = defineMessages({
     pagesFailed: 'The pages couldn’t be read. Try again.',
     tooManyPages: 'Choose at most {count} pages at once.',
     tooManyPhotos: 'Choose at most {count} photos at once.',
+    readingPages: 'Reading pages {from}–{to} of {total}…',
     pagesRange: 'Choose pages between 1 and {count}.',
     pagesTooLarge:
       'These pages are too large to send (scanned pages are heavy). Choose fewer pages.',
@@ -150,6 +151,7 @@ export const paper = defineMessages({
     pagesFailed: 'Не удалось прочитать страницы. Попробуйте ещё раз.',
     tooManyPages: 'Выберите не больше {count} страниц за раз.',
     tooManyPhotos: 'Выберите не больше {count} фото за раз.',
+    readingPages: 'Читаю страницы {from}–{to} из {total}…',
     pagesRange: 'Выберите страницы от 1 до {count}.',
     pagesTooLarge:
       'Эти страницы слишком большие для отправки (сканы много весят). Выберите меньше страниц.',
@@ -252,6 +254,7 @@ export const paper = defineMessages({
     pagesFailed: 'Les pages n’ont pas pu être lues. Réessayez.',
     tooManyPages: 'Choisissez au plus {count} pages à la fois.',
     tooManyPhotos: 'Choisissez au plus {count} photos à la fois.',
+    readingPages: 'Lecture des pages {from} à {to} sur {total}…',
     pagesRange: 'Choisissez des pages entre 1 et {count}.',
     pagesTooLarge:
       'Ces pages sont trop lourdes à envoyer (les pages scannées pèsent beaucoup). Choisissez moins de pages.',
@@ -350,6 +353,7 @@ export const paper = defineMessages({
     pagesFailed: 'Die Seiten konnten nicht gelesen werden. Versuch es nochmal.',
     tooManyPages: 'Wähle höchstens {count} Seiten auf einmal.',
     tooManyPhotos: 'Wähle höchstens {count} Fotos auf einmal.',
+    readingPages: 'Die Seiten {from}–{to} von {total} werden gelesen…',
     pagesRange: 'Wähle Seiten zwischen 1 und {count}.',
     pagesTooLarge:
       'Diese Seiten sind zu groß zum Senden (Scans sind schwer). Wähle weniger Seiten.',
@@ -451,6 +455,7 @@ export const paper = defineMessages({
     pagesFailed: 'No se pudieron leer las páginas. Inténtalo de nuevo.',
     tooManyPages: 'Elige como máximo {count} páginas a la vez.',
     tooManyPhotos: 'Elige como máximo {count} fotos a la vez.',
+    readingPages: 'Leyendo las páginas {from}–{to} de {total}…',
     pagesRange: 'Elige páginas entre 1 y {count}.',
     pagesTooLarge:
       'Estas páginas son demasiado grandes para enviarlas (las páginas escaneadas pesan mucho). Elige menos páginas.',
@@ -550,6 +555,7 @@ export const paper = defineMessages({
     pagesFailed: 'Não foi possível ler as páginas. Tente de novo.',
     tooManyPages: 'Escolha no máximo {count} páginas de cada vez.',
     tooManyPhotos: 'Escolha no máximo {count} fotos de cada vez.',
+    readingPages: 'A ler as páginas {from}–{to} de {total}…',
     pagesRange: 'Escolha páginas entre 1 e {count}.',
     pagesTooLarge:
       'Estas páginas são demasiado grandes para enviar (as páginas digitalizadas são pesadas). Escolha menos páginas.',
@@ -649,6 +655,7 @@ export const paper = defineMessages({
     pagesFailed: 'Impossibile leggere le pagine. Riprova.',
     tooManyPages: 'Scegli al massimo {count} pagine alla volta.',
     tooManyPhotos: 'Scegli al massimo {count} foto alla volta.',
+    readingPages: 'Leggo le pagine {from}–{to} di {total}…',
     pagesRange: 'Scegli pagine tra 1 e {count}.',
     pagesTooLarge:
       'Queste pagine sono troppo grandi da inviare (le pagine scansionate pesano molto). Scegline meno.',

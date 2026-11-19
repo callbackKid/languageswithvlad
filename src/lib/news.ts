@@ -147,6 +147,18 @@ export const NEWS: NewsDay[] = [
           it: 'Il menu delle parole c’è anche in Analisi del testo: clicca su una parola o seleziona una frase, e le parole che cerchi compaiono in un elenco sotto il testo. In Parole da imparare, scrivi una parola che non è in nessun testo e premi «Cerca».',
         },
       },
+      {
+        kind: 'better',
+        text: {
+          en: 'Photo parsing → Handwritten notes takes up to 10 pages at once.',
+          ru: '«Разбор фото» → «Рукописные заметки» принимает до 10 страниц за раз.',
+          fr: 'Analyse de photo → Notes manuscrites accepte jusqu’à 10 pages à la fois.',
+          de: 'Fotoanalyse → Handschriftliche Notizen nimmt bis zu 10 Seiten auf einmal.',
+          es: 'Análisis de fotos → Notas a mano acepta hasta 10 páginas a la vez.',
+          pt: 'Análise de fotos → Notas à mão aceita até 10 páginas de cada vez.',
+          it: 'Analisi delle foto → Appunti a mano accetta fino a 10 pagine alla volta.',
+        },
+      },
     ],
   },
   {

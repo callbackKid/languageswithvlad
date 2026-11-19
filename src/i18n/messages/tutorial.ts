@@ -154,7 +154,7 @@ export const tutorial = defineMessages({
     'photo.step1':
       '<b>Underlined words</b>: underline words in a book, press <pbtn>Choose or take photos</pbtn> (up to 10 pages at once), and get one table with the translation in context, the dictionary form, the tense and a short explanation.',
     'photo.step2':
-      '<b>Handwritten notes</b>: photograph up to 4 pages of notes, fix anything misread (unreadable words are marked [?]), then press <pbtn>Prepare lesson</pbtn> to get words, verbs and exercises as for any lesson.',
+      '<b>Handwritten notes</b>: photograph up to 10 pages of notes, fix anything misread (unreadable words are marked [?]), then press <pbtn>Prepare lesson</pbtn> to get words, verbs and exercises as for any lesson.',
     'photo.step3':
       '<b>Textbook PDF</b>: press <pbtn>Choose a PDF</pbtn>, enter the pages of one chapter (up to 20), then <pbtn>Read these pages</pbtn>. Claude writes lesson notes: words, phrases, grammar and examples. Check them and press <pbtn>Prepare lesson</pbtn>.',
     'photo.step4':
@@ -397,7 +397,7 @@ export const tutorial = defineMessages({
     'photo.step1':
       '<b>Подчёркнутые слова</b>: подчеркните слова в книге, нажмите <pbtn>Выбрать или сделать фото</pbtn> (до 10 страниц за раз) — и получите одну таблицу с переводом в контексте, словарной формой, временем и коротким объяснением.',
     'photo.step2':
-      '<b>Рукописные заметки</b>: сфотографируйте до 4 страниц записей, исправьте неверно прочитанное (неразборчивые слова отмечены [?]) и нажмите <pbtn>Подготовить урок</pbtn> — получите слова, глаголы и упражнения, как в любом уроке.',
+      '<b>Рукописные заметки</b>: сфотографируйте до 10 страниц записей, исправьте неверно прочитанное (неразборчивые слова отмечены [?]) и нажмите <pbtn>Подготовить урок</pbtn> — получите слова, глаголы и упражнения, как в любом уроке.',
     'photo.step3':
       '<b>Учебник (PDF)</b>: нажмите <pbtn>Выбрать PDF</pbtn>, укажите страницы одной главы (до 20), затем <pbtn>Прочитать эти страницы</pbtn>. Claude составит записи урока: слова, фразы, грамматику и примеры. Проверьте их и нажмите <pbtn>Подготовить урок</pbtn>.',
     'photo.step4':
@@ -643,7 +643,7 @@ export const tutorial = defineMessages({
     'photo.step1':
       '<b>Mots soulignés</b> : soulignez des mots dans un livre, appuyez sur <pbtn>Choisir ou prendre des photos</pbtn> (jusqu’à 10 pages à la fois), et obtenez un seul tableau avec la traduction en contexte, la forme du dictionnaire, le temps et une courte explication.',
     'photo.step2':
-      '<b>Notes manuscrites</b> : photographiez jusqu’à 4 pages de notes, corrigez ce qui a été mal lu (les mots illisibles sont marqués [?]), puis appuyez sur <pbtn>Préparer la leçon</pbtn> pour obtenir mots, verbes et exercices comme pour toute leçon.',
+      '<b>Notes manuscrites</b> : photographiez jusqu’à 10 pages de notes, corrigez ce qui a été mal lu (les mots illisibles sont marqués [?]), puis appuyez sur <pbtn>Préparer la leçon</pbtn> pour obtenir mots, verbes et exercices comme pour toute leçon.',
     'photo.step3':
       '<b>Manuel en PDF</b> : appuyez sur <pbtn>Choisir un PDF</pbtn>, indiquez les pages d’un chapitre (jusqu’à 20), puis <pbtn>Lire ces pages</pbtn>. Claude rédige des notes de cours : mots, expressions, grammaire et exemples. Vérifiez-les et appuyez sur <pbtn>Préparer la leçon</pbtn>.',
     'photo.step4':
@@ -891,7 +891,7 @@ export const tutorial = defineMessages({
     'photo.step1':
       '<b>Unterstrichene Wörter</b>: Unterstreiche Wörter in einem Buch, tippe auf <pbtn>Fotos auswählen oder aufnehmen</pbtn> (bis zu 10 Seiten auf einmal) und bekomme eine einzige Tabelle mit der Übersetzung im Kontext, der Grundform, der Zeitform und einer kurzen Erklärung.',
     'photo.step2':
-      '<b>Handschriftliche Notizen</b>: Fotografiere bis zu 4 Seiten Notizen, korrigiere Falschgelesenes (Unleserliches ist mit [?] markiert) und tippe auf <pbtn>Lektion vorbereiten</pbtn>, um Wörter, Verben und Übungen wie bei jeder Lektion zu bekommen.',
+      '<b>Handschriftliche Notizen</b>: Fotografiere bis zu 10 Seiten Notizen, korrigiere Falschgelesenes (Unleserliches ist mit [?] markiert) und tippe auf <pbtn>Lektion vorbereiten</pbtn>, um Wörter, Verben und Übungen wie bei jeder Lektion zu bekommen.',
     'photo.step3':
       '<b>Lehrbuch-PDF</b>: Tippe auf <pbtn>PDF auswählen</pbtn>, gib die Seiten eines Kapitels an (bis zu 20) und tippe dann auf <pbtn>Diese Seiten lesen</pbtn>. Claude schreibt Unterrichtsnotizen: Wörter, Wendungen, Grammatik und Beispiele. Prüfe sie und tippe auf <pbtn>Lektion vorbereiten</pbtn>.',
     'photo.step4':
@@ -1140,7 +1140,7 @@ export const tutorial = defineMessages({
     'photo.step1':
       '<b>Palabras subrayadas</b>: subraya palabras en un libro, pulsa <pbtn>Elegir o hacer fotos</pbtn> (hasta 10 páginas a la vez) y obtén una sola tabla con la traducción en contexto, la forma del diccionario, el tiempo verbal y una breve explicación.',
     'photo.step2':
-      '<b>Notas a mano</b>: fotografía hasta 4 páginas de notas, corrige lo que se haya leído mal (las palabras ilegibles se marcan con [?]) y pulsa <pbtn>Preparar la lección</pbtn> para obtener palabras, verbos y ejercicios como en cualquier lección.',
+      '<b>Notas a mano</b>: fotografía hasta 10 páginas de notas, corrige lo que se haya leído mal (las palabras ilegibles se marcan con [?]) y pulsa <pbtn>Preparar la lección</pbtn> para obtener palabras, verbos y ejercicios como en cualquier lección.',
     'photo.step3':
       '<b>PDF del manual</b>: pulsa <pbtn>Elegir un PDF</pbtn>, indica las páginas de un capítulo (hasta 20) y luego <pbtn>Leer estas páginas</pbtn>. Claude escribe notas de clase: palabras, frases, gramática y ejemplos. Revísalas y pulsa <pbtn>Preparar la lección</pbtn>.',
     'photo.step4':
@@ -1387,7 +1387,7 @@ export const tutorial = defineMessages({
     'photo.step1':
       '<b>Palavras sublinhadas</b>: sublinhe palavras num livro, carregue em <pbtn>Escolher ou tirar fotos</pbtn> (até 10 páginas de cada vez) e obtenha uma só tabela com a tradução no contexto, a forma do dicionário, o tempo verbal e uma explicação curta.',
     'photo.step2':
-      '<b>Notas à mão</b>: fotografe até 4 páginas de notas, corrija o que foi mal lido (as palavras ilegíveis ficam marcadas com [?]) e carregue em <pbtn>Preparar a lição</pbtn> para obter palavras, verbos e exercícios como em qualquer lição.',
+      '<b>Notas à mão</b>: fotografe até 10 páginas de notas, corrija o que foi mal lido (as palavras ilegíveis ficam marcadas com [?]) e carregue em <pbtn>Preparar a lição</pbtn> para obter palavras, verbos e exercícios como em qualquer lição.',
     'photo.step3':
       '<b>PDF do manual</b>: carregue em <pbtn>Escolher um PDF</pbtn>, indique as páginas de um capítulo (até 20) e depois <pbtn>Ler estas páginas</pbtn>. O Claude escreve notas da aula: palavras, expressões, gramática e exemplos. Reveja-as e carregue em <pbtn>Preparar a lição</pbtn>.',
     'photo.step4':
@@ -1635,7 +1635,7 @@ export const tutorial = defineMessages({
     'photo.step1':
       '<b>Parole sottolineate</b>: sottolinea le parole in un libro, premi <pbtn>Scegli o scatta delle foto</pbtn> (fino a 10 pagine alla volta) e ottieni un’unica tabella con la traduzione nel contesto, la forma del dizionario, il tempo verbale e una breve spiegazione.',
     'photo.step2':
-      '<b>Appunti a mano</b>: fotografa fino a 4 pagine di appunti, correggi ciò che è stato letto male (le parole illeggibili sono segnate con [?]), poi premi <pbtn>Prepara la lezione</pbtn> per avere parole, verbi ed esercizi come in qualsiasi lezione.',
+      '<b>Appunti a mano</b>: fotografa fino a 10 pagine di appunti, correggi ciò che è stato letto male (le parole illeggibili sono segnate con [?]), poi premi <pbtn>Prepara la lezione</pbtn> per avere parole, verbi ed esercizi come in qualsiasi lezione.',
     'photo.step3':
       '<b>PDF del manuale</b>: premi <pbtn>Scegli un PDF</pbtn>, indica le pagine di un capitolo (fino a 20), poi <pbtn>Leggi queste pagine</pbtn>. Claude scrive gli appunti della lezione: parole, espressioni, grammatica ed esempi. Controllali e premi <pbtn>Prepara la lezione</pbtn>.',
     'photo.step4':

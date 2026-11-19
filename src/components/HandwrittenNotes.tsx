@@ -21,8 +21,10 @@ const SOURCES: Record<PaperSource, { storageKey: string; keyPrefix: string }> = 
   handwritten: { storageKey: 'handwritten', keyPrefix: 'hw-' },
   textbook: { storageKey: 'textbook', keyPrefix: 'tb-' },
 };
-// keep in step with MAX_HANDWRITTEN_PAGES in api/paper.ts
-const MAX_PAGES = 4;
+// the pages that go to Claude in one request; keep in step with MAX_HANDWRITTEN_PAGES in api/paper.ts
+const PAGES_PER_REQUEST = 4;
+// a long lesson's notes: read PAGES_PER_REQUEST at a time, in order, and joined into one text
+const MAX_PAGES = 10;
 // smaller than for a book page: several pages have to fit in one upload
 const MAX_SIDE = 1600;
 
@@ -76,6 +78,10 @@ export default function HandwrittenNotes({
   const [draft, setDraft] = useState<string | null>(null);
   const [state, setState] = useState<'idle' | 'loading' | 'error'>('idle');
   const [error, setError] = useState('');
+  // which pages are being read, when there are more than one request takes
+  const [progress, setProgress] = useState<{ from: number; to: number; total: number } | null>(
+    null
+  );
 
   const store = (next: HandwrittenLesson[]) => {
     setEntries(next);
@@ -135,13 +141,26 @@ export default function HandwrittenNotes({
     setState('loading');
     setError('');
     try {
-      const images = await Promise.all(files.map((file) => shrinkImage(file, MAX_SIDE)));
-      addEntry(await api.transcribe(images), t('noHandwriting'));
+      const parts: { title: string; text: string }[] = [];
+      for (let start = 0; start < files.length; start += PAGES_PER_REQUEST) {
+        const batch = files.slice(start, start + PAGES_PER_REQUEST);
+        if (files.length > PAGES_PER_REQUEST)
+          setProgress({ from: start + 1, to: start + batch.length, total: files.length });
+        const images = await Promise.all(batch.map((file) => shrinkImage(file, MAX_SIDE)));
+        parts.push(asObjectText(await api.transcribe(images), ['title', 'text']));
+      }
+      // pages are separated by an empty line, as Claude does within one request
+      const text = parts
+        .map((part) => part.text)
+        .filter(Boolean)
+        .join('\n\n');
+      addEntry({ title: parts.find((part) => part.text)?.title ?? '', text }, t('noHandwriting'));
       setState('idle');
-      return;
     } catch (failure) {
       setState('error');
       setError(failure instanceof ApiError ? failure.message : t('photosFailed'));
+    } finally {
+      setProgress(null);
     }
   }
 
@@ -264,7 +283,13 @@ export default function HandwrittenNotes({
       )}
       {state === 'loading' && (
         <WaitingFact>
-          {pdf ? reading : source === 'textbook' ? t('openingPdf') : reading}
+          {progress
+            ? t('readingPages', progress)
+            : pdf
+              ? reading
+              : source === 'textbook'
+                ? t('openingPdf')
+                : reading}
         </WaitingFact>
       )}
       {state === 'error' && (
