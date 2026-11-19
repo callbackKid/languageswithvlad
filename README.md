@@ -42,7 +42,7 @@ React + TypeScript + Vite in the browser, small Vercel serverless functions in `
 
 **From paper**
 
-- **Photo parsing → underlined words**: a photo of a book page gives a translation, dictionary form, tense and short explanation for every underlined word.
+- **Photo parsing → underlined words**: photos of book pages (up to 10 at once, read one by one) give a translation, dictionary form, tense and short explanation for every underlined word, in one table without repeats. They can go into the document as a new lesson or under a lesson you pick.
 - **Photo parsing → handwritten notes**: photos of handwritten notes become a lesson with the same exercises.
 - **Photo parsing → textbook PDF**: the pages of a textbook chapter become lesson notes (words, phrases, grammar, examples) and then a lesson.
 - Both can be added to the Google Doc as a new lesson (optional setup).

@@ -474,6 +474,17 @@ export function normalizePhoto(raw: unknown): PhotoItem[] {
     .filter((item) => item.fr);
 }
 
+// The words of several photos as one list, in photo order; a word marked on two pages comes once.
+export function mergePhotoItems(scans: PhotoItem[][]): PhotoItem[] {
+  const seen = new Set<string>();
+  return scans.flat().filter((item) => {
+    const key = `${item.language ?? 'fr'}:${(item.base || item.fr).toLowerCase()}`;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
 // One marked word or phrase explained; null when the answer has no translation to show.
 export function normalizeExplanation(raw: unknown, selection: string): PhotoItem | null {
   const item = photoItem(raw, asLanguage(asObject(raw).language));

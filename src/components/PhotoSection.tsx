@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useTranslation } from '../i18n/core';
 import { paper } from '../i18n/messages/paper';
 import { load, save } from '../lib/storage';
+import type { Lesson } from '../lib/types';
 import type { DocTarget } from './AddToDoc';
 import HandwrittenNotes from './HandwrittenNotes';
 import PageHead from './PageHead';
@@ -15,9 +16,12 @@ type Mode = (typeof MODES)[number];
 export default function PhotoSection({
   hasClaude,
   target,
+  lessons,
 }: {
   hasClaude: boolean;
   target: DocTarget;
+  // the underlined words can go under one of them
+  lessons: Lesson[];
 }) {
   const { t } = useTranslation(paper);
   const [mode, setMode] = useState<Mode>(() => {
@@ -44,7 +48,7 @@ export default function PhotoSection({
         ))}
       </div>
       {mode === 'underlined' ? (
-        <PhotoWords hasClaude={hasClaude} target={target} />
+        <PhotoWords hasClaude={hasClaude} target={target} lessons={lessons} />
       ) : (
         // a separate instance per mode, so each keeps its own saved lessons
         <HandwrittenNotes key={mode} hasClaude={hasClaude} target={target} source={mode} />

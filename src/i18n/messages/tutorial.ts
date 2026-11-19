@@ -150,13 +150,13 @@ export const tutorial = defineMessages({
     'photo.intro':
       'Three ways to bring words in from paper. Choose one with the switch at the top.',
     'photo.step1':
-      '<b>Underlined words</b>: underline words in a book, press <pbtn>Choose or take a photo</pbtn>, and get a table with the translation in context, the dictionary form, the tense and a short explanation.',
+      '<b>Underlined words</b>: underline words in a book, press <pbtn>Choose or take photos</pbtn> (up to 10 pages at once), and get one table with the translation in context, the dictionary form, the tense and a short explanation.',
     'photo.step2':
       '<b>Handwritten notes</b>: photograph up to 4 pages of notes, fix anything misread (unreadable words are marked [?]), then press <pbtn>Prepare lesson</pbtn> to get words, verbs and exercises as for any lesson.',
     'photo.step3':
       '<b>Textbook PDF</b>: press <pbtn>Choose a PDF</pbtn>, enter the pages of one chapter (up to 20), then <pbtn>Read these pages</pbtn>. Claude writes lesson notes: words, phrases, grammar and examples. Check them and press <pbtn>Prepare lesson</pbtn>.',
     'photo.step4':
-      '<btn>Add to the document as Leçon 8</btn> adds what was read to the end of the document as a new lesson (needs a one-time setup on the server, see the README).',
+      '<btn>Add to the document as Leçon 8</btn> adds what was read to the end of the document as a new lesson (needs a one-time setup on the server, see the README). For underlined words, <b>Add to</b> can also put them under one of your lessons instead.',
     'photo.tip1':
       'Take the photo straight on, in good light, with the whole marked line in the frame.',
     'photo.tip2': '☆ next to a word puts its dictionary form on Favourite words.',
@@ -391,13 +391,13 @@ export const tutorial = defineMessages({
     'photo.summary': 'Подчёркнутые слова, рукописные заметки или учебник в PDF',
     'photo.intro': 'Три способа перенести слова с бумаги. Выберите нужный переключателем сверху.',
     'photo.step1':
-      '<b>Подчёркнутые слова</b>: подчеркните слова в книге, нажмите <pbtn>Выбрать или сделать фото</pbtn> — и получите таблицу с переводом в контексте, словарной формой, временем и коротким объяснением.',
+      '<b>Подчёркнутые слова</b>: подчеркните слова в книге, нажмите <pbtn>Выбрать или сделать фото</pbtn> (до 10 страниц за раз) — и получите одну таблицу с переводом в контексте, словарной формой, временем и коротким объяснением.',
     'photo.step2':
       '<b>Рукописные заметки</b>: сфотографируйте до 4 страниц записей, исправьте неверно прочитанное (неразборчивые слова отмечены [?]) и нажмите <pbtn>Подготовить урок</pbtn> — получите слова, глаголы и упражнения, как в любом уроке.',
     'photo.step3':
       '<b>Учебник (PDF)</b>: нажмите <pbtn>Выбрать PDF</pbtn>, укажите страницы одной главы (до 20), затем <pbtn>Прочитать эти страницы</pbtn>. Claude составит записи урока: слова, фразы, грамматику и примеры. Проверьте их и нажмите <pbtn>Подготовить урок</pbtn>.',
     'photo.step4':
-      '<btn>Добавить в документ как Leçon 8</btn> добавляет прочитанное в конец документа новым уроком (нужна разовая настройка на сервере, см. README).',
+      '<btn>Добавить в документ как Leçon 8</btn> добавляет прочитанное в конец документа новым уроком (нужна разовая настройка на сервере, см. README). Подчёркнутые слова можно вместо этого добавить к одному из ваших уроков: выберите его в списке <b>Куда добавить</b>.',
     'photo.tip1': 'Снимайте прямо, при хорошем свете, чтобы вся отмеченная строка попала в кадр.',
     'photo.tip2': '☆ рядом со словом добавляет его словарную форму в «Избранные слова».',
     'photo.mock': 'результат фото с подчёркнутыми словами',
@@ -635,13 +635,13 @@ export const tutorial = defineMessages({
     'photo.intro':
       'Trois façons de passer du papier aux mots. Choisissez-en une avec le sélecteur en haut.',
     'photo.step1':
-      '<b>Mots soulignés</b> : soulignez des mots dans un livre, appuyez sur <pbtn>Choisir ou prendre une photo</pbtn>, et obtenez un tableau avec la traduction en contexte, la forme du dictionnaire, le temps et une courte explication.',
+      '<b>Mots soulignés</b> : soulignez des mots dans un livre, appuyez sur <pbtn>Choisir ou prendre des photos</pbtn> (jusqu’à 10 pages à la fois), et obtenez un seul tableau avec la traduction en contexte, la forme du dictionnaire, le temps et une courte explication.',
     'photo.step2':
       '<b>Notes manuscrites</b> : photographiez jusqu’à 4 pages de notes, corrigez ce qui a été mal lu (les mots illisibles sont marqués [?]), puis appuyez sur <pbtn>Préparer la leçon</pbtn> pour obtenir mots, verbes et exercices comme pour toute leçon.',
     'photo.step3':
       '<b>Manuel en PDF</b> : appuyez sur <pbtn>Choisir un PDF</pbtn>, indiquez les pages d’un chapitre (jusqu’à 20), puis <pbtn>Lire ces pages</pbtn>. Claude rédige des notes de cours : mots, expressions, grammaire et exemples. Vérifiez-les et appuyez sur <pbtn>Préparer la leçon</pbtn>.',
     'photo.step4':
-      '<btn>Ajouter au document comme Leçon 8</btn> ajoute ce qui a été lu à la fin du document comme nouvelle leçon (une configuration unique du serveur est nécessaire, voir le README).',
+      '<btn>Ajouter au document comme Leçon 8</btn> ajoute ce qui a été lu à la fin du document comme nouvelle leçon (une configuration unique du serveur est nécessaire, voir le README). Pour les mots soulignés, <b>Ajouter à</b> permet aussi de les placer plutôt sous l’une de vos leçons.',
     'photo.tip1':
       'Prenez la photo bien en face, avec une bonne lumière, toute la ligne marquée dans le cadre.',
     'photo.tip2': '☆ à côté d’un mot ajoute sa forme du dictionnaire à Mots favoris.',
@@ -881,13 +881,13 @@ export const tutorial = defineMessages({
     'photo.summary': 'Unterstrichene Wörter, handschriftliche Notizen oder ein Lehrbuch-PDF',
     'photo.intro': 'Drei Wege, Wörter vom Papier zu holen. Wähle einen mit dem Schalter oben.',
     'photo.step1':
-      '<b>Unterstrichene Wörter</b>: Unterstreiche Wörter in einem Buch, tippe auf <pbtn>Foto auswählen oder aufnehmen</pbtn> und bekomme eine Tabelle mit der Übersetzung im Kontext, der Grundform, der Zeitform und einer kurzen Erklärung.',
+      '<b>Unterstrichene Wörter</b>: Unterstreiche Wörter in einem Buch, tippe auf <pbtn>Fotos auswählen oder aufnehmen</pbtn> (bis zu 10 Seiten auf einmal) und bekomme eine einzige Tabelle mit der Übersetzung im Kontext, der Grundform, der Zeitform und einer kurzen Erklärung.',
     'photo.step2':
       '<b>Handschriftliche Notizen</b>: Fotografiere bis zu 4 Seiten Notizen, korrigiere Falschgelesenes (Unleserliches ist mit [?] markiert) und tippe auf <pbtn>Lektion vorbereiten</pbtn>, um Wörter, Verben und Übungen wie bei jeder Lektion zu bekommen.',
     'photo.step3':
       '<b>Lehrbuch-PDF</b>: Tippe auf <pbtn>PDF auswählen</pbtn>, gib die Seiten eines Kapitels an (bis zu 20) und tippe dann auf <pbtn>Diese Seiten lesen</pbtn>. Claude schreibt Unterrichtsnotizen: Wörter, Wendungen, Grammatik und Beispiele. Prüfe sie und tippe auf <pbtn>Lektion vorbereiten</pbtn>.',
     'photo.step4':
-      '<btn>Als Leçon 8 zum Dokument hinzufügen</btn> hängt das Gelesene als neue Lektion ans Ende des Dokuments (braucht eine einmalige Einrichtung auf dem Server, siehe README).',
+      '<btn>Als Leçon 8 zum Dokument hinzufügen</btn> hängt das Gelesene als neue Lektion ans Ende des Dokuments (braucht eine einmalige Einrichtung auf dem Server, siehe README). Unterstrichene Wörter kann <b>Hinzufügen zu</b> stattdessen auch unter eine deiner Lektionen setzen.',
     'photo.tip1':
       'Fotografiere gerade von vorn, bei gutem Licht, mit der ganzen markierten Zeile im Bild.',
     'photo.tip2': '☆ neben einem Wort fügt seine Grundform zu den Lieblingswörtern hinzu.',
@@ -1127,13 +1127,13 @@ export const tutorial = defineMessages({
     'photo.intro':
       'Tres formas de traer palabras desde el papel. Elige una con el interruptor de arriba.',
     'photo.step1':
-      '<b>Palabras subrayadas</b>: subraya palabras en un libro, pulsa <pbtn>Elegir o hacer una foto</pbtn> y obtén una tabla con la traducción en contexto, la forma del diccionario, el tiempo verbal y una breve explicación.',
+      '<b>Palabras subrayadas</b>: subraya palabras en un libro, pulsa <pbtn>Elegir o hacer fotos</pbtn> (hasta 10 páginas a la vez) y obtén una sola tabla con la traducción en contexto, la forma del diccionario, el tiempo verbal y una breve explicación.',
     'photo.step2':
       '<b>Notas a mano</b>: fotografía hasta 4 páginas de notas, corrige lo que se haya leído mal (las palabras ilegibles se marcan con [?]) y pulsa <pbtn>Preparar la lección</pbtn> para obtener palabras, verbos y ejercicios como en cualquier lección.',
     'photo.step3':
       '<b>PDF del manual</b>: pulsa <pbtn>Elegir un PDF</pbtn>, indica las páginas de un capítulo (hasta 20) y luego <pbtn>Leer estas páginas</pbtn>. Claude escribe notas de clase: palabras, frases, gramática y ejemplos. Revísalas y pulsa <pbtn>Preparar la lección</pbtn>.',
     'photo.step4':
-      '<btn>Añadir al documento como Leçon 8</btn> añade lo leído al final del documento como una lección nueva (requiere una configuración única en el servidor, ver el README).',
+      '<btn>Añadir al documento como Leçon 8</btn> añade lo leído al final del documento como una lección nueva (requiere una configuración única en el servidor, ver el README). Para las palabras subrayadas, <b>Añadir a</b> también permite ponerlas bajo una de tus lecciones.',
     'photo.tip1':
       'Haz la foto de frente, con buena luz y con toda la línea marcada dentro del encuadre.',
     'photo.tip2': '☆ junto a una palabra pone su forma del diccionario en Palabras favoritas.',
@@ -1372,13 +1372,13 @@ export const tutorial = defineMessages({
     'photo.summary': 'Palavras sublinhadas, notas à mão ou um PDF do manual',
     'photo.intro': 'Três maneiras de trazer palavras do papel. Escolha uma com o botão em cima.',
     'photo.step1':
-      '<b>Palavras sublinhadas</b>: sublinhe palavras num livro, carregue em <pbtn>Escolher ou tirar uma foto</pbtn> e obtenha uma tabela com a tradução no contexto, a forma do dicionário, o tempo verbal e uma explicação curta.',
+      '<b>Palavras sublinhadas</b>: sublinhe palavras num livro, carregue em <pbtn>Escolher ou tirar fotos</pbtn> (até 10 páginas de cada vez) e obtenha uma só tabela com a tradução no contexto, a forma do dicionário, o tempo verbal e uma explicação curta.',
     'photo.step2':
       '<b>Notas à mão</b>: fotografe até 4 páginas de notas, corrija o que foi mal lido (as palavras ilegíveis ficam marcadas com [?]) e carregue em <pbtn>Preparar a lição</pbtn> para obter palavras, verbos e exercícios como em qualquer lição.',
     'photo.step3':
       '<b>PDF do manual</b>: carregue em <pbtn>Escolher um PDF</pbtn>, indique as páginas de um capítulo (até 20) e depois <pbtn>Ler estas páginas</pbtn>. O Claude escreve notas da aula: palavras, expressões, gramática e exemplos. Reveja-as e carregue em <pbtn>Preparar a lição</pbtn>.',
     'photo.step4':
-      '<btn>Acrescentar ao documento como Leçon 8</btn> acrescenta o que foi lido ao fim do documento como uma nova lição (precisa de uma configuração única no servidor, ver o README).',
+      '<btn>Acrescentar ao documento como Leçon 8</btn> acrescenta o que foi lido ao fim do documento como uma nova lição (precisa de uma configuração única no servidor, ver o README). Para as palavras sublinhadas, <b>Acrescentar a</b> também permite pô-las por baixo de uma das suas lições.',
     'photo.tip1':
       'Tire a foto de frente, com boa luz e com toda a linha marcada dentro do enquadramento.',
     'photo.tip2': '☆ ao lado de uma palavra põe a forma do dicionário nas Palavras favoritas.',
@@ -1618,13 +1618,13 @@ export const tutorial = defineMessages({
     'photo.intro':
       'Tre modi per portare parole dalla carta. Scegline uno con l’interruttore in alto.',
     'photo.step1':
-      '<b>Parole sottolineate</b>: sottolinea le parole in un libro, premi <pbtn>Scegli o scatta una foto</pbtn> e ottieni una tabella con la traduzione nel contesto, la forma del dizionario, il tempo verbale e una breve spiegazione.',
+      '<b>Parole sottolineate</b>: sottolinea le parole in un libro, premi <pbtn>Scegli o scatta delle foto</pbtn> (fino a 10 pagine alla volta) e ottieni un’unica tabella con la traduzione nel contesto, la forma del dizionario, il tempo verbale e una breve spiegazione.',
     'photo.step2':
       '<b>Appunti a mano</b>: fotografa fino a 4 pagine di appunti, correggi ciò che è stato letto male (le parole illeggibili sono segnate con [?]), poi premi <pbtn>Prepara la lezione</pbtn> per avere parole, verbi ed esercizi come in qualsiasi lezione.',
     'photo.step3':
       '<b>PDF del manuale</b>: premi <pbtn>Scegli un PDF</pbtn>, indica le pagine di un capitolo (fino a 20), poi <pbtn>Leggi queste pagine</pbtn>. Claude scrive gli appunti della lezione: parole, espressioni, grammatica ed esempi. Controllali e premi <pbtn>Prepara la lezione</pbtn>.',
     'photo.step4':
-      '<btn>Aggiungi al documento come Leçon 8</btn> aggiunge quanto letto in fondo al documento come nuova lezione (serve una configurazione una tantum sul server, vedi il README).',
+      '<btn>Aggiungi al documento come Leçon 8</btn> aggiunge quanto letto in fondo al documento come nuova lezione (serve una configurazione una tantum sul server, vedi il README). Per le parole sottolineate, <b>Aggiungi a</b> può invece metterle sotto una delle tue lezioni.',
     'photo.tip1':
       'Scatta la foto di fronte, con buona luce e con tutta la riga segnata nell’inquadratura.',
     'photo.tip2':

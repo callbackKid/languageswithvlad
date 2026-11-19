@@ -439,6 +439,23 @@ a.btn {
 .add-to-doc .hint.err {
   color: var(--bad);
 }
+/* where the lines go: a new lesson or under one of the document's lessons */
+.add-to-doc-place {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 8px;
+  font-size: 14px;
+}
+.add-to-doc-place select {
+  max-width: 100%;
+  padding: 7px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+}
 
 .waiting {
   margin: 0 0 18px;
@@ -2434,6 +2451,15 @@ ul.mistakes .miss {
   max-width: 100%;
   border-radius: 8px;
   border: 1px solid var(--line);
+}
+/* several photos: a row of thumbnails that wraps */
+.photo-previews {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.photo-previews .photo-preview {
+  max-height: 110px;
 }
 
 .photo-table-wrap {

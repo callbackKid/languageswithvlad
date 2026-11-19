@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 
-import { useTranslation } from '../i18n/core';
+import { translator, useTranslation } from '../i18n/core';
 import { common } from '../i18n/messages/common';
 import { paper } from '../i18n/messages/paper';
 import { api, ApiError } from '../lib/api';
 import { shrinkImage } from '../lib/image';
-import { normalizePhoto, normalizePhotoItems } from '../lib/parse';
+import { mergePhotoItems, normalizePhoto, normalizePhotoItems } from '../lib/parse';
 import { asFields, loadChecked, save } from '../lib/storage';
-import type { PhotoItem } from '../lib/types';
+import type { Lesson, PhotoItem } from '../lib/types';
 import { docLine } from '../lib/wordActions';
 import AddToDoc, { type DocTarget } from './AddToDoc';
 import WaitingFact from './WaitingFact';
@@ -16,23 +16,30 @@ import WordNotesTable from './WordNotesTable';
 const LAST_KEY = 'photo:last';
 // long side in pixels: enough to read book print, small enough for the server's upload limit
 const MAX_SIDE = 2000;
+// a few pages of a chapter at once; each photo goes in a request of its own, so the server's
+// upload limit stays the same however many there are
+const MAX_PHOTOS = 10;
 
 interface LastScan {
   items: PhotoItem[];
   at: number;
 }
 
-// The underlined words on a photo of a book page, each with its translation, dictionary form and tense.
+/** Photos of book pages with underlined words (up to MAX_PHOTOS at once) → a translation,
+    dictionary form, tense and short explanation for each word, ready to add to the document as a
+    new lesson or under one of its lessons. */
 export default function PhotoWords({
   hasClaude,
   target,
+  lessons,
 }: {
   hasClaude: boolean;
   target: DocTarget;
+  lessons: Lesson[];
 }) {
   const { t } = useTranslation(paper);
   const commonText = useTranslation(common);
-  const [preview, setPreview] = useState<string | null>(null);
+  const [previews, setPreviews] = useState<string[]>([]);
   const [scan, setScan] = useState<LastScan | null>(() =>
     loadChecked(LAST_KEY, (raw) => {
       const fields = asFields(raw, { at: 'number' });
@@ -40,38 +47,60 @@ export default function PhotoWords({
       return fields && items.length ? { at: fields.at, items } : null;
     })
   );
-  const [state, setState] = useState<'idle' | 'loading' | 'error'>('idle');
+  // which photo is being read, while they are read one after another
+  const [progress, setProgress] = useState<{ current: number; total: number } | null>(null);
   const [error, setError] = useState('');
+  // the photos that couldn't be read, kept for Try again
+  const [failed, setFailed] = useState<File[]>([]);
 
-  // the preview is an object URL: the old one is released when a new photo replaces it and
+  // the previews are object URLs: the old ones are released when new photos replace them and
   // when the page is left
-  const previewUrl = useRef<string | null>(null);
-  const showPreview = (file: File) => {
-    if (previewUrl.current) URL.revokeObjectURL(previewUrl.current);
-    previewUrl.current = URL.createObjectURL(file);
-    setPreview(previewUrl.current);
+  const previewUrls = useRef<string[]>([]);
+  // counts the readings, so one replaced by a newer reading (or by leaving the page) stops
+  const reading = useRef(0);
+  const showPreviews = (files: File[]) => {
+    previewUrls.current.forEach((url) => URL.revokeObjectURL(url));
+    previewUrls.current = files.map((file) => URL.createObjectURL(file));
+    setPreviews(previewUrls.current);
   };
   useEffect(
     () => () => {
-      if (previewUrl.current) URL.revokeObjectURL(previewUrl.current);
+      reading.current += 1;
+      previewUrls.current.forEach((url) => URL.revokeObjectURL(url));
     },
     []
   );
 
-  async function read(file: File) {
-    showPreview(file);
-    setState('loading');
+  // Reads the photos one by one and adds their words to those already found (kept).
+  async function read(files: File[], kept: PhotoItem[]) {
+    reading.current += 1;
+    const current = reading.current;
     setError('');
-    try {
-      const items = normalizePhoto(await api.photo(await shrinkImage(file, MAX_SIDE)));
+    setFailed([]);
+    const found: PhotoItem[][] = [kept];
+    const missed: File[] = [];
+    let reason = '';
+    for (const [index, file] of files.entries()) {
+      setProgress({ current: index + 1, total: files.length });
+      try {
+        found.push(normalizePhoto(await api.photo(await shrinkImage(file, MAX_SIDE))));
+      } catch (failure) {
+        missed.push(file);
+        if (failure instanceof ApiError) reason = failure.message;
+      }
+      if (current !== reading.current) return;
+    }
+    setProgress(null);
+    const items = mergePhotoItems(found);
+    if (items.length || !missed.length) {
       const next = { items, at: Date.now() };
       save(LAST_KEY, next);
       setScan(next);
-      setState('idle');
-    } catch (failure) {
-      setState('error');
-      setError(failure instanceof ApiError ? failure.message : t('photoFailed'));
     }
+    setFailed(missed);
+    // read at the moment of failure, so a new interface language is used
+    if (missed.length)
+      setError(reason || translator(paper).t('somePhotosFailed', { count: missed.length }));
   }
 
   return (
@@ -83,33 +112,70 @@ export default function PhotoWords({
         <>
           <div className="photo-pick">
             <label className="btn primary">
-              {scan || preview ? t('anotherPhoto') : t('choosePhoto')}
+              {scan || previews.length ? t('otherPhotos') : t('choosePhotos')}
               <input
                 type="file"
                 accept="image/*"
+                multiple
                 hidden
-                disabled={state === 'loading'}
+                disabled={!!progress}
                 onChange={(event) => {
-                  const file = event.target.files?.[0];
+                  const files = [...(event.target.files ?? [])];
                   event.target.value = '';
-                  if (file) void read(file);
+                  if (files.length > MAX_PHOTOS) {
+                    setError(t('tooManyPhotos', { count: MAX_PHOTOS }));
+                    return;
+                  }
+                  if (!files.length) return;
+                  showPreviews(files);
+                  void read(files, []);
                 }}
               />
             </label>
-            {preview && <img className="photo-preview" src={preview} alt={t('pageYouSent')} />}
+            <span className="hint">{t('photoLimit', { count: MAX_PHOTOS })}</span>
+            {previews.length > 0 && (
+              <div className="photo-previews">
+                {previews.map((url, index) => (
+                  <img
+                    key={url}
+                    className="photo-preview"
+                    src={url}
+                    alt={t('photoYouSent', { n: index + 1 })}
+                  />
+                ))}
+              </div>
+            )}
           </div>
-          {state === 'loading' && <WaitingFact>{t('readingUnderlined')}</WaitingFact>}
-          {state === 'error' && (
-            <div className="note err">
+          {progress && (
+            <WaitingFact>
+              {progress.total > 1 ? t('readingPhotos', progress) : t('readingUnderlined')}
+            </WaitingFact>
+          )}
+          {error && !progress && (
+            <div className="note err" role="alert">
               <p>{error}</p>
+              {failed.length > 0 && (
+                <button
+                  type="button"
+                  className="btn"
+                  onClick={() => void read(failed, scan?.items ?? [])}
+                >
+                  {commonText.t('tryAgain')}
+                </button>
+              )}
             </div>
           )}
           {scan &&
-            state !== 'loading' &&
+            !progress &&
             (scan.items.length ? (
               <>
                 <WordNotesTable items={scan.items} firstColumn={t('colUnderlined')} />
-                <AddToDoc key={scan.at} target={target} lines={scan.items.map(docLine)} />
+                <AddToDoc
+                  key={scan.at}
+                  target={target}
+                  lines={scan.items.map(docLine)}
+                  lessons={lessons}
+                />
               </>
             ) : (
               <p className="empty">{t('noUnderlined')}</p>

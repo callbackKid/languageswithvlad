@@ -536,7 +536,9 @@ export default function App() {
                 />
               )}
               {section === 'discuss' && <Discuss bank={bank} hasClaude={hasClaude} />}
-              {section === 'photo' && <PhotoSection hasClaude={hasClaude} target={docTarget} />}
+              {section === 'photo' && (
+                <PhotoSection hasClaude={hasClaude} target={docTarget} lessons={lessons} />
+              )}
               {section === 'text' && <Reader hasClaude={hasClaude} />}
               {section === 'news' && <News onSeen={newsSeen} />}
             </main>

@@ -355,6 +355,23 @@ const VERB_CARD = {
   examples: [{ text: 'Je me lève tôt le lundi.', ru: 'По понедельникам я встаю рано.' }],
 };
 
+// The underlined words on any photo (Photo parsing): the same two each time, so several photos show that repeats are merged.
+const UNDERLINED = {
+  language: 'fr',
+  items: [
+    EXPLANATION,
+    {
+      fr: 'avait raison',
+      context: 'Elle avait raison, comme toujours.',
+      ru: 'была права',
+      base: 'avoir raison',
+      kind: 'expression',
+      tense: 'imparfait, elle',
+      explanation: 'Устойчивое выражение: «быть правым».',
+    },
+  ],
+};
+
 const DISCUSSION = {
   question: 'Qu’est-ce que vous faites le matin avant le travail ?',
   ru: 'Что вы делаете утром перед работой?',
@@ -404,5 +421,6 @@ export function answerFor(url, body, headers = {}, scenario = 'upcoming') {
   }
   if (path === '/api/discussion') return DISCUSSION;
   if (path === '/api/append') return { ok: true };
+  if (path === '/api/paper' && body?.kind === 'underlined') return UNDERLINED;
   return {};
 }

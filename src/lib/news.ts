@@ -87,6 +87,18 @@ export const NEWS: NewsDay[] = [
           it: 'Per l’insegnante: le Novità possono mostrare solo quelle per gli studenti o solo quelle sugli strumenti dell’insegnante.',
         },
       },
+      {
+        kind: 'better',
+        text: {
+          en: 'Photo parsing → Underlined words takes up to 10 photos at once and gives one table of their words. Add to puts them under a lesson you pick, or into a new lesson as before.',
+          ru: '«Разбор фото» → «Подчёркнутые слова» принимает до 10 фото за раз и собирает их слова в одну таблицу. В списке «Куда добавить» можно выбрать один из ваших уроков, и слова добавятся к нему — или, как раньше, в новый урок.',
+          fr: 'Analyse de photo → Mots soulignés accepte jusqu’à 10 photos à la fois et donne un seul tableau de leurs mots. « Ajouter à » les place sous la leçon de votre choix, ou dans une nouvelle leçon comme avant.',
+          de: 'Fotoanalyse → Unterstrichene Wörter nimmt bis zu 10 Fotos auf einmal und macht aus ihren Wörtern eine einzige Tabelle. „Hinzufügen zu“ setzt sie unter eine Lektion deiner Wahl oder wie bisher in eine neue Lektion.',
+          es: 'Análisis de fotos → Palabras subrayadas acepta hasta 10 fotos a la vez y reúne sus palabras en una sola tabla. «Añadir a» las pone bajo la lección que elijas, o en una lección nueva como antes.',
+          pt: 'Análise de fotos → Palavras sublinhadas aceita até 10 fotos de cada vez e junta as palavras numa só tabela. «Acrescentar a» põe-nas por baixo da lição que escolher, ou numa nova lição, como antes.',
+          it: 'Analisi delle foto → Parole sottolineate accetta fino a 10 foto alla volta e raccoglie le loro parole in un’unica tabella. «Aggiungi a» le mette sotto la lezione che scegli, o in una nuova lezione come prima.',
+        },
+      },
     ],
   },
   {

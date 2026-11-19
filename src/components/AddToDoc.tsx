@@ -4,6 +4,7 @@ import { useTranslation } from '../i18n/core';
 import { common } from '../i18n/messages/common';
 import { api, ApiError } from '../lib/api';
 import { documentDate } from '../lib/dates';
+import type { Lesson } from '../lib/types';
 
 // Where new lessons go: the connected document, the lesson number to use next, and whether the server can write.
 export interface DocTarget {
@@ -21,20 +22,40 @@ export function lessonText(lessonNumber: number, lines: string[]): string {
     .join('\n')}\n`;
 }
 
-// Appends the lines to the Google Doc as a new lesson, then asks the app to sync.
-export default function AddToDoc({ target, lines }: { target: DocTarget; lines: string[] }) {
-  const { t } = useTranslation(common);
+/** Appends the lines to the document as a new lesson, or, when lessons are given and one is
+    picked, under that lesson; then asks the app to sync. */
+export default function AddToDoc({
+  target,
+  lines,
+  lessons = [],
+}: {
+  target: DocTarget;
+  lines: string[];
+  // the document's lessons, oldest first, offered as places for the lines besides a new lesson
+  lessons?: Lesson[];
+}) {
+  const { t, locale } = useTranslation(common);
   const [state, setState] = useState<'idle' | 'saving' | 'done' | 'error'>('idle');
   const [message, setMessage] = useState('');
+  // "" for a new lesson, otherwise the key of the lesson the lines go under
+  const [place, setPlace] = useState('');
+  const chosen = lessons.find((lesson) => lesson.key === place) ?? null;
+  const dateFormat = new Intl.DateTimeFormat(locale, { day: 'numeric', month: 'short' });
+  const lessonName = (lesson: Lesson) => lesson.title ?? `${lesson.word} ${lesson.n}`;
 
   if (!target.docWriter) return <p className="hint">{t('docWriterMissing')}</p>;
 
   async function add() {
     setState('saving');
     try {
-      await api.append(target.docId, lessonText(target.nextLessonNumber, lines));
+      if (chosen) {
+        await api.append(target.docId, lines.join('\n'), chosen.key);
+        setMessage(t('addedUnder', { lesson: lessonName(chosen) }));
+      } else {
+        await api.append(target.docId, lessonText(target.nextLessonNumber, lines));
+        setMessage(t('addedAs', { number: target.nextLessonNumber }));
+      }
       setState('done');
-      setMessage(t('addedAs', { number: target.nextLessonNumber }));
       window.dispatchEvent(new Event('cahier:doc-changed'));
     } catch (error) {
       setState('error');
@@ -44,6 +65,26 @@ export default function AddToDoc({ target, lines }: { target: DocTarget; lines: 
 
   return (
     <div className="row-actions add-to-doc">
+      {lessons.length > 0 && (
+        <label className="add-to-doc-place">
+          <span>{t('addWhere')}</span>
+          <select
+            value={place}
+            disabled={state === 'saving' || state === 'done'}
+            onChange={(event) => setPlace(event.target.value)}
+          >
+            <option value="">{t('asNewLesson', { number: target.nextLessonNumber })}</option>
+            {[...lessons].reverse().map((lesson) => (
+              <option key={lesson.key} value={lesson.key}>
+                {t('underLesson', {
+                  lesson: lessonName(lesson),
+                  date: dateFormat.format(lesson.date),
+                })}
+              </option>
+            ))}
+          </select>
+        </label>
+      )}
       <button
         type="button"
         className="btn"
@@ -54,7 +95,9 @@ export default function AddToDoc({ target, lines }: { target: DocTarget; lines: 
           ? t('adding')
           : state === 'done'
             ? t('added')
-            : t('addAsLesson', { number: target.nextLessonNumber })}
+            : chosen
+              ? t('addUnder', { lesson: lessonName(chosen) })
+              : t('addAsLesson', { number: target.nextLessonNumber })}
       </button>
       {message && (
         <span className={'hint' + (state === 'error' ? ' err' : '')} role="status">
