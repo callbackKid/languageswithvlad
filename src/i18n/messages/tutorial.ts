@@ -237,6 +237,8 @@ export const tutorial = defineMessages({
     'news.intro': 'Every change to the app, newest first.',
     'news.step1':
       'Each day lists what is <b>New</b>, <b>Improved</b> and <b>Fixed</b>. A dot next to <b>News</b> in the menu means there is something you haven’t seen yet.',
+    'news.step2':
+      'New features are on <b>What’s new</b>, bug fixes on <b>Bug fixes</b>. If you learn several languages, pick one under <b>Language</b>: you see its news and the news for every language.',
   },
   ru: {
     title: 'Инструкция',
@@ -476,6 +478,8 @@ export const tutorial = defineMessages({
     'news.intro': 'Все изменения в приложении, сначала самые новые.',
     'news.step1':
       'Для каждого дня указано, что <b>Новое</b>, что <b>Улучшено</b> и что <b>Исправлено</b>. Точка рядом с <b>Новостями</b> в меню значит, что есть что-то, чего вы ещё не видели.',
+    'news.step2':
+      'Новые возможности — во вкладке <b>Что нового</b>, исправленные ошибки — во вкладке <b>Исправления ошибок</b>. Если вы изучаете несколько языков, выберите один в поле <b>Язык</b>: вы увидите его новости и новости для всех языков.',
   },
   fr: {
     title: 'Guide',
@@ -723,6 +727,8 @@ export const tutorial = defineMessages({
     'news.intro': 'Tous les changements de l’application, du plus récent au plus ancien.',
     'news.step1':
       'Chaque jour indique ce qui est <b>Nouveau</b>, <b>Amélioré</b> et <b>Corrigé</b>. Un point à côté de <b>Nouveautés</b> dans le menu signale quelque chose que vous n’avez pas encore vu.',
+    'news.step2':
+      'Les nouvelles fonctions sont dans <b>Quoi de neuf</b>, les corrections de bugs dans <b>Corrections de bugs</b>. Si vous apprenez plusieurs langues, choisissez-en une sous <b>Langue</b> : vous voyez ses nouveautés et celles qui concernent toutes les langues.',
   },
   de: {
     title: 'Anleitung',
@@ -965,6 +971,8 @@ export const tutorial = defineMessages({
     'news.intro': 'Alle Änderungen der App, das Neueste zuerst.',
     'news.step1':
       'Jeder Tag zeigt, was <b>Neu</b>, <b>Verbessert</b> und <b>Behoben</b> ist. Ein Punkt neben <b>Neuigkeiten</b> im Menü heißt, dass es etwas gibt, das du noch nicht gesehen hast.',
+    'news.step2':
+      'Neue Funktionen stehen unter <b>Was ist neu</b>, Fehlerbehebungen unter <b>Fehlerbehebungen</b>. Wenn du mehrere Sprachen lernst, wähle unter <b>Sprache</b> eine aus: Du siehst ihre Neuigkeiten und die für alle Sprachen.',
   },
   es: {
     title: 'Guía',
@@ -1209,6 +1217,8 @@ export const tutorial = defineMessages({
     'news.intro': 'Todos los cambios de la aplicación, de lo más nuevo a lo más antiguo.',
     'news.step1':
       'Cada día indica qué es <b>Nuevo</b>, qué está <b>Mejorado</b> y qué se ha <b>Corregido</b>. Un punto junto a <b>Novedades</b> en el menú significa que hay algo que aún no has visto.',
+    'news.step2':
+      'Las funciones nuevas están en <b>Qué hay de nuevo</b>, y los errores corregidos, en <b>Errores corregidos</b>. Si aprendes varios idiomas, elige uno en <b>Idioma</b>: verás sus novedades y las de todos los idiomas.',
   },
   pt: {
     title: 'Guia',
@@ -1453,6 +1463,8 @@ export const tutorial = defineMessages({
     'news.intro': 'Todas as alterações da aplicação, da mais recente para a mais antiga.',
     'news.step1':
       'Cada dia indica o que é <b>Novo</b>, o que foi <b>Melhorado</b> e o que foi <b>Corrigido</b>. Um ponto ao lado de <b>Novidades</b> no menu significa que há algo que ainda não viu.',
+    'news.step2':
+      'As novas funcionalidades estão em <b>O que há de novo</b> e as correções de erros em <b>Correções de erros</b>. Se aprende várias línguas, escolha uma em <b>Língua</b>: vê as novidades dessa língua e as de todas as línguas.',
   },
   it: {
     title: 'Guida',
@@ -1698,5 +1710,7 @@ export const tutorial = defineMessages({
     'news.intro': 'Tutte le modifiche all’app, dalla più recente.',
     'news.step1':
       'Ogni giorno indica cosa è <b>Novità</b>, cosa è <b>Migliorato</b> e cosa è <b>Corretto</b>. Un punto accanto a <b>Novità</b> nel menu vuol dire che c’è qualcosa che non hai ancora visto.',
+    'news.step2':
+      'Le nuove funzioni sono in <b>Cosa c’è di nuovo</b>, le correzioni in <b>Correzioni di bug</b>. Se studi più lingue, scegline una in <b>Lingua</b>: vedi le sue novità e quelle per tutte le lingue.',
   },
 });

@@ -1,5 +1,6 @@
 import type { UiLanguage } from '../i18n/core';
 import { load, save } from './storage';
+import type { Language } from './types';
 
 /* What changed in the app, for the News page. Add an entry here with every change students
    will notice: the newest day goes first, and every text needs all seven interface languages. */
@@ -10,6 +11,34 @@ export interface NewsItem {
   text: Record<UiLanguage, string>;
   // "teacher": about the teacher's tools, so only the teacher sees it
   audience?: 'teacher';
+  // the learned languages it is about (German verb tables: ["de"]); left out when it is about all of them
+  languages?: Language[];
+}
+
+// The News page's tabs: new and improved features, and bug fixes.
+export const NEWS_TABS = ['new', 'fixed'] as const;
+export type NewsTab = (typeof NEWS_TABS)[number];
+// Whose news the teacher reads; a student always gets the students' news.
+export const NEWS_AUDIENCES = ['all', 'student', 'teacher'] as const;
+export type NewsAudience = (typeof NEWS_AUDIENCES)[number];
+
+/** The days with the items one tab shows, newest first, without the days left empty: for one
+    language, the items about it and those about every language; for one audience, its items. */
+export function newsFor(
+  days: NewsDay[],
+  { tab, language, audience }: { tab: NewsTab; language: Language | 'all'; audience: NewsAudience }
+): NewsDay[] {
+  return days
+    .map((day) => ({
+      ...day,
+      items: day.items.filter(
+        (item) =>
+          (item.kind === 'fixed') === (tab === 'fixed') &&
+          (language === 'all' || !item.languages || item.languages.includes(language)) &&
+          (audience === 'all' || (item.audience === 'teacher') === (audience === 'teacher'))
+      ),
+    }))
+    .filter((day) => day.items.length);
 }
 export interface NewsDay {
   // YYYY-MM-DD
@@ -33,6 +62,31 @@ export const NEWS: NewsDay[] = [
           it: 'Seleziona una parola o un’espressione nella lingua che studi (con un doppio clic; sul telefono, tenendola premuta) per aprire il suo menu: la traduzione in quella frase, una definizione, degli esempi e, per un verbo, le sue tabelle di coniugazione. Nelle pagine di una lezione, il pulsante «Aggiungi alla lezione» la scrive sotto la lezione, così entra negli esercizi.',
         },
       },
+      {
+        kind: 'better',
+        text: {
+          en: 'News has two tabs, What’s new and Bug fixes. If you learn several languages, choose one: you see its news and the news for every language.',
+          ru: 'В Новостях теперь две вкладки: «Что нового» и «Исправления ошибок». Если вы изучаете несколько языков, выберите один: вы увидите его новости и новости для всех языков.',
+          fr: 'Les Nouveautés ont maintenant deux onglets : « Quoi de neuf » et « Corrections de bugs ». Si vous apprenez plusieurs langues, choisissez-en une : vous voyez ses nouveautés et celles qui concernent toutes les langues.',
+          de: 'Die Neuigkeiten haben jetzt zwei Tabs: „Was ist neu“ und „Fehlerbehebungen“. Wenn du mehrere Sprachen lernst, wähle eine aus: Du siehst ihre Neuigkeiten und die für alle Sprachen.',
+          es: 'Novedades tiene ahora dos pestañas: «Qué hay de nuevo» y «Errores corregidos». Si aprendes varios idiomas, elige uno: verás sus novedades y las de todos los idiomas.',
+          pt: 'As Novidades têm agora dois separadores: «O que há de novo» e «Correções de erros». Se aprende várias línguas, escolha uma: vê as novidades dessa língua e as de todas as línguas.',
+          it: 'Le Novità hanno ora due schede: «Cosa c’è di nuovo» e «Correzioni di bug». Se studi più lingue, scegline una: vedi le sue novità e quelle per tutte le lingue.',
+        },
+      },
+      {
+        kind: 'better',
+        audience: 'teacher',
+        text: {
+          en: 'For teachers: News can show only the students’ news or only the news about the teacher’s tools.',
+          ru: 'Для преподавателя: в Новостях можно показать только новости для учеников или только новости об инструментах преподавателя.',
+          fr: 'Pour le professeur : les Nouveautés peuvent afficher seulement celles des élèves ou seulement celles qui concernent les outils du professeur.',
+          de: 'Für Lehrkräfte: Die Neuigkeiten können nur die für Lernende oder nur die zu den Werkzeugen der Lehrkraft zeigen.',
+          es: 'Para el profesor: Novedades puede mostrar solo las de los alumnos o solo las de las herramientas del profesor.',
+          pt: 'Para o professor: as Novidades podem mostrar só as dos alunos ou só as das ferramentas do professor.',
+          it: 'Per l’insegnante: le Novità possono mostrare solo quelle per gli studenti o solo quelle sugli strumenti dell’insegnante.',
+        },
+      },
     ],
   },
   {
@@ -52,6 +106,7 @@ export const NEWS: NewsDay[] = [
       },
       {
         kind: 'fixed',
+        languages: ['es', 'it', 'pt'],
         text: {
           en: 'A word spelled the same in two of your languages (“la casa” in Spanish and in Italian, the verb “ser” in Spanish and in Portuguese) stays in the exercises in both, instead of only in the newer lesson’s.',
           ru: 'Слово, которое пишется одинаково в двух ваших языках («la casa» в испанском и итальянском, глагол «ser» в испанском и португальском), остаётся в упражнениях на обоих языках, а не только на языке более нового урока.',
@@ -64,6 +119,7 @@ export const NEWS: NewsDay[] = [
       },
       {
         kind: 'fixed',
+        languages: ['en', 'de', 'es', 'pt', 'it'],
         text: {
           en: 'Without Claude, a lesson headed “Lektion”, “Lección”, “Lição”, “Lezione” or “Lesson” keeps its language: its words are read aloud in it and follow your languages in Settings.',
           ru: 'Без Claude урок с заголовком «Lektion», «Lección», «Lição», «Lezione» или «Lesson» сохраняет свой язык: его слова озвучиваются на этом языке и показываются по языкам, выбранным в Настройках.',
@@ -76,6 +132,7 @@ export const NEWS: NewsDay[] = [
       },
       {
         kind: 'better',
+        languages: ['fr', 'de'],
         text: {
           en: 'Typing “oe” for “œ” or “ss” for “ß” counts as almost right, like a missing accent, since many keyboards don’t have those letters.',
           ru: 'Если набрать «oe» вместо «œ» или «ss» вместо «ß», ответ засчитывается как «почти», как пропущенный диакритический знак: на многих клавиатурах этих букв нет.',
@@ -124,6 +181,7 @@ export const NEWS: NewsDay[] = [
       },
       {
         kind: 'fixed',
+        languages: ['fr', 'de', 'es', 'it', 'pt'],
         text: {
           en: 'Verb tables and quizzes accept the pronoun for every person: “elle se lève”, “sie geht” or “ella habla” was marked wrong where the person reads “il/elle/on”, “er/sie/es” or “él/ella/usted”.',
           ru: 'Таблицы спряжения и тесты теперь принимают любое местоимение лица: раньше «elle se lève», «sie geht» или «ella habla» засчитывались как ошибка там, где в строке стоит «il/elle/on», «er/sie/es» или «él/ella/usted».',
@@ -136,6 +194,7 @@ export const NEWS: NewsDay[] = [
       },
       {
         kind: 'fixed',
+        languages: ['de', 'es', 'it', 'pt'],
         text: {
           en: 'Mistakes, Stats and the warm-up show missed verb forms in German, Spanish, Italian and Portuguese too, not only in French.',
           ru: '«Ошибки», «Статистика» и разминка теперь показывают формы глаголов с ошибками не только во французском, но и в немецком, испанском, итальянском и португальском.',
@@ -148,6 +207,7 @@ export const NEWS: NewsDay[] = [
       },
       {
         kind: 'fixed',
+        languages: ['fr', 'de', 'es', 'it', 'pt'],
         text: {
           en: 'Homework: verb tasks written with a short tense name (“au futur”, “presente”, “Futur”) or with “и” between the verbs open the right verbs in the right tense.',
           ru: 'Домашнее задание: упражнения на глаголы, где время названо коротко («au futur», «presente», «Futur») или глаголы разделены «и», открывают нужные глаголы в нужном времени.',
@@ -172,6 +232,7 @@ export const NEWS: NewsDay[] = [
       },
       {
         kind: 'new',
+        languages: ['fr', 'de', 'es', 'it', 'pt'],
         text: {
           en: 'Quizzes ask verb forms only in the tenses you have learned: by default those of your level (at A0 only the present), or the ones you tick in Settings → Tenses in quizzes.',
           ru: 'Тесты спрашивают формы глаголов только во временах, которые вы уже прошли: по умолчанию — во временах вашего уровня (на A0 только настоящее), или в тех, что вы отметите в «Настройках» → «Времена в тестах».',
@@ -262,6 +323,7 @@ export const NEWS: NewsDay[] = [
     items: [
       {
         kind: 'new',
+        languages: ['es', 'it', 'pt'],
         text: {
           en: 'Spanish, Italian and Portuguese verbs: the Verbs tab of their lessons has conjugation tables in the main tenses, with the drill and the quick quiz. Portuguese is the Portuguese of Portugal.',
           ru: 'Испанские, итальянские и португальские глаголы: на вкладке «Глаголы» их уроков есть таблицы спряжения в основных временах, с тренировкой и быстрым тестом. Португальский — европейский.',
@@ -274,6 +336,7 @@ export const NEWS: NewsDay[] = [
       },
       {
         kind: 'new',
+        languages: ['de'],
         text: {
           en: 'German verbs: a German lesson’s Verbs tab has tables in Präsens, Perfekt, Präteritum, Futur I and Konjunktiv II, with the drill and the quick quiz, and homework can ask to conjugate them.',
           ru: 'Немецкие глаголы: на вкладке «Глаголы» немецкого урока есть таблицы в Präsens, Perfekt, Präteritum, Futur I и Konjunktiv II, с тренировкой и быстрым тестом, а в домашнем задании можно попросить их проспрягать.',
@@ -485,6 +548,7 @@ export const NEWS: NewsDay[] = [
       },
       {
         kind: 'new',
+        languages: ['es', 'pt', 'it'],
         text: {
           en: 'Spanish, Portuguese and Italian: as languages to learn, and as interface languages. Lessons can start with Lección, Clase, Lição, Aula or Lezione, and “próxima clase”, “próxima aula” or “prossima lezione” sets the next lesson.',
           ru: 'Испанский, португальский и итальянский: их можно учить, и на них можно переключить интерфейс. Уроки в документе могут начинаться с Lección, Clase, Lição, Aula или Lezione, а следующий урок задаётся строкой «próxima clase», «próxima aula» или «prossima lezione».',
@@ -497,6 +561,7 @@ export const NEWS: NewsDay[] = [
       },
       {
         kind: 'new',
+        languages: ['es', 'pt', 'it'],
         text: {
           en: 'New “did you know?” facts about Spanish, Portuguese and Italian while Claude is working.',
           ru: 'Новые факты «А вы знали?» об испанском, португальском и итальянском, пока Claude работает.',
@@ -675,6 +740,7 @@ export const NEWS: NewsDay[] = [
       },
       {
         kind: 'new',
+        languages: ['de'],
         text: {
           en: 'German joins French and English as a language to learn.',
           ru: 'Немецкий теперь можно учить вместе с французским и английским.',

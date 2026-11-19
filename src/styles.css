@@ -3527,6 +3527,33 @@ li .open-link {
    What changed in the app, by day.
    ========================================================================== */
 
+/* the language and audience choice above the tabs */
+.news-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 16px;
+  margin-bottom: 8px;
+}
+.news-filter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.news-filter select {
+  padding: 4px 6px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--paper);
+  color: var(--text);
+}
+.news-tabs {
+  margin-bottom: 20px;
+  padding: 0;
+}
+
 .news {
   list-style: none;
   margin: 0;
@@ -3593,6 +3620,13 @@ li .open-link {
 .news-kind.fixed {
   background: var(--warn-soft);
   color: var(--text);
+}
+/* the languages an item is about, when the page shows every language */
+.news-languages {
+  display: block;
+  margin-top: 4px;
+  font-size: 13px;
+  color: var(--muted);
 }
 
 @media (max-width: 760px) {
