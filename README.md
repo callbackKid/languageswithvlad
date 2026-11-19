@@ -33,6 +33,7 @@ React + TypeScript + Vite in the browser, small Vercel serverless functions in `
 - **Exercises**: quiz, flashcards, translation matching, synonym/antonym matching, fill-the-gap sentences, dictation. Words can be exported for Anki.
 - **Verbs** (every language but English): conjugation tables in the language's main tenses (French in six, affirmative and negative; German, Spanish, Italian and European Portuguese in five or six), a typing drill per tense, and a quick quiz.
 - **My notes** (a notepad per lesson) and **Original** (the lesson exactly as written).
+- **Word menu**, everywhere outside exercises: select a word or phrase in a language being learned (double-click; on a phone, hold it) and choose **Translate** (in its sentence, with the dictionary form, tense and a short note), **Define** (in that language, with Russian), **Examples** or **Conjugate**, plus 🔊 and ☆. One Claude answer covers all four and is kept on the device. On a lesson's pages and in lesson mode, **Add to lesson N** writes `word — translation` under that lesson in the document, so the word joins the lesson's exercises after the sync. The Text page keeps its own explain bar.
 
 **Practice across lessons**
 

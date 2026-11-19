@@ -190,6 +190,17 @@ export interface PhotoItem {
   language?: Language;
 }
 
+// A word or phrase selected anywhere in the app: its explanation in its sentence, a definition in its own language and examples.
+export interface WordCard extends PhotoItem {
+  language: Language;
+  // the dictionary form's own translation (вставать), where ru fits the sentence (встаю)
+  baseRu: string;
+  // in the word's own language, and its Russian translation
+  definition: string;
+  definitionRu: string;
+  examples: { text: string; ru: string }[];
+}
+
 // What Claude builds from a pasted text: words worth learning, questions, true-or-false statements.
 export interface TextStudy {
   title: string;

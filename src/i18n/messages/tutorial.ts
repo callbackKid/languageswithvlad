@@ -81,6 +81,8 @@ export const tutorial = defineMessages({
     'lessons.step3':
       'Start an exercise from the row of buttons: <pbtn>Quiz</pbtn> <btn>Flashcards</btn> <btn>Match translations</btn> <btn>Synonyms & antonyms</btn> <btn>Fill the gap</btn> <btn>Dictation</btn>',
     'lessons.step4': 'Press 🔊 to hear a word and ☆ to put it on <b>Favourite words</b>.',
+    'lessons.step5':
+      'Double-click any word or phrase in the language you learn (on a phone, hold it) for its menu: <b>Translate</b> in that sentence, <b>Define</b>, <b>Examples</b> and, for a verb, <b>Conjugate</b>. <btn>Add to lesson 1</btn> writes it under the lesson, and it joins the exercises.',
     'lessons.tip1': '<added>✱</added> marks a translation Claude added that isn’t in the notes.',
     'lessons.tip2':
       '<b>Flashcards</b>: <key>Space</key> flips the card, <key>←</key> means “again”, <key>→</key> means “I know it”. The toggle on top switches the direction.',
@@ -318,6 +320,8 @@ export const tutorial = defineMessages({
       'Запустите упражнение кнопкой: <pbtn>Тест</pbtn> <btn>Карточки</btn> <btn>Найдите перевод</btn> <btn>Синонимы и антонимы</btn> <btn>Вставьте слово</btn> <btn>Диктант</btn>',
     'lessons.step4':
       'Нажмите 🔊, чтобы услышать слово, и ☆, чтобы добавить его в <b>Избранные слова</b>.',
+    'lessons.step5':
+      'Дважды щёлкните по любому слову или фразе на изучаемом языке (на телефоне — удерживайте палец), чтобы открыть меню: <b>Перевести</b> в этом предложении, <b>Определение</b>, <b>Примеры</b> и, для глагола, <b>Проспрягать</b>. <btn>Добавить в урок 1</btn> добавляет слово в урок, и оно попадает в упражнения.',
     'lessons.tip1':
       '<added>✱</added> отмечает перевод, который добавил Claude: в записях его не было.',
     'lessons.tip2':
@@ -555,6 +559,8 @@ export const tutorial = defineMessages({
       'Lancez un exercice avec les boutons : <pbtn>Quiz</pbtn> <btn>Cartes</btn> <btn>Associer les traductions</btn> <btn>Synonymes et antonymes</btn> <btn>Texte à trous</btn> <btn>Dictée</btn>',
     'lessons.step4':
       'Appuyez sur 🔊 pour entendre un mot et sur ☆ pour l’ajouter à <b>Mots favoris</b>.',
+    'lessons.step5':
+      'Double-cliquez sur un mot ou une expression dans la langue que vous apprenez (sur un téléphone, maintenez le doigt dessus) pour ouvrir son menu : <b>Traduire</b> dans cette phrase, <b>Définir</b>, <b>Exemples</b> et, pour un verbe, <b>Conjuguer</b>. <btn>Ajouter à la leçon 1</btn> l’inscrit sous la leçon, et il rejoint les exercices.',
     'lessons.tip1': '<added>✱</added> marque une traduction ajoutée par Claude, absente des notes.',
     'lessons.tip2':
       '<b>Cartes</b> : <key>Espace</key> retourne la carte, <key>←</key> veut dire « encore », <key>→</key> « je sais ». Le bouton du haut change le sens.',
@@ -800,6 +806,8 @@ export const tutorial = defineMessages({
       'Starte eine Übung über die Knöpfe: <pbtn>Quiz</pbtn> <btn>Karteikarten</btn> <btn>Übersetzungen zuordnen</btn> <btn>Synonyme & Antonyme</btn> <btn>Lückentext</btn> <btn>Diktat</btn>',
     'lessons.step4':
       'Tippe auf 🔊, um ein Wort zu hören, und auf ☆, um es zu den <b>Lieblingswörtern</b> hinzuzufügen.',
+    'lessons.step5':
+      'Doppelklicke auf ein Wort oder eine Wendung in der Sprache, die du lernst (auf dem Handy: gedrückt halten), um das Menü zu öffnen: <b>Übersetzen</b> in diesem Satz, <b>Definieren</b>, <b>Beispiele</b> und bei einem Verb <b>Konjugieren</b>. <btn>Zu Lektion 1 hinzufügen</btn> schreibt es unter die Lektion, und es kommt in die Übungen.',
     'lessons.tip1':
       '<added>✱</added> markiert eine Übersetzung, die Claude ergänzt hat und die nicht in den Notizen steht.',
     'lessons.tip2':
@@ -1038,6 +1046,8 @@ export const tutorial = defineMessages({
     'lessons.step3':
       'Empieza un ejercicio desde la fila de botones: <pbtn>Test</pbtn> <btn>Tarjetas</btn> <btn>Une las traducciones</btn> <btn>Sinónimos y antónimos</btn> <btn>Rellena el hueco</btn> <btn>Dictado</btn>',
     'lessons.step4': 'Pulsa 🔊 para oír una palabra y ☆ para ponerla en <b>Palabras favoritas</b>.',
+    'lessons.step5':
+      'Haz doble clic en cualquier palabra o expresión en el idioma que aprendes (en el móvil, mantenla pulsada) para abrir su menú: <b>Traducir</b> en esa frase, <b>Definir</b>, <b>Ejemplos</b> y, si es un verbo, <b>Conjugar</b>. <btn>Añadir a la lección 1</btn> la escribe bajo la lección, y pasa a los ejercicios.',
     'lessons.tip1':
       '<added>✱</added> marca una traducción que añadió Claude y que no está en las notas.',
     'lessons.tip2':
@@ -1281,6 +1291,8 @@ export const tutorial = defineMessages({
       'Comece um exercício na fila de botões: <pbtn>Teste</pbtn> <btn>Cartões</btn> <btn>Ligue as traduções</btn> <btn>Sinónimos e antónimos</btn> <btn>Preencha o espaço</btn> <btn>Ditado</btn>',
     'lessons.step4':
       'Carregue em 🔊 para ouvir uma palavra e em ☆ para a pôr nas <b>Palavras favoritas</b>.',
+    'lessons.step5':
+      'Faça duplo clique em qualquer palavra ou expressão na língua que está a aprender (no telemóvel, mantenha-a premida) para abrir o menu: <b>Traduzir</b> nessa frase, <b>Definir</b>, <b>Exemplos</b> e, se for um verbo, <b>Conjugar</b>. <btn>Acrescentar à lição 1</btn> escreve-a por baixo da lição, e ela passa para os exercícios.',
     'lessons.tip1':
       '<added>✱</added> marca uma tradução que o Claude acrescentou e que não está nas notas.',
     'lessons.tip2':
@@ -1523,6 +1535,8 @@ export const tutorial = defineMessages({
       'Avvia un esercizio dalla fila di pulsanti: <pbtn>Quiz</pbtn> <btn>Flashcard</btn> <btn>Abbina le traduzioni</btn> <btn>Sinonimi e contrari</btn> <btn>Completa la frase</btn> <btn>Dettato</btn>',
     'lessons.step4':
       'Premi 🔊 per ascoltare una parola e ☆ per metterla nelle <b>Parole preferite</b>.',
+    'lessons.step5':
+      'Fai doppio clic su una parola o un’espressione nella lingua che studi (sul telefono, tienila premuta) per aprire il suo menu: <b>Traduci</b> in quella frase, <b>Definisci</b>, <b>Esempi</b> e, per un verbo, <b>Coniuga</b>. <btn>Aggiungi alla lezione 1</btn> la scrive sotto la lezione, ed entra negli esercizi.',
     'lessons.tip1':
       '<added>✱</added> segna una traduzione aggiunta da Claude che non c’è negli appunti.',
     'lessons.tip2':

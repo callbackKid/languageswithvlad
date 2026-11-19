@@ -25,7 +25,7 @@ const GUIDE_LIST = [
     section: 'lessons',
     id: 'lessons',
     icon: '📚',
-    steps: 4,
+    steps: 5,
     tips: 7,
     mock: true,
     teacherTips: [7],

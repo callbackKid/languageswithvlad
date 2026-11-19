@@ -16,6 +16,7 @@ import type {
   TextStudy,
   VerbRef,
   Word,
+  WordCard,
   Writing,
   WritingCheck,
 } from './types';
@@ -477,6 +478,26 @@ export function normalizePhoto(raw: unknown): PhotoItem[] {
 export function normalizeExplanation(raw: unknown, selection: string): PhotoItem | null {
   const item = photoItem(raw, asLanguage(asObject(raw).language));
   return item.ru ? { ...item, fr: item.fr || selection } : null;
+}
+
+// A selected word's card; null when Claude gave no translation.
+export function normalizeWordCard(raw: unknown, selection: string): WordCard | null {
+  const data = asObject(raw);
+  const language = asLanguage(data.language);
+  const item = photoItem(raw, language);
+  if (!item.ru) return null;
+  return {
+    ...item,
+    fr: item.fr || selection,
+    language,
+    baseRu: asText(data.baseRu) || item.ru,
+    definition: asText(data.definition),
+    definitionRu: asText(data.definitionRu),
+    examples: asArray(data.examples)
+      .map(asObject)
+      .map((example) => ({ text: asText(example.text), ru: asText(example.ru) }))
+      .filter((example) => example.text),
+  };
 }
 
 // The translated paragraphs; throws when the answer has none.

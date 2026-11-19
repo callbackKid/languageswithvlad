@@ -242,6 +242,12 @@ export const api = {
         levels: getSettings().levels,
       }),
     }),
+  // a word or phrase selected anywhere in the app: explained in its sentence, defined, with examples
+  word: (selection: string, context: string) =>
+    request<unknown>('/api/text', {
+      method: 'POST',
+      body: JSON.stringify({ action: 'word', selection, context, levels: getSettings().levels }),
+    }),
   // a pasted text in Russian, paragraph by paragraph
   translate: (text: string) =>
     request<unknown>('/api/text', {

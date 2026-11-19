@@ -29,10 +29,13 @@ export default function VerbsTab({
   verbs,
   hasClaude,
   waiting,
+  openFirst = false,
 }: {
   verbs: VerbRef[];
   hasClaude: boolean;
   waiting: boolean;
+  // open the first verb's table at once, as for the one verb looked up from a word's menu
+  openFirst?: boolean;
 }) {
   const { t, rich } = useTranslation(exercises);
   const commonText = useTranslation(common);
@@ -86,6 +89,15 @@ export default function VerbsTab({
       }));
     }
   }
+
+  // once, after the first render; open() itself skips a table that is already there
+  const openedFirst = useRef(false);
+  useEffect(() => {
+    const first = verbs[0];
+    if (!openFirst || openedFirst.current || !first) return;
+    openedFirst.current = true;
+    void open(first);
+  });
 
   if (!verbs.length)
     return waiting ? null : (

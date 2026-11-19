@@ -330,6 +330,31 @@ const EXPLANATION = {
   explanation: 'A shop where bread is baked and sold.',
 };
 
+// A selected word's card (the word menu): a verb for any form of "lever", a noun otherwise.
+const WORD_CARD = {
+  ...EXPLANATION,
+  definition: 'Un magasin où l’on fait et vend du pain.',
+  definitionRu: 'Магазин, где пекут и продают хлеб.',
+  examples: [
+    { text: 'La boulangerie ouvre à sept heures.', ru: 'Пекарня открывается в семь часов.' },
+    { text: 'J’achète une baguette à la boulangerie.', ru: 'Я покупаю багет в пекарне.' },
+  ],
+};
+const VERB_CARD = {
+  language: 'fr',
+  fr: 'se lève',
+  context: 'Je me lève à sept heures.',
+  ru: 'встаю',
+  base: 'se lever',
+  baseRu: 'вставать',
+  kind: 'verb',
+  tense: 'présent, je',
+  explanation: 'Возвратный глагол: «вставать (с постели)».',
+  definition: 'Sortir du lit, se mettre debout.',
+  definitionRu: 'Выйти из постели, встать на ноги.',
+  examples: [{ text: 'Je me lève tôt le lundi.', ru: 'По понедельникам я встаю рано.' }],
+};
+
 const DISCUSSION = {
   question: 'Qu’est-ce que vous faites le matin avant le travail ?',
   ru: 'Что вы делаете утром перед работой?',
@@ -374,6 +399,7 @@ export function answerFor(url, body, headers = {}, scenario = 'upcoming') {
   if (path === '/api/text') {
     if (body?.action === 'correct') return WRITING_CHECK;
     if (body?.action === 'explain') return EXPLANATION;
+    if (body?.action === 'word') return /l[eè]v/.test(body.selection ?? '') ? VERB_CARD : WORD_CARD;
     return {};
   }
   if (path === '/api/discussion') return DISCUSSION;

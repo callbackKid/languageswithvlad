@@ -8,6 +8,7 @@ import { shrinkImage } from '../lib/image';
 import { normalizePhoto, normalizePhotoItems } from '../lib/parse';
 import { asFields, loadChecked, save } from '../lib/storage';
 import type { PhotoItem } from '../lib/types';
+import { docLine } from '../lib/wordActions';
 import AddToDoc, { type DocTarget } from './AddToDoc';
 import WaitingFact from './WaitingFact';
 import WordNotesTable from './WordNotesTable';
@@ -19,15 +20,6 @@ const MAX_SIDE = 2000;
 interface LastScan {
   items: PhotoItem[];
   at: number;
-}
-
-// Photo of a book page with underlined words → translation, dictionary form, tense and a short explanation for each.
-// "avoir raison — был прав (avait raison, imparfait, il)": one line of a lesson in the document.
-function docLine(item: PhotoItem): string {
-  const notes = [item.base && item.base !== item.fr ? item.fr : '', item.tense]
-    .filter(Boolean)
-    .join(', ');
-  return `${item.base || item.fr} — ${item.ru}${notes ? ` (${notes})` : ''}`;
 }
 
 // The underlined words on a photo of a book page, each with its translation, dictionary form and tense.

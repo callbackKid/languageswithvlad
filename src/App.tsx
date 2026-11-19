@@ -18,6 +18,7 @@ import Settings, { Avatar } from './components/Settings';
 import Stats from './components/Stats';
 import TooltipLayer from './components/TooltipLayer';
 import Tutorial from './components/Tutorial';
+import WordActions from './components/WordActions';
 import { type Translator, translator, useTranslation } from './i18n/core';
 import { app } from './i18n/messages/app';
 import { api, ApiError } from './lib/api';
@@ -542,6 +543,14 @@ export default function App() {
           )}
         </div>
       </div>
+      {/* a new page or lesson closes the menu */}
+      <WordActions
+        key={`${section}:${currentLessonKey ?? ''}`}
+        hasClaude={hasClaude}
+        docId={docId}
+        lesson={section === 'lessons' || section === 'call' ? lesson : null}
+        canWrite={!!docTarget.docWriter}
+      />
       <TooltipLayer />
     </>
   );

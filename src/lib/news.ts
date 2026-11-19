@@ -19,6 +19,23 @@ export interface NewsDay {
 
 export const NEWS: NewsDay[] = [
   {
+    date: '2026-11-20',
+    items: [
+      {
+        kind: 'new',
+        text: {
+          en: 'Select any word or phrase in the language you learn (double-click it; on a phone, hold it) for its menu: the translation in that sentence, a definition, examples and, for a verb, its tables. On a lesson’s pages, Add to lesson writes it under the lesson, so it joins the exercises.',
+          ru: 'Выделите любое слово или фразу на изучаемом языке (двойным щелчком, а на телефоне — удерживая палец), и откроется меню: перевод в этом предложении, определение, примеры, а для глагола — таблицы спряжения. На страницах урока кнопка «Добавить в урок» добавляет слово в урок, и оно попадает в упражнения.',
+          fr: 'Sélectionnez un mot ou une expression dans la langue que vous apprenez (double-cliquez dessus ; sur un téléphone, maintenez le doigt dessus) pour ouvrir son menu : la traduction dans cette phrase, une définition, des exemples et, pour un verbe, ses tableaux de conjugaison. Sur les pages d’une leçon, le bouton « Ajouter à la leçon » l’inscrit sous la leçon, et il rejoint les exercices.',
+          de: 'Markiere ein beliebiges Wort oder eine Wendung in der Sprache, die du lernst (per Doppelklick; auf dem Handy gedrückt halten), um das Menü zu öffnen: die Übersetzung in diesem Satz, eine Definition, Beispiele und bei einem Verb seine Konjugationstabellen. Auf den Seiten einer Lektion schreibt die Schaltfläche „Zu Lektion … hinzufügen“ es unter die Lektion, sodass es in die Übungen kommt.',
+          es: 'Selecciona cualquier palabra o expresión en el idioma que aprendes (con doble clic; en el móvil, manteniéndola pulsada) para abrir su menú: la traducción en esa frase, una definición, ejemplos y, si es un verbo, sus tablas de conjugación. En las páginas de una lección, el botón «Añadir a la lección» la escribe bajo la lección, y así pasa a los ejercicios.',
+          pt: 'Selecione qualquer palavra ou expressão na língua que está a aprender (com duplo clique; no telemóvel, mantendo-a premida) para abrir o menu: a tradução nessa frase, uma definição, exemplos e, se for um verbo, as tabelas de conjugação. Nas páginas de uma lição, o botão «Acrescentar à lição» escreve-a por baixo da lição, e assim ela passa para os exercícios.',
+          it: 'Seleziona una parola o un’espressione nella lingua che studi (con un doppio clic; sul telefono, tenendola premuta) per aprire il suo menu: la traduzione in quella frase, una definizione, degli esempi e, per un verbo, le sue tabelle di coniugazione. Nelle pagine di una lezione, il pulsante «Aggiungi alla lezione» la scrive sotto la lezione, così entra negli esercizi.',
+        },
+      },
+    ],
+  },
+  {
     date: '2026-11-19',
     items: [
       {

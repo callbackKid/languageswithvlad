@@ -198,6 +198,23 @@ Reply with only a JSON object: {"language": ${LANGUAGE_CODES}, "fr": string, "co
 ${MARKED_ITEM_RULES}`;
 }
 
+/** A word or phrase selected anywhere in the app, for its menu of actions: the translation and
+    explanation in its sentence (as for a marked word in a pasted text), a definition in its own
+    language and examples, all in one answer so switching between them needs no new request. */
+export function wordPrompt(selection: string, context: string, levels: Levels): string {
+  return `A Russian-speaking learner of ${LANGUAGE_LIST} selected a word or phrase in a lesson and wants to understand it and learn it. Explain it as it is used in this sentence.
+${levelLine(levels)} ${LEVEL_STYLE}
+Selected: """${selection}"""
+The sentence around it: """${context}"""
+Reply with only a JSON object: {"language": ${LANGUAGE_CODES}, "fr": string, "context": string, "ru": string, "base": string, "kind": string, "tense": string, "explanation": string, "baseRu": string, "definition": string, "definitionRu": string, "examples": [{"text": string, "ru": string}]}.
+- language: the language of the selected text: ${LANGUAGE_KEY}.
+${MARKED_ITEM_RULES}
+- baseRu: a short Russian translation of the dictionary form itself, as a dictionary gives it (for a verb, its infinitive: вставать, not встаю).
+- definition: what the dictionary form means, explained in the selected text's own language the way a learner's dictionary does: one or two short, simple sentences at the learner's level, without using the word itself.
+- definitionRu: the Russian translation of definition.
+- examples: 3 short everyday sentences in the selected text's language using the dictionary form (conjugated or agreed as the sentence needs), at the learner's level and each showing a different common use; ru is the Russian translation of each.`;
+}
+
 // A natural Russian translation of a text, paragraph by paragraph.
 export function translatePrompt(paragraphs: string[]): string {
   return `Translate this text into natural, fluent Russian, the way a good translator would: keep the meaning, tone and register, don't translate word for word, and don't add or leave out anything. It has ${paragraphs.length} paragraph${paragraphs.length === 1 ? '' : 's'}, numbered below.

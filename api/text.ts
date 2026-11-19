@@ -7,11 +7,13 @@ import {
   explainPrompt,
   studyPrompt,
   translatePrompt,
+  wordPrompt,
   writingCheckPrompt,
 } from './_lib/prompts.js';
 
-/* Working with a text the learner pasted:
+/* Working with text the learner reads or writes:
    - "explain": one marked word or phrase, in its sentence;
+   - "word": a word or phrase selected anywhere in the app, with a definition and examples too;
    - "translate": the whole text into Russian, paragraph by paragraph;
    - "study": vocabulary, questions and true-or-false statements built from the text;
    - "correct": a written homework answer, its mistakes fixed and explained. */
@@ -22,20 +24,23 @@ const MAX_SELECTION_LENGTH = 200;
 const MAX_CONTEXT_LENGTH = 600;
 const MAX_TASK_LENGTH = 600;
 
-// One of the four actions above, chosen by body.action.
+// One of the five actions above, chosen by body.action.
 export default async function handler(request: VercelRequest, response: VercelResponse) {
   if (!onlyPost(request, response) || !checkAccess(request, response)) return;
   const body = (request.body ?? {}) as Record<string, unknown>;
   try {
-    if (body.action === 'explain') {
+    if (body.action === 'explain' || body.action === 'word') {
       const selection = text(body.selection, MAX_SELECTION_LENGTH);
       if (!selection) return response.status(400).json({ error: 'nothing_sent' });
-      const prompt = explainPrompt(
+      const makePrompt = body.action === 'word' ? wordPrompt : explainPrompt;
+      const prompt = makePrompt(
         selection,
         text(body.context, MAX_CONTEXT_LENGTH),
         asLevels(body.levels)
       );
-      return response.status(200).json(await claudeJSON(prompt, { model: MODEL, maxTokens: 1500 }));
+      // a word's card holds a definition and examples as well, so it needs more room
+      const maxTokens = body.action === 'word' ? 2500 : 1500;
+      return response.status(200).json(await claudeJSON(prompt, { model: MODEL, maxTokens }));
     }
 
     const whole = typeof body.text === 'string' ? body.text.trim() : '';

@@ -1,0 +1,358 @@
+import { type ReactNode, useEffect, useLayoutEffect, useRef, useState } from 'react';
+
+import { translator, useTranslation } from '../i18n/core';
+import { common } from '../i18n/messages/common';
+import { wordActions } from '../i18n/messages/wordActions';
+import { api, ApiError } from '../lib/api';
+import { normalizeWordCard } from '../lib/parse';
+import { type Language, type Lesson, TENSES_BY_LANGUAGE, type WordCard } from '../lib/types';
+import {
+  cardWord,
+  cleanSelection,
+  docLine,
+  learnedLanguage,
+  readWordCard,
+  saveWordCard,
+  sentenceAround,
+} from '../lib/wordActions';
+import Speak from './Speak';
+import Star from './Star';
+import VerbsTab from './VerbsTab';
+import WaitingFact from './WaitingFact';
+
+// Where the menu never opens: exercises (it would give the answers away), form fields, the Text
+// page's own explain bar, and the menu itself.
+const SKIPPED =
+  '.ex, input, textarea, select, [contenteditable], [data-no-word-actions], .word-actions';
+// The element whose text holds the sentence around a selection.
+const BLOCK = 'p, li, td, th, dd, dt, h1, h2, h3, h4, blockquote, pre, label, div';
+// Keep in step with the width of .word-actions in styles.css.
+const MENU_WIDTH = 380;
+// Space between the menu and the edges of the window or the selected text, in pixels.
+const GAP = 8;
+// On a touch screen the selection is adjusted with handles: the menu waits until it rests this long.
+const TOUCH_PAUSE_MS = 600;
+
+const VIEWS = ['translate', 'define', 'examples', 'conjugate'] as const;
+type View = (typeof VIEWS)[number];
+
+interface Picked {
+  text: string;
+  context: string;
+  language: Language;
+  // where the menu goes on a wide screen, in page coordinates
+  top: number;
+  left: number;
+}
+
+// The selection on the page, when it is text in a language being learned outside the skipped places.
+function pickedNow(): Picked | null {
+  const selection = window.getSelection();
+  if (!selection || selection.isCollapsed || !selection.rangeCount) return null;
+  const text = cleanSelection(selection.toString());
+  if (!text) return null;
+  const range = selection.getRangeAt(0);
+  const node = range.commonAncestorContainer;
+  const element = node instanceof Element ? node : node.parentElement;
+  if (!element || element.closest(SKIPPED)) return null;
+  // the interface's own language sits on <html>; only text marked with its language counts
+  const marked = element.closest('[lang]');
+  if (!marked || marked === document.documentElement) return null;
+  const language = learnedLanguage(marked.getAttribute('lang'));
+  if (!language) return null;
+  const block = element.closest(BLOCK) ?? marked;
+  const paragraph = (block.textContent ?? '').replace(/\s+/g, ' ');
+  const box = range.getBoundingClientRect();
+  const left = Math.max(GAP, Math.min(box.left, window.innerWidth - MENU_WIDTH - GAP));
+  return {
+    text,
+    context: sentenceAround(paragraph, text),
+    language,
+    top: box.bottom + window.scrollY + GAP,
+    left: left + window.scrollX,
+  };
+}
+
+/** The menu on a word or phrase selected anywhere in the app, in text marked with a language being
+    learned: its translation in the sentence, a definition, examples and verb tables (one request
+    to Claude for all of them, kept on the device), 🔊, ☆, and, on a lesson's pages, a line added
+    under that lesson in the document. */
+export default function WordActions({
+  hasClaude,
+  docId,
+  lesson,
+  canWrite,
+}: {
+  hasClaude: boolean;
+  docId: string;
+  // the lesson a looked-up word can be added to: the open lesson, or the newest one in lesson mode
+  lesson: Lesson | null;
+  canWrite: boolean;
+}) {
+  const { t, rich } = useTranslation(wordActions);
+  const commonText = useTranslation(common);
+  const [picked, setPicked] = useState<Picked | null>(null);
+  const [card, setCard] = useState<WordCard | null>(null);
+  const [view, setView] = useState<View | null>(null);
+  const [state, setState] = useState<'idle' | 'loading' | 'error'>('idle');
+  const [error, setError] = useState('');
+  const [adding, setAdding] = useState<'idle' | 'saving' | 'done' | 'error'>('idle');
+  const [addError, setAddError] = useState('');
+  const menu = useRef<HTMLDivElement>(null);
+  // counts the selections, so an answer that arrives after a newer one is dropped
+  const pickCount = useRef(0);
+
+  useEffect(() => {
+    let pointer = 'mouse';
+    let timer = 0;
+    const inMenu = (target: EventTarget | null) =>
+      target instanceof Node && !!menu.current?.contains(target);
+    const open = () => {
+      const next = pickedNow();
+      if (!next) return;
+      pickCount.current += 1;
+      setPicked(next);
+      setCard(readWordCard(next.text, next.context));
+      setView(null);
+      setState('idle');
+      setError('');
+      setAdding('idle');
+      setAddError('');
+    };
+    const onPointerDown = (event: PointerEvent) => {
+      pointer = event.pointerType;
+      if (!inMenu(event.target)) setPicked(null);
+    };
+    const onMouseUp = (event: MouseEvent) => {
+      // after the browser has finished the selection
+      if (pointer === 'mouse' && !inMenu(event.target)) timer = window.setTimeout(open, 0);
+    };
+    const onSelectionChange = () => {
+      if (pointer === 'mouse') return;
+      window.clearTimeout(timer);
+      timer = window.setTimeout(open, TOUCH_PAUSE_MS);
+    };
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setPicked(null);
+    };
+    document.addEventListener('pointerdown', onPointerDown);
+    document.addEventListener('mouseup', onMouseUp);
+    document.addEventListener('selectionchange', onSelectionChange);
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      window.clearTimeout(timer);
+      document.removeEventListener('pointerdown', onPointerDown);
+      document.removeEventListener('mouseup', onMouseUp);
+      document.removeEventListener('selectionchange', onSelectionChange);
+      document.removeEventListener('keydown', onKeyDown);
+    };
+  }, []);
+
+  // the place on a wide screen; on a phone the stylesheet puts the menu at the bottom instead
+  useLayoutEffect(() => {
+    if (!picked || !menu.current) return;
+    menu.current.style.setProperty('--word-top', `${picked.top}px`);
+    menu.current.style.setProperty('--word-left', `${picked.left}px`);
+  }, [picked]);
+
+  // The card for the selection: the saved one, or Claude's answer; null while it fails.
+  async function cardNow(): Promise<WordCard | null> {
+    if (card) return card;
+    if (!picked) return null;
+    const pick = pickCount.current;
+    setState('loading');
+    setError('');
+    try {
+      const answer = normalizeWordCard(await api.word(picked.text, picked.context), picked.text);
+      if (!answer) throw new Error('empty');
+      saveWordCard(picked.text, picked.context, answer);
+      if (pick !== pickCount.current) return null;
+      setCard(answer);
+      setState('idle');
+      return answer;
+    } catch (failure) {
+      if (pick !== pickCount.current) return null;
+      setState('error');
+      // read at the moment of failure, so a new interface language is used
+      setError(failure instanceof ApiError ? failure.message : translator(wordActions).t('failed'));
+      return null;
+    }
+  }
+
+  function choose(next: View) {
+    setView(next);
+    void cardNow();
+  }
+
+  async function addToLesson() {
+    if (!card || !lesson) return;
+    setAdding('saving');
+    setAddError('');
+    try {
+      await api.append(docId, docLine(card), lesson.key);
+      setAdding('done');
+      // the app syncs: the word joins the lesson's exercises
+      window.dispatchEvent(new Event('cahier:doc-changed'));
+    } catch (failure) {
+      setAdding('error');
+      setAddError(
+        failure instanceof ApiError ? failure.message : translator(common).t('addFailed')
+      );
+    }
+  }
+
+  if (!picked) return null;
+  const { language } = picked;
+  const hasTables = Object.hasOwn(TENSES_BY_LANGUAGE, language);
+  const shownViews = VIEWS.filter((candidate) => candidate !== 'conjugate' || hasTables);
+  const word = (chunk: ReactNode) => <b lang={language}>{chunk}</b>;
+
+  // rendered at the top of App, outside any positioned element, so its place is the page's
+  return (
+    <div
+      ref={menu}
+      className="word-actions"
+      role="dialog"
+      aria-label={t('dialogLabel', { word: picked.text })}
+    >
+      <div className="word-actions-head">
+        <b className="word-actions-word" lang={language}>
+          {picked.text}
+        </b>
+        <Speak text={picked.text} language={language} />
+        {card && <Star word={cardWord(card)} />}
+        <button
+          type="button"
+          className="icon-button"
+          aria-label={commonText.t('close')}
+          data-tooltip={commonText.t('close')}
+          onClick={() => setPicked(null)}
+        >
+          ×
+        </button>
+      </div>
+
+      {hasClaude ? (
+        <div className="seg word-actions-views" role="group" aria-label={t('actionsLabel')}>
+          {shownViews.map((candidate) => (
+            <button
+              type="button"
+              key={candidate}
+              aria-pressed={view === candidate}
+              onClick={() => choose(candidate)}
+            >
+              {t(candidate)}
+            </button>
+          ))}
+        </div>
+      ) : (
+        <p className="hint">{commonText.t('needsClaude')}</p>
+      )}
+
+      {state === 'loading' && (
+        <WaitingFact language={language}>
+          {rich('asking', { b: word }, { word: picked.text })}
+        </WaitingFact>
+      )}
+      {state === 'error' && (
+        <div className="note err" role="alert">
+          <p>{error}</p>
+          <button type="button" className="btn" onClick={() => void cardNow()}>
+            {commonText.t('tryAgain')}
+          </button>
+        </div>
+      )}
+
+      {card && view && (
+        <div className="word-actions-body">
+          {view === 'translate' && (
+            <>
+              <p className="word-actions-ru" lang="ru">
+                {card.ru}
+              </p>
+              {card.base && card.base !== card.fr && (
+                <p className="hint">{rich('dictionaryForm', { b: word }, { base: card.base })}</p>
+              )}
+              {card.tense && (
+                <p className="hint" lang={language}>
+                  {card.tense}
+                </p>
+              )}
+              {card.explanation && <p lang="ru">{card.explanation}</p>}
+            </>
+          )}
+          {view === 'define' && (
+            <>
+              <p lang={language}>{card.definition || '—'}</p>
+              {card.definitionRu && (
+                <p className="hint" lang="ru">
+                  {card.definitionRu}
+                </p>
+              )}
+            </>
+          )}
+          {view === 'examples' &&
+            (card.examples.length ? (
+              <ul className="word-actions-examples">
+                {card.examples.map((example) => (
+                  <li key={example.text}>
+                    <span lang={language}>{example.text}</span>
+                    <Speak text={example.text} language={language} />
+                    <span className="ru" lang="ru">
+                      {example.ru}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p>—</p>
+            ))}
+          {view === 'conjugate' &&
+            (card.kind === 'verb' ? (
+              <VerbsTab
+                verbs={[{ inf: card.base || card.fr, ru: card.baseRu, language }]}
+                hasClaude={hasClaude}
+                waiting={false}
+                openFirst
+              />
+            ) : (
+              <p className="hint">{t('notAVerb', { word: card.base || card.fr })}</p>
+            ))}
+        </div>
+      )}
+
+      {card && lesson && (
+        <div className="row-actions word-actions-add">
+          {canWrite ? (
+            <>
+              <button
+                type="button"
+                className="btn"
+                disabled={adding === 'saving' || adding === 'done'}
+                onClick={() => void addToLesson()}
+              >
+                {adding === 'saving'
+                  ? commonText.t('adding')
+                  : adding === 'done'
+                    ? commonText.t('added')
+                    : t('addToLesson', { n: lesson.n })}
+              </button>
+              {adding === 'done' && (
+                <span className="hint" role="status">
+                  {t('addedToLesson', { n: lesson.n })}
+                </span>
+              )}
+              {adding === 'error' && (
+                <span className="hint err" role="alert">
+                  {addError}
+                </span>
+              )}
+            </>
+          ) : (
+            <p className="hint">{commonText.t('docWriterMissing')}</p>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}

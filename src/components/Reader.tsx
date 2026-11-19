@@ -13,6 +13,7 @@ import {
 import { getSettings } from '../lib/settings';
 import { asList, load, save } from '../lib/storage';
 import type { Analysis, Language, ReaderText, TextStudy } from '../lib/types';
+import { MAX_SELECTION_LENGTH, sentenceAround } from '../lib/wordActions';
 import PageHead from './PageHead';
 import Speak from './Speak';
 import WaitingFact from './WaitingFact';
@@ -22,9 +23,6 @@ import WordsTab from './WordsTab';
 const STORAGE_KEY = 'reader:texts';
 // Keep in step with MAX_TEXT_LENGTH in api/text.ts.
 const MAX_TEXT_LENGTH = 8000;
-const MAX_SELECTION_LENGTH = 200;
-// the sentence sent with a marked word; the server takes up to 600 (MAX_CONTEXT_LENGTH in api/text.ts)
-const MAX_CONTEXT_LENGTH = 500;
 // The oldest texts are dropped beyond this many, so storage doesn't fill up.
 const MAX_TEXTS = 20;
 // a word: letters, with apostrophes and hyphens inside (l'ami, peut-être)
@@ -42,13 +40,6 @@ const firstWords = (text: string) => {
   const line = text.trim().split('\n')[0] ?? '';
   return line.length > 60 ? line.slice(0, 57).trimEnd() + '…' : line;
 };
-
-// The sentence of the paragraph that holds the selection; the paragraph's start when it spans several.
-function sentenceAround(paragraph: string, selection: string): string {
-  const sentences = paragraph.split(/(?<=[.!?…»"])\s+/);
-  const found = sentences.find((sentence) => sentence.includes(selection));
-  return (found ?? paragraph).slice(0, MAX_CONTEXT_LENGTH);
-}
 
 // True-or-false statements about the text: each is answered once, then explained.
 function TrueFalse({
@@ -365,8 +356,15 @@ export default function Reader({ hasClaude }: { hasClaude: boolean }) {
               {translating === 'loading' && (
                 <WaitingFact language={language}>{t('translating')}</WaitingFact>
               )}
-              {/* a click or a selection inside the text picks what to explain */}
-              <div className="reader-text" lang={language} onMouseUp={pick} onTouchEnd={pick}>
+              {/* a click or a selection inside the text picks what to explain; this page has its
+                  own explain bar, so the word menu stays away */}
+              <div
+                className="reader-text"
+                lang={language}
+                data-no-word-actions
+                onMouseUp={pick}
+                onTouchEnd={pick}
+              >
                 {paragraphs.map((paragraph, index) => (
                   <div key={index} className="reader-paragraph">
                     <p>
