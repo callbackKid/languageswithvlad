@@ -2,10 +2,10 @@ import { useMemo, useState } from 'react';
 
 import { useTranslation } from '../i18n/core';
 import { exercises } from '../i18n/messages/exercises';
-import { getProgress } from '../lib/progress';
+import { getProgress, LEARNED_STREAK, useProgress, wordKey } from '../lib/progress';
 import { buildDictation, buildQuiz, pickWords } from '../lib/quiz';
 import { canSpeak } from '../lib/speech';
-import type { Analysis } from '../lib/types';
+import type { Analysis, Word } from '../lib/types';
 import { downloadText } from '../lib/util';
 import Flashcards from './Flashcards';
 import GapFill from './GapFill';
@@ -23,6 +23,24 @@ export function KeyBadge() {
   return <span className="key-word">{t('keyWord')}</span>;
 }
 
+// How close a word on Words to learn is to leaving it: ●●○ for 2 right answers in a row of the 3 needed.
+function LearnProgress({ word }: { word: Word }) {
+  const { t } = useTranslation(exercises);
+  const streak = Math.min(useProgress().words[wordKey(word.fr)]?.streak ?? 0, LEARNED_STREAK);
+  const label = t('learnProgress', { count: streak, total: LEARNED_STREAK });
+  return (
+    <span
+      className="learn-progress"
+      role="img"
+      aria-label={label}
+      data-tooltip={label}
+      tabIndex={0}
+    >
+      {'●'.repeat(streak) + '○'.repeat(LEARNED_STREAK - streak)}
+    </span>
+  );
+}
+
 // Tab-separated text Anki imports as cards: word, translation, transcription.
 function ankiText(words: Analysis['words']): string {
   const clean = (text: string) => text.replace(/[\t\r\n]+/g, ' ').trim();
@@ -35,11 +53,14 @@ export default function WordsTab({
   hasClaude,
   onRefresh,
   hidePairs,
+  showProgress = false,
 }: {
   analysis: Analysis;
   hasClaude: boolean;
   onRefresh?: () => void;
   hidePairs?: boolean;
+  // Words to learn: each word shows its right answers in a row towards leaving the list
+  showProgress?: boolean;
 }) {
   const { t, rich } = useTranslation(exercises);
   // Tracks the words left out, so words that arrive later (more lessons prepared) start picked.
@@ -229,6 +250,7 @@ export default function WordsTab({
                   )}
                 </span>
               </label>
+              {showProgress && <LearnProgress word={word} />}
               <Speak text={word.fr} language={word.language ?? 'fr'} />
               <Star word={word} />
             </li>
@@ -245,7 +267,12 @@ export default function WordsTab({
       {analysis.words.some((word) => word.key) && (
         <p className="legend">{rich('keyLegend', {}, { mark: <KeyBadge /> })}</p>
       )}
-      {analysis.words.length > 0 && <p className="legend">{t('starLegend')}</p>}
+      {/* on Words to learn every word is starred already: the dots need explaining instead */}
+      {analysis.words.length > 0 && (
+        <p className="legend">
+          {showProgress ? t('progressLegend', { total: LEARNED_STREAK }) : t('starLegend')}
+        </p>
+      )}
       <p className="legend legend-actions">
         {picked.length > 0 && (
           <button

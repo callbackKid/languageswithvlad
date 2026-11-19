@@ -35,7 +35,7 @@ export const paper = defineMessages({
     colForm: 'Form',
     colExplanation: 'Explanation',
     colActions: 'Actions',
-    photoStarLegend: '☆ adds the word to Favourite words, so it comes back in exercises.',
+    photoStarLegend: '☆ adds the word to Words to learn, so it comes back in exercises.',
     noUnderlined:
       'No underlined words found. Make sure the marks are visible and the page is in focus.',
     // handwriting and textbook
@@ -136,7 +136,8 @@ export const paper = defineMessages({
     colForm: 'Форма',
     colExplanation: 'Объяснение',
     colActions: 'Действия',
-    photoStarLegend: '☆ добавляет слово в «Избранные слова», и оно будет попадаться в упражнениях.',
+    photoStarLegend:
+      '☆ добавляет слово в «Слова на изучении», и оно будет попадаться в упражнениях.',
     noUnderlined:
       'Подчёркнутые слова не найдены. Проверьте, что пометки хорошо видны, а страница в фокусе.',
     'name.handwritten': 'Рукописные заметки',
@@ -238,7 +239,7 @@ export const paper = defineMessages({
     colForm: 'Forme',
     colExplanation: 'Explication',
     colActions: 'Actions',
-    photoStarLegend: '☆ ajoute le mot à Mots favoris : il reviendra dans les exercices.',
+    photoStarLegend: '☆ ajoute le mot aux Mots à apprendre : il reviendra dans les exercices.',
     noUnderlined:
       'Aucun mot souligné trouvé. Vérifiez que les marques sont visibles et que la page est nette.',
     'name.handwritten': 'Notes manuscrites',
@@ -336,8 +337,7 @@ export const paper = defineMessages({
     colForm: 'Form',
     colExplanation: 'Erklärung',
     colActions: 'Aktionen',
-    photoStarLegend:
-      '☆ fügt das Wort zu den Lieblingswörtern hinzu, damit es in Übungen wiederkommt.',
+    photoStarLegend: '☆ fügt das Wort zu den Lernwörtern hinzu, damit es in Übungen wiederkommt.',
     noUnderlined:
       'Keine unterstrichenen Wörter gefunden. Achte darauf, dass die Markierungen sichtbar sind und die Seite scharf ist.',
     'name.handwritten': 'Handschriftliche Notizen',
@@ -437,7 +437,8 @@ export const paper = defineMessages({
     colForm: 'Forma',
     colExplanation: 'Explicación',
     colActions: 'Acciones',
-    photoStarLegend: '☆ añade la palabra a Palabras favoritas para que vuelva en los ejercicios.',
+    photoStarLegend:
+      '☆ añade la palabra a Palabras por aprender para que vuelva en los ejercicios.',
     noUnderlined:
       'No se encontraron palabras subrayadas. Comprueba que las marcas se vean y que la página esté enfocada.',
     'name.handwritten': 'Notas a mano',
@@ -536,7 +537,7 @@ export const paper = defineMessages({
     colExplanation: 'Explicação',
     colActions: 'Ações',
     photoStarLegend:
-      '☆ acrescenta a palavra às Palavras favoritas, para voltar a aparecer nos exercícios.',
+      '☆ acrescenta a palavra às Palavras por aprender, para voltar a aparecer nos exercícios.',
     noUnderlined:
       'Não foram encontradas palavras sublinhadas. Verifique se as marcas estão visíveis e se a página está focada.',
     'name.handwritten': 'Notas à mão',
@@ -635,7 +636,7 @@ export const paper = defineMessages({
     colForm: 'Forma',
     colExplanation: 'Spiegazione',
     colActions: 'Azioni',
-    photoStarLegend: '☆ aggiunge la parola alle Parole preferite, così torna negli esercizi.',
+    photoStarLegend: '☆ aggiunge la parola alle Parole da imparare, così torna negli esercizi.',
     noUnderlined:
       'Nessuna parola sottolineata trovata. Controlla che i segni siano visibili e la pagina a fuoco.',
     'name.handwritten': 'Appunti a mano',

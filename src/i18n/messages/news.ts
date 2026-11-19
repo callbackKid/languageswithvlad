@@ -94,7 +94,7 @@ export const newsText = defineMessages({
   },
   it: {
     intro: 'Cosa è cambiato nell’app, dal più recente.',
-    'kind.new': 'Novità',
+    'kind.new': 'Nuovo',
     'kind.better': 'Migliorato',
     'kind.fixed': 'Corretto',
     'tab.new': 'Cosa c’è di nuovo',

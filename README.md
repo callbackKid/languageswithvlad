@@ -25,7 +25,7 @@ React + TypeScript + Vite in the browser, small Vercel serverless functions in `
 
 **Lesson history**
 
-- **Words**: vocabulary extracted by Claude, with Russian translations (ones Claude added are marked ✱), pronunciation 🔊, and ☆ to save a word to Favourite words.
+- **Words**: vocabulary extracted by Claude, with Russian translations (ones Claude added are marked ✱), pronunciation 🔊, and ☆ to save a word to Words to learn.
 - **Grammar**: every grammar point of the lesson explained in the interface language (how it's formed, when it's used, examples, the usual mistake), with **Practise this rule** for gap sentences on it.
 - **Homework**: the tasks the teacher set, with what each asks; ticked off on the device.
 - **Book exercises**: exercises from the student's book in the lesson. **Import exercises from the book** reads photos or PDF pages and writes the exercises under that lesson in the document (a block starting with 📖), so the teacher and the student both see them. Needs the same one-time setup as adding lessons from photos.
@@ -38,7 +38,7 @@ React + TypeScript + Vite in the browser, small Vercel serverless functions in `
 **Practice across lessons**
 
 - **Home**: a daily round of 10 mixed questions, a 🔥 streak and a daily goal. On the day of a lesson and the day after, a **summary** of it (new words, verbs, grammar) with **Start revising**; in the 24 hours before the next lesson, **Revise before the lesson** (the last lesson's words and the hard words). Above it, the **homework** the teacher wrote in the newest lesson (`Devoirs: …`) as a checklist with the days left until the next lesson; each task opens its exercise (the words of a lesson, gap sentences, verb forms, or a written answer that Claude corrects and explains like a tutor), and finishing it ticks the task. Lesson mode shows the corrected written answers to the teacher. In a lesson's **Homework** tab, **Make homework with Claude** writes such a block from the lesson's words and grammar (key words ★ first), with as many sentences to translate (2–8) and at the level the teacher picks, for the teacher to check and add under the lesson; it is a teacher's tool, shown only after the teacher code is entered in Settings (see `APP_TEACHER_CODE`). **Send to the teacher** (under the homework and in Stats) adds a short report under the lesson in the document: the homework done, answers and mistakes since the lesson, and the corrected written answers. Its lines start with 📝 and emojis, and lesson analysis skips them.
-- **Downloaded lessons**, **Favourite words**, **Mistakes** and **Stats**.
+- **Downloaded lessons**, **Words to learn**, **Mistakes** and **Stats**.
 
 **From paper**
 
@@ -190,7 +190,7 @@ Every section has its own address, so links can be shared and the browser’s Ba
 | Downloaded lessons        | `/all-lessons`                                            |
 | A question for discussion | `/discuss`                                                |
 | Document                  | `/document`                                               |
-| Favourite words           | `/my-words`                                               |
+| Words to learn            | `/my-words`                                               |
 | Mistakes                  | `/mistakes`                                               |
 | Stats                     | `/stats`                                                  |
 | Text analysis             | `/text`                                                   |

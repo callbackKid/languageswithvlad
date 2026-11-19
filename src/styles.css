@@ -1556,6 +1556,14 @@ pre.source {
   min-width: 0;
   border-bottom: 0;
 }
+/* on Words to learn: right answers in a row towards leaving the list (●●○) */
+.learn-progress {
+  flex: none;
+  color: var(--accent-text);
+  font-size: 12px;
+  letter-spacing: 2px;
+  cursor: default;
+}
 
 /* a key word of the lesson (★ in the document) */
 .key-word {

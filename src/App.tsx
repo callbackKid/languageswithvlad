@@ -214,7 +214,7 @@ export default function App() {
   const bank = useBank(lessons, hasClaude);
   // Set while rendering, so the first quiz round already sees this document's progress.
   setProgressDoc(docId);
-  // the same words the Favourite words page lists
+  // the same words the Words to learn page lists
   const hardCount = Object.values(useProgress().words).filter(
     (stat) => stat.hard && isStudied(stat.language, settings)
   ).length;

@@ -123,6 +123,18 @@ export const NEWS: NewsDay[] = [
           it: 'I sostantivi di una lezione e le loro traduzioni sono nello stesso numero, con l’articolo giusto: «la colline — холм», non «холмы»; «la vis», non «le vis». Per correggere una lezione letta prima, usa «Prepara di nuovo questa lezione» in fondo alla sua scheda Parole.',
         },
       },
+      {
+        kind: 'better',
+        text: {
+          en: 'Favourite words is now called Words to learn, because that is how it works: a word you miss or star stays until you get it right 3 times in a row in any exercise (I know it on a flashcard counts too). Dots next to each word, like ●●○, show how far it has got.',
+          ru: '«Избранные слова» теперь называются «Слова на изучении», потому что так этот список и работает: слово, в котором вы ошиблись или которое отметили ☆, остаётся в нём, пока вы не ответите на него верно 3 раза подряд в любом упражнении («Знаю» на карточке тоже считается). Точки рядом с каждым словом, например ●●○, показывают, сколько уже пройдено.',
+          fr: 'Mots favoris s’appelle désormais Mots à apprendre, car c’est ainsi que la liste fonctionne : un mot raté ou marqué d’une ☆ y reste jusqu’à ce que vous le réussissiez 3 fois d’affilée dans n’importe quel exercice (« Je sais » sur une carte compte aussi). Les points à côté de chaque mot, comme ●●○, montrent où il en est.',
+          de: 'Lieblingswörter heißen jetzt Lernwörter, denn so funktioniert die Liste: Ein Wort, das du falsch hast oder mit ☆ markierst, bleibt darin, bis du es in einer beliebigen Übung 3-mal in Folge richtig hast (auch „Weiß ich“ auf einer Karteikarte zählt). Die Punkte neben jedem Wort, etwa ●●○, zeigen, wie weit es schon ist.',
+          es: 'Palabras favoritas ahora se llama Palabras por aprender, porque así funciona la lista: una palabra que fallas o marcas con ☆ se queda en ella hasta que la aciertas 3 veces seguidas en cualquier ejercicio («Me la sé» en una tarjeta también cuenta). Los puntos junto a cada palabra, como ●●○, muestran cuánto ha avanzado.',
+          pt: 'As Palavras favoritas chamam-se agora Palavras por aprender, porque é assim que a lista funciona: uma palavra que errou ou marcou com ☆ fica lá até a acertar 3 vezes seguidas em qualquer exercício («Já sei» num cartão também conta). Os pontos ao lado de cada palavra, como ●●○, mostram quanto já avançou.',
+          it: 'Le Parole preferite ora si chiamano Parole da imparare, perché è così che funziona la lista: una parola che sbagli o segni con ☆ ci resta finché non la indovini 3 volte di fila in qualsiasi esercizio (vale anche «La so» su una flashcard). I puntini accanto a ogni parola, come ●●○, mostrano a che punto è.',
+        },
+      },
     ],
   },
   {

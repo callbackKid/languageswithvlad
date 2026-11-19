@@ -27,7 +27,7 @@ export const settingsText = defineMessages({
     learning: 'Learning',
     studying: 'Languages I learn, and my level',
     studyingHint:
-      'Home, Downloaded lessons, Favourite words, Mistakes, Stats and the discussion questions show only these languages. Lessons in other languages stay in Lesson history.',
+      'Home, Downloaded lessons, Words to learn, Mistakes, Stats and the discussion questions show only these languages. Lessons in other languages stay in Lesson history.',
     atLeastOne: 'Keep at least one language.',
     quizTenses: 'Tenses in quizzes',
     quizTensesHint:
@@ -82,7 +82,7 @@ export const settingsText = defineMessages({
     learning: 'Обучение',
     studying: 'Языки, которые я учу, и мой уровень',
     studyingHint:
-      'Главная, «Загруженные уроки», «Избранные слова», «Ошибки», «Статистика» и «Вопрос для обсуждения» показывают только эти языки. Уроки на других языках остаются в «Истории уроков».',
+      'Главная, «Загруженные уроки», «Слова на изучении», «Ошибки», «Статистика» и «Вопрос для обсуждения» показывают только эти языки. Уроки на других языках остаются в «Истории уроков».',
     atLeastOne: 'Оставьте хотя бы один язык.',
     quizTenses: 'Времена в тестах',
     quizTensesHint:
@@ -144,7 +144,7 @@ export const settingsText = defineMessages({
     learning: 'Apprentissage',
     studying: 'Les langues que j’apprends, et mon niveau',
     studyingHint:
-      'Accueil, Leçons téléchargées, Mots favoris, Erreurs, Statistiques et les questions à discuter n’affichent que ces langues. Les leçons dans d’autres langues restent dans Historique des leçons.',
+      'Accueil, Leçons téléchargées, Mots à apprendre, Erreurs, Statistiques et les questions à discuter n’affichent que ces langues. Les leçons dans d’autres langues restent dans Historique des leçons.',
     atLeastOne: 'Gardez au moins une langue.',
     quizTenses: 'Temps dans les quiz',
     quizTensesHint:
@@ -201,7 +201,7 @@ export const settingsText = defineMessages({
     learning: 'Lernen',
     studying: 'Sprachen, die ich lerne, und mein Niveau',
     studyingHint:
-      'Start, Geladene Lektionen, Lieblingswörter, Fehler, Statistik und die Diskussionsfragen zeigen nur diese Sprachen. Lektionen in anderen Sprachen bleiben im Lektionsverlauf.',
+      'Startseite, Geladene Lektionen, Lernwörter, Fehler, Statistik und die Diskussionsfragen zeigen nur diese Sprachen. Lektionen in anderen Sprachen bleiben im Lektionsverlauf.',
     atLeastOne: 'Behalte mindestens eine Sprache.',
     quizTenses: 'Zeitformen im Quiz',
     quizTensesHint:
@@ -258,7 +258,7 @@ export const settingsText = defineMessages({
     learning: 'Aprendizaje',
     studying: 'Idiomas que aprendo y mi nivel',
     studyingHint:
-      'Inicio, Lecciones descargadas, Palabras favoritas, Errores, Estadísticas y las preguntas para debatir muestran solo estos idiomas. Las lecciones en otros idiomas siguen en Historial de lecciones.',
+      'Inicio, Lecciones descargadas, Palabras por aprender, Errores, Estadísticas y las preguntas para debatir muestran solo estos idiomas. Las lecciones en otros idiomas siguen en Historial de lecciones.',
     atLeastOne: 'Deja al menos un idioma.',
     quizTenses: 'Tiempos en los tests',
     quizTensesHint:
@@ -315,7 +315,7 @@ export const settingsText = defineMessages({
     learning: 'Aprendizagem',
     studying: 'Línguas que aprendo e o meu nível',
     studyingHint:
-      'Início, Lições descarregadas, Palavras favoritas, Erros, Estatísticas e as perguntas para debate mostram só estas línguas. As lições noutras línguas ficam no Histórico de lições.',
+      'Início, Lições descarregadas, Palavras por aprender, Erros, Estatísticas e as perguntas para debate mostram só estas línguas. As lições noutras línguas ficam no Histórico de lições.',
     atLeastOne: 'Mantenha pelo menos uma língua.',
     quizTenses: 'Tempos nos testes',
     quizTensesHint:
@@ -372,7 +372,7 @@ export const settingsText = defineMessages({
     learning: 'Apprendimento',
     studying: 'Lingue che studio e il mio livello',
     studyingHint:
-      'Home, Lezioni scaricate, Parole preferite, Errori, Statistiche e le domande di discussione mostrano solo queste lingue. Le lezioni in altre lingue restano in Cronologia lezioni.',
+      'Home, Lezioni scaricate, Parole da imparare, Errori, Statistiche e le domande di discussione mostrano solo queste lingue. Le lezioni in altre lingue restano in Cronologia lezioni.',
     atLeastOne: 'Tieni almeno una lingua.',
     quizTenses: 'Tempi nei quiz',
     quizTensesHint:

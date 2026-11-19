@@ -1,6 +1,6 @@
 import { defineMessages } from '../core';
 
-// Home, Favourite words, Mistakes, Downloaded lessons and Stats.
+// Home, Words to learn, Mistakes, Downloaded lessons and Stats.
 export const pages = defineMessages({
   en: {
     // Home
@@ -9,7 +9,7 @@ export const pages = defineMessages({
       one: '{learned} of {count} word learned',
       other: '{learned} of {count} words learned',
     },
-    homeOnMyWords: ', {hard} in Favourite words',
+    homeOnMyWords: ', {hard} in Words to learn',
     homeIntro:
       '. Each round mixes words from every lesson, with the ones you miss coming back more often.',
     streak: { one: '🔥 {count} day in a row', other: '🔥 {count} days in a row' },
@@ -18,8 +18,8 @@ export const pages = defineMessages({
     goalProgress: 'Today: {count} of {goal} answers',
     randomExercises: 'Random exercises',
     noWordsYet: 'No words yet. Once a lesson has vocabulary, exercises appear here.',
-    // Favourite words
-    myWordsTitle: 'Favourite words',
+    // Words to learn
+    myWordsTitle: 'Words to learn',
     myWordsIntro: {
       one: '{count} word to work on. A word leaves the list after 3 right answers in a row, or when you take its ★ off.',
       other:
@@ -28,9 +28,9 @@ export const pages = defineMessages({
     myWordsEmpty:
       'Your list is empty. Press ☆ next to a word in any lesson to add it here. Words you get wrong in exercises are added automatically.',
     myWordsHidden: {
-      one: '{count} starred word is hidden here. To see it, tick {languages} under “Languages I learn, and my level” in <link>Settings</link>.',
+      one: '{count} word is hidden here. To see it, tick {languages} under “Languages I learn, and my level” in <link>Settings</link>.',
       other:
-        '{count} starred words are hidden here. To see them, tick {languages} under “Languages I learn, and my level” in <link>Settings</link>.',
+        '{count} words are hidden here. To see them, tick {languages} under “Languages I learn, and my level” in <link>Settings</link>.',
     },
     // Mistakes
     mistakesTitle: 'Mistakes',
@@ -56,7 +56,7 @@ export const pages = defineMessages({
     wordsLearned: 'Words learned',
     leftToLearn: 'Left to learn',
     rightAnswers: 'Right answers',
-    onMyWords: 'In Favourite words',
+    onMyWords: 'In Words to learn',
     vocabulary: 'Vocabulary',
     learnedOf: {
       one: '{learned} of {count} word learned ({percent}%)',
@@ -91,7 +91,7 @@ export const pages = defineMessages({
       many: 'Выучено {learned} из {count} слов',
       other: 'Выучено {learned} из {count} слова',
     },
-    homeOnMyWords: ', в «Избранных словах»: {hard}',
+    homeOnMyWords: ', в «Словах на изучении»: {hard}',
     homeIntro:
       '. В каждом раунде слова из всех уроков, а те, в которых вы ошибаетесь, возвращаются чаще.',
     streak: {
@@ -105,7 +105,7 @@ export const pages = defineMessages({
     goalProgress: 'Сегодня: {count} из {goal} ответов',
     randomExercises: 'Случайные упражнения',
     noWordsYet: 'Слов пока нет. Как только в уроке появится лексика, здесь будут упражнения.',
-    myWordsTitle: 'Избранные слова',
+    myWordsTitle: 'Слова на изучении',
     myWordsIntro: {
       one: '{count} слово для повторения. Слово уходит из списка после 3 верных ответов подряд или если снять с него ★.',
       few: '{count} слова для повторения. Слово уходит из списка после 3 верных ответов подряд или если снять с него ★.',
@@ -116,11 +116,11 @@ export const pages = defineMessages({
     myWordsEmpty:
       'Список пуст. Нажмите ☆ рядом со словом в любом уроке, чтобы добавить его сюда. Слова, в которых вы ошиблись в упражнениях, добавляются сами.',
     myWordsHidden: {
-      one: 'Здесь скрыто {count} избранное слово. Чтобы его увидеть, в <link>Настройках</link> в разделе «Языки, которые я учу, и мой уровень» отметьте: {languages}.',
-      few: 'Здесь скрыты {count} избранных слова. Чтобы их увидеть, в <link>Настройках</link> в разделе «Языки, которые я учу, и мой уровень» отметьте: {languages}.',
-      many: 'Здесь скрыто {count} избранных слов. Чтобы их увидеть, в <link>Настройках</link> в разделе «Языки, которые я учу, и мой уровень» отметьте: {languages}.',
+      one: 'Здесь скрыто {count} слово. Чтобы его увидеть, в <link>Настройках</link> в разделе «Языки, которые я учу, и мой уровень» отметьте: {languages}.',
+      few: 'Здесь скрыты {count} слова. Чтобы их увидеть, в <link>Настройках</link> в разделе «Языки, которые я учу, и мой уровень» отметьте: {languages}.',
+      many: 'Здесь скрыто {count} слов. Чтобы их увидеть, в <link>Настройках</link> в разделе «Языки, которые я учу, и мой уровень» отметьте: {languages}.',
       other:
-        'Здесь скрыто {count} избранного слова. Чтобы их увидеть, в <link>Настройках</link> в разделе «Языки, которые я учу, и мой уровень» отметьте: {languages}.',
+        'Здесь скрыто {count} слова. Чтобы их увидеть, в <link>Настройках</link> в разделе «Языки, которые я учу, и мой уровень» отметьте: {languages}.',
     },
     mistakesTitle: 'Ошибки',
     mistakesIntro: 'То, в чём вы ошибаетесь чаще всего. Тренируйте, пока ошибки не исчезнут.',
@@ -145,7 +145,7 @@ export const pages = defineMessages({
     wordsLearned: 'Выучено слов',
     leftToLearn: 'Осталось выучить',
     rightAnswers: 'Верных ответов',
-    onMyWords: 'В «Избранных словах»',
+    onMyWords: 'В «Словах на изучении»',
     vocabulary: 'Словарный запас',
     learnedOf: {
       one: 'Выучено {learned} из {count} слова ({percent}%)',
@@ -180,7 +180,7 @@ export const pages = defineMessages({
       one: '{learned} sur {count} mot appris',
       other: '{learned} sur {count} mots appris',
     },
-    homeOnMyWords: ', {hard} dans Mots favoris',
+    homeOnMyWords: ', {hard} dans les Mots à apprendre',
     homeIntro:
       '. Chaque tour mélange les mots de toutes les leçons, et ceux que vous ratez reviennent plus souvent.',
     streak: { one: '🔥 {count} jour d’affilée', other: '🔥 {count} jours d’affilée' },
@@ -190,7 +190,7 @@ export const pages = defineMessages({
     randomExercises: 'Exercices au hasard',
     noWordsYet:
       'Pas encore de mots. Dès qu’une leçon contient du vocabulaire, les exercices apparaissent ici.',
-    myWordsTitle: 'Mots favoris',
+    myWordsTitle: 'Mots à apprendre',
     myWordsIntro: {
       one: '{count} mot à travailler. Un mot quitte la liste après 3 bonnes réponses d’affilée, ou quand vous retirez son ★.',
       other:
@@ -199,9 +199,9 @@ export const pages = defineMessages({
     myWordsEmpty:
       'Votre liste est vide. Appuyez sur ☆ à côté d’un mot dans une leçon pour l’ajouter ici. Les mots ratés dans les exercices s’ajoutent automatiquement.',
     myWordsHidden: {
-      one: '{count} mot favori est masqué ici. Pour le voir, cochez {languages} sous « Les langues que j’apprends, et mon niveau » dans les <link>Réglages</link>.',
+      one: '{count} mot est masqué ici. Pour le voir, cochez {languages} sous « Les langues que j’apprends, et mon niveau » dans les <link>Réglages</link>.',
       other:
-        '{count} mots favoris sont masqués ici. Pour les voir, cochez {languages} sous « Les langues que j’apprends, et mon niveau » dans les <link>Réglages</link>.',
+        '{count} mots sont masqués ici. Pour les voir, cochez {languages} sous « Les langues que j’apprends, et mon niveau » dans les <link>Réglages</link>.',
     },
     mistakesTitle: 'Erreurs',
     mistakesIntro:
@@ -226,7 +226,7 @@ export const pages = defineMessages({
     wordsLearned: 'Mots appris',
     leftToLearn: 'Reste à apprendre',
     rightAnswers: 'Bonnes réponses',
-    onMyWords: 'Dans Mots favoris',
+    onMyWords: 'Dans les Mots à apprendre',
     vocabulary: 'Vocabulaire',
     learnedOf: {
       one: '{learned} sur {count} mot appris ({percent} %)',
@@ -259,7 +259,7 @@ export const pages = defineMessages({
       one: '{learned} von {count} Wort gelernt',
       other: '{learned} von {count} Wörtern gelernt',
     },
-    homeOnMyWords: ', {hard} in Lieblingswörtern',
+    homeOnMyWords: ', {hard} in den Lernwörtern',
     homeIntro:
       '. Jede Runde mischt Wörter aus allen Lektionen; die, bei denen du Fehler machst, kommen öfter.',
     streak: { one: '🔥 {count} Tag in Folge', other: '🔥 {count} Tage in Folge' },
@@ -268,7 +268,7 @@ export const pages = defineMessages({
     goalProgress: 'Heute: {count} von {goal} Antworten',
     randomExercises: 'Gemischte Übungen',
     noWordsYet: 'Noch keine Wörter. Sobald eine Lektion Vokabeln hat, erscheinen hier die Übungen.',
-    myWordsTitle: 'Lieblingswörter',
+    myWordsTitle: 'Lernwörter',
     myWordsIntro: {
       one: '{count} Wort zum Üben. Ein Wort verlässt die Liste nach 3 richtigen Antworten in Folge oder wenn du den ★ entfernst.',
       other:
@@ -277,9 +277,9 @@ export const pages = defineMessages({
     myWordsEmpty:
       'Deine Liste ist leer. Tippe in einer Lektion auf ☆ neben einem Wort, um es hier hinzuzufügen. Wörter, die du in Übungen falsch hast, kommen automatisch dazu.',
     myWordsHidden: {
-      one: '{count} Lieblingswort ist hier ausgeblendet. Um es zu sehen, hake in den <link>Einstellungen</link> unter „Sprachen, die ich lerne, und mein Niveau“ {languages} an.',
+      one: '{count} Wort ist hier ausgeblendet. Um es zu sehen, hake in den <link>Einstellungen</link> unter „Sprachen, die ich lerne, und mein Niveau“ {languages} an.',
       other:
-        '{count} Lieblingswörter sind hier ausgeblendet. Um sie zu sehen, hake in den <link>Einstellungen</link> unter „Sprachen, die ich lerne, und mein Niveau“ {languages} an.',
+        '{count} Wörter sind hier ausgeblendet. Um sie zu sehen, hake in den <link>Einstellungen</link> unter „Sprachen, die ich lerne, und mein Niveau“ {languages} an.',
     },
     mistakesTitle: 'Fehler',
     mistakesIntro: 'Was du am häufigsten falsch machst. Übe das, bis es nicht mehr auftaucht.',
@@ -303,7 +303,7 @@ export const pages = defineMessages({
     wordsLearned: 'Gelernte Wörter',
     leftToLearn: 'Noch zu lernen',
     rightAnswers: 'Richtige Antworten',
-    onMyWords: 'In Lieblingswörtern',
+    onMyWords: 'In den Lernwörtern',
     vocabulary: 'Wortschatz',
     learnedOf: {
       one: '{learned} von {count} Wort gelernt ({percent} %)',
@@ -336,7 +336,7 @@ export const pages = defineMessages({
       one: '{learned} de {count} palabra aprendida',
       other: '{learned} de {count} palabras aprendidas',
     },
-    homeOnMyWords: ', {hard} en Palabras favoritas',
+    homeOnMyWords: ', {hard} en Palabras por aprender',
     homeIntro:
       '. Cada ronda mezcla palabras de todas las lecciones, y las que fallas vuelven más a menudo.',
     streak: { one: '🔥 {count} día seguido', other: '🔥 {count} días seguidos' },
@@ -346,7 +346,7 @@ export const pages = defineMessages({
     randomExercises: 'Ejercicios al azar',
     noWordsYet:
       'Aún no hay palabras. En cuanto una lección tenga vocabulario, aquí aparecerán ejercicios.',
-    myWordsTitle: 'Palabras favoritas',
+    myWordsTitle: 'Palabras por aprender',
     myWordsIntro: {
       one: '{count} palabra que trabajar. Una palabra sale de la lista tras 3 aciertos seguidos o cuando le quitas la ★.',
       other:
@@ -355,9 +355,9 @@ export const pages = defineMessages({
     myWordsEmpty:
       'Tu lista está vacía. Pulsa ☆ junto a una palabra en cualquier lección para añadirla. Las palabras que fallas en los ejercicios se añaden solas.',
     myWordsHidden: {
-      one: '{count} palabra favorita está oculta aquí. Para verla, marca {languages} en «Idiomas que aprendo y mi nivel», en <link>Ajustes</link>.',
+      one: '{count} palabra está oculta aquí. Para verla, marca {languages} en «Idiomas que aprendo y mi nivel», en <link>Ajustes</link>.',
       other:
-        '{count} palabras favoritas están ocultas aquí. Para verlas, marca {languages} en «Idiomas que aprendo y mi nivel», en <link>Ajustes</link>.',
+        '{count} palabras están ocultas aquí. Para verlas, marca {languages} en «Idiomas que aprendo y mi nivel», en <link>Ajustes</link>.',
     },
     mistakesTitle: 'Errores',
     mistakesIntro: 'Lo que más fallas. Practícalo hasta que deje de aparecer.',
@@ -381,7 +381,7 @@ export const pages = defineMessages({
     wordsLearned: 'Palabras aprendidas',
     leftToLearn: 'Por aprender',
     rightAnswers: 'Respuestas correctas',
-    onMyWords: 'En Palabras favoritas',
+    onMyWords: 'En Palabras por aprender',
     vocabulary: 'Vocabulario',
     learnedOf: {
       one: '{learned} de {count} palabra aprendida ({percent} %)',
@@ -414,7 +414,7 @@ export const pages = defineMessages({
       one: '{learned} de {count} palavra aprendida',
       other: '{learned} de {count} palavras aprendidas',
     },
-    homeOnMyWords: ', {hard} nas Palavras favoritas',
+    homeOnMyWords: ', {hard} nas Palavras por aprender',
     homeIntro: '. Cada ronda mistura palavras de todas as lições, e as que erra voltam mais vezes.',
     streak: { one: '🔥 {count} dia seguido', other: '🔥 {count} dias seguidos' },
     startStreak: 'Comece uma série hoje',
@@ -423,7 +423,7 @@ export const pages = defineMessages({
     randomExercises: 'Exercícios aleatórios',
     noWordsYet:
       'Ainda não há palavras. Assim que uma lição tiver vocabulário, os exercícios aparecem aqui.',
-    myWordsTitle: 'Palavras favoritas',
+    myWordsTitle: 'Palavras por aprender',
     myWordsIntro: {
       one: '{count} palavra para trabalhar. Uma palavra sai da lista após 3 respostas certas seguidas ou quando lhe tira a ★.',
       other:
@@ -432,9 +432,9 @@ export const pages = defineMessages({
     myWordsEmpty:
       'A sua lista está vazia. Carregue em ☆ ao lado de uma palavra em qualquer lição para a acrescentar. As palavras que erra nos exercícios entram automaticamente.',
     myWordsHidden: {
-      one: '{count} palavra favorita está oculta aqui. Para a ver, marque {languages} em «Línguas que aprendo e o meu nível», nas <link>Definições</link>.',
+      one: '{count} palavra está oculta aqui. Para a ver, marque {languages} em «Línguas que aprendo e o meu nível», nas <link>Definições</link>.',
       other:
-        '{count} palavras favoritas estão ocultas aqui. Para as ver, marque {languages} em «Línguas que aprendo e o meu nível», nas <link>Definições</link>.',
+        '{count} palavras estão ocultas aqui. Para as ver, marque {languages} em «Línguas que aprendo e o meu nível», nas <link>Definições</link>.',
     },
     mistakesTitle: 'Erros',
     mistakesIntro: 'O que erra mais vezes. Pratique até deixar de aparecer.',
@@ -458,7 +458,7 @@ export const pages = defineMessages({
     wordsLearned: 'Palavras aprendidas',
     leftToLearn: 'Por aprender',
     rightAnswers: 'Respostas certas',
-    onMyWords: 'Nas Palavras favoritas',
+    onMyWords: 'Nas Palavras por aprender',
     vocabulary: 'Vocabulário',
     learnedOf: {
       one: '{learned} de {count} palavra aprendida ({percent}%)',
@@ -491,7 +491,7 @@ export const pages = defineMessages({
       one: '{learned} su {count} parola imparata',
       other: '{learned} su {count} parole imparate',
     },
-    homeOnMyWords: ', {hard} nelle Parole preferite',
+    homeOnMyWords: ', {hard} nelle Parole da imparare',
     homeIntro:
       '. Ogni turno mescola parole di tutte le lezioni, e quelle che sbagli tornano più spesso.',
     streak: { one: '🔥 {count} giorno di fila', other: '🔥 {count} giorni di fila' },
@@ -501,7 +501,7 @@ export const pages = defineMessages({
     randomExercises: 'Esercizi casuali',
     noWordsYet:
       'Ancora nessuna parola. Appena una lezione ha del lessico, qui compaiono gli esercizi.',
-    myWordsTitle: 'Parole preferite',
+    myWordsTitle: 'Parole da imparare',
     myWordsIntro: {
       one: '{count} parola su cui lavorare. Una parola esce dalla lista dopo 3 risposte giuste di fila o quando le togli la ★.',
       other:
@@ -510,9 +510,9 @@ export const pages = defineMessages({
     myWordsEmpty:
       'La tua lista è vuota. Premi ☆ accanto a una parola in qualsiasi lezione per aggiungerla. Le parole che sbagli negli esercizi si aggiungono da sole.',
     myWordsHidden: {
-      one: '{count} parola preferita è nascosta qui. Per vederla, spunta {languages} in «Lingue che studio e il mio livello» nelle <link>Impostazioni</link>.',
+      one: '{count} parola è nascosta qui. Per vederla, spunta {languages} in «Lingue che studio e il mio livello» nelle <link>Impostazioni</link>.',
       other:
-        '{count} parole preferite sono nascoste qui. Per vederle, spunta {languages} in «Lingue che studio e il mio livello» nelle <link>Impostazioni</link>.',
+        '{count} parole sono nascoste qui. Per vederle, spunta {languages} in «Lingue che studio e il mio livello» nelle <link>Impostazioni</link>.',
     },
     mistakesTitle: 'Errori',
     mistakesIntro: 'Quello che sbagli più spesso. Esercitati finché non smette di comparire.',
@@ -535,7 +535,7 @@ export const pages = defineMessages({
     wordsLearned: 'Parole imparate',
     leftToLearn: 'Da imparare',
     rightAnswers: 'Risposte giuste',
-    onMyWords: 'Nelle Parole preferite',
+    onMyWords: 'Nelle Parole da imparare',
     vocabulary: 'Lessico',
     learnedOf: {
       one: '{learned} su {count} parola imparata ({percent}%)',

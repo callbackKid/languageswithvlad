@@ -78,7 +78,7 @@ export function docLine(item: PhotoItem): string {
   return `${item.base || item.fr} — ${item.ru}${notes ? ` (${notes})` : ''}`;
 }
 
-// The card as a word for Favourite words: its dictionary form with that form's translation.
+// The card as a word for Words to learn: its dictionary form with that form's translation.
 export const cardWord = (card: WordCard): Word => ({
   fr: card.base || card.fr,
   ru: card.baseRu,

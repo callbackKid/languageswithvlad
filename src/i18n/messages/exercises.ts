@@ -23,7 +23,10 @@ export const exercises = defineMessages({
     keyLegend:
       '{mark}: a key word of the lesson, marked ★ by the teacher; exercises ask it more often',
     starLegend:
-      '☆ adds a word to Favourite words. Words you miss in exercises are added too, and leave the list after 3 right answers in a row.',
+      '☆ adds a word to Words to learn. Words you miss in exercises are added too, and leave the list after 3 right answers in a row.',
+    learnProgress: '{count} of {total} right answers in a row',
+    progressLegend:
+      '●●○ shows right answers in a row, in any exercise. After {total} the word is learned and leaves the list; a mistake starts the count again.',
     ankiTitle: 'Tab-separated: word, translation, transcription. In Anki: File → Import.',
     ankiExport: { one: 'Export {count} word for Anki', other: 'Export {count} words for Anki' },
     refreshTitle: 'Reads the lesson with Claude again and replaces the saved words',
@@ -104,7 +107,10 @@ export const exercises = defineMessages({
     keyLegend:
       '{mark}: ключевое слово урока, преподаватель отметил его ★; в упражнениях оно встречается чаще',
     starLegend:
-      '☆ добавляет слово в «Избранные слова». Слова с ошибками в упражнениях попадают туда сами и уходят после 3 верных ответов подряд.',
+      '☆ добавляет слово в «Слова на изучении». Слова с ошибками в упражнениях попадают туда сами и уходят после 3 верных ответов подряд.',
+    learnProgress: '{count} из {total} верных ответов подряд',
+    progressLegend:
+      '●●○ — верные ответы подряд в любом упражнении. Когда их {total}, слово считается выученным и уходит из списка; после ошибки счёт начинается заново.',
     ankiTitle: 'Через табуляцию: слово, перевод, транскрипция. В Anki: Файл → Импорт.',
     ankiExport: {
       one: 'Экспорт {count} слова в Anki',
@@ -187,7 +193,10 @@ export const exercises = defineMessages({
     keyLegend:
       '{mark} : un mot clé de la leçon, marqué ★ par le professeur ; les exercices le demandent plus souvent',
     starLegend:
-      '☆ ajoute un mot à Mots favoris. Les mots ratés dans les exercices s’y ajoutent aussi et en sortent après 3 bonnes réponses d’affilée.',
+      '☆ ajoute un mot aux Mots à apprendre. Les mots ratés dans les exercices s’y ajoutent aussi et en sortent après 3 bonnes réponses d’affilée.',
+    learnProgress: '{count} sur {total} bonnes réponses d’affilée',
+    progressLegend:
+      '●●○ indique les bonnes réponses d’affilée, dans n’importe quel exercice. Au bout de {total}, le mot est appris et quitte la liste ; une erreur remet le compteur à zéro.',
     ankiTitle:
       'Séparé par des tabulations : mot, traduction, transcription. Dans Anki : Fichier → Importer.',
     ankiExport: { one: 'Exporter {count} mot pour Anki', other: 'Exporter {count} mots pour Anki' },
@@ -264,7 +273,10 @@ export const exercises = defineMessages({
     keyLegend:
       '{mark}: ein Schlüsselwort der Lektion, von der Lehrkraft mit ★ markiert; die Übungen fragen es öfter ab',
     starLegend:
-      '☆ fügt ein Wort zu den Lieblingswörtern hinzu. Wörter, die du in Übungen falsch hast, kommen auch dazu und verschwinden nach 3 richtigen Antworten in Folge.',
+      '☆ fügt ein Wort zu den Lernwörtern hinzu. Wörter, die du in Übungen falsch hast, kommen auch dazu und verschwinden nach 3 richtigen Antworten in Folge.',
+    learnProgress: '{count} von {total} richtigen Antworten in Folge',
+    progressLegend:
+      '●●○ zeigt die richtigen Antworten in Folge, in jeder Übung. Bei {total} gilt das Wort als gelernt und verlässt die Liste; ein Fehler setzt die Zählung zurück.',
     ankiTitle: 'Tabulatorgetrennt: Wort, Übersetzung, Aussprache. In Anki: Datei → Importieren.',
     ankiExport: {
       one: '{count} Wort für Anki exportieren',
@@ -343,7 +355,10 @@ export const exercises = defineMessages({
     keyLegend:
       '{mark}: una palabra clave de la lección, marcada con ★ por el profesor; los ejercicios la preguntan más a menudo',
     starLegend:
-      '☆ añade una palabra a Palabras favoritas. Las palabras que fallas en los ejercicios también se añaden y salen de la lista tras 3 aciertos seguidos.',
+      '☆ añade una palabra a Palabras por aprender. Las palabras que fallas en los ejercicios también se añaden y salen de la lista tras 3 aciertos seguidos.',
+    learnProgress: '{count} de {total} aciertos seguidos',
+    progressLegend:
+      '●●○ muestra los aciertos seguidos, en cualquier ejercicio. Al llegar a {total}, la palabra se da por aprendida y sale de la lista; un fallo reinicia la cuenta.',
     ankiTitle:
       'Separado por tabuladores: palabra, traducción, transcripción. En Anki: Archivo → Importar.',
     ankiExport: {
@@ -423,7 +438,10 @@ export const exercises = defineMessages({
     keyLegend:
       '{mark}: uma palavra-chave da lição, marcada com ★ pelo professor; os exercícios perguntam-na mais vezes',
     starLegend:
-      '☆ acrescenta uma palavra às Palavras favoritas. As palavras que erra nos exercícios também entram e saem da lista após 3 respostas certas seguidas.',
+      '☆ acrescenta uma palavra às Palavras por aprender. As palavras que erra nos exercícios também entram e saem da lista após 3 respostas certas seguidas.',
+    learnProgress: '{count} de {total} respostas certas seguidas',
+    progressLegend:
+      '●●○ mostra as respostas certas seguidas, em qualquer exercício. Ao chegar a {total}, a palavra fica aprendida e sai da lista; um erro recomeça a contagem.',
     ankiTitle:
       'Separado por tabulações: palavra, tradução, transcrição. No Anki: Ficheiro → Importar.',
     ankiExport: {
@@ -503,7 +521,10 @@ export const exercises = defineMessages({
     keyLegend:
       '{mark}: una parola chiave della lezione, segnata con ★ dall’insegnante; gli esercizi la chiedono più spesso',
     starLegend:
-      '☆ aggiunge una parola alle Parole preferite. Ci finiscono anche le parole sbagliate negli esercizi, che escono dalla lista dopo 3 risposte giuste di fila.',
+      '☆ aggiunge una parola alle Parole da imparare. Ci finiscono anche le parole sbagliate negli esercizi, che escono dalla lista dopo 3 risposte giuste di fila.',
+    learnProgress: '{count} su {total} risposte giuste di fila',
+    progressLegend:
+      '●●○ mostra le risposte giuste di fila, in qualsiasi esercizio. Arrivati a {total}, la parola è imparata ed esce dalla lista; un errore fa ripartire il conteggio.',
     ankiTitle:
       'Separato da tabulazioni: parola, traduzione, trascrizione. In Anki: File → Importa.',
     ankiExport: {

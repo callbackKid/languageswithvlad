@@ -64,7 +64,7 @@ export default function MyWords({ hasClaude }: { hasClaude: boolean }) {
       {words.length ? (
         <section className="panel solo">
           <div className="body">
-            <WordsTab analysis={analysis} hasClaude={hasClaude} hidePairs />
+            <WordsTab analysis={analysis} hasClaude={hasClaude} hidePairs showProgress />
           </div>
         </section>
       ) : (

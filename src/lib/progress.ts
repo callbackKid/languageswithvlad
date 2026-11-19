@@ -19,7 +19,7 @@ export interface WordStat {
   wrong: number;
   streak: number;
   last: number;
-  // on the "Favourite words" list: starred by hand or missed in an exercise
+  // on the "Words to learn" list: starred by hand or missed in an exercise
   hard: boolean;
 }
 export interface FormStat {
@@ -151,7 +151,7 @@ function baseStat(word: Word, old?: WordStat): WordStat {
   };
 }
 
-// Counts an answer on a word; a wrong one puts the word on Favourite words.
+// Counts an answer on a word; a wrong one puts the word on Words to learn.
 export function recordWord(word: Word, ok: boolean) {
   const identity = wordKey(word.fr);
   const stat = baseStat(word, state.words[identity]);
@@ -168,7 +168,7 @@ export function recordWord(word: Word, ok: boolean) {
   commit(withAnswer({ ...state, words: { ...state.words, [identity]: stat } }));
 }
 
-// Stars or unstars a word (Favourite words).
+// Stars or unstars a word (Words to learn).
 export function setHard(word: Word, hard: boolean) {
   const identity = wordKey(word.fr);
   const stat = baseStat(word, state.words[identity]);
@@ -220,7 +220,7 @@ export function useProgress(): Progress {
   return useSyncExternalStore(subscribe, getProgress);
 }
 
-// A saved word as a Word again, for exercises on Favourite words and mistakes.
+// A saved word as a Word again, for exercises on Words to learn and mistakes.
 export const statWord = (stat: WordStat): Word => ({
   fr: stat.fr,
   ru: stat.ru,
