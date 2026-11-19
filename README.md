@@ -229,7 +229,7 @@ The rules for the code are in [CODE_STYLE.md](CODE_STYLE.md). A pre-commit hook 
 
 How to work with Claude Code on this project without long, costly sessions: [WORKING-WITH-CLAUDE.md](WORKING-WITH-CLAUDE.md).
 
-Already set up in `.claude/`: the rules in `CLAUDE.md`, hooks (format after each edit, guard, typecheck and News reminder at the end of a turn, session briefing), a permission allowlist, the skills `run-languageswithvlad`, `check-a11y`, `commit-message` and `commit-and-push`, and the `translator` subagent (`.claude/agents/translator.md`), which fills in and reviews the seven interface languages.
+Already set up in `.claude/`: the rules in `CLAUDE.md`, hooks (format after each edit, guard, typecheck and News reminder at the end of a turn, session briefing), a permission allowlist, the skills `run-languageswithvlad`, `check-a11y`, `audit-app` (a whole-app pass for bugs, exercise and text mistakes, and UI/UX problems), `commit-message` and `commit-and-push`, and the `translator` subagent (`.claude/agents/translator.md`), which fills in and reviews the seven interface languages.
 
 Set up personally, in `~/.claude/` (not in the repo): the status line in the terminal (folder, branch, model, how full the context is, session age, the 5-hour usage limit; context and age turn yellow, then red), the session-age reminder and notifications.
 

@@ -43,7 +43,7 @@ Check a changed page at desktop width too: `--width 1280`.
 
 Read the changed components against CODE_STYLE.md, section Accessibility, and also:
 
-- **Labels say what the control does**, in every interface language, not just exist. An icon button (🔈, ☆, ↻) has both `aria-label` and `title`.
+- **Labels say what the control does**, in every interface language, not just exist. An icon button (🔈, ☆, ↻) has both `aria-label` and `data-tooltip` (never `title`: CODE_STYLE.md, Accessibility).
 - **Toggle groups**: `role="group"` with `aria-label`, `aria-pressed` on each button. This finds groups without a label (expect 0):
   ```bash
   grep -rn 'role="group"' src --include='*.tsx' | grep -vc 'aria-label'
