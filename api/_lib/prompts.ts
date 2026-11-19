@@ -9,7 +9,9 @@ export const LANGUAGE_NAMES: Record<LearnLanguage, string> = {
 };
 // The language a request asks for; French when it's missing or unknown.
 export const asLanguage = (value: unknown): LearnLanguage =>
-  typeof value === 'string' && value in LANGUAGE_NAMES ? (value as LearnLanguage) : 'fr';
+  typeof value === 'string' && Object.hasOwn(LANGUAGE_NAMES, value)
+    ? (value as LearnLanguage)
+    : 'fr';
 
 export const LEARN_LANGUAGES = Object.keys(LANGUAGE_NAMES) as LearnLanguage[];
 const CODES = LEARN_LANGUAGES;
@@ -132,7 +134,7 @@ const VERB_TABLES = {
 export type VerbLanguage = keyof typeof VERB_TABLES;
 // The language of a verb's tables; null for one without tables (English).
 export const asVerbLanguage = (value: unknown): VerbLanguage | null =>
-  typeof value === 'string' && value in VERB_TABLES ? (value as VerbLanguage) : null;
+  typeof value === 'string' && Object.hasOwn(VERB_TABLES, value) ? (value as VerbLanguage) : null;
 
 // The prompt for a verb's tables, in the tenses of its language.
 export function conjugationPrompt(infinitive: string, ru: string, language: VerbLanguage): string {
@@ -262,7 +264,9 @@ const EXPLAIN_NAMES = {
 export type ExplainLanguage = keyof typeof EXPLAIN_NAMES;
 // The language to explain grammar in; Russian when it's missing or unknown.
 export const asExplainLanguage = (value: unknown): ExplainLanguage =>
-  typeof value === 'string' && value in EXPLAIN_NAMES ? (value as ExplainLanguage) : 'ru';
+  typeof value === 'string' && Object.hasOwn(EXPLAIN_NAMES, value)
+    ? (value as ExplainLanguage)
+    : 'ru';
 
 // The prompt for a discussion question, with follow-ups, sentence starters and useful words.
 export function discussionPrompt({
