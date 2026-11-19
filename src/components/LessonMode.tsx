@@ -7,13 +7,15 @@ import { homework as homeworkText } from '../i18n/messages/homework';
 import { type Bank, readAnalysis, usePreparedLesson } from '../lib/bank';
 import type { BoardServer } from '../lib/boardSync';
 import { findCall, openCallWindow } from '../lib/call';
+import { clockTime, dayKey } from '../lib/dates';
 import { homeworkItems, readItem, writingKey } from '../lib/homework';
+import { normalizeWriting } from '../lib/parse';
 import { getProgress } from '../lib/progress';
 import { keyWordsFirst } from '../lib/quiz';
 import { followLink, hrefFor } from '../lib/router';
 import { lessonPath } from '../lib/sections';
 import { getSettings } from '../lib/settings';
-import { load, remove, save } from '../lib/storage';
+import { load, loadChecked, remove, save } from '../lib/storage';
 import type { Lesson, Writing } from '../lib/types';
 import { hash } from '../lib/util';
 import { previousLesson, warmUpRound } from '../lib/warmUp';
@@ -34,11 +36,10 @@ import { WritingResult } from './WritingTask';
 import ZoomCall from './ZoomCall';
 
 const NAME_KEY = 'call:name';
-const pad = (value: number) => String(value).padStart(2, '0');
-const today = () => {
-  const now = new Date();
-  return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
-};
+// a name as Zoom shows it, and a meeting passcode (Zoom allows at most 10 characters; room to spare)
+const MAX_NAME_LENGTH = 60;
+const MAX_PASSCODE_LENGTH = 40;
+const today = () => dayKey(new Date());
 
 /** Today's date in UTC, the same for everyone wherever they are. */
 const utcDay = () => new Date().toISOString().slice(0, 10);
@@ -128,7 +129,7 @@ function CallPanel({ docText, zoomReady }: { docText: string; zoomReady: boolean
               <input
                 type="text"
                 required
-                maxLength={60}
+                maxLength={MAX_NAME_LENGTH}
                 value={name}
                 onChange={(event) => setName(event.target.value)}
               />
@@ -137,7 +138,7 @@ function CallPanel({ docText, zoomReady }: { docText: string; zoomReady: boolean
               <span>{t('passcode')}</span>
               <input
                 type="text"
-                maxLength={40}
+                maxLength={MAX_PASSCODE_LENGTH}
                 value={passcode}
                 onChange={(event) => setPasscode(event.target.value)}
               />
@@ -168,8 +169,7 @@ function LessonNotes({ docId, target }: { docId: string; target: DocTarget }) {
   };
   /** "[18:05] " at the cursor, to mark when something came up */
   const insertTime = () => {
-    const now = new Date();
-    const stamp = `[${pad(now.getHours())}:${pad(now.getMinutes())}] `;
+    const stamp = `[${clockTime(new Date())}] `;
     const element = area.current;
     const start = element?.selectionStart ?? text.length;
     const end = element?.selectionEnd ?? text.length;
@@ -275,7 +275,7 @@ function WrittenHomework({ lesson, docId }: { lesson: Lesson | null; docId: stri
   const written = homeworkItems(lesson.body)
     .map(readItem)
     .filter((item) => item.kind === 'writing')
-    .map((item) => load<Writing>(writingKey(docId, lesson.key, item.text)))
+    .map((item) => loadChecked(writingKey(docId, lesson.key, item.text), normalizeWriting))
     .filter((writing): writing is Writing => !!writing?.text.trim());
   if (!written.length) return null;
   return (
@@ -401,7 +401,7 @@ export default function LessonMode({
   target,
   zoomReady,
   boardServer,
-  ai,
+  hasClaude,
 }: {
   docText: string;
   docId: string;
@@ -410,13 +410,13 @@ export default function LessonMode({
   target: DocTarget;
   zoomReady: boolean;
   boardServer: BoardServer | null;
-  ai: boolean;
+  hasClaude: boolean;
 }) {
   const { t } = useTranslation(call);
   // the warm-up or the game, shown above the call
   const [activity, setActivity] = useState<'warm-up' | 'game' | null>(null);
   const earlier = previousLesson(lessons);
-  const preparing = usePreparedLesson(earlier, bank, ai);
+  const preparing = usePreparedLesson(earlier, bank, hasClaude);
   const newest = lessons[lessons.length - 1] ?? null;
   return (
     <>
@@ -430,7 +430,7 @@ export default function LessonMode({
       {activity === 'game' && newest && (
         <ActivityPlace>
           <QuizGame
-            words={gameWords(lessons, bank, ai)}
+            words={gameWords(lessons, bank, hasClaude)}
             pool={bank.words}
             lessonNumber={newest.n}
             lessonKey={newest.key}

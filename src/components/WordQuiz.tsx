@@ -176,7 +176,7 @@ export default function WordQuiz({
           ? {
               asked: `${question.form.inf}, ${question.form.t}${question.form.negative ? `, ${t('negative')}` : ''}`,
               answer: `${question.form.p} ${question.form.f}`,
-              language: 'fr',
+              language: languageOfTense(question.form.t),
             }
           : {
               asked: question.word.ru,

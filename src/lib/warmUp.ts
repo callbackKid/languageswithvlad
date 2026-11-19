@@ -1,8 +1,9 @@
 import type { Bank } from './bank';
+import { startOfDay } from './dates';
 import { isLearned, type Progress, statWord } from './progress';
 import { buildQuiz, type FormQuestion, pickWords, type QuizItem } from './quiz';
 import { getSettings, isStudied } from './settings';
-import type { Lesson, Tense, Word } from './types';
+import { languageOfTense, type Lesson, type Tense, type Word } from './types';
 
 /** About five minutes of questions. */
 export const WARM_UP_QUESTIONS = 12;
@@ -14,9 +15,6 @@ const MISSED_WORDS = 6;
 const MISSED_FORMS = 2;
 // with no earlier lesson in the document, the mistakes of the past week
 const FALLBACK_DAYS = 7;
-
-const startOfDay = (date: Date) =>
-  new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime();
 
 /** The lesson the warm-up goes over: the newest one before today, since today's may already be
     written in the document. */
@@ -52,20 +50,24 @@ export function warmUpRound(
     .sort(byMisses)
     .slice(0, MISSED_WORDS)
     .map(statWord);
-  // verb forms are French
-  const missedForms: FormQuestion[] = settings.studying.includes('fr')
-    ? Object.values(progress.forms)
-        .filter((stat) => stat.wrong > 0 && stat.last >= since && stat.wrong >= stat.right)
-        .sort(byMisses)
-        .slice(0, MISSED_FORMS)
-        .map((stat) => ({
-          inf: stat.inf,
-          t: stat.t as Tense,
-          p: stat.p,
-          f: stat.f,
-          negative: stat.negative,
-        }))
-    : [];
+  // a verb form's tense names its language, which the student must still learn
+  const missedForms: FormQuestion[] = Object.values(progress.forms)
+    .filter(
+      (stat) =>
+        stat.wrong > 0 &&
+        stat.last >= since &&
+        stat.wrong >= stat.right &&
+        isStudied(languageOfTense(stat.t), settings)
+    )
+    .sort(byMisses)
+    .slice(0, MISSED_FORMS)
+    .map((stat) => ({
+      inf: stat.inf,
+      t: stat.t as Tense,
+      p: stat.p,
+      f: stat.f,
+      negative: stat.negative,
+    }));
 
   const asked = new Set(missedWords.map((word) => word.fr.toLowerCase()));
   const lessonWords = lesson

@@ -6,6 +6,9 @@ import type { BoardPeer, BoardServer } from '../lib/boardSync';
 import { isDark, useSettings } from '../lib/settings';
 import type { BoardHandle } from './BoardCanvas';
 
+// the download has started by then, so the file's address can be let go (milliseconds)
+const RELEASE_AFTER = 1000;
+
 const BoardCanvas = lazy(() => import('./BoardCanvas'));
 
 /** A drawing board for the lesson: write, draw, paste pictures. With sharing set up, the teacher
@@ -32,11 +35,11 @@ export default function LessonBoard({
   const others = peers.length > 1;
   const frame = useRef<HTMLDivElement>(null);
   const handle = useRef<BoardHandle | null>(null);
-  const [open, setOpen] = useState(false);
-  const [fullScreen, setFullScreen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isFullScreen, setIsFullScreen] = useState(false);
 
   useEffect(() => {
-    const onFullScreen = () => setFullScreen(document.fullscreenElement === frame.current);
+    const onFullScreen = () => setIsFullScreen(document.fullscreenElement === frame.current);
     document.addEventListener('fullscreenchange', onFullScreen);
     return () => {
       document.removeEventListener('fullscreenchange', onFullScreen);
@@ -51,25 +54,25 @@ export default function LessonBoard({
     link.href = url;
     link.download = `board-${new Date().toISOString().slice(0, 10)}.png`;
     link.click();
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    setTimeout(() => URL.revokeObjectURL(url), RELEASE_AFTER);
   }
 
   return (
     <section className="call-card lesson-board">
       <div className="call-card-head">
         <h2>{t('boardTitle')}</h2>
-        {open && (
+        {isOpen && (
           <>
             <button
               type="button"
               className="btn ghost"
               onClick={() =>
-                fullScreen
+                isFullScreen
                   ? void document.exitFullscreen()
                   : void frame.current?.requestFullscreen()
               }
             >
-              {fullScreen ? t('exitFullScreen') : t('fullScreen')}
+              {isFullScreen ? t('exitFullScreen') : t('fullScreen')}
             </button>
             <button type="button" className="btn ghost" onClick={() => void savePicture()}>
               {t('savePicture')}
@@ -87,7 +90,7 @@ export default function LessonBoard({
         )}
       </div>
       <p className="hint">{shared ? t('boardHintShared') : t('boardHint')}</p>
-      {open && shared && (
+      {isOpen && shared && (
         <p className={'board-status' + (others ? ' live' : '')} role="status">
           {others
             ? t('boardLive', {
@@ -96,7 +99,7 @@ export default function LessonBoard({
             : t('boardWaiting')}
         </p>
       )}
-      {open ? (
+      {isOpen ? (
         <div ref={frame} className="board-frame">
           <Suspense
             fallback={
@@ -121,7 +124,7 @@ export default function LessonBoard({
         </div>
       ) : (
         <div className="row-actions">
-          <button type="button" className="btn primary" onClick={() => setOpen(true)}>
+          <button type="button" className="btn primary" onClick={() => setIsOpen(true)}>
             {t('openBoard')}
           </button>
         </div>

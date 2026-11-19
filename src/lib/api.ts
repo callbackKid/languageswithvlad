@@ -49,15 +49,17 @@ async function request<T>(path: string, init?: RequestInit, teacherCode?: string
   if (response.ok && data === null)
     throw new ApiError(response.status, 'no_api', translator(common).t('noServer'));
   if (!response.ok) {
-    const errorCode = (data as { error?: string } | null)?.error || '';
-    throw new ApiError(response.status, errorCode, messageFor(response.status, errorCode));
+    const fields = data && typeof data === 'object' ? (data as Record<string, unknown>) : {};
+    const errorCode = typeof fields.error === 'string' ? fields.error : '';
+    const email = typeof fields.email === 'string' ? fields.email : '';
+    throw new ApiError(response.status, errorCode, messageFor(response.status, errorCode, email));
   }
   return data as T;
 }
 
 /** The error in the interface language. Codes and common statuses are translated here; the
     rare input errors the server explains in its own words (in English) are shown as they are. */
-function messageFor(status: number, errorCode: string): string {
+function messageFor(status: number, errorCode: string, email = ''): string {
   const { t } = translator(common);
   if (status === 401) {
     window.dispatchEvent(new Event('cahier:need-code'));
@@ -70,6 +72,11 @@ function messageFor(status: number, errorCode: string): string {
   if (errorCode === 'unreachable') return t('docUnreachable');
   if (errorCode === 'delivery_failed') return t('deliveryFailed');
   if (errorCode === 'lesson_not_found') return t('lessonNotFound');
+  if (errorCode === 'google_off') return t('googleOff');
+  if (errorCode === 'google_key') return t('googleKey');
+  if (errorCode === 'google_no_edit') return t('googleNoEdit', { email });
+  if (errorCode === 'google_unreachable') return t('googleUnreachable');
+  if (errorCode === 'google_rejected') return t('googleRejected');
   if (errorCode === 'notion_off') return t('notionOff');
   if (errorCode === 'notion_token') return t('notionToken');
   if (errorCode === 'notion_not_shared') return t('notionNotShared');

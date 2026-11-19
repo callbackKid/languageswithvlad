@@ -5,8 +5,8 @@ import { common } from '../i18n/messages/common';
 import { paper } from '../i18n/messages/paper';
 import { api, ApiError } from '../lib/api';
 import { shrinkImage } from '../lib/image';
+import { asObjectText } from '../lib/parse';
 import { extractPages, pdfPageCount } from '../lib/pdf';
-import { asText } from '../lib/util';
 import WaitingFact from './WaitingFact';
 
 // keep in step with MAX_HANDWRITTEN_PAGES in api/paper.ts
@@ -44,8 +44,7 @@ export default function BookImport({
     setStep('reading');
     setError('');
     try {
-      const result = (await api.bookExercises(pages)) as { text?: unknown };
-      const copied = asText(result?.text);
+      const { text: copied } = asObjectText(await api.bookExercises(pages), ['text']);
       if (!copied) throw new Error('empty');
       setText(copied);
       setPdf(null);

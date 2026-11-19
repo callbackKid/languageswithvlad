@@ -7,8 +7,9 @@ import { api, ApiError } from '../lib/api';
 import type { Bank } from '../lib/bank';
 import { normalizeDiscussion } from '../lib/parse';
 import { LEVELS, useSettings } from '../lib/settings';
-import { load, save } from '../lib/storage';
+import { asFields, load, loadChecked, save } from '../lib/storage';
 import type { Discussion, Language } from '../lib/types';
+import { asLanguage } from '../lib/types';
 import { shownTopic } from '../lib/util';
 import GrammarRuleBox from './GrammarRuleBox';
 import PageHead from './PageHead';
@@ -17,6 +18,8 @@ import Star from './Star';
 import WaitingFact from './WaitingFact';
 
 const CUSTOM = '__custom';
+// the student's own topic; the server cuts it at the same length (api/discussion.ts)
+const MAX_TOPIC_LENGTH = 120;
 
 const TOPICS: Record<Language, string[]> = {
   fr: [
@@ -329,7 +332,7 @@ function TopicSelect({
         <input
           type="text"
           value={custom}
-          maxLength={120}
+          maxLength={MAX_TOPIC_LENGTH}
           placeholder={t('typeYourOwn')}
           onChange={(event) => onCustom(event.target.value)}
         />
@@ -339,13 +342,23 @@ function TopicSelect({
 }
 
 /** A discussion question for the start of a lesson: chosen level, vocabulary topic and grammar point. */
-export default function Discuss({ bank, ai }: { bank: Bank; ai: boolean }) {
+export default function Discuss({ bank, hasClaude }: { bank: Bank; hasClaude: boolean }) {
   const { t, language: uiLanguage } = useTranslation(talk);
   const commonText = useTranslation(common);
   const names = useTranslation(learning);
   const settings = useSettings();
   const [choice, setChoice] = useState<Choice>(() => {
-    const stored = load<Choice>('discuss:choice');
+    const fields = asFields(load<unknown>('discuss:choice'), {
+      level: 'string',
+      topic: 'string',
+      customTopic: 'string',
+      grammar: 'string',
+      customGrammar: 'string',
+    });
+    const stored: Choice | null = fields && {
+      ...fields,
+      language: asLanguage((load<unknown>('discuss:choice') as { language?: unknown }).language),
+    };
     // the first time, start from the student's own language and level (Settings)
     const first = settings.studying[0] ?? 'fr';
     const saved = stored
@@ -364,7 +377,7 @@ export default function Discuss({ bank, ai }: { bank: Bank; ai: boolean }) {
     ? choice.language
     : (settings.studying[0] ?? 'fr');
   const [discussion, setDiscussion] = useState<Discussion | null>(() =>
-    load<Discussion>('discuss:last')
+    loadChecked('discuss:last', normalizeDiscussion)
   );
   const [state, setState] = useState<'idle' | 'loading' | 'error'>('idle');
   const [error, setError] = useState('');
@@ -419,7 +432,7 @@ export default function Discuss({ bank, ai }: { bank: Bank; ai: boolean }) {
       <PageHead guide="discuss" title={t('discussTitle')}>
         {t('discussIntro')}
       </PageHead>
-      {!ai ? (
+      {!hasClaude ? (
         <p className="empty">{commonText.t('needsClaude')}</p>
       ) : (
         <>
@@ -487,7 +500,7 @@ export default function Discuss({ bank, ai }: { bank: Bank; ai: boolean }) {
                   id="discuss-own-topic"
                   type="text"
                   value={choice.customTopic}
-                  maxLength={120}
+                  maxLength={MAX_TOPIC_LENGTH}
                   placeholder={t('ownTopicPlaceholder')}
                   onChange={(event) => update({ customTopic: event.target.value })}
                 />

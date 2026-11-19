@@ -7,7 +7,6 @@ import {
   reconcileElements,
 } from '@excalidraw/excalidraw';
 import type {
-  BinaryFileData,
   BinaryFiles,
   Collaborator,
   ExcalidrawImperativeAPI,
@@ -17,12 +16,19 @@ import { useCallback, useEffect, useRef } from 'react';
 
 import type { UiLanguage } from '../i18n/core';
 import {
+  asPointer,
+  asPointerButton,
+  asSavedBoard,
+  asSharedElements,
+  asSharedFiles,
+} from '../lib/boardPayload';
+import {
   type BoardConnection,
   type BoardPeer,
   type BoardServer,
   connectBoard,
 } from '../lib/boardSync';
-import { load, save } from '../lib/storage';
+import { loadChecked, save } from '../lib/storage';
 
 /* The drawing itself (Excalidraw, MIT). It's a big library, so LessonBoard loads this file only
    when the board is opened. With a connection, every change is sent to the other people on the
@@ -41,6 +47,8 @@ const LANG_CODES: Record<UiLanguage, string> = {
     and well within the realtime service's message limits. */
 const SEND_EVERY = 100;
 const POINTER_EVERY = 60;
+// the drawing is saved on the device this many milliseconds after the last stroke
+const SAVE_AFTER = 400;
 /** Pictures larger than this aren't sent (a broadcast message is limited to about 256 KB). */
 const MAX_SHARED_FILE = 180_000;
 
@@ -82,7 +90,7 @@ export default function BoardCanvas({
   // opened and closed by the effect below, so React's double mount in development is harmless
   const connectionRef = useRef<BoardConnection | null>(null);
   const timer = useRef<number>();
-  const initial = useRef(load<Saved>(storageKey));
+  const initial = useRef(loadChecked(storageKey, asSavedBoard));
   // the newest drawing not written to storage yet (saving waits for a pause in drawing)
   const unsaved = useRef<Saved | null>(null);
   // the version of each shape the others already have, so only real changes are sent
@@ -136,9 +144,12 @@ export default function BoardCanvas({
     const pointers = collaborators.current;
     connection.on('elements', (payload) => {
       const instance = api.current;
-      if (!instance || !Array.isArray(payload.elements)) return;
-      // shapes from the others, in Excalidraw's own format
-      const remote = payload.elements as RemoteElements;
+      if (!instance) return;
+      // shapes from the others, in Excalidraw's own format, the malformed ones left out
+      const shared = asSharedElements(payload.elements);
+      if (!shared.length) return;
+      // checked for what reconcileElements reads (id, type, version) on the line above
+      const remote = shared as unknown as RemoteElements;
       for (const element of remote)
         sharedVersions.set(
           element.id,
@@ -155,8 +166,8 @@ export default function BoardCanvas({
       });
     });
     connection.on('files', (payload) => {
-      if (!Array.isArray(payload.files)) return;
-      const files = payload.files as BinaryFileData[];
+      const files = asSharedFiles(payload.files);
+      if (!files.length) return;
       for (const file of files) knownFiles.add(file.id);
       api.current?.addFiles(files);
     });
@@ -164,11 +175,13 @@ export default function BoardCanvas({
     connection.on('hello', () => sendChanges(true));
     connection.on('pointer', (payload) => {
       const instance = api.current;
-      const from = String(payload.from ?? '') as SocketId;
-      if (!instance || !from) return;
+      const sender = typeof payload.from === 'string' ? payload.from : '';
+      if (!instance || !sender) return;
+      // a socket id is any non-empty text, which the check above proves
+      const from = sender as SocketId;
       pointers.set(from, {
-        pointer: payload.pointer as Collaborator['pointer'],
-        button: payload.button as Collaborator['button'],
+        pointer: asPointer(payload.pointer),
+        button: asPointerButton(payload.button),
         username: String(payload.name ?? ''),
         id: from,
       });
@@ -203,6 +216,7 @@ export default function BoardCanvas({
       initialData={
         initial.current
           ? {
+              // shapes and pictures checked by asSavedBoard, in Excalidraw's own format
               elements: initial.current.elements as never,
               files: initial.current.files as never,
               scrollToContent: true,
@@ -250,7 +264,7 @@ export default function BoardCanvas({
         // pictures pasted on the board can be large; storage may refuse them, the drawing stays
         unsaved.current = { elements: elements.filter((element) => !element.isDeleted), files };
         window.clearTimeout(timer.current);
-        timer.current = window.setTimeout(flush, 400);
+        timer.current = window.setTimeout(flush, SAVE_AFTER);
         if (!connectionRef.current || sendTimer.current) return;
         sendTimer.current = window.setTimeout(() => {
           sendTimer.current = undefined;

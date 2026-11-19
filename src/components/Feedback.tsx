@@ -9,6 +9,11 @@ import { getSettings, isDark } from '../lib/settings';
 import { load, save } from '../lib/storage';
 
 const MAX_PICTURES = 3;
+// the server cuts the message and the contact at the same lengths (api/feedback.ts)
+const MAX_MESSAGE_LENGTH = 3000;
+const MAX_CONTACT_LENGTH = 200;
+// a user agent is cut here: the server keeps a little more (api/feedback.ts)
+const MAX_BROWSER_LENGTH = 200;
 // long side in pixels: a screenshot stays readable and three of them fit the upload limit
 const MAX_SIDE = 1600;
 const DRAFT_KEY = 'feedback:draft';
@@ -21,6 +26,16 @@ interface Draft {
   contact: string;
 }
 const EMPTY_DRAFT: Draft = { kind: 'bug', message: '', contact: '' };
+// the unsent message kept on this device; only its usable fields
+function asDraft(raw: unknown): Partial<Draft> {
+  const data = raw && typeof raw === 'object' ? (raw as Record<string, unknown>) : {};
+  const kind = KINDS.find((known) => known === data.kind);
+  return {
+    ...(kind && { kind }),
+    ...(typeof data.message === 'string' && { message: data.message }),
+    ...(typeof data.contact === 'string' && { contact: data.contact }),
+  };
+}
 
 interface Picture extends ImagePayload {
   preview: string;
@@ -29,7 +44,7 @@ interface Picture extends ImagePayload {
 /** Where it happened, so the teacher doesn't have to ask. */
 function browserLine(): string {
   const theme = isDark() ? 'dark' : 'light';
-  return `${navigator.userAgent.slice(0, 200)} · window ${window.innerWidth}×${window.innerHeight} · ${theme} theme`;
+  return `${navigator.userAgent.slice(0, MAX_BROWSER_LENGTH)} · window ${window.innerWidth}×${window.innerHeight} · ${theme} theme`;
 }
 
 /** A "Feedback" button that opens a form: report a bug, suggest a change or write anything, with screenshots. Goes to the teacher's Telegram. */
@@ -41,7 +56,7 @@ export default function Feedback({ docTitle }: { docTitle: string }) {
     ...EMPTY_DRAFT,
     // the name from Settings, until the student writes another contact here
     contact: getSettings().name,
-    ...load<Draft>(DRAFT_KEY),
+    ...asDraft(load<unknown>(DRAFT_KEY)),
   }));
   const [pictures, setPictures] = useState<Picture[]>([]);
   const [state, setState] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
@@ -81,11 +96,9 @@ export default function Feedback({ docTitle }: { docTitle: string }) {
   }
 
   function removePicture(index: number) {
-    setPictures((previous) => {
-      const removed = previous[index];
-      if (removed) URL.revokeObjectURL(removed.preview);
-      return previous.filter((_picture, position) => position !== index);
-    });
+    const removed = pictures[index];
+    if (removed) URL.revokeObjectURL(removed.preview);
+    setPictures((previous) => previous.filter((_picture, position) => position !== index));
   }
 
   function open() {
@@ -191,7 +204,7 @@ export default function Feedback({ docTitle }: { docTitle: string }) {
               <textarea
                 required
                 rows={5}
-                maxLength={3000}
+                maxLength={MAX_MESSAGE_LENGTH}
                 value={draft.message}
                 placeholder={t(`placeholder.${draft.kind}`)}
                 onChange={(event) => update({ message: event.target.value })}
@@ -237,7 +250,7 @@ export default function Feedback({ docTitle }: { docTitle: string }) {
               <span>{t('contact')}</span>
               <input
                 type="text"
-                maxLength={200}
+                maxLength={MAX_CONTACT_LENGTH}
                 value={draft.contact}
                 placeholder={t('contactPlaceholder')}
                 onChange={(event) => update({ contact: event.target.value })}

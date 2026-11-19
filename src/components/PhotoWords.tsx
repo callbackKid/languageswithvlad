@@ -5,8 +5,8 @@ import { common } from '../i18n/messages/common';
 import { paper } from '../i18n/messages/paper';
 import { api, ApiError } from '../lib/api';
 import { shrinkImage } from '../lib/image';
-import { normalizePhoto } from '../lib/parse';
-import { load, save } from '../lib/storage';
+import { normalizePhoto, normalizePhotoItems } from '../lib/parse';
+import { asFields, loadChecked, save } from '../lib/storage';
 import type { PhotoItem } from '../lib/types';
 import AddToDoc, { type DocTarget } from './AddToDoc';
 import WaitingFact from './WaitingFact';
@@ -30,11 +30,23 @@ function docLine(item: PhotoItem): string {
   return `${item.base || item.fr} — ${item.ru}${notes ? ` (${notes})` : ''}`;
 }
 
-export default function PhotoWords({ ai, target }: { ai: boolean; target: DocTarget }) {
+export default function PhotoWords({
+  hasClaude,
+  target,
+}: {
+  hasClaude: boolean;
+  target: DocTarget;
+}) {
   const { t } = useTranslation(paper);
   const commonText = useTranslation(common);
   const [preview, setPreview] = useState<string | null>(null);
-  const [scan, setScan] = useState<LastScan | null>(() => load<LastScan>(LAST_KEY));
+  const [scan, setScan] = useState<LastScan | null>(() =>
+    loadChecked(LAST_KEY, (raw) => {
+      const fields = asFields(raw, { at: 'number' });
+      const items = normalizePhotoItems((raw as { items?: unknown }).items);
+      return fields && items.length ? { at: fields.at, items } : null;
+    })
+  );
   const [state, setState] = useState<'idle' | 'loading' | 'error'>('idle');
   const [error, setError] = useState('');
 
@@ -72,7 +84,7 @@ export default function PhotoWords({ ai, target }: { ai: boolean; target: DocTar
   return (
     <>
       <p className="hint photo-intro">{t('photoIntro')}</p>
-      {!ai ? (
+      {!hasClaude ? (
         <p className="empty">{commonText.t('needsClaude')}</p>
       ) : (
         <>

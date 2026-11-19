@@ -4,9 +4,14 @@ import { translator, useTranslation } from '../i18n/core';
 import { common } from '../i18n/messages/common';
 import { reader } from '../i18n/messages/reader';
 import { api, ApiError } from '../lib/api';
-import { normalizeExplanation, normalizeStudy, normalizeTranslation } from '../lib/parse';
+import {
+  normalizeExplanation,
+  normalizeReaderText,
+  normalizeStudy,
+  normalizeTranslation,
+} from '../lib/parse';
 import { getSettings } from '../lib/settings';
-import { load, save } from '../lib/storage';
+import { asList, load, save } from '../lib/storage';
 import type { Analysis, Language, ReaderText, TextStudy } from '../lib/types';
 import PageHead from './PageHead';
 import Speak from './Speak';
@@ -18,6 +23,8 @@ const STORAGE_KEY = 'reader:texts';
 /** Keep in step with MAX_TEXT_LENGTH in api/text.ts. */
 const MAX_TEXT_LENGTH = 8000;
 const MAX_SELECTION_LENGTH = 200;
+// the sentence sent with a marked word; the server takes up to 600 (MAX_CONTEXT_LENGTH in api/text.ts)
+const MAX_CONTEXT_LENGTH = 500;
 /** The oldest texts are dropped beyond this many, so storage doesn't fill up. */
 const MAX_TEXTS = 20;
 // a word: letters, with apostrophes and hyphens inside (l'ami, peut-être)
@@ -40,7 +47,7 @@ const firstWords = (text: string) => {
 function sentenceAround(paragraph: string, selection: string): string {
   const sentences = paragraph.split(/(?<=[.!?…»"])\s+/);
   const found = sentences.find((sentence) => sentence.includes(selection));
-  return (found ?? paragraph).slice(0, 500);
+  return (found ?? paragraph).slice(0, MAX_CONTEXT_LENGTH);
 }
 
 /** True-or-false statements about the text: each is answered once, then explained. */
@@ -100,10 +107,12 @@ function TrueFalse({
 
 /** A pasted text to read: any word or phrase explained on request, a translation of the whole
     text, and words, questions and a true-or-false exercise built from it. */
-export default function Reader({ ai }: { ai: boolean }) {
+export default function Reader({ hasClaude }: { hasClaude: boolean }) {
   const { t, rich } = useTranslation(reader);
   const commonText = useTranslation(common);
-  const [texts, setTexts] = useState<ReaderText[]>(() => load<ReaderText[]>(STORAGE_KEY) ?? []);
+  const [texts, setTexts] = useState<ReaderText[]>(() =>
+    asList(load<unknown>(STORAGE_KEY), normalizeReaderText)
+  );
   const [currentId, setCurrentId] = useState<string | null>(() => texts[0]?.id ?? null);
   const [draft, setDraft] = useState('');
   const [selection, setSelection] = useState<Selection | null>(null);
@@ -247,7 +256,7 @@ export default function Reader({ ai }: { ai: boolean }) {
     }
   }
 
-  if (!ai)
+  if (!hasClaude)
     return (
       <>
         <PageHead guide="text" title={t('title')}>
@@ -456,7 +465,7 @@ export default function Reader({ ai }: { ai: boolean }) {
                       <WordsTab
                         key={current.id + current.study.words.length}
                         analysis={studyAnalysis}
-                        ai={ai}
+                        hasClaude={hasClaude}
                         hidePairs
                       />
                     </>

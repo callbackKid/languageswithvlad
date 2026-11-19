@@ -8,6 +8,8 @@ export const FAST_MODEL = process.env.CLAUDE_FAST_MODEL || 'claude-haiku-5-5';
    (many students opening the same lesson or the same verb). */
 const cache = new Map<string, unknown>();
 const MAX_CACHE = 500;
+// characters of an error answer written to the log: enough to see what went wrong
+const LOGGED_DETAIL = 500;
 
 export class ClaudeError extends HttpError {}
 
@@ -96,7 +98,7 @@ export async function claudeJSON(
   });
   if (!apiResponse.ok) {
     const detail = await apiResponse.text().catch(() => '');
-    console.error('Claude API error', apiResponse.status, detail.slice(0, 500));
+    console.error('Claude API error', apiResponse.status, detail.slice(0, LOGGED_DETAIL));
     if (apiResponse.status === 429 || apiResponse.status === 529)
       throw new ClaudeError(503, 'Claude is busy. Try again in a minute.');
     throw new ClaudeError(502, 'Claude request failed.');

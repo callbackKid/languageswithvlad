@@ -5,7 +5,7 @@ import { game } from '../i18n/messages/game';
 import { type Bank, lessonWords } from '../lib/bank';
 import { recordWord } from '../lib/progress';
 import { buildChoiceQuiz, type QuizItem } from '../lib/quiz';
-import { load, save } from '../lib/storage';
+import { asFields, asList, load, save } from '../lib/storage';
 import type { Lesson, Word } from '../lib/types';
 import ExerciseHead from './ExerciseHead';
 import Speak from './Speak';
@@ -18,6 +18,8 @@ const BASE_POINTS = 100;
 const POINTS_PER_SECOND = 10;
 const KEPT_RECORDS = 10;
 const SHOWN_RECORDS = 5;
+// milliseconds between two updates of the clock: smooth enough for the bar
+const CLOCK_TICK = 100;
 
 export interface GameRecord {
   points: number;
@@ -27,20 +29,32 @@ export interface GameRecord {
   lessonKey: string;
 }
 const recordsKey = (docId: string) => `game-records:${docId}`;
-export const readRecords = (docId: string) => load<GameRecord[]>(recordsKey(docId)) ?? [];
+// The records table of a document, each record checked.
+export const readRecords = (docId: string): GameRecord[] =>
+  asList(load<unknown>(recordsKey(docId)), (raw) =>
+    asFields(raw, {
+      points: 'number',
+      correct: 'number',
+      total: 'number',
+      at: 'number',
+      lessonKey: 'string',
+    })
+  );
 
 /** The words a round is played on: the newest lesson's, with the one before it when the newest
     has too few to tell apart (a lesson that has only just started). */
-export function gameWords(lessons: Lesson[], bank: Bank, ai: boolean): Word[] {
+export function gameWords(lessons: Lesson[], bank: Bank, hasClaude: boolean): Word[] {
   const newest = lessons[lessons.length - 1];
   if (!newest) return [];
-  const words = lessonWords(newest, bank, ai).filter((word) => word.ru);
+  const words = lessonWords(newest, bank, hasClaude).filter((word) => word.ru);
   const before = lessons[lessons.length - 2];
   if (words.length >= GAME_QUESTIONS || !before) return words;
   const seen = new Set(words.map((word) => word.fr.toLowerCase()));
   return [
     ...words,
-    ...lessonWords(before, bank, ai).filter((word) => word.ru && !seen.has(word.fr.toLowerCase())),
+    ...lessonWords(before, bank, hasClaude).filter(
+      (word) => word.ru && !seen.has(word.fr.toLowerCase())
+    ),
   ];
 }
 
@@ -119,17 +133,6 @@ export default function QuizGame({
 
   const question = questions[index];
   const answer = answers[index];
-  // the clock runs until the question is answered
-  useEffect(() => {
-    if (!question || answer) return;
-    startedAt.current = Date.now();
-    setLeft(GAME_SECONDS * 1000);
-    const timer = window.setInterval(() => {
-      setLeft(Math.max(0, GAME_SECONDS * 1000 - (Date.now() - startedAt.current)));
-    }, 100);
-    return () => window.clearInterval(timer);
-  }, [question, answer]);
-
   const choose = (picked: string | null) => {
     if (!isChoice(question) || answers[index]) return;
     const right = question.kind === 'pick-ru' ? question.word.ru : question.word.fr;
@@ -139,12 +142,27 @@ export default function QuizGame({
     setAnswers((previous) => [...previous, { picked, points }]);
     recordWord(question.word, correct);
   };
-  // time's up: counted as a wrong answer
+  // the clock reads the newest choose when time is up, not the one of the render that started it
+  const chooseNow = useRef(choose);
   useEffect(() => {
-    if (left === 0 && question && !answer) choose(null);
-    // choose reads the current question; it runs once when the clock reaches zero
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [left]);
+    chooseNow.current = choose;
+  });
+
+  // the clock runs until the question is answered; time's up counts as a wrong answer
+  useEffect(() => {
+    if (!question || answer) return;
+    startedAt.current = Date.now();
+    setLeft(GAME_SECONDS * 1000);
+    const timer = window.setInterval(() => {
+      const remaining = Math.max(0, GAME_SECONDS * 1000 - (Date.now() - startedAt.current));
+      setLeft(remaining);
+      if (remaining === 0) {
+        window.clearInterval(timer);
+        chooseNow.current(null);
+      }
+    }, CLOCK_TICK);
+    return () => window.clearInterval(timer);
+  }, [question, answer]);
   useEffect(() => {
     if (answer) nextButton.current?.focus();
   }, [answer]);

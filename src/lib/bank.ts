@@ -2,23 +2,21 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { api } from './api';
 import {
+  languageOfLesson,
   localParse,
   markKeyWords,
   normalizeAnalysis,
   normalizeConjugation,
-  withPerson,
-  withTranscription,
 } from './parse';
 import { wordKey } from './progress';
 import { useSettings } from './settings';
-import { load, save } from './storage';
+import { loadChecked, save } from './storage';
 import {
   type Analysis,
   type Conjugation,
   isVerbLanguage,
   type Lesson,
   type Pair,
-  TENSES_BY_LANGUAGE,
   type VerbLanguage,
   type VerbRef,
   type Word,
@@ -40,21 +38,17 @@ export const verbLanguageOf = (verb: VerbRef): VerbLanguage =>
 
 /** Cached analysis, with transcriptions moved out of older entries. */
 export function readAnalysis(hash: string): Analysis | null {
-  const analysis = load<Analysis>(analysisKey(hash));
-  return analysis ? { ...analysis, words: analysis.words.map(withTranscription) } : null;
+  // the same check as Claude's answer, which also moves old transcriptions out (withTranscription)
+  return loadChecked(analysisKey(hash), normalizeAnalysis);
 }
 
 /** Cached conjugation. Older French entries get their language set and their reflexive pronouns
     moved out of the person. */
 export function readConjugation(infinitive: string, language: VerbLanguage): Conjugation | null {
-  const conjugation = load<Conjugation>(conjugationKey(infinitive, language));
-  if (!conjugation) return null;
-  const tenses: Conjugation['tenses'] = {};
-  for (const tense of TENSES_BY_LANGUAGE[language]) {
-    const forms = conjugation.tenses[tense] || [];
-    tenses[tense] = language === 'fr' ? forms.map(withPerson) : forms;
-  }
-  return { ...conjugation, language, tenses };
+  // the same check as Claude's answer: it sets the language and moves reflexive pronouns
+  return loadChecked(conjugationKey(infinitive, language), (raw) =>
+    normalizeConjugation(raw, infinitive, language)
+  );
 }
 
 /** A verb's tables: the saved ones, or (fresh, or none saved) Claude's, which are then saved.
@@ -96,7 +90,7 @@ export interface Bank {
 }
 
 /** Every prepared lesson's words, verbs and pairs, newest lesson first. The newest lessons are prepared one at a time if missing. */
-export function useBank(lessons: Lesson[], ai: boolean): Bank {
+export function useBank(lessons: Lesson[], hasClaude: boolean): Bank {
   const [analyses, setAnalyses] = useState<Record<string, Analysis>>({});
   // The words of a newest lesson the teacher has just edited, kept from before the edit while
   // Claude reads it again, so they don't drop out of the exercises for those seconds (during a
@@ -120,19 +114,21 @@ export function useBank(lessons: Lesson[], ai: boolean): Bank {
     const kept: Record<string, Analysis> = {};
     const auto = new Set(lessons.slice(-AUTO_PREPARE).map((lesson) => lesson.key));
     for (const lesson of lessons) {
-      const analysis = readAnalysis(lesson.hash) || (ai ? null : localParse(lesson.body));
+      const analysis =
+        readAnalysis(lesson.hash) ||
+        (hasClaude ? null : localParse(lesson.body, languageOfLesson(lesson)));
       const before = latestShown.current[lesson.key];
       if (analysis) out[lesson.key] = analysis;
       // only lessons that are prepared again right away
-      else if (ai && auto.has(lesson.key) && before) kept[lesson.key] = before;
+      else if (hasClaude && auto.has(lesson.key) && before) kept[lesson.key] = before;
     }
     setAnalyses(out);
     setStale(kept);
     setFailed(new Set());
-  }, [lessons, ai]);
+  }, [lessons, hasClaude]);
 
   useEffect(() => {
-    if (!ai || busy.current) return;
+    if (!hasClaude || busy.current) return;
     // Check the cache too: on load this runs before the cached lessons reach state.
     const next = lessons
       .slice(-AUTO_PREPARE)
@@ -161,7 +157,7 @@ export function useBank(lessons: Lesson[], ai: boolean): Bank {
         busy.current = false;
         setTick((previous) => previous + 1);
       });
-  }, [lessons, ai, analyses, failed, tick]);
+  }, [lessons, hasClaude, analyses, failed, tick]);
 
   const put = useCallback(
     (key: string, analysis: Analysis) =>
@@ -189,16 +185,18 @@ export function useBank(lessons: Lesson[], ai: boolean): Bank {
         ready: !!analysis,
       });
       if (!analysis) continue;
+      // the language is part of a word's identity: "la casa" is Spanish and Italian
       for (const word of markKeyWords(analysis.words, lesson.body)) {
-        const identity = wordKey(word.fr);
+        const identity = `${analysis.language}:${wordKey(word.fr)}`;
         if (!seenWords.has(identity)) {
           seenWords.add(identity);
           words.push({ ...word, lesson: lesson.key, language: analysis.language });
         }
       }
       pairs.push(...analysis.pairs.map((pair) => ({ ...pair, lesson: lesson.key })));
+      // "ser", "ir" and "partir" are verbs in several languages, each with its own tables
       for (const verb of analysis.verbs) {
-        const identity = verb.inf.toLowerCase();
+        const identity = `${analysis.language}:${verb.inf.toLowerCase()}`;
         if (!seenVerbs.has(identity)) {
           seenVerbs.add(identity);
           verbs.push({ ...verb, language: analysis.language, lesson: lesson.key });
@@ -207,8 +205,8 @@ export function useBank(lessons: Lesson[], ai: boolean): Bank {
     }
     const auto = new Set(lessons.slice(-AUTO_PREPARE).map((lesson) => lesson.key));
     const missing = lessons.filter((lesson) => !analyses[lesson.key] && !failed.has(lesson.key));
-    const pending = ai ? missing.filter((lesson) => auto.has(lesson.key)).length : 0;
-    const waiting = ai ? missing.length - pending : 0;
+    const pending = hasClaude ? missing.filter((lesson) => auto.has(lesson.key)).length : 0;
+    const waiting = hasClaude ? missing.length - pending : 0;
     return {
       words,
       pairs,
@@ -219,13 +217,13 @@ export function useBank(lessons: Lesson[], ai: boolean): Bank {
       waiting,
       put,
     };
-  }, [lessons, analyses, shown, failed, ai, put, studying]);
+  }, [lessons, analyses, shown, failed, hasClaude, put, studying]);
 }
 
 /** Only the newest lesson is prepared by itself (AUTO_PREPARE). An older one a page needs (the
     warm-up's previous lesson, "mots de la leçon 5" in the homework) is prepared here if this
     device doesn't have it yet. True while Claude is reading it. */
-export function usePreparedLesson(lesson: Lesson | null, bank: Bank, ai: boolean): boolean {
+export function usePreparedLesson(lesson: Lesson | null, bank: Bank, hasClaude: boolean): boolean {
   const ready =
     !lesson ||
     bank.lessons.some((info) => info.key === lesson.key && info.ready) ||
@@ -233,7 +231,7 @@ export function usePreparedLesson(lesson: Lesson | null, bank: Bank, ai: boolean
   const [preparing, setPreparing] = useState(false);
   const { put } = bank;
   useEffect(() => {
-    if (!lesson || ready || !ai) return;
+    if (!lesson || ready || !hasClaude) return;
     let alive = true;
     setPreparing(true);
     api
@@ -251,14 +249,16 @@ export function usePreparedLesson(lesson: Lesson | null, bank: Bank, ai: boolean
     return () => {
       alive = false;
     };
-  }, [lesson, ready, ai, put]);
+  }, [lesson, ready, hasClaude, put]);
   return preparing;
 }
 
 /** One lesson's own words, with their lesson and language, key words (★) marked. The bank keeps
     a word under the newest lesson that has it, so this reads the lesson's analysis instead. */
-export function lessonWords(lesson: Lesson, bank: Bank, ai: boolean): Word[] {
-  const analysis = readAnalysis(lesson.hash) ?? (ai ? null : localParse(lesson.body));
+export function lessonWords(lesson: Lesson, bank: Bank, hasClaude: boolean): Word[] {
+  const analysis =
+    readAnalysis(lesson.hash) ??
+    (hasClaude ? null : localParse(lesson.body, languageOfLesson(lesson)));
   if (!analysis) return bank.words.filter((word) => word.lesson === lesson.key);
   return markKeyWords(analysis.words, lesson.body).map((word) => ({
     ...word,

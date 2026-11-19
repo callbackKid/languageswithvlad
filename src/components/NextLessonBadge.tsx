@@ -2,6 +2,7 @@ import { type ReactNode, useEffect, useState } from 'react';
 
 import { useTranslation } from '../i18n/core';
 import { app } from '../i18n/messages/app';
+import { daysBetween } from '../lib/dates';
 import { parseNextLesson } from '../lib/nextLesson';
 
 /** The next lesson's date and time, read from the newest "le cours prochain:" / "next lesson:" line in
@@ -60,9 +61,7 @@ export default function NextLessonBadge({ text, action }: { text: string; action
       { role: 'status', title: t('liveSync') }
     );
   // "today", "tomorrow" or "Sun 22 Nov", in the viewer's own calendar
-  const startOfDay = (value: Date) =>
-    new Date(value.getFullYear(), value.getMonth(), value.getDate()).getTime();
-  const days = Math.round((startOfDay(lesson.start) - startOfDay(now)) / 86400000);
+  const days = daysBetween(now, lesson.start);
   const day =
     days === 0
       ? t('today')

@@ -1,4 +1,4 @@
-import { load, save } from './storage';
+import { asFields, asList, load, save } from './storage';
 import type { Lesson } from './types';
 
 /* Questions the student writes down for the next lesson ("почему здесь subjonctif?"). Kept on
@@ -20,7 +20,11 @@ export interface Question {
 }
 
 const storageKey = (docId: string) => `questions:${docId}`;
-export const readQuestions = (docId: string) => load<Question[]>(storageKey(docId)) ?? [];
+// The questions kept on this device for a document, each one checked.
+export const readQuestions = (docId: string): Question[] =>
+  asList(load<unknown>(storageKey(docId)), (raw) =>
+    asFields(raw, { text: 'string', at: 'number' })
+  );
 export const saveQuestions = (docId: string, questions: Question[]) =>
   save(storageKey(docId), questions);
 

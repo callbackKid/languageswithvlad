@@ -19,14 +19,14 @@ const FORMS = 2;
 export default function Home({
   bank,
   lessons,
-  ai,
+  hasClaude,
   docId,
   docText,
   canWrite,
 }: {
   bank: Bank;
   lessons: Lesson[];
-  ai: boolean;
+  hasClaude: boolean;
   docId: string;
   docText: string;
   canWrite: boolean;
@@ -84,7 +84,7 @@ export default function Home({
           lesson={newest}
           docText={docText}
           bank={bank}
-          ai={ai}
+          hasClaude={hasClaude}
           docId={docId}
         />
       )}
@@ -93,7 +93,7 @@ export default function Home({
           key={'summary' + newest.key}
           lesson={newest}
           bank={bank}
-          ai={ai}
+          hasClaude={hasClaude}
           docId={docId}
         />
       )}
@@ -104,7 +104,7 @@ export default function Home({
           homework={homework}
           lessons={lessons}
           bank={bank}
-          ai={ai}
+          hasClaude={hasClaude}
           docId={docId}
           docText={docText}
           canWrite={canWrite}

@@ -8,6 +8,9 @@ import { lessonQuestions, questionsBlock, readQuestions, saveQuestions } from '.
 import { getSettings } from '../lib/settings';
 import type { Lesson } from '../lib/types';
 
+// one question is a sentence or two
+const MAX_QUESTION_LENGTH = 300;
+
 /** ❓ in the top bar: questions for the next lesson, written down whenever they come up and
     added to the document under the newest lesson before the lesson. */
 export function QuestionsButton({
@@ -94,7 +97,7 @@ export function QuestionsButton({
             <input
               type="text"
               value={draft}
-              maxLength={300}
+              maxLength={MAX_QUESTION_LENGTH}
               placeholder={t('placeholder')}
               aria-label={t('placeholder')}
               onChange={(event) => setDraft(event.target.value)}

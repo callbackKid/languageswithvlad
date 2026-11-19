@@ -1,14 +1,20 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { getUiLanguage, translator, useTranslation } from '../i18n/core';
 import { common } from '../i18n/messages/common';
 import { paper } from '../i18n/messages/paper';
 import { api, ApiError } from '../lib/api';
 import { analysisKey, readAnalysis } from '../lib/bank';
-import { homeworkKey } from '../lib/homework';
-import { localParse, markKeyWords, normalizeAnalysis, normalizeExtras } from '../lib/parse';
+import { homeworkItems, homeworkKey } from '../lib/homework';
+import {
+  languageOfLesson,
+  localParse,
+  markKeyWords,
+  normalizeAnalysis,
+  normalizeExtras,
+} from '../lib/parse';
 import { LESSON_TABS, type LessonTab, useSettings } from '../lib/settings';
-import { load, save } from '../lib/storage';
+import { loadChecked, save } from '../lib/storage';
 import { useTeacher } from '../lib/teacher';
 import { type Analysis, isVerbLanguage, type Lesson, type LessonExtras } from '../lib/types';
 import { shownTopic } from '../lib/util';
@@ -27,17 +33,20 @@ const EXTRA_TABS: Tab[] = ['grammar', 'homework', 'book'];
 export default function LessonView({
   lesson,
   docId,
-  ai,
+  hasClaude,
   docWriter,
   onAnalysis,
+  isNewest = false,
 }: {
   lesson: Lesson;
   docId: string;
-  ai: boolean;
+  hasClaude: boolean;
   /** whether the server can write to this document (to add exercises from the book); left out
       for a lesson that isn't in the document */
   docWriter?: boolean;
   onAnalysis?: (lessonKey: string, analysis: Analysis) => void;
+  // the newest lesson in the document, whose homework Home shows with an exercise per task
+  isNewest?: boolean;
 }) {
   const { t, locale, language: uiLanguage } = useTranslation(paper);
   const commonText = useTranslation(common);
@@ -47,10 +56,23 @@ export default function LessonView({
   // a tab hidden in Settings gives way to the first one shown
   const tab = shownTabs.includes(chosenTab) ? chosenTab : (shownTabs[0] ?? 'words');
   const { isTeacher } = useTeacher();
+  // on a phone the tabs scroll sideways: the open one is kept in view
+  const tabList = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const list = tabList.current;
+    const open = list?.querySelector<HTMLElement>('[aria-selected="true"]');
+    if (!list || !open) return;
+    const box = list.getBoundingClientRect();
+    const own = open.getBoundingClientRect();
+    if (own.left < box.left || own.right > box.right)
+      list.scrollLeft += own.left - box.left - (box.width - own.width) / 2;
+  }, [tab]);
   const [analysis, setAnalysis] = useState<Analysis | null>(null);
   const [state, setState] = useState<'loading' | 'ready' | 'error'>('loading');
   const [error, setError] = useState('');
   const [fresh, setFresh] = useState(0);
+  // without Claude, the heading word ("Lektion") tells the lesson's language
+  const headingLanguage = languageOfLesson(lesson);
 
   // Analyses are cached by the lesson text's hash: editing a lesson re-prepares it.
   useEffect(() => {
@@ -61,12 +83,14 @@ export default function LessonView({
       setState('ready');
       return;
     }
-    if (!ai) {
-      setAnalysis(localParse(lesson.body));
+    if (!hasClaude) {
+      setAnalysis(localParse(lesson.body, headingLanguage));
       setState('ready');
       return;
     }
-    setAnalysis((previous) => (previous && !previous.local ? previous : localParse(lesson.body)));
+    setAnalysis((previous) =>
+      previous && !previous.local ? previous : localParse(lesson.body, headingLanguage)
+    );
     setState('loading');
     api
       .analyze(lesson.body, fresh > 0)
@@ -91,20 +115,22 @@ export default function LessonView({
     return () => {
       alive = false;
     };
-  }, [lesson.hash, lesson.key, lesson.body, ai, fresh, onAnalysis]);
+  }, [lesson.hash, lesson.key, lesson.body, headingLanguage, hasClaude, fresh, onAnalysis]);
 
   // The grammar, homework and book exercises: read once, the first time one of their tabs is
   // opened, and kept for this lesson text and interface language.
   const extrasKey = `extras:${lesson.hash}:${uiLanguage}`;
-  const [extras, setExtras] = useState<LessonExtras | null>(() => load<LessonExtras>(extrasKey));
+  const [extras, setExtras] = useState<LessonExtras | null>(() =>
+    loadChecked(extrasKey, normalizeExtras)
+  );
   const [extrasState, setExtrasState] = useState<'idle' | 'loading' | 'error'>('idle');
   const [freshExtras, setFreshExtras] = useState(0);
   const wantsExtras = EXTRA_TABS.includes(tab);
   useEffect(() => {
-    const cached = freshExtras ? null : load<LessonExtras>(extrasKey);
+    const cached = freshExtras ? null : loadChecked(extrasKey, normalizeExtras);
     setExtras(cached);
     setExtrasState('idle');
-    if (cached || !wantsExtras || !ai) return;
+    if (cached || !wantsExtras || !hasClaude) return;
     let alive = true;
     setExtrasState('loading');
     api
@@ -123,7 +149,7 @@ export default function LessonView({
     return () => {
       alive = false;
     };
-  }, [extrasKey, lesson.body, wantsExtras, ai, freshExtras]);
+  }, [extrasKey, lesson.body, wantsExtras, hasClaude, freshExtras]);
 
   // Words carry their lesson so progress and stats can group by lesson.
   const tagged = useMemo(
@@ -192,7 +218,7 @@ export default function LessonView({
         )}
       </section>
       <section className="panel">
-        <div className="tabs" role="tablist">
+        <div className="tabs" role="tablist" ref={tabList}>
           {tabButton('words', t('words'), analysis?.words.length ?? 0)}
           {tabButton('verbs', t('verbs'), analysis?.verbs.length ?? 0)}
           {tabButton('grammar', t('grammar'), extras?.grammar.length)}
@@ -207,9 +233,9 @@ export default function LessonView({
             <WordsTab
               key={lesson.hash + (tagged.local ? 'l' : 'c')}
               analysis={tagged}
-              ai={ai && !tagged.local}
+              hasClaude={hasClaude && !tagged.local}
               onRefresh={
-                ai && state === 'ready' && !tagged.local
+                hasClaude && state === 'ready' && !tagged.local
                   ? () => setFresh((previous) => previous + 1)
                   : undefined
               }
@@ -222,11 +248,13 @@ export default function LessonView({
             <VerbsTab
               key={lesson.hash}
               verbs={analysis.verbs.map((verb) => ({ ...verb, language: analysis.language }))}
-              ai={ai && !analysis.local}
+              hasClaude={hasClaude && !analysis.local}
               waiting={state === 'loading'}
             />
           )}
-          {wantsExtras && !ai && !extras && <p className="empty">{commonText.t('needsClaude')}</p>}
+          {wantsExtras && !hasClaude && !extras && (
+            <p className="empty">{commonText.t('needsClaude')}</p>
+          )}
           {wantsExtras && extrasState === 'loading' && (
             <WaitingFact language={analysis?.language}>{t('readingExtras')}</WaitingFact>
           )}
@@ -248,17 +276,18 @@ export default function LessonView({
               tasks={extras.homework}
               storageKey={homeworkKey(docId, lesson.key)}
               language={extras.language}
+              onHome={isNewest && homeworkItems(lesson.body).length > 0}
             />
           )}
           {/* the teacher's tool, for a lesson that is in the document, with Claude to write it */}
-          {tab === 'homework' && isTeacher && ai && docWriter !== undefined && tagged && (
+          {tab === 'homework' && isTeacher && hasClaude && docWriter !== undefined && tagged && (
             <MakeHomework
               lesson={lesson}
               words={tagged.words}
               language={tagged.language}
               docId={docId}
               docWriter={docWriter}
-              ai={ai}
+              hasClaude={hasClaude}
             />
           )}
           {tab === 'book' && extrasState !== 'loading' && (
@@ -267,10 +296,10 @@ export default function LessonView({
               docId={docId}
               lessonKey={lesson.key}
               docWriter={docWriter}
-              ai={ai}
+              hasClaude={hasClaude}
             />
           )}
-          {wantsExtras && extras && ai && (
+          {wantsExtras && extras && hasClaude && (
             <p className="row-actions extras-refresh">
               <button
                 type="button"

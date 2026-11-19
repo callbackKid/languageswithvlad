@@ -3,25 +3,21 @@ import { useState } from 'react';
 import { useTranslation } from '../i18n/core';
 import { homeCards } from '../i18n/messages/homeCards';
 import { type Bank, lessonWords, readAnalysis } from '../lib/bank';
+import { daysBetween } from '../lib/dates';
+import { normalizeExtras } from '../lib/parse';
 import { getProgress } from '../lib/progress';
 import { buildQuiz, keyWordsFirst, pickWords } from '../lib/quiz';
 import { followLink, hrefFor } from '../lib/router';
 import { lessonPath } from '../lib/sections';
-import { load, save } from '../lib/storage';
-import type { Lesson, LessonExtras } from '../lib/types';
+import { load, loadChecked, save } from '../lib/storage';
+import type { Lesson } from '../lib/types';
 import { shownTopic } from '../lib/util';
 import WordQuiz from './WordQuiz';
 
 const ROUND = 10;
 const SHOWN_WORDS = 8;
-const DAY = 24 * 60 * 60 * 1000;
-
-const startOfDay = (date: Date) =>
-  new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime();
-
 /** Days from the lesson's date to today: 0 on the day of the lesson. */
-export const daysSince = (lesson: Lesson, now = new Date()) =>
-  Math.round((startOfDay(now) - startOfDay(lesson.date)) / DAY);
+export const daysSince = (lesson: Lesson, now = new Date()) => daysBetween(lesson.date, now);
 
 /** After a lesson, on Home: what it brought ("Today, lesson 6: 12 new words, 2 verbs"), its
     words and grammar, and a round to start revising them. Shown on the lesson's day and the
@@ -29,12 +25,12 @@ export const daysSince = (lesson: Lesson, now = new Date()) =>
 export default function LessonSummary({
   lesson,
   bank,
-  ai,
+  hasClaude,
   docId,
 }: {
   lesson: Lesson;
   bank: Bank;
-  ai: boolean;
+  hasClaude: boolean;
   docId: string;
 }) {
   const { t, language: uiLanguage } = useTranslation(homeCards);
@@ -45,7 +41,7 @@ export default function LessonSummary({
   const analysis = readAnalysis(lesson.hash);
   if (hidden || days < 0 || days > 1 || !analysis) return null;
 
-  const words = keyWordsFirst(lessonWords(lesson, bank, ai));
+  const words = keyWordsFirst(lessonWords(lesson, bank, hasClaude));
   if (revising)
     return (
       <section className="home-card exercise">
@@ -68,7 +64,8 @@ export default function LessonSummary({
     ...(analysis.verbs.length ? [t('verbs', { count: analysis.verbs.length })] : []),
   ].join(', ');
   // grammar is known once the lesson's Grammar tab has been read, in this interface language
-  const grammar = load<LessonExtras>(`extras:${lesson.hash}:${uiLanguage}`)?.grammar ?? [];
+  const grammar =
+    loadChecked(`extras:${lesson.hash}:${uiLanguage}`, normalizeExtras)?.grammar ?? [];
   const path = lessonPath(lesson.key);
   return (
     <section className="home-card lesson-summary">

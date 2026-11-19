@@ -33,6 +33,13 @@ import PageHead from './PageHead';
 import TeacherCard from './TeacherCard';
 
 // each lesson tab under the name it has on the lesson page
+// the student's name, in reports to the teacher and in Zoom calls
+const MAX_NAME_LENGTH = 60;
+// how long “Copied” stays on the button, in milliseconds
+const COPIED_SHOWN = 2500;
+// the picture is kept this many pixels wide: enough for the top bar and Zoom, small to store
+const AVATAR_SIDE = 256;
+
 const TAB_NAMES = {
   words: 'words',
   verbs: 'verbs',
@@ -81,27 +88,27 @@ export default function Settings({ lessonDocument }: { lessonDocument: DocumentI
   const sectionNames = useTranslation(app);
   const tabNames = useTranslation(paper);
   const settings = useSettings();
-  const [pictureError, setPictureError] = useState(false);
+  const [hasPictureError, setHasPictureError] = useState(false);
   const [copied, setCopied] = useState(false);
 
   async function copyLink() {
     try {
       await navigator.clipboard.writeText(lessonDocument.studentLink);
       setCopied(true);
-      window.setTimeout(() => setCopied(false), 2500);
+      window.setTimeout(() => setCopied(false), COPIED_SHOWN);
     } catch {
       window.prompt(sectionNames.t('copyPrompt'), lessonDocument.studentLink);
     }
   }
 
   async function choosePicture(file: File) {
-    setPictureError(false);
+    setHasPictureError(false);
     try {
       // small and square-ish: it sits in a circle in the top bar
-      const { mediaType, data } = await shrinkImage(file, 256);
+      const { mediaType, data } = await shrinkImage(file, AVATAR_SIDE);
       updateSettings({ avatar: `data:${mediaType};base64,${data}` });
     } catch {
-      setPictureError(true);
+      setHasPictureError(true);
     }
   }
   const toggleTense = (language: VerbLanguage, tense: Tense) => {
@@ -182,7 +189,7 @@ export default function Settings({ lessonDocument }: { lessonDocument: DocumentI
                 </button>
               )}
             </div>
-            {pictureError && (
+            {hasPictureError && (
               <p className="field-error" role="alert">
                 {t('pictureFailed')}
               </p>
@@ -191,7 +198,7 @@ export default function Settings({ lessonDocument }: { lessonDocument: DocumentI
               <span>{t('name')}</span>
               <input
                 type="text"
-                maxLength={60}
+                maxLength={MAX_NAME_LENGTH}
                 value={settings.name}
                 placeholder={t('namePlaceholder')}
                 onChange={(event) => updateSettings({ name: event.target.value })}
@@ -343,7 +350,7 @@ export default function Settings({ lessonDocument }: { lessonDocument: DocumentI
         )}
         <div className="settings-row">
           <span className="settings-label">{t('dailyGoal')}</span>
-          <div className="seg" role="group" aria-label={t('dailyGoal')}>
+          <div className="seg goal-choice" role="group" aria-label={t('dailyGoal')}>
             {DAILY_GOALS.map((goal) => (
               <button
                 key={goal}

@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useTranslation } from '../i18n/core';
 import { common } from '../i18n/messages/common';
 import { api, ApiError } from '../lib/api';
+import { documentDate } from '../lib/dates';
 
 /** Where new lessons go: the connected document, the lesson number to use next, and whether the server can write. */
 export interface DocTarget {
@@ -11,12 +12,9 @@ export interface DocTarget {
   docWriter: string | null;
 }
 
-const pad = (value: number) => String(value).padStart(2, '0');
-
 /** "13.11.2026 8 Leçon" and the lines under it, in the format the app reads lessons from. */
 export function lessonText(lessonNumber: number, lines: string[]): string {
-  const today = new Date();
-  const heading = `${pad(today.getDate())}.${pad(today.getMonth() + 1)}.${today.getFullYear()} ${lessonNumber} Leçon`;
+  const heading = `${documentDate(new Date())} ${lessonNumber} Leçon`;
   return `\n\n${heading}\n${lines
     .map((line) => line.trim())
     .filter(Boolean)

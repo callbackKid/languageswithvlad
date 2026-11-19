@@ -10,13 +10,14 @@ import {
   readConjugation,
   usePreparedLesson,
 } from '../lib/bank';
+import { daysBetween } from '../lib/dates';
 import { type Homework, type HomeworkItem, homeworkKey, writingKey } from '../lib/homework';
 import { parseNextLesson } from '../lib/nextLesson';
 import { getProgress } from '../lib/progress';
 import { buildQuiz, pickWords, verbForms } from '../lib/quiz';
 import { followLink, hrefFor } from '../lib/router';
 import { lessonPath } from '../lib/sections';
-import { load, save } from '../lib/storage';
+import { loadTexts, save } from '../lib/storage';
 import {
   type Conjugation,
   isVerbLanguage,
@@ -39,10 +40,7 @@ function DueLine({ docText }: { docText: string }) {
   const { t } = useTranslation(homeworkText);
   const next = parseNextLesson(docText);
   if (!next || next === 'unconfirmed' || next.state !== 'upcoming') return null;
-  const now = new Date();
-  const startOfDay = (value: Date) =>
-    new Date(value.getFullYear(), value.getMonth(), value.getDate()).getTime();
-  const days = Math.round((startOfDay(next.start) - startOfDay(now)) / 86400000);
+  const days = daysBetween(new Date(), next.start);
   return (
     <span className="homework-due">
       {days <= 0 ? t('dueToday') : days === 1 ? t('dueTomorrow') : t('dueIn', { count: days })}
@@ -56,21 +54,21 @@ function WordsExercise({
   lesson,
   gaps,
   bank,
-  ai,
+  hasClaude,
   onClose,
   onDone,
 }: {
   lesson: Lesson;
   gaps: boolean;
   bank: Bank;
-  ai: boolean;
+  hasClaude: boolean;
   onClose: () => void;
   onDone: () => void;
 }) {
   const { t } = useTranslation(homeworkText);
-  const preparing = usePreparedLesson(lesson, bank, ai);
+  const preparing = usePreparedLesson(lesson, bank, hasClaude);
   const [round, setRound] = useState(0);
-  const words = lessonWords(lesson, bank, ai);
+  const words = lessonWords(lesson, bank, hasClaude);
   const title = gaps ? t('gapsTitle', { n: lesson.n }) : t('wordsTitle', { n: lesson.n });
   if (preparing)
     return (
@@ -109,28 +107,31 @@ function WordsExercise({
 function VerbsExercise({
   item,
   language,
-  ai,
+  hasClaude,
   onClose,
   onDone,
 }: {
   item: HomeworkItem;
   language: VerbLanguage;
-  ai: boolean;
+  hasClaude: boolean;
   onClose: () => void;
   onDone: () => void;
 }) {
   const { t } = useTranslation(homeworkText);
   const verbs = item.verbs ?? [];
-  const tense = item.tense && languageOfTense(item.tense) === language ? item.tense : undefined;
+  // "presente" names a tense in three languages: only the lesson's counts
+  const tenses = (item.tenses ?? []).filter((name) => languageOfTense(name) === language);
   const [tables, setTables] = useState<Conjugation[] | null>(null);
   const [failed, setFailed] = useState<string[]>([]);
 
+  // one text, so the effect sees the same verbs as the same value on every render
+  const verbList = verbs.join('\n');
   useEffect(() => {
     let alive = true;
     void Promise.all(
-      verbs.map(async (verb) => {
+      verbList.split('\n').map(async (verb) => {
         // without Claude only a saved table can be used
-        if (!ai) return readConjugation(verb, language) ?? verb;
+        if (!hasClaude) return readConjugation(verb, language) ?? verb;
         try {
           return await fetchConjugation({ inf: verb, ru: '', language });
         } catch {
@@ -145,9 +146,7 @@ function VerbsExercise({
     return () => {
       alive = false;
     };
-    // the item's verbs don't change while it is open
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [verbList, hasClaude, language]);
 
   if (!tables) return <WaitingFact language={language}>{t('loadingVerbs')}</WaitingFact>;
 
@@ -170,8 +169,8 @@ function VerbsExercise({
             shuffle(
               tables
                 .flatMap(verbForms)
-                // the task's tense when it is one of this language's, every tense otherwise
-                .filter((form) => !form.negative && (!tense || form.t === tense))
+                // the task's tenses when it names this language's, every tense otherwise
+                .filter((form) => !form.negative && (!tenses.length || tenses.includes(form.t)))
             ).slice(0, VERB_FORMS)
           )
         }
@@ -186,7 +185,7 @@ export default function HomeworkCard({
   homework,
   lessons,
   bank,
-  ai,
+  hasClaude,
   docId,
   docText,
   canWrite,
@@ -194,7 +193,7 @@ export default function HomeworkCard({
   homework: Homework;
   lessons: Lesson[];
   bank: Bank;
-  ai: boolean;
+  hasClaude: boolean;
   docId: string;
   docText: string;
   /** whether the server can write to the document, for the report */
@@ -202,21 +201,22 @@ export default function HomeworkCard({
 }) {
   const { t } = useTranslation(homeworkText);
   const storageKey = homeworkKey(docId, homework.lesson.key);
-  const [done, setDone] = useState<string[]>(() => load<string[]>(storageKey) ?? []);
+  const [done, setDone] = useState<string[]>(() => loadTexts(storageKey));
   const [open, setOpen] = useState<HomeworkItem | null>(null);
   // another lesson's homework (after a sync) starts from its own ticks
   useEffect(() => {
-    setDone(load<string[]>(storageKey) ?? []);
+    setDone(loadTexts(storageKey));
     setOpen(null);
   }, [storageKey]);
 
-  const mark = (task: string, value: boolean) =>
-    setDone((previous) => {
-      if (previous.includes(task) === value) return previous;
-      const next = value ? [...previous, task] : previous.filter((item) => item !== task);
-      save(storageKey, next);
-      return next;
-    });
+  // read from the device, not from state: an exercise that finishes calls this from an older render
+  const mark = (task: string, value: boolean) => {
+    const saved = loadTexts(storageKey);
+    if (saved.includes(task) === value) return;
+    const next = value ? [...saved, task] : saved.filter((item) => item !== task);
+    save(storageKey, next);
+    setDone(next);
+  };
   // "mots de la leçon 5": the newest lesson with that number; otherwise the homework's own
   const lessonOf = (item: HomeworkItem) =>
     (item.lessonNumber !== undefined &&
@@ -228,7 +228,7 @@ export default function HomeworkCard({
   const action = (item: HomeworkItem): string | null => {
     if (item.kind === 'words') return t('practiseWords');
     if (item.kind === 'writing') return t('write');
-    if (item.kind === 'gaps' && ai) return t('fillGaps');
+    if (item.kind === 'gaps' && hasClaude) return t('fillGaps');
     if (item.kind === 'verbs' && verbLanguage) return t('conjugate');
     return null;
   };
@@ -243,7 +243,7 @@ export default function HomeworkCard({
             task={open.text}
             language={lessonLanguage}
             storageKey={writingKey(docId, homework.lesson.key, open.text)}
-            ai={ai}
+            hasClaude={hasClaude}
             onClose={close}
             onChecked={finished}
           />
@@ -253,7 +253,7 @@ export default function HomeworkCard({
             // the lesson's language: a tense name alone can mislead ("condicional" is Spanish
             // and Portuguese)
             language={verbLanguage}
-            ai={ai}
+            hasClaude={hasClaude}
             onClose={close}
             onDone={finished}
           />
@@ -262,7 +262,7 @@ export default function HomeworkCard({
             lesson={lessonOf(open)}
             gaps={open.kind === 'gaps'}
             bank={bank}
-            ai={ai}
+            hasClaude={hasClaude}
             onClose={close}
             onDone={finished}
           />

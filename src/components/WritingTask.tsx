@@ -4,9 +4,9 @@ import { getUiLanguage, translator, useTranslation } from '../i18n/core';
 import { common } from '../i18n/messages/common';
 import { homework as homeworkText } from '../i18n/messages/homework';
 import { api, ApiError } from '../lib/api';
-import { normalizeWritingCheck } from '../lib/parse';
+import { normalizeWriting, normalizeWritingCheck } from '../lib/parse';
 import { getSettings } from '../lib/settings';
-import { load, save } from '../lib/storage';
+import { loadChecked, save } from '../lib/storage';
 import type { Language, Writing, WritingCheck } from '../lib/types';
 import ExerciseHead from './ExerciseHead';
 import WaitingFact from './WaitingFact';
@@ -64,21 +64,21 @@ export default function WritingTask({
   task,
   language,
   storageKey,
-  ai,
+  hasClaude,
   onClose,
   onChecked,
 }: {
   task: string;
   language: Language;
   storageKey: string;
-  ai: boolean;
+  hasClaude: boolean;
   onClose: () => void;
   onChecked?: () => void;
 }) {
   const { t } = useTranslation(homeworkText);
   const commonText = useTranslation(common);
   const [writing, setWriting] = useState<Writing>(
-    () => load<Writing>(storageKey) ?? { task, text: '' }
+    () => loadChecked(storageKey, normalizeWriting) ?? { task, text: '' }
   );
   const [checking, setChecking] = useState(false);
   const [error, setError] = useState('');
@@ -103,7 +103,7 @@ export default function WritingTask({
       );
       if (!result) throw new Error('empty');
       // read again: the student may have typed on while Claude was reading
-      const latest = load<Writing>(storageKey) ?? writing;
+      const latest = loadChecked(storageKey, normalizeWriting) ?? writing;
       keep({ ...latest, check: result, checkedText: text, checkedAt: Date.now() });
       onChecked?.();
     } catch (failure) {
@@ -133,8 +133,8 @@ export default function WritingTask({
         <button
           type="button"
           className="btn primary"
-          disabled={checking || !ai || !writing.text.trim()}
-          data-tooltip={ai ? undefined : commonText.t('needsClaude')}
+          disabled={checking || !hasClaude || !writing.text.trim()}
+          data-tooltip={hasClaude ? undefined : commonText.t('needsClaude')}
           onClick={() => void check()}
         >
           {writing.check ? t('checkAgain') : t('check')}

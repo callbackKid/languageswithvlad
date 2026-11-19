@@ -253,6 +253,7 @@ api/                serverless functions (Vercel)
   _lib/telegram.ts  sending feedback to the teacher’s Telegram
   _lib/zoom.ts      signing Zoom Meeting SDK joins
   _lib/notion.ts    reading a Notion page as lesson text, adding lessons to it
+  _lib/lessons.ts   finding one lesson's heading in a document, to write under it
   doc.ts            reads the Google Doc (or the Notion page)
   analyze.ts        prepares a lesson: words, pairs, verbs
   conjugate.ts      a verb’s tables
@@ -267,7 +268,7 @@ api/                serverless functions (Vercel)
 src/
   App.tsx           top bar, menu and pages
   components/       one file per page or exercise
-  i18n/             interface languages: core.tsx, and messages/ with every text in en, ru, fr, de
+  i18n/             interface languages: core.tsx, and messages/ with every text in en, ru, fr, de, es, pt, it
   lib/              logic without UI: parsing, grading, progress, routing, speech
 public/             the app icon (icon.svg and the PNGs drawn from it) and manifest.webmanifest
 ```

@@ -26,18 +26,18 @@ import WaitingFact from './WaitingFact';
 
 export default function VerbsTab({
   verbs,
-  ai,
+  hasClaude,
   waiting,
 }: {
   verbs: VerbRef[];
-  ai: boolean;
+  hasClaude: boolean;
   waiting: boolean;
 }) {
   const { t, rich } = useTranslation(exercises);
   const commonText = useTranslation(common);
   const [currentVerb, setCurrentVerb] = useState<string | null>(null);
   const [tense, setTense] = useState<Tense>('présent');
-  const [negative, setNegative] = useState(false);
+  const [isNegative, setIsNegative] = useState(false);
   const [conjugations, setConjugations] = useState<Record<string, Conjugation>>(() => {
     const out: Record<string, Conjugation> = {};
     for (const verb of verbs) {
@@ -62,7 +62,7 @@ export default function VerbsTab({
         return;
       }
     }
-    if (!ai) {
+    if (!hasClaude) {
       setStatus((previous) => ({
         ...previous,
         [verb.inf]: commonText.t('needsClaude'),
@@ -88,7 +88,7 @@ export default function VerbsTab({
 
   if (!verbs.length)
     return waiting ? null : (
-      <p className="empty">{ai ? t('noVerbs') : commonText.t('needsClaude')}</p>
+      <p className="empty">{hasClaude ? t('noVerbs') : commonText.t('needsClaude')}</p>
     );
   const loaded = verbs.filter((verb) => conjugations[verb.inf]);
 
@@ -111,7 +111,7 @@ export default function VerbsTab({
   const compoundPast = COMPOUND_PAST[language];
   // negate knows French word order only
   const canNegate = language === 'fr';
-  const showNegative = negative && canNegate;
+  const showNegative = isNegative && canNegate;
   const affirmativeRows = shownConjugation ? shownConjugation.tenses[shownTense] || [] : [];
   const rows = showNegative
     ? affirmativeRows.map((row) => negate(row, shownTense))
@@ -206,7 +206,7 @@ export default function VerbsTab({
                 { i: (chunk) => <i lang={language}>{chunk}</i> },
                 { aux: shownConjugation.aux, tense: compoundPast }
               )}
-            {ai && (
+            {hasClaude && (
               <>
                 {' '}
                 ·{' '}
@@ -239,10 +239,10 @@ export default function VerbsTab({
           </div>
           {canNegate && (
             <div className="tense-tabs" role="group" aria-label={t('sentenceType')}>
-              <button type="button" aria-pressed={!negative} onClick={() => setNegative(false)}>
+              <button type="button" aria-pressed={!isNegative} onClick={() => setIsNegative(false)}>
                 {t('affirmative')}
               </button>
-              <button type="button" aria-pressed={negative} onClick={() => setNegative(true)}>
+              <button type="button" aria-pressed={isNegative} onClick={() => setIsNegative(true)}>
                 {commonText.t('negative')}
               </button>
             </div>
@@ -255,7 +255,7 @@ export default function VerbsTab({
               inf={shownConjugation.inf}
               tense={shownTense}
               language={language}
-              negative={showNegative}
+              isNegative={showNegative}
               rows={rows}
               onStop={() => setMode('table')}
             />
@@ -293,14 +293,14 @@ function Drill({
   inf,
   tense,
   language,
-  negative,
+  isNegative,
   rows,
   onStop,
 }: {
   inf: string;
   tense: Tense;
   language: VerbLanguage;
-  negative: boolean;
+  isNegative: boolean;
   rows: Form[];
   onStop: () => void;
 }) {
@@ -328,7 +328,7 @@ function Drill({
         rows.forEach((row, index) => {
           const result = grade(values[index] ?? '', row.f, row.p);
           if (result === 'ok' || result === 'bad')
-            recordForm(inf, tense, row.p, row.f, result === 'ok', negative);
+            recordForm(inf, tense, row.p, row.f, result === 'ok', isNegative);
         });
       }}
     >

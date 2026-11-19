@@ -1,6 +1,14 @@
 export type Grade = 'ok' | 'accent' | 'bad' | 'empty';
 
-const strip = (text: string) => text.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+/** Without accents, and with the letters many keyboards lack spelled out (sœur → soeur,
+    Straße → strasse): an answer that differs only there is a near miss, not a mistake. */
+const strip = (text: string) =>
+  text
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/œ/g, 'oe')
+    .replace(/æ/g, 'ae')
+    .replace(/ß/g, 'ss');
 /** Case, punctuation ("Je t'aime." = "je t'aime") and invisible characters don't count; apostrophes, hyphens and the (e)s brackets do. */
 const normalize = (text: string) =>
   String(text || '')
@@ -28,9 +36,12 @@ export function grade(input: string, answer: string, pronoun = ''): Grade {
   // so the right answer is shown instead of Check doing nothing
   if (!typed) return /[^\s\p{Cf}]/u.test(input) ? 'bad' : 'empty';
   // The answer may be typed with or without the subject pronoun. Both readings are tried,
-  // since in "nous nous levons" the reflexive pronoun looks like the subject one.
+  // since in "nous nous levons" the reflexive pronoun looks like the subject one. A person like
+  // "il/elle/on" is split before normalize, which turns "/" into a space: any one of them counts,
+  // and so does the whole label copied as it is.
   const readings = [typed];
-  for (const part of normalize(pronoun).split('/').filter(Boolean)) {
+  const persons = [pronoun, ...pronoun.split('/')].map(normalize).filter(Boolean);
+  for (const part of [...new Set(persons)]) {
     if (part.endsWith("'") && typed.startsWith(part)) {
       readings.push(typed.slice(part.length).trim());
       break;

@@ -15,13 +15,18 @@ const MEET = /https?:\/\/meet\.google\.com(?:\/[\w-]+)+/gi;
 // us05web.zoom.us/j/12345678901?pwd=…, zoom.us/wc/join/…, zoom.us/my/name
 const ZOOM = /https?:\/\/(?:[\w-]+\.)*zoom\.us\/[^\s)<>"']+/gi;
 // "Passcode: 123456", "Code secret : 123456", "Пароль: 123456", "Kenncode: 123456"
+// a passcode counts when it is written this many characters after the link, or closer
+const PASSCODE_NEARBY = 200;
+// the small window Meet opens in, beside the app
+const SMALL_WINDOW = { width: 520, height: 400 };
+
 const PASSCODE =
   /(?:passcode|password|code secret|code d['’]accès|mot de passe|пароль|код доступа|kenncode|passwort)\s*[:：]?\s*([\w-]{4,20})/i;
 
 function zoomDetails(url: string, text: string, position: number) {
   const meetingNumber = url.match(/\/(?:j|s|w|wc\/join|wc)\/(\d{9,11})/)?.[1] ?? null;
   // a passcode written next to the link wins over the encoded one inside it
-  const nearby = text.slice(position, position + url.length + 200);
+  const nearby = text.slice(position, position + url.length + PASSCODE_NEARBY);
   const written = nearby.match(PASSCODE)?.[1];
   let fromLink = '';
   try {
@@ -58,8 +63,8 @@ export function openCallWindow(url: string, layout: 'small' | 'half' = 'small'):
   const screen = window.screen;
   // "half": a tall window over the right half of the screen, the closest a page can get to
   // the browser's own split view (which no website can open by itself)
-  const width = layout === 'half' ? Math.round(screen.availWidth / 2) : 520;
-  const height = layout === 'half' ? screen.availHeight : 400;
+  const width = layout === 'half' ? Math.round(screen.availWidth / 2) : SMALL_WINDOW.width;
+  const height = layout === 'half' ? screen.availHeight : SMALL_WINDOW.height;
   const left = Math.max(0, screen.availWidth - width - (layout === 'half' ? 0 : 24));
   const top = layout === 'half' ? 0 : 48;
   const opened = window.open(

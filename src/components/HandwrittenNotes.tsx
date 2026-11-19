@@ -7,7 +7,7 @@ import { api, ApiError } from '../lib/api';
 import { shrinkImage } from '../lib/image';
 import { asObjectText } from '../lib/parse';
 import { extractPages, MAX_PDF_PAGES, pdfPageCount } from '../lib/pdf';
-import { load, save } from '../lib/storage';
+import { asFields, asList, load, save } from '../lib/storage';
 import type { Lesson } from '../lib/types';
 import { hash } from '../lib/util';
 import AddToDoc, { type DocTarget } from './AddToDoc';
@@ -50,11 +50,11 @@ const toLesson = (
 
 /** Photos of handwritten notes, or pages of a textbook PDF → text the student can correct → the same words, verbs and exercises as a lesson from the document. */
 export default function HandwrittenNotes({
-  ai,
+  hasClaude,
   target,
   source,
 }: {
-  ai: boolean;
+  hasClaude: boolean;
   target: DocTarget;
   source: PaperSource;
 }) {
@@ -63,8 +63,10 @@ export default function HandwrittenNotes({
   const { storageKey } = SOURCES[source];
   const name = t(`name.${source}`);
   const reading = t(`reading.${source}`);
-  const [entries, setEntries] = useState<HandwrittenLesson[]>(
-    () => load<HandwrittenLesson[]>(storageKey) || []
+  const [entries, setEntries] = useState<HandwrittenLesson[]>(() =>
+    asList(load<unknown>(storageKey), (raw) =>
+      asFields(raw, { id: 'string', title: 'string', text: 'string', at: 'number' })
+    )
   );
   // the PDF waiting for the student to choose its pages
   const [pdf, setPdf] = useState<{ file: File; pageCount: number } | null>(null);
@@ -162,7 +164,7 @@ export default function HandwrittenNotes({
     setDraft(null);
   }
 
-  if (!ai) return <p className="empty">{commonText.t('needsClaude')}</p>;
+  if (!hasClaude) return <p className="empty">{commonText.t('needsClaude')}</p>;
 
   return (
     <>
@@ -315,7 +317,7 @@ export default function HandwrittenNotes({
               key={current.id + hash(current.text)}
               lesson={toLesson(current, entries.length - 1 - currentIndex, source, name)}
               docId={storageKey}
-              ai={ai}
+              hasClaude={hasClaude}
             />
           </>
         ))}

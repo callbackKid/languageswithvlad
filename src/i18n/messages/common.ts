@@ -67,6 +67,13 @@ export const common = defineMessages({
     notionNoWrite:
       'The app may read this Notion page but not add to it. Give the integration the “Insert content” capability (see README).',
     notionUnreachable: 'Notion didn’t answer. Try again in a moment.',
+    googleOff:
+      'Adding to the Google Doc isn’t set up on this server yet (GOOGLE_SERVICE_ACCOUNT, see README).',
+    googleKey: 'The server’s Google key was refused. Check GOOGLE_SERVICE_ACCOUNT (see README).',
+    googleNoEdit:
+      'The app can’t edit this document. In Google Docs, share it with {email} as Editor, then try again.',
+    googleUnreachable: 'Google Docs didn’t answer. Try again in a moment.',
+    googleRejected: 'Google Docs didn’t accept the change. Try again in a moment.',
     deliveryFailed: 'The message couldn’t be delivered. Try again later.',
     // adding to the Google Doc
     docWriterMissing:
@@ -152,6 +159,13 @@ export const common = defineMessages({
     notionNoWrite:
       'Приложению можно читать эту страницу Notion, но не добавлять в неё. Дайте интеграции право «Insert content» (см. README).',
     notionUnreachable: 'Notion не отвечает. Попробуйте через минуту.',
+    googleOff:
+      'Добавление в Google-документ ещё не настроено на сервере (GOOGLE_SERVICE_ACCOUNT, см. README).',
+    googleKey: 'Google отклонил ключ сервера. Проверьте GOOGLE_SERVICE_ACCOUNT (см. README).',
+    googleNoEdit:
+      'Приложение не может редактировать этот документ. В Google Docs откройте доступ для {email} с ролью «Редактор», затем попробуйте ещё раз.',
+    googleUnreachable: 'Google Docs не отвечает. Попробуйте через минуту.',
+    googleRejected: 'Google Docs не принял изменение. Попробуйте через минуту.',
     deliveryFailed: 'Сообщение не удалось доставить. Попробуйте позже.',
     docWriterMissing:
       'Добавление в Google-документ ещё не настроено на сервере (GOOGLE_SERVICE_ACCOUNT, см. README).',
@@ -230,6 +244,14 @@ export const common = defineMessages({
     notionNoWrite:
       'L’application peut lire cette page Notion mais pas y ajouter. Donnez à l’intégration la capacité « Insert content » (voir README).',
     notionUnreachable: 'Notion ne répond pas. Réessayez dans un instant.',
+    googleOff:
+      'L’ajout au Google Doc n’est pas encore configuré sur ce serveur (GOOGLE_SERVICE_ACCOUNT, voir README).',
+    googleKey:
+      'La clé Google du serveur a été refusée. Vérifiez GOOGLE_SERVICE_ACCOUNT (voir README).',
+    googleNoEdit:
+      'L’application ne peut pas modifier ce document. Dans Google Docs, partagez-le avec {email} en tant qu’Éditeur, puis réessayez.',
+    googleUnreachable: 'Google Docs ne répond pas. Réessayez dans un instant.',
+    googleRejected: 'Google Docs n’a pas accepté la modification. Réessayez dans un instant.',
     deliveryFailed: 'Le message n’a pas pu être envoyé. Réessayez plus tard.',
     docWriterMissing:
       'L’ajout au Google Doc n’est pas encore configuré sur le serveur (GOOGLE_SERVICE_ACCOUNT, voir README).',
@@ -308,6 +330,14 @@ export const common = defineMessages({
     notionNoWrite:
       'Die App darf diese Notion-Seite lesen, aber nichts hinzufügen. Gib der Integration die Fähigkeit „Insert content“ (siehe README).',
     notionUnreachable: 'Notion antwortet nicht. Versuch es gleich nochmal.',
+    googleOff:
+      'Das Hinzufügen zum Google-Dokument ist auf diesem Server noch nicht eingerichtet (GOOGLE_SERVICE_ACCOUNT, siehe README).',
+    googleKey:
+      'Der Google-Schlüssel des Servers wurde abgelehnt. Prüfe GOOGLE_SERVICE_ACCOUNT (siehe README).',
+    googleNoEdit:
+      'Die App kann dieses Dokument nicht bearbeiten. Gib es in Google Docs für {email} als Bearbeiter frei, dann versuch es nochmal.',
+    googleUnreachable: 'Google Docs antwortet nicht. Versuch es gleich nochmal.',
+    googleRejected: 'Google Docs hat die Änderung nicht angenommen. Versuch es gleich nochmal.',
     deliveryFailed: 'Die Nachricht konnte nicht zugestellt werden. Versuch es später nochmal.',
     docWriterMissing:
       'Das Hinzufügen zum Google-Dokument ist auf dem Server noch nicht eingerichtet (GOOGLE_SERVICE_ACCOUNT, siehe README).',
@@ -387,6 +417,14 @@ export const common = defineMessages({
     notionNoWrite:
       'La aplicación puede leer esta página de Notion, pero no añadirle nada. Da a la integración el permiso «Insertar contenido» (ver README).',
     notionUnreachable: 'Notion no ha respondido. Inténtalo de nuevo en un momento.',
+    googleOff:
+      'Añadir al Google Doc aún no está configurado en este servidor (GOOGLE_SERVICE_ACCOUNT, ver README).',
+    googleKey:
+      'Google ha rechazado la clave del servidor. Comprueba GOOGLE_SERVICE_ACCOUNT (ver README).',
+    googleNoEdit:
+      'La aplicación no puede editar este documento. En Google Docs, compártelo con {email} como Editor e inténtalo de nuevo.',
+    googleUnreachable: 'Google Docs no ha respondido. Inténtalo de nuevo en un momento.',
+    googleRejected: 'Google Docs no ha aceptado el cambio. Inténtalo de nuevo en un momento.',
     deliveryFailed: 'No se pudo entregar el mensaje. Inténtalo más tarde.',
     docWriterMissing:
       'Añadir al Google Doc aún no está configurado en el servidor (GOOGLE_SERVICE_ACCOUNT, ver README).',
@@ -465,6 +503,14 @@ export const common = defineMessages({
     notionNoWrite:
       'A aplicação pode ler esta página do Notion, mas não acrescentar nada. Dê à integração a permissão «Inserir conteúdo» (ver README).',
     notionUnreachable: 'O Notion não respondeu. Tente de novo daqui a pouco.',
+    googleOff:
+      'Acrescentar ao Google Doc ainda não está configurado neste servidor (GOOGLE_SERVICE_ACCOUNT, ver README).',
+    googleKey:
+      'A chave do Google do servidor foi recusada. Verifique GOOGLE_SERVICE_ACCOUNT (ver README).',
+    googleNoEdit:
+      'A aplicação não consegue editar este documento. No Google Docs, partilhe-o com {email} como Editor e tente de novo.',
+    googleUnreachable: 'O Google Docs não respondeu. Tente de novo daqui a pouco.',
+    googleRejected: 'O Google Docs não aceitou a alteração. Tente de novo daqui a pouco.',
     deliveryFailed: 'Não foi possível entregar a mensagem. Tente mais tarde.',
     docWriterMissing:
       'Acrescentar ao Google Doc ainda não está configurado no servidor (GOOGLE_SERVICE_ACCOUNT, ver README).',
@@ -542,6 +588,14 @@ export const common = defineMessages({
     notionNoWrite:
       'L’app può leggere questa pagina Notion ma non aggiungervi nulla. Dai all’integrazione il permesso «Inserisci contenuto» (vedi README).',
     notionUnreachable: 'Notion non ha risposto. Riprova tra un momento.',
+    googleOff:
+      'L’aggiunta al Google Doc non è ancora configurata su questo server (GOOGLE_SERVICE_ACCOUNT, vedi README).',
+    googleKey:
+      'La chiave Google del server è stata rifiutata. Controlla GOOGLE_SERVICE_ACCOUNT (vedi README).',
+    googleNoEdit:
+      'L’app non può modificare questo documento. In Google Docs condividilo con {email} come Editor, poi riprova.',
+    googleUnreachable: 'Google Docs non ha risposto. Riprova tra un momento.',
+    googleRejected: 'Google Docs non ha accettato la modifica. Riprova tra un momento.',
     deliveryFailed: 'Impossibile consegnare il messaggio. Riprova più tardi.',
     docWriterMissing:
       'L’aggiunta al Google Doc non è ancora configurata sul server (GOOGLE_SERVICE_ACCOUNT, vedi README).',

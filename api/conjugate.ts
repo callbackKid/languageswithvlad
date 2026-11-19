@@ -1,15 +1,19 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 import { claudeJSON, MODEL } from './_lib/claude.js';
-import { checkAccess, fail, onlyPost } from './_lib/http.js';
+import { checkAccess, fail, onlyPost, text } from './_lib/http.js';
 import { asVerbLanguage, conjugationPrompt } from './_lib/prompts.js';
 
-/** A French or German verb's conjugation tables. */
+// an infinitive is a word or two ("se lever", "sich waschen"); its Russian a few words
+const MAX_INFINITIVE_LENGTH = 60;
+const MAX_TRANSLATION_LENGTH = 100;
+
+// A verb's conjugation tables, in any language that has them (French, German, Spanish, Italian, Portuguese).
 export default async function handler(request: VercelRequest, response: VercelResponse) {
   if (!onlyPost(request, response) || !checkAccess(request, response)) return;
   const infinitive = typeof request.body?.inf === 'string' ? request.body.inf.trim() : '';
-  const ru = typeof request.body?.ru === 'string' ? request.body.ru.trim().slice(0, 100) : '';
-  if (!infinitive || infinitive.length > 60)
+  const ru = text(request.body?.ru, MAX_TRANSLATION_LENGTH);
+  if (!infinitive || infinitive.length > MAX_INFINITIVE_LENGTH)
     return response.status(400).json({ error: 'Bad verb.' });
   // an app from before German verb tables sends no language: its verbs are French
   const language =

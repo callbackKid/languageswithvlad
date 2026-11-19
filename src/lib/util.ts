@@ -1,5 +1,8 @@
 import type { UiLanguage } from '../i18n/core';
 
+// the download has started by then, so the file's address can be let go (milliseconds)
+const RELEASE_AFTER = 1000;
+
 /** A lesson's topic as shown: Claude writes it in English only, so with another interface
     language it is left out rather than shown in English. */
 export const shownTopic = (topic: string, uiLanguage: UiLanguage): string =>
@@ -37,5 +40,5 @@ export function downloadText(filename: string, text: string, type = 'text/plain'
   document.body.appendChild(link);
   link.click();
   link.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  setTimeout(() => URL.revokeObjectURL(url), RELEASE_AFTER);
 }

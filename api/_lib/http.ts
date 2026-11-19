@@ -12,7 +12,9 @@ import { LEARN_LANGUAGES, type LearnLanguage } from './prompts.js';
 export class HttpError extends Error {
   constructor(
     public status: number,
-    message: string
+    message: string,
+    // more fields for the app's text, e.g. the address to share a document with
+    public details: Record<string, string> = {}
   ) {
     super(message);
   }
@@ -60,7 +62,7 @@ export function onlyPost(request: VercelRequest, response: VercelResponse): bool
 /** Answers with the error's own status and message when it is one of ours, 500 otherwise. */
 export function fail(response: VercelResponse, error: unknown) {
   if (error instanceof HttpError)
-    return response.status(error.status).json({ error: error.message });
+    return response.status(error.status).json({ ...error.details, error: error.message });
   console.error(error);
   return response.status(500).json({ error: 'Something went wrong on the server.' });
 }

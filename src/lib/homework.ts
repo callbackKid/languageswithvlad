@@ -1,4 +1,10 @@
-import { type Lesson, type Tense, TENSES } from './types';
+import {
+  type Lesson,
+  type Tense,
+  type TENSES_BY_LANGUAGE,
+  VERB_LANGUAGES,
+  type VerbLanguage,
+} from './types';
 import { hash } from './util';
 
 /* "Devoirs: verbes être, avoir — présent; mots de la leçon 5; 5 phrases au passé composé"
@@ -24,7 +30,9 @@ export interface HomeworkItem {
   lessonNumber?: number;
   /** verbs: "verbes être, avoir — présent" → être, avoir in the présent */
   verbs?: string[];
-  tense?: Tense;
+  /** every tense the item names, in each language that has one by that name ("presente" is
+      Spanish, Italian and Portuguese): the exercise keeps those of the lesson's language */
+  tenses?: Tense[];
 }
 export interface Homework {
   /** the lesson the homework was written in */
@@ -39,7 +47,109 @@ const VERBS = /\b(?:verbes?|verbs?|verben|verbos?|verbi)\b|conjug|konjug|coniug|
 const VERB_WORDS =
   /\b(?:verbes?|verbs?|verben|verbos?|verbi)\b|\S*(?:conjug|konjug|coniug|спряж)\S*|глагол\S*/giu;
 // "aller et venir au passé composé": what is left after the tense's name
-const TRAILING_PREPOSITION = /\s+(?:au|à|en|in|im|the|no|al|nel|в)\s*$/iu;
+const TRAILING_PREPOSITION = /\s+(?:au|aux|à|en|in|im|the|no|na|al|nel|в)\s*$/iu;
+// between two verbs: "être et avoir", "ser y estar", "глаголы être и avoir"; \b knows only Latin
+// letters, so the bounds are written out
+const VERB_SEPARATOR = /,|(?<!\p{L})(?:et|and|und|y|e|и)(?!\p{L})/u;
+
+/** The names a teacher may write for each tense, short ones too ("futur", "presente"), all
+    lowercase; they are compared without accents, so "passe compose" counts. */
+const TENSE_NAMES: {
+  [Key in VerbLanguage]: Record<string, (typeof TENSES_BY_LANGUAGE)[Key][number]>;
+} = {
+  fr: {
+    présent: 'présent',
+    'passé composé': 'passé composé',
+    imparfait: 'imparfait',
+    'futur simple': 'futur simple',
+    futur: 'futur simple',
+    'conditionnel présent': 'conditionnel présent',
+    conditionnel: 'conditionnel présent',
+    impératif: 'impératif',
+  },
+  de: {
+    präsens: 'Präsens',
+    perfekt: 'Perfekt',
+    präteritum: 'Präteritum',
+    imperfekt: 'Präteritum',
+    'futur i': 'Futur I',
+    futur: 'Futur I',
+    'konjunktiv ii': 'Konjunktiv II',
+    konjunktiv: 'Konjunktiv II',
+  },
+  es: {
+    'presente de indicativo': 'presente de indicativo',
+    presente: 'presente de indicativo',
+    'pretérito perfecto compuesto': 'pretérito perfecto compuesto',
+    // the simple one is the indefinido: longer names are tried first
+    'pretérito perfecto simple': 'pretérito indefinido',
+    'pretérito perfecto': 'pretérito perfecto compuesto',
+    'pretérito indefinido': 'pretérito indefinido',
+    indefinido: 'pretérito indefinido',
+    'pretérito imperfecto': 'pretérito imperfecto',
+    imperfecto: 'pretérito imperfecto',
+    'futuro simple': 'futuro simple',
+    futuro: 'futuro simple',
+    'condicional simple': 'condicional simple',
+    condicional: 'condicional simple',
+  },
+  it: {
+    'indicativo presente': 'indicativo presente',
+    presente: 'indicativo presente',
+    'passato prossimo': 'passato prossimo',
+    imperfetto: 'imperfetto',
+    'futuro semplice': 'futuro semplice',
+    futuro: 'futuro semplice',
+    'condizionale presente': 'condizionale presente',
+    condizionale: 'condizionale presente',
+  },
+  pt: {
+    'presente do indicativo': 'presente do indicativo',
+    presente: 'presente do indicativo',
+    'pretérito perfeito': 'pretérito perfeito',
+    perfeito: 'pretérito perfeito',
+    'pretérito imperfeito': 'pretérito imperfeito',
+    imperfeito: 'pretérito imperfeito',
+    'futuro do presente': 'futuro do presente',
+    futuro: 'futuro do presente',
+    condicional: 'condicional',
+  },
+};
+
+/** Lowercase and without accents, one character for each character of the text, so a position
+    found in it is the same position in the text. */
+const fold = (text: string) =>
+  [...text.toLowerCase()].map((char) => char.normalize('NFD').replace(/\p{M}/gu, '')).join('');
+
+/** The tenses an item names, in every language that has a tense by that name, and the text with
+    those names taken out (so they aren't read as verbs). */
+function findTenses(text: string): { tenses: Tense[]; rest: string } {
+  const source = text.normalize('NFC');
+  const folded = fold(source);
+  const found = new Set<Tense>();
+  const spans: [number, number][] = [];
+  for (const language of VERB_LANGUAGES) {
+    const names: Record<string, Tense> = TENSE_NAMES[language];
+    // within one language a name is used once: "pretérito perfecto simple" isn't also "pretérito perfecto"
+    let free = folded;
+    for (const name of Object.keys(names).sort((first, second) => second.length - first.length)) {
+      const pattern = new RegExp(`(?<!\\p{L})${fold(name)}(?!\\p{L})`, 'u');
+      const match = pattern.exec(free);
+      const tense = names[name];
+      if (!match || !tense) continue;
+      found.add(tense);
+      spans.push([match.index, match.index + match[0].length]);
+      free =
+        free.slice(0, match.index) +
+        ' '.repeat(match[0].length) +
+        free.slice(match.index + match[0].length);
+    }
+  }
+  let rest = source;
+  for (const [start, end] of spans)
+    rest = rest.slice(0, start) + ' '.repeat(end - start) + rest.slice(end);
+  return { tenses: [...found], rest };
+}
 const WRITING =
   /phrases?|sentences?|\bsätze\b|\bsatz\b|frases?|frasi|écri|rédig|\bwrite\b|schreib|escrib|escrev|scriv|напис|сочин|décri|describe|beschreib|descriv|descrev|опиши|tradu|translat|übersetz|перев(?:ест|ед|од)/iu;
 const WORDS =
@@ -47,25 +157,27 @@ const WORDS =
 const WORDS_FIRST = new RegExp(`^\\s*(?:${WORDS.source})`, 'iu');
 const NUMBER = /(\d{1,3})/;
 
-/** "verbes être, avoir — présent" → the verbs and the tense, when they can be told. */
-function readVerbs(text: string): { verbs: string[]; tense?: Tense } {
-  const lower = text.toLowerCase();
-  // the longest name first: "conditionnel présent" before "présent"; German names are capitalised
-  const tense = [...TENSES]
-    .sort((first, second) => second.length - first.length)
-    .find((name) => lower.includes(name.toLowerCase()));
-  let rest = text.replace(VERB_WORDS, ' ');
-  if (tense) rest = rest.replace(new RegExp(tense, 'iu'), ' ');
+// "verbes être, avoir — présent" → the verbs and the tenses, when they can be told.
+function readVerbs(text: string): { verbs: string[]; tenses: Tense[] } {
+  const { tenses, rest } = findTenses(text);
   const listed = rest
+    .replace(VERB_WORDS, ' ')
     .split(/\s+[—–-]\s+|:/)
     .map((part) => part.trim().replace(TRAILING_PREPOSITION, '').trim())
     .find(Boolean);
   const verbs = (listed ?? '')
-    .split(/,|\bet\b|\band\b|\bund\b|\by\b|\be\b|\bи\b/u)
-    .map((verb) => verb.trim().replace(/[.;]+$/, ''))
+    .split(VERB_SEPARATOR)
+    // "être, avoir au présent et au passé composé": a preposition left by a tense's name
+    .map((verb) =>
+      verb
+        .trim()
+        .replace(TRAILING_PREPOSITION, '')
+        .replace(/[.;]+$/, '')
+        .trim()
+    )
     // one or two words: "aller", "se lever"
     .filter((verb) => verb && verb.split(/\s+/).length <= 2 && !/\d/.test(verb));
-  return { verbs, tense };
+  return { verbs, tenses };
 }
 
 /** What one item asks for. */
@@ -73,8 +185,8 @@ export function readItem(text: string): HomeworkItem {
   const number = Number(text.match(NUMBER)?.[1]) || undefined;
   if (GAPS.test(text)) return { text, kind: 'gaps', lessonNumber: number };
   if (VERBS.test(text)) {
-    const { verbs, tense } = readVerbs(text);
-    if (verbs.length) return { text, kind: 'verbs', verbs, tense };
+    const { verbs, tenses } = readVerbs(text);
+    if (verbs.length) return { text, kind: 'verbs', verbs, tenses };
   }
   // "mots de la leçon 6 — surtout : la phrase": a words task, whatever its words are
   if (WORDS_FIRST.test(text)) return { text, kind: 'words', lessonNumber: number };

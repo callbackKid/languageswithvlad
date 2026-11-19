@@ -3,8 +3,9 @@ import { useState } from 'react';
 import { getUiLanguage, useTranslation } from '../i18n/core';
 import { paper } from '../i18n/messages/paper';
 import { api } from '../lib/api';
+import { followLink, hrefFor } from '../lib/router';
 import { getSettings } from '../lib/settings';
-import { load, save } from '../lib/storage';
+import { loadTexts, save } from '../lib/storage';
 import type { GrammarRule, HomeworkTask, Language, LessonExtras } from '../lib/types';
 import BookImport from './BookImport';
 import { GapRound } from './GapFill';
@@ -76,14 +77,17 @@ export function HomeworkTab({
   tasks,
   storageKey,
   language,
+  onHome = false,
 }: {
   tasks: HomeworkTask[];
   storageKey: string;
   language: Language;
+  // Home shows these tasks too, each with its exercise: a link there
+  onHome?: boolean;
 }) {
   const { t } = useTranslation(paper);
   // the tasks done, by their text, so a task stays ticked when the lesson is edited around it
-  const [done, setDone] = useState<string[]>(() => load<string[]>(storageKey) ?? []);
+  const [done, setDone] = useState<string[]>(() => loadTexts(storageKey));
   if (!tasks.length) return <p className="empty">{t('noHomework')}</p>;
   const toggle = (task: string) => {
     const next = done.includes(task) ? done.filter((item) => item !== task) : [...done, task];
@@ -113,6 +117,13 @@ export function HomeworkTab({
           </li>
         ))}
       </ul>
+      {onHome && (
+        <p>
+          <a className="btn" href={hrefFor('/')} onClick={(event) => followLink(event, '/')}>
+            {t('homeworkOnHome')}
+          </a>
+        </p>
+      )}
     </>
   );
 }
@@ -123,14 +134,14 @@ export function BookTab({
   docId,
   lessonKey,
   docWriter,
-  ai,
+  hasClaude,
 }: {
   extras: LessonExtras | null;
   docId: string;
   lessonKey: string;
   /** whether the server can write to this document; undefined: the lesson isn't in it */
   docWriter: boolean | undefined;
-  ai: boolean;
+  hasClaude: boolean;
 }) {
   const { t } = useTranslation(paper);
   const exercises = extras?.book ?? [];
@@ -159,7 +170,7 @@ export function BookTab({
         ) : (
           <p className="empty">{t('noBook')}</p>
         ))}
-      {ai && docWriter !== undefined && (
+      {hasClaude && docWriter !== undefined && (
         <BookImport docId={docId} lessonKey={lessonKey} docWriter={docWriter} />
       )}
     </>

@@ -8,14 +8,22 @@ import HandwrittenNotes from './HandwrittenNotes';
 import PageHead from './PageHead';
 import PhotoWords from './PhotoWords';
 
-type Mode = 'underlined' | 'handwritten' | 'textbook';
-
-const MODES: Mode[] = ['underlined', 'handwritten', 'textbook'];
+const MODES = ['underlined', 'handwritten', 'textbook'] as const;
+type Mode = (typeof MODES)[number];
 
 /** Everything that starts from paper: underlined words in a book, handwritten lesson notes, or a textbook chapter. */
-export default function PhotoSection({ ai, target }: { ai: boolean; target: DocTarget }) {
+export default function PhotoSection({
+  hasClaude,
+  target,
+}: {
+  hasClaude: boolean;
+  target: DocTarget;
+}) {
   const { t } = useTranslation(paper);
-  const [mode, setMode] = useState<Mode>(() => load<Mode>('photo:mode') || 'underlined');
+  const [mode, setMode] = useState<Mode>(() => {
+    const saved = load<unknown>('photo:mode');
+    return MODES.find((mode) => mode === saved) ?? 'underlined';
+  });
   const choose = (next: Mode) => {
     setMode(next);
     save('photo:mode', next);
@@ -36,10 +44,10 @@ export default function PhotoSection({ ai, target }: { ai: boolean; target: DocT
         ))}
       </div>
       {mode === 'underlined' ? (
-        <PhotoWords ai={ai} target={target} />
+        <PhotoWords hasClaude={hasClaude} target={target} />
       ) : (
         // a separate instance per mode, so each keeps its own saved lessons
-        <HandwrittenNotes key={mode} ai={ai} target={target} source={mode} />
+        <HandwrittenNotes key={mode} hasClaude={hasClaude} target={target} source={mode} />
       )}
     </>
   );

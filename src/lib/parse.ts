@@ -12,9 +12,11 @@ import type {
   LessonWord,
   Pair,
   PhotoItem,
+  ReaderText,
   TextStudy,
   VerbRef,
   Word,
+  Writing,
   WritingCheck,
 } from './types';
 import { asLanguage, TENSES_BY_LANGUAGE, type VerbLanguage } from './types';
@@ -92,7 +94,13 @@ export function splitLessons(text: string): Lesson[] {
       key: repeats === 1 ? baseKey : `${baseKey}-${repeats}`,
       n: mark.number,
       word: mark.word,
-      date: new Date(mark.year, mark.month - 1, mark.day),
+      // "31.02.2026" is a typo for the end of February, not 3 March; the key keeps what was
+      // written, since the server finds the heading by it
+      date: new Date(
+        mark.year,
+        mark.month - 1,
+        Math.min(mark.day, new Date(mark.year, mark.month, 0).getDate())
+      ),
       body,
       hash: hash(body),
     };
@@ -179,7 +187,21 @@ export function markKeyWords(words: Word[], body: string): Word[] {
   );
 }
 
-export function localParse(body: string): Analysis {
+/** The language a heading word points to ("Lektion" → German), for lessons read without Claude.
+    "Leçon" is the oldest heading, and French. */
+const LESSON_WORD_LANGUAGES: Record<LessonWord, Language> = {
+  Leçon: 'fr',
+  Lesson: 'en',
+  Lektion: 'de',
+  Lección: 'es',
+  Lição: 'pt',
+  Lezione: 'it',
+};
+export const languageOfLesson = (lesson: Pick<Lesson, 'word'>): Language =>
+  LESSON_WORD_LANGUAGES[lesson.word];
+
+// The lesson's words without Claude, from "mot — перевод" lines, in the language of its heading.
+export function localParse(body: string, language: Language = 'fr'): Analysis {
   const words: Word[] = [];
   const seen = new Set<string>();
   for (let line of withoutReport(body).split('\n')) {
@@ -217,7 +239,7 @@ export function localParse(body: string): Analysis {
       ...(starred && { key: true }),
     });
   }
-  return { language: 'fr', topic: '', words, pairs: [], verbs: [], local: true };
+  return { language, topic: '', words, pairs: [], verbs: [], local: true };
 }
 
 type JsonObject = Record<string, unknown>;
@@ -227,7 +249,6 @@ const asArray = (value: unknown): unknown[] => (Array.isArray(value) ? value : [
 /** The non-empty strings of a list. */
 const asTexts = (value: unknown): string[] => asArray(value).map(asText).filter(Boolean);
 
-/** The grammar, homework and book exercises Claude found in a lesson; missing parts are empty. */
 /** Claude's check of a written answer; null when the reply has no corrected text. */
 export function normalizeWritingCheck(raw: unknown): WritingCheck | null {
   const data = asObject(raw);
@@ -247,6 +268,7 @@ export function normalizeWritingCheck(raw: unknown): WritingCheck | null {
   };
 }
 
+/** The grammar, homework and book exercises Claude found in a lesson; missing parts are empty. */
 export function normalizeExtras(raw: unknown): LessonExtras {
   const data = asObject(raw);
   return {
@@ -387,6 +409,53 @@ function photoItem(raw: unknown, language: Language): PhotoItem {
     tense: asText(item.tense),
     explanation: asText(item.explanation),
     language,
+  };
+}
+
+// Saved photo or text notes, each with the language it was saved with.
+export function normalizePhotoItems(raw: unknown): PhotoItem[] {
+  return asArray(raw)
+    .map((item) => photoItem(item, asLanguage(asObject(item).language)))
+    .filter((item) => item.fr);
+}
+
+// A written homework answer as saved on the device; null when it has no task.
+export function normalizeWriting(raw: unknown): Writing | null {
+  const data = asObject(raw);
+  const task = asText(data.task);
+  if (!task) return null;
+  const check = data.check === undefined ? null : normalizeWritingCheck(data.check);
+  return {
+    task,
+    text: typeof data.text === 'string' ? data.text : '',
+    ...(check && { check }),
+    ...(typeof data.checkedText === 'string' && { checkedText: data.checkedText }),
+    ...(typeof data.checkedAt === 'number' && { checkedAt: data.checkedAt }),
+  };
+}
+
+// A pasted text as saved on the device, with what Claude made of it; null when it has no text.
+export function normalizeReaderText(raw: unknown): ReaderText | null {
+  const data = asObject(raw);
+  const id = asText(data.id);
+  const text = typeof data.text === 'string' ? data.text : '';
+  if (!id || !text.trim()) return null;
+  let study: TextStudy | undefined;
+  try {
+    study = data.study === undefined ? undefined : normalizeStudy(data.study).study;
+  } catch {
+    // a study with nothing in it is made again on request
+  }
+  const translation = asTexts(data.translation);
+  return {
+    id,
+    title: asText(data.title),
+    text,
+    at: typeof data.at === 'number' ? data.at : 0,
+    ...(data.language !== undefined && { language: asLanguage(data.language) }),
+    notes: normalizePhotoItems(data.notes),
+    ...(translation.length && { translation }),
+    ...(study && { study }),
   };
 }
 

@@ -30,7 +30,7 @@ export default function MakeHomework({
   language,
   docId,
   docWriter,
-  ai,
+  hasClaude,
 }: {
   lesson: Lesson;
   /** the lesson's words, key words (★) marked */
@@ -39,7 +39,7 @@ export default function MakeHomework({
   docId: string;
   /** whether the server can write to this document */
   docWriter: boolean;
-  ai: boolean;
+  hasClaude: boolean;
 }) {
   const { t } = useTranslation(homeworkText);
   const commonText = useTranslation(common);
@@ -60,7 +60,7 @@ export default function MakeHomework({
         level,
         sentences,
       });
-      setText(homeworkBlock({ raw, lessonNumber: lesson.n, words, gaps: ai }));
+      setText(homeworkBlock({ raw, lessonNumber: lesson.n, words, gaps: hasClaude }));
       setStep('review');
     } catch (failure) {
       setStep('idle');

@@ -31,12 +31,12 @@ function ankiText(words: Analysis['words']): string {
 
 export default function WordsTab({
   analysis,
-  ai,
+  hasClaude,
   onRefresh,
   hidePairs,
 }: {
   analysis: Analysis;
-  ai: boolean;
+  hasClaude: boolean;
   onRefresh?: () => void;
   hidePairs?: boolean;
 }) {
@@ -155,7 +155,7 @@ export default function WordsTab({
         <button
           type="button"
           className="btn"
-          disabled={picked.length < 1 || !ai}
+          disabled={picked.length < 1 || !hasClaude}
           onClick={() => start('gap')}
         >
           {t('fillGap')}

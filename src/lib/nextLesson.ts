@@ -89,9 +89,19 @@ function zonedTime(
   return new Date(moment);
 }
 
+/** A line that says when the next lesson is: the label followed by ":" or a dash
+    ("le cours prochain: à confirmer" counts too), or by a date. "Devoirs: lire le texte pour le
+    cours prochain" only mentions it, and must not hide the date written above. */
+function isNextLessonLine(line: string): boolean {
+  const match = line.match(LINE);
+  if (!match || match.index === undefined) return false;
+  const afterLabel = line.slice(match.index + match[0].length);
+  return /^\s*[:–—-]/.test(afterLabel) || DATE_TIME.test(afterLabel);
+}
+
 /** null when the document never mentions the next lesson; "unconfirmed" when its newest mention has no usable date. */
 export function parseNextLesson(text: string, now = new Date()): NextLesson | 'unconfirmed' | null {
-  const lines = text.split('\n').filter((line) => LINE.test(line));
+  const lines = text.split('\n').filter(isNextLessonLine);
   // only the newest mention counts: "le cours prochain: à confirmer" cancels an older date
   const line = lines[lines.length - 1];
   if (line === undefined) return null;

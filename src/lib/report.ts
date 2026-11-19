@@ -1,10 +1,12 @@
 import { translator } from '../i18n/core';
 import { homework as homeworkText } from '../i18n/messages/homework';
+import { dayKey, startOfDay } from './dates';
 import { type Homework, homeworkKey, writingKey } from './homework';
+import { normalizeWriting } from './parse';
 import { isLearned, type Progress } from './progress';
 import { getSettings, isStudied } from './settings';
-import { load } from './storage';
-import type { Lesson, Writing } from './types';
+import { loadChecked, loadTexts } from './storage';
+import type { Lesson } from './types';
 
 /* The student's report to the teacher, added to the document under the lesson it is about.
    Every line starts with an emoji, or with spaces for the lines of a written answer, and the
@@ -15,11 +17,6 @@ export const REPORT_MARK = '📝';
 const MAX_WORDS = 12;
 const MAX_FORMS = 8;
 const INDENT = '   ';
-
-const startOfDay = (date: Date) =>
-  new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime();
-const dayKey = (date: Date) =>
-  `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
 
 /** The report on everything since the lesson: homework, answers, mistakes, written answers. */
 export function buildReport({
@@ -53,7 +50,7 @@ export function buildReport({
   );
 
   if (homework) {
-    const done = load<string[]>(homeworkKey(docId, lesson.key)) ?? [];
+    const done = loadTexts(homeworkKey(docId, lesson.key));
     const doneCount = homework.items.filter((item) => done.includes(item.text)).length;
     lines.push(t('reportHomework', { done: doneCount, total: homework.items.length }));
     for (const item of homework.items)
@@ -92,7 +89,7 @@ export function buildReport({
 
   // the written answers, as Claude corrected them
   for (const item of homework?.items.filter((candidate) => candidate.kind === 'writing') ?? []) {
-    const writing = load<Writing>(writingKey(docId, lesson.key, item.text));
+    const writing = loadChecked(writingKey(docId, lesson.key, item.text), normalizeWriting);
     if (!writing?.text.trim()) continue;
     const verdict = writing.check
       ? t('mistakesTitle', { count: writing.check.mistakes.length })

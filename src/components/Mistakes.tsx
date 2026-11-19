@@ -15,15 +15,15 @@ import WordQuiz from './WordQuiz';
 export default function Mistakes({ bank }: { bank: Bank }) {
   const { t } = useTranslation(pages);
   const progress = useProgress();
-  const [practise, setPractise] = useState(false);
+  const [isPractising, setPractising] = useState(false);
   const { words, forms } = topMistakes(progress);
 
-  if (practise)
+  if (isPractising)
     return (
       <WordQuiz
         title={t('practiseMistakesTitle')}
         closeLabel={t('backToMistakes')}
-        onClose={() => setPractise(false)}
+        onClose={() => setPractising(false)}
         make={() => {
           const mistakes = topMistakes();
           const pickedWords = shuffle(mistakes.words).slice(0, 7).map(statWord);
@@ -55,7 +55,7 @@ export default function Mistakes({ bank }: { bank: Bank }) {
       ) : (
         <>
           <div className="row-actions lead">
-            <button type="button" className="btn primary" onClick={() => setPractise(true)}>
+            <button type="button" className="btn primary" onClick={() => setPractising(true)}>
               {t('practiseMistakes')}
             </button>
           </div>

@@ -17,6 +17,8 @@ export const GOOGLE_DOC_ID = /^[a-zA-Z0-9_-]{20,100}$/;
 
 const SCOPE = 'https://www.googleapis.com/auth/documents';
 const TOKEN_URL = 'https://oauth2.googleapis.com/token';
+// characters of Google's error answer written to the log: enough to see what went wrong
+const LOGGED_DETAIL = 300;
 
 export class GoogleError extends HttpError {}
 
@@ -67,19 +69,15 @@ async function accessToken(account: ServiceAccount): Promise<string> {
     console.error(
       'Google token error',
       tokenResponse.status,
-      (await tokenResponse.text().catch(() => '')).slice(0, 300)
+      (await tokenResponse.text().catch(() => '')).slice(0, LOGGED_DETAIL)
     );
-    throw new GoogleError(
-      500,
-      'The Google service account key was refused. Check GOOGLE_SERVICE_ACCOUNT.'
-    );
+    throw new GoogleError(500, 'google_key');
   }
   const data = (await tokenResponse.json()) as { access_token: string; expires_in: number };
   cachedToken = { value: data.access_token, expiresAt: Date.now() + data.expires_in * 1000 };
   return data.access_token;
 }
 
-/** Adds text at the very end of a Google Doc. */
 interface DocParagraph {
   startIndex?: number;
   paragraph?: { elements?: { textRun?: { content?: string } }[] };
@@ -93,7 +91,7 @@ export async function insertIntoLesson(
   text: string
 ): Promise<boolean> {
   const account = serviceAccount();
-  if (!account) throw new GoogleError(501, 'Writing to Google Docs isn’t set up on this server.');
+  if (!account) throw new GoogleError(501, 'google_off');
   const token = await accessToken(account);
   const url = `https://docs.googleapis.com/v1/documents/${encodeURIComponent(documentId)}`;
   const documentResponse = await fetch(`${url}?fields=body.content(startIndex,paragraph)`, {
@@ -101,11 +99,8 @@ export async function insertIntoLesson(
   });
   if (!documentResponse.ok) {
     if (documentResponse.status === 403 || documentResponse.status === 404)
-      throw new GoogleError(
-        403,
-        `The app can’t edit this document. In Google Docs, share it with ${account.client_email} as Editor.`
-      );
-    throw new GoogleError(502, 'Google Docs didn’t answer. Try again.');
+      throw new GoogleError(403, 'google_no_edit', { email: account.client_email });
+    throw new GoogleError(502, 'google_unreachable');
   }
   const { body } = (await documentResponse.json()) as { body?: { content?: DocParagraph[] } };
   const paragraphs = (body?.content ?? []).filter((element) => element.paragraph);
@@ -126,14 +121,14 @@ export async function insertIntoLesson(
       requests: [{ insertText: { ...location, text: `\n${text.trim()}\n` } }],
     }),
   });
-  if (!docsResponse.ok)
-    throw new GoogleError(502, 'Google Docs didn’t accept the change. Try again.');
+  if (!docsResponse.ok) throw new GoogleError(502, 'google_rejected');
   return true;
 }
 
+/** Adds text at the very end of a Google Doc. */
 export async function appendToDoc(documentId: string, text: string): Promise<void> {
   const account = serviceAccount();
-  if (!account) throw new GoogleError(501, 'Writing to Google Docs isn’t set up on this server.');
+  if (!account) throw new GoogleError(501, 'google_off');
   const token = await accessToken(account);
   const docsResponse = await fetch(
     `https://docs.googleapis.com/v1/documents/${encodeURIComponent(documentId)}:batchUpdate`,
@@ -147,13 +142,10 @@ export async function appendToDoc(documentId: string, text: string): Promise<voi
   console.error(
     'Google Docs error',
     docsResponse.status,
-    (await docsResponse.text().catch(() => '')).slice(0, 300)
+    (await docsResponse.text().catch(() => '')).slice(0, LOGGED_DETAIL)
   );
   if (docsResponse.status === 403 || docsResponse.status === 404) {
-    throw new GoogleError(
-      403,
-      `The app can’t edit this document. In Google Docs, share it with ${account.client_email} as Editor.`
-    );
+    throw new GoogleError(403, 'google_no_edit', { email: account.client_email });
   }
-  throw new GoogleError(502, 'Google Docs didn’t accept the change. Try again.');
+  throw new GoogleError(502, 'google_rejected');
 }

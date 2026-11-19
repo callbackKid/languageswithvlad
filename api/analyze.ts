@@ -14,6 +14,12 @@ import {
 /** Longest lesson read in one go; a longer one is refused instead of being cut silently. */
 const MAX_LESSON_LENGTH = 20_000;
 const PRACTICE_SENTENCES = 8;
+// a grammar point's title and its summary, as the Grammar tab shows them
+const MAX_TITLE_LENGTH = 200;
+const MAX_SUMMARY_LENGTH = 600;
+// the key words (★) named in made homework: at most this many, each this long
+const MAX_KEY_WORDS = 20;
+const MAX_KEY_WORD_LENGTH = 80;
 /** Sentences to translate in made homework: what the teacher picks, within the app's range
     (src/lib/makeHomework.ts). */
 const MIN_TRANSLATE_SENTENCES = 2;
@@ -30,13 +36,13 @@ export default async function handler(request: VercelRequest, response: VercelRe
   const action: unknown = request.body?.action ?? 'words';
   try {
     if (action === 'practice') {
-      const title = text(request.body?.title, 200);
+      const title = text(request.body?.title, MAX_TITLE_LENGTH);
       if (!title) return response.status(400).json({ error: 'Which grammar point?' });
       const prompt = grammarPracticePrompt({
         language: asLanguage(request.body?.language),
         level: asLevel(request.body?.level) ?? 'A2',
         title,
-        summary: text(request.body?.summary, 600),
+        summary: text(request.body?.summary, MAX_SUMMARY_LENGTH),
         count: PRACTICE_SENTENCES,
         explainIn: asExplainLanguage(request.body?.explainIn),
       });
@@ -52,9 +58,9 @@ export default async function handler(request: VercelRequest, response: VercelRe
           .status(413)
           .json({ error: 'This lesson is too long to analyze in one go.' });
       const keyWords = (Array.isArray(request.body?.keyWords) ? request.body.keyWords : [])
-        .map((word: unknown) => text(word, 80))
+        .map((word: unknown) => text(word, MAX_KEY_WORD_LENGTH))
         .filter(Boolean)
-        .slice(0, 20);
+        .slice(0, MAX_KEY_WORDS);
       const prompt = homeworkPrompt({
         body: lesson,
         keyWords,

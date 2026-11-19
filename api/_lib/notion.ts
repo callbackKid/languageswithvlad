@@ -12,6 +12,13 @@ const NOTION_VERSION = '2022-06-28';
 // deep enough for toggles in columns in a sub-page, shallow enough to stay fast
 const MAX_DEPTH = 4;
 const MAX_BLOCKS = 4000;
+// Notion's own limits: items in one page of a listing, blocks added in one request, characters
+// in one text run
+const PAGE_SIZE = 100;
+const BLOCKS_PER_REQUEST = 100;
+const MAX_TEXT_RUN = 2000;
+// rows of a lesson database read at most: years of lessons
+const MAX_ROWS = 500;
 
 export const NOTION_ID = /^notion-([0-9a-f]{32})$/;
 
@@ -102,7 +109,7 @@ async function children(blockId: string): Promise<Block[]> {
   const blocks: Block[] = [];
   let cursor: string | null = null;
   do {
-    const query = `page_size=100${cursor ? `&start_cursor=${cursor}` : ''}`;
+    const query = `page_size=${PAGE_SIZE}${cursor ? `&start_cursor=${cursor}` : ''}`;
     const page: List<Block> = await notion(`/blocks/${blockId}/children?${query}`);
     blocks.push(...page.results);
     cursor = page.has_more ? page.next_cursor : null;
@@ -179,7 +186,7 @@ class Reader {
       const page: List<Page> = await notion(`/databases/${databaseId}/query`, {
         method: 'POST',
         body: {
-          page_size: 100,
+          page_size: PAGE_SIZE,
           // oldest first, like lessons written one under another in a document
           sorts: [{ timestamp: 'created_time', direction: 'ascending' }],
           ...(cursor ? { start_cursor: cursor } : {}),
@@ -187,7 +194,7 @@ class Reader {
       });
       rows.push(...page.results);
       cursor = page.has_more ? page.next_cursor : null;
-    } while (cursor && rows.length < 500);
+    } while (cursor && rows.length < MAX_ROWS);
     const out: string[] = [];
     for (const [position, row] of rows.entries()) {
       out.push('', rowTitle(row, position));
@@ -232,8 +239,8 @@ export async function readNotion(id: string): Promise<{ title: string; text: str
 const paragraph = (text: string, type = 'paragraph') => ({
   object: 'block',
   type,
-  // Notion takes at most 2000 characters per text run
-  [type]: { rich_text: [{ type: 'text', text: { content: text.slice(0, 2000) } }] },
+  // Notion takes at most MAX_TEXT_RUN characters per text run
+  [type]: { rich_text: [{ type: 'text', text: { content: text.slice(0, MAX_TEXT_RUN) } }] },
 });
 
 /** Adds a lesson: under the page's last block, or as a new row when the link is a database of lessons. */
@@ -256,13 +263,13 @@ export async function insertIntoNotionLesson(
     .split('\n')
     .map((line) => paragraph(line.trimEnd()));
   const add = async (parentId: string, after?: string) => {
-    // Notion adds at most 100 blocks per request; later chunks follow the ones just added
+    // Notion adds at most BLOCKS_PER_REQUEST blocks per request; later chunks follow the ones just added
     let previous = after;
-    for (let start = 0; start < blocks.length; start += 100) {
+    for (let start = 0; start < blocks.length; start += BLOCKS_PER_REQUEST) {
       const added: List<Block> = await notion(`/blocks/${parentId}/children`, {
         method: 'PATCH',
         body: {
-          children: blocks.slice(start, start + 100),
+          children: blocks.slice(start, start + BLOCKS_PER_REQUEST),
           ...(previous ? { after: previous } : {}),
         },
       });
@@ -278,7 +285,10 @@ export async function insertIntoNotionLesson(
     // a database: every row is a lesson
     const rows: List<Page> = await notion(`/databases/${id}/query`, {
       method: 'POST',
-      body: { page_size: 100, sorts: [{ timestamp: 'created_time', direction: 'ascending' }] },
+      body: {
+        page_size: PAGE_SIZE,
+        sorts: [{ timestamp: 'created_time', direction: 'ascending' }],
+      },
     });
     const titles = rows.results.map(
       (row, position) => rowTitle(row, position).split('\n')[0] ?? ''
@@ -306,12 +316,12 @@ export async function appendToNotion(id: string, text: string): Promise<void> {
   const heading = lines[headingIndex]?.trim() ?? '';
   const body = lines.slice(headingIndex + 1).filter((line, index, all) => line || all[index - 1]);
   try {
-    // Notion adds at most 100 blocks per request
+    // Notion adds at most BLOCKS_PER_REQUEST blocks per request
     const blocks = [paragraph(heading, 'heading_2'), ...body.map((line) => paragraph(line))];
-    for (let start = 0; start < blocks.length; start += 100)
+    for (let start = 0; start < blocks.length; start += BLOCKS_PER_REQUEST)
       await notion(`/blocks/${id}/children`, {
         method: 'PATCH',
-        body: { children: blocks.slice(start, start + 100) },
+        body: { children: blocks.slice(start, start + BLOCKS_PER_REQUEST) },
       });
   } catch (error) {
     if (!(error instanceof NotionError) || error.message !== 'notion_validation') throw error;
@@ -325,7 +335,7 @@ export async function appendToNotion(id: string, text: string): Promise<void> {
       body: {
         parent: { database_id: id },
         properties: { [titleName]: { title: [{ text: { content: heading } }] } },
-        children: body.slice(0, 100).map((line) => paragraph(line)),
+        children: body.slice(0, BLOCKS_PER_REQUEST).map((line) => paragraph(line)),
       },
     });
   }

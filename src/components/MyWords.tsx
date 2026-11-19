@@ -9,7 +9,7 @@ import PageHead from './PageHead';
 import WordsTab from './WordsTab';
 
 /** The student's list of unfamiliar words: starred by hand or missed in an exercise. */
-export default function MyWords({ ai }: { ai: boolean }) {
+export default function MyWords({ hasClaude }: { hasClaude: boolean }) {
   const { t, rich, locale } = useTranslation(pages);
   const names = useTranslation(learning);
   const progress = useProgress();
@@ -64,7 +64,7 @@ export default function MyWords({ ai }: { ai: boolean }) {
       {words.length ? (
         <section className="panel solo">
           <div className="body">
-            <WordsTab analysis={analysis} ai={ai} hidePairs />
+            <WordsTab analysis={analysis} hasClaude={hasClaude} hidePairs />
           </div>
         </section>
       ) : (

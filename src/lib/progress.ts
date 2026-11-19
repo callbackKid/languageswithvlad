@@ -1,8 +1,9 @@
 import { useSyncExternalStore } from 'react';
 
+import { dayKey } from './dates';
 import { getSettings, isStudied } from './settings';
-import { load, save } from './storage';
-import type { Language, Word } from './types';
+import { asFields, loadChecked, save } from './storage';
+import { asLanguage, type Language, languageOfTense, type Word } from './types';
 
 /** Correct answers in a row that make a word learned (and take it off the hard list). */
 export const LEARNED_STREAK = 3;
@@ -39,6 +40,51 @@ export interface Progress {
 }
 
 const EMPTY: Progress = { words: {}, forms: {} };
+
+/** Saved progress with every entry checked: a word or form with missing fields is dropped rather
+    than breaking the exercises, Stats and Mistakes. */
+function asProgress(raw: unknown): Progress {
+  const data = raw && typeof raw === 'object' ? (raw as Record<string, unknown>) : {};
+  const entries = (value: unknown) =>
+    Object.entries(value && typeof value === 'object' ? value : {});
+  const words: Record<string, WordStat> = {};
+  for (const [key, value] of entries(data.words)) {
+    const fields = asFields(value, {
+      fr: 'string',
+      ru: 'string',
+      right: 'number',
+      wrong: 'number',
+      streak: 'number',
+      last: 'number',
+    });
+    if (!fields) continue;
+    const stat = value as Record<string, unknown>;
+    words[key] = {
+      ...fields,
+      tr: typeof stat.tr === 'string' ? stat.tr : '',
+      kind: typeof stat.kind === 'string' ? stat.kind : 'other',
+      lesson: typeof stat.lesson === 'string' ? stat.lesson : '',
+      ...(stat.language !== undefined && { language: asLanguage(stat.language) }),
+      hard: stat.hard === true,
+    };
+  }
+  const forms: Record<string, FormStat> = {};
+  for (const [key, value] of entries(data.forms)) {
+    const fields = asFields(value, {
+      inf: 'string',
+      t: 'string',
+      p: 'string',
+      f: 'string',
+      right: 'number',
+      wrong: 'number',
+      last: 'number',
+    });
+    if (fields) forms[key] = { ...fields, negative: (value as FormStat).negative === true };
+  }
+  const days: Record<string, number> = {};
+  for (const [day, count] of entries(data.days)) if (typeof count === 'number') days[day] = count;
+  return { words, forms, days };
+}
 let docId: string | null = null;
 let state: Progress = EMPTY;
 const subscribers = new Set<() => void>();
@@ -53,12 +99,9 @@ export const isLearned = (stat: WordStat | undefined) => !!stat && stat.streak >
 export function setProgressDoc(id: string | null) {
   if (id === docId) return;
   docId = id;
-  state = (id && load<Progress>('progress:' + id)) || EMPTY;
+  state = (id && loadChecked('progress:' + id, asProgress)) || EMPTY;
   queueMicrotask(() => subscribers.forEach((notify) => notify()));
 }
-
-const dayKey = (date: Date) =>
-  `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
 
 /** Counts one more answer for today. */
 function withAnswer(progress: Progress): Progress {
@@ -187,7 +230,7 @@ export function topMistakes(
   progress: Progress = state,
   limit = 20
 ): { words: WordStat[]; forms: FormStat[] } {
-  // only the languages the student learns (Settings); verb forms are French
+  // only the languages the student learns (Settings); a verb form's tense names its language
   const settings = getSettings();
   return {
     words: Object.values(progress.words)
@@ -195,7 +238,7 @@ export function topMistakes(
       .sort(byMisses)
       .slice(0, limit),
     forms: Object.values(progress.forms)
-      .filter((stat) => stat.wrong > 0 && settings.studying.includes('fr'))
+      .filter((stat) => stat.wrong > 0 && isStudied(languageOfTense(stat.t), settings))
       .sort(byMisses)
       .slice(0, limit),
   };

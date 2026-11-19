@@ -5,6 +5,9 @@ import { call } from '../i18n/messages/call';
 import { api, ApiError } from '../lib/api';
 
 // the Zoom window speaks the same language as the app
+// the size of the call inside the page, in pixels: 16:9, as wide as the lesson mode's column
+const ZOOM_VIEW = { width: 480, height: 270 };
+
 const ZOOM_LANGUAGES = {
   en: 'en-US',
   ru: 'ru-RU',
@@ -54,7 +57,7 @@ export default function ZoomCall({
         patchJsMedia: true,
         leaveOnPageUnload: true,
         customize: {
-          video: { isResizable: true, viewSizes: { default: { width: 480, height: 270 } } },
+          video: { isResizable: true, viewSizes: { default: ZOOM_VIEW } },
         },
       });
       await client.join({ signature, meetingNumber, password: passcode, userName });

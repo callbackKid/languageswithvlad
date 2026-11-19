@@ -33,7 +33,7 @@ import { lessonPath, NEEDS_LESSONS, parsePath, SECTIONS } from './lib/sections';
 import { isStudied, useSettings } from './lib/settings';
 import { isNotion, sourceUrl } from './lib/source';
 import { stopSpeaking } from './lib/speech';
-import { load, remove, save } from './lib/storage';
+import { asFields, load, loadChecked, remove, save } from './lib/storage';
 import { applyTeacherHealth } from './lib/teacher';
 
 interface DocCache {
@@ -41,6 +41,11 @@ interface DocCache {
   text: string;
   fetchedAt: number;
 }
+// the document as last read on this device, so the app opens at once and works offline
+const loadDocCache = (id: string): DocCache | null =>
+  loadChecked('doc:' + id, (raw) =>
+    asFields(raw, { title: 'string', text: 'string', fetchedAt: 'number' })
+  );
 type Sync = { state: 'idle' | 'loading' | 'ok' | 'error'; message?: string };
 
 function ago(timestamp: number, { t, locale }: Translator<keyof (typeof app)['en']>): string {
@@ -98,16 +103,14 @@ export default function App() {
   const settings = useSettings();
   const { t, rich, locale } = translation;
   const [needsCode, setNeedsCode] = useState(false);
-  const [ai, setAi] = useState(true);
+  const [hasClaude, setHasClaude] = useState(true);
   const [docWriter, setDocWriter] = useState<string | null>(null);
-  const [feedback, setFeedback] = useState(false);
+  const [hasFeedback, setHasFeedback] = useState(false);
   const [zoomReady, setZoomReady] = useState(false);
   const [notionReady, setNotionReady] = useState(false);
   const [boardServer, setBoardServer] = useState<BoardServer | null>(null);
   const [docId, setDocId] = useState<string | null>(initialDocId);
-  const [doc, setDoc] = useState<DocCache | null>(() =>
-    docId ? load<DocCache>('doc:' + docId) : null
-  );
+  const [doc, setDoc] = useState<DocCache | null>(() => (docId ? loadDocCache(docId) : null));
   const [sync, setSync] = useState<Sync>({ state: 'idle' });
   const [changing, setChanging] = useState(false);
   const [unseenNews, setUnseenNews] = useState(hasUnseenNews);
@@ -137,9 +140,9 @@ export default function App() {
     api
       .health()
       .then((health) => {
-        setAi(health.ai);
+        setHasClaude(health.ai);
         setDocWriter(health.docWriter ?? null);
-        setFeedback(!!health.feedback);
+        setHasFeedback(!!health.feedback);
         setZoomReady(!!health.zoom);
         setNotionReady(!!health.notion);
         setBoardServer(health.board ?? null);
@@ -206,7 +209,7 @@ export default function App() {
   useLiveSync(lessonOn && !!docId, () => {
     if (docId) void runSync(docId, true);
   });
-  const bank = useBank(lessons, ai);
+  const bank = useBank(lessons, hasClaude);
   // Set while rendering, so the first quiz round already sees this document's progress.
   setProgressDoc(docId);
   // the same words the Favourite words page lists
@@ -219,10 +222,22 @@ export default function App() {
     lessons[lessons.length - 1] ??
     null;
   const currentLessonKey = lesson?.key ?? null;
+  // The lesson list runs oldest to newest; the open lesson (usually the newest) is scrolled into
+  // view, along the row on a phone and down the column on a computer, without moving the page.
+  const lessonList = useRef<HTMLElement>(null);
+  useEffect(() => {
+    const list = lessonList.current;
+    const link = list?.querySelector<HTMLElement>('[aria-current="page"]');
+    if (!list || !link) return;
+    const box = list.getBoundingClientRect();
+    const own = link.getBoundingClientRect();
+    list.scrollLeft += own.left - box.left - (box.width - own.width) / 2;
+    list.scrollTop += own.top - box.top - (box.height - own.height) / 2;
+  }, [currentLessonKey, section, lessons.length]);
 
   function connect(id: string) {
     if (id !== docId) {
-      setDoc(load<DocCache>('doc:' + id));
+      setDoc(loadDocCache(id));
     }
     save('doc', id);
     setDocId(id);
@@ -323,7 +338,7 @@ export default function App() {
           />
         </div>
         <div className="top-actions">
-          {feedback && <Feedback docTitle={doc?.title ?? ''} />}
+          {hasFeedback && <Feedback docTitle={doc?.title ?? ''} />}
           <a
             className="btn ghost"
             href={hrefFor('/settings')}
@@ -451,12 +466,12 @@ export default function App() {
                 target={docTarget}
                 zoomReady={zoomReady}
                 boardServer={boardServer}
-                ai={ai}
+                hasClaude={hasClaude}
               />
             </main>
           ) : section === 'lessons' ? (
             <div className="layout">
-              <nav className="lessons" aria-label={t('lessonsLabel')}>
+              <nav className="lessons" aria-label={t('lessonsLabel')} ref={lessonList}>
                 {lessons.map((listedLesson) => (
                   <a
                     key={listedLesson.key}
@@ -476,9 +491,10 @@ export default function App() {
                     key={lesson.key}
                     lesson={lesson}
                     docId={docId}
-                    ai={ai}
+                    hasClaude={hasClaude}
                     docWriter={!!docTarget.docWriter}
                     onAnalysis={bank.put}
+                    isNewest={lesson.key === lessons[lessons.length - 1]?.key}
                   />
                 )}
               </main>
@@ -489,14 +505,14 @@ export default function App() {
                 <Home
                   bank={bank}
                   lessons={lessons}
-                  ai={ai}
+                  hasClaude={hasClaude}
                   docId={docId}
                   docText={doc?.text ?? ''}
                   canWrite={!!docTarget.docWriter}
                 />
               )}
-              {section === 'practice' && <Practice bank={bank} ai={ai} />}
-              {section === 'mine' && <MyWords ai={ai} />}
+              {section === 'practice' && <Practice bank={bank} hasClaude={hasClaude} />}
+              {section === 'mine' && <MyWords hasClaude={hasClaude} />}
               {section === 'mistakes' && <Mistakes bank={bank} />}
               {section === 'stats' && (
                 <Stats
@@ -517,9 +533,9 @@ export default function App() {
                   }}
                 />
               )}
-              {section === 'discuss' && <Discuss bank={bank} ai={ai} />}
-              {section === 'photo' && <PhotoSection ai={ai} target={docTarget} />}
-              {section === 'text' && <Reader ai={ai} />}
+              {section === 'discuss' && <Discuss bank={bank} hasClaude={hasClaude} />}
+              {section === 'photo' && <PhotoSection hasClaude={hasClaude} target={docTarget} />}
+              {section === 'text' && <Reader hasClaude={hasClaude} />}
               {section === 'news' && <News onSeen={newsSeen} />}
             </main>
           )}

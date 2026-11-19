@@ -9,6 +9,14 @@ const KINDS: Record<string, string> = {
   other: '💬 Message',
 };
 const MAX_PHOTOS = 3;
+// the message itself; keep in step with maxLength in src/components/Feedback.tsx
+const MAX_MESSAGE_LENGTH = 3000;
+// the contact, the page and the document's name
+const MAX_DETAIL_LENGTH = 200;
+// a browser's user agent and window size
+const MAX_BROWSER_LENGTH = 300;
+const MAX_DATE_LENGTH = 80;
+const MAX_KIND_LENGTH = 10;
 const MAX_PHOTOS_BASE64 = 4_000_000;
 const PHOTO_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp']);
 
@@ -56,7 +64,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
     return response.status(501).json({ error: 'Feedback isn’t set up on this server.' });
 
   const body = (request.body ?? {}) as Record<string, unknown>;
-  const message = text(body.message, 3000);
+  const message = text(body.message, MAX_MESSAGE_LENGTH);
   if (!message) return response.status(400).json({ error: 'Write a few words first.' });
   const photos = readPhotos(body.images);
   if (typeof photos === 'string') return response.status(400).json({ error: photos });
@@ -71,17 +79,21 @@ export default async function handler(request: VercelRequest, response: VercelRe
       .json({ error: 'Too many messages in a short time. Try again in a few minutes.' });
 
   const details = [
-    ['From', text(body.contact, 200) || 'not given'],
-    ['Page', text(body.page, 200)],
-    ['Document', text(body.docTitle, 200)],
-    ['Browser', text(body.browser, 300)],
-    ['Sent', text(body.sentAt, 80)],
+    ['From', text(body.contact, MAX_DETAIL_LENGTH) || 'not given'],
+    ['Page', text(body.page, MAX_DETAIL_LENGTH)],
+    ['Document', text(body.docTitle, MAX_DETAIL_LENGTH)],
+    ['Browser', text(body.browser, MAX_BROWSER_LENGTH)],
+    ['Sent', text(body.sentAt, MAX_DATE_LENGTH)],
   ]
     .filter(([, value]) => value)
     .map(([label, value]) => `${label}: ${value}`);
-  const report = [KINDS[text(body.kind, 10)] ?? KINDS.other, '', message, '', ...details].join(
-    '\n'
-  );
+  const report = [
+    KINDS[text(body.kind, MAX_KIND_LENGTH)] ?? KINDS.other,
+    '',
+    message,
+    '',
+    ...details,
+  ].join('\n');
 
   try {
     await sendWithPhotos(report, photos);

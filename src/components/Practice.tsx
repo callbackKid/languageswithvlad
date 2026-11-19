@@ -11,7 +11,7 @@ import VerbsTab from './VerbsTab';
 import WordsTab from './WordsTab';
 
 /** Every exercise, run on the words and verbs of all lessons or the ones picked. */
-export default function Practice({ bank, ai }: { bank: Bank; ai: boolean }) {
+export default function Practice({ bank, hasClaude }: { bank: Bank; hasClaude: boolean }) {
   const { t } = useTranslation(pages);
   const appText = useTranslation(app);
   const uiLanguage = appText.language;
@@ -29,13 +29,13 @@ export default function Practice({ bank, ai }: { bank: Bank; ai: boolean }) {
       language: words[0]?.language ?? 'fr',
       topic: '',
       words,
-      local: !ai,
+      local: !hasClaude,
       pairs: bank.pairs.filter(
         (pair) => isIncluded(pair.lesson) && chosenWords.has(pair.a) && chosenWords.has(pair.b)
       ),
       verbs: bank.verbs.filter((verb) => isIncluded(verb.lesson)),
     };
-  }, [bank.words, bank.pairs, bank.verbs, selectedLessons, ai]);
+  }, [bank.words, bank.pairs, bank.verbs, selectedLessons, hasClaude]);
   const { words } = analysis;
   const ready = bank.lessons.filter((lesson) => lesson.ready);
   const toggle = (key: string) =>
@@ -100,12 +100,14 @@ export default function Practice({ bank, ai }: { bank: Bank; ai: boolean }) {
           </button>
         </div>
         <div className="body">
-          {tab === 'words' && <WordsTab key={selectionKey} analysis={analysis} ai={ai} />}
+          {tab === 'words' && (
+            <WordsTab key={selectionKey} analysis={analysis} hasClaude={hasClaude} />
+          )}
           {tab === 'verbs' && (
             <VerbsTab
               key={selectionKey}
               verbs={analysis.verbs}
-              ai={ai}
+              hasClaude={hasClaude}
               waiting={bank.pending > 0}
             />
           )}

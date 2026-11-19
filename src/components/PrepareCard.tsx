@@ -19,14 +19,14 @@ export default function PrepareCard({
   lesson,
   docText,
   bank,
-  ai,
+  hasClaude,
   docId,
 }: {
   /** the newest lesson in the document: the one before the next */
   lesson: Lesson;
   docText: string;
   bank: Bank;
-  ai: boolean;
+  hasClaude: boolean;
   docId: string;
 }) {
   const { t, locale } = useTranslation(homeCards);
@@ -40,7 +40,7 @@ export default function PrepareCard({
   const until = upcoming.start.getTime() - Date.now();
   if (until <= 0 || until > AHEAD) return null;
 
-  const words = lessonWords(lesson, bank, ai);
+  const words = lessonWords(lesson, bank, hasClaude);
   if (revising)
     return (
       <section className="home-card exercise">
