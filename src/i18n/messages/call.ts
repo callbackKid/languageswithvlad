@@ -204,7 +204,7 @@ export const call = defineMessages({
     warmUpRound: 'Échauffement · leçon {n}',
     backToLesson: 'Retour au cours',
     missedTitle: 'Pas encore acquis : à revoir ensemble',
-    allStuck: 'Tout est acquis : aucune erreur dans cette série.',
+    allStuck: 'Tout est acquis : aucune erreur dans ce tour.',
   },
   de: {
     title: 'Unterrichtsmodus',

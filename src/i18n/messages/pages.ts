@@ -182,7 +182,7 @@ export const pages = defineMessages({
     },
     homeOnMyWords: ', {hard} dans Mots favoris',
     homeIntro:
-      '. Chaque série mélange les mots de toutes les leçons, et ceux que vous ratez reviennent plus souvent.',
+      '. Chaque tour mélange les mots de toutes les leçons, et ceux que vous ratez reviennent plus souvent.',
     streak: { one: '🔥 {count} jour d’affilée', other: '🔥 {count} jours d’affilée' },
     startStreak: 'Commencez une série aujourd’hui',
     goalDone: 'Objectif du jour atteint : {count} réponses',

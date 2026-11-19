@@ -133,7 +133,7 @@ export const NEWS: NewsDay[] = [
         kind: 'fixed',
         text: {
           en: 'Homework: verb tasks written with a short tense name (“au futur”, “presente”, “Futur”) or with “и” between the verbs open the right verbs in the right tense.',
-          ru: 'Домашка: задания на глаголы, где время названо коротко («au futur», «presente», «Futur») или глаголы разделены «и», открывают нужные глаголы в нужном времени.',
+          ru: 'Домашнее задание: упражнения на глаголы, где время названо коротко («au futur», «presente», «Futur») или глаголы разделены «и», открывают нужные глаголы в нужном времени.',
           fr: 'Devoirs : les tâches de verbes écrites avec un nom de temps abrégé (« au futur », « presente », « Futur ») ou avec « и » entre les verbes ouvrent les bons verbes au bon temps.',
           de: 'Hausaufgaben: Verbaufgaben mit einer kurzen Angabe der Zeitform („au futur“, „presente“, „Futur“) oder mit „и“ zwischen den Verben öffnen die richtigen Verben in der richtigen Zeitform.',
           es: 'Deberes: las tareas de verbos escritas con el nombre corto de un tiempo («au futur», «presente», «Futur») o con «и» entre los verbos abren los verbos correctos en el tiempo correcto.',
@@ -170,7 +170,7 @@ export const NEWS: NewsDay[] = [
         audience: 'teacher',
         text: {
           en: 'Make homework with Claude: choose how many sentences to translate (2 to 8) and the level before Claude writes the homework.',
-          ru: '«Составить с Claude»: теперь можно выбрать, сколько фраз дать на перевод (от 2 до 8) и уровень, прежде чем Claude напишет домашку.',
+          ru: '«Составить с Claude»: теперь можно выбрать, сколько фраз дать на перевод (от 2 до 8) и уровень, прежде чем Claude напишет домашнее задание.',
           fr: 'Préparer les devoirs avec Claude : choisissez le nombre de phrases à traduire (de 2 à 8) et le niveau avant que Claude rédige les devoirs.',
           de: 'Mit Claude erstellen: Wähle vorher, wie viele Sätze zu übersetzen sind (2 bis 8) und auf welchem Niveau Claude die Hausaufgaben schreibt.',
           es: 'Preparar los deberes con Claude: elige cuántas frases hay que traducir (de 2 a 8) y el nivel antes de que Claude escriba los deberes.',
@@ -195,7 +195,7 @@ export const NEWS: NewsDay[] = [
         text: {
           en: 'Listening questions in the exercises have a “Can’t listen now” button: it skips the round’s listening questions without counting them as mistakes.',
           ru: 'У вопросов на слух в упражнениях появилась кнопка «Сейчас не могу слушать»: она пропускает вопросы на слух в этом раунде и не считает их ошибками.',
-          fr: 'Les questions d’écoute des exercices ont un bouton « Je ne peux pas écouter maintenant » : il passe les questions d’écoute de la série sans les compter comme des erreurs.',
+          fr: 'Les questions d’écoute des exercices ont un bouton « Je ne peux pas écouter maintenant » : il passe les questions d’écoute du tour sans les compter comme des erreurs.',
           de: 'Hörfragen in den Übungen haben eine Schaltfläche „Kann gerade nicht zuhören“: Sie überspringt die Hörfragen der Runde, ohne sie als Fehler zu zählen.',
           es: 'Las preguntas de escucha de los ejercicios tienen un botón «Ahora no puedo escuchar»: salta las preguntas de escucha de la ronda sin contarlas como errores.',
           pt: 'As perguntas de audição dos exercícios têm um botão «Agora não posso ouvir»: salta as perguntas de audição da ronda sem as contar como erros.',
@@ -259,7 +259,7 @@ export const NEWS: NewsDay[] = [
         kind: 'new',
         text: {
           en: 'German verbs: a German lesson’s Verbs tab has tables in Präsens, Perfekt, Präteritum, Futur I and Konjunktiv II, with the drill and the quick quiz, and homework can ask to conjugate them.',
-          ru: 'Немецкие глаголы: на вкладке «Глаголы» немецкого урока есть таблицы в Präsens, Perfekt, Präteritum, Futur I и Konjunktiv II, с тренировкой и быстрым тестом, а в домашке можно попросить их проспрягать.',
+          ru: 'Немецкие глаголы: на вкладке «Глаголы» немецкого урока есть таблицы в Präsens, Perfekt, Präteritum, Futur I и Konjunktiv II, с тренировкой и быстрым тестом, а в домашнем задании можно попросить их проспрягать.',
           fr: 'Verbes allemands : l’onglet Verbes d’une leçon d’allemand a des tableaux au Präsens, Perfekt, Präteritum, Futur I et Konjunktiv II, avec l’entraînement et le quiz rapide, et les devoirs peuvent demander de les conjuguer.',
           de: 'Deutsche Verben: Der Tab Verben einer Deutsch-Lektion hat Tabellen im Präsens, Perfekt, Präteritum, Futur I und Konjunktiv II, mit Übung und Schnelltest, und Hausaufgaben können das Konjugieren verlangen.',
           es: 'Verbos alemanes: la pestaña Verbos de una lección de alemán tiene tablas en Präsens, Perfekt, Präteritum, Futur I y Konjunktiv II, con la práctica y el test rápido, y los deberes pueden pedir conjugarlos.',
@@ -313,7 +313,7 @@ export const NEWS: NewsDay[] = [
         audience: 'teacher',
         text: {
           en: 'For teachers: Settings → Teacher turns on the teacher’s tools with the teacher code. Students no longer see Make homework from this lesson.',
-          ru: 'Для преподавателя: Настройки → Преподаватель включают инструменты преподавателя по коду преподавателя. Ученики больше не видят «Домашка по этому уроку».',
+          ru: 'Для преподавателя: Настройки → Преподаватель включают инструменты преподавателя по коду преподавателя. Ученики больше не видят «Домашнее задание по этому уроку».',
           fr: 'Pour le professeur : Réglages → Professeur active ses outils avec le code du professeur. Les élèves ne voient plus « Des devoirs à partir de cette leçon ».',
           de: 'Für Lehrkräfte: Einstellungen → Lehrkraft schaltet die Werkzeuge der Lehrkraft mit dem Code der Lehrkraft ein. Lernende sehen „Hausaufgaben aus dieser Lektion“ nicht mehr.',
           es: 'Para el profesor: Ajustes → Profesor activa sus herramientas con el código del profesor. Los alumnos ya no ven «Deberes a partir de esta lección».',
@@ -386,7 +386,7 @@ export const NEWS: NewsDay[] = [
         kind: 'new',
         text: {
           en: 'Send to the teacher: under the homework and in Stats, a short report (homework done, mistakes since the lesson, your corrected written answers) goes into the document under the lesson after you’ve read it.',
-          ru: 'Отправить преподавателю: под домашкой и в Статистике короткий отчёт (что сделано, ошибки с урока, исправленные письменные ответы) после вашей проверки попадает в документ под урок.',
+          ru: 'Отправить преподавателю: под домашним заданием и в Статистике короткий отчёт (что сделано, ошибки с урока, исправленные письменные ответы) после вашей проверки попадает в документ под урок.',
           fr: 'Envoyer au professeur : sous les devoirs et dans les Statistiques, un court rapport (devoirs faits, erreurs depuis le cours, vos réponses écrites corrigées) va dans le document sous la leçon, après relecture.',
           de: 'An die Lehrkraft senden: Unter den Hausaufgaben und in der Statistik kommt ein kurzer Bericht (erledigte Aufgaben, Fehler seit der Stunde, deine korrigierten schriftlichen Antworten) nach dem Durchlesen ins Dokument unter die Lektion.',
           es: 'Enviar al profesor: debajo de los deberes y en Estadísticas, un breve informe (deberes hechos, errores desde la clase, tus respuestas escritas corregidas) va al documento debajo de la lección, después de que lo leas.',
@@ -398,7 +398,7 @@ export const NEWS: NewsDay[] = [
         kind: 'new',
         text: {
           en: 'Written homework checked by Claude: write your answer to a task like “5 phrases au passé composé”, and Claude fixes the mistakes and explains each one, like a tutor. The teacher sees the corrected answers in lesson mode.',
-          ru: 'Письменная домашка с проверкой Claude: напишите ответ на задание вроде «5 phrases au passé composé», и Claude исправит ошибки и объяснит каждую, как репетитор. Преподаватель видит исправленные ответы в режиме урока.',
+          ru: 'Письменное домашнее задание с проверкой Claude: напишите ответ на задание вроде «5 phrases au passé composé», и Claude исправит ошибки и объяснит каждую, как репетитор. Преподаватель видит исправленные ответы в режиме урока.',
           fr: 'Devoirs écrits vérifiés par Claude : écrivez votre réponse à une tâche comme « 5 phrases au passé composé », et Claude corrige les erreurs et explique chacune, comme un professeur particulier. Le professeur voit les réponses corrigées dans le mode cours.',
           de: 'Schriftliche Hausaufgaben, von Claude geprüft: Schreib deine Antwort auf eine Aufgabe wie „5 phrases au passé composé“, und Claude korrigiert die Fehler und erklärt jeden, wie ein Nachhilfelehrer. Die Lehrkraft sieht die korrigierten Antworten im Unterrichtsmodus.',
           es: 'Deberes escritos corregidos por Claude: escribe tu respuesta a una tarea como «5 phrases au passé composé», y Claude corrige los errores y explica cada uno, como un profesor particular. El profesor ve las respuestas corregidas en el modo clase.',
@@ -410,7 +410,7 @@ export const NEWS: NewsDay[] = [
         kind: 'new',
         text: {
           en: 'Homework on Home: what the teacher writes after “Devoirs:” in the lesson becomes a checklist with the days left until the next lesson. Each task opens its exercise, and finishing it ticks the task.',
-          ru: 'Домашка на Главной: то, что преподаватель пишет в уроке после «Devoirs:», становится чек-листом, где видно, сколько дней до урока. Каждое задание открывает своё упражнение, а когда оно закончено, галочка ставится сама.',
+          ru: 'Домашнее задание на Главной: то, что преподаватель пишет в уроке после «Devoirs:», становится чек-листом, где видно, сколько дней до урока. Каждое задание открывает своё упражнение, а когда оно закончено, галочка ставится сама.',
           fr: 'Les devoirs sur l’Accueil : ce que le professeur écrit après « Devoirs: » dans la leçon devient une liste à cocher, avec les jours restants avant le cours. Chaque tâche ouvre son exercice, et le finir la coche.',
           de: 'Hausaufgaben auf der Startseite: Was die Lehrkraft in der Lektion nach „Devoirs:“ schreibt, wird zur Checkliste mit den Tagen bis zur nächsten Stunde. Jede Aufgabe öffnet ihre Übung, und ist sie fertig, wird sie abgehakt.',
           es: 'Deberes en Inicio: lo que el profesor escribe tras «Devoirs:» en la lección se convierte en una lista para marcar, con los días que faltan para la clase. Cada tarea abre su ejercicio, y al terminarlo se marca.',

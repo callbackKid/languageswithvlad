@@ -154,7 +154,7 @@ export const tutorial = defineMessages({
     'photo.step3':
       '<b>Textbook PDF</b>: press <pbtn>Choose a PDF</pbtn>, enter the pages of one chapter (up to 20), then <pbtn>Read these pages</pbtn>. Claude writes lesson notes: words, phrases, grammar and examples. Check them and press <pbtn>Prepare lesson</pbtn>.',
     'photo.step4':
-      '<btn>Add to Google Doc as Leçon 8</btn> adds what was read to the end of the document as a new lesson (needs a one-time setup on the server, see the README).',
+      '<btn>Add to the document as Leçon 8</btn> adds what was read to the end of the document as a new lesson (needs a one-time setup on the server, see the README).',
     'photo.tip1':
       'Take the photo straight on, in good light, with the whole marked line in the frame.',
     'photo.tip2': '☆ next to a word puts its dictionary form on Favourite words.',
@@ -210,7 +210,7 @@ export const tutorial = defineMessages({
     'call.step3':
       'Write in <b>Lesson notes</b> during the lesson: new words as “mot — перевод”, mistakes, homework. <btn>⏱ Time</btn> marks when something came up.',
     'call.step4':
-      'After the lesson, <btn>Add to Google Doc as Leçon 8</btn> puts the notes into the document as a new lesson, ready for exercises.',
+      'After the lesson, <btn>Add to the document as Leçon 8</btn> puts the notes into the document as a new lesson, ready for exercises.',
     'call.step5':
       '<pbtn>Open the board</pbtn> under the notes: write, draw and paste pictures. With live sharing set up, the teacher and the student draw on the same board at once and see each other’s pointer; otherwise share your screen in the call. <b>Full screen</b> and <b>Save as picture</b> are above it.',
     'call.step6':
@@ -297,9 +297,9 @@ export const tutorial = defineMessages({
     'home.tip1':
       'Когда преподаватель пишет в уроке домашнее задание (<ex>Devoirs: verbes être, avoir — présent; mots de la leçon 5; 5 phrases au passé composé</ex>), на Главной появляется чек-лист и сколько осталось до урока. <btn>Повторить слова</btn>, <btn>Вставить слова</btn> и <btn>Проспрягать</btn> открывают упражнение к заданию, а когда оно закончено, галочка ставится сама.',
     'home.tip2':
-      'У письменного задания (<ex>5 phrases au passé composé</ex>, перевод, «опиши свой день») есть кнопка <btn>Написать</btn>: напишите ответ и нажмите <pbtn>Проверить</pbtn>. Claude исправит ошибки, коротко объяснит каждую, как репетитор, и скажет, выполнено ли задание. В режиме урока <b>Письменная домашка</b> показывает преподавателю исправленные ответы.',
+      'У письменного задания (<ex>5 phrases au passé composé</ex>, перевод, «опиши свой день») есть кнопка <btn>Написать</btn>: напишите ответ и нажмите <pbtn>Проверить</pbtn>. Claude исправит ошибки, коротко объяснит каждую, как репетитор, и скажет, выполнено ли задание. В режиме урока <b>Письменное домашнее задание</b> показывает преподавателю исправленные ответы.',
     'home.tip3':
-      '<btn>Подготовить отчёт</btn> под домашкой (и внизу Статистики) собирает короткий отчёт для преподавателя: что сделано, ответы и ошибки с урока, письменные ответы, исправленные Claude. Прочитайте, при желании поправьте, и <pbtn>Добавить в документ</pbtn> поместит его под урок.',
+      '<btn>Подготовить отчёт</btn> под домашним заданием (и внизу Статистики) собирает короткий отчёт для преподавателя: что сделано, ответы и ошибки с урока, письменные ответы, исправленные Claude. Прочитайте, при желании поправьте, и <pbtn>Добавить в документ</pbtn> поместит его под урок.',
     'home.tip4':
       'В день урока и на следующий день Главная подводит его итог: «Сегодня, урок 7: 12 новых слов, 2 глагола», его слова (сначала ключевые) и грамматика, с кнопкой <pbtn>Начать повторение</pbtn>. ✕ скрывает карточку.',
     'home.tip5':
@@ -315,7 +315,7 @@ export const tutorial = defineMessages({
     'lessons.step2':
       'Оставайтесь на вкладке <b>Слова</b>. Все слова отмечены; снимите галочки с ненужных или используйте <b>Выбрать все</b>, <b>Снять выбор</b> и поиск.',
     'lessons.step3':
-      'Запустите упражнение кнопкой: <pbtn>Тест</pbtn> <btn>Карточки</btn> <btn>Найди перевод</btn> <btn>Синонимы и антонимы</btn> <btn>Вставь слово</btn> <btn>Диктант</btn>',
+      'Запустите упражнение кнопкой: <pbtn>Тест</pbtn> <btn>Карточки</btn> <btn>Найдите перевод</btn> <btn>Синонимы и антонимы</btn> <btn>Вставьте слово</btn> <btn>Диктант</btn>',
     'lessons.step4':
       'Нажмите 🔊, чтобы услышать слово, и ☆, чтобы добавить его в <b>Избранные слова</b>.',
     'lessons.tip1':
@@ -391,7 +391,7 @@ export const tutorial = defineMessages({
     'photo.step3':
       '<b>Учебник (PDF)</b>: нажмите <pbtn>Выбрать PDF</pbtn>, укажите страницы одной главы (до 20), затем <pbtn>Прочитать эти страницы</pbtn>. Claude составит записи урока: слова, фразы, грамматику и примеры. Проверьте их и нажмите <pbtn>Подготовить урок</pbtn>.',
     'photo.step4':
-      '<btn>Добавить в Google-документ как Leçon 8</btn> добавляет прочитанное в конец документа новым уроком (нужна разовая настройка на сервере, см. README).',
+      '<btn>Добавить в документ как Leçon 8</btn> добавляет прочитанное в конец документа новым уроком (нужна разовая настройка на сервере, см. README).',
     'photo.tip1': 'Снимайте прямо, при хорошем свете, чтобы вся отмеченная строка попала в кадр.',
     'photo.tip2': '☆ рядом со словом добавляет его словарную форму в «Избранные слова».',
     'photo.mock': 'результат фото с подчёркнутыми словами',
@@ -431,7 +431,7 @@ export const tutorial = defineMessages({
     'settings.step2':
       '<b>Интерфейс</b>: язык приложения (английский, русский, французский, немецкий, испанский, португальский, итальянский) и цветовая тема: как в системе, светлая или тёмная.',
     'settings.step3':
-      '<b>Обучение</b>: отметьте языки, которые учите, и выберите уровень для каждого. Упражнения, «Избранные слова», «Ошибки», «Статистика» и «Вопрос для обсуждения» покажут только эти языки, а уровень подставится в «Вопрос для обсуждения» и «Вставь слово».',
+      '<b>Обучение</b>: отметьте языки, которые учите, и выберите уровень для каждого. Упражнения, «Избранные слова», «Ошибки», «Статистика» и «Вопрос для обсуждения» покажут только эти языки, а уровень подставится в «Вопрос для обсуждения» и «Вставьте слово».',
     'settings.step4':
       'Ещё там: цель на день для 🔥 серии, скорость озвучки 🔊, какие разделы показывать в меню и какие вкладки — на странице урока.',
     'settings.tip1': 'Переводы слов остаются на русском при любом языке интерфейса.',
@@ -446,7 +446,7 @@ export const tutorial = defineMessages({
     'call.step3':
       'Во время урока пишите в <b>Заметки урока</b>: новые слова в виде «mot — перевод», ошибки, домашнее задание. <btn>⏱ Время</btn> отмечает, когда что-то прозвучало.',
     'call.step4':
-      'После урока <btn>Добавить в Google-документ как Leçon 8</btn> переносит заметки в документ новым уроком — сразу с упражнениями.',
+      'После урока <btn>Добавить в документ как Leçon 8</btn> переносит заметки в документ новым уроком — сразу с упражнениями.',
     'call.step5':
       '<pbtn>Открыть доску</pbtn> под заметками: пишите, рисуйте, вставляйте картинки. Если настроен общий доступ, преподаватель и ученик рисуют на одной доске одновременно и видят указатель друг друга; иначе покажите экран в звонке. Над ней — <b>На весь экран</b> и <b>Сохранить картинкой</b>.',
     'call.step6':
@@ -522,13 +522,13 @@ export const tutorial = defineMessages({
     'header.mock': 'la barre du haut',
 
     'home.title': 'Accueil',
-    'home.summary': 'Une série quotidienne de 10 questions variées',
+    'home.summary': 'Un tour quotidien de 10 questions variées',
     'home.intro':
       'Le moyen le plus rapide de pratiquer chaque jour : 10 questions de toutes vos leçons, et les mots ratés reviennent plus souvent.',
     'home.step1':
       'Répondez à chaque question : choisissez une traduction, choisissez le mot dans la langue apprise, tapez-le ou écrivez ce que vous entendez.',
     'home.step2':
-      'Après chaque réponse, appuyez sur <pbtn>Suivant</pbtn>. À la fin, vous voyez votre score et <pbtn>Série suivante</pbtn>.',
+      'Après chaque réponse, appuyez sur <pbtn>Suivant</pbtn>. À la fin, vous voyez votre score et <pbtn>Tour suivant</pbtn>.',
     'home.step3':
       'Répondez au moins une fois par jour pour garder votre 🔥 série ; 20 réponses remplissent l’objectif du jour.',
     'home.tip1':
@@ -612,7 +612,7 @@ export const tutorial = defineMessages({
     'mistakes.intro':
       'Vos erreurs les plus fréquentes, mots et formes verbales, avec le nombre de fois où vous les avez ratés.',
     'mistakes.step1':
-      'Appuyez sur <pbtn>Travailler mes erreurs</pbtn> pour une série faite uniquement d’elles.',
+      'Appuyez sur <pbtn>Travailler mes erreurs</pbtn> pour un tour fait uniquement d’elles.',
 
     'stats.title': 'Statistiques',
     'stats.summary': 'Vos progrès et vos points faibles',
@@ -631,7 +631,7 @@ export const tutorial = defineMessages({
     'photo.step3':
       '<b>Manuel en PDF</b> : appuyez sur <pbtn>Choisir un PDF</pbtn>, indiquez les pages d’un chapitre (jusqu’à 20), puis <pbtn>Lire ces pages</pbtn>. Claude rédige des notes de cours : mots, expressions, grammaire et exemples. Vérifiez-les et appuyez sur <pbtn>Préparer la leçon</pbtn>.',
     'photo.step4':
-      '<btn>Ajouter au Google Doc comme Leçon 8</btn> ajoute ce qui a été lu à la fin du document comme nouvelle leçon (une configuration unique du serveur est nécessaire, voir le README).',
+      '<btn>Ajouter au document comme Leçon 8</btn> ajoute ce qui a été lu à la fin du document comme nouvelle leçon (une configuration unique du serveur est nécessaire, voir le README).',
     'photo.tip1':
       'Prenez la photo bien en face, avec une bonne lumière, toute la ligne marquée dans le cadre.',
     'photo.tip2': '☆ à côté d’un mot ajoute sa forme du dictionnaire à Mots favoris.',
@@ -690,7 +690,7 @@ export const tutorial = defineMessages({
     'call.step3':
       'Pendant le cours, écrivez dans <b>Notes du cours</b> : les nouveaux mots sous la forme « mot — перевод », les erreurs, les devoirs. <btn>⏱ Heure</btn> marque le moment.',
     'call.step4':
-      'Après le cours, <btn>Ajouter au Google Doc comme Leçon 8</btn> met les notes dans le document comme nouvelle leçon, prête pour les exercices.',
+      'Après le cours, <btn>Ajouter au document comme Leçon 8</btn> met les notes dans le document comme nouvelle leçon, prête pour les exercices.',
     'call.step5':
       '<pbtn>Ouvrir le tableau</pbtn> sous les notes : écrivez, dessinez, collez des images. Avec le partage en direct configuré, le professeur et l’élève dessinent sur le même tableau en même temps et voient le pointeur de l’autre ; sinon, partagez votre écran dans l’appel. <b>Plein écran</b> et <b>Enregistrer en image</b> sont au-dessus.',
     'call.step6':
@@ -873,7 +873,7 @@ export const tutorial = defineMessages({
     'photo.step3':
       '<b>Lehrbuch-PDF</b>: Tippe auf <pbtn>PDF auswählen</pbtn>, gib die Seiten eines Kapitels an (bis zu 20) und tippe dann auf <pbtn>Diese Seiten lesen</pbtn>. Claude schreibt Unterrichtsnotizen: Wörter, Wendungen, Grammatik und Beispiele. Prüfe sie und tippe auf <pbtn>Lektion vorbereiten</pbtn>.',
     'photo.step4':
-      '<btn>Als Leçon 8 zum Google-Dokument hinzufügen</btn> hängt das Gelesene als neue Lektion ans Ende des Dokuments (braucht eine einmalige Einrichtung auf dem Server, siehe README).',
+      '<btn>Als Leçon 8 zum Dokument hinzufügen</btn> hängt das Gelesene als neue Lektion ans Ende des Dokuments (braucht eine einmalige Einrichtung auf dem Server, siehe README).',
     'photo.tip1':
       'Fotografiere gerade von vorn, bei gutem Licht, mit der ganzen markierten Zeile im Bild.',
     'photo.tip2': '☆ neben einem Wort fügt seine Grundform zu den Lieblingswörtern hinzu.',
@@ -931,7 +931,7 @@ export const tutorial = defineMessages({
     'call.step3':
       'Schreib während der Stunde in die <b>Notizen zur Stunde</b>: neue Wörter als „Wort — перевод“, Fehler, Hausaufgaben. <btn>⏱ Uhrzeit</btn> markiert, wann etwas vorkam.',
     'call.step4':
-      'Nach der Stunde legt <btn>Als Leçon 8 zum Google-Dokument hinzufügen</btn> die Notizen als neue Lektion ins Dokument, bereit für Übungen.',
+      'Nach der Stunde legt <btn>Als Leçon 8 zum Dokument hinzufügen</btn> die Notizen als neue Lektion ins Dokument, bereit für Übungen.',
     'call.step5':
       '<pbtn>Tafel öffnen</pbtn> unter den Notizen: schreiben, zeichnen, Bilder einfügen. Ist das Live-Teilen eingerichtet, zeichnen Lehrkraft und Schüler gleichzeitig auf derselben Tafel und sehen den Zeiger des anderen; sonst teile deinen Bildschirm im Anruf. <b>Vollbild</b> und <b>Als Bild speichern</b> stehen darüber.',
     'call.step6':
@@ -1115,7 +1115,7 @@ export const tutorial = defineMessages({
     'photo.step3':
       '<b>PDF del manual</b>: pulsa <pbtn>Elegir un PDF</pbtn>, indica las páginas de un capítulo (hasta 20) y luego <pbtn>Leer estas páginas</pbtn>. Claude escribe notas de clase: palabras, frases, gramática y ejemplos. Revísalas y pulsa <pbtn>Preparar la lección</pbtn>.',
     'photo.step4':
-      '<btn>Añadir al Google Doc como Leçon 8</btn> añade lo leído al final del documento como una lección nueva (requiere una configuración única en el servidor, ver el README).',
+      '<btn>Añadir al documento como Leçon 8</btn> añade lo leído al final del documento como una lección nueva (requiere una configuración única en el servidor, ver el README).',
     'photo.tip1':
       'Haz la foto de frente, con buena luz y con toda la línea marcada dentro del encuadre.',
     'photo.tip2': '☆ junto a una palabra pone su forma del diccionario en Palabras favoritas.',
@@ -1173,7 +1173,7 @@ export const tutorial = defineMessages({
     'call.step3':
       'Escribe en <b>Notas de la clase</b> durante la clase: palabras nuevas como «palabra — перевод», errores, deberes. <btn>⏱ Hora</btn> marca cuándo surgió algo.',
     'call.step4':
-      'Después de la clase, <btn>Añadir al Google Doc como Leçon 8</btn> pone las notas en el documento como una lección nueva, lista para los ejercicios.',
+      'Después de la clase, <btn>Añadir al documento como Leçon 8</btn> pone las notas en el documento como una lección nueva, lista para los ejercicios.',
     'call.step5':
       '<pbtn>Abrir la pizarra</pbtn> debajo de las notas: escribe, dibuja y pega imágenes. Con el uso compartido en directo configurado, el profesor y el alumno dibujan a la vez en la misma pizarra y ven el puntero del otro; si no, comparte la pantalla en la llamada. <b>Pantalla completa</b> y <b>Guardar como imagen</b> están encima.',
     'call.step6':
@@ -1356,7 +1356,7 @@ export const tutorial = defineMessages({
     'photo.step3':
       '<b>PDF do manual</b>: carregue em <pbtn>Escolher um PDF</pbtn>, indique as páginas de um capítulo (até 20) e depois <pbtn>Ler estas páginas</pbtn>. O Claude escreve notas da aula: palavras, expressões, gramática e exemplos. Reveja-as e carregue em <pbtn>Preparar a lição</pbtn>.',
     'photo.step4':
-      '<btn>Acrescentar ao Google Doc como Leçon 8</btn> acrescenta o que foi lido ao fim do documento como uma nova lição (precisa de uma configuração única no servidor, ver o README).',
+      '<btn>Acrescentar ao documento como Leçon 8</btn> acrescenta o que foi lido ao fim do documento como uma nova lição (precisa de uma configuração única no servidor, ver o README).',
     'photo.tip1':
       'Tire a foto de frente, com boa luz e com toda a linha marcada dentro do enquadramento.',
     'photo.tip2': '☆ ao lado de uma palavra põe a forma do dicionário nas Palavras favoritas.',
@@ -1415,7 +1415,7 @@ export const tutorial = defineMessages({
     'call.step3':
       'Escreva nas <b>Notas da aula</b> durante a aula: palavras novas como «palavra — перевод», erros, trabalhos de casa. <btn>⏱ Hora</btn> marca quando algo surgiu.',
     'call.step4':
-      'Depois da aula, <btn>Acrescentar ao Google Doc como Leçon 8</btn> põe as notas no documento como uma nova lição, pronta para os exercícios.',
+      'Depois da aula, <btn>Acrescentar ao documento como Leçon 8</btn> põe as notas no documento como uma nova lição, pronta para os exercícios.',
     'call.step5':
       '<pbtn>Abrir o quadro</pbtn> por baixo das notas: escreva, desenhe e cole imagens. Com a partilha em direto configurada, o professor e o aluno desenham ao mesmo tempo no mesmo quadro e veem o ponteiro um do outro; caso contrário, partilhe o ecrã na chamada. <b>Ecrã inteiro</b> e <b>Guardar como imagem</b> estão por cima.',
     'call.step6':
@@ -1500,9 +1500,9 @@ export const tutorial = defineMessages({
     'home.step3':
       'Rispondi almeno una volta al giorno per mantenere la serie 🔥; 20 risposte completano l’obiettivo del giorno.',
     'home.tip1':
-      'Quando l’insegnante scrive i compiti nella lezione (<ex>Devoirs: verbes être, avoir — présent; mots de la leçon 5; 5 phrases au passé composé</ex>), la Home li mostra come lista da spuntare, con il tempo che manca alla prossima lezione. <btn>Ripassare le parole</btn>, <btn>Riempire gli spazi</btn> e <btn>Coniugare</btn> aprono l’esercizio del compito, e finirlo lo spunta.',
+      'Quando l’insegnante scrive i compiti nella lezione (<ex>Devoirs: verbes être, avoir — présent; mots de la leçon 5; 5 phrases au passé composé</ex>), la Home li mostra come lista da spuntare, con il tempo che manca alla prossima lezione. <btn>Ripassa le parole</btn>, <btn>Riempi gli spazi</btn> e <btn>Coniuga</btn> aprono l’esercizio del compito, e finirlo lo spunta.',
     'home.tip2':
-      'Un compito scritto (<ex>5 phrases au passé composé</ex>, una traduzione, «descrivi la tua giornata») ha <btn>Scrivere</btn>: scrivi la risposta e premi <pbtn>Controlla</pbtn>. Claude corregge gli errori, spiega ognuno come un insegnante privato e dice se la risposta fa ciò che chiede il compito. Nella modalità lezione, <b>Compiti scritti</b> mostra all’insegnante le risposte corrette.',
+      'Un compito scritto (<ex>5 phrases au passé composé</ex>, una traduzione, «descrivi la tua giornata») ha <btn>Scrivi</btn>: scrivi la risposta e premi <pbtn>Controlla</pbtn>. Claude corregge gli errori, spiega ognuno come un insegnante privato e dice se la risposta fa ciò che chiede il compito. Nella modalità lezione, <b>Compiti scritti</b> mostra all’insegnante le risposte corrette.',
     'home.tip3':
       '<btn>Prepara il resoconto</btn> sotto i compiti (e in fondo alle Statistiche) scrive un breve resoconto per l’insegnante: i compiti fatti, le risposte e gli errori dalla lezione, le tue risposte scritte corrette da Claude. Leggilo, cambialo se vuoi, e <pbtn>Aggiungi al documento</pbtn> lo mette sotto la lezione.',
     'home.tip4':
@@ -1598,7 +1598,7 @@ export const tutorial = defineMessages({
     'photo.step3':
       '<b>PDF del manuale</b>: premi <pbtn>Scegli un PDF</pbtn>, indica le pagine di un capitolo (fino a 20), poi <pbtn>Leggi queste pagine</pbtn>. Claude scrive gli appunti della lezione: parole, espressioni, grammatica ed esempi. Controllali e premi <pbtn>Prepara la lezione</pbtn>.',
     'photo.step4':
-      '<btn>Aggiungi al Google Doc come Leçon 8</btn> aggiunge quanto letto in fondo al documento come nuova lezione (serve una configurazione una tantum sul server, vedi il README).',
+      '<btn>Aggiungi al documento come Leçon 8</btn> aggiunge quanto letto in fondo al documento come nuova lezione (serve una configurazione una tantum sul server, vedi il README).',
     'photo.tip1':
       'Scatta la foto di fronte, con buona luce e con tutta la riga segnata nell’inquadratura.',
     'photo.tip2':
@@ -1658,7 +1658,7 @@ export const tutorial = defineMessages({
     'call.step3':
       'Scrivi negli <b>Appunti della lezione</b> durante la lezione: parole nuove come «parola — перевод», errori, compiti. <btn>⏱ Ora</btn> segna quando è venuto fuori qualcosa.',
     'call.step4':
-      'Dopo la lezione, <btn>Aggiungi al Google Doc come Leçon 8</btn> mette gli appunti nel documento come nuova lezione, pronta per gli esercizi.',
+      'Dopo la lezione, <btn>Aggiungi al documento come Leçon 8</btn> mette gli appunti nel documento come nuova lezione, pronta per gli esercizi.',
     'call.step5':
       '<pbtn>Apri la lavagna</pbtn> sotto gli appunti: scrivi, disegna e incolla immagini. Con la condivisione in diretta configurata, insegnante e studente disegnano insieme sulla stessa lavagna e vedono il puntatore dell’altro; altrimenti condividi lo schermo nella chiamata. <b>Schermo intero</b> e <b>Salva come immagine</b> sono sopra.',
     'call.step6':

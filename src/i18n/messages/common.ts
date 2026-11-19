@@ -588,7 +588,7 @@ export const common = defineMessages({
     noServer: 'O servidor não está a correr. Inicie a aplicação com yarn start.',
     enterCode: 'Introduza o código da turma para continuar.',
     notShared:
-      'Este documento não está partilhado. No Google Docs, escolha Partilhar → Acesso geral → Qualquer pessoa com a ligação e tente de novo.',
+      'Este documento não está partilhado. No Google Docs, escolha Partilhar → Acesso geral → Qualquer pessoa com o link e tente de novo.',
     docNotFound: 'Não foi encontrado nenhum Google Doc nessa ligação.',
     badDocLink: 'Isso não parece uma ligação do Google Docs.',
     docUnreachable: 'O Google Docs não respondeu. Tente de novo daqui a pouco.',
@@ -599,7 +599,7 @@ export const common = defineMessages({
     notionToken:
       'A chave do Notion do servidor está errada ou foi revogada. Verifique NOTION_TOKEN (ver README).',
     notionNotShared:
-      'A aplicação não vê esta página do Notion. No Notion, abra ••• → Ligações, adicione a integração da aplicação e tente de novo.',
+      'A aplicação não vê esta página do Notion. No Notion, abra ••• → Adicionar conexões, escolha a integração da aplicação e tente de novo.',
     notionNoWrite:
       'A aplicação pode ler esta página do Notion, mas não acrescentar nada. Dê à integração a permissão «Inserir conteúdo» (ver README).',
     notionUnreachable: 'O Notion não respondeu. Tente de novo daqui a pouco.',

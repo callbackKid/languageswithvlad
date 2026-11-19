@@ -407,11 +407,11 @@ export const app = defineMessages({
     connectIntro:
       'Cole a ligação do Google Doc ou da página do Notion com as notas das aulas. Cada linha como {leçon} ou {lesson} começa uma nova lição, com as suas palavras, verbos e notas.',
     connectShare:
-      'O documento tem de estar partilhado como <b>Qualquer pessoa com a ligação pode ver</b>.',
+      'O documento tem de estar partilhado como <b>Qualquer pessoa com o link pode ver</b>.',
     docLinkPlaceholder: 'Cole uma ligação do Google Docs ou do Notion',
     docLinkLabel: 'Ligação do Google Docs ou do Notion',
     connectNotion:
-      'Uma página do Notion tem de ser ligada à aplicação uma vez: no Notion, abra ••• → Ligações e adicione a integração da aplicação. As lições podem estar umas por baixo das outras, como subpáginas ou como linhas de uma base de dados.',
+      'Uma página do Notion tem de ser ligada à aplicação uma vez: no Notion, abra ••• → Adicionar conexões e escolha a integração da aplicação. As lições podem estar umas por baixo das outras, como subpáginas ou como linhas de uma base de dados.',
     notionDocument:
       'As páginas do Notion não podem ser editadas dentro da aplicação. <link>Abra a página no Notion</link>; quando voltar, carregue em Sincronizar.',
     loadLessons: 'Carregar as lições',

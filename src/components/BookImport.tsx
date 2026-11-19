@@ -55,7 +55,7 @@ export default function BookImport({
   }
   async function readPhotos(files: File[]) {
     if (files.length > MAX_PHOTOS) {
-      setError(t('tooManyPages', { count: MAX_PHOTOS }));
+      setError(t('tooManyPhotos', { count: MAX_PHOTOS }));
       return;
     }
     try {
