@@ -191,7 +191,7 @@ export const settingsText = defineMessages({
     document: 'Dokument',
     documentHint: 'Die Stundennotizen, die die App liest: ein Google Doc oder eine Notion-Seite.',
     studentLinkHint:
-      'Der Schülerlink öffnet die App mit demselben Dokument, so sieht die Schülerin oder der Schüler dieselben Stunden.',
+      'Der Schülerlink öffnet die App mit demselben Dokument, so sieht die Schülerin oder der Schüler dieselben Lektionen.',
     interface: 'Oberfläche',
     interfaceLanguage: 'Sprache der Oberfläche',
     theme: 'Farbschema',

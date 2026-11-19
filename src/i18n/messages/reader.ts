@@ -90,11 +90,12 @@ export const reader = defineMessages({
   fr: {
     title: 'Analyse de texte',
     intro:
-      'Collez un article ou n’importe quel texte. Cliquez sur un mot ou sélectionnez une expression pour l’expliquer, traduisez tout le texte et obtenez des questions et des exercices à partir de lui.',
+      'Collez un article ou n’importe quel texte. Cliquez sur un mot ou sélectionnez une expression pour en avoir l’explication, traduisez tout le texte et obtenez des questions et des exercices tirés du texte.',
     pasteLabel: 'Votre texte',
     pastePlaceholder: 'Collez un texte dans la langue que vous apprenez…',
     read: 'Lire ce texte',
-    tooLong: 'Ce texte est trop long : {count} caractères au maximum. Collez-en une partie.',
+    tooLong:
+      'Ce texte est trop long : {count} caractères au maximum. Collez un passage plus court.',
     newText: 'Nouveau texte',
     savedTexts: 'Textes enregistrés',
     delete: 'Supprimer',
@@ -110,7 +111,7 @@ export const reader = defineMessages({
     translateFailed: 'Impossible de traduire le texte. Réessayez.',
     showTranslation: 'Afficher la traduction',
     hideTranslation: 'Masquer la traduction',
-    askedTitle: 'Les mots que vous avez demandés',
+    askedTitle: 'Les mots que vous avez fait expliquer',
     colMarked: 'Mot ou expression',
     exercisesTitle: 'Questions et exercices',
     exercisesHint:
@@ -133,7 +134,7 @@ export const reader = defineMessages({
   de: {
     title: 'Textanalyse',
     intro:
-      'Füge einen Artikel oder einen anderen Text ein. Klicke auf ein Wort oder markiere eine Wendung, um sie erklärt zu bekommen, übersetze den ganzen Text und erhalte Fragen und Übungen dazu.',
+      'Füge einen Artikel oder einen anderen Text ein. Klicke auf ein Wort oder markiere eine Wendung, um eine Erklärung zu bekommen, übersetze den ganzen Text und erhalte Fragen und Übungen dazu.',
     pasteLabel: 'Dein Text',
     pastePlaceholder: 'Füge einen Text in der Sprache ein, die du lernst…',
     read: 'Diesen Text lesen',
@@ -165,7 +166,7 @@ export const reader = defineMessages({
     wordsTitle: 'Wörter aus dem Text',
     questionsTitle: 'Fragen zum Text',
     questionsHint:
-      'Antworte mündlich oder schriftlich: Die ersten Fragen gehen um den Text, die letzten um dich.',
+      'Antworte mündlich oder schriftlich: Die ersten Fragen drehen sich um den Text, die letzten um dich.',
     trueFalseTitle: 'Richtig oder falsch?',
     isTrue: 'Richtig',
     isFalse: 'Falsch',
@@ -176,7 +177,7 @@ export const reader = defineMessages({
   es: {
     title: 'Análisis de texto',
     intro:
-      'Pega un artículo o cualquier otro texto. Haz clic en una palabra o selecciona una frase para que te la expliquen, traduce el texto entero y consigue preguntas y ejercicios hechos con él.',
+      'Pega un artículo o cualquier otro texto. Haz clic en una palabra o selecciona una frase para ver su explicación, traduce el texto entero y consigue preguntas y ejercicios hechos con él.',
     pasteLabel: 'Tu texto',
     pastePlaceholder: 'Pega un texto en el idioma que estás aprendiendo…',
     read: 'Leer este texto',
@@ -264,7 +265,7 @@ export const reader = defineMessages({
   it: {
     title: 'Analisi del testo',
     intro:
-      'Incolla un articolo o qualsiasi altro testo. Clicca su una parola o seleziona una frase per fartela spiegare, traduci tutto il testo e ottieni domande ed esercizi ricavati da esso.',
+      'Incolla un articolo o qualsiasi altro testo. Clicca su una parola o seleziona una frase per fartela spiegare, traduci tutto il testo e ottieni domande ed esercizi ricavati dal testo.',
     pasteLabel: 'Il tuo testo',
     pastePlaceholder: 'Incolla un testo nella lingua che stai imparando…',
     read: 'Leggi questo testo',
@@ -285,7 +286,7 @@ export const reader = defineMessages({
     translateFailed: 'Impossibile tradurre il testo. Riprova.',
     showTranslation: 'Mostra la traduzione',
     hideTranslation: 'Nascondi la traduzione',
-    askedTitle: 'Parole che hai chiesto',
+    askedTitle: 'Parole di cui hai chiesto la spiegazione',
     colMarked: 'Parola o frase',
     exercisesTitle: 'Domande ed esercizi',
     exercisesHint:

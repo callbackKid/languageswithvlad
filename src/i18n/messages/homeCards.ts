@@ -69,7 +69,7 @@ export const homeCards = defineMessages({
     prepareTomorrow: 'Cours demain à {time} : révisez avant',
     prepareToday: 'Cours aujourd’hui à {time} : révisez avant',
     prepareHint:
-      'Un tour sur les mots de la leçon {n} et vos mots difficiles, pour qu’ils soient frais au cours.',
+      'Un tour sur les mots de la leçon {n} et vos mots difficiles, pour les avoir bien en tête au cours.',
     prepareButton: 'Réviser avant le cours',
     prepareAgain: 'Un autre tour',
     prepareDone: '✓ Révisé pour ce cours.',
@@ -90,7 +90,7 @@ export const homeCards = defineMessages({
     prepareTomorrow: 'Stunde morgen um {time}: wiederhole vorher',
     prepareToday: 'Stunde heute um {time}: wiederhole vorher',
     prepareHint:
-      'Eine Runde mit den Wörtern der Lektion {n} und deinen schweren Wörtern, damit sie zur Stunde frisch sind.',
+      'Eine Runde mit den Wörtern der Lektion {n} und deinen schwierigen Wörtern, damit sie zur Stunde frisch sind.',
     prepareButton: 'Vor der Stunde wiederholen',
     prepareAgain: 'Noch eine Runde',
     prepareDone: '✓ Für diese Stunde wiederholt.',

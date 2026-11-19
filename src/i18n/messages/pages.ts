@@ -177,8 +177,8 @@ export const pages = defineMessages({
   fr: {
     homeTitle: 'L’entraînement du jour',
     homeLearned: {
-      one: '{learned} mot appris sur {count}',
-      other: '{learned} mots appris sur {count}',
+      one: '{learned} sur {count} mot appris',
+      other: '{learned} sur {count} mots appris',
     },
     homeOnMyWords: ', {hard} dans Mots favoris',
     homeIntro:
@@ -186,7 +186,7 @@ export const pages = defineMessages({
     streak: { one: '🔥 {count} jour d’affilée', other: '🔥 {count} jours d’affilée' },
     startStreak: 'Commencez une série aujourd’hui',
     goalDone: 'Objectif du jour atteint : {count} réponses',
-    goalProgress: 'Aujourd’hui : {count} réponses sur {goal}',
+    goalProgress: 'Aujourd’hui : {count} sur {goal} réponses',
     randomExercises: 'Exercices au hasard',
     noWordsYet:
       'Pas encore de mots. Dès qu’une leçon contient du vocabulaire, les exercices apparaissent ici.',
@@ -229,8 +229,8 @@ export const pages = defineMessages({
     onMyWords: 'Dans Mots favoris',
     vocabulary: 'Vocabulaire',
     learnedOf: {
-      one: '{learned} mot appris sur {count} ({percent} %)',
-      other: '{learned} mots appris sur {count} ({percent} %)',
+      one: '{learned} sur {count} mot appris ({percent} %)',
+      other: '{learned} sur {count} mots appris ({percent} %)',
     },
     learnedRule: 'Un mot compte comme appris après 3 bonnes réponses d’affilée.',
     lessonWordsLearned: '{lesson}, mots appris',
@@ -488,8 +488,8 @@ export const pages = defineMessages({
   it: {
     homeTitle: 'L’esercizio di oggi',
     homeLearned: {
-      one: '{learned} parola imparata su {count}',
-      other: '{learned} parole imparate su {count}',
+      one: '{learned} su {count} parola imparata',
+      other: '{learned} su {count} parole imparate',
     },
     homeOnMyWords: ', {hard} nelle Parole preferite',
     homeIntro:
@@ -497,7 +497,7 @@ export const pages = defineMessages({
     streak: { one: '🔥 {count} giorno di fila', other: '🔥 {count} giorni di fila' },
     startStreak: 'Inizia una serie oggi',
     goalDone: 'Obiettivo di oggi raggiunto: {count} risposte',
-    goalProgress: 'Oggi: {count} risposte su {goal}',
+    goalProgress: 'Oggi: {count} su {goal} risposte',
     randomExercises: 'Esercizi casuali',
     noWordsYet:
       'Ancora nessuna parola. Appena una lezione ha del lessico, qui compaiono gli esercizi.',
@@ -538,8 +538,8 @@ export const pages = defineMessages({
     onMyWords: 'Nelle Parole preferite',
     vocabulary: 'Lessico',
     learnedOf: {
-      one: '{learned} parola imparata su {count} ({percent}%)',
-      other: '{learned} parole imparate su {count} ({percent}%)',
+      one: '{learned} su {count} parola imparata ({percent}%)',
+      other: '{learned} su {count} parole imparate ({percent}%)',
     },
     learnedRule: 'Una parola conta come imparata dopo 3 risposte giuste di fila.',
     lessonWordsLearned: '{lesson}, parole imparate',

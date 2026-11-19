@@ -357,7 +357,7 @@ export const app = defineMessages({
     liveSync:
       'La clase está en curso: la app lee el documento cada minuto, así que las palabras nuevas y sus ejercicios aparecen solos.',
     nextLesson: 'Próxima clase: <b>{when}</b>',
-    yourTime: '({written}, {time} en tu hora)',
+    yourTime: '({written}, {time} en tu zona horaria)',
   },
   pt: {
     'section.home': 'Início',
@@ -428,7 +428,7 @@ export const app = defineMessages({
     liveSync:
       'A aula está a decorrer: a app lê o documento a cada minuto, por isso as palavras novas e os exercícios aparecem sozinhos.',
     nextLesson: 'Próxima aula: <b>{when}</b>',
-    yourTime: '({written}, {time} na sua hora)',
+    yourTime: '({written}, {time} no seu fuso horário)',
   },
   it: {
     'section.home': 'Home',
@@ -500,6 +500,6 @@ export const app = defineMessages({
     liveSync:
       'La lezione è in corso: l’app rilegge il documento ogni minuto, così le parole nuove e i loro esercizi compaiono da soli.',
     nextLesson: 'Prossima lezione: <b>{when}</b>',
-    yourTime: '({written}, {time} nel tuo orario)',
+    yourTime: '({written}, {time} nel tuo fuso orario)',
   },
 });

@@ -272,8 +272,8 @@ export const paper = defineMessages({
     writingPractice: 'J’écris des phrases sur cette règle…',
     noHomework: 'Pas de devoirs dans cette leçon.',
     homeworkHint: 'Cochez une tâche quand elle est faite ; c’est enregistré sur cet appareil.',
-    homeworkOnHome: 'Faire les devoirs sur l’accueil : chaque tâche ouvre son exercice',
-    homeworkProgress: '{done} sur {total} faits.',
+    homeworkOnHome: 'Faire les devoirs sur l’Accueil : chaque tâche ouvre son exercice',
+    homeworkProgress: '{done} sur {total} faites.',
     noBook: 'Pas encore d’exercices du manuel dans cette leçon.',
     importBook: 'Importer des exercices du manuel',
     importBookHint:
@@ -403,7 +403,7 @@ export const paper = defineMessages({
       'Subraya palabras en tu libro, haz una foto de la página y obtén para cada una la traducción, la forma del diccionario, el tiempo verbal y una breve explicación.',
     anotherPhoto: 'Otra foto',
     choosePhoto: 'Elegir o hacer una foto',
-    pageYouSent: 'La página que enviaste',
+    pageYouSent: 'La página que has enviado',
     readingUnderlined: 'Leyendo las palabras subrayadas…',
     photoFailed: 'No se pudo leer la foto. Inténtalo de nuevo.',
     colUnderlined: 'Subrayado',
@@ -504,7 +504,8 @@ export const paper = defineMessages({
     colForm: 'Forma',
     colExplanation: 'Explicação',
     colActions: 'Ações',
-    photoStarLegend: '☆ acrescenta a palavra às Palavras favoritas, para voltar nos exercícios.',
+    photoStarLegend:
+      '☆ acrescenta a palavra às Palavras favoritas, para voltar a aparecer nos exercícios.',
     noUnderlined:
       'Não foram encontradas palavras sublinhadas. Verifique se as marcas estão visíveis e se a página está focada.',
     'name.handwritten': 'Notas à mão',

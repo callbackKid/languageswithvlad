@@ -271,7 +271,7 @@ export const tutorial = defineMessages({
     'header.step1':
       '<b>↻</b> рядом с названием документа синхронизирует: заново читает документ. Нажмите, когда преподаватель добавил урок. Во время урока («Урок идёт») приложение делает это само каждую минуту.',
     'header.step2':
-      '<b>Следующий урок</b> показывает дату из самой новой строки вроде <ex>le cours prochain: 22.11.2026 18:00 de Paris</ex>. Время, указанное для города, переводится в ваше. Если дата прошла, будет написано «не подтверждена».',
+      '<b>Следующий урок</b> показывает дату из самой новой строки вроде <ex>le cours prochain: 22.11.2026 18:00 de Paris</ex>. Время, указанное для города, переводится в ваше. Если дата прошла, будет написано «пока не подтверждена».',
     'header.step3':
       '<b>Войти в урок</b> появляется в виджете следующего урока, если в документе есть ссылка на Google Meet или Zoom, и открывает режим урока: звонок рядом с уроком и заметками.',
     'header.step4':
@@ -295,11 +295,11 @@ export const tutorial = defineMessages({
     'home.step3':
       'Отвечайте хотя бы раз в день, чтобы не прервать 🔥 серию; 20 ответов — цель на день.',
     'home.tip1':
-      'Когда учитель пишет в уроке домашнее задание (<ex>Devoirs: verbes être, avoir — présent; mots de la leçon 5; 5 phrases au passé composé</ex>), на Главной появляется чек-лист и сколько осталось до урока. <btn>Повторить слова</btn>, <btn>Вставить слова</btn> и <btn>Проспрягать</btn> открывают упражнение к заданию, а когда оно закончено, галочка ставится сама.',
+      'Когда преподаватель пишет в уроке домашнее задание (<ex>Devoirs: verbes être, avoir — présent; mots de la leçon 5; 5 phrases au passé composé</ex>), на Главной появляется чек-лист и сколько осталось до урока. <btn>Повторить слова</btn>, <btn>Вставить слова</btn> и <btn>Проспрягать</btn> открывают упражнение к заданию, а когда оно закончено, галочка ставится сама.',
     'home.tip2':
-      'У письменного задания (<ex>5 phrases au passé composé</ex>, перевод, «опиши свой день») есть кнопка <btn>Написать</btn>: напишите ответ и нажмите <pbtn>Проверить</pbtn>. Claude исправит ошибки, коротко объяснит каждую, как репетитор, и скажет, выполнено ли задание. В режиме урока <b>Письменная домашка</b> показывает учителю исправленные ответы.',
+      'У письменного задания (<ex>5 phrases au passé composé</ex>, перевод, «опиши свой день») есть кнопка <btn>Написать</btn>: напишите ответ и нажмите <pbtn>Проверить</pbtn>. Claude исправит ошибки, коротко объяснит каждую, как репетитор, и скажет, выполнено ли задание. В режиме урока <b>Письменная домашка</b> показывает преподавателю исправленные ответы.',
     'home.tip3':
-      '<btn>Подготовить отчёт</btn> под домашкой (и внизу Статистики) собирает короткий отчёт для учителя: что сделано, ответы и ошибки с урока, письменные ответы, исправленные Claude. Прочитайте, при желании поправьте, и <pbtn>Добавить в документ</pbtn> поместит его под урок.',
+      '<btn>Подготовить отчёт</btn> под домашкой (и внизу Статистики) собирает короткий отчёт для преподавателя: что сделано, ответы и ошибки с урока, письменные ответы, исправленные Claude. Прочитайте, при желании поправьте, и <pbtn>Добавить в документ</pbtn> поместит его под урок.',
     'home.tip4':
       'В день урока и на следующий день Главная подводит его итог: «Сегодня, урок 7: 12 новых слов, 2 глагола», его слова (сначала ключевые) и грамматика, с кнопкой <pbtn>Начать повторение</pbtn>. ✕ скрывает карточку.',
     'home.tip5':
@@ -329,9 +329,9 @@ export const tutorial = defineMessages({
     'lessons.tip5':
       '<b>Грамматика</b> объясняет каждую тему урока, а <pbtn>Потренировать это правило</pbtn> даёт предложения на неё. <b>Домашнее задание</b> — список того, что нужно сделать; отмечайте выполненное. <b>Упражнения из учебника</b> показывает упражнения из книги и добавляет новые с фото или PDF в урок в документе. В <b>Моих заметках</b> — доска и заметки из режима урока за тот день.',
     'lessons.tip6':
-      'Слово, которое учитель отметил в документе звёздочкой (<ex>★ la boulangerie — пекарня</ex>), — <b>ключевое</b>: у него метка <b>ключевое</b>, и в упражнениях оно встречается чаще.',
+      'Слово, которое преподаватель отметил в документе звёздочкой (<ex>★ la boulangerie — пекарня</ex>), — <b>ключевое</b>: у него метка <b>ключевое</b>, и в упражнениях оно встречается чаще.',
     'lessons.tip7':
-      'Для учителя: во вкладке <b>Домашнее задание</b> кнопка <btn>Составить с Claude</btn> пишет блок <ex>Devoirs:</ex> по словам и грамматике урока (сначала ключевые слова). Проверьте, нажмите <pbtn>Добавить в этот урок</pbtn>, и ученик увидит его на Главной чек-листом.',
+      'Для преподавателя: во вкладке <b>Домашнее задание</b> кнопка <btn>Составить с Claude</btn> пишет блок <ex>Devoirs:</ex> по словам и грамматике урока (сначала ключевые слова). Проверьте, нажмите <pbtn>Добавить в этот урок</pbtn>, и ученик увидит его на Главной чек-листом.',
     'lessons.mock': 'вкладка «Слова» в уроке',
 
     'verbs.title': 'Глаголы',
@@ -450,7 +450,7 @@ export const tutorial = defineMessages({
     'call.step5':
       '<pbtn>Открыть доску</pbtn> под заметками: пишите, рисуйте, вставляйте картинки. Если настроен общий доступ, преподаватель и ученик рисуют на одной доске одновременно и видят указатель друг друга; иначе покажите экран в звонке. Над ней — <b>На весь экран</b> и <b>Сохранить картинкой</b>.',
     'call.step6':
-      '<pbtn>Начать разминку</pbtn> в начале урока: минут 5 вопросов по прошлому уроку и ошибкам ученика с тех пор. В конце <b>Не закрепилось</b> показывает учителю все неверные ответы. Делайте на устройстве ученика, где хранятся ошибки, и покажите экран.',
+      '<pbtn>Начать разминку</pbtn> в начале урока: минут 5 вопросов по прошлому уроку и ошибкам ученика с тех пор. В конце <b>Не закрепилось</b> показывает преподавателю все неверные ответы. Делайте на устройстве ученика, где хранятся ошибки, и покажите экран.',
     'call.step7':
       '<pbtn>Играть</pbtn> в карточке <b>Игра-квиз</b>: 10 вопросов по словам урока, на каждый 15 секунд, и чем быстрее верный ответ, тем больше очков. Играйте на общем экране; лучшие раунды попадают в таблицу <b>Рекорды</b>.',
     'call.tip3':
@@ -498,7 +498,7 @@ export const tutorial = defineMessages({
       'Commencez par les <b>Cartes</b>, puis le <b>Quiz</b>. Les mots ratés vont dans <mine>Mots favoris</mine>.',
     'quick4.title': 'Revenez chaque jour',
     'quick4.text':
-      'Une série sur l’<home>Accueil</home> prend quelques minutes et entretient votre 🔥 série.',
+      'Un tour sur l’<home>Accueil</home> prend quelques minutes et entretient votre 🔥 série.',
 
     'header.title': 'La barre du haut',
     'header.summary':
@@ -506,7 +506,7 @@ export const tutorial = defineMessages({
     'header.intro':
       'La barre du haut est toujours là. Elle montre quel Google Doc l’application lit et quand il a été synchronisé, ainsi que le prochain cours et l’appel vidéo.',
     'header.step1':
-      '<b>↻</b> à côté du nom du document synchronise : il relit le document. Appuyez-y quand le professeur a ajouté une leçon. Pendant un cours (« Cours en cours »), l’application le fait seule chaque minute.',
+      '<b>↻</b> à côté du nom du document synchronise : il relit le document. Appuyez dessus quand le professeur a ajouté une leçon. Pendant un cours (« Cours en cours »), l’application le fait seule chaque minute.',
     'header.step2':
       '<b>Prochain cours</b> affiche la date de la ligne la plus récente comme <ex>le cours prochain: 22.11.2026 18:00 de Paris</ex>. Une heure donnée pour une ville est convertie dans la vôtre. Une fois la date passée, il est écrit « pas encore confirmée ».',
     'header.step3':
@@ -649,7 +649,8 @@ export const tutorial = defineMessages({
       '<btn>Traduire le texte</btn> affiche une traduction russe sous chaque paragraphe ; le même bouton la masque.',
     'text.step4':
       '<pbtn>Créer des questions et des exercices</pbtn> : Claude choisit les mots à retenir (avec le Quiz, les Cartes et les autres exercices habituels), écrit des questions sur le texte et un exercice « vrai ou faux ».',
-    'text.tip1': 'Les mots que vous avez déjà demandés sont soulignés en pointillé dans le texte.',
+    'text.tip1':
+      'Les mots sur lesquels vous avez déjà posé une question sont soulignés en pointillé dans le texte.',
     'text.tip2': 'Les mots sont choisis pour votre niveau dans cette langue, réglé dans Réglages.',
     'discuss.title': 'Une question à discuter',
     'discuss.summary': 'Une question de discussion pour commencer le cours',
@@ -737,9 +738,9 @@ export const tutorial = defineMessages({
     'quick2.title': 'Wähle eine Lektion',
     'quick2.text':
       'Wähle unter <lessons>Lektionsverlauf</lessons> eine Lektion und sieh dir ihre Wörter an.',
-    'quick3.title': 'Üben',
+    'quick3.title': 'Übe',
     'quick3.text':
-      'Fang mit den <b>Karteikarten</b> an, dann das <b>Quiz</b>. Falsche Wörter landen in den <mine>Lieblingswörtern</mine>.',
+      'Fang mit den <b>Karteikarten</b> an, dann mach das <b>Quiz</b>. Falsche Wörter landen in den <mine>Lieblingswörtern</mine>.',
     'quick4.title': 'Komm jeden Tag wieder',
     'quick4.text':
       'Eine Runde auf <home>Start</home> dauert ein paar Minuten und hält deine 🔥 Serie am Leben.',
@@ -810,9 +811,9 @@ export const tutorial = defineMessages({
     'lessons.tip5':
       '<b>Grammatik</b> erklärt jedes Grammatikthema der Lektion, mit <pbtn>Diese Regel üben</pbtn> für Sätze dazu. <b>Hausaufgaben</b> zeigt, was zu tun ist; hake Erledigtes ab. <b>Übungen aus dem Lehrbuch</b> zeigt Übungen aus dem Buch und importiert neue aus Fotos oder einem PDF in die Lektion im Dokument. Unter <b>Meine Notizen</b> findest du die Tafel und die Notizen aus dem Unterrichtsmodus von diesem Tag.',
     'lessons.tip6':
-      'Ein Wort, das die Lehrkraft im Dokument mit ★ markiert (<ex>★ la boulangerie — пекарня</ex>), ist ein <b>Schlüsselwort</b>: Es trägt das Etikett <b>Schlüssel</b> und kommt in den Übungen öfter dran.',
+      'Ein Wort, das die Lehrkraft im Dokument mit ★ markiert (<ex>★ la boulangerie — пекарня</ex>), ist ein <b>Schlüsselwort</b>: Es trägt das Etikett <b>Schlüsselwort</b> und kommt in den Übungen öfter dran.',
     'lessons.tip7':
-      'Für die Lehrkraft: Unter <b>Hausaufgaben</b> schreibt <btn>Mit Claude erstellen</btn> einen Block <ex>Devoirs:</ex> aus den Wörtern und der Grammatik der Lektion (Schlüsselwörter zuerst). Prüfe ihn, drück auf <pbtn>Zu dieser Lektion hinzufügen</pbtn>, und die Startseite zeigt ihn als Checkliste.',
+      'Für die Lehrkraft: Unter <b>Hausaufgaben</b> schreibt <btn>Mit Claude erstellen</btn> einen Block <ex>Devoirs:</ex> aus den Wörtern und der Grammatik der Lektion (Schlüsselwörter zuerst). Prüfe ihn, drück auf <pbtn>Zu dieser Lektion hinzufügen</pbtn>, und die Schülerin oder der Schüler findet ihn auf der Startseite als Checkliste.',
     'lessons.mock': 'der Tab Wörter einer Lektion',
 
     'verbs.title': 'Verben',
@@ -823,7 +824,7 @@ export const tutorial = defineMessages({
     'verbs.step2':
       'Wähle eine Zeitform (présent, passé composé, imparfait, futur simple, conditionnel présent, impératif) und <b>bejaht</b> oder <b>verneint</b>. 🔊 liest jede Form vor.',
     'verbs.step3':
-      'Tippe auf <pbtn>Diese Zeitform üben</pbtn>, fülle alle Personen aus und dann <pbtn>Antworten prüfen</pbtn>. Unter falschen Formen steht die richtige.',
+      'Tippe auf <pbtn>Diese Zeitform üben</pbtn>, fülle alle Personen aus und tippe dann auf <pbtn>Antworten prüfen</pbtn>. Unter falschen Formen steht die richtige.',
     'verbs.step4': '<btn>Schnellquiz</btn> fragt zufällige Formen aller geöffneten Verben ab.',
     'verbs.tip1':
       'Tippe eine Form mit oder ohne Pronomen: „nous réveillons“ und „réveillons“ zählen beide.',
@@ -870,12 +871,12 @@ export const tutorial = defineMessages({
     'photo.step2':
       '<b>Handschriftliche Notizen</b>: Fotografiere bis zu 4 Seiten Notizen, korrigiere Falschgelesenes (Unleserliches ist mit [?] markiert) und tippe auf <pbtn>Lektion vorbereiten</pbtn>, um Wörter, Verben und Übungen wie bei jeder Lektion zu bekommen.',
     'photo.step3':
-      '<b>Lehrbuch-PDF</b>: Tippe auf <pbtn>PDF auswählen</pbtn>, gib die Seiten eines Kapitels an (bis zu 20) und dann <pbtn>Diese Seiten lesen</pbtn>. Claude schreibt Unterrichtsnotizen: Wörter, Wendungen, Grammatik und Beispiele. Prüfe sie und tippe auf <pbtn>Lektion vorbereiten</pbtn>.',
+      '<b>Lehrbuch-PDF</b>: Tippe auf <pbtn>PDF auswählen</pbtn>, gib die Seiten eines Kapitels an (bis zu 20) und tippe dann auf <pbtn>Diese Seiten lesen</pbtn>. Claude schreibt Unterrichtsnotizen: Wörter, Wendungen, Grammatik und Beispiele. Prüfe sie und tippe auf <pbtn>Lektion vorbereiten</pbtn>.',
     'photo.step4':
       '<btn>Als Leçon 8 zum Google-Dokument hinzufügen</btn> hängt das Gelesene als neue Lektion ans Ende des Dokuments (braucht eine einmalige Einrichtung auf dem Server, siehe README).',
     'photo.tip1':
       'Fotografiere gerade von vorn, bei gutem Licht, mit der ganzen markierten Zeile im Bild.',
-    'photo.tip2': '☆ neben einem Wort fügt seine Grundform zu Lieblingswörter hinzu.',
+    'photo.tip2': '☆ neben einem Wort fügt seine Grundform zu den Lieblingswörtern hinzu.',
     'photo.mock': 'das Ergebnis eines Fotos mit unterstrichenen Wörtern',
 
     'text.title': 'Textanalyse',
@@ -885,7 +886,7 @@ export const tutorial = defineMessages({
     'text.step1':
       'Füge den Text ein und tippe auf <pbtn>Diesen Text lesen</pbtn>. Er wird auf diesem Gerät gespeichert, mit allem, was du damit machst.',
     'text.step2':
-      'Klicke auf ein Wort oder markiere ein paar Wörter mit der Maus oder dem Finger und tippe dann auf <pbtn>Erklären</pbtn>: Du bekommst die Übersetzung in diesem Satz, die Grundform, die Zeitform und eine kurze Erklärung. ☆ fügt das Wort zu Lieblingswörter hinzu.',
+      'Klicke auf ein Wort oder markiere ein paar Wörter mit der Maus oder dem Finger und tippe dann auf <pbtn>Erklären</pbtn>: Du bekommst die Übersetzung in diesem Satz, die Grundform, die Zeitform und eine kurze Erklärung. ☆ fügt das Wort zu den Lieblingswörtern hinzu.',
     'text.step3':
       '<btn>Text übersetzen</btn> zeigt eine russische Übersetzung unter jedem Absatz; derselbe Knopf blendet sie wieder aus.',
     'text.step4':
@@ -903,7 +904,7 @@ export const tutorial = defineMessages({
     'discuss.step3':
       'Tippe auf <pbtn>Frage schreiben</pbtn>. Du bekommst die Frage (🔊 liest sie vor, <b>Übersetzung zeigen</b> zeigt sie auf Russisch), Anschlussfragen, Satzanfänge mit der Grammatik und nützliche Wörter. Mit einem Grammatikthema öffnet <b>📘 Die Regel</b> eine Erklärung mit Beispielen.',
     'discuss.step4': '<pbtn>Andere Frage</pbtn> schreibt eine neue mit denselben Einstellungen.',
-    'discuss.tip1': '☆ neben einem nützlichen Wort fügt es zu Lieblingswörter hinzu.',
+    'discuss.tip1': '☆ neben einem nützlichen Wort fügt es zu den Lieblingswörtern hinzu.',
 
     'settings.title': 'Einstellungen',
     'settings.summary': 'Sprache, Farbschema, was du lernst, dein Niveau und das Menü',
@@ -934,7 +935,7 @@ export const tutorial = defineMessages({
     'call.step5':
       '<pbtn>Tafel öffnen</pbtn> unter den Notizen: schreiben, zeichnen, Bilder einfügen. Ist das Live-Teilen eingerichtet, zeichnen Lehrkraft und Schüler gleichzeitig auf derselben Tafel und sehen den Zeiger des anderen; sonst teile deinen Bildschirm im Anruf. <b>Vollbild</b> und <b>Als Bild speichern</b> stehen darüber.',
     'call.step6':
-      '<pbtn>Aufwärmen starten</pbtn> zu Beginn der Stunde: etwa 5 Minuten Fragen zur letzten Lektion und zu den Fehlern seitdem. Am Ende listet <b>Sitzt noch nicht</b> alle falschen Antworten für die Lehrkraft auf. Am Gerät der Schülerin oder des Schülers, wo die Fehler gespeichert sind, mit geteiltem Bildschirm.',
+      '<pbtn>Aufwärmen starten</pbtn> zu Beginn der Stunde: etwa 5 Minuten Fragen zur letzten Lektion und zu den Fehlern seitdem. Am Ende listet <b>Sitzt noch nicht</b> alle falschen Antworten für die Lehrkraft auf. Mach das am Gerät der Schülerin oder des Schülers, wo die Fehler gespeichert sind, und teile den Bildschirm.',
     'call.step7':
       '<pbtn>Spielen</pbtn> unter <b>Quizspiel</b>: 10 Fragen zu den Wörtern der Lektion, je 15 Sekunden, und eine schnelle richtige Antwort bringt mehr Punkte. Spielt auf dem geteilten Bildschirm; die besten Runden kommen in die Tabelle <b>Rekorde</b>.',
     'call.tip3':
@@ -1009,7 +1010,7 @@ export const tutorial = defineMessages({
     'home.intro':
       'La forma más rápida de practicar cada día: 10 preguntas de todas tus lecciones, y las palabras que fallas vuelven más a menudo.',
     'home.step1':
-      'Responde cada pregunta: elige una traducción, elige la palabra en el idioma que aprendes, escríbela o escribe lo que oyes.',
+      'Responde a cada pregunta: elige una traducción, elige la palabra en el idioma que aprendes, escríbela o escribe lo que oyes.',
     'home.step2':
       'Después de cada respuesta pulsa <pbtn>Siguiente</pbtn>. Al final ves tu puntuación y <pbtn>Siguiente ronda</pbtn>.',
     'home.step3':
@@ -1050,7 +1051,7 @@ export const tutorial = defineMessages({
     'lessons.tip6':
       'Una palabra que el profesor marca con ★ en el documento (<ex>★ la boulangerie — пекарня</ex>) es una <b>palabra clave</b>: lleva la etiqueta <b>clave</b> y sale más a menudo en los ejercicios.',
     'lessons.tip7':
-      'Para el profesor: en <b>Deberes</b>, <btn>Preparar los deberes con Claude</btn> redacta un bloque <ex>Devoirs:</ex> con las palabras y la gramática de la lección (primero las palabras clave). Revísalo, pulsa <pbtn>Añadir a esta lección</pbtn>, y el alumno lo encuentra en Inicio como lista.',
+      'Para el profesor: en <b>Deberes</b>, <btn>Preparar los deberes con Claude</btn> redacta un bloque <ex>Devoirs:</ex> con las palabras y la gramática de la lección (primero las palabras clave). Revísalo, pulsa <pbtn>Añadir a esta lección</pbtn>, y el alumno lo encuentra en Inicio como lista para marcar.',
     'lessons.mock': 'la pestaña Palabras de una lección',
 
     'verbs.title': 'Verbos',
@@ -1293,7 +1294,7 @@ export const tutorial = defineMessages({
     'lessons.tip6':
       'Uma palavra que o professor marca com ★ no documento (<ex>★ la boulangerie — пекарня</ex>) é uma <b>palavra-chave</b>: tem a etiqueta <b>chave</b> e aparece mais vezes nos exercícios.',
     'lessons.tip7':
-      'Para o professor: em <b>Trabalho de casa</b>, <btn>Fazer com o Claude</btn> escreve um bloco <ex>Devoirs:</ex> com as palavras e a gramática da lição (primeiro as palavras-chave). Verifique-o, carregue em <pbtn>Acrescentar a esta lição</pbtn>, e o aluno encontra-o no Início como lista.',
+      'Para o professor: em <b>Trabalhos de casa</b>, <btn>Fazer com o Claude</btn> escreve um bloco <ex>Devoirs:</ex> com as palavras e a gramática da lição (primeiro as palavras-chave). Verifique-o, carregue em <pbtn>Acrescentar a esta lição</pbtn>, e o aluno encontra-o no Início como lista para marcar.',
     'lessons.mock': 'o separador Palavras de uma lição',
 
     'verbs.title': 'Verbos',
@@ -1535,7 +1536,7 @@ export const tutorial = defineMessages({
     'lessons.tip6':
       'Una parola che l’insegnante segna con ★ nel documento (<ex>★ la boulangerie — пекарня</ex>) è una <b>parola chiave</b>: ha l’etichetta <b>chiave</b> e compare più spesso negli esercizi.',
     'lessons.tip7':
-      'Per l’insegnante: in <b>Compiti</b>, <btn>Crea con Claude</btn> scrive un blocco <ex>Devoirs:</ex> con le parole e la grammatica della lezione (prima le parole chiave). Controllalo, premi <pbtn>Aggiungi a questa lezione</pbtn>, e lo studente lo trova nella Home come lista.',
+      'Per l’insegnante: in <b>Compiti</b>, <btn>Crea con Claude</btn> scrive un blocco <ex>Devoirs:</ex> con le parole e la grammatica della lezione (prima le parole chiave). Controllalo, premi <pbtn>Aggiungi a questa lezione</pbtn>, e lo studente lo trova nella Home come lista da spuntare.',
     'lessons.mock': 'la scheda Parole di una lezione',
 
     'verbs.title': 'Verbi',

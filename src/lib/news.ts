@@ -52,7 +52,7 @@ export const NEWS: NewsDay[] = [
           ru: 'Без Claude урок с заголовком «Lektion», «Lección», «Lição», «Lezione» или «Lesson» сохраняет свой язык: его слова озвучиваются на этом языке и показываются по языкам, выбранным в Настройках.',
           fr: 'Sans Claude, une leçon intitulée « Lektion », « Lección », « Lição », « Lezione » ou « Lesson » garde sa langue : ses mots sont lus à voix haute dans cette langue et suivent les langues cochées dans les Réglages.',
           de: 'Ohne Claude behält eine Lektion mit der Überschrift „Lektion“, „Lección“, „Lição“, „Lezione“ oder „Lesson“ ihre Sprache: Ihre Wörter werden in dieser Sprache vorgelesen und richten sich nach deinen Sprachen in den Einstellungen.',
-          es: 'Sin Claude, una lección titulada «Lektion», «Lección», «Lição», «Lezione» o «Lesson» conserva su idioma: sus palabras se leen en voz alta en ese idioma y siguen los idiomas que marcaste en Ajustes.',
+          es: 'Sin Claude, una lección titulada «Lektion», «Lección», «Lição», «Lezione» o «Lesson» conserva su idioma: sus palabras se leen en voz alta en ese idioma y siguen los idiomas que has marcado en Ajustes.',
           pt: 'Sem o Claude, uma lição com o título «Lektion», «Lección», «Lição», «Lezione» ou «Lesson» mantém a sua língua: as palavras são lidas em voz alta nessa língua e seguem as línguas marcadas nas Definições.',
           it: 'Senza Claude, una lezione intitolata «Lektion», «Lección», «Lição», «Lezione» o «Lesson» mantiene la sua lingua: le sue parole vengono lette ad alta voce in quella lingua e seguono le lingue spuntate nelle Impostazioni.',
         },
@@ -86,7 +86,7 @@ export const NEWS: NewsDay[] = [
         text: {
           en: 'A lesson’s Homework tab links to Home, where each task opens its exercise.',
           ru: 'На вкладке «Домашнее задание» урока есть ссылка на Главную, где каждое задание открывает своё упражнение.',
-          fr: 'L’onglet Devoirs d’une leçon mène à l’accueil, où chaque tâche ouvre son exercice.',
+          fr: 'L’onglet Devoirs d’une leçon mène à l’Accueil, où chaque tâche ouvre son exercice.',
           de: 'Der Tab Hausaufgaben einer Lektion führt zur Startseite, wo jede Aufgabe ihre Übung öffnet.',
           es: 'La pestaña Deberes de una lección lleva a Inicio, donde cada tarea abre su ejercicio.',
           pt: 'O separador Trabalhos de casa de uma lição leva ao Início, onde cada tarefa abre o seu exercício.',
@@ -288,8 +288,8 @@ export const NEWS: NewsDay[] = [
         kind: 'fixed',
         text: {
           en: 'Speech: “Slow” in Settings is now clearly slower than “Normal”. Words no longer play by themselves when you open Home, and reading stops when you leave the page or switch tabs.',
-          ru: 'Озвучка: скорость «Медленная» в Настройках теперь заметно медленнее, чем «Обычная». Слова больше не звучат сами, когда открываешь Главную, а чтение останавливается, когда уходишь со страницы или переключаешь вкладку.',
-          fr: 'Lecture à voix haute : « Lente » dans les Réglages est maintenant nettement plus lente que « Normale ». Les mots ne se lisent plus tout seuls à l’ouverture de l’accueil, et la lecture s’arrête quand vous quittez la page ou changez d’onglet.',
+          ru: 'Озвучка: скорость «Медленная» в Настройках теперь заметно медленнее, чем «Обычная». Слова больше не звучат сами, когда вы открываете Главную, а чтение останавливается, когда вы уходите со страницы или переключаете вкладку.',
+          fr: 'Lecture à voix haute : « Lente » dans les Réglages est maintenant nettement plus lente que « Normale ». Les mots ne se lisent plus tout seuls à l’ouverture de l’Accueil, et la lecture s’arrête quand vous quittez la page ou changez d’onglet.',
           de: 'Vorlesen: „Langsam“ in den Einstellungen ist jetzt deutlich langsamer als „Normal“. Wörter werden nicht mehr von selbst vorgelesen, wenn du die Startseite öffnest, und das Vorlesen hört auf, wenn du die Seite verlässt oder den Tab wechselst.',
           es: 'Lectura en voz alta: «Lenta» en Ajustes ahora es claramente más lenta que «Normal». Las palabras ya no suenan solas al abrir Inicio, y la lectura se detiene al salir de la página o cambiar de pestaña.',
           pt: 'Leitura em voz alta: «Lenta» nas Definições é agora claramente mais lenta do que «Normal». As palavras já não soam sozinhas ao abrir o Início, e a leitura para quando sai da página ou muda de separador.',
@@ -300,7 +300,7 @@ export const NEWS: NewsDay[] = [
         kind: 'new',
         text: {
           en: 'A “?” next to every page’s title opens that page’s guide in the Tutorial. Icon buttons show what they do when you point at them or reach them with the Tab key.',
-          ru: 'Значок «?» рядом с названием каждой страницы открывает её раздел в Инструкции. Кнопки-значки показывают подсказку, когда на них наводишь указатель или переходишь клавишей Tab.',
+          ru: 'Значок «?» рядом с названием каждой страницы открывает её раздел в Инструкции. Кнопки-значки показывают подсказку, когда вы наводите на них указатель или переходите к ним клавишей Tab.',
           fr: 'Un « ? » à côté du titre de chaque page ouvre sa partie du Guide. Les boutons-icônes disent ce qu’ils font quand on les survole ou qu’on y arrive avec la touche Tab.',
           de: 'Ein „?“ neben dem Titel jeder Seite öffnet ihren Teil der Anleitung. Symbol-Schaltflächen zeigen, was sie tun, wenn du darauf zeigst oder sie mit der Tab-Taste erreichst.',
           es: 'Un «?» junto al título de cada página abre su parte de la Guía. Los botones con icono dicen lo que hacen al pasar el puntero o al llegar a ellos con la tecla Tab.',
@@ -338,7 +338,7 @@ export const NEWS: NewsDay[] = [
         text: {
           en: 'Revise before the lesson: in the 24 hours before a lesson, Home offers a round on the last lesson’s words and your hard words.',
           ru: 'Повторить перед уроком: за сутки до урока на Главной появляется раунд по словам прошлого урока и вашим сложным словам.',
-          fr: 'Réviser avant le cours : dans les 24 heures avant un cours, l’accueil propose un tour sur les mots de la dernière leçon et vos mots difficiles.',
+          fr: 'Réviser avant le cours : dans les 24 heures avant un cours, l’Accueil propose un tour sur les mots de la dernière leçon et vos mots difficiles.',
           de: 'Vor der Stunde wiederholen: In den 24 Stunden vor einer Stunde bietet die Startseite eine Runde mit den Wörtern der letzten Lektion und deinen schweren Wörtern an.',
           es: 'Repasar antes de la clase: en las 24 horas antes de una clase, Inicio ofrece una ronda con las palabras de la última lección y tus palabras difíciles.',
           pt: 'Rever antes da aula: nas 24 horas antes de uma aula, o Início propõe uma ronda com as palavras da última lição e as suas palavras difíceis.',
@@ -350,7 +350,7 @@ export const NEWS: NewsDay[] = [
         text: {
           en: 'Lesson summary on Home: on the day of a lesson and the day after, a card with its new words, verbs and grammar, and Start revising.',
           ru: 'Итог урока на Главной: в день урока и на следующий день — карточка с его новыми словами, глаголами и грамматикой и кнопкой «Начать повторение».',
-          fr: 'Le résumé de la leçon sur l’accueil : le jour du cours et le lendemain, une carte avec ses nouveaux mots, ses verbes et sa grammaire, et « Commencer la révision ».',
+          fr: 'Le résumé de la leçon sur l’Accueil : le jour du cours et le lendemain, une carte avec ses nouveaux mots, ses verbes et sa grammaire, et « Commencer la révision ».',
           de: 'Zusammenfassung der Lektion auf der Startseite: am Tag der Stunde und am Tag danach eine Karte mit neuen Wörtern, Verben und Grammatik und „Wiederholung starten“.',
           es: 'Resumen de la lección en Inicio: el día de la clase y el siguiente, una tarjeta con sus palabras nuevas, verbos y gramática, y «Empezar el repaso».',
           pt: 'Resumo da lição no Início: no dia da aula e no seguinte, um cartão com as palavras novas, os verbos e a gramática, e «Começar a revisão».',
@@ -374,8 +374,8 @@ export const NEWS: NewsDay[] = [
         audience: 'teacher',
         text: {
           en: 'For teachers: “Make homework with Claude” in a lesson’s Homework tab writes a Devoirs: block from the lesson’s words and grammar, key words first. After a check it goes under the lesson, and the student gets it on Home as a checklist.',
-          ru: 'Для учителя: «Составить с Claude» во вкладке «Домашнее задание» пишет блок Devoirs: по словам и грамматике урока, сначала ключевые слова. После проверки он попадает под урок, а ученик видит его на Главной чек-листом.',
-          fr: 'Pour les professeurs : « Préparer les devoirs avec Claude » dans l’onglet Devoirs d’une leçon rédige un bloc Devoirs: à partir des mots et de la grammaire, mots clés d’abord. Après vérification, il va sous la leçon et l’élève le retrouve sur l’accueil en liste à cocher.',
+          ru: 'Для преподавателя: «Составить с Claude» во вкладке «Домашнее задание» пишет блок Devoirs: по словам и грамматике урока, сначала ключевые слова. После проверки он попадает под урок, а ученик видит его на Главной чек-листом.',
+          fr: 'Pour les professeurs : « Préparer les devoirs avec Claude » dans l’onglet Devoirs d’une leçon rédige un bloc Devoirs: à partir des mots et de la grammaire, mots clés d’abord. Après vérification, il va sous la leçon et l’élève le retrouve sur l’Accueil en liste à cocher.',
           de: 'Für Lehrkräfte: „Mit Claude erstellen“ im Tab Hausaufgaben einer Lektion schreibt einen Block Devoirs: aus den Wörtern und der Grammatik, Schlüsselwörter zuerst. Nach dem Prüfen kommt er unter die Lektion, und die Startseite zeigt ihn als Checkliste.',
           es: 'Para profesores: «Preparar los deberes con Claude» en la pestaña Deberes de una lección redacta un bloque Devoirs: con sus palabras y su gramática, primero las palabras clave. Tras revisarlo va debajo de la lección, y el alumno lo ve en Inicio como lista.',
           pt: 'Para professores: «Fazer com o Claude» no separador Trabalhos de casa de uma lição escreve um bloco Devoirs: com as palavras e a gramática, primeiro as palavras-chave. Depois de verificado vai para baixo da lição, e o aluno vê-o no Início como lista.',
@@ -386,7 +386,7 @@ export const NEWS: NewsDay[] = [
         kind: 'new',
         text: {
           en: 'Send to the teacher: under the homework and in Stats, a short report (homework done, mistakes since the lesson, your corrected written answers) goes into the document under the lesson after you’ve read it.',
-          ru: 'Отправить учителю: под домашкой и в Статистике короткий отчёт (что сделано, ошибки с урока, исправленные письменные ответы) после вашей проверки попадает в документ под урок.',
+          ru: 'Отправить преподавателю: под домашкой и в Статистике короткий отчёт (что сделано, ошибки с урока, исправленные письменные ответы) после вашей проверки попадает в документ под урок.',
           fr: 'Envoyer au professeur : sous les devoirs et dans les Statistiques, un court rapport (devoirs faits, erreurs depuis le cours, vos réponses écrites corrigées) va dans le document sous la leçon, après relecture.',
           de: 'An die Lehrkraft senden: Unter den Hausaufgaben und in der Statistik kommt ein kurzer Bericht (erledigte Aufgaben, Fehler seit der Stunde, deine korrigierten schriftlichen Antworten) nach dem Durchlesen ins Dokument unter die Lektion.',
           es: 'Enviar al profesor: debajo de los deberes y en Estadísticas, un breve informe (deberes hechos, errores desde la clase, tus respuestas escritas corregidas) va al documento debajo de la lección, después de que lo leas.',
@@ -398,7 +398,7 @@ export const NEWS: NewsDay[] = [
         kind: 'new',
         text: {
           en: 'Written homework checked by Claude: write your answer to a task like “5 phrases au passé composé”, and Claude fixes the mistakes and explains each one, like a tutor. The teacher sees the corrected answers in lesson mode.',
-          ru: 'Письменная домашка с проверкой Claude: напишите ответ на задание вроде «5 phrases au passé composé», и Claude исправит ошибки и объяснит каждую, как репетитор. Учитель видит исправленные ответы в режиме урока.',
+          ru: 'Письменная домашка с проверкой Claude: напишите ответ на задание вроде «5 phrases au passé composé», и Claude исправит ошибки и объяснит каждую, как репетитор. Преподаватель видит исправленные ответы в режиме урока.',
           fr: 'Devoirs écrits vérifiés par Claude : écrivez votre réponse à une tâche comme « 5 phrases au passé composé », et Claude corrige les erreurs et explique chacune, comme un professeur particulier. Le professeur voit les réponses corrigées dans le mode cours.',
           de: 'Schriftliche Hausaufgaben, von Claude geprüft: Schreib deine Antwort auf eine Aufgabe wie „5 phrases au passé composé“, und Claude korrigiert die Fehler und erklärt jeden, wie ein Nachhilfelehrer. Die Lehrkraft sieht die korrigierten Antworten im Unterrichtsmodus.',
           es: 'Deberes escritos corregidos por Claude: escribe tu respuesta a una tarea como «5 phrases au passé composé», y Claude corrige los errores y explica cada uno, como un profesor particular. El profesor ve las respuestas corregidas en el modo clase.',
@@ -410,8 +410,8 @@ export const NEWS: NewsDay[] = [
         kind: 'new',
         text: {
           en: 'Homework on Home: what the teacher writes after “Devoirs:” in the lesson becomes a checklist with the days left until the next lesson. Each task opens its exercise, and finishing it ticks the task.',
-          ru: 'Домашка на Главной: то, что учитель пишет в уроке после «Devoirs:», становится чек-листом, где видно, сколько дней до урока. Каждое задание открывает своё упражнение, а когда оно закончено, галочка ставится сама.',
-          fr: 'Les devoirs sur l’accueil : ce que le professeur écrit après « Devoirs: » dans la leçon devient une liste à cocher, avec les jours restants avant le cours. Chaque tâche ouvre son exercice, et le finir la coche.',
+          ru: 'Домашка на Главной: то, что преподаватель пишет в уроке после «Devoirs:», становится чек-листом, где видно, сколько дней до урока. Каждое задание открывает своё упражнение, а когда оно закончено, галочка ставится сама.',
+          fr: 'Les devoirs sur l’Accueil : ce que le professeur écrit après « Devoirs: » dans la leçon devient une liste à cocher, avec les jours restants avant le cours. Chaque tâche ouvre son exercice, et le finir la coche.',
           de: 'Hausaufgaben auf der Startseite: Was die Lehrkraft in der Lektion nach „Devoirs:“ schreibt, wird zur Checkliste mit den Tagen bis zur nächsten Stunde. Jede Aufgabe öffnet ihre Übung, und ist sie fertig, wird sie abgehakt.',
           es: 'Deberes en Inicio: lo que el profesor escribe tras «Devoirs:» en la lección se convierte en una lista para marcar, con los días que faltan para la clase. Cada tarea abre su ejercicio, y al terminarlo se marca.',
           pt: 'Trabalho de casa no Início: o que o professor escreve depois de «Devoirs:» na lição passa a ser uma lista para marcar, com os dias que faltam para a aula. Cada tarefa abre o seu exercício, e ao terminá-lo fica marcada.',
@@ -422,9 +422,9 @@ export const NEWS: NewsDay[] = [
         kind: 'new',
         text: {
           en: 'Key words: the teacher marks a word with ★ in the document (★ la boulangerie — пекарня), and it gets a “key” badge and comes up more often in exercises and the warm-up.',
-          ru: 'Ключевые слова: учитель отмечает слово звёздочкой в документе (★ la boulangerie — пекарня), у него появляется метка «ключевое», и оно чаще встречается в упражнениях и разминке.',
+          ru: 'Ключевые слова: преподаватель отмечает слово звёздочкой в документе (★ la boulangerie — пекарня), у него появляется метка «ключевое», и оно чаще встречается в упражнениях и разминке.',
           fr: 'Mots clés : le professeur marque un mot d’une ★ dans le document (★ la boulangerie — пекарня) ; il reçoit l’étiquette « clé » et revient plus souvent dans les exercices et l’échauffement.',
-          de: 'Schlüsselwörter: Die Lehrkraft markiert ein Wort im Dokument mit ★ (★ la boulangerie — пекарня); es bekommt das Etikett „Schlüssel“ und kommt in Übungen und beim Aufwärmen öfter dran.',
+          de: 'Schlüsselwörter: Die Lehrkraft markiert ein Wort im Dokument mit ★ (★ la boulangerie — пекарня); es bekommt das Etikett „Schlüsselwort“ und kommt in Übungen und beim Aufwärmen öfter dran.',
           es: 'Palabras clave: el profesor marca una palabra con ★ en el documento (★ la boulangerie — пекарня); lleva la etiqueta «clave» y sale más a menudo en los ejercicios y el calentamiento.',
           pt: 'Palavras-chave: o professor marca uma palavra com ★ no documento (★ la boulangerie — пекарня); fica com a etiqueta «chave» e aparece mais vezes nos exercícios e no aquecimento.',
           it: 'Parole chiave: l’insegnante segna una parola con ★ nel documento (★ la boulangerie — пекарня); riceve l’etichetta «chiave» e compare più spesso negli esercizi e nel riscaldamento.',
@@ -434,7 +434,7 @@ export const NEWS: NewsDay[] = [
         kind: 'new',
         text: {
           en: 'Warm-up in lesson mode: about 5 minutes of questions on the previous lesson and on your mistakes since, with a list of what didn’t stick at the end, for the teacher to see on the shared screen.',
-          ru: 'Разминка в режиме урока: минут 5 вопросов по прошлому уроку и вашим ошибкам с тех пор, а в конце — список того, что не закрепилось, чтобы учитель увидел его на общем экране.',
+          ru: 'Разминка в режиме урока: минут 5 вопросов по прошлому уроку и вашим ошибкам с тех пор, а в конце — список того, что не закрепилось, чтобы преподаватель увидел его на общем экране.',
           fr: 'Échauffement dans le mode cours : environ 5 minutes de questions sur la leçon précédente et sur vos erreurs depuis, avec à la fin la liste de ce qui n’est pas acquis, que le professeur voit sur l’écran partagé.',
           de: 'Aufwärmen im Unterrichtsmodus: etwa 5 Minuten Fragen zur letzten Lektion und zu deinen Fehlern seitdem, am Ende eine Liste dessen, was noch nicht sitzt, damit die Lehrkraft sie auf dem geteilten Bildschirm sieht.',
           es: 'Calentamiento en el modo clase: unos 5 minutos de preguntas sobre la lección anterior y sobre tus errores desde entonces, con una lista al final de lo que no se ha fijado, para que el profesor la vea en la pantalla compartida.',
@@ -446,7 +446,7 @@ export const NEWS: NewsDay[] = [
         kind: 'new',
         text: {
           en: 'Live sync: while the top bar says “Lesson now”, the app reads the document every minute by itself, so the words the teacher writes appear with their exercises without pressing ↻.',
-          ru: 'Живая синхронизация: пока в шапке горит «Урок идёт», приложение само читает документ каждую минуту, и слова, которые пишет учитель, появляются вместе с упражнениями без нажатия ↻.',
+          ru: 'Живая синхронизация: пока в шапке горит «Урок идёт», приложение само читает документ каждую минуту, и слова, которые пишет преподаватель, появляются вместе с упражнениями без нажатия ↻.',
           fr: 'Synchro en direct : tant que la barre du haut affiche « Cours en cours », l’app relit le document chaque minute, et les mots que le professeur écrit apparaissent avec leurs exercices sans appuyer sur ↻.',
           de: 'Live-Synchronisierung: Solange oben „Stunde läuft“ steht, liest die App das Dokument jede Minute selbst, und die Wörter, die die Lehrkraft schreibt, erscheinen samt Übungen, ohne ↻ zu drücken.',
           es: 'Sincronización en directo: mientras la barra superior dice «Clase en curso», la app lee el documento cada minuto, y las palabras que escribe el profesor aparecen con sus ejercicios sin pulsar ↻.',
@@ -473,9 +473,9 @@ export const NEWS: NewsDay[] = [
           ru: 'Испанский, португальский и итальянский: их можно учить, и на них можно переключить интерфейс. Уроки в документе могут начинаться с Lección, Clase, Lição, Aula или Lezione, а следующий урок задаётся строкой «próxima clase», «próxima aula» или «prossima lezione».',
           fr: 'L’espagnol, le portugais et l’italien : comme langues à apprendre et comme langues de l’interface. Les leçons peuvent commencer par Lección, Clase, Lição, Aula ou Lezione, et « próxima clase », « próxima aula » ou « prossima lezione » fixe le prochain cours.',
           de: 'Spanisch, Portugiesisch und Italienisch: als Lernsprachen und als Sprachen der Oberfläche. Lektionen können mit Lección, Clase, Lição, Aula oder Lezione beginnen, und „próxima clase“, „próxima aula“ oder „prossima lezione“ legt die nächste Stunde fest.',
-          es: 'Español, portugués e italiano: como idiomas para aprender y como idiomas de la interfaz. Las lecciones pueden empezar con Lección, Clase, Lição, Aula o Lezione, y «próxima clase» fija la próxima clase.',
-          pt: 'Espanhol, português e italiano: como línguas para aprender e como idiomas da interface. As lições podem começar com Lección, Clase, Lição, Aula ou Lezione, e «próxima aula» marca a próxima aula.',
-          it: 'Spagnolo, portoghese e italiano: come lingue da studiare e come lingue dell’interfaccia. Le lezioni possono iniziare con Lección, Clase, Lição, Aula o Lezione, e «prossima lezione» fissa la prossima lezione.',
+          es: 'Español, portugués e italiano: como idiomas para aprender y como idiomas de la interfaz. Las lecciones pueden empezar con Lección, Clase, Lição, Aula o Lezione, y «próxima clase», «próxima aula» o «prossima lezione» fija la próxima clase.',
+          pt: 'Espanhol, português e italiano: como línguas para aprender e como idiomas da interface. As lições podem começar com Lección, Clase, Lição, Aula ou Lezione, e «próxima clase», «próxima aula» ou «prossima lezione» marca a próxima aula.',
+          it: 'Spagnolo, portoghese e italiano: come lingue da studiare e come lingue dell’interfaccia. Le lezioni possono iniziare con Lección, Clase, Lição, Aula o Lezione, e «próxima clase», «próxima aula» o «prossima lezione» fissa la prossima lezione.',
         },
       },
       {

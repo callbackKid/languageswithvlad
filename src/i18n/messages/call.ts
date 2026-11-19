@@ -76,7 +76,7 @@ export const call = defineMessages({
     title: 'Режим урока',
     intro: 'Звонок, ваши заметки и слова урока в одном месте.',
     noCall:
-      'В документе пока нет ссылки на Google Meet или Zoom. Вставьте ссылку на урок и нажмите ↻ (синхронизировать) наверху.',
+      'В документе пока нет ссылки на Google Meet или Zoom. Вставьте ссылку на урок и нажмите ↻ («Синхронизировать») наверху.',
     meetTitle: 'Google Meet',
     meetExplain:
       'Google Meet нельзя встроить в другие сайты, поэтому он открывается маленьким окном сбоку экрана. Держите его рядом с этой страницей.',
@@ -127,9 +127,9 @@ export const call = defineMessages({
     // warm-up
     warmUpTitle: 'Разминка',
     warmUpHint:
-      'Минут 5 в начале: вопросы по уроку {n} ({date}) и по ошибкам ученика с тех пор. Делайте на устройстве ученика, где хранятся его ошибки, с общим экраном: учитель сразу видит, что не закрепилось.',
+      'Минут 5 в начале: вопросы по уроку {n} ({date}) и по ошибкам ученика с тех пор. Делайте на устройстве ученика, где хранятся его ошибки, с общим экраном: преподаватель сразу видит, что не закрепилось.',
     warmUpHintNoLesson:
-      'Минут 5 в начале: вопросы по ошибкам ученика за последнюю неделю. Делайте на устройстве ученика, где хранятся его ошибки, с общим экраном: учитель сразу видит, что не закрепилось.',
+      'Минут 5 в начале: вопросы по ошибкам ученика за последнюю неделю. Делайте на устройстве ученика, где хранятся его ошибки, с общим экраном: преподаватель сразу видит, что не закрепилось.',
     startWarmUp: 'Начать разминку',
     preparingWarmUp: 'Готовлю урок {n}…',
     warmUpEmpty: 'Пока не о чем спрашивать: нет слов прошлого урока и ошибок с тех пор.',
@@ -204,7 +204,7 @@ export const call = defineMessages({
     warmUpRound: 'Échauffement · leçon {n}',
     backToLesson: 'Retour au cours',
     missedTitle: 'Pas encore acquis : à revoir ensemble',
-    allStuck: 'Tout est acquis : aucune erreur dans ce tour.',
+    allStuck: 'Tout est acquis : aucune erreur dans cette série.',
   },
   de: {
     title: 'Unterrichtsmodus',
@@ -242,7 +242,7 @@ export const call = defineMessages({
     yourName: 'Dein Name im Anruf',
     passcode: 'Kenncode des Meetings',
     joinHere: 'Hier beitreten',
-    joining: 'Anruf wird beigetreten…',
+    joining: 'Verbindung zum Anruf…',
     leave: 'Anruf verlassen',
     zoomNotSetUp:
       'Zoom ist auf diesem Server noch nicht eingerichtet (ZOOM_SDK_KEY, siehe README), deshalb öffnet sich der Anruf in Zoom.',
@@ -310,14 +310,14 @@ export const call = defineMessages({
     yourName: 'Tu nombre en la llamada',
     passcode: 'Código de acceso de la reunión',
     joinHere: 'Unirse aquí',
-    joining: 'Uniéndose a la llamada…',
+    joining: 'Entrando en la llamada…',
     leave: 'Salir de la llamada',
     zoomNotSetUp:
       'Zoom aún no está configurado en este servidor (ZOOM_SDK_KEY, ver README), así que la llamada se abre en Zoom.',
     zoomNoNumber:
       'Este enlace de Zoom no tiene número de reunión, así que la llamada se abre en Zoom.',
     openInZoom: 'Abrir en Zoom',
-    zoomFailed: 'No se pudo unir a la llamada: {reason}',
+    zoomFailed: 'No se ha podido entrar en la llamada: {reason}',
     notesTitle: 'Notas de la clase',
     notesHint:
       'Escribe durante la clase: palabras nuevas como «palabra — перевод», errores que trabajar, deberes. Se guarda en este dispositivo.',
@@ -479,6 +479,6 @@ export const call = defineMessages({
     warmUpRound: 'Riscaldamento · lezione {n}',
     backToLesson: 'Torna alla lezione',
     missedTitle: 'Non è rimasto: ripassatelo insieme',
-    allStuck: 'È rimasto tutto: nessun errore in questo giro.',
+    allStuck: 'È rimasto tutto: nessun errore in questo turno.',
   },
 });
