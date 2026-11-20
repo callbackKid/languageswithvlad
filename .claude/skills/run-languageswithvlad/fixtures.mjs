@@ -372,6 +372,40 @@ const UNDERLINED = {
   ],
 };
 
+// An exercise the teacher makes in lesson mode: one question of each kind.
+const MADE_EXERCISE = {
+  title: 'Passé composé с être',
+  questions: [
+    {
+      type: 'choice',
+      prompt: 'Hier, elle ___ au marché.',
+      options: ['est allée', 'a allé', 'est allé'],
+      answer: 'est allée',
+      accept: [],
+      ru: 'Вчера она ходила на рынок.',
+      explanation: 'Aller спрягается с être, причастие согласуется с elle.',
+    },
+    {
+      type: 'gap',
+      prompt: 'Nous ___ (partir) à huit heures.',
+      options: [],
+      answer: 'sommes partis',
+      accept: ['sommes parties'],
+      ru: 'Мы уехали в восемь часов.',
+      explanation: 'Partir спрягается с être.',
+    },
+    {
+      type: 'translate',
+      prompt: 'Я пришёл вчера.',
+      options: [],
+      answer: 'Je suis venu hier.',
+      accept: ['Je suis venue hier.', 'Hier, je suis venu.'],
+      ru: '',
+      explanation: 'Venir спрягается с être.',
+    },
+  ],
+};
+
 const DISCUSSION = {
   question: 'Qu’est-ce que vous faites le matin avant le travail ?',
   ru: 'Что вы делаете утром перед работой?',
@@ -413,6 +447,7 @@ export function answerFor(url, body, headers = {}, scenario = 'upcoming') {
             : ANALYSIS;
     if (body.action === 'extras') return EXTRAS;
     if (body.action === 'homework') return MADE_HOMEWORK;
+    if (body.action === 'exercise') return MADE_EXERCISE;
     return {};
   }
   if (path === '/api/text') {

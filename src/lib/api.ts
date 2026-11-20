@@ -241,6 +241,18 @@ export const api = {
       method: 'POST',
       body: JSON.stringify({ kind: 'handwritten', images }),
     }),
+  // an exercise the teacher makes in lesson mode (teacher code)
+  exercise: (options: {
+    language: Language;
+    level: string;
+    grammar: string;
+    words: string[];
+    count: number;
+  }) =>
+    request<unknown>('/api/analyze', {
+      method: 'POST',
+      body: JSON.stringify({ action: 'exercise', ...options }),
+    }),
   // a word or phrase selected anywhere in the app: explained in its sentence, defined, with examples
   word: (selection: string, context: string) =>
     request<unknown>('/api/text', {

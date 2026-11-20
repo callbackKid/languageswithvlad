@@ -183,6 +183,19 @@ export const NEWS: NewsDay[] = [
           it: 'La modalità lezione finisce con un riquadro «Compiti»: l’insegnante scrive i compiti durante la lezione e li aggiunge sotto la lezione, e lo studente li vede nella Home come lista. Il gioco a quiz ora viene subito dopo il riscaldamento.',
         },
       },
+      {
+        kind: 'new',
+        audience: 'teacher',
+        text: {
+          en: 'For teachers: Create an exercise in lesson mode. Choose a grammar point and/or the lesson’s words, the level and the number of questions, and Claude writes a round (choose the answer, fill the gap, translate) that the student does right there, every answer checked and explained.',
+          ru: 'Для преподавателя: в режиме урока появилась карточка «Составить упражнение». Выберите грамматическую тему и/или слова урока, уровень и число вопросов, и Claude составит раунд (выбрать ответ, вставить пропущенное слово, перевести), который ученик пройдёт прямо там; каждый ответ проверяется и объясняется.',
+          fr: 'Pour le professeur : « Créer un exercice » arrive en mode cours. Choisissez un point de grammaire et/ou les mots de la leçon, le niveau et le nombre de questions, et Claude écrit un tour (choisir la réponse, compléter les trous, traduire) que l’élève fait sur place, chaque réponse étant vérifiée et expliquée.',
+          de: 'Für Lehrkräfte: „Übung erstellen“ im Unterrichtsmodus. Wähle ein Grammatikthema und/oder die Wörter der Lektion, das Niveau und die Anzahl der Fragen, und Claude schreibt eine Runde (Antwort wählen, Lücke füllen, übersetzen), die der Schüler gleich dort löst; jede Antwort wird geprüft und erklärt.',
+          es: 'Para el profesor: «Crear un ejercicio» en el modo clase. Elige un tema de gramática y/o las palabras de la lección, el nivel y el número de preguntas, y Claude escribe una ronda (elegir la respuesta, rellenar el hueco, traducir) que el alumno hace allí mismo; cada respuesta se corrige y se explica.',
+          pt: 'Para o professor: «Criar um exercício» no modo aula. Escolha um tema de gramática e/ou as palavras da lição, o nível e o número de perguntas, e o Claude escreve uma ronda (escolher a resposta, preencher o espaço, traduzir) que o aluno faz ali mesmo; cada resposta é verificada e explicada.',
+          it: 'Per l’insegnante: «Crea un esercizio» nella modalità lezione. Scegli un tema di grammatica e/o le parole della lezione, il livello e il numero di domande, e Claude scrive un giro (scegliere la risposta, riempire lo spazio vuoto, tradurre) che lo studente fa direttamente lì; ogni risposta viene controllata e spiegata.',
+        },
+      },
     ],
   },
   {

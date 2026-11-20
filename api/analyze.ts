@@ -6,6 +6,7 @@ import {
   analysisPrompt,
   asExplainLanguage,
   asLanguage,
+  exercisePrompt,
   grammarPracticePrompt,
   homeworkPrompt,
   lessonExtrasPrompt,
@@ -25,12 +26,20 @@ const MAX_KEY_WORD_LENGTH = 80;
 const MIN_TRANSLATE_SENTENCES = 2;
 const MAX_TRANSLATE_SENTENCES = 8;
 const DEFAULT_TRANSLATE_SENTENCES = 4;
+// a made exercise: its questions (keep in step with src/components/MakeExercise.tsx), the grammar
+// point as the teacher types it, and the lesson's words it practises
+const MIN_EXERCISE_QUESTIONS = 3;
+const MAX_EXERCISE_QUESTIONS = 15;
+const DEFAULT_EXERCISE_QUESTIONS = 8;
+const MAX_GRAMMAR_LENGTH = 200;
+const MAX_EXERCISE_WORDS = 30;
 
 /* Everything Claude prepares from one lesson, in one function (Vercel's free plan allows 12):
    - "words" (the default): its words with translations, synonym and antonym pairs, and verbs;
    - "extras": its grammar points, homework and exercises from the book;
    - "practice": gap sentences on one of its grammar points;
-   - "homework": homework for the next lesson, made from its words and grammar. */
+   - "homework": homework for the next lesson, made from its words and grammar;
+   - "exercise": a mixed exercise the teacher makes in lesson mode, on a grammar point and/or words. */
 export default async function handler(request: VercelRequest, response: VercelResponse) {
   if (!onlyPost(request, response) || !checkAccess(request, response)) return;
   const action: unknown = request.body?.action ?? 'words';
@@ -70,6 +79,27 @@ export default async function handler(request: VercelRequest, response: VercelRe
         .status(200)
         .json(await claudeJSON(prompt, { model: MODEL, maxTokens: 3000, cache: false }));
     }
+    if (action === 'exercise') {
+      // making an exercise in lesson mode is the teacher's tool
+      if (!checkTeacher(request, response)) return;
+      const grammar = text(request.body?.grammar, MAX_GRAMMAR_LENGTH);
+      const words = (Array.isArray(request.body?.words) ? request.body.words : [])
+        .map((word: unknown) => text(word, MAX_KEY_WORD_LENGTH))
+        .filter(Boolean)
+        .slice(0, MAX_EXERCISE_WORDS);
+      if (!grammar && !words.length) return response.status(400).json({ error: 'nothing_sent' });
+      const prompt = exercisePrompt({
+        language: asLanguage(request.body?.language),
+        level: asLevel(request.body?.level) ?? 'A2',
+        grammar,
+        words,
+        count: questionCount(request.body?.count),
+      });
+      // asked again for another exercise: never the same questions twice
+      return response
+        .status(200)
+        .json(await claudeJSON(prompt, { model: MODEL, maxTokens: 6000, cache: false }));
+    }
     if (action !== 'words' && action !== 'extras')
       return response.status(400).json({ error: 'bad_request' });
 
@@ -89,6 +119,12 @@ export default async function handler(request: VercelRequest, response: VercelRe
   } catch (error) {
     return fail(response, error);
   }
+}
+
+// The number of questions the teacher asked for, kept within the range.
+function questionCount(value: unknown): number {
+  if (typeof value !== 'number' || !Number.isInteger(value)) return DEFAULT_EXERCISE_QUESTIONS;
+  return Math.min(MAX_EXERCISE_QUESTIONS, Math.max(MIN_EXERCISE_QUESTIONS, value));
 }
 
 // The number of sentences to translate the teacher asked for, kept within the range.

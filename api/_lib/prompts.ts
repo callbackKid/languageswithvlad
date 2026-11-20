@@ -209,6 +209,39 @@ ${MARKED_ITEM_RULES}
 - examples: 3 short everyday sentences in the selected text's language using the dictionary form (conjugated or agreed as the sentence needs), at the learner's level and each showing a different common use; ru is the Russian translation of each.`;
 }
 
+/** An exercise the teacher makes in lesson mode: a mixed round on a grammar point and/or some
+    words, at a level, for the student to do in the app. Each question has one answer the app can
+    check (with the other right answers listed), and a short reason in Russian. */
+export function exercisePrompt({
+  language,
+  level,
+  grammar,
+  words,
+  count,
+}: {
+  language: LearnLanguage;
+  level: string;
+  grammar: string;
+  words: string[];
+  count: number;
+}): string {
+  const name = LANGUAGE_NAMES[language];
+  const focus = [
+    grammar ? `the grammar point "${grammar}"` : '',
+    words.length ? `these words from the lesson: ${words.join(', ')}` : '',
+  ]
+    .filter(Boolean)
+    .join(', and ');
+  return `Write a ${name} exercise for a Russian-speaking learner at CEFR level ${level} (A0 is a complete beginner): ${count} questions practising ${focus}.
+${LEVEL_STYLE}
+Mix three kinds of question, about a third of each, in a varied order:
+- "choice": prompt is a ${name} sentence with one gap written ___, or a short question; options are 3 or 4 answers in ${name}, exactly one of them right; answer is that option, written exactly as in options.
+- "gap": prompt is a ${name} sentence with one gap written ___, followed in brackets by the word to put in the right form when the form is what is practised ("Hier, nous ___ (aller) au cinéma."); answer is what goes in the gap.
+- "translate": prompt is a short everyday Russian sentence (4 to 8 words); answer is its natural ${name} translation, using what is practised.
+Every question practises the point${grammar && words.length ? 's' : ''} above, with vocabulary of the level, and has one clear answer. accept lists other answers that are just as right (another word order, a contraction, a synonym); [] when there are none. ru is the Russian translation of the prompt for "choice" and "gap", "" for "translate". explanation is one short sentence in Russian saying why the answer is right. options is [] for "gap" and "translate".
+Reply with only a JSON object: {"title": string, "questions": [{"type": "choice" | "gap" | "translate", "prompt": string, "options": [string], "answer": string, "accept": [string], "ru": string, "explanation": string}]}. title says what the exercise practises, in Russian, in at most 6 words.`;
+}
+
 // A natural Russian translation of a text, paragraph by paragraph.
 export function translatePrompt(paragraphs: string[]): string {
   return `Translate this text into natural, fluent Russian, the way a good translator would: keep the meaning, tone and register, don't translate word for word, and don't add or leave out anything. It has ${paragraphs.length} paragraph${paragraphs.length === 1 ? '' : 's'}, numbered below.

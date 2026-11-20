@@ -190,6 +190,27 @@ export interface PhotoItem {
   language?: Language;
 }
 
+/** A question of an exercise the teacher makes in lesson mode: choose the answer, fill the gap,
+    or translate a Russian sentence. */
+export interface ExerciseQuestion {
+  type: 'choice' | 'gap' | 'translate';
+  prompt: string;
+  // the answers to choose from, for "choice"; [] otherwise
+  options: string[];
+  answer: string;
+  // other answers that are just as right
+  accept: string[];
+  // the Russian translation of the prompt ("" for "translate", whose prompt is Russian)
+  ru: string;
+  // why the answer is right, in Russian
+  explanation: string;
+}
+export interface MadeExercise {
+  title: string;
+  language: Language;
+  questions: ExerciseQuestion[];
+}
+
 // A word or phrase selected anywhere in the app: its explanation in its sentence, a definition in its own language and examples.
 export interface WordCard extends PhotoItem {
   language: Language;

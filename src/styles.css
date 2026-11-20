@@ -3406,6 +3406,59 @@ li .open-link {
   min-height: 420px;
   margin-top: 4px;
 }
+/* Create an exercise (the teacher's card): what to practise, then the level and the number */
+.make-exercise {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 10px;
+}
+.make-exercise-what {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.make-exercise-what legend {
+  margin-bottom: 6px;
+  padding: 0;
+  font-weight: 600;
+}
+.make-exercise-what .check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+.make-exercise-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 16px;
+}
+.make-exercise-count {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+.make-exercise-count select {
+  padding: 4px 8px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+}
+/* a question of the made exercise: as large as in the other exercises */
+.made-exercise-prompt {
+  margin: 8px 0 4px;
+  font-family: var(--serif);
+  font-size: 20px;
+}
+
 /* the homework card at the end of lesson mode: a few lines, one task each */
 .call-homework {
   margin-top: 20px;

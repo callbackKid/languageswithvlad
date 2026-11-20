@@ -4,6 +4,7 @@ import { useTranslation } from '../i18n/core';
 import { call } from '../i18n/messages/call';
 import { game } from '../i18n/messages/game';
 import { homework as homeworkText } from '../i18n/messages/homework';
+import { makeExerciseText } from '../i18n/messages/makeExercise';
 import { talk } from '../i18n/messages/talk';
 import { type Bank, readAnalysis, usePreparedLesson } from '../lib/bank';
 import type { BoardServer } from '../lib/boardSync';
@@ -18,6 +19,7 @@ import { followLink, hrefFor } from '../lib/router';
 import { lessonPath } from '../lib/sections';
 import { getSettings } from '../lib/settings';
 import { load, loadChecked, remove, save } from '../lib/storage';
+import { useTeacher } from '../lib/teacher';
 import type { Lesson, Writing } from '../lib/types';
 import { hash } from '../lib/util';
 import { previousLesson, warmUpRound } from '../lib/warmUp';
@@ -26,6 +28,7 @@ import CallCard from './CallCard';
 import Discuss from './Discuss';
 import JitsiCall from './JitsiCall';
 import LessonBoard from './LessonBoard';
+import MakeExercise from './MakeExercise';
 import PageHead from './PageHead';
 import QuizGame, {
   GAME_QUESTIONS,
@@ -45,6 +48,8 @@ const NAME_KEY = 'call:name';
 const MAX_NAME_LENGTH = 60;
 const MAX_PASSCODE_LENGTH = 40;
 const today = () => dayKey(new Date());
+// the lesson's words an exercise practises at most; keep in step with MAX_EXERCISE_WORDS in api/analyze.ts
+const MAX_EXERCISE_WORDS = 30;
 
 // Today's date in UTC, the same for everyone wherever they are.
 const utcDay = () => new Date().toISOString().slice(0, 10);
@@ -434,6 +439,23 @@ function ActivityPlace({ children }: { children: ReactNode }) {
   );
 }
 
+// The teacher's exercise maker, on the newest lesson's words (key words first) and any grammar point.
+function MakeExerciseCard({ bank, lesson }: { bank: Bank; lesson: Lesson | null }) {
+  const { t } = useTranslation(makeExerciseText);
+  const words = keyWordsFirst(lesson ? bank.words.filter((word) => word.lesson === lesson.key) : [])
+    .map((word) => word.fr)
+    .slice(0, MAX_EXERCISE_WORDS);
+  return (
+    <CallCard id="exercise" title={t('title')} className="exercise-card">
+      <MakeExercise
+        language={lesson ? languageOfLesson(lesson) : (getSettings().studying[0] ?? 'fr')}
+        words={words}
+        lessonNumber={lesson?.n ?? null}
+      />
+    </CallCard>
+  );
+}
+
 // A discussion question for the lesson, made here as on its own page.
 function DiscussCard({ bank, hasClaude }: { bank: Bank; hasClaude: boolean }) {
   const { t } = useTranslation(talk);
@@ -541,6 +563,7 @@ export default function LessonMode({
   const { t } = useTranslation(call);
   // the warm-up or the game, shown above the call
   const [activity, setActivity] = useState<'warm-up' | 'game' | null>(null);
+  const { isTeacher } = useTeacher();
   const earlier = previousLesson(lessons);
   const preparing = usePreparedLesson(earlier, bank, hasClaude);
   const newest = lessons[lessons.length - 1] ?? null;
@@ -577,6 +600,7 @@ export default function LessonMode({
             />
           )}
           {!activity && newest && <GameCard docId={docId} onStart={() => setActivity('game')} />}
+          {isTeacher && hasClaude && <MakeExerciseCard bank={bank} lesson={newest} />}
           <DiscussCard bank={bank} hasClaude={hasClaude} />
           <WrittenHomework lesson={earlier} docId={docId} />
           <LessonWords bank={bank} lesson={lessons[lessons.length - 1] ?? null} />
