@@ -159,7 +159,8 @@ If the findings will be shared, offer a page in one line.
 
 - French lines quoting the document's syntax (`le cours prochain: 22.11.2026`, `Devoirs: …`) have no space before `:` on purpose: they show what to type.
 - `«` in News 2026-11-16 is the menu button's icon, not a quote.
-- `reportWriting` (`✍️ {task} — {verdict}`) and `game.fr.points` are the same as English on purpose.
+- `reportWriting` (`✍️ {task} — {verdict}`), `game.fr.points` and `exercises.groupOption` (`{name} ({count})`) are the same as English on purpose.
+- The `notesPlaceholder` and `homeworkPlaceholder` texts in `call.ts` are examples of the document's syntax, in French on purpose.
 - `pages.ofTotal` and `exercises.fromWord` start with a space: they follow a number or a sentence on screen. (They are glued text; fine while every language reads right.)
 
 Add a line here when a sweep reports something that is right on purpose.
