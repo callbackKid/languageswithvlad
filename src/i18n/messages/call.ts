@@ -66,6 +66,8 @@ export const call = defineMessages({
     clearConfirm: 'Clear the notes of this lesson?',
     // words
     wordsTitle: 'Words of the last lesson',
+    // the card that imports pages of the book; {lesson}: "Leçon 7"
+    bookUnder: 'What you tick goes under {lesson} in the document.',
     noWords: 'No words prepared yet.',
     openLesson: 'Open the lesson',
     // warm-up
@@ -142,6 +144,8 @@ export const call = defineMessages({
     clearNotes: 'Очистить',
     clearConfirm: 'Очистить заметки этого урока?',
     wordsTitle: 'Слова последнего урока',
+    // the card that imports pages of the book; {lesson}: "Leçon 7"
+    bookUnder: 'То, что вы отметите, попадёт в документ под «{lesson}».',
     noWords: 'Слова ещё не подготовлены.',
     openLesson: 'Открыть урок',
     // warm-up
@@ -219,6 +223,8 @@ export const call = defineMessages({
     clearNotes: 'Effacer',
     clearConfirm: 'Effacer les notes de ce cours ?',
     wordsTitle: 'Mots de la dernière leçon',
+    // the card that imports pages of the book; {lesson}: "Leçon 7"
+    bookUnder: 'Ce que vous cochez est ajouté sous {lesson} dans le document.',
     noWords: 'Aucun mot préparé pour l’instant.',
     openLesson: 'Ouvrir la leçon',
     // warm-up
@@ -297,6 +303,8 @@ export const call = defineMessages({
     clearNotes: 'Leeren',
     clearConfirm: 'Die Notizen dieser Stunde leeren?',
     wordsTitle: 'Wörter der letzten Lektion',
+    // the card that imports pages of the book; {lesson}: "Leçon 7"
+    bookUnder: 'Was du ankreuzt, kommt im Dokument unter {lesson}.',
     noWords: 'Noch keine Wörter vorbereitet.',
     openLesson: 'Lektion öffnen',
     // warm-up
@@ -376,6 +384,8 @@ export const call = defineMessages({
     clearNotes: 'Borrar',
     clearConfirm: '¿Borrar las notas de esta clase?',
     wordsTitle: 'Palabras de la última lección',
+    // the card that imports pages of the book; {lesson}: "Leçon 7"
+    bookUnder: 'Lo que marques va debajo de {lesson} en el documento.',
     noWords: 'Aún no hay palabras preparadas.',
     openLesson: 'Abrir la lección',
     // warm-up
@@ -456,6 +466,8 @@ export const call = defineMessages({
     clearNotes: 'Limpar',
     clearConfirm: 'Limpar as notas desta aula?',
     wordsTitle: 'Palavras da última lição',
+    // the card that imports pages of the book; {lesson}: "Leçon 7"
+    bookUnder: 'O que marcar fica por baixo de {lesson} no documento.',
     noWords: 'Ainda não há palavras preparadas.',
     openLesson: 'Abrir a lição',
     // warm-up
@@ -535,6 +547,8 @@ export const call = defineMessages({
     clearNotes: 'Cancella',
     clearConfirm: 'Cancellare gli appunti di questa lezione?',
     wordsTitle: 'Parole dell’ultima lezione',
+    // the card that imports pages of the book; {lesson}: "Leçon 7"
+    bookUnder: 'Ciò che spunti va sotto {lesson} nel documento.',
     noWords: 'Nessuna parola ancora pronta.',
     openLesson: 'Apri la lezione',
     // warm-up

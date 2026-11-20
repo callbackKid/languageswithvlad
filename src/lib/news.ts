@@ -53,6 +53,18 @@ export const NEWS: NewsDay[] = [
       {
         kind: 'new',
         text: {
+          en: 'Lesson mode now has Import from the book, under the words of the last lesson: choose photos or PDF pages of the book and tick what to take, and it goes under the newest lesson, as in a lesson’s Book exercises tab.',
+          ru: 'В режиме урока под «Словами последнего урока» появилось «Добавить из учебника»: выберите фото или страницы PDF из учебника, отметьте, что взять, и это попадёт под самый новый урок — как на вкладке «Упражнения из учебника» в уроке.',
+          fr: 'Le mode cours a maintenant « Importer du manuel », sous « Mots de la dernière leçon » : choisissez des photos ou des pages PDF du manuel et cochez ce qu’il faut prendre, et c’est ajouté sous la leçon la plus récente, comme dans l’onglet Exercices du manuel d’une leçon.',
+          de: 'Der Unterrichtsmodus hat jetzt „Aus dem Lehrbuch importieren“, unter „Wörter der letzten Lektion“: Wähle Fotos oder PDF-Seiten des Lehrbuchs, kreuze an, was übernommen werden soll, und es kommt unter die neueste Lektion, wie im Tab Übungen aus dem Lehrbuch einer Lektion.',
+          es: 'El modo clase tiene ahora «Importar del libro», debajo de «Palabras de la última lección»: elige fotos o páginas PDF del libro, marca lo que quieras tomar y va debajo de la lección más reciente, como en la pestaña Ejercicios del libro de una lección.',
+          pt: 'O modo aula tem agora «Importar do manual», por baixo de «Palavras da última lição»: escolha fotos ou páginas PDF do manual, marque o que quer aproveitar, e fica por baixo da lição mais recente, como no separador Exercícios do manual de uma lição.',
+          it: 'La modalità lezione ora ha «Importa dal libro», sotto «Parole dell’ultima lezione»: scegli foto o pagine PDF del libro, spunta cosa prendere e va sotto la lezione più recente, come nella scheda Esercizi dal libro di una lezione.',
+        },
+      },
+      {
+        kind: 'new',
+        text: {
           en: 'The words of a lesson and Words to learn are now sorted into groups by meaning, such as food or time. Choose a group next to Filter words to see only its words and practise them on their own.',
           ru: 'Слова урока и раздела «Слова на изучении» теперь разделены на группы по смыслу, например еда или время. Выберите группу рядом с полем «Найти слово», чтобы видеть только её слова и тренировать их отдельно.',
           fr: 'Les mots d’une leçon et de « Mots à apprendre » sont maintenant classés en groupes par sens, par exemple la nourriture ou le temps. Choisissez un groupe à côté de « Filtrer les mots » pour ne voir que ses mots et les travailler à part.',

@@ -5,6 +5,7 @@ import { call } from '../i18n/messages/call';
 import { game } from '../i18n/messages/game';
 import { homework as homeworkText } from '../i18n/messages/homework';
 import { makeExerciseText } from '../i18n/messages/makeExercise';
+import { paper } from '../i18n/messages/paper';
 import { talk } from '../i18n/messages/talk';
 import { type Bank, readAnalysis, usePreparedLesson } from '../lib/bank';
 import type { BoardServer } from '../lib/boardSync';
@@ -23,6 +24,7 @@ import type { Lesson, Writing } from '../lib/types';
 import { hash } from '../lib/util';
 import { previousLesson, warmUpRound } from '../lib/warmUp';
 import AddToDoc, { type DocTarget } from './AddToDoc';
+import BookImport from './BookImport';
 import CallCard from './CallCard';
 import Discuss from './Discuss';
 import JitsiCall from './JitsiCall';
@@ -456,6 +458,28 @@ function MakeExerciseCard({ bank, lesson }: { bank: Bank; lesson: Lesson | null 
 }
 
 // A discussion question for the lesson, made here as on its own page.
+// Pages of the student's book, from photos or a PDF, written under the newest lesson.
+function BookCard({
+  docId,
+  lesson,
+  canWrite,
+}: {
+  docId: string;
+  lesson: Lesson;
+  canWrite: boolean;
+}) {
+  const { t } = useTranslation(paper);
+  const callText = useTranslation(call);
+  return (
+    <CallCard id="book" title={t('importBook')}>
+      <p className="hint">
+        {callText.t('bookUnder', { lesson: lesson.title ?? `${lesson.word} ${lesson.n}` })}
+      </p>
+      <BookImport docId={docId} lessonKey={lesson.key} docWriter={canWrite} embedded />
+    </CallCard>
+  );
+}
+
 function DiscussCard({ bank, hasClaude }: { bank: Bank; hasClaude: boolean }) {
   const { t } = useTranslation(talk);
   return (
@@ -602,6 +626,9 @@ export default function LessonMode({
           <DiscussCard bank={bank} hasClaude={hasClaude} />
           <WrittenHomework lesson={earlier} docId={docId} />
           <LessonWords bank={bank} lesson={lessons[lessons.length - 1] ?? null} />
+          {hasClaude && newest && (
+            <BookCard docId={docId} lesson={newest} canWrite={!!target.docWriter} />
+          )}
         </div>
         <LessonNotes docId={docId} target={target} />
       </div>

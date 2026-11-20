@@ -23,10 +23,13 @@ export default function BookImport({
   docId,
   lessonKey,
   docWriter,
+  embedded = false,
 }: {
   docId: string;
   lessonKey: string;
   docWriter: boolean;
+  // inside a card that already has the title (lesson mode)
+  embedded?: boolean;
 }) {
   const { t } = useTranslation(paper);
   const commonText = useTranslation(common);
@@ -102,7 +105,7 @@ export default function BookImport({
 
   return (
     <section className="book-import">
-      <h2>{t('importBook')}</h2>
+      {!embedded && <h2>{t('importBook')}</h2>}
       {!docWriter ? (
         <p className="hint">{commonText.t('docWriterMissing')}</p>
       ) : (
