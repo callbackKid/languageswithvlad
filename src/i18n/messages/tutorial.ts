@@ -118,7 +118,8 @@ export const tutorial = defineMessages({
 
     'all-lessons.title': 'Downloaded lessons',
     'all-lessons.summary': 'The same exercises, on several lessons at once',
-    'all-lessons.intro': 'Every word and verb exercise, on all prepared lessons together.',
+    'all-lessons.intro':
+      'The second tab of <b>Lesson history</b>: every word and verb exercise, on all prepared lessons together.',
     'all-lessons.step1':
       'Leave <b>All</b> selected, or tap lesson chips to practise only a few lessons.',
     'all-lessons.step2':
@@ -187,7 +188,7 @@ export const tutorial = defineMessages({
       'Pick a <b>vocabulary topic</b>: from the list or from your lessons, or write any topic of your own under <b>Or your own topic</b>: a TV series, a hobby, new slang words. Pick a <b>grammar topic</b>, or leave <b>Any</b>.',
     'discuss.step3':
       'Press <pbtn>Write a question</pbtn>. You get the question (🔊 reads it, <b>Show translation</b> shows it in Russian), follow-up questions, sentence beginnings that use the grammar, and useful words. With a grammar topic, <b>📘 The rule</b> opens an explanation with examples.',
-    'discuss.step4': '<pbtn>Another question</pbtn> writes a new one with the same settings.',
+    'discuss.step4': '<pbtn>Ask a question</pbtn> writes a new one with the same settings.',
     'discuss.tip1': '☆ next to a useful word puts it on Words to learn.',
 
     'settings.title': 'Settings',
@@ -372,7 +373,8 @@ export const tutorial = defineMessages({
 
     'all-lessons.title': 'Загруженные уроки',
     'all-lessons.summary': 'Те же упражнения сразу по нескольким урокам',
-    'all-lessons.intro': 'Все упражнения на слова и глаголы по всем подготовленным урокам вместе.',
+    'all-lessons.intro':
+      'Вторая вкладка раздела <b>История уроков</b>: все упражнения на слова и глаголы по всем подготовленным урокам вместе.',
     'all-lessons.step1':
       'Оставьте выбранным <b>Все</b> или нажмите на нужные уроки, чтобы тренировать только их.',
     'all-lessons.step2':
@@ -439,7 +441,7 @@ export const tutorial = defineMessages({
       'Выберите <b>лексическую тему</b>: из списка или из ваших уроков — или впишите любую свою в поле <b>Или своя тема</b>: сериал, хобби, новые сленговые слова. Выберите <b>грамматическую тему</b> или оставьте <b>Любая</b>.',
     'discuss.step3':
       'Нажмите <pbtn>Придумать вопрос</pbtn>. Вы получите вопрос (🔊 прочитает его, <b>Показать перевод</b> покажет его по-русски), вопросы для продолжения разговора, начала фраз с нужной грамматикой и полезные слова. Если выбрана грамматика, <b>📘 Правило</b> раскрывает объяснение с примерами.',
-    'discuss.step4': '<pbtn>Другой вопрос</pbtn> придумает новый с теми же настройками.',
+    'discuss.step4': '<pbtn>Задать вопрос</pbtn> придумает новый с теми же настройками.',
     'discuss.tip1': '☆ рядом с полезным словом добавляет его в «Слова на изучении».',
 
     'settings.title': 'Настройки',
@@ -626,7 +628,7 @@ export const tutorial = defineMessages({
     'all-lessons.title': 'Leçons téléchargées',
     'all-lessons.summary': 'Les mêmes exercices, sur plusieurs leçons à la fois',
     'all-lessons.intro':
-      'Tous les exercices de mots et de verbes, sur toutes les leçons préparées.',
+      'Le deuxième onglet de l’<b>Historique des leçons</b> : tous les exercices de mots et de verbes, sur toutes les leçons préparées.',
     'all-lessons.step1':
       'Laissez <b>Toutes</b> sélectionné, ou touchez des leçons pour n’en travailler que quelques-unes.',
     'all-lessons.step2':
@@ -698,7 +700,7 @@ export const tutorial = defineMessages({
     'discuss.step3':
       'Appuyez sur <pbtn>Écrire une question</pbtn>. Vous obtenez la question (🔊 la lit, <b>Afficher la traduction</b> la montre en russe), des questions de relance, des débuts de phrase avec la grammaire, et des mots utiles. Avec un point de grammaire, <b>📘 La règle</b> ouvre une explication avec des exemples.',
     'discuss.step4':
-      '<pbtn>Une autre question</pbtn> en écrit une nouvelle avec les mêmes réglages.',
+      '<pbtn>Poser une question</pbtn> en écrit une nouvelle avec les mêmes réglages.',
     'discuss.tip1': '☆ à côté d’un mot utile l’ajoute aux Mots à apprendre.',
 
     'settings.title': 'Réglages',
@@ -886,7 +888,8 @@ export const tutorial = defineMessages({
 
     'all-lessons.title': 'Geladene Lektionen',
     'all-lessons.summary': 'Dieselben Übungen, für mehrere Lektionen auf einmal',
-    'all-lessons.intro': 'Alle Wort- und Verbübungen für alle vorbereiteten Lektionen zusammen.',
+    'all-lessons.intro':
+      'Der zweite Tab im <b>Lektionsverlauf</b>: alle Wort- und Verbübungen für alle vorbereiteten Lektionen zusammen.',
     'all-lessons.step1':
       'Lass <b>Alle</b> ausgewählt oder tippe auf einzelne Lektionen, um nur diese zu üben.',
     'all-lessons.step2':
@@ -955,7 +958,7 @@ export const tutorial = defineMessages({
       'Wähle ein <b>Wortschatzthema</b>: aus der Liste oder aus deinen Lektionen, oder schreib unter <b>Oder ein eigenes Thema</b> ein beliebiges: eine Serie, ein Hobby, neue Slangwörter. Wähle ein <b>Grammatikthema</b> oder lass <b>Beliebig</b>.',
     'discuss.step3':
       'Tippe auf <pbtn>Frage schreiben</pbtn>. Du bekommst die Frage (🔊 liest sie vor, <b>Übersetzung zeigen</b> zeigt sie auf Russisch), Anschlussfragen, Satzanfänge mit der Grammatik und nützliche Wörter. Mit einem Grammatikthema öffnet <b>📘 Die Regel</b> eine Erklärung mit Beispielen.',
-    'discuss.step4': '<pbtn>Andere Frage</pbtn> schreibt eine neue mit denselben Einstellungen.',
+    'discuss.step4': '<pbtn>Frage stellen</pbtn> schreibt eine neue mit denselben Einstellungen.',
     'discuss.tip1': '☆ neben einem nützlichen Wort fügt es zu den Lernwörtern hinzu.',
 
     'settings.title': 'Einstellungen',
@@ -1143,7 +1146,7 @@ export const tutorial = defineMessages({
     'all-lessons.title': 'Lecciones descargadas',
     'all-lessons.summary': 'Los mismos ejercicios, con varias lecciones a la vez',
     'all-lessons.intro':
-      'Todos los ejercicios de palabras y verbos, con todas las lecciones preparadas juntas.',
+      'La segunda pestaña del <b>Historial de lecciones</b>: todos los ejercicios de palabras y verbos, con todas las lecciones preparadas juntas.',
     'all-lessons.step1':
       'Deja <b>Todas</b> seleccionado o toca las etiquetas de lecciones para practicar solo algunas.',
     'all-lessons.step2':
@@ -1214,7 +1217,7 @@ export const tutorial = defineMessages({
       'Elige un <b>tema de vocabulario</b>: de la lista o de tus lecciones, o escribe cualquier tema propio en <b>O tu propio tema</b>: una serie, un pasatiempo, palabras nuevas de jerga. Elige un <b>tema de gramática</b> o deja <b>Cualquiera</b>.',
     'discuss.step3':
       'Pulsa <pbtn>Escribir una pregunta</pbtn>. Recibes la pregunta (🔊 la lee, <b>Mostrar la traducción</b> la muestra en ruso), preguntas para seguir, comienzos de frase que usan la gramática y palabras útiles. Con un tema de gramática, <b>📘 La regla</b> abre una explicación con ejemplos.',
-    'discuss.step4': '<pbtn>Otra pregunta</pbtn> escribe una nueva con los mismos ajustes.',
+    'discuss.step4': '<pbtn>Hacer una pregunta</pbtn> escribe una nueva con los mismos ajustes.',
     'discuss.tip1': '☆ junto a una palabra útil la pone en Palabras por aprender.',
 
     'settings.title': 'Ajustes',
@@ -1402,7 +1405,7 @@ export const tutorial = defineMessages({
     'all-lessons.title': 'Lições descarregadas',
     'all-lessons.summary': 'Os mesmos exercícios, com várias lições ao mesmo tempo',
     'all-lessons.intro':
-      'Todos os exercícios de palavras e verbos, com todas as lições preparadas juntas.',
+      'O segundo separador do <b>Histórico de lições</b>: todos os exercícios de palavras e verbos, com todas as lições preparadas juntas.',
     'all-lessons.step1':
       'Deixe <b>Todas</b> selecionado ou toque nas etiquetas das lições para praticar só algumas.',
     'all-lessons.step2':
@@ -1472,7 +1475,7 @@ export const tutorial = defineMessages({
       'Escolha um <b>tema de vocabulário</b>: da lista ou das suas lições, ou escreva qualquer tema seu em <b>Ou o seu próprio tema</b>: uma série, um passatempo, novas palavras de calão. Escolha um <b>tema de gramática</b> ou deixe <b>Qualquer</b>.',
     'discuss.step3':
       'Carregue em <pbtn>Escrever uma pergunta</pbtn>. Recebe a pergunta (🔊 lê-a, <b>Mostrar a tradução</b> mostra-a em russo), perguntas para continuar, inícios de frase que usam a gramática e palavras úteis. Com um tema de gramática, <b>📘 A regra</b> abre uma explicação com exemplos.',
-    'discuss.step4': '<pbtn>Outra pergunta</pbtn> escreve uma nova com as mesmas definições.',
+    'discuss.step4': '<pbtn>Fazer uma pergunta</pbtn> escreve uma nova com as mesmas definições.',
     'discuss.tip1': '☆ ao lado de uma palavra útil põe-na nas Palavras por aprender.',
 
     'settings.title': 'Definições',
@@ -1659,7 +1662,7 @@ export const tutorial = defineMessages({
     'all-lessons.title': 'Lezioni scaricate',
     'all-lessons.summary': 'Gli stessi esercizi, su più lezioni insieme',
     'all-lessons.intro':
-      'Tutti gli esercizi su parole e verbi, con tutte le lezioni preparate insieme.',
+      'La seconda scheda della <b>Cronologia lezioni</b>: tutti gli esercizi su parole e verbi, con tutte le lezioni preparate insieme.',
     'all-lessons.step1':
       'Lascia selezionato <b>Tutte</b> oppure tocca le etichette delle lezioni per esercitarti solo su alcune.',
     'all-lessons.step2': 'Usa le schede <b>Parole</b> e <b>Verbi</b> come in una singola lezione.',
@@ -1730,8 +1733,7 @@ export const tutorial = defineMessages({
       'Scegli un <b>tema di lessico</b>: dalla lista o dalle tue lezioni, oppure scrivi un tuo tema in <b>Oppure un tuo tema</b>: una serie, un hobby, parole nuove di slang. Scegli un <b>tema di grammatica</b> o lascia <b>Qualsiasi</b>.',
     'discuss.step3':
       'Premi <pbtn>Scrivi una domanda</pbtn>. Ricevi la domanda (🔊 la legge, <b>Mostra la traduzione</b> la mostra in russo), domande per continuare, inizi di frase che usano la grammatica e parole utili. Con un tema di grammatica, <b>📘 La regola</b> apre una spiegazione con esempi.',
-    'discuss.step4':
-      '<pbtn>Un’altra domanda</pbtn> ne scrive una nuova con le stesse impostazioni.',
+    'discuss.step4': '<pbtn>Fai una domanda</pbtn> ne scrive una nuova con le stesse impostazioni.',
     'discuss.tip1': '☆ accanto a una parola utile la mette nelle Parole da imparare.',
 
     'settings.title': 'Impostazioni',

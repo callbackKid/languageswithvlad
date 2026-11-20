@@ -18,15 +18,23 @@ export type Section =
 export type SectionGroup = 'start' | 'lessons' | 'words' | 'tools' | 'help';
 
 // Every page of the app, in menu order. Their names are translated: app.ts, "section.<id>".
-export const SECTIONS: { id: Section; path: string; group: SectionGroup; inMenu?: false }[] = [
+export const SECTIONS: {
+  id: Section;
+  path: string;
+  group: SectionGroup;
+  inMenu?: false;
+  // a page shown as a tab of another section, whose menu link stays current on it
+  tabOf?: Section;
+}[] = [
   { id: 'home', path: '/', group: 'start' },
   { id: 'lessons', path: '/lessons', group: 'lessons' },
-  { id: 'practice', path: '/all-lessons', group: 'lessons' },
-  { id: 'discuss', path: '/discuss', group: 'lessons' },
+  // the second tab of Lesson history
+  { id: 'practice', path: '/all-lessons', group: 'lessons', inMenu: false, tabOf: 'lessons' },
   // hidden from everyone until it is redone; /document still opens it
   { id: 'document', path: '/document', group: 'lessons', inMenu: false },
   { id: 'mine', path: '/my-words', group: 'words' },
   { id: 'mistakes', path: '/mistakes', group: 'words' },
+  { id: 'discuss', path: '/discuss', group: 'words' },
   { id: 'stats', path: '/stats', group: 'words' },
   { id: 'text', path: '/text', group: 'tools' },
   { id: 'photo', path: '/photo', group: 'tools' },

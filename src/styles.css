@@ -1100,6 +1100,19 @@ main.page.wide {
    The list of lessons, the lesson sheet with its tabs, notes and the original text.
    ========================================================================== */
 
+/* Lesson history: one lesson at a time, or Downloaded lessons, as two tabs over the page */
+.history {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+.history-tabs {
+  margin: 12px 24px 0;
+  padding: 0;
+}
+.history-practice {
+  padding: 24px 24px 64px;
+}
+
 .layout {
   display: grid;
   grid-template-columns: 200px minmax(0, 1fr);
@@ -1208,7 +1221,12 @@ nav.lessons {
   border-bottom: 2px solid transparent;
   white-space: nowrap;
 }
-.tab[aria-selected='true'] {
+/* Lesson history's two tabs are links: each has its own address */
+a.tab {
+  text-decoration: none;
+}
+.tab[aria-selected='true'],
+.tab[aria-current='page'] {
   color: var(--text);
   border-bottom-color: var(--ink);
 }
@@ -1466,6 +1484,13 @@ pre.source {
 }
 
 @media (max-width: 760px) {
+  .history-tabs {
+    margin: 4px 12px 0;
+  }
+  .history-practice {
+    padding: 20px 12px 48px;
+  }
+
   .layout {
     grid-template-columns: 1fr;
   }

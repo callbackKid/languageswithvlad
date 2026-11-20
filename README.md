@@ -39,7 +39,7 @@ React + TypeScript + Vite in the browser, small Vercel serverless functions in `
 **Practice across lessons**
 
 - **Home**: a daily round of 10 mixed questions, a 🔥 streak and a daily goal. On the day of a lesson and the day after, a **summary** of it (new words, verbs, grammar) with **Start revising**; in the 24 hours before the next lesson, **Revise before the lesson** (the last lesson's words and the hard words). Above it, the **homework** the teacher wrote in the newest lesson (`Devoirs: …`) as a checklist with the days left until the next lesson; each task opens its exercise (the words of a lesson, gap sentences, verb forms, or a written answer that Claude corrects and explains like a tutor), and finishing it ticks the task. Lesson mode shows the corrected written answers to the teacher. In a lesson's **Homework** tab, **Make homework with Claude** writes such a block from the lesson's words and grammar (key words ★ first), with as many sentences to translate (2–8) and at the level the teacher picks, for the teacher to check and add under the lesson; it is a teacher's tool, shown only after the teacher code is entered in Settings (see `APP_TEACHER_CODE`). **Send to the teacher** (under the homework and in Stats) adds a short report under the lesson in the document: the homework done, answers and mistakes since the lesson, and the corrected written answers. Its lines start with 📝 and emojis, and lesson analysis skips them.
-- **Downloaded lessons**, **Words to learn**, **Mistakes** and **Stats**.
+- **Downloaded lessons** (the second tab of Lesson history: the exercises on all lessons or the ones picked), **Words to learn**, **Mistakes** and **Stats**.
 
 **From paper**
 
@@ -54,7 +54,7 @@ React + TypeScript + Vite in the browser, small Vercel serverless functions in `
 
 **Around the lessons**
 
-- **A question for discussion**: a discussion question for the start of a lesson, for a chosen level, a vocabulary topic from the list or the student’s own (“the TV series Dexter”) and a grammar point, with follow-up questions, sentence starters, useful words and a fold-out explanation of the grammar rule.
+- **A question for discussion**: a discussion question for the start of a lesson, for a chosen level, a vocabulary topic from the list or the student’s own (“the TV series Dexter”) and a grammar point, with follow-up questions, sentence starters, useful words and a fold-out explanation of the grammar rule; **Ask a question** writes another with the same choices. In the menu it sits with Words to learn and Mistakes.
 - **Document** (`/document`, hidden from the menu until it is redone): the Google Docs editor inside the app.
 - **Top bar:** your picture and the document's name with **↻** (sync) on the left, the **next lesson** widget with **Enter the lesson** in the middle (both read from the document; while it says **Lesson now**, the app syncs by itself every minute, so the teacher's new words reach the student with their exercises), **Feedback** and **⚙️ Settings** on the right. The menu is a column on the left: **«** folds it to a thin strip, **☰** opens it again, and the choice is remembered. On a phone it is a drop-down list that closes once a section is picked. Its sections are grouped: lessons, words, reading tools, and help.
 - **News**: what changed in the app, day by day, on two tabs (**What’s new** and **Bug fixes**); a dot in the menu marks news not seen yet. A student of several languages picks one and sees its news plus the news for every language (a student of one sees only that); the teacher also picks students’ or teachers’ news. An entry about some languages only lists them in `languages`, and one about the teacher’s tools has `audience: 'teacher'`. Add an entry to `src/lib/news.ts` (all seven interface languages) with every change students will notice.
@@ -201,7 +201,7 @@ Every section has its own address, so links can be shared and the browser’s Ba
 | ------------------------- | --------------------------------------------------------- |
 | Home                      | `/`                                                       |
 | Lesson history            | `/lessons` (newest), `/lessons/2026-11-12_7` (one lesson) |
-| Downloaded lessons        | `/all-lessons`                                            |
+| Downloaded lessons        | `/all-lessons` (a tab of Lesson history)                  |
 | A question for discussion | `/discuss`                                                |
 | Document                  | `/document`                                               |
 | Words to learn            | `/my-words`                                               |

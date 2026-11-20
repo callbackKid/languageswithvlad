@@ -51,6 +51,18 @@ export const NEWS: NewsDay[] = [
     date: '2026-11-20',
     items: [
       {
+        kind: 'better',
+        text: {
+          en: 'Downloaded lessons is now the second tab of Lesson history, and A question for discussion sits in the menu next to Words to learn and Mistakes. Its button for a new question is now called Ask a question.',
+          ru: '«Загруженные уроки» теперь вторая вкладка раздела «История уроков», а «Вопрос для обсуждения» — в меню рядом с разделами «Слова на изучении» и «Ошибки». Кнопка, которая пишет новый вопрос, теперь называется «Задать вопрос».',
+          fr: '« Leçons téléchargées » est maintenant le deuxième onglet de l’« Historique des leçons », et « Une question à discuter » se trouve dans le menu, à côté de « Mots à apprendre » et « Erreurs ». Le bouton qui écrit une nouvelle question s’appelle désormais « Poser une question ».',
+          de: '„Geladene Lektionen“ ist jetzt der zweite Tab im „Lektionsverlauf“, und „Eine Frage zum Diskutieren“ steht im Menü neben „Lernwörter“ und „Fehler“. Die Schaltfläche für eine neue Frage heißt jetzt „Frage stellen“.',
+          es: '«Lecciones descargadas» es ahora la segunda pestaña del «Historial de lecciones», y «Una pregunta para debatir» está en el menú, junto a «Palabras por aprender» y «Errores». El botón para una pregunta nueva se llama ahora «Hacer una pregunta».',
+          pt: '«Lições descarregadas» é agora o segundo separador do «Histórico de lições», e «Uma pergunta para debate» está no menu, ao lado de «Palavras por aprender» e «Erros». O botão para uma nova pergunta chama-se agora «Fazer uma pergunta».',
+          it: '«Lezioni scaricate» è ora la seconda scheda della «Cronologia lezioni», e «Una domanda di discussione» si trova nel menu accanto a «Parole da imparare» ed «Errori». Il pulsante per una nuova domanda ora si chiama «Fai una domanda».',
+        },
+      },
+      {
         kind: 'new',
         text: {
           en: 'Select any word or phrase in the language you learn (double-click it; on a phone, hold it) for its menu: the translation in that sentence, a definition, examples and, for a verb, its tables. On a lesson’s pages, Add to lesson writes it under the lesson, so it joins the exercises.',

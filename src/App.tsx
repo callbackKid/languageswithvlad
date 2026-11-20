@@ -134,6 +134,8 @@ export default function App() {
     return () => document.removeEventListener('visibilitychange', onVisibility);
   }, []);
   const section = route?.section ?? 'home';
+  // a page that is a tab of another section keeps that section's menu link current
+  const menuSection = SECTIONS.find((entry) => entry.id === section)?.tabOf ?? section;
   // an address the app doesn't have goes to Home
   const unknownPath = !route;
   useEffect(() => {
@@ -371,7 +373,7 @@ export default function App() {
                 <ButtonIcon name={menuOpen ? 'fold' : 'menu'} />
               </span>
               {/* on a phone the closed menu says where you are */}
-              <span className="sidebar-current">{t(`section.${section}`)}</span>
+              <span className="sidebar-current">{t(`section.${menuSection}`)}</span>
             </button>
             <nav
               id="sections-menu"
@@ -390,7 +392,7 @@ export default function App() {
                   }
                   className="section-link"
                   href={hrefFor(entry.path)}
-                  aria-current={section === entry.id ? 'page' : undefined}
+                  aria-current={menuSection === entry.id ? 'page' : undefined}
                   onClick={(event) => {
                     if (onPhone()) setMenuOpen(false);
                     followLink(event, entry.path);
@@ -475,35 +477,59 @@ export default function App() {
                 hasClaude={hasClaude}
               />
             </main>
-          ) : section === 'lessons' ? (
-            <div className="layout">
-              <nav className="lessons" aria-label={t('lessonsLabel')} ref={lessonList}>
-                {lessons.map((listedLesson) => (
-                  <a
-                    key={listedLesson.key}
-                    className="lesson-link"
-                    href={hrefFor(lessonPath(listedLesson.key))}
-                    aria-current={listedLesson.key === currentLessonKey ? 'page' : undefined}
-                    onClick={(event) => followLink(event, lessonPath(listedLesson.key))}
-                  >
-                    <span className="n">{listedLesson.n}</span>
-                    <span className="d">{shortDateFormat.format(listedLesson.date)}</span>
-                  </a>
-                ))}
+          ) : section === 'lessons' || section === 'practice' ? (
+            <div className="history">
+              <nav className="tabs history-tabs" aria-label={t('section.lessons')}>
+                {(['lessons', 'practice'] as const).map((tabSection) => {
+                  const tabPath = tabSection === 'lessons' ? '/lessons' : '/all-lessons';
+                  return (
+                    <a
+                      key={tabSection}
+                      className="tab"
+                      href={hrefFor(tabPath)}
+                      aria-current={section === tabSection ? 'page' : undefined}
+                      onClick={(event) => followLink(event, tabPath)}
+                    >
+                      {tabSection === 'lessons' ? t('lessonsLabel') : t('section.practice')}
+                    </a>
+                  );
+                })}
               </nav>
-              <main>
-                {lesson && (
-                  <LessonView
-                    key={lesson.key}
-                    lesson={lesson}
-                    docId={docId}
-                    hasClaude={hasClaude}
-                    docWriter={!!docTarget.docWriter}
-                    onAnalysis={bank.put}
-                    isNewest={lesson.key === lessons[lessons.length - 1]?.key}
-                  />
-                )}
-              </main>
+              {section === 'practice' ? (
+                <main className="history-practice">
+                  <Practice bank={bank} hasClaude={hasClaude} />
+                </main>
+              ) : (
+                <div className="layout">
+                  <nav className="lessons" aria-label={t('lessonsLabel')} ref={lessonList}>
+                    {lessons.map((listedLesson) => (
+                      <a
+                        key={listedLesson.key}
+                        className="lesson-link"
+                        href={hrefFor(lessonPath(listedLesson.key))}
+                        aria-current={listedLesson.key === currentLessonKey ? 'page' : undefined}
+                        onClick={(event) => followLink(event, lessonPath(listedLesson.key))}
+                      >
+                        <span className="n">{listedLesson.n}</span>
+                        <span className="d">{shortDateFormat.format(listedLesson.date)}</span>
+                      </a>
+                    ))}
+                  </nav>
+                  <main>
+                    {lesson && (
+                      <LessonView
+                        key={lesson.key}
+                        lesson={lesson}
+                        docId={docId}
+                        hasClaude={hasClaude}
+                        docWriter={!!docTarget.docWriter}
+                        onAnalysis={bank.put}
+                        isNewest={lesson.key === lessons[lessons.length - 1]?.key}
+                      />
+                    )}
+                  </main>
+                </div>
+              )}
             </div>
           ) : (
             <main className="page">
@@ -517,7 +543,6 @@ export default function App() {
                   canWrite={!!docTarget.docWriter}
                 />
               )}
-              {section === 'practice' && <Practice bank={bank} hasClaude={hasClaude} />}
               {section === 'mine' && <MyWords hasClaude={hasClaude} />}
               {section === 'mistakes' && <Mistakes bank={bank} />}
               {section === 'stats' && (

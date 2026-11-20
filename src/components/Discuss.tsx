@@ -540,7 +540,7 @@ export default function Discuss({
             />
             <div className="row-actions">
               <button className="btn primary" type="submit" disabled={state === 'loading'}>
-                {discussion ? t('anotherQuestion') : t('writeQuestion')}
+                {discussion ? t('askQuestion') : t('writeQuestion')}
               </button>
             </div>
           </form>
