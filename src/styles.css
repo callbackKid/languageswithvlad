@@ -3406,6 +3406,14 @@ li .open-link {
   min-height: 420px;
   margin-top: 4px;
 }
+/* the homework card at the end of lesson mode: a few lines, one task each */
+.call-homework {
+  margin-top: 20px;
+}
+.call-homework textarea.notes {
+  min-height: 140px;
+  margin-top: 4px;
+}
 
 .call-words {
   list-style: none;

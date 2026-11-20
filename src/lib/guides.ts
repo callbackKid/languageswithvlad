@@ -39,7 +39,7 @@ const GUIDE_LIST = [
   { section: 'stats', id: 'stats', icon: '📊', steps: 1 },
   { section: 'text', id: 'text', icon: '📰', steps: 4, tips: 2 },
   { section: 'photo', id: 'photo', icon: '📷', steps: 4, tips: 2, mock: true },
-  { section: 'call', id: 'call', icon: '🎥', steps: 7, tips: 6 },
+  { section: 'call', id: 'call', icon: '🎥', steps: 7, tips: 7 },
   { section: 'settings', id: 'settings', icon: '⚙️', steps: 4, tips: 1 },
   { section: 'news', id: 'news', icon: '🗞️', steps: 2 },
 ] as const satisfies readonly Guide[];

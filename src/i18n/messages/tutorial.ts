@@ -229,6 +229,8 @@ export const tutorial = defineMessages({
       'Press a card’s title to fold it away; a folded card stays folded on this device until you open it again. A call or the board in a folded card goes on.',
     'call.tip6':
       '<b>A question for discussion</b> is here too, to start the lesson with a conversation, as on its own page.',
+    'call.tip7':
+      '<b>Homework</b> at the end: write the tasks one per line during the lesson, then <pbtn>Add under Leçon 7</pbtn> puts them under that lesson, and the student gets them on Home as a checklist.',
     'call.tip1':
       'The notes are saved on this device for each day, so closing the page loses nothing.',
     'call.tip2':
@@ -477,6 +479,8 @@ export const tutorial = defineMessages({
       'Нажмите на заголовок карточки, чтобы свернуть её; свёрнутая карточка остаётся свёрнутой на этом устройстве, пока вы снова её не откроете. Звонок или доска в свёрнутой карточке продолжают работать.',
     'call.tip6':
       '<b>Вопрос для обсуждения</b> тоже здесь — чтобы начать урок с разговора, как на его отдельной странице.',
+    'call.tip7':
+      '<b>Домашнее задание</b> в конце: во время урока запишите задания по одному на строку, потом <pbtn>Добавить к Leçon 7</pbtn> добавит их под этот урок, а ученик увидит их на Главной чек-листом.',
     'call.tip1':
       'Заметки сохраняются на этом устройстве отдельно на каждый день — если закрыть страницу, ничего не пропадёт.',
     'call.tip2':
@@ -733,6 +737,8 @@ export const tutorial = defineMessages({
       'Appuyez sur le titre d’une carte pour la replier ; une carte repliée le reste sur cet appareil jusqu’à ce que vous la rouvriez. Un appel ou le tableau dans une carte repliée continue de fonctionner.',
     'call.tip6':
       '<b>Une question à discuter</b> est là aussi, pour commencer le cours par une conversation, comme sur sa propre page.',
+    'call.tip7':
+      '<b>Devoirs</b> à la fin : écrivez les tâches une par ligne pendant le cours, puis <pbtn>Ajouter sous Leçon 7</pbtn> les place sous cette leçon, et l’élève les retrouve sur l’Accueil en liste à cocher.',
     'call.tip1':
       'Les notes sont enregistrées sur cet appareil pour chaque jour : fermer la page ne fait rien perdre.',
     'call.tip2':
@@ -986,6 +992,8 @@ export const tutorial = defineMessages({
       'Tippe auf den Titel einer Karte, um sie einzuklappen; eine eingeklappte Karte bleibt auf diesem Gerät eingeklappt, bis du sie wieder öffnest. Ein Anruf oder die Tafel in einer eingeklappten Karte läuft weiter.',
     'call.tip6':
       '<b>Eine Frage zum Diskutieren</b> gibt es hier auch, um die Stunde mit einem Gespräch zu beginnen, wie auf ihrer eigenen Seite.',
+    'call.tip7':
+      '<b>Hausaufgaben</b> am Ende: Schreib während der Stunde die Aufgaben auf, eine pro Zeile, dann setzt <pbtn>Unter Leçon 7 hinzufügen</pbtn> sie unter diese Lektion, und der Schüler sieht sie auf der Startseite als Checkliste.',
     'call.tip1':
       'Die Notizen werden auf diesem Gerät für jeden Tag gespeichert; wenn du die Seite schließt, geht nichts verloren.',
     'call.tip2':
@@ -1241,6 +1249,8 @@ export const tutorial = defineMessages({
       'Pulsa el título de una tarjeta para contraerla; una tarjeta contraída se queda así en este dispositivo hasta que la vuelvas a abrir. Una llamada o la pizarra en una tarjeta contraída siguen en marcha.',
     'call.tip6':
       '<b>Una pregunta para debatir</b> también está aquí, para empezar la clase con una conversación, como en su propia página.',
+    'call.tip7':
+      '<b>Deberes</b> al final: escribe las tareas una por línea durante la clase; luego <pbtn>Añadir bajo Leçon 7</pbtn> las pone bajo esa lección, y el alumno las ve en Inicio como lista.',
     'call.tip1':
       'Las notas se guardan en este dispositivo para cada día, así que cerrar la página no hace perder nada.',
     'call.tip2':
@@ -1495,6 +1505,8 @@ export const tutorial = defineMessages({
       'Carregue no título de um cartão para o recolher; um cartão recolhido fica assim neste dispositivo até o voltar a abrir. Uma chamada ou o quadro num cartão recolhido continuam a funcionar.',
     'call.tip6':
       '<b>Uma pergunta para debate</b> também está aqui, para começar a aula com uma conversa, como na sua própria página.',
+    'call.tip7':
+      '<b>Trabalhos de casa</b> no fim: escreva as tarefas uma por linha durante a aula; depois, <pbtn>Acrescentar por baixo de Leçon 7</pbtn> põe-nas por baixo dessa lição, e o aluno vê-as no Início como lista.',
     'call.tip1':
       'As notas ficam guardadas neste dispositivo para cada dia, por isso fechar a página não faz perder nada.',
     'call.tip2':
@@ -1750,6 +1762,8 @@ export const tutorial = defineMessages({
       'Premi il titolo di un riquadro per comprimerlo; un riquadro compresso resta così su questo dispositivo finché non lo riapri. Una chiamata o la lavagna in un riquadro compresso vanno avanti.',
     'call.tip6':
       '<b>Una domanda di discussione</b> c’è anche qui, per iniziare la lezione con una conversazione, come nella sua pagina.',
+    'call.tip7':
+      '<b>Compiti</b> alla fine: scrivi i compiti uno per riga durante la lezione, poi <pbtn>Aggiungi sotto Leçon 7</pbtn> li mette sotto quella lezione, e lo studente li vede nella Home come lista.',
     'call.tip1':
       'Gli appunti si salvano su questo dispositivo per ogni giorno, quindi chiudere la pagina non fa perdere nulla.',
     'call.tip2':

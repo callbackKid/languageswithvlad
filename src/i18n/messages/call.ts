@@ -56,6 +56,11 @@ export const call = defineMessages({
     notesHint:
       'Write during the lesson: new words as “mot — перевод”, mistakes to work on, homework. Saved on this device.',
     notesPlaceholder: 'la boulangerie — пекарня\nil faisait beau — была хорошая погода',
+    homeworkTitle: 'Homework',
+    homeworkHint:
+      'One task per line, as you’d write it in the document. It goes under the lesson you pick as a homework block, and the student gets it on Home as a checklist, each task with its exercise.',
+    homeworkPlaceholder:
+      'mots de la leçon 5\nverbes être, avoir — présent\n5 phrases au passé composé',
     insertTime: '⏱ Time',
     clearNotes: 'Clear',
     clearConfirm: 'Clear the notes of this lesson?',
@@ -128,6 +133,11 @@ export const call = defineMessages({
     notesHint:
       'Пишите во время урока: новые слова в виде «mot — перевод», ошибки для работы, домашнее задание. Сохраняется на этом устройстве.',
     notesPlaceholder: 'la boulangerie — пекарня\nil faisait beau — была хорошая погода',
+    homeworkTitle: 'Домашнее задание',
+    homeworkHint:
+      'По одному заданию на строку, как вы написали бы в документе. Задания попадут блоком домашнего задания под выбранный вами урок, а ученик увидит их на Главной чек-листом, каждое со своим упражнением.',
+    homeworkPlaceholder:
+      'mots de la leçon 5\nverbes être, avoir — présent\n5 phrases au passé composé',
     insertTime: '⏱ Время',
     clearNotes: 'Очистить',
     clearConfirm: 'Очистить заметки этого урока?',
@@ -200,6 +210,11 @@ export const call = defineMessages({
     notesHint:
       'Écrivez pendant le cours : les nouveaux mots sous la forme « mot — перевод », les erreurs à travailler, les devoirs. Enregistré sur cet appareil.',
     notesPlaceholder: 'la boulangerie — пекарня\nil faisait beau — была хорошая погода',
+    homeworkTitle: 'Devoirs',
+    homeworkHint:
+      'Une tâche par ligne, comme vous l’écririez dans le document. Les tâches vont sous la leçon choisie, dans un bloc de devoirs, et l’élève les retrouve sur l’Accueil en liste à cocher, chacune avec son exercice.',
+    homeworkPlaceholder:
+      'mots de la leçon 5\nverbes être, avoir — présent\n5 phrases au passé composé',
     insertTime: '⏱ Heure',
     clearNotes: 'Effacer',
     clearConfirm: 'Effacer les notes de ce cours ?',
@@ -273,6 +288,11 @@ export const call = defineMessages({
     notesHint:
       'Schreib während der Stunde: neue Wörter als „Wort — перевод“, Fehler zum Üben, Hausaufgaben. Wird auf diesem Gerät gespeichert.',
     notesPlaceholder: 'die Bäckerei — пекарня\nes war schön — была хорошая погода',
+    homeworkTitle: 'Hausaufgaben',
+    homeworkHint:
+      'Eine Aufgabe pro Zeile, so wie du sie ins Dokument schreiben würdest. Sie kommen als Hausaufgabenblock unter die Lektion, die du auswählst, und der Schüler sieht sie auf der Startseite als Checkliste, jede Aufgabe mit ihrer Übung.',
+    homeworkPlaceholder:
+      'mots de la leçon 5\nverbes être, avoir — présent\n5 phrases au passé composé',
     insertTime: '⏱ Uhrzeit',
     clearNotes: 'Leeren',
     clearConfirm: 'Die Notizen dieser Stunde leeren?',
@@ -347,6 +367,11 @@ export const call = defineMessages({
     notesHint:
       'Escribe durante la clase: palabras nuevas como «palabra — перевод», errores que trabajar, deberes. Se guarda en este dispositivo.',
     notesPlaceholder: 'la panadería — пекарня\nhacía buen tiempo — была хорошая погода',
+    homeworkTitle: 'Deberes',
+    homeworkHint:
+      'Una tarea por línea, como la escribirías en el documento. Las tareas van como bloque de deberes debajo de la lección que elijas, y el alumno las ve en Inicio como lista, cada una con su ejercicio.',
+    homeworkPlaceholder:
+      'mots de la leçon 5\nverbes être, avoir — présent\n5 phrases au passé composé',
     insertTime: '⏱ Hora',
     clearNotes: 'Borrar',
     clearConfirm: '¿Borrar las notas de esta clase?',
@@ -422,6 +447,11 @@ export const call = defineMessages({
     notesHint:
       'Escreva durante a aula: palavras novas como «palavra — перевод», erros a trabalhar, trabalhos de casa. Fica guardado neste dispositivo.',
     notesPlaceholder: 'a padaria — пекарня\nestava bom tempo — была хорошая погода',
+    homeworkTitle: 'Trabalhos de casa',
+    homeworkHint:
+      'Uma tarefa por linha, como a escreveria no documento. As tarefas ficam por baixo da lição que escolher, num bloco de trabalhos de casa, e o aluno vê-as no Início como lista, cada uma com o seu exercício.',
+    homeworkPlaceholder:
+      'mots de la leçon 5\nverbes être, avoir — présent\n5 phrases au passé composé',
     insertTime: '⏱ Hora',
     clearNotes: 'Limpar',
     clearConfirm: 'Limpar as notas desta aula?',
@@ -496,6 +526,11 @@ export const call = defineMessages({
     notesHint:
       'Scrivi durante la lezione: parole nuove come «parola — перевод», errori su cui lavorare, compiti. Si salva su questo dispositivo.',
     notesPlaceholder: 'la panetteria — пекарня\nfaceva bel tempo — была хорошая погода',
+    homeworkTitle: 'Compiti',
+    homeworkHint:
+      'Un compito per riga, come lo scriveresti nel documento. I compiti vanno sotto la lezione che scegli, in un blocco di compiti, e lo studente li vede nella Home come lista, ognuno con il suo esercizio.',
+    homeworkPlaceholder:
+      'mots de la leçon 5\nverbes être, avoir — présent\n5 phrases au passé composé',
     insertTime: '⏱ Ora',
     clearNotes: 'Cancella',
     clearConfirm: 'Cancellare gli appunti di questa lezione?',

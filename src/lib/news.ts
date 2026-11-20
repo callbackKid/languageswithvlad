@@ -171,6 +171,18 @@ export const NEWS: NewsDay[] = [
           it: 'Modalità lezione: premi il titolo di un riquadro per comprimerlo, e resta così sul tuo dispositivo. C’è anche «Una domanda di discussione», per iniziare la lezione con una conversazione.',
         },
       },
+      {
+        kind: 'new',
+        text: {
+          en: 'Lesson mode ends with a Homework card: the teacher writes the tasks during the lesson and adds them under the lesson, and the student gets them on Home as a checklist. The quiz game now comes right after the warm-up.',
+          ru: 'Режим урока заканчивается карточкой «Домашнее задание»: преподаватель записывает задания во время урока и добавляет их под урок, а ученик видит их на Главной чек-листом. Игра-квиз теперь идёт сразу после разминки.',
+          fr: 'Le mode cours se termine par une carte « Devoirs » : le professeur écrit les tâches pendant le cours et les ajoute sous la leçon, et l’élève les retrouve sur l’Accueil en liste à cocher. Le Quiz chrono vient maintenant juste après l’échauffement.',
+          de: 'Der Unterrichtsmodus endet mit einer Karte „Hausaufgaben“: Die Lehrkraft schreibt die Aufgaben während der Stunde auf und fügt sie unter der Lektion ein, und der Schüler sieht sie auf der Startseite als Checkliste. Das Quizspiel kommt jetzt direkt nach dem Aufwärmen.',
+          es: 'El modo clase termina con una tarjeta «Deberes»: el profesor escribe las tareas durante la clase y las añade bajo la lección, y el alumno las ve en Inicio como lista. El juego de preguntas va ahora justo después del calentamiento.',
+          pt: 'O modo aula termina com um cartão «Trabalhos de casa»: o professor escreve as tarefas durante a aula e acrescenta-as por baixo da lição, e o aluno vê-as no Início como lista. O jogo de perguntas vem agora logo a seguir ao aquecimento.',
+          it: 'La modalità lezione finisce con un riquadro «Compiti»: l’insegnante scrive i compiti durante la lezione e li aggiunge sotto la lezione, e lo studente li vede nella Home come lista. Il gioco a quiz ora viene subito dopo il riscaldamento.',
+        },
+      },
     ],
   },
   {

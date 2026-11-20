@@ -28,17 +28,22 @@ export default function AddToDoc({
   target,
   lines,
   lessons = [],
+  defaultLesson = '',
 }: {
   target: DocTarget;
   lines: string[];
   // the document's lessons, oldest first, offered as places for the lines besides a new lesson
   lessons?: Lesson[];
+  // the key of the lesson picked at first, instead of a new lesson
+  defaultLesson?: string;
 }) {
   const { t, locale } = useTranslation(common);
   const [state, setState] = useState<'idle' | 'saving' | 'done' | 'error'>('idle');
   const [message, setMessage] = useState('');
   // "" for a new lesson, otherwise the key of the lesson the lines go under
-  const [place, setPlace] = useState('');
+  const [place, setPlace] = useState(() =>
+    lessons.some((lesson) => lesson.key === defaultLesson) ? defaultLesson : ''
+  );
   const chosen = lessons.find((lesson) => lesson.key === place) ?? null;
   const dateFormat = new Intl.DateTimeFormat(locale, { day: 'numeric', month: 'short' });
   const lessonName = (lesson: Lesson) => lesson.title ?? `${lesson.word} ${lesson.n}`;

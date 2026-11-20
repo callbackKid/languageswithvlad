@@ -10,7 +10,8 @@ import type { BoardServer } from '../lib/boardSync';
 import { findCall, openCallWindow } from '../lib/call';
 import { clockTime, dayKey } from '../lib/dates';
 import { homeworkItems, readItem, writingKey } from '../lib/homework';
-import { normalizeWriting } from '../lib/parse';
+import { homeworkLabel } from '../lib/makeHomework';
+import { languageOfLesson, normalizeWriting } from '../lib/parse';
 import { getProgress } from '../lib/progress';
 import { keyWordsFirst } from '../lib/quiz';
 import { followLink, hrefFor } from '../lib/router';
@@ -282,6 +283,53 @@ function LessonNotes({ docId, target }: { docId: string; target: DocTarget }) {
   );
 }
 
+/** The homework the teacher sets during the lesson, one task per line, saved on this device for
+    the day. It goes into the document as a homework block ("Devoirs:" and a "- " line per task)
+    under the lesson picked, the newest at first, so the student finds it on Home as a checklist. */
+function HomeworkNotes({
+  docId,
+  target,
+  lessons,
+}: {
+  docId: string;
+  target: DocTarget;
+  lessons: Lesson[];
+}) {
+  const { t } = useTranslation(call);
+  const storageKey = `call-homework:${docId}:${today()}`;
+  const [text, setText] = useState(() => load<string>(storageKey) ?? '');
+  const newest = lessons[lessons.length - 1] ?? null;
+  const tasks = text
+    .split('\n')
+    .map((line) => line.replace(/^\s*(?:[-•*]|\d{1,2}[.)])\s*/, '').trim())
+    .filter(Boolean);
+  const label = homeworkLabel(newest ? languageOfLesson(newest) : 'fr');
+  const change = (value: string) => {
+    setText(value);
+    save(storageKey, value);
+  };
+  return (
+    <CallCard id="homework" title={t('homeworkTitle')} className="call-homework">
+      <p className="hint">{t('homeworkHint')}</p>
+      <textarea
+        className="notes"
+        value={text}
+        placeholder={t('homeworkPlaceholder')}
+        aria-label={t('homeworkTitle')}
+        onChange={(event) => change(event.target.value)}
+      />
+      {/* a new key when the tasks change or a newer lesson arrives: the button and the picker start over */}
+      <AddToDoc
+        key={hash(text) + (newest?.key ?? '')}
+        target={target}
+        lines={tasks.length ? [`${label}:`, ...tasks.map((task) => `- ${task}`)] : []}
+        lessons={lessons}
+        defaultLesson={newest?.key}
+      />
+    </CallCard>
+  );
+}
+
 // The words of the newest lesson, to glance at and say aloud during the call.
 function LessonWords({ bank, lesson }: { bank: Bank; lesson: Lesson | null }) {
   const { t } = useTranslation(call);
@@ -386,7 +434,7 @@ function ActivityPlace({ children }: { children: ReactNode }) {
   );
 }
 
-// A discussion question for the start of the lesson, made here as on its own page.
+// A discussion question for the lesson, made here as on its own page.
 function DiscussCard({ bank, hasClaude }: { bank: Bank; hasClaude: boolean }) {
   const { t } = useTranslation(talk);
   return (
@@ -528,8 +576,8 @@ export default function LessonMode({
               onStart={() => setActivity('warm-up')}
             />
           )}
-          <DiscussCard bank={bank} hasClaude={hasClaude} />
           {!activity && newest && <GameCard docId={docId} onStart={() => setActivity('game')} />}
+          <DiscussCard bank={bank} hasClaude={hasClaude} />
           <WrittenHomework lesson={earlier} docId={docId} />
           <LessonWords bank={bank} lesson={lessons[lessons.length - 1] ?? null} />
         </div>
@@ -543,6 +591,7 @@ export default function LessonMode({
         room={`board:${hash(docId)}:${utcDay()}`}
         server={boardServer}
       />
+      <HomeworkNotes docId={docId} target={target} lessons={lessons} />
     </>
   );
 }
