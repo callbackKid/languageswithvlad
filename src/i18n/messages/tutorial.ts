@@ -232,7 +232,7 @@ export const tutorial = defineMessages({
     'call.tip7':
       '<b>Homework</b> at the end: write the tasks one per line during the lesson, then <pbtn>Add under Leçon 7</pbtn> puts them under that lesson, and the student gets them on Home as a checklist.',
     'call.tip8':
-      'For the teacher: <b>Create an exercise</b> writes a round for the student to do on the spot. Type a grammar point and/or tick the lesson’s words, choose the level and the number of questions. The round mixes choosing the answer, filling the gap and translating, and every answer is checked and explained.',
+      '<b>Create an exercise</b> writes a round for the student to do on the spot. Type a grammar point and/or tick the lesson’s words, choose the level and the number of questions. The round mixes choosing the answer, filling the gap and translating, and every answer is checked and explained.',
     'call.tip1':
       'The notes are saved on this device for each day, so closing the page loses nothing.',
     'call.tip2':
@@ -484,7 +484,7 @@ export const tutorial = defineMessages({
     'call.tip7':
       '<b>Домашнее задание</b> в конце: во время урока запишите задания по одному на строку, потом <pbtn>Добавить к Leçon 7</pbtn> добавит их под этот урок, а ученик увидит их на Главной чек-листом.',
     'call.tip8':
-      'Для преподавателя: в карточке <b>Составить упражнение</b> Claude составляет раунд, который ученик проходит прямо на уроке. Введите грамматическую тему и/или отметьте слова урока, выберите уровень и число вопросов. В раунде нужно выбрать ответ, вставить пропущенное слово и перевести; каждый ответ проверяется и объясняется.',
+      'В карточке <b>Составить упражнение</b> Claude составляет раунд, который ученик проходит прямо на уроке. Введите грамматическую тему и/или отметьте слова урока, выберите уровень и число вопросов. В раунде нужно выбрать ответ, вставить пропущенное слово и перевести; каждый ответ проверяется и объясняется.',
     'call.tip1':
       'Заметки сохраняются на этом устройстве отдельно на каждый день — если закрыть страницу, ничего не пропадёт.',
     'call.tip2':
@@ -744,7 +744,7 @@ export const tutorial = defineMessages({
     'call.tip7':
       '<b>Devoirs</b> à la fin : écrivez les tâches une par ligne pendant le cours, puis <pbtn>Ajouter sous Leçon 7</pbtn> les place sous cette leçon, et l’élève les retrouve sur l’Accueil en liste à cocher.',
     'call.tip8':
-      'Pour le professeur : avec <b>Créer un exercice</b>, Claude écrit un tour que l’élève fait sur-le-champ. Tapez un point de grammaire et/ou cochez les mots de la leçon, choisissez le niveau et le nombre de questions. Au programme : choisir la réponse, compléter les trous et traduire, chaque réponse étant vérifiée et expliquée.',
+      'Avec <b>Créer un exercice</b>, Claude écrit un tour que l’élève fait sur-le-champ. Tapez un point de grammaire et/ou cochez les mots de la leçon, choisissez le niveau et le nombre de questions. Au programme : choisir la réponse, compléter les trous et traduire, chaque réponse étant vérifiée et expliquée.',
     'call.tip1':
       'Les notes sont enregistrées sur cet appareil pour chaque jour : fermer la page ne fait rien perdre.',
     'call.tip2':
@@ -1001,7 +1001,7 @@ export const tutorial = defineMessages({
     'call.tip7':
       '<b>Hausaufgaben</b> am Ende: Schreib während der Stunde die Aufgaben auf, eine pro Zeile, dann setzt <pbtn>Unter Leçon 7 hinzufügen</pbtn> sie unter diese Lektion, und der Schüler sieht sie auf der Startseite als Checkliste.',
     'call.tip8':
-      'Für die Lehrkraft: In <b>Übung erstellen</b> schreibt Claude eine Runde, die der Schüler sofort löst. Gib ein Grammatikthema ein und/oder hake die Wörter der Lektion an, wähle das Niveau und die Anzahl der Fragen. In der Runde wählt man die Antwort, füllt die Lücke und übersetzt; jede Antwort wird geprüft und erklärt.',
+      'In <b>Übung erstellen</b> schreibt Claude eine Runde, die der Schüler sofort löst. Gib ein Grammatikthema ein und/oder hake die Wörter der Lektion an, wähle das Niveau und die Anzahl der Fragen. In der Runde wählt man die Antwort, füllt die Lücke und übersetzt; jede Antwort wird geprüft und erklärt.',
     'call.tip1':
       'Die Notizen werden auf diesem Gerät für jeden Tag gespeichert; wenn du die Seite schließt, geht nichts verloren.',
     'call.tip2':
@@ -1260,7 +1260,7 @@ export const tutorial = defineMessages({
     'call.tip7':
       '<b>Deberes</b> al final: escribe las tareas una por línea durante la clase; luego <pbtn>Añadir bajo Leçon 7</pbtn> las pone bajo esa lección, y el alumno las ve en Inicio como lista.',
     'call.tip8':
-      'Para el profesor: en <b>Crear un ejercicio</b>, Claude escribe una ronda que el alumno hace en el momento. Escribe un tema de gramática y/o marca las palabras de la lección, elige el nivel y el número de preguntas. En la ronda hay que elegir la respuesta, rellenar el hueco y traducir, y cada respuesta se corrige y se explica.',
+      'En <b>Crear un ejercicio</b>, Claude escribe una ronda que el alumno hace en el momento. Escribe un tema de gramática y/o marca las palabras de la lección, elige el nivel y el número de preguntas. En la ronda hay que elegir la respuesta, rellenar el hueco y traducir, y cada respuesta se corrige y se explica.',
     'call.tip1':
       'Las notas se guardan en este dispositivo para cada día, así que cerrar la página no hace perder nada.',
     'call.tip2':
@@ -1518,7 +1518,7 @@ export const tutorial = defineMessages({
     'call.tip7':
       '<b>Trabalhos de casa</b> no fim: escreva as tarefas uma por linha durante a aula; depois, <pbtn>Acrescentar por baixo de Leçon 7</pbtn> põe-nas por baixo dessa lição, e o aluno vê-as no Início como lista.',
     'call.tip8':
-      'Para o professor: em <b>Criar um exercício</b>, o Claude escreve uma ronda que o aluno faz no momento. Escreva um tema de gramática e/ou marque as palavras da lição, escolha o nível e o número de perguntas. Na ronda é preciso escolher a resposta, preencher o espaço e traduzir, e cada resposta é verificada e explicada.',
+      'Em <b>Criar um exercício</b>, o Claude escreve uma ronda que o aluno faz no momento. Escreva um tema de gramática e/ou marque as palavras da lição, escolha o nível e o número de perguntas. Na ronda é preciso escolher a resposta, preencher o espaço e traduzir, e cada resposta é verificada e explicada.',
     'call.tip1':
       'As notas ficam guardadas neste dispositivo para cada dia, por isso fechar a página não faz perder nada.',
     'call.tip2':
@@ -1777,7 +1777,7 @@ export const tutorial = defineMessages({
     'call.tip7':
       '<b>Compiti</b> alla fine: scrivi i compiti uno per riga durante la lezione, poi <pbtn>Aggiungi sotto Leçon 7</pbtn> li mette sotto quella lezione, e lo studente li vede nella Home come lista.',
     'call.tip8':
-      'Per l’insegnante: in <b>Crea un esercizio</b> Claude scrive un giro che lo studente fa sul momento. Scrivi un tema di grammatica e/o spunta le parole della lezione, scegli il livello e il numero di domande. Nel giro si sceglie la risposta, si riempie lo spazio vuoto e si traduce, e ogni risposta viene controllata e spiegata.',
+      'In <b>Crea un esercizio</b> Claude scrive un giro che lo studente fa sul momento. Scrivi un tema di grammatica e/o spunta le parole della lezione, scegli il livello e il numero di domande. Nel giro si sceglie la risposta, si riempie lo spazio vuoto e si traduce, e ogni risposta viene controllata e spiegata.',
     'call.tip1':
       'Gli appunti si salvano su questo dispositivo per ogni giorno, quindi chiudere la pagina non fa perdere nulla.',
     'call.tip2':

@@ -37,7 +37,7 @@ function gradeAnswer(input: string, question: ExerciseQuestion): Grade {
   return grades[0] ?? 'bad';
 }
 
-/** The teacher's exercise maker in lesson mode: grammar and/or the lesson's words, a level and a
+/** The exercise maker in lesson mode, for the teacher and the student alike: grammar and/or the lesson's words, a level and a
     number of questions; Claude writes a mixed round (choose, fill the gap, translate) that the
     student then does right here, each answer checked and explained. */
 export default function MakeExercise({

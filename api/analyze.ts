@@ -39,7 +39,7 @@ const MAX_EXERCISE_WORDS = 30;
    - "extras": its grammar points, homework and exercises from the book;
    - "practice": gap sentences on one of its grammar points;
    - "homework": homework for the next lesson, made from its words and grammar;
-   - "exercise": a mixed exercise the teacher makes in lesson mode, on a grammar point and/or words. */
+   - "exercise": a mixed exercise made in lesson mode, on a grammar point and/or words. */
 export default async function handler(request: VercelRequest, response: VercelResponse) {
   if (!onlyPost(request, response) || !checkAccess(request, response)) return;
   const action: unknown = request.body?.action ?? 'words';
@@ -80,8 +80,6 @@ export default async function handler(request: VercelRequest, response: VercelRe
         .json(await claudeJSON(prompt, { model: MODEL, maxTokens: 3000, cache: false }));
     }
     if (action === 'exercise') {
-      // making an exercise in lesson mode is the teacher's tool
-      if (!checkTeacher(request, response)) return;
       const grammar = text(request.body?.grammar, MAX_GRAMMAR_LENGTH);
       const words = (Array.isArray(request.body?.words) ? request.body.words : [])
         .map((word: unknown) => text(word, MAX_KEY_WORD_LENGTH))
@@ -121,7 +119,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
   }
 }
 
-// The number of questions the teacher asked for, kept within the range.
+// The number of questions asked for, kept within the range.
 function questionCount(value: unknown): number {
   if (typeof value !== 'number' || !Number.isInteger(value)) return DEFAULT_EXERCISE_QUESTIONS;
   return Math.min(MAX_EXERCISE_QUESTIONS, Math.max(MIN_EXERCISE_QUESTIONS, value));

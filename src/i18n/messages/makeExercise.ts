@@ -1,6 +1,6 @@
 import { defineMessages } from '../core';
 
-// Create an exercise, the teacher's card in lesson mode, and the round the student then does.
+// Create an exercise, a card in lesson mode, and the round the student then does.
 export const makeExerciseText = defineMessages({
   en: {
     title: 'Create an exercise',

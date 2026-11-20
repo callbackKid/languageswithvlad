@@ -246,7 +246,7 @@ export const api = {
       method: 'POST',
       body: JSON.stringify({ kind: 'handwritten', images }),
     }),
-  // an exercise the teacher makes in lesson mode (teacher code)
+  // an exercise made in lesson mode
   exercise: (options: {
     language: Language;
     level: string;

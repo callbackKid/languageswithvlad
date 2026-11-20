@@ -19,7 +19,6 @@ import { followLink, hrefFor } from '../lib/router';
 import { lessonPath } from '../lib/sections';
 import { getSettings } from '../lib/settings';
 import { load, loadChecked, remove, save } from '../lib/storage';
-import { useTeacher } from '../lib/teacher';
 import type { Lesson, Writing } from '../lib/types';
 import { hash } from '../lib/util';
 import { previousLesson, warmUpRound } from '../lib/warmUp';
@@ -439,7 +438,7 @@ function ActivityPlace({ children }: { children: ReactNode }) {
   );
 }
 
-// The teacher's exercise maker, on the newest lesson's words (key words first) and any grammar point.
+// The exercise maker, on the newest lesson's words (key words first) and any grammar point.
 function MakeExerciseCard({ bank, lesson }: { bank: Bank; lesson: Lesson | null }) {
   const { t } = useTranslation(makeExerciseText);
   const words = keyWordsFirst(lesson ? bank.words.filter((word) => word.lesson === lesson.key) : [])
@@ -563,7 +562,6 @@ export default function LessonMode({
   const { t } = useTranslation(call);
   // the warm-up or the game, shown above the call
   const [activity, setActivity] = useState<'warm-up' | 'game' | null>(null);
-  const { isTeacher } = useTeacher();
   const earlier = previousLesson(lessons);
   const preparing = usePreparedLesson(earlier, bank, hasClaude);
   const newest = lessons[lessons.length - 1] ?? null;
@@ -600,7 +598,7 @@ export default function LessonMode({
             />
           )}
           {!activity && newest && <GameCard docId={docId} onStart={() => setActivity('game')} />}
-          {isTeacher && hasClaude && <MakeExerciseCard bank={bank} lesson={newest} />}
+          {hasClaude && <MakeExerciseCard bank={bank} lesson={newest} />}
           <DiscussCard bank={bank} hasClaude={hasClaude} />
           <WrittenHomework lesson={earlier} docId={docId} />
           <LessonWords bank={bank} lesson={lessons[lessons.length - 1] ?? null} />
