@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { translator, useTranslation } from '../i18n/core';
 import { common } from '../i18n/messages/common';
 import { paper } from '../i18n/messages/paper';
-import { api, ApiError } from '../lib/api';
+import { api, ApiError, BOOK_PARTS, type BookPart } from '../lib/api';
 import { shrinkImage } from '../lib/image';
 import { asObjectText } from '../lib/parse';
 import { extractPages, pdfPageCount } from '../lib/pdf';
@@ -15,9 +15,10 @@ const MAX_SIDE = 1600;
 
 type Step = 'idle' | 'reading' | 'review' | 'saving' | 'done';
 
-/** Exercises from the student's book, photographed or picked from a PDF: Claude copies them out,
-    the teacher or student checks the text, and it is written under this lesson in the document,
-    so both of them see it on every device. */
+/** Pages of the student's book, photographed or picked from a PDF: Claude copies out the parts
+    ticked (the exercises, the text, the grammar) without any answers, the teacher or student
+    checks the text, and it is written under this lesson in the document, so both of them see it
+    on every device. */
 export default function BookImport({
   docId,
   lessonKey,
@@ -32,6 +33,7 @@ export default function BookImport({
   const [step, setStep] = useState<Step>('idle');
   const [text, setText] = useState('');
   const [error, setError] = useState('');
+  const [parts, setParts] = useState<BookPart[]>(['exercises']);
   const [pdf, setPdf] = useState<{ file: File; pageCount: number } | null>(null);
   const [firstPage, setFirstPage] = useState(1);
   const [lastPage, setLastPage] = useState(1);
@@ -44,7 +46,7 @@ export default function BookImport({
     setStep('reading');
     setError('');
     try {
-      const { text: copied } = asObjectText(await api.bookExercises(pages), ['text']);
+      const { text: copied } = asObjectText(await api.bookExercises(pages, parts), ['text']);
       if (!copied) throw new Error('empty');
       setText(copied);
       setPdf(null);
@@ -107,6 +109,28 @@ export default function BookImport({
         <>
           <p className="hint">{t('importBookHint', { count: MAX_PHOTOS })}</p>
           {(step === 'idle' || step === 'done') && (
+            <fieldset className="book-parts">
+              <legend>{t('takeFromPage')}</legend>
+              {BOOK_PARTS.map((part) => (
+                <label key={part} className="check">
+                  <input
+                    type="checkbox"
+                    checked={parts.includes(part)}
+                    onChange={(event) =>
+                      setParts(
+                        event.target.checked
+                          ? BOOK_PARTS.filter((kept) => kept === part || parts.includes(kept))
+                          : parts.filter((kept) => kept !== part)
+                      )
+                    }
+                  />
+                  {t(`part.${part}`)}
+                </label>
+              ))}
+              {!parts.length && <span className="hint">{t('pickPart')}</span>}
+            </fieldset>
+          )}
+          {(step === 'idle' || step === 'done') && parts.length > 0 && (
             <div className="row-actions">
               <label className="btn">
                 {t('choosePhotos')}

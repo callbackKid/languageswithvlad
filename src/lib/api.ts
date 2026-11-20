@@ -157,6 +157,10 @@ interface Health {
   board?: BoardServer | null;
 }
 
+// The parts of a book page a lesson can take; keep in step with BOOK_PARTS in api/_lib/prompts.ts.
+export const BOOK_PARTS = ['exercises', 'text', 'grammar'] as const;
+export type BookPart = (typeof BOOK_PARTS)[number];
+
 export const api = {
   health: () => request<Health>('/api/health'),
   // whether the server accepts this teacher code
@@ -209,10 +213,11 @@ export const api = {
       body: JSON.stringify({ action: 'practice', ...options }),
     }),
   // exercises from the student's book, from photos or from PDF pages, copied out as text
-  bookExercises: (pages: { images: ImagePayload[] } | { data: string }) =>
+  // book pages copied out for a lesson: the parts asked for, never their answers
+  bookExercises: (pages: { images: ImagePayload[] } | { data: string }, parts: BookPart[]) =>
     request<unknown>('/api/paper', {
       method: 'POST',
-      body: JSON.stringify({ kind: 'exercises', ...pages }),
+      body: JSON.stringify({ kind: 'exercises', parts, ...pages }),
     }),
   conjugate: (infinitive: string, ru: string, language: VerbLanguage, fresh = false) =>
     request<unknown>('/api/conjugate', {

@@ -3,7 +3,9 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { claudeJSON, MODEL, readImages } from './_lib/claude.js';
 import { asLevels, checkAccess, fail, HttpError, onlyPost } from './_lib/http.js';
 import {
+  BOOK_PARTS,
   bookExercisesPrompt,
+  type BookPart,
   photoPrompt,
   textbookPrompt,
   transcribePrompt,
@@ -13,7 +15,8 @@ import {
    - "underlined": the words a learner underlined on a photo of a book page;
    - "handwritten": photos of handwritten lesson notes, as text;
    - "textbook": pages of a textbook chapter (a PDF), as lesson notes;
-   - "exercises": exercises from a student's book (photos or PDF pages), copied out as text. */
+   - "exercises": a student's book pages (photos or PDF pages) copied out as text for a lesson: the
+     exercises, the reading text and/or the grammar (body.parts), never their answers. */
 
 // keep in step with MAX_PAGES in src/components/HandwrittenNotes.tsx
 const MAX_HANDWRITTEN_PAGES = 4;
@@ -36,7 +39,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
       const prompt =
         kind === 'textbook'
           ? textbookPrompt(asLevels(request.body?.levels))
-          : bookExercisesPrompt();
+          : bookExercisesPrompt(bookParts(request.body?.parts));
       return response
         .status(200)
         .json(await claudeJSON(prompt, { model: MODEL, maxTokens: 16000, pdfs: [data] }));
@@ -50,7 +53,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
       kind === 'handwritten'
         ? transcribePrompt(images.length)
         : kind === 'exercises'
-          ? bookExercisesPrompt()
+          ? bookExercisesPrompt(bookParts(request.body?.parts))
           : photoPrompt(asLevels(request.body?.levels));
     return response.status(200).json(
       await claudeJSON(prompt, {
@@ -62,4 +65,11 @@ export default async function handler(request: VercelRequest, response: VercelRe
   } catch (error) {
     return fail(response, error);
   }
+}
+
+// The parts of a book page asked for, the known ones only; the exercises when none is.
+function bookParts(value: unknown): BookPart[] {
+  const asked = Array.isArray(value) ? value : [];
+  const parts = BOOK_PARTS.filter((part) => asked.includes(part));
+  return parts.length ? parts : ['exercises'];
 }

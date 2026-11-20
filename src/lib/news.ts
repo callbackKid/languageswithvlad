@@ -196,6 +196,18 @@ export const NEWS: NewsDay[] = [
           it: 'Per l’insegnante: «Crea un esercizio» nella modalità lezione. Scegli un tema di grammatica e/o le parole della lezione, il livello e il numero di domande, e Claude scrive un giro (scegliere la risposta, riempire lo spazio vuoto, tradurre) che lo studente fa direttamente lì; ogni risposta viene controllata e spiegata.',
         },
       },
+      {
+        kind: 'better',
+        text: {
+          en: 'Import from the book (a lesson’s Book exercises tab) takes more than exercises: tick the exercises, the text and/or the grammar of the pages, and they go into the lesson. Answers are never copied, so the exercises stay for the student to do.',
+          ru: '«Добавить из учебника» (вкладка «Упражнения из учебника» в уроке) берёт теперь не только упражнения: отметьте упражнения, текст и/или грамматику со страниц, и они попадут в урок. Ответы никогда не переписываются, так что упражнения остаются ученику.',
+          fr: '« Importer du manuel » (l’onglet Exercices du manuel d’une leçon) ne prend plus seulement les exercices : cochez les exercices, le texte et/ou la grammaire des pages, et ils sont ajoutés à la leçon. Les réponses ne sont jamais recopiées : les exercices restent à faire pour l’élève.',
+          de: '„Aus dem Lehrbuch importieren“ (im Tab Übungen aus dem Lehrbuch einer Lektion) übernimmt mehr als Übungen: Kreuze die Übungen, den Text und/oder die Grammatik der Seiten an, und sie kommen in die Lektion. Lösungen werden nie abgeschrieben, damit die Übungen für den Schüler zu lösen bleiben.',
+          es: '«Importar del libro» (la pestaña Ejercicios del libro de una lección) ya no se limita a los ejercicios: marca los ejercicios, el texto y/o la gramática de las páginas, y pasan a la lección. Las soluciones nunca se copian, así que los ejercicios quedan para que los haga el alumno.',
+          pt: '«Importar do manual» (o separador Exercícios do manual de uma lição) já não traz só exercícios: marque os exercícios, o texto e/ou a gramática das páginas, e eles passam para a lição. As soluções nunca são copiadas, por isso os exercícios ficam para o aluno fazer.',
+          it: '«Importa dal libro» (la scheda Esercizi dal libro di una lezione) non prende più solo gli esercizi: spunta gli esercizi, il testo e/o la grammatica delle pagine, e finiscono nella lezione. Le soluzioni non vengono mai ricopiate, così gli esercizi restano da fare per lo studente.',
+        },
+      },
     ],
   },
   {

@@ -460,6 +460,11 @@ export function answerFor(url, body, headers = {}, scenario = 'upcoming') {
   if (path === '/api/call-token' && body?.kind === 'jitsi')
     return { token: 'test-token', roomName: `vpaas-magic-cookie-test/${body.room}` };
   if (path === '/api/paper' && body?.kind === 'underlined') return UNDERLINED;
+  // book pages for a lesson: says which parts were asked for, so a test can see the ticks reach the server
+  if (path === '/api/paper' && body?.kind === 'exercises')
+    return {
+      text: `📖 Exercices du manuel\n${(body.parts ?? ['exercises']).join(', ')}\nEx. 1 — Complétez.\n1. Je ___ (être) content.`,
+    };
   // handwritten notes: one line per request, so a test sees how the pages were split
   if (path === '/api/paper' && body?.kind === 'handwritten')
     return { title: 'Notes', text: `la page — страница (${body.images?.length ?? 0} pages)` };

@@ -91,7 +91,7 @@ export const tutorial = defineMessages({
     'lessons.tip4':
       '<b>My notes</b> is your notepad for the lesson, saved as you type. <b>Original</b> shows the lesson exactly as written.',
     'lessons.tip5':
-      '<b>Grammar</b> explains every grammar point of the lesson, with <pbtn>Practise this rule</pbtn> for sentences on it. <b>Homework</b> lists what to do; tick tasks off as you finish. <b>Book exercises</b> shows exercises from the book, and imports new ones from photos or a PDF into the lesson in the document. Under <b>My notes</b> you find the board and the lesson-mode notes from that day.',
+      '<b>Grammar</b> explains every grammar point of the lesson, with <pbtn>Practise this rule</pbtn> for sentences on it. <b>Homework</b> lists what to do; tick tasks off as you finish. <b>Book exercises</b> shows exercises from the book, and <pbtn>Import from the book</pbtn> brings in book pages from photos or a PDF: tick the exercises, the text and/or the grammar, and Claude copies them into the lesson in the document, never with the answers. Under <b>My notes</b> you find the board and the lesson-mode notes from that day.',
     'lessons.tip6':
       'A word the teacher marks with ★ in the document (<ex>★ la boulangerie — пекарня</ex>) is a <b>key word</b>: it has a <b>key</b> badge and comes up more often in exercises.',
     'lessons.tip7':
@@ -345,7 +345,7 @@ export const tutorial = defineMessages({
     'lessons.tip4':
       '<b>Мои заметки</b> — ваш блокнот к уроку, сохраняется по мере набора. <b>Оригинал</b> показывает урок так, как он записан.',
     'lessons.tip5':
-      '<b>Грамматика</b> объясняет каждую тему урока, а <pbtn>Потренировать это правило</pbtn> даёт предложения на неё. <b>Домашнее задание</b> — список того, что нужно сделать; отмечайте выполненное. <b>Упражнения из учебника</b> показывает упражнения из книги и добавляет новые с фото или PDF в урок в документе. В <b>Моих заметках</b> — доска и заметки из режима урока за тот день.',
+      '<b>Грамматика</b> объясняет каждую тему урока, а <pbtn>Потренировать это правило</pbtn> даёт предложения на неё. <b>Домашнее задание</b> — список того, что нужно сделать; отмечайте выполненное. <b>Упражнения из учебника</b> показывает упражнения из книги, а <pbtn>Добавить из учебника</pbtn> берёт страницы учебника с фото или из PDF: отметьте упражнения, текст и/или грамматику, и Claude перепишет их в урок в документе, всегда без ответов. В <b>Моих заметках</b> — доска и заметки из режима урока за тот день.',
     'lessons.tip6':
       'Слово, которое преподаватель отметил в документе звёздочкой (<ex>★ la boulangerie — пекарня</ex>), — <b>ключевое</b>: у него метка <b>ключевое</b>, и в упражнениях оно встречается чаще.',
     'lessons.tip7':
@@ -597,7 +597,7 @@ export const tutorial = defineMessages({
     'lessons.tip4':
       '<b>Mes notes</b> est votre bloc-notes pour la leçon, enregistré pendant la saisie. <b>Original</b> montre la leçon telle qu’elle est écrite.',
     'lessons.tip5':
-      '<b>Grammaire</b> explique chaque point de grammaire de la leçon, avec <pbtn>S’entraîner sur cette règle</pbtn> pour des phrases dessus. <b>Devoirs</b> liste ce qu’il faut faire ; cochez au fur et à mesure. <b>Exercices du manuel</b> affiche les exercices du livre et en importe de nouveaux depuis des photos ou un PDF dans la leçon du document. Sous <b>Mes notes</b>, vous trouvez le tableau et les notes du mode cours de ce jour-là.',
+      '<b>Grammaire</b> explique chaque point de grammaire de la leçon, avec <pbtn>S’entraîner sur cette règle</pbtn> pour des phrases dessus. <b>Devoirs</b> liste ce qu’il faut faire ; cochez au fur et à mesure. <b>Exercices du manuel</b> affiche les exercices du livre, et <pbtn>Importer du manuel</pbtn> reprend des pages du manuel depuis des photos ou un PDF : cochez les exercices, le texte et/ou la grammaire, et Claude les recopie dans la leçon du document, jamais avec les réponses. Sous <b>Mes notes</b>, vous trouvez le tableau et les notes du mode cours de ce jour-là.',
     'lessons.tip6':
       'Un mot que le professeur marque d’une ★ dans le document (<ex>★ la boulangerie — пекарня</ex>) est un <b>mot clé</b> : il porte l’étiquette <b>clé</b> et revient plus souvent dans les exercices.',
     'lessons.tip7':
@@ -859,7 +859,7 @@ export const tutorial = defineMessages({
     'lessons.tip4':
       '<b>Meine Notizen</b> ist dein Notizblock zur Lektion, wird beim Tippen gespeichert. <b>Original</b> zeigt die Lektion so, wie sie geschrieben ist.',
     'lessons.tip5':
-      '<b>Grammatik</b> erklärt jedes Grammatikthema der Lektion, mit <pbtn>Diese Regel üben</pbtn> für Sätze dazu. <b>Hausaufgaben</b> zeigt, was zu tun ist; hake Erledigtes ab. <b>Übungen aus dem Lehrbuch</b> zeigt Übungen aus dem Buch und importiert neue aus Fotos oder einem PDF in die Lektion im Dokument. Unter <b>Meine Notizen</b> findest du die Tafel und die Notizen aus dem Unterrichtsmodus von diesem Tag.',
+      '<b>Grammatik</b> erklärt jedes Grammatikthema der Lektion, mit <pbtn>Diese Regel üben</pbtn> für Sätze dazu. <b>Hausaufgaben</b> zeigt, was zu tun ist; hake Erledigtes ab. <b>Übungen aus dem Lehrbuch</b> zeigt Übungen aus dem Buch, und <pbtn>Aus dem Lehrbuch importieren</pbtn> holt Lehrbuchseiten aus Fotos oder einem PDF: Kreuze die Übungen, den Text und/oder die Grammatik an, und Claude schreibt sie in die Lektion im Dokument ab, nie mit den Lösungen. Unter <b>Meine Notizen</b> findest du die Tafel und die Notizen aus dem Unterrichtsmodus von diesem Tag.',
     'lessons.tip6':
       'Ein Wort, das die Lehrkraft im Dokument mit ★ markiert (<ex>★ la boulangerie — пекарня</ex>), ist ein <b>Schlüsselwort</b>: Es trägt das Etikett <b>Schlüsselwort</b> und kommt in den Übungen öfter dran.',
     'lessons.tip7':
@@ -1114,7 +1114,7 @@ export const tutorial = defineMessages({
     'lessons.tip4':
       '<b>Mis notas</b> es tu bloc de notas de la lección, se guarda mientras escribes. <b>Original</b> muestra la lección tal como está escrita.',
     'lessons.tip5':
-      '<b>Gramática</b> explica cada punto de gramática de la lección, con <pbtn>Practicar esta regla</pbtn> para hacer frases. <b>Deberes</b> muestra lo que hay que hacer; marca las tareas al terminarlas. <b>Ejercicios del libro</b> muestra los ejercicios del libro e importa otros nuevos desde fotos o un PDF a la lección del documento. En <b>Mis notas</b> están la pizarra y las notas del modo clase de ese día.',
+      '<b>Gramática</b> explica cada punto de gramática de la lección, con <pbtn>Practicar esta regla</pbtn> para hacer frases. <b>Deberes</b> muestra lo que hay que hacer; marca las tareas al terminarlas. <b>Ejercicios del libro</b> muestra los ejercicios del libro, y <pbtn>Importar del libro</pbtn> trae páginas del libro desde fotos o un PDF: marca los ejercicios, el texto y/o la gramática, y Claude los copia en la lección del documento, nunca con las soluciones. En <b>Mis notas</b> están la pizarra y las notas del modo clase de ese día.',
     'lessons.tip6':
       'Una palabra que el profesor marca con ★ en el documento (<ex>★ la boulangerie — пекарня</ex>) es una <b>palabra clave</b>: lleva la etiqueta <b>clave</b> y sale más a menudo en los ejercicios.',
     'lessons.tip7':
@@ -1373,7 +1373,7 @@ export const tutorial = defineMessages({
     'lessons.tip4':
       '<b>As minhas notas</b> é o seu bloco de notas da lição, guardado enquanto escreve. <b>Original</b> mostra a lição exatamente como está escrita.',
     'lessons.tip5':
-      '<b>Gramática</b> explica cada ponto de gramática da lição, com <pbtn>Praticar esta regra</pbtn> para fazer frases. <b>Trabalhos de casa</b> mostra o que há para fazer; marque as tarefas ao terminá-las. <b>Exercícios do manual</b> mostra os exercícios do livro e importa novos a partir de fotos ou de um PDF para a lição no documento. Em <b>As minhas notas</b> estão o quadro e as notas do modo aula desse dia.',
+      '<b>Gramática</b> explica cada ponto de gramática da lição, com <pbtn>Praticar esta regra</pbtn> para fazer frases. <b>Trabalhos de casa</b> mostra o que há para fazer; marque as tarefas ao terminá-las. <b>Exercícios do manual</b> mostra os exercícios do livro, e <pbtn>Importar do manual</pbtn> traz páginas do manual a partir de fotos ou de um PDF: marque os exercícios, o texto e/ou a gramática, e o Claude copia-os para a lição no documento, nunca com as soluções. Em <b>As minhas notas</b> estão o quadro e as notas do modo aula desse dia.',
     'lessons.tip6':
       'Uma palavra que o professor marca com ★ no documento (<ex>★ la boulangerie — пекарня</ex>) é uma <b>palavra-chave</b>: tem a etiqueta <b>chave</b> e aparece mais vezes nos exercícios.',
     'lessons.tip7':
@@ -1631,7 +1631,7 @@ export const tutorial = defineMessages({
     'lessons.tip4':
       '<b>I miei appunti</b> è il tuo blocco note per la lezione, salvato mentre scrivi. <b>Originale</b> mostra la lezione esattamente com’è scritta.',
     'lessons.tip5':
-      '<b>Grammatica</b> spiega ogni punto di grammatica della lezione, con <pbtn>Esercitati su questa regola</pbtn> per fare frasi. <b>Compiti</b> elenca cosa fare; spunta i compiti finiti. <b>Esercizi dal libro</b> mostra gli esercizi del libro e ne importa di nuovi da foto o da un PDF nella lezione del documento. In <b>I miei appunti</b> trovi la lavagna e gli appunti della modalità lezione di quel giorno.',
+      '<b>Grammatica</b> spiega ogni punto di grammatica della lezione, con <pbtn>Esercitati su questa regola</pbtn> per fare frasi. <b>Compiti</b> elenca cosa fare; spunta i compiti finiti. <b>Esercizi dal libro</b> mostra gli esercizi del libro, e <pbtn>Importa dal libro</pbtn> prende pagine del libro da foto o da un PDF: spunta gli esercizi, il testo e/o la grammatica, e Claude li ricopia nella lezione del documento, mai con le soluzioni. In <b>I miei appunti</b> trovi la lavagna e gli appunti della modalità lezione di quel giorno.',
     'lessons.tip6':
       'Una parola che l’insegnante segna con ★ nel documento (<ex>★ la boulangerie — пекарня</ex>) è una <b>parola chiave</b>: ha l’etichetta <b>chiave</b> e compare più spesso negli esercizi.',
     'lessons.tip7':
