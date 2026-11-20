@@ -288,6 +288,12 @@ export const api = {
       method: 'POST',
       body: JSON.stringify({ action: 'correct', ...input }),
     }),
+  // words sorted into groups by meaning, named in the interface language; known: the names in use
+  wordGroups: (words: { fr: string; ru: string }[], known: string[], explainIn: string) =>
+    request<unknown>('/api/analyze', {
+      method: 'POST',
+      body: JSON.stringify({ action: 'groups', words, known, explainIn }),
+    }),
   gaps: (words: { fr: string; ru: string }[], language: Language, level: string) =>
     request<unknown>('/api/gaps', {
       method: 'POST',

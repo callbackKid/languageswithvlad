@@ -312,6 +312,25 @@ export const asExplainLanguage = (value: unknown): ExplainLanguage =>
     ? (value as ExplainLanguage)
     : 'ru';
 
+/** The prompt that sorts a learner's words into groups by meaning, named in the interface
+    language. known: the names the learner's other words are already grouped under, reused so
+    the same topic keeps one name. */
+export function wordGroupsPrompt(
+  words: { fr: string; ru: string }[],
+  known: string[],
+  explainIn: ExplainLanguage
+): string {
+  const list = words.map((word) => `- ${word.fr} = ${word.ru}`).join('\n');
+  const knownLine = known.length
+    ? `The learner's other words are already in these groups: ${known.map((name) => `"${name}"`).join(', ')}. When a word fits one of them, use that name exactly as written.\n`
+    : '';
+  return `Sort the words and phrases a Russian-speaking learner is studying into groups by meaning: topics such as food, time, the home, feelings, travel or work. Name each group in ${EXPLAIN_NAMES[explainIn]} with one to three words starting with a capital letter ("Food", "Time and dates"). Keep the groups few and broad, about one for every 4 to 8 words, and avoid a group of one word when another group fits it. A word that fits no topic (a linking word, a pronoun) goes into a group named after its kind ("Linking words").
+${knownLine}Reply with only a JSON object: {"groups": [{"name": string, "words": [string]}]}. Every word from the list goes into exactly one group, copied exactly as written before the "=".
+
+Words:
+${list}`;
+}
+
 // The prompt for a discussion question, with follow-ups, sentence starters and useful words.
 export function discussionPrompt({
   language,

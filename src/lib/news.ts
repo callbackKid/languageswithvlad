@@ -51,6 +51,18 @@ export const NEWS: NewsDay[] = [
     date: '2026-11-20',
     items: [
       {
+        kind: 'new',
+        text: {
+          en: 'The words of a lesson and Words to learn are now sorted into groups by meaning, such as food or time. Choose a group next to Filter words to see only its words and practise them on their own.',
+          ru: 'Слова урока и раздела «Слова на изучении» теперь разделены на группы по смыслу, например еда или время. Выберите группу рядом с полем «Найти слово», чтобы видеть только её слова и тренировать их отдельно.',
+          fr: 'Les mots d’une leçon et de « Mots à apprendre » sont maintenant classés en groupes par sens, par exemple la nourriture ou le temps. Choisissez un groupe à côté de « Filtrer les mots » pour ne voir que ses mots et les travailler à part.',
+          de: 'Die Wörter einer Lektion und die „Lernwörter“ sind jetzt nach Bedeutung in Gruppen sortiert, etwa Essen oder Zeit. Wähle neben „Wörter filtern“ eine Gruppe, um nur ihre Wörter zu sehen und sie gezielt zu üben.',
+          es: 'Las palabras de una lección y de «Palabras por aprender» están ahora ordenadas en grupos por significado, como la comida o el tiempo. Elige un grupo junto a «Filtrar palabras» para ver solo sus palabras y practicarlas por separado.',
+          pt: 'As palavras de uma lição e de «Palavras por aprender» estão agora organizadas em grupos por significado, como a comida ou o tempo. Escolha um grupo ao lado de «Filtrar palavras» para ver só as palavras dele e praticá-las à parte.',
+          it: 'Le parole di una lezione e di «Parole da imparare» ora sono divise in gruppi per significato, come il cibo o il tempo. Scegli un gruppo accanto a «Filtra le parole» per vedere solo le sue parole ed esercitarti solo su quelle.',
+        },
+      },
+      {
         kind: 'better',
         text: {
           en: 'Downloaded lessons is now the second tab of Lesson history, and A question for discussion sits in the menu next to Words to learn and Mistakes. Its button for a new question is now called Ask a question.',

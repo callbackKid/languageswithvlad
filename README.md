@@ -26,7 +26,7 @@ React + TypeScript + Vite in the browser, small Vercel serverless functions in `
 
 **Lesson history**
 
-- **Words**: vocabulary extracted by Claude, with Russian translations (ones Claude added are marked ✱), pronunciation 🔊, and ☆ to save a word to Words to learn.
+- **Words**: vocabulary extracted by Claude, with Russian translations (ones Claude added are marked ✱), pronunciation 🔊, and ☆ to save a word to Words to learn. The words are sorted into groups by meaning (Food, Time…), named in the interface language by a small separate Claude call (the fast model) and kept per word on the device, so a word is grouped once; a **group** chosen next to Filter words shows only its words, and the exercises use only them. Words to learn is grouped the same way.
 - **Grammar**: every grammar point of the lesson explained in the interface language (how it's formed, when it's used, examples, the usual mistake), with **Practise this rule** for gap sentences on it.
 - **Homework**: the tasks the teacher set, with what each asks; ticked off on the device.
 - **Book exercises**: exercises from the student's book in the lesson. **Import from the book** reads photos or PDF pages and writes what is ticked (the exercises, the reading text and/or the grammar) under that lesson in the document (a block starting with 📖), so the teacher and the student both see it. Answers are never copied, even when the page or a photo shows them: the student does the exercises. Needs the same one-time setup as adding lessons from photos.

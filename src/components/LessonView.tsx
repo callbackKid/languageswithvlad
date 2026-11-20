@@ -235,6 +235,7 @@ export default function LessonView({
               key={lesson.hash + (tagged.local ? 'l' : 'c')}
               analysis={tagged}
               hasClaude={hasClaude && !tagged.local}
+              grouped
               onRefresh={
                 hasClaude && state === 'ready' && !tagged.local
                   ? () => setFresh((previous) => previous + 1)

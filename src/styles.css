@@ -1571,14 +1571,44 @@ pre.source {
   color: var(--muted);
   margin-bottom: 8px;
 }
-.sel-bar input {
-  flex: 1;
-  min-width: 160px;
-  max-width: 260px;
+.sel-bar input,
+.sel-bar select {
   border: 1px solid var(--line);
   border-radius: 8px;
   padding: 6px 10px;
   background: var(--surface);
+  color: var(--text);
+}
+.sel-bar input {
+  flex: 1;
+  min-width: 160px;
+  max-width: 260px;
+}
+.sel-bar select {
+  max-width: 100%;
+}
+
+/* the words of one group by meaning, under its name */
+.word-group + .word-group {
+  margin-top: 18px;
+}
+.word-group-name {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  margin: 0 0 6px;
+}
+.word-group-name .count {
+  margin-left: 6px;
+  font-weight: 500;
+}
+.grouping-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 10px;
 }
 
 .words {

@@ -96,6 +96,8 @@ export const tutorial = defineMessages({
       'A word the teacher marks with ★ in the document (<ex>★ la boulangerie — пекарня</ex>) is a <b>key word</b>: it has a <b>key</b> badge and comes up more often in exercises.',
     'lessons.tip7':
       'For the teacher: under <b>Homework</b>, <btn>Make homework with Claude</btn> writes a <ex>Devoirs:</ex> block from the lesson’s words and grammar (key words first). Check it, press <pbtn>Add to this lesson</pbtn>, and the student finds it on Home as a checklist.',
+    'lessons.tip8':
+      'The words are sorted into groups by meaning, such as food or time. Choose a group next to <b>Filter words</b> to see only its words: the exercises then use only them.',
     'lessons.mock': 'the Words tab of a lesson',
 
     'verbs.title': 'Verbs',
@@ -135,6 +137,8 @@ export const tutorial = defineMessages({
       'A word leaves the list after <b>3 right answers in a row</b> in any exercise (<b>I know it</b> on a flashcard counts too), or when you take its ★ off. The dots next to it, like ●●○, show how far it has got; a mistake starts the count again.',
     'my-words.step3':
       'A word that isn’t in any text: type it in the field at the top and press <pbtn>Look up</pbtn> for the same menu as on a selected word, with ☆ to put it on the list.',
+    'my-words.tip1':
+      'Your words are sorted into groups by meaning, as in a lesson. Choose a group next to <b>Filter words</b> to practise only its words.',
 
     'mistakes.title': 'Mistakes',
     'mistakes.summary': 'The words and verb forms you miss most',
@@ -351,6 +355,8 @@ export const tutorial = defineMessages({
       'Слово, которое преподаватель отметил в документе звёздочкой (<ex>★ la boulangerie — пекарня</ex>), — <b>ключевое</b>: у него метка <b>ключевое</b>, и в упражнениях оно встречается чаще.',
     'lessons.tip7':
       'Для преподавателя: во вкладке <b>Домашнее задание</b> кнопка <btn>Составить с Claude</btn> пишет блок <ex>Devoirs:</ex> по словам и грамматике урока (сначала ключевые слова). Проверьте, нажмите <pbtn>Добавить в этот урок</pbtn>, и ученик увидит его на Главной чек-листом.',
+    'lessons.tip8':
+      'Слова разделены на группы по смыслу, например еда или время. Выберите группу рядом с <b>Найти слово</b>, чтобы видеть только её слова: упражнения тогда будут только по ним.',
     'lessons.mock': 'вкладка «Слова» в уроке',
 
     'verbs.title': 'Глаголы',
@@ -390,6 +396,8 @@ export const tutorial = defineMessages({
       'Слово уходит из списка после <b>3 верных ответов подряд</b> в любом упражнении (<b>Знаю</b> на карточке тоже считается) или если снять с него ★. Точки рядом со словом, например ●●○, показывают, сколько уже пройдено; после ошибки счёт начинается заново.',
     'my-words.step3':
       'Слово, которого нет ни в одном тексте: введите его в поле вверху и нажмите <pbtn>Найти</pbtn> — откроется то же меню, что и для выделенного слова, с ☆, чтобы добавить его в список.',
+    'my-words.tip1':
+      'Ваши слова разделены на группы по смыслу, как в уроке. Выберите группу рядом с <b>Найти слово</b>, чтобы тренировать только её слова.',
 
     'mistakes.title': 'Ошибки',
     'mistakes.summary': 'Слова и формы глаголов, в которых вы ошибаетесь чаще всего',
@@ -604,6 +612,8 @@ export const tutorial = defineMessages({
       'Un mot que le professeur marque d’une ★ dans le document (<ex>★ la boulangerie — пекарня</ex>) est un <b>mot clé</b> : il porte l’étiquette <b>clé</b> et revient plus souvent dans les exercices.',
     'lessons.tip7':
       'Pour le professeur : sous <b>Devoirs</b>, <btn>Préparer les devoirs avec Claude</btn> rédige un bloc <ex>Devoirs:</ex> à partir des mots et de la grammaire de la leçon (mots clés d’abord). Vérifiez-le, appuyez sur <pbtn>Ajouter à cette leçon</pbtn>, et l’élève le trouve sur l’accueil en liste à cocher.',
+    'lessons.tip8':
+      'Les mots sont classés en groupes par sens, par exemple la nourriture ou le temps. Choisissez un groupe à côté de <b>Filtrer les mots</b> pour ne voir que ses mots : les exercices n’utilisent alors qu’eux.',
     'lessons.mock': 'l’onglet Mots d’une leçon',
 
     'verbs.title': 'Verbes',
@@ -644,6 +654,8 @@ export const tutorial = defineMessages({
       'Un mot quitte la liste après <b>3 bonnes réponses d’affilée</b> dans n’importe quel exercice (<b>Je sais</b> sur une carte compte aussi), ou quand vous retirez son ★. Les points à côté, comme ●●○, montrent où il en est ; une erreur remet le compteur à zéro.',
     'my-words.step3':
       'Un mot qui n’est dans aucun texte : tapez-le dans le champ en haut et appuyez sur <pbtn>Chercher</pbtn> pour avoir le même menu que sur un mot sélectionné, avec ☆ pour l’ajouter à la liste.',
+    'my-words.tip1':
+      'Vos mots sont classés en groupes par sens, comme dans une leçon. Choisissez un groupe à côté de <b>Filtrer les mots</b> pour ne travailler que ses mots.',
 
     'mistakes.title': 'Erreurs',
     'mistakes.summary': 'Les mots et formes verbales que vous ratez le plus',
@@ -866,6 +878,8 @@ export const tutorial = defineMessages({
       'Ein Wort, das die Lehrkraft im Dokument mit ★ markiert (<ex>★ la boulangerie — пекарня</ex>), ist ein <b>Schlüsselwort</b>: Es trägt das Etikett <b>Schlüsselwort</b> und kommt in den Übungen öfter dran.',
     'lessons.tip7':
       'Für die Lehrkraft: Unter <b>Hausaufgaben</b> schreibt <btn>Mit Claude erstellen</btn> einen Block <ex>Devoirs:</ex> aus den Wörtern und der Grammatik der Lektion (Schlüsselwörter zuerst). Prüfe ihn, drück auf <pbtn>Zu dieser Lektion hinzufügen</pbtn>, und die Schülerin oder der Schüler findet ihn auf der Startseite als Checkliste.',
+    'lessons.tip8':
+      'Die Wörter sind nach Bedeutung in Gruppen sortiert, etwa Essen oder Zeit. Wähle neben <b>Wörter filtern</b> eine Gruppe, um nur ihre Wörter zu sehen: Die Übungen verwenden dann nur diese.',
     'lessons.mock': 'der Tab Wörter einer Lektion',
 
     'verbs.title': 'Verben',
@@ -905,6 +919,8 @@ export const tutorial = defineMessages({
       'Ein Wort verlässt die Liste nach <b>3 richtigen Antworten in Folge</b> in einer beliebigen Übung (auch <b>Weiß ich</b> auf einer Karteikarte zählt) oder wenn du den ★ entfernst. Die Punkte daneben, etwa ●●○, zeigen, wie weit es schon ist; nach einem Fehler geht es von vorn los.',
     'my-words.step3':
       'Ein Wort, das in keinem Text vorkommt: Gib es oben in das Feld ein und tippe auf <pbtn>Nachschlagen</pbtn>. Du bekommst dasselbe Menü wie bei einem markierten Wort, mit ☆, um es auf die Liste zu setzen.',
+    'my-words.tip1':
+      'Deine Wörter sind nach Bedeutung in Gruppen sortiert, wie in einer Lektion. Wähle neben <b>Wörter filtern</b> eine Gruppe, um nur ihre Wörter zu üben.',
 
     'mistakes.title': 'Fehler',
     'mistakes.summary': 'Die Wörter und Verbformen, die du am häufigsten falsch machst',
@@ -1122,6 +1138,8 @@ export const tutorial = defineMessages({
       'Una palabra que el profesor marca con ★ en el documento (<ex>★ la boulangerie — пекарня</ex>) es una <b>palabra clave</b>: lleva la etiqueta <b>clave</b> y sale más a menudo en los ejercicios.',
     'lessons.tip7':
       'Para el profesor: en <b>Deberes</b>, <btn>Preparar los deberes con Claude</btn> redacta un bloque <ex>Devoirs:</ex> con las palabras y la gramática de la lección (primero las palabras clave). Revísalo, pulsa <pbtn>Añadir a esta lección</pbtn>, y el alumno lo encuentra en Inicio como lista para marcar.',
+    'lessons.tip8':
+      'Las palabras están ordenadas en grupos por significado, como la comida o el tiempo. Elige un grupo junto a <b>Filtrar palabras</b> para ver solo sus palabras: los ejercicios usarán solo esas.',
     'lessons.mock': 'la pestaña Palabras de una lección',
 
     'verbs.title': 'Verbos',
@@ -1162,6 +1180,8 @@ export const tutorial = defineMessages({
       'Una palabra sale de la lista tras <b>3 aciertos seguidos</b> en cualquier ejercicio (<b>Me la sé</b> en una tarjeta también cuenta) o cuando le quitas la ★. Los puntos a su lado, como ●●○, muestran cuánto ha avanzado; con un fallo, la cuenta vuelve a empezar.',
     'my-words.step3':
       'Una palabra que no está en ningún texto: escríbela en el campo de arriba y pulsa <pbtn>Buscar</pbtn> para abrir el mismo menú que con una palabra seleccionada, con ☆ para ponerla en la lista.',
+    'my-words.tip1':
+      'Tus palabras están ordenadas en grupos por significado, como en una lección. Elige un grupo junto a <b>Filtrar palabras</b> para practicar solo sus palabras.',
 
     'mistakes.title': 'Errores',
     'mistakes.summary': 'Las palabras y formas verbales que más fallas',
@@ -1381,6 +1401,8 @@ export const tutorial = defineMessages({
       'Uma palavra que o professor marca com ★ no documento (<ex>★ la boulangerie — пекарня</ex>) é uma <b>palavra-chave</b>: tem a etiqueta <b>chave</b> e aparece mais vezes nos exercícios.',
     'lessons.tip7':
       'Para o professor: em <b>Trabalhos de casa</b>, <btn>Fazer com o Claude</btn> escreve um bloco <ex>Devoirs:</ex> com as palavras e a gramática da lição (primeiro as palavras-chave). Verifique-o, carregue em <pbtn>Acrescentar a esta lição</pbtn>, e o aluno encontra-o no Início como lista para marcar.',
+    'lessons.tip8':
+      'As palavras estão organizadas em grupos por significado, como a comida ou o tempo. Escolha um grupo ao lado de <b>Filtrar palavras</b> para ver só as palavras dele: os exercícios passam a usar só essas.',
     'lessons.mock': 'o separador Palavras de uma lição',
 
     'verbs.title': 'Verbos',
@@ -1421,6 +1443,8 @@ export const tutorial = defineMessages({
       'Uma palavra sai da lista após <b>3 respostas certas seguidas</b> em qualquer exercício (<b>Já sei</b> num cartão também conta) ou quando lhe tira a ★. Os pontos ao lado, como ●●○, mostram quanto já avançou; um erro recomeça a contagem.',
     'my-words.step3':
       'Uma palavra que não está em nenhum texto: escreva-a no campo em cima e carregue em <pbtn>Procurar</pbtn> para abrir o mesmo menu que numa palavra selecionada, com ☆ para a pôr na lista.',
+    'my-words.tip1':
+      'As suas palavras estão organizadas em grupos por significado, como numa lição. Escolha um grupo ao lado de <b>Filtrar palavras</b> para praticar só as palavras dele.',
 
     'mistakes.title': 'Erros',
     'mistakes.summary': 'As palavras e formas verbais que mais erra',
@@ -1639,6 +1663,8 @@ export const tutorial = defineMessages({
       'Una parola che l’insegnante segna con ★ nel documento (<ex>★ la boulangerie — пекарня</ex>) è una <b>parola chiave</b>: ha l’etichetta <b>chiave</b> e compare più spesso negli esercizi.',
     'lessons.tip7':
       'Per l’insegnante: in <b>Compiti</b>, <btn>Crea con Claude</btn> scrive un blocco <ex>Devoirs:</ex> con le parole e la grammatica della lezione (prima le parole chiave). Controllalo, premi <pbtn>Aggiungi a questa lezione</pbtn>, e lo studente lo trova nella Home come lista da spuntare.',
+    'lessons.tip8':
+      'Le parole sono divise in gruppi per significato, come il cibo o il tempo. Scegli un gruppo accanto a <b>Filtra le parole</b> per vedere solo le sue parole: gli esercizi useranno solo quelle.',
     'lessons.mock': 'la scheda Parole di una lezione',
 
     'verbs.title': 'Verbi',
@@ -1677,6 +1703,8 @@ export const tutorial = defineMessages({
       'Una parola esce dalla lista dopo <b>3 risposte giuste di fila</b> in qualsiasi esercizio (vale anche <b>La so</b> su una flashcard) o quando le togli la ★. I puntini accanto, come ●●○, mostrano a che punto è; un errore fa ripartire il conteggio da capo.',
     'my-words.step3':
       'Una parola che non è in nessun testo: scrivila nel campo in alto e premi <pbtn>Cerca</pbtn> per aprire lo stesso menu di una parola selezionata, con ☆ per metterla nella lista.',
+    'my-words.tip1':
+      'Le tue parole sono divise in gruppi per significato, come in una lezione. Scegli un gruppo accanto a <b>Filtra le parole</b> per esercitarti solo con le sue parole.',
 
     'mistakes.title': 'Errori',
     'mistakes.summary': 'Le parole e le forme verbali che sbagli di più',

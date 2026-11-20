@@ -420,6 +420,23 @@ const DISCUSSION = {
 };
 
 // The JSON body for one API request; {} for endpoints this fixture doesn't cover.
+// Groups by meaning for the words sent (action "groups"): the test lesson's words in two groups,
+// any other word left out, so it lands under Other.
+const WORD_GROUPS = {
+  'se lever': 'Morning routine',
+  'le matin': 'Morning routine',
+  'la boulangerie': 'Food and shops',
+  'le pain': 'Food and shops',
+};
+function wordGroupsFor(words = []) {
+  const groups = {};
+  for (const { fr } of words) {
+    const name = WORD_GROUPS[fr];
+    if (name) (groups[name] ??= []).push(fr);
+  }
+  return { groups: Object.entries(groups).map(([name, listed]) => ({ name, words: listed })) };
+}
+
 export function answerFor(url, body, headers = {}, scenario = 'upcoming') {
   const path = new URL(url).pathname;
   if (path === '/api/health')
@@ -448,6 +465,7 @@ export function answerFor(url, body, headers = {}, scenario = 'upcoming') {
     if (body.action === 'extras') return EXTRAS;
     if (body.action === 'homework') return MADE_HOMEWORK;
     if (body.action === 'exercise') return MADE_EXERCISE;
+    if (body.action === 'groups') return wordGroupsFor(body.words);
     return {};
   }
   if (path === '/api/text') {

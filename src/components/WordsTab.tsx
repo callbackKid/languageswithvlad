@@ -1,12 +1,14 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 
 import { useTranslation } from '../i18n/core';
+import { common } from '../i18n/messages/common';
 import { exercises } from '../i18n/messages/exercises';
 import { getProgress, LEARNED_STREAK, useProgress, wordKey } from '../lib/progress';
 import { buildDictation, buildQuiz, pickWords } from '../lib/quiz';
 import { canSpeak } from '../lib/speech';
 import type { Analysis, Word } from '../lib/types';
 import { downloadText } from '../lib/util';
+import { groupWords, useWordGroups } from '../lib/wordGroups';
 import Flashcards from './Flashcards';
 import GapFill from './GapFill';
 import Match, { type MatchPair } from './Match';
@@ -54,6 +56,7 @@ export default function WordsTab({
   onRefresh,
   hidePairs,
   showProgress = false,
+  grouped = false,
 }: {
   analysis: Analysis;
   hasClaude: boolean;
@@ -61,20 +64,33 @@ export default function WordsTab({
   hidePairs?: boolean;
   // Words to learn: each word shows its right answers in a row towards leaving the list
   showProgress?: boolean;
+  // the words under groups by meaning, which Claude makes, with a group to choose in the filters
+  grouped?: boolean;
 }) {
-  const { t, rich } = useTranslation(exercises);
+  const { t, rich, language: uiLanguage } = useTranslation(exercises);
+  const commonText = useTranslation(common);
   // Tracks the words left out, so words that arrive later (more lessons prepared) start picked.
   const [unpicked, setUnpicked] = useState<Set<string>>(() => new Set());
   const [filter, setFilter] = useState('');
+  // the name of the group chosen in the filters; null for every group
+  const [chosenGroup, setChosenGroup] = useState<string | null>(null);
   const [exercise, setExercise] = useState<Exercise>(null);
   const [run, setRun] = useState(0);
+  const grouping = useWordGroups(analysis.words, grouped && hasClaude, uiLanguage);
+  const { groupOf } = grouping;
 
-  const picked = useMemo(
-    () => analysis.words.filter((word) => !unpicked.has(word.fr)),
-    [analysis.words, unpicked]
-  );
+  const groups = grouped ? groupWords(analysis.words, groupOf) : [];
+  // no group to show before the first answer, or without Claude
+  const hasGroups = groups.some((group) => group.name);
+  // a group that is gone (its words left the list) stops filtering
+  const group =
+    hasGroups && groups.some((listed) => listed.name === chosenGroup) ? chosenGroup : null;
+  // the chosen group's words are the ones the exercises use
+  const shown =
+    group === null ? analysis.words : (groups.find((listed) => listed.name === group)?.words ?? []);
+  const picked = shown.filter((word) => !unpicked.has(word.fr));
   const query = filter.toLowerCase();
-  const list = analysis.words.filter(
+  const list = shown.filter(
     (word) =>
       !query || word.fr.toLowerCase().includes(query) || word.ru.toLowerCase().includes(query)
   );
@@ -192,9 +208,7 @@ export default function WordsTab({
             {t('dictation')}
           </button>
         )}
-        <span className="hint">
-          {t('picked', { picked: picked.length, total: analysis.words.length })}
-        </span>
+        <span className="hint">{t('picked', { picked: picked.length, total: shown.length })}</span>
       </div>
       <div className="sel-bar">
         <button type="button" className="btn ghost" onClick={() => setUnpicked(new Set())}>
@@ -214,48 +228,97 @@ export default function WordsTab({
           value={filter}
           onChange={(event) => setFilter(event.target.value)}
         />
+        {hasGroups && (
+          <select
+            aria-label={t('groupFilter')}
+            value={
+              group === null ? '' : String(groups.findIndex((listed) => listed.name === group))
+            }
+            onChange={(event) => {
+              const index = event.target.value;
+              setChosenGroup(index === '' ? null : (groups[Number(index)]?.name ?? null));
+            }}
+          >
+            <option value="">{t('allGroups')}</option>
+            {groups.map((listed, index) => (
+              <option key={listed.name} value={index}>
+                {t('groupOption', {
+                  name: listed.name || t('otherGroup'),
+                  count: listed.words.length,
+                })}
+              </option>
+            ))}
+          </select>
+        )}
       </div>
+      {grouping.state === 'loading' && (
+        <p className="hint grouping-status" role="status">
+          <span className="spinner" aria-hidden="true" /> {t('grouping')}
+        </p>
+      )}
+      {grouping.state === 'error' && (
+        <div className="note err" role="alert">
+          <p>{t('groupingFailed')}</p>
+          <button type="button" className="btn" onClick={grouping.retry}>
+            {commonText.t('tryAgain')}
+          </button>
+        </div>
+      )}
       {list.length ? (
-        <ul className="words">
-          {list.map((word) => (
-            <li key={word.fr} className="word-row">
-              <label className="word">
-                <input
-                  type="checkbox"
-                  checked={!unpicked.has(word.fr)}
-                  onChange={() => toggle(word.fr)}
-                />
-                <span className="fr" lang={word.language ?? 'fr'}>
-                  {word.fr}
-                  {word.key && (
-                    <>
-                      {' '}
-                      <KeyBadge />
-                    </>
-                  )}
-                  {word.tr && (
-                    <>
-                      {' '}
-                      <Transcription tr={word.tr} />
-                    </>
-                  )}
-                </span>
-                <span className="ru" lang="ru">
-                  {word.ru || '—'}
-                  {word.added && (
-                    <span className="added" data-tooltip={t('addedByClaude')}>
-                      {' '}
-                      ✱
+        (hasGroups ? groupWords(list, groupOf) : [{ name: '', words: list }]).map((listed) => (
+          <section
+            key={listed.name}
+            className="word-group"
+            aria-label={hasGroups ? listed.name || t('otherGroup') : undefined}
+          >
+            {hasGroups && (
+              <h3 className="word-group-name">
+                {listed.name || t('otherGroup')}
+                <span className="count">{listed.words.length}</span>
+              </h3>
+            )}
+            <ul className="words">
+              {listed.words.map((word) => (
+                <li key={word.fr} className="word-row">
+                  <label className="word">
+                    <input
+                      type="checkbox"
+                      checked={!unpicked.has(word.fr)}
+                      onChange={() => toggle(word.fr)}
+                    />
+                    <span className="fr" lang={word.language ?? 'fr'}>
+                      {word.fr}
+                      {word.key && (
+                        <>
+                          {' '}
+                          <KeyBadge />
+                        </>
+                      )}
+                      {word.tr && (
+                        <>
+                          {' '}
+                          <Transcription tr={word.tr} />
+                        </>
+                      )}
                     </span>
-                  )}
-                </span>
-              </label>
-              {showProgress && <LearnProgress word={word} />}
-              <Speak text={word.fr} language={word.language ?? 'fr'} />
-              <Star word={word} />
-            </li>
-          ))}
-        </ul>
+                    <span className="ru" lang="ru">
+                      {word.ru || '—'}
+                      {word.added && (
+                        <span className="added" data-tooltip={t('addedByClaude')}>
+                          {' '}
+                          ✱
+                        </span>
+                      )}
+                    </span>
+                  </label>
+                  {showProgress && <LearnProgress word={word} />}
+                  <Speak text={word.fr} language={word.language ?? 'fr'} />
+                  <Star word={word} />
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))
       ) : (
         <p className="empty">{analysis.words.length ? t('noMatch') : t('noVocabulary')}</p>
       )}
