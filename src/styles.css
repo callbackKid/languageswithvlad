@@ -216,17 +216,19 @@ a {
   gap: 8px;
   margin-bottom: 18px;
 }
-.look-up input {
-  flex: 1 1 220px;
-  min-width: 0;
-}
+/* the field, the language and the button share one height and the app's field look */
+.look-up input,
 .look-up select {
   padding: 7px 10px;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: var(--surface);
   color: var(--text);
-  font: inherit;
+  line-height: 1.3;
+}
+.look-up input {
+  flex: 1 1 220px;
+  min-width: 0;
 }
 .word-actions-add {
   margin-top: 12px;
@@ -578,6 +580,14 @@ a.btn {
     left: 8px;
     width: auto;
     max-height: 60vh;
+  }
+
+  /* the field gets its own line, so its hint isn't cut; the language and the button share the next */
+  .look-up input {
+    flex-basis: 100%;
+  }
+  .look-up select {
+    flex: 1;
   }
 }
 
