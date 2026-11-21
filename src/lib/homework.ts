@@ -61,6 +61,7 @@ const TENSE_NAMES: {
     présent: 'présent',
     'passé composé': 'passé composé',
     imparfait: 'imparfait',
+    'futur proche': 'futur proche',
     'futur simple': 'futur simple',
     futur: 'futur simple',
     'conditionnel présent': 'conditionnel présent',

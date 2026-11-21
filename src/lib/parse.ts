@@ -1,3 +1,4 @@
+import { futurProche } from './futurProche';
 import { notionIdFrom } from './source';
 import type {
   Analysis,
@@ -366,8 +367,10 @@ export function normalizeConjugation(
       .filter((form) => form.f);
   // the first tense (présent, Präsens) is the one every verb has
   if (!tenses[TENSES_BY_LANGUAGE[language][0]]?.length) throw new Error('empty');
+  const verb = asText(data.inf) || infinitive;
+  if (language === 'fr') tenses['futur proche'] = futurProche(verb);
   return {
-    inf: asText(data.inf) || infinitive,
+    inf: verb,
     ru: asText(data.ru),
     aux: asText(data.aux),
     pp: asText(data.pp),

@@ -48,6 +48,24 @@ export interface NewsDay {
 
 export const NEWS: NewsDay[] = [
   {
+    date: '2026-11-21',
+    items: [
+      {
+        kind: 'new',
+        text: {
+          en: 'French verbs have the futur proche (je vais manger), in the Verbs tab, in quizzes and in homework, negative forms included. Tick it in Settings under Tenses in quizzes; from A1 it is asked by default.',
+          ru: 'У французских глаголов появилось время futur proche (je vais manger): на вкладке «Глаголы», в тестах и в домашних заданиях, включая отрицательные формы. Отметьте его в «Настройках» → «Времена в тестах»; с уровня A1 оно спрашивается по умолчанию.',
+          fr: 'Les verbes français ont maintenant le futur proche (je vais manger), dans l’onglet Verbes, dans les quiz et dans les devoirs, formes négatives comprises. Cochez-le dans Réglages → Temps dans les quiz ; à partir du niveau A1, il est demandé par défaut.',
+          de: 'Französische Verben haben jetzt das futur proche (je vais manger), im Tab Verben, im Quiz und in den Hausaufgaben, verneinte Formen inklusive. Hake es unter Einstellungen → Zeitformen im Quiz an; ab A1 wird es standardmäßig abgefragt.',
+          es: 'Los verbos franceses tienen ahora el futur proche (je vais manger), en la pestaña Verbos, en los tests y en los deberes, formas negativas incluidas. Márcalo en Ajustes → Tiempos en los tests; desde A1 se pregunta por defecto.',
+          pt: 'Os verbos franceses têm agora o futur proche (je vais manger), no separador Verbos, nos testes e nos trabalhos de casa, com as formas negativas incluídas. Marque-o em Definições → Tempos nos testes; a partir do A1 é perguntado por predefinição.',
+          it: 'I verbi francesi ora hanno il futur proche (je vais manger), nella scheda Verbi, nei quiz e nei compiti, forme negative comprese. Spuntalo in Impostazioni → Tempi nei quiz; dall’A1 viene chiesto in automatico.',
+        },
+        languages: ['fr'],
+      },
+    ],
+  },
+  {
     date: '2026-11-20',
     items: [
       {

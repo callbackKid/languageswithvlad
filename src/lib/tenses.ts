@@ -13,6 +13,7 @@ const FIRST_LEVEL: {
     'passé composé': 'A1',
     impératif: 'A1',
     imparfait: 'A2',
+    'futur proche': 'A1',
     'futur simple': 'A2',
     'conditionnel présent': 'B1',
   },

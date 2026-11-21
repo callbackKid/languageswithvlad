@@ -103,10 +103,10 @@ export const tutorial = defineMessages({
     'verbs.title': 'Verbs',
     'verbs.summary': 'Conjugation tables and drills (Verbs tab of a lesson)',
     'verbs.intro':
-      'The <b>Verbs</b> tab of a lesson in any language but English has a conjugation table for every verb in it: French in six tenses, affirmative and negative; German, Spanish, Italian and Portuguese in their five or six main tenses.',
+      'The <b>Verbs</b> tab of a lesson in any language but English has a conjugation table for every verb in it: French in seven tenses, affirmative and negative; German, Spanish, Italian and Portuguese in their five or six main tenses.',
     'verbs.step1': 'Press a verb to open its table.',
     'verbs.step2':
-      'Choose a tense (présent, passé composé, imparfait, futur simple, conditionnel présent, impératif) and <b>affirmative</b> or <b>negative</b>. 🔊 reads each form.',
+      'Choose a tense (présent, passé composé, imparfait, futur proche, futur simple, conditionnel présent, impératif) and <b>affirmative</b> or <b>negative</b>. 🔊 reads each form.',
     'verbs.step3':
       'Press <pbtn>Practise this tense</pbtn>, fill in every person, then <pbtn>Check answers</pbtn>. Wrong forms show the right one underneath.',
     'verbs.step4': '<btn>Quick quiz</btn> asks random forms of every verb you’ve opened.',
@@ -362,10 +362,10 @@ export const tutorial = defineMessages({
     'verbs.title': 'Глаголы',
     'verbs.summary': 'Таблицы спряжения и тренировка (вкладка «Глаголы» в уроке)',
     'verbs.intro':
-      'На вкладке <b>Глаголы</b> урока на любом языке, кроме английского, есть таблица спряжения для каждого глагола: французские — в шести временах, утвердительная и отрицательная формы; немецкие, испанские, итальянские и португальские — в пяти-шести основных временах.',
+      'На вкладке <b>Глаголы</b> урока на любом языке, кроме английского, есть таблица спряжения для каждого глагола: французские — в семи временах, утвердительная и отрицательная формы; немецкие, испанские, итальянские и португальские — в пяти-шести основных временах.',
     'verbs.step1': 'Нажмите на глагол, чтобы открыть его таблицу.',
     'verbs.step2':
-      'Выберите время (présent, passé composé, imparfait, futur simple, conditionnel présent, impératif) и <b>утверждение</b> или <b>отрицание</b>. 🔊 читает каждую форму.',
+      'Выберите время (présent, passé composé, imparfait, futur proche, futur simple, conditionnel présent, impératif) и <b>утверждение</b> или <b>отрицание</b>. 🔊 читает каждую форму.',
     'verbs.step3':
       'Нажмите <pbtn>Тренировать это время</pbtn>, заполните все лица, затем <pbtn>Проверить ответы</pbtn>. Под неверной формой появится правильная.',
     'verbs.step4': '<btn>Быстрый тест</btn> спрашивает случайные формы всех открытых глаголов.',
@@ -619,10 +619,10 @@ export const tutorial = defineMessages({
     'verbs.title': 'Verbes',
     'verbs.summary': 'Tableaux de conjugaison et exercices (onglet Verbes d’une leçon)',
     'verbs.intro':
-      'L’onglet <b>Verbes</b> d’une leçon dans toute langue sauf l’anglais contient un tableau de conjugaison pour chaque verbe : le français à six temps, à l’affirmatif et au négatif ; l’allemand, l’espagnol, l’italien et le portugais à leurs cinq ou six temps principaux.',
+      'L’onglet <b>Verbes</b> d’une leçon dans toute langue sauf l’anglais contient un tableau de conjugaison pour chaque verbe : le français à sept temps, à l’affirmatif et au négatif ; l’allemand, l’espagnol, l’italien et le portugais à leurs cinq ou six temps principaux.',
     'verbs.step1': 'Appuyez sur un verbe pour ouvrir son tableau.',
     'verbs.step2':
-      'Choisissez un temps (présent, passé composé, imparfait, futur simple, conditionnel présent, impératif) et <b>affirmatif</b> ou <b>négatif</b>. 🔊 lit chaque forme.',
+      'Choisissez un temps (présent, passé composé, imparfait, futur proche, futur simple, conditionnel présent, impératif) et <b>affirmatif</b> ou <b>négatif</b>. 🔊 lit chaque forme.',
     'verbs.step3':
       'Appuyez sur <pbtn>Travailler ce temps</pbtn>, remplissez toutes les personnes, puis <pbtn>Vérifier les réponses</pbtn>. La bonne forme s’affiche sous chaque erreur.',
     'verbs.step4':
@@ -885,10 +885,10 @@ export const tutorial = defineMessages({
     'verbs.title': 'Verben',
     'verbs.summary': 'Konjugationstabellen und Übungen (Tab Verben einer Lektion)',
     'verbs.intro':
-      'Der Tab <b>Verben</b> einer Lektion in jeder Sprache außer Englisch hat für jedes Verb eine Konjugationstabelle: Französisch in sechs Zeitformen, bejaht und verneint; Deutsch, Spanisch, Italienisch und Portugiesisch in ihren fünf oder sechs wichtigsten Zeitformen.',
+      'Der Tab <b>Verben</b> einer Lektion in jeder Sprache außer Englisch hat für jedes Verb eine Konjugationstabelle: Französisch in sieben Zeitformen, bejaht und verneint; Deutsch, Spanisch, Italienisch und Portugiesisch in ihren fünf oder sechs wichtigsten Zeitformen.',
     'verbs.step1': 'Tippe auf ein Verb, um seine Tabelle zu öffnen.',
     'verbs.step2':
-      'Wähle eine Zeitform (présent, passé composé, imparfait, futur simple, conditionnel présent, impératif) und <b>bejaht</b> oder <b>verneint</b>. 🔊 liest jede Form vor.',
+      'Wähle eine Zeitform (présent, passé composé, imparfait, futur proche, futur simple, conditionnel présent, impératif) und <b>bejaht</b> oder <b>verneint</b>. 🔊 liest jede Form vor.',
     'verbs.step3':
       'Tippe auf <pbtn>Diese Zeitform üben</pbtn>, fülle alle Personen aus und tippe dann auf <pbtn>Antworten prüfen</pbtn>. Unter falschen Formen steht die richtige.',
     'verbs.step4': '<btn>Schnellquiz</btn> fragt zufällige Formen aller geöffneten Verben ab.',
@@ -1145,10 +1145,10 @@ export const tutorial = defineMessages({
     'verbs.title': 'Verbos',
     'verbs.summary': 'Tablas de conjugación y ejercicios (pestaña Verbos de una lección)',
     'verbs.intro':
-      'La pestaña <b>Verbos</b> de una lección en cualquier idioma salvo el inglés tiene una tabla de conjugación para cada verbo: el francés en seis tiempos, en afirmativa y negativa; el alemán, el español, el italiano y el portugués en sus cinco o seis tiempos principales.',
+      'La pestaña <b>Verbos</b> de una lección en cualquier idioma salvo el inglés tiene una tabla de conjugación para cada verbo: el francés en siete tiempos, en afirmativa y negativa; el alemán, el español, el italiano y el portugués en sus cinco o seis tiempos principales.',
     'verbs.step1': 'Pulsa un verbo para abrir su tabla.',
     'verbs.step2':
-      'Elige un tiempo (présent, passé composé, imparfait, futur simple, conditionnel présent, impératif) y <b>afirmativa</b> o <b>negativa</b>. 🔊 lee cada forma.',
+      'Elige un tiempo (présent, passé composé, imparfait, futur proche, futur simple, conditionnel présent, impératif) y <b>afirmativa</b> o <b>negativa</b>. 🔊 lee cada forma.',
     'verbs.step3':
       'Pulsa <pbtn>Practicar este tiempo</pbtn>, rellena todas las personas y luego <pbtn>Comprobar las respuestas</pbtn>. Debajo de las formas incorrectas aparece la correcta.',
     'verbs.step4':
@@ -1408,10 +1408,10 @@ export const tutorial = defineMessages({
     'verbs.title': 'Verbos',
     'verbs.summary': 'Tabelas de conjugação e exercícios (separador Verbos de uma lição)',
     'verbs.intro':
-      'O separador <b>Verbos</b> de uma lição em qualquer língua exceto o inglês tem uma tabela de conjugação para cada verbo: o francês em seis tempos, na afirmativa e na negativa; o alemão, o espanhol, o italiano e o português nos seus cinco ou seis tempos principais.',
+      'O separador <b>Verbos</b> de uma lição em qualquer língua exceto o inglês tem uma tabela de conjugação para cada verbo: o francês em sete tempos, na afirmativa e na negativa; o alemão, o espanhol, o italiano e o português nos seus cinco ou seis tempos principais.',
     'verbs.step1': 'Carregue num verbo para abrir a tabela.',
     'verbs.step2':
-      'Escolha um tempo (présent, passé composé, imparfait, futur simple, conditionnel présent, impératif) e <b>afirmativa</b> ou <b>negativa</b>. 🔊 lê cada forma.',
+      'Escolha um tempo (présent, passé composé, imparfait, futur proche, futur simple, conditionnel présent, impératif) e <b>afirmativa</b> ou <b>negativa</b>. 🔊 lê cada forma.',
     'verbs.step3':
       'Carregue em <pbtn>Praticar este tempo</pbtn>, preencha todas as pessoas e depois <pbtn>Verificar as respostas</pbtn>. Por baixo das formas erradas aparece a certa.',
     'verbs.step4':
@@ -1670,10 +1670,10 @@ export const tutorial = defineMessages({
     'verbs.title': 'Verbi',
     'verbs.summary': 'Tabelle di coniugazione ed esercizi (scheda Verbi di una lezione)',
     'verbs.intro':
-      'La scheda <b>Verbi</b> di una lezione in qualsiasi lingua tranne l’inglese ha una tabella di coniugazione per ogni verbo: il francese in sei tempi, affermativa e negativa; il tedesco, lo spagnolo, l’italiano e il portoghese nei loro cinque o sei tempi principali.',
+      'La scheda <b>Verbi</b> di una lezione in qualsiasi lingua tranne l’inglese ha una tabella di coniugazione per ogni verbo: il francese in sette tempi, affermativa e negativa; il tedesco, lo spagnolo, l’italiano e il portoghese nei loro cinque o sei tempi principali.',
     'verbs.step1': 'Premi un verbo per aprire la sua tabella.',
     'verbs.step2':
-      'Scegli un tempo (présent, passé composé, imparfait, futur simple, conditionnel présent, impératif) e <b>affermativa</b> o <b>negativa</b>. 🔊 legge ogni forma.',
+      'Scegli un tempo (présent, passé composé, imparfait, futur proche, futur simple, conditionnel présent, impératif) e <b>affermativa</b> o <b>negativa</b>. 🔊 legge ogni forma.',
     'verbs.step3':
       'Premi <pbtn>Esercitati su questo tempo</pbtn>, completa tutte le persone, poi <pbtn>Controlla le risposte</pbtn>. Sotto le forme sbagliate compare quella giusta.',
     'verbs.step4': '<btn>Quiz veloce</btn> chiede forme a caso di tutti i verbi che hai aperto.',
