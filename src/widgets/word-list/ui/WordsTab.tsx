@@ -29,8 +29,9 @@ import Speak from '@/shared/ui/Speak';
 import { groupWords, useWordGroups } from '../model/wordGroups';
 import Flashcards from './Flashcards';
 import Match, { type MatchPair } from './Match';
+import WordBlitz from './WordBlitz';
 
-type Exercise = null | 'quiz' | 'cards' | 'match' | 'syn' | 'gap' | 'dictation';
+type Exercise = null | 'quiz' | 'cards' | 'match' | 'syn' | 'gap' | 'blitz' | 'dictation';
 
 // The mark of a key word of the lesson (★ in the document).
 export function KeyBadge() {
@@ -160,6 +161,8 @@ export default function WordsTab({
   }
   if (exercise === 'gap')
     return <GapFill key={run} words={picked} onClose={close} onRestart={() => start('gap')} />;
+  if (exercise === 'blitz')
+    return <WordBlitz key={run} words={picked} onClose={close} onRestart={() => start('blitz')} />;
 
   const toggle = (fr: string) =>
     setUnpicked((previous) => {
@@ -214,6 +217,14 @@ export default function WordsTab({
           onClick={() => start('gap')}
         >
           {t('fillGap')}
+        </button>
+        <button
+          type="button"
+          className="btn"
+          disabled={picked.length < 1 || !hasClaude}
+          onClick={() => start('blitz')}
+        >
+          {t('blitz')}
         </button>
         {canSpeak && (
           <button

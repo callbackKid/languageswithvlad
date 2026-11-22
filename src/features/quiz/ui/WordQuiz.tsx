@@ -40,6 +40,7 @@ export default function WordQuiz({
   empty,
   review,
   onRoundEnd,
+  onNextRound,
   speakAtOnce = true,
 }: {
   title: string;
@@ -50,6 +51,8 @@ export default function WordQuiz({
   review?: { title: string; none: string };
   // called once each time a round is over (homework ticks itself)
   onRoundEnd?: () => void;
+  // instead of make() again: a round Claude writes (the blitz) starts over by asking for a new one
+  onNextRound?: () => void;
   /** false for a quiz that is simply on the page (Home): its first listening question waits for
       the student instead of speaking as soon as the page opens */
   speakAtOnce?: boolean;
@@ -155,7 +158,7 @@ export default function WordQuiz({
             <p className="hint">{review.none}</p>
           ))}
         <div className="row-actions">
-          <button type="button" className="btn primary" autoFocus onClick={restart}>
+          <button type="button" className="btn primary" autoFocus onClick={onNextRound ?? restart}>
             {tx('nextRound')}
           </button>
         </div>
@@ -205,7 +208,9 @@ export default function WordQuiz({
       ? `${question.form.p} ${question.form.f}`
       : question.kind === 'pick-ru'
         ? question.word.ru
-        : question.word.fr;
+        : question.kind === 'gap'
+          ? question.answer
+          : question.word.fr;
   const listen = question.kind !== 'pick-ru' && (
     <>
       {' '}
@@ -245,18 +250,22 @@ export default function WordQuiz({
             { b: (chunk) => <b lang={question.kind === 'pick-ru' ? 'ru' : language}>{chunk}</b> },
             { answer }
           )}
-          {question.kind !== 'form' && question.kind !== 'pick-ru' && question.word.tr && (
-            <>
-              {' '}
-              <Transcription tr={question.word.tr} />
-            </>
-          )}
+          {/* a gap's answer is a form of the word, which the word's transcription doesn't match */}
+          {question.kind !== 'form' &&
+            question.kind !== 'pick-ru' &&
+            question.kind !== 'gap' &&
+            question.word.tr && (
+              <>
+                {' '}
+                <Transcription tr={question.word.tr} />
+              </>
+            )}
           {listen}
         </p>
       )}
-      {question.kind === 'listen' && (
+      {(question.kind === 'listen' || question.kind === 'define' || question.kind === 'gap') && (
         <p className="ru-line" lang="ru">
-          {question.word.ru}
+          {question.kind === 'gap' ? question.ru : question.word.ru}
         </p>
       )}
       <div className="row-actions">
@@ -267,11 +276,19 @@ export default function WordQuiz({
     </>
   );
 
-  if (question.kind === 'pick-ru' || question.kind === 'pick-fr') {
-    const right = question.kind === 'pick-ru' ? question.word.ru : question.word.fr;
+  if (question.kind === 'pick-ru' || question.kind === 'pick-fr' || question.kind === 'gap') {
+    const right = answer;
     return shell(
       <>
-        {question.kind === 'pick-ru' ? (
+        {question.kind === 'gap' ? (
+          <p className="sentence" lang={language}>
+            {question.before}{' '}
+            <span className={'gap' + (result == null ? '' : result === 'ok' ? ' ok' : ' bad')}>
+              {result == null ? '\u00a0' : question.answer}
+            </span>{' '}
+            {question.after}
+          </p>
+        ) : question.kind === 'pick-ru' ? (
           <p className="quiz-word">
             <span lang={language}>{question.word.fr}</span>
             {question.word.tr && <Transcription tr={question.word.tr} />}
@@ -283,7 +300,11 @@ export default function WordQuiz({
           </p>
         )}
         <p className="ru-line">
-          {question.kind === 'pick-ru' ? tx('pickTranslation') : names.t(`pickWord.${language}`)}
+          {question.kind === 'pick-ru'
+            ? tx('pickTranslation')
+            : question.kind === 'gap'
+              ? tx('pickForGap')
+              : names.t(`pickWord.${language}`)}
         </p>
         <div className="choices">
           {question.choices.map((choice) => {
@@ -343,6 +364,13 @@ export default function WordQuiz({
           <p className="ru-line">
             {form ? tx(`writeWhatYouHearForm.${form}`) : tx('writeWhatYouHear')}
           </p>
+        </>
+      ) : question.kind === 'define' ? (
+        <>
+          <p className="quiz-definition" lang={language}>
+            {question.definition}
+          </p>
+          <p className="ru-line">{tx('guessFromDefinition')}</p>
         </>
       ) : (
         <>

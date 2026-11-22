@@ -174,6 +174,21 @@ Words:
 ${list}`;
 }
 
+// Definitions of some of the lesson's words in their own language, for the student to guess the word from.
+export function definitionPrompt(
+  words: { fr: string; ru: string }[],
+  language: LearnLanguage,
+  level = 'A1'
+): string {
+  const list = words.map((word) => `- ${word.fr} = ${word.ru}`).join('\n');
+  const name = LANGUAGE_NAMES[language];
+  return `For each ${name} word or expression below (with its Russian meaning in this lesson), write a short definition in ${name} for a Russian-speaking learner at CEFR level ${level} (A0 means a complete beginner: only the most common words), the way a learner's dictionary explains a word: one simple sentence of at most about 15 words, with words easier than the one defined. The learner reads the definition and has to guess the word, so the definition never contains the word itself, a word of the same root or its translation, and it fits only this word, not another word of the list. A noun may start with what kind of thing it is (in French: un endroit où…, une personne qui…, un objet pour…); a verb with what you do.
+Reply with only a JSON array of objects, in the order of the list: {"word": string, "definition": string}. word is the list entry exactly as given.
+
+Words:
+${list}`;
+}
+
 // How one word or phrase the learner marked is described: shared by the photo and the reader.
 const MARKED_ITEM_RULES = `- fr: the marked text exactly as it is written (a single marked phrase stays one item).
 - context: the clause it appears in, copied from the text, at most about 12 words.

@@ -1953,6 +1953,13 @@ pre.source {
   gap: 10px;
   flex-wrap: wrap;
 }
+/* the blitz: a word's definition in its own language, to guess the word from */
+.quiz-definition {
+  font-family: var(--serif);
+  font-size: 22px;
+  line-height: 1.4;
+  margin: 4px 0;
+}
 .quiz-word.ru {
   font-family: var(--sans);
   font-size: 24px;

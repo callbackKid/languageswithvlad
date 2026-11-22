@@ -19,7 +19,20 @@ export type QuizItem =
   | { kind: 'type-fr'; word: Word }
   // dictation: the word is read aloud and typed
   | { kind: 'listen'; word: Word }
-  | { kind: 'form'; form: FormQuestion };
+  | { kind: 'form'; form: FormQuestion }
+  // the blitz: a sentence with the word as its gap (in the form the sentence needs), picked from choices
+  | {
+      kind: 'gap';
+      word: Word;
+      before: string;
+      after: string;
+      answer: string;
+      choices: string[];
+      // the whole sentence in Russian
+      ru: string;
+    }
+  // the blitz: the word's definition in its own language, the word typed
+  | { kind: 'define'; word: Word; definition: string };
 
 const DAY = 86400000;
 // How much more often a key word of the lesson (★) is asked.

@@ -33,7 +33,7 @@ A download arrow next to a lesson in the list marks one already prepared on the 
 - **Homework**: the tasks the teacher set, with what each asks; ticked off on the device.
 - **Book exercises**: exercises from the student's book in the lesson. **Import from the book** reads photos or PDF pages and writes what is ticked (the exercises, the reading text and/or the grammar) under that lesson in the document (a block starting with 📖), so the teacher and the student both see it. Answers are never copied, even when the page or a photo shows them: the student does the exercises. Needs the same one-time setup as adding lessons from photos.
 - **My notes** also shows the lesson board and the lesson-mode notes from that day, as saved on the device.
-- **Exercises**: quiz, flashcards, translation matching, synonym/antonym matching, fill-the-gap sentences, dictation (a French adjective, whose masculine and feminine often sound alike, says which form to write, read from its Russian translation). Words can be exported for Anki.
+- **Exercises**: quiz, flashcards, translation matching, synonym/antonym matching, fill-the-gap sentences, a **vocabulary blitz** (10 questions mixing gap sentences with choices and definitions in the language learned, from which the word is typed), dictation (a French adjective, whose masculine and feminine often sound alike, says which form to write, read from its Russian translation). Words can be exported for Anki.
 - **Verbs** (every language but English): the lesson's verbs as a list, in alphabetical order (a reflexive verb under the verb itself) or by group (French 1, 2, 3, an -ir verb placed by its nous form once its table is loaded; -ar/-er/-ir, -are/-ere/-ire for the others; `src/entities/verb/lib/verbGroups.ts`), the choice kept on the device; ✕ takes a verb out of the lesson like a word, and **Bring back removed verbs** puts it back. Then conjugation tables in the language's main tenses (French in seven, affirmative and negative, the futur proche built by the app from the infinitive instead of asked of Claude; German, Spanish, Italian and European Portuguese in five or six), a typing drill per tense, and a quick quiz.
 - **My notes** (a notepad per lesson) and **Original** (the lesson exactly as written).
 - **Word menu**, everywhere outside exercises: select a word or phrase in a language being learned (double-click; on a phone, hold it) and choose **Translate** (in its sentence, with the dictionary form, tense and a short note), **Define** (in that language, with Russian), **Examples** or **Conjugate**, plus 🔊 and ☆. One Claude answer covers all four and is kept on the device. On a lesson's pages and in lesson mode, **Add to lesson N** writes `word — translation` under that lesson in the document, so the word joins the lesson's exercises after the sync. On the Text page a single click on a word opens it too, and the words looked up there are listed under the text. On Words to learn, **Look up a word** opens it for a word typed by hand.
@@ -277,7 +277,7 @@ api/                serverless functions (Vercel)
   doc.ts            reads the Google Doc (or the Notion page)
   analyze.ts        prepares a lesson: words, pairs, verbs
   conjugate.ts      a verb’s tables
-  gaps.ts           fill-the-gap sentences
+  gaps.ts           fill-the-gap sentences, and the blitz's definitions
   paper.ts          from paper: underlined words on a photo, handwritten notes, textbook pages
   text.ts           a selected word's card (the word menu); a pasted text translated, exercises
   discussion.ts     a discussion question for the start of a lesson
@@ -320,7 +320,7 @@ public/             the app icon (icon.svg and the PNGs drawn from it) and manif
 
 ## Costs
 
-Claude is called when a lesson is first prepared, when a verb is first opened, for each new set of gap sentences, for each photo or PDF, for each discussion question, and on the Text page for each explained word, each translation and each set of exercises; for each written homework answer checked and each homework made from a lesson. Lessons and verbs are cached in each student’s browser, and warm server instances reuse identical answers, so a class sharing one document mostly pays for each lesson once per student device. Set a monthly spend limit in the Anthropic console.
+Claude is called when a lesson is first prepared, when a verb is first opened, for each new set of gap sentences and each blitz round, for each photo or PDF, for each discussion question, and on the Text page for each explained word, each translation and each set of exercises; for each written homework answer checked and each homework made from a lesson. Lessons and verbs are cached in each student’s browser, and warm server instances reuse identical answers, so a class sharing one document mostly pays for each lesson once per student device. Set a monthly spend limit in the Anthropic console.
 
 ## Limits
 

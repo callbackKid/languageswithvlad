@@ -299,4 +299,10 @@ export const api = {
       method: 'POST',
       body: JSON.stringify({ words, language, level }),
     }),
+  // a definition of each word in its own language, for the blitz
+  definitions: (words: { fr: string; ru: string }[], language: Language, level: string) =>
+    request<unknown>('/api/gaps', {
+      method: 'POST',
+      body: JSON.stringify({ action: 'definitions', words, language, level }),
+    }),
 };

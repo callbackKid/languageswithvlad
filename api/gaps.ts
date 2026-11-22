@@ -2,7 +2,7 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 import { claudeJSON, FAST_MODEL } from './_lib/claude.js';
 import { asLevel, checkAccess, fail, onlyPost, text } from './_lib/http.js';
-import { asLanguage, gapPrompt } from './_lib/prompts.js';
+import { asLanguage, definitionPrompt, gapPrompt } from './_lib/prompts.js';
 
 // at most this many words get sentences in one request, each word and translation this long
 const MAX_WORDS = 30;
@@ -12,7 +12,8 @@ const MAX_TRANSLATION_LENGTH = 120;
 const MIN_SENTENCES = 4;
 const MAX_SENTENCES = 8;
 
-// Sentences with a gap for some of the lesson's words, at the student's level.
+/** Sentences with a gap for some of the lesson's words, at the student's level; with
+    action "definitions", a definition of each word in its own language instead (the blitz). */
 export default async function handler(request: VercelRequest, response: VercelResponse) {
   if (!onlyPost(request, response) || !checkAccess(request, response)) return;
   const raw: unknown[] = Array.isArray(request.body?.words) ? request.body.words : [];
@@ -28,10 +29,14 @@ export default async function handler(request: VercelRequest, response: VercelRe
   const count = Math.min(MAX_SENTENCES, Math.max(MIN_SENTENCES, words.length));
   const language = asLanguage(request.body?.language);
   const level = asLevel(request.body?.level) ?? 'A1';
+  const prompt =
+    request.body?.action === 'definitions'
+      ? definitionPrompt(words.slice(0, MAX_SENTENCES), language, level)
+      : gapPrompt(words, count, language, level);
   try {
     // Fresh sentences every time, so no caching.
     response.status(200).json(
-      await claudeJSON(gapPrompt(words, count, language, level), {
+      await claudeJSON(prompt, {
         model: FAST_MODEL,
         maxTokens: 3000,
         cache: false,

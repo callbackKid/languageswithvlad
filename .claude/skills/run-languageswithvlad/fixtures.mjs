@@ -500,6 +500,12 @@ export function answerFor(url, body, headers = {}, scenario = 'upcoming') {
     return {};
   }
   if (path === '/api/discussion') return DISCUSSION;
+  // the blitz's definitions: one for each word sent, never containing the word
+  if (path === '/api/gaps' && body?.action === 'definitions')
+    return (body.words ?? []).map((word) => ({
+      word: word.fr,
+      definition: 'Une chose que l’on apprend dans cette leçon de test.',
+    }));
   if (path === '/api/gaps') return GAPS;
   if (path === '/api/append') return { ok: true };
   if (path === '/api/call-token' && body?.kind === 'jitsi')

@@ -53,6 +53,18 @@ export const NEWS: NewsDay[] = [
       {
         kind: 'new',
         text: {
+          en: 'Vocabulary blitz, a new exercise on the Words tab: a round of 10 questions on the lesson’s words, half of them a sentence with a gap to fill from four choices, half a short definition in the language you learn, from which you guess the word and type it.',
+          ru: '«Словарный блиц» — новое упражнение на вкладке «Слова»: раунд из 10 вопросов по словам урока. В половине из них нужно вставить в пропуск в предложении одно из четырёх слов, в другой половине — по короткому определению на изучаемом языке угадать слово и написать его.',
+          fr: '« Vocabulaire éclair », un nouvel exercice dans l’onglet Mots : un tour de 10 questions sur les mots de la leçon. La moitié sont des phrases à trou, à compléter parmi quatre choix ; l’autre moitié, de courtes définitions dans la langue que vous apprenez, à partir desquelles vous devinez le mot avant de l’écrire.',
+          de: '„Vokabelblitz“, eine neue Übung im Tab Wörter: eine Runde mit 10 Fragen zu den Wörtern der Lektion. Die eine Hälfte sind Lückensätze, für die du das passende Wort aus vier Vorschlägen wählst, die andere kurze Definitionen in der Sprache, die du lernst: Du errätst das Wort und tippst es ein.',
+          es: '«Vocabulario relámpago», un ejercicio nuevo en la pestaña Palabras: una ronda de 10 preguntas sobre las palabras de la lección. La mitad son frases con un hueco que rellenas eligiendo entre cuatro opciones; la otra mitad, definiciones cortas en el idioma que aprendes, con las que adivinas la palabra y la escribes.',
+          pt: '«Vocabulário relâmpago», um exercício novo no separador Palavras: uma ronda de 10 perguntas sobre as palavras da lição. Metade são frases com um espaço para preencher com uma de quatro opções; a outra metade são definições curtas na língua que aprende, a partir das quais adivinha a palavra e a escreve.',
+          it: '«Vocabolario lampo», un nuovo esercizio nella scheda Parole: un giro di 10 domande sulle parole della lezione. Metà sono frasi con uno spazio vuoto da riempire scegliendo tra quattro opzioni; l’altra metà, brevi definizioni nella lingua che studi, da cui indovini la parola e la scrivi.',
+        },
+      },
+      {
+        kind: 'new',
+        text: {
           en: 'Lesson history: a download arrow next to a lesson shows it is already on this device, so its words and exercises open at once, without waiting for Claude.',
           ru: 'История уроков: стрелка загрузки рядом с уроком показывает, что он уже на этом устройстве, поэтому его слова и упражнения открываются сразу, без ожидания Claude.',
           fr: 'Historique des leçons : une flèche de téléchargement à côté d’une leçon indique qu’elle est déjà sur cet appareil ; ses mots et ses exercices s’ouvrent donc tout de suite, sans attendre Claude.',

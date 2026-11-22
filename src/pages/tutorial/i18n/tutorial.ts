@@ -79,7 +79,7 @@ export const tutorial = defineMessages({
     'lessons.step2':
       'Stay on the <b>Words</b> tab. Every word is ticked; untick the ones you don’t want, or use <b>Pick all</b>, <b>Clear</b> and the filter box.',
     'lessons.step3':
-      'Start an exercise from the row of buttons: <pbtn>Quiz</pbtn> <btn>Flashcards</btn> <btn>Match translations</btn> <btn>Synonyms & antonyms</btn> <btn>Fill the gap</btn> <btn>Dictation</btn>',
+      'Start an exercise from the row of buttons: <pbtn>Quiz</pbtn> <btn>Flashcards</btn> <btn>Match translations</btn> <btn>Synonyms & antonyms</btn> <btn>Fill the gap</btn> <btn>Vocabulary blitz</btn> <btn>Dictation</btn>',
     'lessons.step4':
       'Press 🔊 to hear a word and ☆ to put it on <b>Words to learn</b>. ✕ takes a word out of the lesson’s list and its exercises (one Claude picked up by mistake); <b>Bring back removed words</b> under the list puts them back.',
     'lessons.step5':
@@ -338,7 +338,7 @@ export const tutorial = defineMessages({
     'lessons.step2':
       'Оставайтесь на вкладке <b>Слова</b>. Все слова отмечены; снимите галочки с ненужных или используйте <b>Выбрать все</b>, <b>Снять выбор</b> и поиск.',
     'lessons.step3':
-      'Запустите упражнение кнопкой: <pbtn>Тест</pbtn> <btn>Карточки</btn> <btn>Найдите перевод</btn> <btn>Синонимы и антонимы</btn> <btn>Вставьте слово</btn> <btn>Диктант</btn>',
+      'Запустите упражнение кнопкой: <pbtn>Тест</pbtn> <btn>Карточки</btn> <btn>Найдите перевод</btn> <btn>Синонимы и антонимы</btn> <btn>Вставьте слово</btn> <btn>Словарный блиц</btn> <btn>Диктант</btn>',
     'lessons.step4':
       'Нажмите 🔊, чтобы услышать слово, и ☆, чтобы добавить его в <b>Слова на изучении</b>. ✕ убирает слово из списка урока и из упражнений (если Claude взял его по ошибке); <b>Вернуть убранные слова</b> под списком возвращает их.',
     'lessons.step5':
@@ -597,7 +597,7 @@ export const tutorial = defineMessages({
     'lessons.step2':
       'Restez sur l’onglet <b>Mots</b>. Tous les mots sont cochés ; décochez ceux dont vous ne voulez pas, ou utilisez <b>Tout choisir</b>, <b>Tout retirer</b> et le filtre.',
     'lessons.step3':
-      'Lancez un exercice avec les boutons : <pbtn>Quiz</pbtn> <btn>Cartes</btn> <btn>Associer les traductions</btn> <btn>Synonymes et antonymes</btn> <btn>Texte à trous</btn> <btn>Dictée</btn>',
+      'Lancez un exercice avec les boutons : <pbtn>Quiz</pbtn> <btn>Cartes</btn> <btn>Associer les traductions</btn> <btn>Synonymes et antonymes</btn> <btn>Texte à trous</btn> <btn>Vocabulaire éclair</btn> <btn>Dictée</btn>',
     'lessons.step4':
       'Appuyez sur 🔊 pour entendre un mot et sur ☆ pour l’ajouter aux <b>Mots à apprendre</b>. ✕ retire un mot de la liste de la leçon et de ses exercices (un mot que Claude a relevé par erreur) ; <b>Remettre les mots retirés</b>, sous la liste, les remet.',
     'lessons.step5':
@@ -863,7 +863,7 @@ export const tutorial = defineMessages({
     'lessons.step2':
       'Bleib auf dem Tab <b>Wörter</b>. Alle Wörter sind angehakt; entferne die Haken bei denen, die du nicht willst, oder nutze <b>Alle auswählen</b>, <b>Auswahl aufheben</b> und das Suchfeld.',
     'lessons.step3':
-      'Starte eine Übung über die Knöpfe: <pbtn>Quiz</pbtn> <btn>Karteikarten</btn> <btn>Übersetzungen zuordnen</btn> <btn>Synonyme & Antonyme</btn> <btn>Lückentext</btn> <btn>Diktat</btn>',
+      'Starte eine Übung über die Knöpfe: <pbtn>Quiz</pbtn> <btn>Karteikarten</btn> <btn>Übersetzungen zuordnen</btn> <btn>Synonyme & Antonyme</btn> <btn>Lückentext</btn> <btn>Vokabelblitz</btn> <btn>Diktat</btn>',
     'lessons.step4':
       'Tippe auf 🔊, um ein Wort zu hören, und auf ☆, um es zu den <b>Lernwörtern</b> hinzuzufügen. ✕ nimmt ein Wort aus der Wortliste der Lektion und aus ihren Übungen (etwa eines, das Claude versehentlich aufgenommen hat); <b>Entfernte Wörter zurückholen</b> unter der Liste holt sie zurück.',
     'lessons.step5':
@@ -1124,7 +1124,7 @@ export const tutorial = defineMessages({
     'lessons.step2':
       'Quédate en la pestaña <b>Palabras</b>. Todas las palabras están marcadas; desmarca las que no quieras o usa <b>Elegir todas</b>, <b>Quitar</b> y el filtro.',
     'lessons.step3':
-      'Empieza un ejercicio desde la fila de botones: <pbtn>Test</pbtn> <btn>Tarjetas</btn> <btn>Une las traducciones</btn> <btn>Sinónimos y antónimos</btn> <btn>Rellena el hueco</btn> <btn>Dictado</btn>',
+      'Empieza un ejercicio desde la fila de botones: <pbtn>Test</pbtn> <btn>Tarjetas</btn> <btn>Une las traducciones</btn> <btn>Sinónimos y antónimos</btn> <btn>Rellena el hueco</btn> <btn>Vocabulario relámpago</btn> <btn>Dictado</btn>',
     'lessons.step4':
       'Pulsa 🔊 para oír una palabra y ☆ para ponerla en <b>Palabras por aprender</b>. ✕ quita una palabra de la lista de la lección y de sus ejercicios (una que Claude cogió por error); <b>Recuperar las palabras quitadas</b>, debajo de la lista, las devuelve.',
     'lessons.step5':
@@ -1388,7 +1388,7 @@ export const tutorial = defineMessages({
     'lessons.step2':
       'Fique no separador <b>Palavras</b>. Todas as palavras estão marcadas; desmarque as que não quer ou use <b>Escolher todas</b>, <b>Limpar</b> e o filtro.',
     'lessons.step3':
-      'Comece um exercício na fila de botões: <pbtn>Teste</pbtn> <btn>Cartões</btn> <btn>Ligue as traduções</btn> <btn>Sinónimos e antónimos</btn> <btn>Preencha o espaço</btn> <btn>Ditado</btn>',
+      'Comece um exercício na fila de botões: <pbtn>Teste</pbtn> <btn>Cartões</btn> <btn>Ligue as traduções</btn> <btn>Sinónimos e antónimos</btn> <btn>Preencha o espaço</btn> <btn>Vocabulário relâmpago</btn> <btn>Ditado</btn>',
     'lessons.step4':
       'Carregue em 🔊 para ouvir uma palavra e em ☆ para a pôr nas <b>Palavras por aprender</b>. ✕ retira uma palavra da lista da lição e dos seus exercícios (uma que o Claude apanhou por engano); <b>Repor as palavras retiradas</b>, por baixo da lista, volta a pô-las.',
     'lessons.step5':
@@ -1651,7 +1651,7 @@ export const tutorial = defineMessages({
     'lessons.step2':
       'Resta nella scheda <b>Parole</b>. Tutte le parole sono spuntate; togli la spunta a quelle che non vuoi, oppure usa <b>Scegli tutte</b>, <b>Togli</b> e il filtro.',
     'lessons.step3':
-      'Avvia un esercizio dalla fila di pulsanti: <pbtn>Quiz</pbtn> <btn>Flashcard</btn> <btn>Abbina le traduzioni</btn> <btn>Sinonimi e contrari</btn> <btn>Completa la frase</btn> <btn>Dettato</btn>',
+      'Avvia un esercizio dalla fila di pulsanti: <pbtn>Quiz</pbtn> <btn>Flashcard</btn> <btn>Abbina le traduzioni</btn> <btn>Sinonimi e contrari</btn> <btn>Completa la frase</btn> <btn>Vocabolario lampo</btn> <btn>Dettato</btn>',
     'lessons.step4':
       'Premi 🔊 per ascoltare una parola e ☆ per metterla nelle <b>Parole da imparare</b>. ✕ toglie una parola dalla lista della lezione e dai suoi esercizi (una che Claude ha preso per errore); <b>Recupera le parole tolte</b>, sotto la lista, le rimette.',
     'lessons.step5':
