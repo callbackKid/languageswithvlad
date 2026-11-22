@@ -27,8 +27,8 @@ const MAX_KEY_WORD_LENGTH = 80;
 const MIN_TRANSLATE_SENTENCES = 2;
 const MAX_TRANSLATE_SENTENCES = 8;
 const DEFAULT_TRANSLATE_SENTENCES = 4;
-// a made exercise: its questions (keep in step with src/pages/call/ui/MakeExercise.tsx), the grammar
-// point as the teacher types it, and the lesson's words it practises
+// a made exercise: its questions and the grammar point as the teacher types it (both keep in step
+// with src/pages/call/ui/MakeExercise.tsx), and the lesson's words it practises
 const MIN_EXERCISE_QUESTIONS = 3;
 const MAX_EXERCISE_QUESTIONS = 15;
 const DEFAULT_EXERCISE_QUESTIONS = 8;

@@ -17,6 +17,8 @@ const LAST_KEY = 'exercise:last';
 // keep in step with MIN_ / MAX_ / DEFAULT_EXERCISE_QUESTIONS in api/analyze.ts
 const QUESTION_COUNTS = [5, 8, 10, 15] as const;
 const DEFAULT_COUNT = 8;
+// the longest grammar point; keep in step with MAX_GRAMMAR_LENGTH in api/analyze.ts
+const MAX_GRAMMAR_LENGTH = 200;
 
 // The saved exercise, checked; null when there is none or it can't be used.
 const readLast = (): MadeExercise | null =>
@@ -101,7 +103,7 @@ export default function MakeExercise({
               type="text"
               lang={language}
               value={grammar}
-              maxLength={200}
+              maxLength={MAX_GRAMMAR_LENGTH}
               placeholder={t('grammarPlaceholder')}
               onChange={(event) => setGrammar(event.target.value)}
             />
