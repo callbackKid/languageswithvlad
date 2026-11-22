@@ -10,12 +10,15 @@ const ARTICLE =
 const MAX_GROUP_NAME_LENGTH = 60;
 
 /** Claude's groups by meaning for the words sent: each word (as sent) to its group's name, its
-    spelling matched without regard to case. Words left out aren't in the map; throws when no word
-    came back in a group. */
+    spelling matched without regard to case. Words left out aren't in the map, even when that is
+    all of them (the caller keeps them as in no group, so they aren't asked about again); throws
+    only when the answer has no list of groups at all. */
 export function normalizeWordGroups(raw: unknown, sent: string[]): Map<string, string> {
+  const { groups } = asObject(raw);
+  if (!Array.isArray(groups)) throw new Error('no_groups');
   const wanted = new Map(sent.map((word) => [word.toLowerCase(), word]));
   const found = new Map<string, string>();
-  for (const group of asArray(asObject(raw).groups).map(asObject)) {
+  for (const group of asArray(groups).map(asObject)) {
     const name = asText(group.name).slice(0, MAX_GROUP_NAME_LENGTH);
     if (!name) continue;
     for (const listed of asArray(group.words).map(asText)) {
@@ -23,7 +26,6 @@ export function normalizeWordGroups(raw: unknown, sent: string[]): Map<string, s
       if (word && !found.has(word)) found.set(word, name);
     }
   }
-  if (!found.size) throw new Error('empty');
   return found;
 }
 
