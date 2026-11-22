@@ -7,6 +7,7 @@ import { followLink, hrefFor } from '@/shared/lib/router';
 import { LessonView } from '@/widgets/lesson-view';
 import { WordsTab } from '@/widgets/word-list';
 
+import { lessonsText } from '../i18n/lessons';
 import Practice from './Practice';
 
 /** Lesson history: one tab with the lessons, oldest to newest, and the open one beside them; the
@@ -32,7 +33,10 @@ export default function Lessons({
 }) {
   const { t, locale } = useTranslation(app);
   const shortDateFormat = new Intl.DateTimeFormat(locale, { day: 'numeric', month: 'short' });
+  const downloadedLabel = useTranslation(lessonsText).t('downloaded');
   const currentLessonKey = lesson?.key ?? null;
+  // lessons whose words are prepared and kept on this device (the Downloaded lessons tab)
+  const downloaded = new Set(bank.lessons.filter((info) => info.ready).map((info) => info.key));
   // The lesson list runs oldest to newest; the open lesson (usually the newest) is scrolled into
   // view, along the row on a phone and down the column on a computer, without moving the page.
   const lessonList = useRef<HTMLElement>(null);
@@ -81,6 +85,25 @@ export default function Lessons({
               >
                 <span className="n">{listedLesson.n}</span>
                 <span className="d">{shortDateFormat.format(listedLesson.date)}</span>
+                {downloaded.has(listedLesson.key) && (
+                  <span
+                    className="lesson-downloaded"
+                    role="img"
+                    aria-label={downloadedLabel}
+                    data-tooltip={downloadedLabel}
+                  >
+                    <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+                      <path
+                        d="M8 2v8M4.5 6.5 8 10l3.5-3.5M3 13.5h10"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="1.6"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </span>
+                )}
               </a>
             ))}
           </nav>

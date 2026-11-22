@@ -26,6 +26,8 @@ React + TypeScript + Vite in the browser, small Vercel serverless functions in `
 
 **Lesson history**
 
+A download arrow next to a lesson in the list marks one already prepared on the device (its words are on the Downloaded lessons tab), so it opens without waiting for Claude.
+
 - **Words**: vocabulary extracted by Claude, with Russian translations (ones Claude added are marked ✱), pronunciation 🔊, and ☆ to save a word to Words to learn. The words are sorted into groups by meaning (Food, Time…), named in the interface language by a small separate Claude call (the fast model) and kept per word on the device, so a word is grouped once; a **group** chosen next to Filter words shows only its words, and the exercises use only them. Words to learn is grouped the same way. **✕** on a word in a lesson's list takes it out of that lesson's list and every exercise, on the device (`removed` in `src/entities/lesson/model/removed.ts`, by lesson key, so it stays out after the lesson is edited and read again); **Bring back removed words** under the list puts them back.
 - **Grammar**: every grammar point of the lesson explained in the interface language (how it's formed, when it's used, examples, the usual mistake), with **Practise this rule** for gap sentences on it.
 - **Homework**: the tasks the teacher set, with what each asks; ticked off on the device.

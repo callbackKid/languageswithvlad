@@ -51,6 +51,18 @@ export const NEWS: NewsDay[] = [
     date: '2026-11-22',
     items: [
       {
+        kind: 'new',
+        text: {
+          en: 'Lesson history: a download arrow next to a lesson shows it is already on this device, so its words and exercises open at once, without waiting for Claude.',
+          ru: 'История уроков: стрелка загрузки рядом с уроком показывает, что он уже на этом устройстве, поэтому его слова и упражнения открываются сразу, без ожидания Claude.',
+          fr: 'Historique des leçons : une flèche de téléchargement à côté d’une leçon indique qu’elle est déjà sur cet appareil ; ses mots et ses exercices s’ouvrent donc tout de suite, sans attendre Claude.',
+          de: 'Lektionsverlauf: Ein Download-Pfeil neben einer Lektion zeigt, dass sie schon auf diesem Gerät ist. Wörter und Übungen öffnen sich dann sofort, ohne Warten auf Claude.',
+          es: 'Historial de lecciones: una flecha de descarga junto a una lección indica que ya está en este dispositivo, así que sus palabras y ejercicios se abren al instante, sin esperar a Claude.',
+          pt: 'Histórico de lições: uma seta para baixo ao lado de uma lição mostra que esta já está descarregada neste dispositivo, por isso as suas palavras e exercícios abrem de imediato, sem esperar pelo Claude.',
+          it: 'Cronologia lezioni: una freccia di download accanto a una lezione indica che è già su questo dispositivo, quindi le sue parole e i suoi esercizi si aprono subito, senza aspettare Claude.',
+        },
+      },
+      {
         kind: 'better',
         text: {
           en: 'Verbs tab: the verbs are a list now, in alphabetical order or by group (1, 2, 3 for French; -ar, -er, -ir and the like for Spanish, Portuguese and Italian). ✕ takes a verb out of the lesson, as for words, and Bring back removed verbs puts them back.',

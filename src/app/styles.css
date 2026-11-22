@@ -1166,6 +1166,12 @@ nav.lessons {
   font-size: 14px;
   color: var(--muted);
 }
+.lesson-downloaded {
+  display: inline-flex;
+  align-self: center;
+  margin-left: auto;
+  color: var(--muted);
+}
 .lesson-link:hover {
   background: var(--surface);
 }

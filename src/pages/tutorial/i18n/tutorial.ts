@@ -75,7 +75,7 @@ export const tutorial = defineMessages({
     'lessons.intro':
       'Every lesson from the document, newest selected. Claude reads it once and prepares the vocabulary with translations, synonym and antonym pairs, and the verbs.',
     'lessons.step1':
-      'Pick a lesson in the list on the left (each lesson has its own link you can share).',
+      'Pick a lesson in the list on the left (each lesson has its own link you can share). A download arrow next to a lesson means it is already on this device: its words and exercises open at once.',
     'lessons.step2':
       'Stay on the <b>Words</b> tab. Every word is ticked; untick the ones you don’t want, or use <b>Pick all</b>, <b>Clear</b> and the filter box.',
     'lessons.step3':
@@ -334,7 +334,7 @@ export const tutorial = defineMessages({
     'lessons.intro':
       'Все уроки из документа, выбран самый новый. Claude один раз читает урок и готовит лексику с переводами, пары синонимов и антонимов и глаголы.',
     'lessons.step1':
-      'Выберите урок в списке слева (у каждого урока своя ссылка, ею можно поделиться).',
+      'Выберите урок в списке слева (у каждого урока своя ссылка, ею можно поделиться). Стрелка загрузки рядом с уроком значит, что он уже на этом устройстве: его слова и упражнения открываются сразу.',
     'lessons.step2':
       'Оставайтесь на вкладке <b>Слова</b>. Все слова отмечены; снимите галочки с ненужных или используйте <b>Выбрать все</b>, <b>Снять выбор</b> и поиск.',
     'lessons.step3':
@@ -593,7 +593,7 @@ export const tutorial = defineMessages({
     'lessons.intro':
       'Toutes les leçons du document, la plus récente sélectionnée. Claude la lit une fois et prépare le vocabulaire avec les traductions, les paires de synonymes et d’antonymes, et les verbes.',
     'lessons.step1':
-      'Choisissez une leçon dans la liste à gauche (chaque leçon a son propre lien, que vous pouvez partager).',
+      'Choisissez une leçon dans la liste à gauche (chaque leçon a son propre lien, que vous pouvez partager). Une flèche de téléchargement à côté d’une leçon signifie qu’elle est déjà sur cet appareil : ses mots et ses exercices s’ouvrent tout de suite.',
     'lessons.step2':
       'Restez sur l’onglet <b>Mots</b>. Tous les mots sont cochés ; décochez ceux dont vous ne voulez pas, ou utilisez <b>Tout choisir</b>, <b>Tout retirer</b> et le filtre.',
     'lessons.step3':
@@ -859,7 +859,7 @@ export const tutorial = defineMessages({
     'lessons.intro':
       'Alle Lektionen aus dem Dokument, die neueste ist ausgewählt. Claude liest sie einmal und bereitet den Wortschatz mit Übersetzungen, Synonym- und Antonympaaren und die Verben vor.',
     'lessons.step1':
-      'Wähle links eine Lektion aus der Liste (jede Lektion hat einen eigenen Link zum Teilen).',
+      'Wähle links eine Lektion aus der Liste (jede Lektion hat einen eigenen Link zum Teilen). Ein Download-Pfeil neben einer Lektion bedeutet, dass sie schon auf diesem Gerät ist: Wörter und Übungen öffnen sich sofort.',
     'lessons.step2':
       'Bleib auf dem Tab <b>Wörter</b>. Alle Wörter sind angehakt; entferne die Haken bei denen, die du nicht willst, oder nutze <b>Alle auswählen</b>, <b>Auswahl aufheben</b> und das Suchfeld.',
     'lessons.step3':
@@ -1120,7 +1120,7 @@ export const tutorial = defineMessages({
     'lessons.intro':
       'Todas las lecciones del documento, con la más nueva seleccionada. Claude la lee una vez y prepara el vocabulario con traducciones, pares de sinónimos y antónimos, y los verbos.',
     'lessons.step1':
-      'Elige una lección en la lista de la izquierda (cada lección tiene su propio enlace que puedes compartir).',
+      'Elige una lección en la lista de la izquierda (cada lección tiene su propio enlace que puedes compartir). Una flecha de descarga junto a una lección significa que ya está en este dispositivo: sus palabras y ejercicios se abren al instante.',
     'lessons.step2':
       'Quédate en la pestaña <b>Palabras</b>. Todas las palabras están marcadas; desmarca las que no quieras o usa <b>Elegir todas</b>, <b>Quitar</b> y el filtro.',
     'lessons.step3':
@@ -1384,7 +1384,7 @@ export const tutorial = defineMessages({
     'lessons.intro':
       'Todas as lições do documento, com a mais recente selecionada. O Claude lê-a uma vez e prepara o vocabulário com traduções, pares de sinónimos e antónimos, e os verbos.',
     'lessons.step1':
-      'Escolha uma lição na lista à esquerda (cada lição tem a sua própria ligação, que pode partilhar).',
+      'Escolha uma lição na lista à esquerda (cada lição tem a sua própria ligação, que pode partilhar). Uma seta para baixo ao lado de uma lição significa que esta já está descarregada neste dispositivo: as suas palavras e exercícios abrem de imediato.',
     'lessons.step2':
       'Fique no separador <b>Palavras</b>. Todas as palavras estão marcadas; desmarque as que não quer ou use <b>Escolher todas</b>, <b>Limpar</b> e o filtro.',
     'lessons.step3':
@@ -1647,7 +1647,7 @@ export const tutorial = defineMessages({
     'lessons.intro':
       'Tutte le lezioni del documento, con la più recente selezionata. Claude la legge una volta e prepara il lessico con le traduzioni, le coppie di sinonimi e contrari, e i verbi.',
     'lessons.step1':
-      'Scegli una lezione nella lista a sinistra (ogni lezione ha un proprio link che puoi condividere).',
+      'Scegli una lezione nella lista a sinistra (ogni lezione ha un proprio link che puoi condividere). Una freccia di download accanto a una lezione significa che è già su questo dispositivo: le sue parole e i suoi esercizi si aprono subito.',
     'lessons.step2':
       'Resta nella scheda <b>Parole</b>. Tutte le parole sono spuntate; togli la spunta a quelle che non vuoi, oppure usa <b>Scegli tutte</b>, <b>Togli</b> e il filtro.',
     'lessons.step3':
