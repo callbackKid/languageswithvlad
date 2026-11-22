@@ -209,7 +209,8 @@ export const tutorial = defineMessages({
       '<b>Learning</b>: tick the languages you learn and choose your level in each. Exercises, Words to learn, Mistakes, Stats and the discussion questions then show only those languages, and the level is the default for discussion questions and in Fill the gap.',
     'settings.step4':
       'Also there: the daily goal for the 🔥 streak, the speed of 🔊, which sections the menu shows and which tabs a lesson page shows.',
-    'settings.tip1': 'Translations of words stay in Russian whatever the interface language.',
+    'settings.tip1':
+      '“Translations in” sets the language word and verb translations are written in, apart from the interface language; a lesson is prepared again in that language when you open it.',
     'call.title': 'Lesson mode',
     'call.summary': 'The call, notes and the lesson’s words on one screen',
     'call.intro':
@@ -467,7 +468,8 @@ export const tutorial = defineMessages({
       '<b>Обучение</b>: отметьте языки, которые учите, и выберите уровень для каждого. Упражнения, «Слова на изучении», «Ошибки», «Статистика» и «Вопрос для обсуждения» покажут только эти языки, а уровень подставится в «Вопрос для обсуждения» и «Вставьте слово».',
     'settings.step4':
       'Ещё там: цель на день для 🔥 серии, скорость озвучки 🔊, какие разделы показывать в меню и какие вкладки — на странице урока.',
-    'settings.tip1': 'Переводы слов остаются на русском при любом языке интерфейса.',
+    'settings.tip1':
+      'Настройка «Язык переводов» задаёт, на каком языке написаны переводы слов и глаголов, независимо от языка интерфейса; урок заново готовится на этом языке, когда вы его открываете.',
     'call.title': 'Режим урока',
     'call.summary': 'Звонок, заметки и слова урока на одном экране',
     'call.intro':
@@ -732,7 +734,7 @@ export const tutorial = defineMessages({
     'settings.step4':
       'Aussi : l’objectif du jour pour la 🔥 série, la vitesse de 🔊, les sections affichées dans le menu et les onglets affichés sur la page d’une leçon.',
     'settings.tip1':
-      'Les traductions des mots restent en russe, quelle que soit la langue de l’interface.',
+      '« Langue des traductions » fixe la langue dans laquelle sont écrites les traductions des mots et des verbes, indépendamment de celle de l’interface ; une leçon est de nouveau préparée dans cette langue quand vous l’ouvrez.',
     'call.title': 'Mode cours',
     'call.summary': 'L’appel, les notes et les mots de la leçon sur un seul écran',
     'call.intro':
@@ -995,7 +997,7 @@ export const tutorial = defineMessages({
     'settings.step4':
       'Außerdem: das Tagesziel für die 🔥 Serie, das Tempo von 🔊, welche Bereiche das Menü und welche Tabs die Lektionsseite zeigt.',
     'settings.tip1':
-      'Die Übersetzungen der Wörter bleiben auf Russisch, egal welche Sprache die Oberfläche hat.',
+      'Unter „Übersetzungssprache“ wählst du, in welche Sprache Wörter und Verben übersetzt werden, unabhängig von der Sprache der Oberfläche; eine Lektion wird in dieser Sprache neu vorbereitet, wenn du sie öffnest.',
     'call.title': 'Unterrichtsmodus',
     'call.summary': 'Anruf, Notizen und die Wörter der Lektion auf einem Bildschirm',
     'call.intro':
@@ -1259,7 +1261,7 @@ export const tutorial = defineMessages({
     'settings.step4':
       'También están allí: el objetivo diario para la racha 🔥, la velocidad de 🔊, qué secciones muestra el menú y qué pestañas muestra la página de una lección.',
     'settings.tip1':
-      'Las traducciones de las palabras siguen en ruso, sea cual sea el idioma de la interfaz.',
+      '«Idioma de las traducciones» elige el idioma en el que se escriben las traducciones de palabras y verbos, independientemente del idioma de la interfaz; una lección se vuelve a preparar en ese idioma cuando la abres.',
     'call.title': 'Modo clase',
     'call.summary': 'La llamada, las notas y las palabras de la lección en una pantalla',
     'call.intro':
@@ -1522,7 +1524,7 @@ export const tutorial = defineMessages({
     'settings.step4':
       'Também lá estão: o objetivo diário para a série 🔥, a velocidade do 🔊, as secções que o menu mostra e os separadores que a página de uma lição mostra.',
     'settings.tip1':
-      'As traduções das palavras ficam em russo, seja qual for o idioma da interface.',
+      '«Idioma das traduções» define o idioma em que são escritas as traduções das palavras e dos verbos, independentemente do idioma da interface; uma lição volta a ser preparada nesse idioma quando a abre.',
     'call.title': 'Modo aula',
     'call.summary': 'A chamada, as notas e as palavras da lição num só ecrã',
     'call.intro':
@@ -1785,7 +1787,7 @@ export const tutorial = defineMessages({
     'settings.step4':
       'Lì trovi anche: l’obiettivo giornaliero per la serie 🔥, la velocità del 🔊, quali sezioni mostra il menu e quali schede mostra la pagina di una lezione.',
     'settings.tip1':
-      'Le traduzioni delle parole restano in russo, qualunque sia la lingua dell’interfaccia.',
+      '«Lingua delle traduzioni» sceglie la lingua in cui sono scritte le traduzioni di parole e verbi, indipendentemente da quella dell’interfaccia; una lezione viene preparata di nuovo in questa lingua quando la apri.',
     'call.title': 'Modalità lezione',
     'call.summary': 'La chiamata, gli appunti e le parole della lezione in un’unica schermata',
     'call.intro':

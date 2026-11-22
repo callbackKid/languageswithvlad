@@ -3997,6 +3997,20 @@ li .open-link {
   flex-wrap: wrap;
 }
 
+.settings-select {
+  max-width: 100%;
+  padding: 6px 8px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--paper);
+  color: var(--text);
+}
+
+/* a hint under a row's control, on a line of its own */
+.settings-row-note {
+  flex-basis: 100%;
+}
+
 .settings-profile {
   display: flex;
   gap: 18px;

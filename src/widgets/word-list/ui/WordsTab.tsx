@@ -21,6 +21,7 @@ import {
 import { GapFill } from '@/features/gap-fill';
 import { WordQuiz } from '@/features/quiz';
 import { Star } from '@/features/star-word';
+import { useTranslationLanguage } from '@/shared/config';
 import { common, exercises, useTranslation } from '@/shared/i18n';
 import { canSpeak } from '@/shared/lib/speech';
 import { downloadText } from '@/shared/lib/util';
@@ -86,6 +87,7 @@ export default function WordsTab({
 }) {
   const { t, rich, language: uiLanguage } = useTranslation(exercises);
   const commonText = useTranslation(common);
+  const translationOf = useTranslationLanguage();
   // Tracks the words left out, so words that arrive later (more lessons prepared) start picked.
   const [unpicked, setUnpicked] = useState<Set<string>>(() => new Set());
   const [filter, setFilter] = useState('');
@@ -329,7 +331,7 @@ export default function WordsTab({
                         </>
                       )}
                     </span>
-                    <span className="ru" lang="ru">
+                    <span className="ru" lang={translationOf(word.language)}>
                       {word.ru || '—'}
                       {word.added && (
                         <span className="added" data-tooltip={t('addedByClaude')}>

@@ -1,5 +1,11 @@
-import { getSettings, getTeacherCode, type Language, type VerbLanguage } from '@/shared/config';
-import { common, translator } from '@/shared/i18n';
+import {
+  getSettings,
+  getTeacherCode,
+  type Language,
+  translationFallback,
+  type VerbLanguage,
+} from '@/shared/config';
+import { common, getUiLanguage, translator, type UiLanguage } from '@/shared/i18n';
 import { type ImagePayload } from '@/shared/lib/image';
 import { load } from '@/shared/lib/storage';
 
@@ -125,16 +131,25 @@ function messageFor(status: number, errorCode: string, fields: Record<string, un
 
 // Prompts that only learn the language from what they read (a lesson, a photo, a text) get the
 // student's level in every language, from Settings.
-// Identical analyses already on their way share one request (the lesson page and the
-// word bank can ask for the same lesson at once; React's dev mode runs effects twice).
+/** Identical analyses already on their way share one request (the lesson page and the word bank
+    can ask for the same lesson at once; React's dev mode runs effects twice). The translation
+    language is part of the key: an answer in Russian never stands in for one in English. Claude
+    finds out the lesson's language itself, so it gets the fallback for a lesson in translateTo. */
 const inflight = new Map<string, Promise<unknown>>();
 function analyzeOnce(body: string, fresh: boolean): Promise<unknown> {
-  const cacheKey = (fresh ? '1:' : '0:') + body;
+  const { levels, translateTo } = getSettings();
+  const cacheKey = `${fresh ? 1 : 0}:${translateTo}:${body}`;
   let pending = inflight.get(cacheKey);
   if (!pending) {
     pending = request<unknown>('/api/analyze', {
       method: 'POST',
-      body: JSON.stringify({ body, fresh, levels: getSettings().levels }),
+      body: JSON.stringify({
+        body,
+        fresh,
+        levels,
+        translateTo,
+        translateFallback: translationFallback(translateTo, getUiLanguage()),
+      }),
     }).finally(() => inflight.delete(cacheKey));
     inflight.set(cacheKey, pending);
   }
@@ -219,10 +234,17 @@ export const api = {
       method: 'POST',
       body: JSON.stringify({ kind: 'exercises', parts, ...pages }),
     }),
-  conjugate: (infinitive: string, ru: string, language: VerbLanguage, fresh = false) =>
+  // ru is the verb's translation in translateTo, the language the tables are translated into
+  conjugate: (
+    infinitive: string,
+    ru: string,
+    language: VerbLanguage,
+    translateTo: UiLanguage,
+    fresh = false
+  ) =>
     request<unknown>('/api/conjugate', {
       method: 'POST',
-      body: JSON.stringify({ inf: infinitive, ru, language, fresh }),
+      body: JSON.stringify({ inf: infinitive, ru, language, translateTo, fresh }),
     }),
   photo: (image: ImagePayload) =>
     request<unknown>('/api/paper', {

@@ -8,6 +8,7 @@ import {
   type QuizItem,
 } from '@/entities/lesson';
 import { recordWord, type Word } from '@/entities/word';
+import { useTranslationLanguage } from '@/shared/config';
 import { useTranslation } from '@/shared/i18n';
 import { asFields, asList, load, save } from '@/shared/lib/storage';
 import ExerciseHead from '@/shared/ui/ExerciseHead';
@@ -125,6 +126,7 @@ export default function QuizGame({
   onClose: () => void;
 }) {
   const { t } = useTranslation(game);
+  const translationOf = useTranslationLanguage();
   const make = () =>
     buildChoiceQuiz(words, pool.length >= 4 ? pool : words).slice(0, GAME_QUESTIONS);
   const [questions, setQuestions] = useState<QuizItem[]>(make);
@@ -246,7 +248,7 @@ export default function QuizGame({
           <Speak text={question.word.fr} language={language} />
         </p>
       ) : (
-        <p className="quiz-word ru" lang="ru">
+        <p className="quiz-word ru" lang={translationOf(question.word.language)}>
           {question.word.ru}
         </p>
       )}

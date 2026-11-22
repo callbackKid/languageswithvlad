@@ -1,6 +1,7 @@
 import { useSyncExternalStore } from 'react';
 
-import { load, save } from '@/shared/lib/storage';
+import { getUiLanguage, UI_LANGUAGES, type UiLanguage } from '@/shared/i18n';
+import { hasSavedKey, load, save } from '@/shared/lib/storage';
 
 import {
   type Language,
@@ -56,6 +57,9 @@ export interface Settings {
   hiddenTabs: LessonTab[];
   // the tenses quizzes ask, ticked by hand; a language missing here follows its level
   tenses: Partial<Record<VerbLanguage, Tense[]>>;
+  // the language Claude writes word and sentence translations in; Russian for anyone who used the
+  // app before it could be chosen
+  translateTo: UiLanguage;
 }
 
 const DEFAULTS: Settings = {
@@ -69,11 +73,21 @@ const DEFAULTS: Settings = {
   hidden: [],
   hiddenTabs: [],
   tenses: {},
+  translateTo: 'ru',
 };
 const KEY = 'settings';
 
-// Older or hand-edited values never break the app: anything unknown falls back to the default.
-function sanitize(raw: Partial<Settings> | null): Settings {
+/** The translation language of someone without one saved: Russian when they used the app before
+    it could be chosen (their lessons are prepared in Russian), their interface language otherwise. */
+export const defaultTranslateTo = (hasHistory: boolean, uiLanguage: UiLanguage): UiLanguage =>
+  hasHistory ? 'ru' : uiLanguage;
+
+const isUiLanguage = (value: unknown): value is UiLanguage =>
+  UI_LANGUAGES.some((language) => language.id === value);
+
+/** Older or hand-edited values never break the app: anything unknown falls back to the default.
+    missingTranslateTo is used when no valid translation language is saved. */
+function sanitize(raw: Partial<Settings> | null, missingTranslateTo: UiLanguage): Settings {
   const value = { ...DEFAULTS, ...raw };
   const studying = (Array.isArray(value.studying) ? value.studying : []).filter((language) =>
     LANGUAGES.includes(language)
@@ -100,6 +114,7 @@ function sanitize(raw: Partial<Settings> | null): Settings {
     hidden: Array.isArray(value.hidden) ? value.hidden : [],
     hiddenTabs: hiddenTabs.length < LESSON_TABS.length ? hiddenTabs : [],
     tenses: sanitizeTenses(value.tenses),
+    translateTo: isUiLanguage(raw?.translateTo) ? raw.translateTo : missingTranslateTo,
   };
 }
 
@@ -116,7 +131,14 @@ function sanitizeTenses(raw: unknown): Settings['tenses'] {
   return tenses;
 }
 
-let current = sanitize(load<Partial<Settings>>(KEY));
+const stored = load<Partial<Settings>>(KEY);
+let current = sanitize(
+  stored,
+  defaultTranslateTo(stored !== null || hasSavedKey('an2:'), getUiLanguage())
+);
+// decided once: a new student's first lesson saves an an2: key, which must not make them "existing"
+// on the next visit
+if (stored?.translateTo !== current.translateTo) save(KEY, current);
 const listeners = new Set<() => void>();
 
 const prefersDark = () =>
@@ -151,7 +173,7 @@ export const getSettings = () => current;
 
 // Changes some settings, saves them and applies the theme.
 export function updateSettings(changes: Partial<Settings>) {
-  current = sanitize({ ...current, ...changes });
+  current = sanitize({ ...current, ...changes }, current.translateTo);
   save(KEY, current);
   applyTheme(current);
   listeners.forEach((listener) => listener());

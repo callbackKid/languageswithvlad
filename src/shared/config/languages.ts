@@ -1,5 +1,6 @@
-/** The language a lesson teaches; translations are always Russian. Its name in each interface
-    language is in shared/i18n/messages/common.ts ("name.<code>"). */
+/** The language a lesson teaches; translations go into the language chosen in Settings
+    (translation.ts). Its name in each interface language is in shared/i18n/messages/common.ts
+    ("name.<code>"). */
 export type Language = 'fr' | 'en' | 'de' | 'es' | 'pt' | 'it';
 export const LANGUAGES: Language[] = ['fr', 'en', 'de', 'es', 'pt', 'it'];
 // A lesson's language from outside data; French when it isn't one.

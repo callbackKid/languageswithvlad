@@ -2,7 +2,7 @@ import { Fragment, type ReactNode, useSyncExternalStore } from 'react';
 
 import { load, save } from '@/shared/lib/storage';
 
-// The language of the interface (buttons, hints, the Tutorial). Translations of words stay Russian.
+// The language of the interface (buttons, hints, the Tutorial); translations have their own setting.
 export type UiLanguage = 'en' | 'ru' | 'fr' | 'de' | 'es' | 'pt' | 'it';
 export const UI_LANGUAGES: { id: UiLanguage; name: string; flag: string }[] = [
   { id: 'en', name: 'English', flag: '🇬🇧' },

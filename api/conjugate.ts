@@ -2,9 +2,9 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 import { claudeJSON, MODEL } from './_lib/claude.js';
 import { checkAccess, fail, onlyPost, text } from './_lib/http.js';
-import { asVerbLanguage, conjugationPrompt } from './_lib/prompts.js';
+import { asExplainLanguage, asVerbLanguage, conjugationPrompt } from './_lib/prompts.js';
 
-// an infinitive is a word or two ("se lever", "sich waschen"); its Russian a few words
+// an infinitive is a word or two ("se lever", "sich waschen"); its translation a few words
 const MAX_INFINITIVE_LENGTH = 60;
 const MAX_TRANSLATION_LENGTH = 100;
 
@@ -22,11 +22,14 @@ export default async function handler(request: VercelRequest, response: VercelRe
   try {
     const fresh = request.body?.fresh === true;
     response.status(200).json(
-      await claudeJSON(conjugationPrompt(infinitive, ru, language), {
-        model: MODEL,
-        maxTokens: 3000,
-        cache: !fresh,
-      })
+      await claudeJSON(
+        conjugationPrompt(infinitive, ru, language, asExplainLanguage(request.body?.translateTo)),
+        {
+          model: MODEL,
+          maxTokens: 3000,
+          cache: !fresh,
+        }
+      )
     );
   } catch (error) {
     fail(response, error);

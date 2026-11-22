@@ -1,6 +1,7 @@
 import { type Conjugation, knownTenses, negate, type VerbRef } from '@/entities/verb/@x/lesson';
 import { formKey, isLearned, type Progress, type Word, wordKey } from '@/entities/word/@x/lesson';
 import { type Tense } from '@/shared/config';
+import { type UiLanguage } from '@/shared/i18n';
 import { canSpeak } from '@/shared/lib/speech';
 import { shuffle } from '@/shared/lib/util';
 
@@ -95,7 +96,11 @@ export function verbForms(conjugation: Conjugation): FormQuestion[] {
 export function pickForms(verbs: VerbRef[], progress: Progress, count: number): FormQuestion[] {
   const all: FormQuestion[] = [];
   for (const verb of verbs) {
-    const conjugation = readConjugation(verb.inf, verbLanguageOf(verb));
+    const language = verbLanguageOf(verb);
+    // only the forms are asked, which are the same whatever the translation language: a table
+    // opened before the setting changed still counts
+    const conjugation =
+      readConjugation(verb.inf, language) ?? readConjugation(verb.inf, language, 'ru');
     if (conjugation) all.push(...verbForms(conjugation));
   }
   return weighted(
@@ -125,19 +130,28 @@ const FILLER = new Set([
   'она',
   'они',
   'чем',
+  // translations in the other languages: articles and small words that most of them share
+  ...['the', 'and', 'for', 'with', 'from'],
+  ...['der', 'die', 'das', 'und', 'mit', 'sich', 'ein', 'eine'],
+  ...['les', 'une', 'des', 'pour', 'avec', 'dans'],
+  ...['los', 'las', 'una', 'del', 'con', 'para', 'por'],
+  ...['uma', 'dos', 'das', 'com'],
+  ...['della', 'per'],
 ]);
-const russianWords = (text: string) =>
+// The words of a translation in any alphabet, lowercase, without the short and the filler ones.
+const translationWords = (text: string) =>
   text
     .toLowerCase()
     .replace(/ё/g, 'е')
-    .split(/[^а-я]+/)
+    .split(/[^\p{L}]+/u)
     .filter((part) => part.length > 2 && !FILLER.has(part));
 
-// True when the candidate could also be a right answer: same sense, or translations sharing a word (выделить, отметить / отметить).
+/** True when the candidate could also be a right answer: same sense, or translations sharing a
+    word (выделить, отметить / отметить). A false overlap only drops a wrong answer. */
 function overlaps(word: Word, sense: string | undefined, candidate: Word): boolean {
   if (sense && sense === candidate.sense) return true;
-  const own = new Set(russianWords(word.ru));
-  return russianWords(candidate.ru).some((part) => own.has(part));
+  const own = new Set(translationWords(word.ru));
+  return translationWords(candidate.ru).some((part) => own.has(part));
 }
 
 // Three wrong answers of the same kind of word when possible, none of them close in meaning.
@@ -164,10 +178,11 @@ export type DictationForm = 'masculine' | 'feminine';
 
 /** For a French adjective, the form to write: its masculine and feminine often sound the same
     (grec, grecque; bleu, bleue), so the dictation says which one is meant. It is read from the
-    ending of the Russian translation (греческий, греческая), which is right even when the teacher
-    wrote the feminine. null when it can't be told (a Russian plural doesn't say which gender) or
-    doesn't matter. */
-export function dictationForm(word: Word): DictationForm | null {
+    ending of the translation, in translation (its language), which is right even when the teacher
+    wrote the feminine: Russian греческий / греческая, Spanish, Italian and Portuguese -o / -a.
+    null when it can't be told (English, German and French don't show it, nor does a Russian
+    plural or an Italian -e) or doesn't matter. */
+export function dictationForm(word: Word, translation: UiLanguage): DictationForm | null {
   if ((word.language ?? 'fr') !== 'fr' || word.kind !== 'adjective') return null;
   // both forms written ("grec, grecque"): the dictation reads them both
   if (/[,/]/.test(word.fr)) return null;
@@ -175,8 +190,14 @@ export function dictationForm(word: Word): DictationForm | null {
     .trim()
     .toLowerCase()
     .split(/[\s,;(]/);
-  if (/(ая|яя)$/.test(first)) return 'feminine';
-  if (/(ый|ий|ой)$/.test(first)) return 'masculine';
+  if (translation === 'ru') {
+    if (/(ая|яя)$/.test(first)) return 'feminine';
+    if (/(ый|ий|ой)$/.test(first)) return 'masculine';
+  }
+  if (translation === 'es' || translation === 'it' || translation === 'pt') {
+    if (first.endsWith('a')) return 'feminine';
+    if (first.endsWith('o')) return 'masculine';
+  }
   return null;
 }
 

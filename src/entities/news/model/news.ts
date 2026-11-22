@@ -53,6 +53,18 @@ export const NEWS: NewsDay[] = [
       {
         kind: 'new',
         text: {
+          en: 'Settings: choose the language word and verb translations are written in, under Translations in. Each lesson is prepared again in that language when you open it.',
+          ru: 'Настройки: в строке «Язык переводов» можно выбрать, на каком языке пишутся переводы слов и глаголов. Каждый урок будет подготовлен заново на этом языке, когда вы его откроете.',
+          fr: 'Réglages : choisissez sous « Langue des traductions » la langue dans laquelle sont écrites les traductions des mots et des verbes. Chaque leçon est de nouveau préparée dans cette langue quand vous l’ouvrez.',
+          de: 'Einstellungen: Unter „Übersetzungssprache“ wählst du, in welcher Sprache Wörter und Verben übersetzt werden. Jede Lektion wird beim Öffnen neu in dieser Sprache vorbereitet.',
+          es: 'Ajustes: en «Idioma de las traducciones» eliges el idioma en el que se escriben las traducciones de palabras y verbos. Cada lección se vuelve a preparar en ese idioma cuando la abres.',
+          pt: 'Definições: em «Idioma das traduções» escolhe o idioma em que são escritas as traduções das palavras e dos verbos. Cada lição volta a ser preparada nesse idioma quando a abrir.',
+          it: 'Impostazioni: in «Lingua delle traduzioni» scegli la lingua in cui sono scritte le traduzioni di parole e verbi. Ogni lezione viene preparata di nuovo in quella lingua quando la apri.',
+        },
+      },
+      {
+        kind: 'new',
+        text: {
           en: 'Vocabulary blitz, a new exercise on the Words tab: a round of 10 questions on the lesson’s words, half of them a sentence with a gap to fill from four choices, half a short definition in the language you learn, from which you guess the word and type it.',
           ru: '«Словарный блиц» — новое упражнение на вкладке «Слова»: раунд из 10 вопросов по словам урока. В половине из них нужно вставить в пропуск в предложении одно из четырёх слов, в другой половине — по короткому определению на изучаемом языке угадать слово и написать его.',
           fr: '« Vocabulaire éclair », un nouvel exercice dans l’onglet Mots : un tour de 10 questions sur les mots de la leçon. La moitié sont des phrases à trou, à compléter parmi quatre choix ; l’autre moitié, de courtes définitions dans la langue que vous apprenez, à partir desquelles vous devinez le mot avant de l’écrire.',

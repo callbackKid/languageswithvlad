@@ -2,7 +2,7 @@ import { type FormEvent, type ReactNode, useEffect, useRef, useState } from 'rea
 
 import { dictationForm, type QuizItem } from '@/entities/lesson';
 import { recordForm, recordWord, Transcription } from '@/entities/word';
-import { type Language, languageOfTense } from '@/shared/config';
+import { type Language, languageOfTense, useTranslationLanguage } from '@/shared/config';
 import { common, exercises, learning, useTranslation } from '@/shared/i18n';
 import { grade } from '@/shared/lib/grade';
 import { speak } from '@/shared/lib/speech';
@@ -60,6 +60,7 @@ export default function WordQuiz({
   const { t: tx } = useTranslation(exercises);
   const { t, rich } = useTranslation(common);
   const names = useTranslation(learning);
+  const translationOf = useTranslationLanguage();
   const [questions, setQuestions] = useState(make);
   const [index, setIndex] = useState(0);
   const [typed, setTyped] = useState('');
@@ -202,7 +203,10 @@ export default function WordQuiz({
   const language =
     question.kind === 'form' ? languageOfTense(question.form.t) : (question.word.language ?? 'fr');
   // a dictated adjective whose forms sound alike says which form to write
-  const form = question.kind === 'listen' ? dictationForm(question.word) : null;
+  const form =
+    question.kind === 'listen'
+      ? dictationForm(question.word, translationOf(question.word.language))
+      : null;
   const answer =
     question.kind === 'form'
       ? `${question.form.p} ${question.form.f}`
@@ -264,7 +268,11 @@ export default function WordQuiz({
         </p>
       )}
       {(question.kind === 'listen' || question.kind === 'define' || question.kind === 'gap') && (
-        <p className="ru-line" lang="ru">
+        // gap sentences are still translated into Russian
+        <p
+          className="ru-line"
+          lang={question.kind === 'gap' ? 'ru' : translationOf(question.word.language)}
+        >
           {question.kind === 'gap' ? question.ru : question.word.ru}
         </p>
       )}
@@ -295,7 +303,7 @@ export default function WordQuiz({
             <Speak text={question.word.fr} language={language} />
           </p>
         ) : (
-          <p className="quiz-word ru" lang="ru">
+          <p className="quiz-word ru" lang={translationOf(question.word.language)}>
             {question.word.ru}
           </p>
         )}
@@ -374,7 +382,7 @@ export default function WordQuiz({
         </>
       ) : (
         <>
-          <p className="quiz-word ru" lang="ru">
+          <p className="quiz-word ru" lang={translationOf(question.word.language)}>
             {question.word.ru}
           </p>
           <p className="ru-line">{names.t(`typeIn.${language}`)}</p>

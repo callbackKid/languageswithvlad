@@ -39,7 +39,7 @@ const NOUN_FORMS =
 // A noun and its translation in the same number, with the article of its real gender: notes often
 // list plurals ("les collines — холмы"), and the singular form alone made "la colline — холмы".
 const NOUN_AGREEMENT =
-  'Give a noun the article of its real gender (la vis, not le vis). The word and its Russian translation are in the same number: a noun written in the singular gets a singular translation, even when the notes give the plural (les collines — холмы becomes la colline — холм); keep both in the plural only for a word used mainly in the plural (les gens — люди, les vacances — каникулы).';
+  'Give a noun the article of its real gender (la vis, not le vis). The word and its translation are in the same number: a noun written in the singular gets a singular translation, even when the notes give the plural (les collines — холмы becomes la colline — холм); keep both in the plural only for a word used mainly in the plural (les gens — люди, les vacances — каникулы).';
 
 // How dictionary forms are written in each language.
 const WORD_FORMS: Record<LearnLanguage, string> = {
@@ -51,9 +51,14 @@ const WORD_FORMS: Record<LearnLanguage, string> = {
   it: 'nouns with il, lo, la or l’, verbs in the infinitive',
 };
 
-// body is one lesson's notes; the endpoint has already refused anything too long to read whole.
-export function analysisPrompt(body: string, levels: Levels): string {
-  return `You are helping a Russian-speaking learner learn a foreign language: ${LANGUAGE_LIST}. ${levelLine(levels)} The level shapes only the translations you write yourself (see words), never which words you list. Below are raw notes from one lesson, written by the teacher in that language and Russian. They are messy: some words have no translation, and some lines are conjugation tables, example sentences or pronunciation rules.
+/** body is one lesson's notes; the endpoint has already refused anything too long to read whole.
+    translation: the language the translations (ru) are written in. */
+export function analysisPrompt(
+  body: string,
+  levels: Levels,
+  translation: TranslationRequest
+): string {
+  return `You are helping a learner whose own language is ${EXPLAIN_NAMES[translation.language]} learn a foreign language: ${LANGUAGE_LIST}. ${levelLine(levels)} The level shapes only the translations you write yourself (see words), never which words you list. ${translationRule(translation)} Below are raw notes from one lesson, written by the teacher in that language mixed with translations, often in Russian. They are messy: some words have no translation, and some lines are conjugation tables, example sentences or pronunciation rules.
 
 First decide which language the lesson teaches, judging by its vocabulary rather than by headings or labels (a lesson in any of them may still be headed "leçon"): ${LANGUAGE_KEY}.
 
@@ -62,9 +67,9 @@ Reply with only a JSON object of this shape:
 
 Rules:
 - topic: what the lesson covered, in English, at most 12 words.
-- words: every word or short expression in the lesson's language that the lesson teaches (vocabulary, greetings, question words, set phrases). fr always holds the word being learned, even when the language is not French. For French, write nouns with an article (le, la, l', un, une) when the gender is known; for English, write nouns without an article and verbs without "to"; for German, write nouns capitalised with der, die or das; for Spanish, nouns with el or la; for Portuguese, nouns with o or a; for Italian, nouns with il, lo, la or l'; in every language but English, verbs in the infinitive. Correct obvious spelling mistakes. ${NOUN_AGREEMENT} ru is a short Russian translation: use the teacher's translation when there is one (in the number of fr); otherwise write your own and set added to true: at A0–A1 only the most common meaning, at B1 and above the meaning that fits the lesson, with a second one after a comma when it is common. tr is the pronunciation the teacher wrote for the word (usually in square brackets, in Cyrillic or IPA), copied without the brackets; never put it inside fr or ru, and use "" when the notes give none. sense is the core meaning as one or two lowercase English words; words whose meanings overlap so that one translation could pass for the other get the same sense (удалить and вырезать: "remove"; выделить and отметить: "mark"; указать and показать: "show"); this holds for expressions too, judged by what they are said for (Bouge ! / Dégage ! / Va-t'en !, проваливай and убирайся: "go away"), so the quiz never offers one as a wrong answer for the other. key is true when the teacher marked the word as a key word with ★ or ⭐ on its line (★ la boulangerie — пекарня); never put the star in fr or ru. Skip a block that starts with a line beginning with 📖: it holds exercises copied from a book, not vocabulary. Skip the student's report and questions too: a line beginning with 📝 or ❓ and every line after it that begins with an emoji or with spaces. Skip lines that only show a conjugated form from a verb table, pronunciation rules, numbers written as digits, and words in any other language. Never repeat the same fr.
+- words: every word or short expression in the lesson's language that the lesson teaches (vocabulary, greetings, question words, set phrases). fr always holds the word being learned, even when the language is not French. For French, write nouns with an article (le, la, l', un, une) when the gender is known; for English, write nouns without an article and verbs without "to"; for German, write nouns capitalised with der, die or das; for Spanish, nouns with el or la; for Portuguese, nouns with o or a; for Italian, nouns with il, lo, la or l'; in every language but English, verbs in the infinitive. Correct obvious spelling mistakes. ${NOUN_AGREEMENT} ru is a short translation: when the teacher gave one, keep its meaning and write it in the translation language (in the number of fr; added stays false); otherwise write your own and set added to true: at A0–A1 only the most common meaning, at B1 and above the meaning that fits the lesson, with a second one after a comma when it is common. tr is the pronunciation the teacher wrote for the word (usually in square brackets, in Cyrillic or IPA), copied without the brackets; never put it inside fr or ru, and use "" when the notes give none. sense is the core meaning as one or two lowercase English words; words whose meanings overlap so that one translation could pass for the other get the same sense (удалить and вырезать: "remove"; выделить and отметить: "mark"; указать and показать: "show"); this holds for expressions too, judged by what they are said for (Bouge ! / Dégage ! / Va-t'en !, проваливай and убирайся: "go away"), so the quiz never offers one as a wrong answer for the other. key is true when the teacher marked the word as a key word with ★ or ⭐ on its line (★ la boulangerie — пекарня); never put the star in fr or ru. Skip a block that starts with a line beginning with 📖: it holds exercises copied from a book, not vocabulary. Skip the student's report and questions too: a line beginning with 📝 or ❓ and every line after it that begins with an emoji or with spaces. Skip lines that only show a conjugated form from a verb table, pronunciation rules, numbers written as digits, and words in any other language. Never repeat the same fr.
 - pairs: 4 to 12 synonym or antonym pairs where both a and b are exact fr values from words. Use pairs the teacher noted first (for example facile / difficile), then obvious ones among the lesson's words. Return [] if there are none.
-- verbs: for a lesson in any language but English, every verb in the infinitive, including reflexive ones (se raser, sich waschen, levantarse, alzarsi, levantar-se), separable ones (aufstehen) and verbs the lesson conjugates; ru is a short Russian translation. For an English lesson, return [].
+- verbs: for a lesson in any language but English, every verb in the infinitive, including reflexive ones (se raser, sich waschen, levantarse, alzarsi, levantar-se), separable ones (aufstehen) and verbs the lesson conjugates; ru is a short translation. For an English lesson, return [].
 
 Lesson notes:
 """
@@ -141,14 +146,20 @@ export type VerbLanguage = keyof typeof VERB_TABLES;
 export const asVerbLanguage = (value: unknown): VerbLanguage | null =>
   typeof value === 'string' && Object.hasOwn(VERB_TABLES, value) ? (value as VerbLanguage) : null;
 
-// The prompt for a verb's tables, in the tenses of its language.
-export function conjugationPrompt(infinitive: string, ru: string, language: VerbLanguage): string {
+/** The prompt for a verb's tables, in the tenses of its language. meaning is the verb's translation
+    in its lesson, already in translateTo. */
+export function conjugationPrompt(
+  infinitive: string,
+  meaning: string,
+  language: VerbLanguage,
+  translateTo: ExplainLanguage
+): string {
   const table = VERB_TABLES[language];
   const shape = table.tenses.map(([name, persons]) => `"${name}": [..${persons}]`).join(', ');
-  return `Conjugate the ${LANGUAGE_NAMES[language]} verb "${infinitive}"${ru ? ` (Russian meaning: ${ru})` : ''}.
+  return `Conjugate the ${LANGUAGE_NAMES[language]} verb "${infinitive}"${meaning ? ` (meaning: ${meaning})` : ''}.
 Reply with only a JSON object:
 {"inf": string, "ru": string, "aux": ${table.aux}, "pp": string, "tenses": {${shape}}}
-Each item is {"p": string, "f": string}. ${table.rules} ru is a short Russian translation.`;
+Each item is {"p": string, "f": string}. ${table.rules} ru is a short ${EXPLAIN_NAMES[translateTo]} translation.`;
 }
 
 // "for French exactly one of présent, passé composé, …" for every language with verb tables.
@@ -321,11 +332,24 @@ const EXPLAIN_NAMES = {
   it: 'Italian',
 } as const;
 export type ExplainLanguage = keyof typeof EXPLAIN_NAMES;
-// The language to explain grammar in; Russian when it's missing or unknown.
+// The language to explain grammar or write translations in; Russian when it's missing or unknown.
 export const asExplainLanguage = (value: unknown): ExplainLanguage =>
   typeof value === 'string' && Object.hasOwn(EXPLAIN_NAMES, value)
     ? (value as ExplainLanguage)
     : 'ru';
+
+/** The language translations are written in, and the one used instead for a text in that very
+    language (a lesson of French when translations are in French). */
+export interface TranslationRequest {
+  language: ExplainLanguage;
+  fallback: ExplainLanguage;
+}
+// "Write every translation (ru) in French; for a lesson in French itself, in German."
+function translationRule({ language, fallback }: TranslationRequest): string {
+  const name = EXPLAIN_NAMES[language];
+  const isLearned = LEARN_LANGUAGES.some((code) => code === language);
+  return `Write every translation (ru) in ${name}${isLearned ? `; for a lesson in ${name} itself, in ${EXPLAIN_NAMES[fallback]}` : ''}.`;
+}
 
 /** The prompt that sorts a learner's words into groups by meaning, named in the interface
     language. known: the names the learner's other words are already grouped under, reused so

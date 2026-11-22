@@ -25,6 +25,18 @@ export function remove(key: string): void {
   }
 }
 
+// Whether anything is saved under a key that starts with this prefix ("an2:" for any analysis).
+export function hasSavedKey(prefix: string): boolean {
+  try {
+    for (let index = 0; index < localStorage.length; index++) {
+      if (localStorage.key(index)?.startsWith(PREFIX + prefix)) return true;
+    }
+    return false;
+  } catch {
+    return false;
+  }
+}
+
 // A saved list of texts (ticked homework tasks): anything else in it is dropped.
 export function loadTexts(key: string): string[] {
   const stored = load<unknown>(key);

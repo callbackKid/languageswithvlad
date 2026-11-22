@@ -15,7 +15,7 @@ import {
   type Lesson,
   openCallWindow,
   previousLesson,
-  readAnalysis,
+  readLessonLanguage,
   usePreparedLesson,
   warmUpRound,
 } from '@/entities/lesson';
@@ -26,7 +26,7 @@ import { homeworkLabel } from '@/features/make-homework';
 import { WordQuiz } from '@/features/quiz';
 import { WritingResult } from '@/features/writing-task';
 import { type BoardServer } from '@/shared/api';
-import { getSettings, lessonPath } from '@/shared/config';
+import { getSettings, lessonPath, useTranslationLanguage } from '@/shared/config';
 import { call, homework as homeworkText, paper, talk, useTranslation } from '@/shared/i18n';
 import { clockTime, dayKey } from '@/shared/lib/dates';
 import { followLink, hrefFor } from '@/shared/lib/router';
@@ -347,6 +347,7 @@ function HomeworkNotes({
 // The words of the newest lesson, to glance at and say aloud during the call.
 function LessonWords({ bank, lesson }: { bank: Bank; lesson: Lesson | null }) {
   const { t } = useTranslation(call);
+  const translationOf = useTranslationLanguage();
   // the key words (★) first
   const words = keyWordsFirst(
     lesson ? bank.words.filter((word) => word.lesson === lesson.key) : []
@@ -382,7 +383,7 @@ function LessonWords({ bank, lesson }: { bank: Bank; lesson: Lesson | null }) {
                   </>
                 )}
               </span>
-              <span className="ru" lang="ru">
+              <span className="ru" lang={translationOf(word.language)}>
                 {word.ru}
               </span>
               <Speak text={word.fr} language={word.language ?? 'fr'} />
@@ -401,7 +402,7 @@ function LessonWords({ bank, lesson }: { bank: Bank; lesson: Lesson | null }) {
 function WrittenHomework({ lesson, docId }: { lesson: Lesson | null; docId: string }) {
   const { t } = useTranslation(homeworkText);
   if (!lesson) return null;
-  const language = readAnalysis(lesson.hash)?.language ?? 'fr';
+  const language = readLessonLanguage(lesson.hash) ?? 'fr';
   const written = homeworkItems(lesson.body)
     .map(readItem)
     .filter((item) => item.kind === 'writing')

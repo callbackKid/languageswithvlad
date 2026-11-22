@@ -1,4 +1,4 @@
-import { languageOfTense } from '@/shared/config';
+import { languageOfTense, useTranslationLanguage } from '@/shared/config';
 import { common, useTranslation } from '@/shared/i18n';
 
 import { type FormStat, type WordStat } from '../model/progress';
@@ -13,6 +13,7 @@ export default function MistakeList({
   forms?: FormStat[];
 }) {
   const { t } = useTranslation(common);
+  const translationOf = useTranslationLanguage();
   return (
     <ul className="mistakes">
       {words.map((stat) => (
@@ -26,7 +27,7 @@ export default function MistakeList({
               </>
             )}
           </span>
-          <span className="ru" lang="ru">
+          <span className="ru" lang={translationOf(stat.language)}>
             {stat.ru || '—'}
           </span>
           <span className="miss">{t('missed', { count: stat.wrong })}</span>

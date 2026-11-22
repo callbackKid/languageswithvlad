@@ -16,6 +16,7 @@ export {
   lessonWords,
   readAnalysis,
   readConjugation,
+  readLessonLanguage,
   useBank,
   usePreparedLesson,
   verbLanguageOf,

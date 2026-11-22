@@ -76,6 +76,8 @@ export default function Settings({ lessonDocument }: { lessonDocument: DocumentI
   const settings = useSettings();
   const [hasPictureError, setHasPictureError] = useState(false);
   const [copied, setCopied] = useState(false);
+  // shown once the translation language is changed: lessons are prepared again in it
+  const [translationChanged, setTranslationChanged] = useState(false);
 
   async function copyLink() {
     try {
@@ -231,6 +233,34 @@ export default function Settings({ lessonDocument }: { lessonDocument: DocumentI
               </button>
             ))}
           </div>
+        </div>
+        <div className="settings-row">
+          <label className="settings-label" htmlFor="settings-translate-to">
+            {t('translateTo')}
+          </label>
+          <select
+            id="settings-translate-to"
+            className="settings-select"
+            value={settings.translateTo}
+            onChange={(event) => {
+              const translateTo = UI_LANGUAGES.find((option) => option.id === event.target.value);
+              if (!translateTo) return;
+              updateSettings({ translateTo: translateTo.id });
+              setTranslationChanged(true);
+            }}
+          >
+            {UI_LANGUAGES.map((option) => (
+              <option key={option.id} value={option.id}>
+                {option.flag} {option.name}
+              </option>
+            ))}
+          </select>
+          <small className="hint settings-row-note">{t('translateToHint')}</small>
+          {translationChanged && (
+            <small className="hint settings-row-note" role="status">
+              {t('translateToChanged')}
+            </small>
+          )}
         </div>
         <div className="settings-row">
           <span className="settings-label">{t('theme')}</span>

@@ -9,8 +9,8 @@ import {
   lessonWords,
   parseNextLesson,
   pickWords,
-  readAnalysis,
   readConjugation,
+  readLessonLanguage,
   usePreparedLesson,
   verbForms,
 } from '@/entities/lesson';
@@ -219,7 +219,7 @@ export default function HomeworkCard({
       [...lessons].reverse().find((candidate) => candidate.n === item.lessonNumber)) ||
     homework.lesson;
   // verb tables exist for French and German; a verbs task in another language just opens the lesson
-  const lessonLanguage = readAnalysis(homework.lesson.hash)?.language ?? 'fr';
+  const lessonLanguage = readLessonLanguage(homework.lesson.hash) ?? 'fr';
   const verbLanguage = isVerbLanguage(lessonLanguage) ? lessonLanguage : null;
   const action = (item: HomeworkItem): string | null => {
     if (item.kind === 'words') return t('practiseWords');

@@ -29,6 +29,7 @@ import {
   languageOfTense,
   type Tense,
   TENSES_BY_LANGUAGE,
+  useTranslationLanguage,
   type VerbLanguage,
 } from '@/shared/config';
 import { common, exercises, useTranslation } from '@/shared/i18n';
@@ -64,6 +65,7 @@ export default function VerbsTab({
 }) {
   const { t, rich, language: uiLanguage } = useTranslation(exercises);
   const commonText = useTranslation(common);
+  const translationOf = useTranslationLanguage();
   const [currentVerb, setCurrentVerb] = useState<string | null>(null);
   const [tense, setTense] = useState<Tense>('présent');
   const [isNegative, setIsNegative] = useState(false);
@@ -220,7 +222,7 @@ export default function VerbsTab({
                     <span className="fr" lang={verbLanguageOf(verb)}>
                       {verb.inf}
                     </span>
-                    <span className="ru" lang="ru">
+                    <span className="ru" lang={translationOf(verbLanguageOf(verb))}>
                       {verb.ru}
                     </span>
                   </button>
@@ -296,7 +298,7 @@ export default function VerbsTab({
         <>
           <div className="conj-head">
             <h2 lang={language}>{shownConjugation.inf}</h2>
-            <span className="ru" lang="ru">
+            <span className="ru" lang={translationOf(language)}>
               {shownConjugation.ru}
             </span>
           </div>

@@ -25,7 +25,14 @@ import {
   useSettings,
   useTeacher,
 } from '@/shared/config';
-import { common, getUiLanguage, paper, translator, useTranslation } from '@/shared/i18n';
+import {
+  common,
+  getUiLanguage,
+  paper,
+  translator,
+  type UiLanguage,
+  useTranslation,
+} from '@/shared/i18n';
 import { loadChecked, save } from '@/shared/lib/storage';
 import { shownTopic } from '@/shared/lib/util';
 import HelpLink from '@/shared/ui/HelpLink';
@@ -62,7 +69,7 @@ export default function LessonView({
   /** whether the server can write to this document (to add exercises from the book); left out
       for a lesson that isn't in the document */
   docWriter?: boolean;
-  onAnalysis?: (lessonKey: string, analysis: Analysis) => void;
+  onAnalysis?: (lessonKey: string, analysis: Analysis, translateTo: UiLanguage) => void;
   // the newest lesson in the document, whose homework Home shows with an exercise per task
   isNewest?: boolean;
   /** the Words tab's list, given by the page: it is another widget (word-list), and one widget
@@ -71,7 +78,7 @@ export default function LessonView({
 }) {
   const { t, locale, language: uiLanguage } = useTranslation(paper);
   const commonText = useTranslation(common);
-  const { hiddenTabs } = useSettings();
+  const { hiddenTabs, translateTo } = useSettings();
   const shownTabs = LESSON_TABS.filter((id) => !hiddenTabs.includes(id));
   const [chosenTab, setTab] = useState<Tab>('words');
   // a tab hidden in Settings gives way to the first one shown
@@ -95,10 +102,11 @@ export default function LessonView({
   // without Claude, the heading word ("Lektion") tells the lesson's language
   const headingLanguage = languageOfLesson(lesson);
 
-  // Analyses are cached by the lesson text's hash: editing a lesson re-prepares it.
+  // Analyses are cached by the lesson text's hash and the translation language: editing a lesson
+  // or choosing another translation language prepares it again.
   useEffect(() => {
     let alive = true;
-    const cached = fresh ? null : readAnalysis(lesson.hash);
+    const cached = fresh ? null : readAnalysis(lesson.hash, translateTo);
     if (cached) {
       setAnalysis(cached);
       setState('ready');
@@ -117,8 +125,8 @@ export default function LessonView({
       .analyze(lesson.body, fresh > 0)
       .then((raw) => {
         const prepared = normalizeAnalysis(raw);
-        save(analysisKey(lesson.hash), prepared);
-        onAnalysis?.(lesson.key, prepared);
+        save(analysisKey(lesson.hash, translateTo), prepared);
+        onAnalysis?.(lesson.key, prepared, translateTo);
         if (alive) {
           setAnalysis(prepared);
           setState('ready');
@@ -136,7 +144,16 @@ export default function LessonView({
     return () => {
       alive = false;
     };
-  }, [lesson.hash, lesson.key, lesson.body, headingLanguage, hasClaude, fresh, onAnalysis]);
+  }, [
+    lesson.hash,
+    lesson.key,
+    lesson.body,
+    headingLanguage,
+    hasClaude,
+    fresh,
+    onAnalysis,
+    translateTo,
+  ]);
 
   // The grammar, homework and book exercises: read once, the first time one of their tabs is
   // opened, and kept for this lesson text and interface language.
