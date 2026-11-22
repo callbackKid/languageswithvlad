@@ -302,10 +302,10 @@ export default function WordsTab({
             aria-label={hasGroups ? listed.name || t('otherGroup') : undefined}
           >
             {hasGroups && (
-              <h3 className="word-group-name">
+              <h2 className="word-group-name">
                 {listed.name || t('otherGroup')}
                 <span className="count">{listed.words.length}</span>
-              </h3>
+              </h2>
             )}
             <ul className="words">
               {listed.words.map((word) => (

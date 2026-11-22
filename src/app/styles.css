@@ -1294,8 +1294,7 @@ textarea.notes {
 .grammar-rule[open] summary {
   border-bottom: 1px solid var(--line);
 }
-/* the summary's heading keeps the summary's look: it is a heading for the page's outline only,
-   so it also undoes the small capitals of the section labels around it (.discussion h3) */
+/* the summary's heading keeps the summary's look: it is a heading for the page's outline only */
 .grammar-rule .grammar-rule-title {
   display: inline;
   margin: 0;
@@ -3273,7 +3272,7 @@ li .open-link {
   margin: 0 0 6px;
 }
 
-.discussion h3 {
+.discussion-section-title {
   font-size: 12px;
   font-weight: 600;
   text-transform: uppercase;

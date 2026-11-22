@@ -356,6 +356,8 @@ export default function Discuss({
   embedded?: boolean;
 }) {
   const { t, language: uiLanguage } = useTranslation(talk);
+  // on its page the sections sit under the page's h1; in lesson mode, under its card's h2
+  const SectionTitle = embedded ? 'h3' : 'h2';
   const commonText = useTranslation(common);
   const names = useTranslation(learning);
   const settings = useSettings();
@@ -582,7 +584,9 @@ export default function Discuss({
               <div className="discussion-grid">
                 {discussion.followUps.length > 0 && (
                   <section>
-                    <h3>{t('keepGoing')}</h3>
+                    <SectionTitle className="discussion-section-title">
+                      {t('keepGoing')}
+                    </SectionTitle>
                     <ul lang={language}>
                       {discussion.followUps.map((followUp) => (
                         <li key={followUp}>{followUp}</li>
@@ -592,7 +596,9 @@ export default function Discuss({
                 )}
                 {discussion.starters.length > 0 && (
                   <section>
-                    <h3>{t('startWith')}</h3>
+                    <SectionTitle className="discussion-section-title">
+                      {t('startWith')}
+                    </SectionTitle>
                     <ul className="starters" lang={language}>
                       {discussion.starters.map((starter) => (
                         <li key={starter}>{starter}</li>
@@ -612,13 +618,16 @@ export default function Discuss({
                   rule={discussion.grammarRule}
                   language={language}
                   translationLanguage={discussion.translatedTo}
+                  level={embedded ? 3 : 2}
                   label={`📘 ${t('ruleSummary', { title: discussion.grammarRule.title })}`}
                 />
               )}
 
               {discussion.vocabulary.length > 0 && (
                 <section>
-                  <h3>{t('usefulWords')}</h3>
+                  <SectionTitle className="discussion-section-title">
+                    {t('usefulWords')}
+                  </SectionTitle>
                   <ul className="discussion-words">
                     {discussion.vocabulary.map((item) => (
                       <li key={item.word}>
