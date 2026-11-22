@@ -27,20 +27,27 @@ for dep in $(node -p "Object.keys(require('./package.json').dependencies).join('
 
 Grading, conjugation, homework and date parsing are plain functions in the `lib/` and `model/` segments of the slices (`src/entities/*/lib`, `src/entities/*/model`…), so try them on real cases. Write a probe in the scratchpad (not in the repo; tests are the owner's to write) and run it with `npx tsx <probe>.ts`, importing by absolute path:
 
-| Function                                     | Cases to try                                                                                                                                                                                                                                 |
-| -------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `grade(input, answer, person)` (`grade.ts`)  | Typed with the pronoun for **every person label the prompts use** (`il/elle/on`, `ils/elles`, `er/sie/es`, `sie/Sie`, `él/ella/usted`, `nosotros/nosotras`…: see `api/_lib/prompts.ts`); `j'aime`; `œ` typed as `oe`; `ß` as `ss`; `allé(e)` |
-| `negate(form, tense)` (`negation.ts`)        | reflexive, elision (`n'ai`), aspirated h (`hais`), `y`/`en`, impératif with `-toi`, `-moi`, `va-t’en`                                                                                                                                        |
-| `readItem`, `homeworkItems` (`homework.ts`)  | the homework line in every language, with Russian labels (`глаголы … и …`), short tense names (`futur`, `presente`, `Futur`), `Devoirs:` block with list lines                                                                               |
-| `parseNextLesson` (`nextLesson.ts`)          | each label language, a city, no time, `18h`, a two-digit year, and **another line that merely mentions "next lesson"** after the real one                                                                                                    |
-| `splitLessons`, `localParse` (`document.ts`) | each heading word, an impossible date (`31.02.2026`), a German lesson without Claude                                                                                                                                                         |
-| `homeworkBlock` (`makeHomework.ts`)          | its output for each language must read back through `readItem` as the right kinds                                                                                                                                                            |
+| Function                                                          | Cases to try                                                                                                                                                                                                                                 |
+| ----------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `grade(input, answer, person)` (`grade.ts`)                       | Typed with the pronoun for **every person label the prompts use** (`il/elle/on`, `ils/elles`, `er/sie/es`, `sie/Sie`, `él/ella/usted`, `nosotros/nosotras`…: see `api/_lib/prompts.ts`); `j'aime`; `œ` typed as `oe`; `ß` as `ss`; `allé(e)` |
+| `negate(form, tense)` (`negation.ts`)                             | reflexive, elision (`n'ai`), aspirated h (`hais`), `y`/`en`, impératif with `-toi`, `-moi`, `va-t’en`                                                                                                                                        |
+| `readItem`, `homeworkItems` (`homework.ts`)                       | the homework line in every language, with Russian labels (`глаголы … и …`), short tense names (`futur`, `presente`, `Futur`), `Devoirs:` block with list lines                                                                               |
+| `parseNextLesson` (`nextLesson.ts`)                               | each label language, a city, no time, `18h`, a two-digit year, and **another line that merely mentions "next lesson"** after the real one                                                                                                    |
+| `splitLessons`, `localParse` (`document.ts`)                      | each heading word, an impossible date (`31.02.2026`), a German lesson without Claude                                                                                                                                                         |
+| `homeworkBlock` (`makeHomework.ts`)                               | its output for each language must read back through `readItem` as the right kinds                                                                                                                                                            |
+| `wordsForGroupExercise`, `canMakeGroupExercise` (`groupWords.ts`) | words of two languages (2 + 2, 3 + 2), a tie, more than 30 words, words without a translation: the button and the round must agree                                                                                                           |
+| `normalizeWordGroups` (word-list `normalize.ts`)                  | an answer that groups none of the words sent (they must be kept as in no group, not an error), an answer without `groups` (an error), a word sent back with another apostrophe or case                                                       |
+| `normalizePhonetics`, `normalizeExercise`                         | Claude's shape and the shape saved on the device read the same way; a choice whose answer isn't among its options; `say` / `heard` missing (an older saved exercise)                                                                         |
+| `readListView`, `readListOpen`, `readListPause`                   | a saved value that isn't one of ours (`"sideways"`, `7`, `null`) falls back to the default                                                                                                                                                   |
+| `forSpeech`, `translationLanguage`                                | `il/elle/on se lève`, `allé(e)s`; a word is never translated into its own language                                                                                                                                                           |
 
 Then read, in this order, looking for where one language was handled and the others forgotten (French was first; German, Spanish, Italian, Portuguese came later): `grade.ts`, `quiz.ts`, `progress.ts`, `tenses.ts`, `bank.ts`, `document.ts`, the `normalize.ts` files, `homework.ts`, `nextLesson.ts`, `warmUp.ts`, `report.ts`, `makeHomework.ts`. Grep for leftovers:
 
 ```bash
 grep -rn "'fr'\|French" src --include='*.ts' --include='*.tsx' | grep -v i18n
 ```
+
+**Saved data.** Every key the app keeps on the device (`grep -rhoE "(load|loadChecked|save)\(['\`][^'\`]+" src | sort -u`: `extras:`, `phonetics:`, `an2:`, `word-groups:`, `exercise:last`, `lessons-view`, `lessons-open`, `listen-pause`, `menu-open`, the settings…) must be read with a check, and a change of shape must still read what students already have (CLAUDE.md: stored field names never change; a new shape needs a migration on read or a new key). A cache that saves its normalized value but reads it back with the normalizer of Claude's answer is a bug (it happened with `phonetics:`).
 
 Also: keys that ignore the language (`wordKey`, the bank's dedupe by `inf`: `ser`, `ir`, `partir`, `casa` exist in several languages), cached values read without a check (`load<T>` used as is), and comments that sit above the wrong function.
 
@@ -108,7 +115,7 @@ A call next to the `setState` call is fine; one inside the `(previous) => …` f
 
 ### Exercise components
 
-Read the exercise components the student uses most: `WordQuiz`, `VerbsTab`, `GapFill`, `Match`, `Flashcards`, `QuizGame`, `HomeworkCard`, `WritingTask`. In each: what is recorded as right or wrong (a grading bug becomes a false "mistake" in Stats, Mistakes, the warm-up and the report to the teacher), the `lang` of shown words, what happens with 0, 1 or 2 words.
+Read the exercise components the student uses most: `WordQuiz`, `VerbsTab`, `GapFill`, `WordBlitz`, `Match`, `Flashcards`, `Listen`, `ExerciseRound` with `RoundLoader` (Create an exercise, a group's Exercise, the Phonetics tab's Practise), `PhoneticsTab`, `QuizGame`, the warm-up, `HomeworkCard`, `WritingTask`. In each: what is recorded as right or wrong (a grading bug becomes a false "mistake" in Stats, Mistakes, the warm-up and the report to the teacher), the `lang` of shown words, what happens with 0, 1 or 2 words. A picked option must be graded exactly (an accent-only difference is a wrong answer, not "almost"); a question that needs sound must not be shown where the browser has no voice, and its 🔊 label must not say the answer.
 
 ## 5. UI and UX in the browser
 
@@ -117,12 +124,11 @@ Start the dev server as in `run-languageswithvlad` (port 5173; if it is taken, t
 ```bash
 node .claude/skills/run-languageswithvlad/driver.mjs --out "$TMPDIR/audit-shots" < .claude/skills/audit-app/tour.steps
 node .claude/skills/run-languageswithvlad/driver.mjs --themes light --out "$TMPDIR/audit-shots" < .claude/skills/audit-app/tour-languages.steps
-printf 'nav /\nshot desk-home\nnav /lessons\nshot desk-lessons\nnav /settings\nshot desk-settings\n' \
-  | node .claude/skills/run-languageswithvlad/driver.mjs --width 1280 --out "$TMPDIR/audit-shots"
+node .claude/skills/run-languageswithvlad/driver.mjs --width 1280 --out "$TMPDIR/audit-shots" < .claude/skills/audit-app/tour-desktop.steps
 node .claude/skills/run-languageswithvlad/driver.mjs --themes light --out "$TMPDIR/audit-shots" < .claude/skills/audit-app/bad-input.steps
 ```
 
-`tour.steps` visits every page and lesson tab in both themes at 390 px, fills a verb drill with the pronoun typed in, and opens an unknown address; `tour-languages.steps` repeats the main pages with the interface in German and Russian (the longest words); `bad-input.steps` types bad input into the form fields (REVIEW.md, Forms): a very long name with emojis, markup in the word filter, only spaces as a text, a link as a discussion topic, `?` and odd spacing in the drill. A field added since needs a line there. The driver reports console errors and sideways scroll by itself. The driver trims each step line, so "only spaces" arrives as an empty field.
+`tour.steps` visits every page and lesson tab in both themes at 390 px (with a group's Exercise and its 3-word note, a Phonetics round, Listen and the Settings picture menu), fills a verb drill with the pronoun typed in, and opens an unknown address; `tour-desktop.steps` covers what only a wide screen shows (the lesson list as a column, a row and folded; Profile and Interface side by side; lesson mode); `tour-languages.steps` repeats the main pages with the interface in German and Russian (the longest words); `bad-input.steps` types bad input into the form fields (REVIEW.md, Forms): a very long name with emojis, markup in the word filter, only spaces as a text, a link as a discussion topic, `?` and odd spacing in the drill. A field added since needs a line there. The driver reports console errors and sideways scroll by itself. The driver trims each step line, so "only spaces" arrives as an empty field.
 
 **Look at every screenshot** with Read, and note:
 
@@ -133,6 +139,12 @@ node .claude/skills/run-languageswithvlad/driver.mjs --themes light --out "$TMPD
 - text in the wrong language for the interface, or a word in the learned language shown as English;
 - unknown addresses: does the app say so or quietly show Home?
 - light and dark: anything unreadable or invisible in one of them.
+
+Three checks the screenshots can't make:
+
+- **Speech.** Record what is read and in which voice with the `speechSynthesis.speak` wrapper from `run-languageswithvlad` (Checking speech): Listen reads word, then translation, in the right locales; Pause and ✕ stop it; a phonetics question's 🔊 reads its `say`.
+- **Translation language apart from the interface.** Set `translateTo` to `ru` with the interface in English (and the other way round) in `cahier-fr:settings`, then open a lesson's words, Listen, Fill the gap and Create an exercise: translations and their `lang` follow `translateTo`, explanations of grammar and phonetics follow the interface.
+- **Paid requests on a return visit.** On every screen that asks Claude (word groups, Grammar, Phonetics, the word menu, Discuss), count the `/api/` requests after leaving and coming back (wrap `window.fetch` in an `eval`, then navigate inside the app by clicking a menu link, at `--width 1280`, so the wrapper survives). A second request for the same thing means its answer isn't kept, and every visit costs money.
 
 Accessibility has its own skill: run `check-a11y` too when the owner asks for it, or mention it.
 

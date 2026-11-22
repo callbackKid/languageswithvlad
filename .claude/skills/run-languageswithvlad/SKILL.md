@@ -70,7 +70,7 @@ Lines starting with `#` are skipped. A line `---` ends a block: when a step fail
 
 ### Test data
 
-`fixtures.mjs` serves four lessons. The newest, French, is dated today: six words (★ `se lever` is a key word; `grec`, an adjective, makes the dictation name the form to write), the verbs `se lever` and `aimer` with their conjugations (and `finir`, `partir` without tables, for the order by group), a `Devoirs:` line, a Meet link and the next lesson. Before it, one lesson each in German (yesterday: `aufstehen`, `sich waschen`), Spanish (`hablar`) and Portuguese (`falar`), with their verb tables; open them at `/lessons/<date>_1`. It also answers grammar and homework (`analyze` extras), Make homework, the words' groups by meaning (`aimer` and `grec` are left out, so they show under Other), a written answer's correction, a word's explanation (Text analysis) and a discussion question; `{}` for the rest. A page that needs more needs a branch in `answerFor`; copy the response shape from the endpoint in `api/` and its `normalizeX` (in the `model/normalize.ts` of the slice that asks).
+`fixtures.mjs` serves four lessons. The newest, French, is dated today: six words (★ `se lever` is a key word; `grec`, an adjective, makes the dictation name the form to write), the verbs `se lever` and `aimer` with their conjugations (and `finir`, `partir` without tables, for the order by group), a `Devoirs:` line, a Meet link and the next lesson. Before it, one lesson each in German (yesterday: `aufstehen`, `sich waschen`, `das Frühstück`), Spanish (`hablar`) and Portuguese (`falar`), with their verb tables; open them at `/lessons/<date>_1`. It also answers grammar and homework (`analyze` extras), Make homework, the words' groups by meaning (`aimer` and `grec` are left out, so they show under Other; every French group has 2 words, too few for a group's **Exercise**, while the German lesson's three words make one group where it works), the Phonetics tab and a round on it (with a "which word did you hear" question and an accent-only wrong option), a written answer's correction, a word's explanation (Text analysis) and a discussion question; `{}` for the rest. A page that needs more needs a branch in `answerFor`; copy the response shape from the endpoint in `api/` and its `normalizeX` (in the `model/normalize.ts` of the slice that asks).
 
 The next lesson's time depends on the **scenario**, computed from now: `upcoming` (default; in 20 hours: Home shows the summary and Revise before the lesson), `now` (started 10 minutes ago: Lesson now, lesson mode), `finished` (ended today). The app keeps the document it loaded, so after `scenario` press `click button Sync`.
 
@@ -79,6 +79,18 @@ The server's teacher code is `test-teacher` (Settings → Teacher turns the teac
 ## Run (human path)
 
 `yarn start` runs the app with the real API functions (`vercel dev`, reads `.env.local`); open the address it prints and paste a document link. Not used by the driver.
+
+## Checking speech
+
+Headless Chrome has no voices, so nothing is heard; record what the page asks the browser to read instead, then do the steps and print the log:
+
+```
+eval (()=>{window.spoken=[];const original=speechSynthesis.speak.bind(speechSynthesis);speechSynthesis.speak=(utterance)=>{if(utterance.text.trim())window.spoken.push(utterance.lang+' '+utterance.text);original(utterance)};return 1})()
+click button Listen
+eval new Promise(r=>setTimeout(()=>r(window.spoken.join(' | ')),6000))
+```
+
+Each entry is the locale and the text (`fr-FR se lever | ru-RU вставать`). An utterance never reports its end here, so the app's fallback timer paces it. In development React's StrictMode runs effects twice, so the first item can appear twice. A translation read in the voice of the interface language means `translateTo` in the test settings differs from the language of the fixture's (Russian) translations: set `translateTo` to `ru` in `cahier-fr:settings` first.
 
 ## Gotchas
 

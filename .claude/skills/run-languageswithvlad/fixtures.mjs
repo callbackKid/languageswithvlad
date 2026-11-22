@@ -500,12 +500,16 @@ const DISCUSSION = {
 
 // The JSON body for one API request; {} for endpoints this fixture doesn't cover.
 // Groups by meaning for the words sent (action "groups"): the test lesson's words in two groups,
-// any other word left out, so it lands under Other.
+// any other word left out, so it lands under Other. The German lesson's three words make one group
+// of 3, the smallest a group's Exercise button works with.
 const WORD_GROUPS = {
   'se lever': 'Morning routine',
   'le matin': 'Morning routine',
   'la boulangerie': 'Food and shops',
   'le pain': 'Food and shops',
+  aufstehen: 'Morning routine',
+  'sich waschen': 'Morning routine',
+  'das Frühstück': 'Morning routine',
 };
 function wordGroupsFor(words = []) {
   const groups = {};
