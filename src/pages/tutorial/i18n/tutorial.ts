@@ -180,7 +180,7 @@ export const tutorial = defineMessages({
     'text.step2':
       'Click a word, or select a few words with the mouse or your finger, to open the menu: <b>Translate</b> in this sentence (with the dictionary form, the tense and a short explanation), <b>Define</b>, <b>Examples</b> and, for a verb, <b>Conjugate</b>. The words you look up are listed under the text. ☆ puts the word on Words to learn.',
     'text.step3':
-      '<btn>Translate the text</btn> shows a Russian translation under each paragraph; the same button hides it again.',
+      '<btn>Translate the text</btn> shows a translation under each paragraph, in the language chosen under “Translations in” in Settings; the same button hides it again.',
     'text.step4':
       '<pbtn>Make questions and exercises</pbtn>: Claude picks the words worth learning (with the usual Quiz, Flashcards and the other exercises), writes questions about the text, and a true-or-false exercise.',
     'text.tip1': 'Words you already asked about are underlined with dots in the text.',
@@ -439,7 +439,7 @@ export const tutorial = defineMessages({
     'text.step2':
       'Нажмите на слово или выделите несколько слов мышью или пальцем, чтобы открыть меню: <b>Перевести</b> — перевод в этом предложении (со словарной формой, временем и коротким объяснением), <b>Определение</b>, <b>Примеры</b> и, для глагола, <b>Проспрягать</b>. Под текстом — список слов, которые вы уже посмотрели. ☆ добавляет слово в «Слова на изучении».',
     'text.step3':
-      '<btn>Перевести текст</btn> показывает русский перевод под каждым абзацем; та же кнопка его скрывает.',
+      '<btn>Перевести текст</btn> показывает перевод под каждым абзацем на языке, выбранном в настройке «Язык переводов» в «Настройках»; та же кнопка его скрывает.',
     'text.step4':
       '<pbtn>Составить вопросы и упражнения</pbtn>: Claude выберет слова, которые стоит выучить (с обычными упражнениями — тест, карточки и остальные), составит вопросы по тексту и упражнение «верно или неверно».',
     'text.tip1': 'Слова, о которых вы уже спрашивали, подчёркнуты в тексте точками.',
@@ -702,7 +702,7 @@ export const tutorial = defineMessages({
     'text.step2':
       'Cliquez sur un mot, ou sélectionnez quelques mots à la souris ou au doigt, pour ouvrir son menu : <b>Traduire</b> dans cette phrase (avec la forme du dictionnaire, le temps et une courte explication), <b>Définir</b>, <b>Exemples</b> et, pour un verbe, <b>Conjuguer</b>. Les mots consultés sont listés sous le texte. ☆ ajoute le mot aux Mots à apprendre.',
     'text.step3':
-      '<btn>Traduire le texte</btn> affiche une traduction russe sous chaque paragraphe ; le même bouton la masque.',
+      '<btn>Traduire le texte</btn> affiche une traduction sous chaque paragraphe, dans la langue choisie sous « Langue des traductions » dans Réglages ; le même bouton la masque.',
     'text.step4':
       '<pbtn>Créer des questions et des exercices</pbtn> : Claude choisit les mots à retenir (avec le Quiz, les Cartes et les autres exercices habituels), écrit des questions sur le texte et un exercice « vrai ou faux ».',
     'text.tip1':
@@ -966,7 +966,7 @@ export const tutorial = defineMessages({
     'text.step2':
       'Klicke auf ein Wort oder markiere ein paar Wörter mit der Maus oder dem Finger, um das Menü zu öffnen: <b>Übersetzen</b> in diesem Satz (mit Grundform, Zeitform und einer kurzen Erklärung), <b>Definieren</b>, <b>Beispiele</b> und bei einem Verb <b>Konjugieren</b>. Die Wörter, die du nachschlägst, stehen in einer Liste unter dem Text. ☆ fügt das Wort zu den Lernwörtern hinzu.',
     'text.step3':
-      '<btn>Text übersetzen</btn> zeigt eine russische Übersetzung unter jedem Absatz; derselbe Knopf blendet sie wieder aus.',
+      '<btn>Text übersetzen</btn> zeigt unter jedem Absatz eine Übersetzung in die Sprache, die du in den Einstellungen unter „Übersetzungssprache“ gewählt hast; derselbe Knopf blendet sie wieder aus.',
     'text.step4':
       '<pbtn>Fragen und Übungen erstellen</pbtn>: Claude wählt die Wörter, die sich zu lernen lohnen (mit Quiz, Karteikarten und den anderen Übungen), schreibt Fragen zum Text und eine Richtig-oder-falsch-Übung.',
     'text.tip1': 'Wörter, nach denen du schon gefragt hast, sind im Text gepunktet unterstrichen.',
@@ -1230,7 +1230,7 @@ export const tutorial = defineMessages({
     'text.step2':
       'Haz clic en una palabra o selecciona unas cuantas con el ratón o el dedo para abrir su menú: <b>Traducir</b> en esa frase (con la forma del diccionario, el tiempo verbal y una breve explicación), <b>Definir</b>, <b>Ejemplos</b> y, si es un verbo, <b>Conjugar</b>. Las palabras que consultas aparecen en una lista bajo el texto. ☆ pone la palabra en Palabras por aprender.',
     'text.step3':
-      '<btn>Traducir el texto</btn> muestra una traducción al ruso debajo de cada párrafo; el mismo botón la vuelve a ocultar.',
+      '<btn>Traducir el texto</btn> muestra una traducción debajo de cada párrafo, en el idioma elegido en «Idioma de las traducciones» en Ajustes; el mismo botón la vuelve a ocultar.',
     'text.step4':
       '<pbtn>Crear preguntas y ejercicios</pbtn>: Claude elige las palabras que vale la pena aprender (con el Test, las Tarjetas y los demás ejercicios de siempre), escribe preguntas sobre el texto y un ejercicio de verdadero o falso.',
     'text.tip1':
@@ -1492,7 +1492,7 @@ export const tutorial = defineMessages({
     'text.step2':
       'Clique numa palavra ou selecione algumas com o rato ou o dedo para abrir o menu: <b>Traduzir</b> nessa frase (com a forma do dicionário, o tempo verbal e uma explicação curta), <b>Definir</b>, <b>Exemplos</b> e, se for um verbo, <b>Conjugar</b>. As palavras que consultar ficam numa lista por baixo do texto. ☆ põe a palavra nas Palavras por aprender.',
     'text.step3':
-      '<btn>Traduzir o texto</btn> mostra uma tradução em russo por baixo de cada parágrafo; o mesmo botão volta a escondê-la.',
+      '<btn>Traduzir o texto</btn> mostra uma tradução por baixo de cada parágrafo, no idioma escolhido em «Idioma das traduções» nas Definições; o mesmo botão volta a escondê-la.',
     'text.step4':
       '<pbtn>Criar perguntas e exercícios</pbtn>: o Claude escolhe as palavras que vale a pena aprender (com o Teste, os Cartões e os outros exercícios habituais), escreve perguntas sobre o texto e um exercício de verdadeiro ou falso.',
     'text.tip1':
@@ -1756,7 +1756,7 @@ export const tutorial = defineMessages({
     'text.step2':
       'Clicca su una parola, o selezionane alcune con il mouse o il dito, per aprire il suo menu: <b>Traduci</b> in quella frase (con la forma del dizionario, il tempo verbale e una breve spiegazione), <b>Definisci</b>, <b>Esempi</b> e, per un verbo, <b>Coniuga</b>. Le parole che cerchi compaiono in un elenco sotto il testo. ☆ mette la parola nelle Parole da imparare.',
     'text.step3':
-      '<btn>Traduci il testo</btn> mostra una traduzione in russo sotto ogni paragrafo; lo stesso pulsante la nasconde di nuovo.',
+      '<btn>Traduci il testo</btn> mostra una traduzione sotto ogni paragrafo, nella lingua scelta in «Lingua delle traduzioni» nelle Impostazioni; lo stesso pulsante la nasconde di nuovo.',
     'text.step4':
       '<pbtn>Crea domande ed esercizi</pbtn>: Claude sceglie le parole che vale la pena imparare (con Quiz, Flashcard e gli altri esercizi di sempre), scrive domande sul testo e un esercizio vero o falso.',
     'text.tip1': 'Le parole che hai già chiesto sono sottolineate a puntini nel testo.',

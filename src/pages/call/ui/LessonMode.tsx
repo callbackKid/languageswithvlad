@@ -383,7 +383,7 @@ function LessonWords({ bank, lesson }: { bank: Bank; lesson: Lesson | null }) {
                   </>
                 )}
               </span>
-              <span className="ru" lang={translationOf(word.language)}>
+              <span className="ru" data-no-word-actions lang={translationOf(word.language)}>
                 {word.ru}
               </span>
               <Speak text={word.fr} language={word.language ?? 'fr'} />

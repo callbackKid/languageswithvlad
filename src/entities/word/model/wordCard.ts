@@ -20,7 +20,7 @@ export interface WordCard extends PhotoItem {
   language: Language;
   // the dictionary form's own translation (вставать), where ru fits the sentence (встаю)
   baseRu: string;
-  // in the word's own language, and its Russian translation
+  // in the word’s own language, and its translation
   definition: string;
   definitionRu: string;
   examples: { text: string; ru: string }[];

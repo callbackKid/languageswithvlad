@@ -20,13 +20,14 @@ import {
 } from '@/features/look-up-word';
 import { Star } from '@/features/star-word';
 import { api, ApiError } from '@/shared/api';
-import { TENSES_BY_LANGUAGE } from '@/shared/config';
+import { getSettings, TENSES_BY_LANGUAGE, useTranslationLanguage } from '@/shared/config';
 import { common, translator, useTranslation, wordActions } from '@/shared/i18n';
 import Speak from '@/shared/ui/Speak';
 import WaitingFact from '@/shared/ui/WaitingFact';
 
-// Where the menu never opens on a selection: exercises (it would give the answers away), form
-// fields, places marked data-no-word-actions, and the menu itself.
+/** Where the menu never opens on a selection: exercises (it would give the answers away), form
+    fields, places marked data-no-word-actions (translations, which may be in a language being
+    learned too), and the menu itself. */
 const SKIPPED =
   '.ex, input, textarea, select, [contenteditable], [data-no-word-actions], .word-actions';
 // The element whose text holds the sentence around a selection.
@@ -81,6 +82,7 @@ export default function WordActions({
 }) {
   const { t, rich } = useTranslation(wordActions);
   const commonText = useTranslation(common);
+  const translationOf = useTranslationLanguage();
   const [picked, setPicked] = useState<LookUp | null>(null);
   const [card, setCard] = useState<WordCard | null>(null);
   const [view, setView] = useState<View | null>(null);
@@ -166,10 +168,15 @@ export default function WordActions({
     const pick = pickCount.current;
     setState('loading');
     setError('');
+    // once, so the request and the key it is saved under always agree
+    const translateTo = getSettings().translateTo;
     try {
-      const answer = normalizeWordCard(await api.word(picked.text, picked.context), picked.text);
+      const answer = normalizeWordCard(
+        await api.word(picked.text, picked.context, translateTo),
+        picked.text
+      );
       if (!answer) throw new Error('empty');
-      saveWordCard(picked.text, picked.context, answer);
+      saveWordCard(picked.text, picked.context, answer, translateTo);
       if (pick !== pickCount.current) return null;
       setCard(answer);
       setState('idle');
@@ -272,7 +279,7 @@ export default function WordActions({
         <div className="word-actions-body">
           {view === 'translate' && (
             <>
-              <p className="word-actions-ru" lang="ru">
+              <p className="word-actions-ru" lang={translationOf(card.language)}>
                 {card.ru}
               </p>
               {card.base && card.base !== card.fr && (
@@ -283,14 +290,14 @@ export default function WordActions({
                   {card.tense}
                 </p>
               )}
-              {card.explanation && <p lang="ru">{card.explanation}</p>}
+              {card.explanation && <p lang={translationOf(card.language)}>{card.explanation}</p>}
             </>
           )}
           {view === 'define' && (
             <>
               <p lang={language}>{card.definition || '—'}</p>
               {card.definitionRu && (
-                <p className="hint" lang="ru">
+                <p className="hint" lang={translationOf(card.language)}>
                   {card.definitionRu}
                 </p>
               )}
@@ -303,7 +310,7 @@ export default function WordActions({
                   <li key={example.text}>
                     <span lang={language}>{example.text}</span>
                     <Speak text={example.text} language={language} />
-                    <span className="ru" lang="ru">
+                    <span className="ru" lang={translationOf(card.language)}>
                       {example.ru}
                     </span>
                   </li>

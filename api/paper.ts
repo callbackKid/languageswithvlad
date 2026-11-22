@@ -3,6 +3,7 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { claudeJSON, MODEL, readImages } from './_lib/claude.js';
 import { asLevels, checkAccess, fail, HttpError, onlyPost } from './_lib/http.js';
 import {
+  asTranslationRequest,
   BOOK_PARTS,
   bookExercisesPrompt,
   type BookPart,
@@ -38,7 +39,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
       if (!data.startsWith('JVBERi')) return response.status(400).json({ error: 'not_pdf' });
       const prompt =
         kind === 'textbook'
-          ? textbookPrompt(asLevels(request.body?.levels))
+          ? textbookPrompt(asLevels(request.body?.levels), asTranslationRequest(request.body))
           : bookExercisesPrompt(bookParts(request.body?.parts));
       return response
         .status(200)
@@ -54,7 +55,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
         ? transcribePrompt(images.length)
         : kind === 'exercises'
           ? bookExercisesPrompt(bookParts(request.body?.parts))
-          : photoPrompt(asLevels(request.body?.levels));
+          : photoPrompt(asLevels(request.body?.levels), asTranslationRequest(request.body));
     return response.status(200).json(
       await claudeJSON(prompt, {
         model: MODEL,

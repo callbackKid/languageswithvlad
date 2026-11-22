@@ -6,6 +6,7 @@ import {
   analysisPrompt,
   asExplainLanguage,
   asLanguage,
+  asTranslationRequest,
   exercisePrompt,
   grammarPracticePrompt,
   homeworkPrompt,
@@ -138,10 +139,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
     const prompt =
       action === 'extras'
         ? lessonExtrasPrompt(body, asExplainLanguage(request.body?.explainIn), levels)
-        : analysisPrompt(body, levels, {
-            language: asExplainLanguage(request.body?.translateTo),
-            fallback: asExplainLanguage(request.body?.translateFallback),
-          });
+        : analysisPrompt(body, levels, asTranslationRequest(request.body));
     return response
       .status(200)
       .json(await claudeJSON(prompt, { model: MODEL, maxTokens: 16000, cache: !fresh }));

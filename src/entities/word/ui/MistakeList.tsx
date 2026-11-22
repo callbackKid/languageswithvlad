@@ -27,7 +27,7 @@ export default function MistakeList({
               </>
             )}
           </span>
-          <span className="ru" lang={translationOf(stat.language)}>
+          <span className="ru" data-no-word-actions lang={translationOf(stat.language)}>
             {stat.ru || '—'}
           </span>
           <span className="miss">{t('missed', { count: stat.wrong })}</span>

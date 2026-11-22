@@ -331,7 +331,7 @@ export default function WordsTab({
                         </>
                       )}
                     </span>
-                    <span className="ru" lang={translationOf(word.language)}>
+                    <span className="ru" data-no-word-actions lang={translationOf(word.language)}>
                       {word.ru || '—'}
                       {word.added && (
                         <span className="added" data-tooltip={t('addedByClaude')}>

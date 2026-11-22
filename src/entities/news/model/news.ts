@@ -51,6 +51,18 @@ export const NEWS: NewsDay[] = [
     date: '2026-11-22',
     items: [
       {
+        kind: 'better',
+        text: {
+          en: 'The word menu, Photo parsing, Text analysis and textbook notes now translate into the language chosen under Translations in, explanations included.',
+          ru: 'Переводы и объяснения в меню слова, «Разборе фото», «Разборе текста» и записях по учебнику теперь пишутся на языке, выбранном в строке «Язык переводов».',
+          fr: 'Le menu des mots, Analyse de photo, Analyse de texte et les notes tirées d’un manuel traduisent maintenant dans la langue choisie sous « Langue des traductions », explications comprises.',
+          de: 'Das Wortmenü, die Fotoanalyse, die Textanalyse und die Notizen aus dem Lehrbuch übersetzen jetzt samt Erklärungen in die Sprache, die du unter „Übersetzungssprache“ gewählt hast.',
+          es: 'El menú de palabras, Análisis de fotos, Análisis de texto y las notas del manual traducen ahora al idioma elegido en «Idioma de las traducciones», explicaciones incluidas.',
+          pt: 'O menu das palavras, a Análise de fotos, a Análise de texto e as notas do manual traduzem agora para o idioma escolhido em «Idioma das traduções», explicações incluídas.',
+          it: 'Il menu delle parole, Analisi delle foto, Analisi del testo e gli appunti dal manuale ora traducono nella lingua scelta in «Lingua delle traduzioni», spiegazioni comprese.',
+        },
+      },
+      {
         kind: 'new',
         text: {
           en: 'Settings: choose the language word and verb translations are written in, under Translations in. Each lesson is prepared again in that language when you open it.',

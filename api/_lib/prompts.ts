@@ -30,7 +30,7 @@ const levelLine = (levels: Levels) =>
   `The learner's CEFR level (A0 is a complete beginner): ${CODES.map((code) => `${LANGUAGE_NAMES[code]} ${levels[code]}`).join(', ')}; use the level of the language at hand.`;
 // What the level changes in what Claude writes for the learner.
 const LEVEL_STYLE =
-  'Match that level in everything you write for the learner: at A0 and A1 short and simple, the most common meaning first, explanations in plain Russian with an everyday example and nothing a beginner doesn’t need yet; at A2 simple but complete; at B1 and above natural, idiomatic wording and the nuances (register, near-synonyms, exceptions) a learner at that level is ready for.';
+  'Match that level in everything you write for the learner: at A0 and A1 short and simple, the most common meaning first, explanations in plain words of the translation language with an everyday example and nothing a beginner doesn’t need yet; at A2 simple but complete; at B1 and above natural, idiomatic wording and the nuances (register, near-synonyms, exceptions) a learner at that level is ready for.';
 
 // How nouns are written in their dictionary form, for every language that has articles.
 const NOUN_FORMS =
@@ -58,7 +58,7 @@ export function analysisPrompt(
   levels: Levels,
   translation: TranslationRequest
 ): string {
-  return `You are helping a learner whose own language is ${EXPLAIN_NAMES[translation.language]} learn a foreign language: ${LANGUAGE_LIST}. ${levelLine(levels)} The level shapes only the translations you write yourself (see words), never which words you list. ${translationRule(translation)} Below are raw notes from one lesson, written by the teacher in that language mixed with translations, often in Russian. They are messy: some words have no translation, and some lines are conjugation tables, example sentences or pronunciation rules.
+  return `You are helping a learner whose own language is ${EXPLAIN_NAMES[translation.language]} learn a foreign language: ${LANGUAGE_LIST}. ${levelLine(levels)} The level shapes only the translations you write yourself (see words), never which words you list. ${translationRule(translation, 'lesson')} Below are raw notes from one lesson, written by the teacher in that language mixed with translations, often in Russian. They are messy: some words have no translation, and some lines are conjugation tables, example sentences or pronunciation rules.
 
 First decide which language the lesson teaches, judging by its vocabulary rather than by headings or labels (a lesson in any of them may still be headed "leçon"): ${LANGUAGE_KEY}.
 
@@ -203,16 +203,16 @@ ${list}`;
 // How one word or phrase the learner marked is described: shared by the photo and the reader.
 const MARKED_ITEM_RULES = `- fr: the marked text exactly as it is written (a single marked phrase stays one item).
 - context: the clause it appears in, copied from the text, at most about 12 words.
-- ru: a Russian translation that fits this context, in plain everyday Russian (шваб, not швабец; фиксированная плата, not паушальная сумма).
+- ru: a translation that fits this context, in plain everyday words of the translation language (in Russian, for example: шваб, not швабец; фиксированная плата, not паушальная сумма).
 - base: the dictionary form: the infinitive for a verb form, masculine singular for an adjective or participle, the noun with its article for a noun (le/la/l' in French, der/die/das in German, el/la in Spanish, o/a in Portuguese, il/lo/la/l' in Italian, none in English), the fixed expression for an idiom (avoir raison, être en guerre). Use "" when fr is already that form.
 - kind: "verb", "noun", "adjective", "adverb", "expression" or "other".
 - tense: for a conjugated verb or a phrase built around one, the name of the tense or mood in the text's language, with the person when useful (French: "imparfait, il", "passé composé", "subjonctif présent"; English: "past simple", "present perfect"; German: "Präteritum, er", "Perfekt", "Konjunktiv II"; Spanish: "pretérito indefinido, él", "subjuntivo presente"; Portuguese: "pretérito perfeito", "futuro do conjuntivo"; Italian: "passato prossimo", "congiuntivo presente"); the participle or infinitive by its name in that language for those forms; "" for anything without a verb.
-- explanation: one or two short sentences in Russian on what it means here and anything worth knowing: register (разговорное, книжное), literal meaning or origin, a common related expression, why this tense is used.`;
+- explanation: one or two short sentences in the translation language on what it means here and anything worth knowing: register (in Russian: разговорное, книжное), literal meaning or origin, a common related expression, why this tense is used.`;
 
 // The prompt for the underlined words on a photo of a book page.
-export function photoPrompt(levels: Levels): string {
-  return `The image is a photo of a page from a book in ${LANGUAGE_LIST}. A Russian-speaking learner has underlined (or highlighted, or circled) some words and phrases. Find every marked word or phrase, in reading order. Ignore text that is not marked.
-${levelLine(levels)} ${LEVEL_STYLE}
+export function photoPrompt(levels: Levels, translation: TranslationRequest): string {
+  return `The image is a photo of a page from a book in ${LANGUAGE_LIST}. A learner has underlined (or highlighted, or circled) some words and phrases. Find every marked word or phrase, in reading order. Ignore text that is not marked.
+${levelLine(levels)} ${translationRule(translation, 'page')} ${LEVEL_STYLE}
 Reply with only a JSON object: {"language": ${LANGUAGE_CODES}, "items": [{"fr": string, "context": string, "ru": string, "base": string, "kind": string, "tense": string, "explanation": string}]}.
 - language: the language of the book: ${LANGUAGE_KEY}.
 ${MARKED_ITEM_RULES}`;
@@ -221,18 +221,23 @@ ${MARKED_ITEM_RULES}`;
 /** A word or phrase selected anywhere in the app, for its menu of actions: the translation and
     explanation in its sentence (as for a marked word in a pasted text), a definition in its own
     language and examples, all in one answer so switching between them needs no new request. */
-export function wordPrompt(selection: string, context: string, levels: Levels): string {
-  return `A Russian-speaking learner of ${LANGUAGE_LIST} selected a word or phrase in a lesson and wants to understand it and learn it. Explain it as it is used in this sentence.
-${levelLine(levels)} ${LEVEL_STYLE}
+export function wordPrompt(
+  selection: string,
+  context: string,
+  levels: Levels,
+  translation: TranslationRequest
+): string {
+  return `A learner of ${LANGUAGE_LIST} selected a word or phrase in a lesson and wants to understand it and learn it. Explain it as it is used in this sentence.
+${levelLine(levels)} ${translationRule(translation, 'selection')} ${LEVEL_STYLE}
 Selected: """${selection}"""
 The sentence around it: """${context}"""
 Reply with only a JSON object: {"language": ${LANGUAGE_CODES}, "fr": string, "context": string, "ru": string, "base": string, "kind": string, "tense": string, "explanation": string, "baseRu": string, "definition": string, "definitionRu": string, "examples": [{"text": string, "ru": string}]}.
 - language: the language of the selected text: ${LANGUAGE_KEY}.
 ${MARKED_ITEM_RULES}
-- baseRu: a short Russian translation of the dictionary form itself, as a dictionary gives it (for a verb, its infinitive: вставать, not встаю).
+- baseRu: a short translation of the dictionary form itself, as a dictionary gives it (for a verb, its infinitive; in Russian, for example: вставать, not встаю).
 - definition: what the dictionary form means, explained in the selected text's own language the way a learner's dictionary does: one or two short, simple sentences at the learner's level, without using the word itself.
-- definitionRu: the Russian translation of definition.
-- examples: 3 short everyday sentences in the selected text's language using the dictionary form (conjugated or agreed as the sentence needs), at the learner's level and each showing a different common use; ru is the Russian translation of each.`;
+- definitionRu: the translation of definition.
+- examples: 3 short everyday sentences in the selected text's language using the dictionary form (conjugated or agreed as the sentence needs), at the learner's level and each showing a different common use; ru is the translation of each.`;
 }
 
 /** An exercise the teacher makes in lesson mode: a mixed round on a grammar point and/or some
@@ -259,7 +264,7 @@ export function exercisePrompt({
     .filter(Boolean)
     .join(', and ');
   return `Write a ${name} exercise for a Russian-speaking learner at CEFR level ${level} (A0 is a complete beginner): ${count} questions practising ${focus}.
-${LEVEL_STYLE}
+${LEVEL_STYLE} ${translationRule({ language: 'ru', fallback: 'ru' }, 'text')}
 Mix three kinds of question, about a third of each, in a varied order:
 - "choice": prompt is a ${name} sentence with one gap written ___, or a short question; options are 3 or 4 answers in ${name}, exactly one of them right; answer is that option, written exactly as in options.
 - "gap": prompt is a ${name} sentence with one gap written ___, followed in brackets by the word to put in the right form when the form is what is practised ("Hier, nous ___ (aller) au cinéma."); answer is what goes in the gap.
@@ -268,24 +273,29 @@ Every question practises the point${grammar && words.length ? 's' : ''} above, w
 Reply with only a JSON object: {"title": string, "questions": [{"type": "choice" | "gap" | "translate", "prompt": string, "options": [string], "answer": string, "accept": [string], "ru": string, "explanation": string}]}. title says what the exercise practises, in Russian, in at most 6 words.`;
 }
 
-// A natural Russian translation of a text, paragraph by paragraph.
-export function translatePrompt(paragraphs: string[]): string {
-  return `Translate this text into natural, fluent Russian, the way a good translator would: keep the meaning, tone and register, don't translate word for word, and don't add or leave out anything. It has ${paragraphs.length} paragraph${paragraphs.length === 1 ? '' : 's'}, numbered below.
+// A natural translation of a text into the translation language, paragraph by paragraph.
+export function translatePrompt(paragraphs: string[], translation: TranslationRequest): string {
+  const name = EXPLAIN_NAMES[translation.language];
+  const isLearned = LEARN_LANGUAGES.some((code) => code === translation.language);
+  const instead = isLearned
+    ? ` If it is already in ${name}, translate it into ${EXPLAIN_NAMES[translation.fallback]}.`
+    : '';
+  return `Translate this text into natural, fluent ${name}, the way a good translator would: keep the meaning, tone and register, don't translate word for word, and don't add or leave out anything.${instead} It has ${paragraphs.length} paragraph${paragraphs.length === 1 ? '' : 's'}, numbered below.
 Reply with only a JSON object: {"paragraphs": [string]} with exactly ${paragraphs.length} item${paragraphs.length === 1 ? '' : 's'}: the translation of each paragraph, in the same order, without the numbers.
 
 ${paragraphs.map((paragraph, index) => `[${index + 1}] ${paragraph}`).join('\n\n')}`;
 }
 
 // Vocabulary, questions and true-or-false statements built from a text the learner pasted.
-export function studyPrompt(body: string, levels: Levels): string {
-  return `A Russian-speaking learner pasted the text below (an article, a story, a post) to study with. It is in ${LANGUAGE_LIST}. ${levelLine(levels)}
+export function studyPrompt(body: string, levels: Levels, translation: TranslationRequest): string {
+  return `A learner pasted the text below (an article, a story, a post) to study with. It is in ${LANGUAGE_LIST}. ${levelLine(levels)} ${translationRule(translation, 'text')}
 Reply with only a JSON object:
 {"language": ${LANGUAGE_CODES}, "title": string, "words": [{"fr": string, "ru": string, "kind": "noun"|"verb"|"adjective"|"adverb"|"expression"|"other", "sense": string}], "questions": [{"question": string, "ru": string}], "statements": [{"text": string, "ru": string, "correct": boolean, "why": string}]}
 - language: the language of the text.
 - title: what the text is about, in its own language, at most 8 words.
-- words: the 12 to 18 words and expressions from the text most worth learning at this level: skip what such a learner surely knows, prefer what they need to understand the text. fr is the dictionary form (${NOUN_FORMS}; verbs in the infinitive; a set phrase as it is said), ru a short Russian translation that fits the text (${NOUN_AGREEMENT}), sense the core meaning as one or two lowercase English words (words that could be confused share a sense). Never repeat the same fr.
-- questions: 5 questions in the text's language, at the learner's level: first 3 about what the text says, then 2 asking for the learner's own opinion or experience. ru is the Russian translation of each.
-- statements: 6 statements about the text in its language, for a true-or-false exercise: about half true and half false, each checking a different detail, none of them a word-for-word copy of a sentence. ru is its Russian translation, correct whether it is true, why one short sentence in Russian saying where the text shows it.
+- words: the 12 to 18 words and expressions from the text most worth learning at this level: skip what such a learner surely knows, prefer what they need to understand the text. fr is the dictionary form (${NOUN_FORMS}; verbs in the infinitive; a set phrase as it is said), ru a short translation that fits the text (${NOUN_AGREEMENT}), sense the core meaning as one or two lowercase English words (words that could be confused share a sense). Never repeat the same fr.
+- questions: 5 questions in the text's language, at the learner's level: first 3 about what the text says, then 2 asking for the learner's own opinion or experience. ru is the translation of each.
+- statements: 6 statements about the text in its language, for a true-or-false exercise: about half true and half false, each checking a different detail, none of them a word-for-word copy of a sentence. ru is its translation, correct whether it is true, why one short sentence in the translation language saying where the text shows it.
 
 Text:
 """
@@ -301,14 +311,14 @@ Reply with only a JSON object: {"title": string, "text": string}. title is what 
 }
 
 // The prompt for the pages of a textbook (a PDF), turned into lesson notes.
-export function textbookPrompt(levels: Levels): string {
-  return `The PDF holds a few pages from a ${LANGUAGE_LIST} textbook, usually one chapter. Write the lesson notes a teacher would write from them for a Russian-speaking learner, as plain text, one item per line, using only what these pages teach.
-${levelLine(levels)} ${LEVEL_STYLE} The level decides how the rules are explained and which example sentences you choose, not which of the chapter's words you list.
+export function textbookPrompt(levels: Levels, translation: TranslationRequest): string {
+  return `The PDF holds a few pages from a ${LANGUAGE_LIST} textbook, usually one chapter. Write the lesson notes a teacher would write from them for a learner, as plain text, one item per line, using only what these pages teach.
+${levelLine(levels)} ${translationRule(translation, 'page')} ${LEVEL_STYLE} The level decides how the rules are explained and which example sentences you choose, not which of the chapter's words you list.
 The notes:
-- Vocabulary, one word per line as "word — перевод": ${NOUN_FORMS}; adjectives in the masculine form; verbs in the infinitive. ${NOUN_AGREEMENT}
-- Set phrases and expressions the same way: "phrase — перевод".
-- A line "Grammaire:" (for an English textbook "Grammar:", German "Grammatik:", Spanish or Portuguese "Gramática:", Italian "Grammatica:") followed by each grammar point of the chapter: a short rule in Russian and one or two examples.
-- A line "Exemples:" ("Examples:", "Beispiele:", "Ejemplos:", "Exemplos:", "Esempi:") followed by up to 10 useful sentences from the pages, each followed by " — " and its Russian translation.
+- Vocabulary, one word per line as "word — translation": ${NOUN_FORMS}; adjectives in the masculine form; verbs in the infinitive. ${NOUN_AGREEMENT}
+- Set phrases and expressions the same way: "phrase — translation".
+- A line "Grammaire:" (for an English textbook "Grammar:", German "Grammatik:", Spanish or Portuguese "Gramática:", Italian "Grammatica:") followed by each grammar point of the chapter: a short rule in the translation language and one or two examples.
+- A line "Exemples:" ("Examples:", "Beispiele:", "Ejemplos:", "Exemplos:", "Esempi:") followed by up to 10 useful sentences from the pages, each followed by " — " and its translation.
 Leave out exercise instructions, answer keys, page numbers, headers and anything not in the textbook's language or about it. Do not invent content that is not on the pages.
 Reply with only a JSON object: {"title": string, "text": string}. title is the chapter's topic in English, at most 6 words; text is the notes.`;
 }
@@ -344,11 +354,26 @@ export interface TranslationRequest {
   language: ExplainLanguage;
   fallback: ExplainLanguage;
 }
-// "Write every translation (ru) in French; for a lesson in French itself, in German."
-function translationRule({ language, fallback }: TranslationRequest): string {
+// The fields a request sends for it; Russian when they are missing (an older tab).
+export const asTranslationRequest = (body: unknown): TranslationRequest => {
+  const fields = body && typeof body === 'object' ? (body as Record<string, unknown>) : {};
+  return {
+    language: asExplainLanguage(fields.translateTo),
+    fallback: asExplainLanguage(fields.translateFallback),
+  };
+};
+/** "The translation language is French, or German for a lesson in French itself: …". source
+    names what Claude reads, whose language it finds out itself. */
+function translationRule(
+  { language, fallback }: TranslationRequest,
+  source: 'lesson' | 'text' | 'page' | 'selection'
+): string {
   const name = EXPLAIN_NAMES[language];
   const isLearned = LEARN_LANGUAGES.some((code) => code === language);
-  return `Write every translation (ru) in ${name}${isLearned ? `; for a lesson in ${name} itself, in ${EXPLAIN_NAMES[fallback]}` : ''}.`;
+  const instead = isLearned
+    ? `, or ${EXPLAIN_NAMES[fallback]} for a ${source} in ${name} itself`
+    : '';
+  return `The translation language is ${name}${instead}: write every translation (ru) and explanation in it.`;
 }
 
 /** The prompt that sorts a learner's words into groups by meaning, named in the interface

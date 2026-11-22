@@ -4,7 +4,7 @@ import { type Analysis } from '@/entities/lesson';
 import { normalizeWordCard } from '@/entities/word';
 import { CARD_EVENT, cardNote, lookUp, menuPlace, sentenceAround } from '@/features/look-up-word';
 import { api, ApiError } from '@/shared/api';
-import { getSettings, type Language } from '@/shared/config';
+import { getSettings, type Language, useTranslationLanguage } from '@/shared/config';
 import { common, translator, useTranslation } from '@/shared/i18n';
 import { asList, load, save } from '@/shared/lib/storage';
 import PageHead from '@/shared/ui/PageHead';
@@ -44,6 +44,7 @@ function TrueFalse({
   language: Language;
 }) {
   const { t } = useTranslation(reader);
+  const translationOf = useTranslationLanguage();
   const [answers, setAnswers] = useState<Record<number, boolean>>({});
   const answered = Object.keys(answers).length;
   const score = statements.filter(
@@ -76,7 +77,9 @@ function TrueFalse({
                 <p className={'feedback ' + (isRight ? 'ok' : 'bad')}>
                   {isRight ? t('answerRight') : t('answerWrong')}{' '}
                   <b>{statement.correct ? t('isTrue') : t('isFalse')}.</b>{' '}
-                  <span lang="ru">{statement.why}</span>
+                  <span data-no-word-actions lang={translationOf(language)}>
+                    {statement.why}
+                  </span>
                 </p>
               )}
             </li>
@@ -95,6 +98,7 @@ function TrueFalse({
     questions and a true-or-false exercise built from it. */
 export default function Reader({ hasClaude }: { hasClaude: boolean }) {
   const { t } = useTranslation(reader);
+  const translationOf = useTranslationLanguage();
   const commonText = useTranslation(common);
   const [texts, setTexts] = useState<ReaderText[]>(() =>
     asList(load<unknown>(STORAGE_KEY), normalizeReaderText)
@@ -371,14 +375,22 @@ export default function Reader({ hasClaude }: { hasClaude: boolean }) {
                       )}
                     </p>
                     {showTranslation && aligned && (
-                      <p className="reader-translation" lang="ru">
+                      <p
+                        className="reader-translation"
+                        data-no-word-actions
+                        lang={translationOf(language)}
+                      >
                         {translation[index]}
                       </p>
                     )}
                   </div>
                 ))}
                 {showTranslation && translation && !aligned && (
-                  <div className="reader-translation" lang="ru">
+                  <div
+                    className="reader-translation"
+                    data-no-word-actions
+                    lang={translationOf(language)}
+                  >
                     {translation.map((paragraph, index) => (
                       <p key={index}>{paragraph}</p>
                     ))}
@@ -444,7 +456,11 @@ export default function Reader({ hasClaude }: { hasClaude: boolean }) {
                             <span lang={language}>{item.question}</span>{' '}
                             <Speak text={item.question} language={language} />
                             {item.ru && (
-                              <span className="translation" lang="ru">
+                              <span
+                                className="translation"
+                                data-no-word-actions
+                                lang={translationOf(language)}
+                              >
                                 {item.ru}
                               </span>
                             )}

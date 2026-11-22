@@ -4,6 +4,7 @@ import { claudeJSON, MODEL } from './_lib/claude.js';
 import { asLevel, asLevels, checkAccess, fail, onlyPost, text } from './_lib/http.js';
 import {
   asExplainLanguage,
+  asTranslationRequest,
   studyPrompt,
   translatePrompt,
   wordPrompt,
@@ -13,7 +14,7 @@ import {
 /* Working with text the learner reads or writes:
    - "word": a word or phrase selected anywhere in the app, explained in its sentence, with a
      definition and examples;
-   - "translate": the whole text into Russian, paragraph by paragraph;
+   - "translate": the whole text into the translation language, paragraph by paragraph;
    - "study": vocabulary, questions and true-or-false statements built from the text;
    - "correct": a written homework answer, its mistakes fixed and explained. */
 
@@ -34,7 +35,8 @@ export default async function handler(request: VercelRequest, response: VercelRe
       const prompt = wordPrompt(
         selection,
         text(body.context, MAX_CONTEXT_LENGTH),
-        asLevels(body.levels)
+        asLevels(body.levels),
+        asTranslationRequest(body)
       );
       return response.status(200).json(await claudeJSON(prompt, { model: MODEL, maxTokens: 2500 }));
     }
@@ -45,9 +47,12 @@ export default async function handler(request: VercelRequest, response: VercelRe
 
     if (body.action === 'translate') {
       const paragraphs = whole.split(/\n+/).filter((paragraph) => paragraph.trim());
-      return response
-        .status(200)
-        .json(await claudeJSON(translatePrompt(paragraphs), { model: MODEL, maxTokens: 12000 }));
+      return response.status(200).json(
+        await claudeJSON(translatePrompt(paragraphs, asTranslationRequest(body)), {
+          model: MODEL,
+          maxTokens: 12000,
+        })
+      );
     }
     if (body.action === 'correct') {
       const task = text(body.task, MAX_TASK_LENGTH);
@@ -64,7 +69,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
         .json(await claudeJSON(prompt, { model: MODEL, maxTokens: 6000, cache: false }));
     }
     if (body.action === 'study') {
-      const prompt = studyPrompt(whole, asLevels(body.levels));
+      const prompt = studyPrompt(whole, asLevels(body.levels), asTranslationRequest(body));
       return response.status(200).json(await claudeJSON(prompt, { model: MODEL, maxTokens: 6000 }));
     }
     return response.status(400).json({ error: 'bad_request' });

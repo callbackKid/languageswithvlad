@@ -1,5 +1,6 @@
 import { type PhotoItem, type Word } from '@/entities/word';
 import { Star } from '@/features/star-word';
+import { useTranslationLanguage } from '@/shared/config';
 import { paper, useTranslation } from '@/shared/i18n';
 import Speak from '@/shared/ui/Speak';
 
@@ -24,6 +25,7 @@ export default function WordNotesTable({
   firstColumn: string;
 }) {
   const { t } = useTranslation(paper);
+  const translationOf = useTranslationLanguage();
   return (
     <div className="photo-table-wrap">
       <table className="photo-table">
@@ -49,7 +51,9 @@ export default function WordNotesTable({
                     </div>
                   )}
                 </td>
-                <td lang="ru">{item.ru}</td>
+                <td data-no-word-actions lang={translationOf(item.language)}>
+                  {item.ru}
+                </td>
                 <td>
                   {item.base && (
                     <div lang={language}>
@@ -59,7 +63,11 @@ export default function WordNotesTable({
                   {item.tense && <div className="tense">{item.tense}</div>}
                   {!item.base && !item.tense && <span className="muted">—</span>}
                 </td>
-                <td lang="ru" className="explanation">
+                <td
+                  data-no-word-actions
+                  lang={translationOf(item.language)}
+                  className="explanation"
+                >
                   {item.explanation}
                 </td>
                 <td className="actions">

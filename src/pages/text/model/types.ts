@@ -20,7 +20,7 @@ export interface ReaderText {
   language?: Language;
   // words and phrases the student asked about, newest first
   notes: PhotoItem[];
-  // the Russian translation, one item per paragraph
+  // the translation, one item per paragraph, in the translation language of the time
   translation?: string[];
   study?: TextStudy;
 }

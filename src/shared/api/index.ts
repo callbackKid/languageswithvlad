@@ -2,10 +2,10 @@ import {
   getSettings,
   getTeacherCode,
   type Language,
-  translationFallback,
+  translationFields,
   type VerbLanguage,
 } from '@/shared/config';
-import { common, getUiLanguage, translator, type UiLanguage } from '@/shared/i18n';
+import { common, translator, type UiLanguage } from '@/shared/i18n';
 import { type ImagePayload } from '@/shared/lib/image';
 import { load } from '@/shared/lib/storage';
 
@@ -147,8 +147,7 @@ function analyzeOnce(body: string, fresh: boolean): Promise<unknown> {
         body,
         fresh,
         levels,
-        translateTo,
-        translateFallback: translationFallback(translateTo, getUiLanguage()),
+        ...translationFields(translateTo),
       }),
     }).finally(() => inflight.delete(cacheKey));
     inflight.set(cacheKey, pending);
@@ -249,7 +248,12 @@ export const api = {
   photo: (image: ImagePayload) =>
     request<unknown>('/api/paper', {
       method: 'POST',
-      body: JSON.stringify({ kind: 'underlined', images: [image], levels: getSettings().levels }),
+      body: JSON.stringify({
+        kind: 'underlined',
+        images: [image],
+        levels: getSettings().levels,
+        ...translationFields(),
+      }),
     }),
   discussion: (options: {
     language: Language;
@@ -261,7 +265,12 @@ export const api = {
   textbook: (data: string) =>
     request<unknown>('/api/paper', {
       method: 'POST',
-      body: JSON.stringify({ kind: 'textbook', data, levels: getSettings().levels }),
+      body: JSON.stringify({
+        kind: 'textbook',
+        data,
+        levels: getSettings().levels,
+        ...translationFields(),
+      }),
     }),
   transcribe: (images: ImagePayload[]) =>
     request<unknown>('/api/paper', {
@@ -280,23 +289,30 @@ export const api = {
       method: 'POST',
       body: JSON.stringify({ action: 'exercise', ...options }),
     }),
-  // a word or phrase selected anywhere in the app: explained in its sentence, defined, with examples
-  word: (selection: string, context: string) =>
+  /** a word or phrase selected anywhere in the app: explained in its sentence, defined, with
+      examples, in translateTo (the card is saved under that language) */
+  word: (selection: string, context: string, translateTo: UiLanguage) =>
     request<unknown>('/api/text', {
       method: 'POST',
-      body: JSON.stringify({ action: 'word', selection, context, levels: getSettings().levels }),
+      body: JSON.stringify({
+        action: 'word',
+        selection,
+        context,
+        levels: getSettings().levels,
+        ...translationFields(translateTo),
+      }),
     }),
-  // a pasted text in Russian, paragraph by paragraph
+  // a pasted text translated, paragraph by paragraph
   translate: (text: string) =>
     request<unknown>('/api/text', {
       method: 'POST',
-      body: JSON.stringify({ action: 'translate', text }),
+      body: JSON.stringify({ action: 'translate', text, ...translationFields() }),
     }),
   // vocabulary, questions and true-or-false statements built from a pasted text
   study: (text: string, levels: Record<Language, string>) =>
     request<unknown>('/api/text', {
       method: 'POST',
-      body: JSON.stringify({ action: 'study', text, levels }),
+      body: JSON.stringify({ action: 'study', text, levels, ...translationFields() }),
     }),
   // homework for the next lesson, made by Claude from a lesson's words and grammar
   makeHomework: (input: { body: string; keyWords: string[]; level: string; sentences: number }) =>

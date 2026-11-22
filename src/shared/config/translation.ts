@@ -22,7 +22,16 @@ export function resolveTranslationLanguage(
   return translateTo === learned ? translationFallback(translateTo, uiLanguage) : translateTo;
 }
 
-// The same, from the current settings, for code outside React.
+/** The fields of a request in which Claude finds out the language itself (a lesson, a photo, a
+    text): the translation language and the one to use for a text in that very language. */
+export function translationFields(translateTo: UiLanguage = getSettings().translateTo): {
+  translateTo: UiLanguage;
+  translateFallback: UiLanguage;
+} {
+  return { translateTo, translateFallback: translationFallback(translateTo, getUiLanguage()) };
+}
+
+// resolveTranslationLanguage with the current settings, for code outside React.
 export const translationLanguage = (learned?: Language): UiLanguage =>
   resolveTranslationLanguage(getSettings().translateTo, getUiLanguage(), learned);
 

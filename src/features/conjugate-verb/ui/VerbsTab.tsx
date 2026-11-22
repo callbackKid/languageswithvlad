@@ -222,7 +222,11 @@ export default function VerbsTab({
                     <span className="fr" lang={verbLanguageOf(verb)}>
                       {verb.inf}
                     </span>
-                    <span className="ru" lang={translationOf(verbLanguageOf(verb))}>
+                    <span
+                      className="ru"
+                      data-no-word-actions
+                      lang={translationOf(verbLanguageOf(verb))}
+                    >
                       {verb.ru}
                     </span>
                   </button>
@@ -298,7 +302,7 @@ export default function VerbsTab({
         <>
           <div className="conj-head">
             <h2 lang={language}>{shownConjugation.inf}</h2>
-            <span className="ru" lang={translationOf(language)}>
+            <span className="ru" data-no-word-actions lang={translationOf(language)}>
               {shownConjugation.ru}
             </span>
           </div>
