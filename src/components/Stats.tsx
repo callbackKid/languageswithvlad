@@ -1,15 +1,13 @@
 import { useMemo } from 'react';
 
+import { type Bank, BankNote, type Lesson } from '@/entities/lesson';
+import { isLearned, topMistakes, useProgress, wordKey } from '@/entities/word';
 import { isStudied, useSettings } from '@/shared/config/settings';
 import { useTranslation } from '@/shared/i18n/core';
 import { pages } from '@/shared/i18n/messages/pages';
 import { shownTopic } from '@/shared/lib/util';
 import PageHead from '@/shared/ui/PageHead';
 
-import type { Bank } from '../lib/bank';
-import { isLearned, topMistakes, useProgress, wordKey } from '../lib/progress';
-import type { Lesson } from '../lib/types';
-import BankNote from './BankNote';
 import MistakeList from './MistakeList';
 import SendToTeacher from './SendToTeacher';
 

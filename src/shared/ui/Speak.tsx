@@ -1,4 +1,4 @@
-import type { Language } from '@/shared/config/languages';
+import { type Language } from '@/shared/config/languages';
 import { useTranslation } from '@/shared/i18n/core';
 import { common } from '@/shared/i18n/messages/common';
 import { canSpeak, speak } from '@/shared/lib/speech';

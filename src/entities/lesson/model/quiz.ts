@@ -1,12 +1,10 @@
+import { type Conjugation, knownTenses, negate, type VerbRef } from '@/entities/verb/@x/lesson';
+import { formKey, isLearned, type Progress, type Word, wordKey } from '@/entities/word/@x/lesson';
 import { type Tense } from '@/shared/config/languages';
 import { canSpeak } from '@/shared/lib/speech';
 import { shuffle } from '@/shared/lib/util';
 
 import { readConjugation, verbLanguageOf } from './bank';
-import { negate } from './negation';
-import { formKey, isLearned, type Progress, wordKey } from './progress';
-import { knownTenses } from './tenses';
-import { type Conjugation, type VerbRef, type Word } from './types';
 
 export interface FormQuestion {
   inf: string;

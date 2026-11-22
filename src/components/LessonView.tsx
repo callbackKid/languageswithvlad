@@ -1,5 +1,20 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 
+import { homeworkItems, homeworkKey } from '@/entities/homework';
+import {
+  type Analysis,
+  analysisKey,
+  languageOfLesson,
+  type Lesson,
+  type LessonExtras,
+  localParse,
+  markKeyWords,
+  normalizeAnalysis,
+  normalizeExtras,
+  readAnalysis,
+  useRemoved,
+  withoutRemoved,
+} from '@/entities/lesson';
 import { api, ApiError } from '@/shared/api';
 import { isVerbLanguage } from '@/shared/config/languages';
 import { LESSON_TABS, type LessonTab, useSettings } from '@/shared/config/settings';
@@ -12,17 +27,6 @@ import { shownTopic } from '@/shared/lib/util';
 import HelpLink from '@/shared/ui/HelpLink';
 import WaitingFact from '@/shared/ui/WaitingFact';
 
-import { analysisKey, readAnalysis } from '../lib/bank';
-import { homeworkItems, homeworkKey } from '../lib/homework';
-import {
-  languageOfLesson,
-  localParse,
-  markKeyWords,
-  normalizeAnalysis,
-  normalizeExtras,
-} from '../lib/parse';
-import { useRemoved, withoutRemoved } from '../lib/removed';
-import { type Analysis, type Lesson, type LessonExtras } from '../lib/types';
 import LessonDrawings from './LessonDrawings';
 import { BookTab, GrammarTab, HomeworkTab } from './LessonExtrasTabs';
 import MakeHomework from './MakeHomework';

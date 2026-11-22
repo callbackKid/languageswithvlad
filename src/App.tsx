@@ -1,7 +1,19 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
+import {
+  docIdFrom,
+  findCall,
+  isNotion,
+  sourceUrl,
+  splitLessons,
+  useBank,
+  useLessonOn,
+  useLiveSync,
+} from '@/entities/lesson';
+import { hasUnseenNews } from '@/entities/news';
+import { setProgressDoc, useProgress } from '@/entities/word';
 import { api, ApiError } from '@/shared/api';
-import type { BoardServer } from '@/shared/api/boardSync';
+import { type BoardServer } from '@/shared/api/boardSync';
 import { lessonPath, NEEDS_LESSONS, parsePath, SECTIONS } from '@/shared/config/routes';
 import { isStudied, useSettings } from '@/shared/config/settings';
 import { applyTeacherHealth } from '@/shared/config/teacher';
@@ -30,13 +42,6 @@ import Stats from './components/Stats';
 import TooltipLayer from './components/TooltipLayer';
 import Tutorial from './components/Tutorial';
 import WordActions from './components/WordActions';
-import { useBank } from './lib/bank';
-import { findCall } from './lib/call';
-import { useLessonOn, useLiveSync } from './lib/liveSync';
-import { hasUnseenNews } from './lib/news';
-import { docIdFrom, splitLessons } from './lib/parse';
-import { setProgressDoc, useProgress } from './lib/progress';
-import { isNotion, sourceUrl } from './lib/source';
 
 interface DocCache {
   title: string;

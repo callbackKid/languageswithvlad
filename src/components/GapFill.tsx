@@ -1,7 +1,9 @@
 import { type ReactNode, useEffect, useRef, useState } from 'react';
 
+import { keyWordsFirst } from '@/entities/lesson';
+import { recordWord, type Word } from '@/entities/word';
 import { api, ApiError } from '@/shared/api';
-import type { Language } from '@/shared/config/languages';
+import { type Language } from '@/shared/config/languages';
 import { getSettings } from '@/shared/config/settings';
 import { translator, useTranslation } from '@/shared/i18n/core';
 import { common } from '@/shared/i18n/messages/common';
@@ -11,9 +13,7 @@ import ExerciseHead from '@/shared/ui/ExerciseHead';
 import WaitingFact from '@/shared/ui/WaitingFact';
 
 import { normalizeGaps } from '../lib/parse';
-import { recordWord } from '../lib/progress';
-import { keyWordsFirst } from '../lib/quiz';
-import type { GapItem, Word } from '../lib/types';
+import { type GapItem } from '../lib/types';
 
 // Fill the gap with the lesson's words: sentences Claude writes around them.
 export default function GapFill({

@@ -45,6 +45,7 @@ Prettier decides: 100 columns, single quotes, semicolons, trailing commas where 
 - Sorted automatically into one order: side-effect imports, packages, then project files. Don't reorder by hand.
 - `src/` is moving to [Feature-Sliced Design](https://feature-sliced.design/) layers: `app` → `pages` → `widgets` → `features` → `entities` → `shared`. A file imports only from layers below its own, and slices of one layer don't import each other.
 - Between slices (and between segments of `shared`), import through the `@/` alias: `@/shared/lib/storage`, `@/shared/i18n/core`. Inside one slice or segment, use relative paths. Code not moved yet (`src/components/`, `src/lib/`) imports its old neighbours relatively.
+- A slice of `entities`, `features`, `widgets` or `pages` is used from outside only through its `index.ts` (`@/entities/word`, not `@/entities/word/model/progress`); add a name there when another layer needs it. When one entity needs another (a lesson holds words), it imports from that entity's `@x/<its own name>.ts` (`@/entities/word/@x/lesson`), which lists exactly what is lent.
 - No `import React`; import what is used: `import { type ReactNode, useState } from 'react'`.
 - Heavy libraries are loaded with `import()` where they are needed (pdf-lib, the Zoom SDK, Excalidraw), never at the top of a file that every page loads.
 
@@ -64,8 +65,8 @@ Prettier decides: 100 columns, single quotes, semicolons, trailing commas where 
 ## State and storage
 
 - `localStorage` only through `load` / `save` / `remove` in `src/shared/lib/storage.ts`. Anything read back is checked before use (see `sanitize` in `settings.ts`).
-- Stores shared between pages (`settings.ts`, `progress.ts`, `shared/i18n/core.tsx`) expose a hook built on `useSyncExternalStore` and plain getters for code outside React. Their snapshot is a new object whenever something changed.
-- Logic without UI lives in `src/lib/` as plain functions, so it can be tested without a browser. Components call it; they don't contain parsing, grading or date arithmetic.
+- Stores shared between pages (`settings.ts`, `entities/word/model/progress.ts`, `shared/i18n/core.tsx`) expose a hook built on `useSyncExternalStore` and plain getters for code outside React. Their snapshot is a new object whenever something changed.
+- Logic without UI is plain functions in the `lib/` and `model/` segments of a slice (`src/entities/verb/lib/negation.ts`), or in `src/lib/` for code not moved yet, so it can be tested without a browser. Components call it; they don't contain parsing, grading or date arithmetic.
 
 ## Texts
 
@@ -124,4 +125,4 @@ Prettier decides: 100 columns, single quotes, semicolons, trailing commas where 
 3. Type bad input into every changed form field.
 4. New text: all seven interface languages filled in, and it reads naturally in each.
 5. New feature: a line in the README, a guide or step in the Tutorial, and its item removed from TODO.md.
-6. A change students will notice: an entry for today in `src/lib/news.ts`, so it shows on the News page.
+6. A change students will notice: an entry for today in `src/entities/news/model/news.ts`, so it shows on the News page.

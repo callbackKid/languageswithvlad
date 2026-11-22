@@ -1,3 +1,4 @@
+import { type Word } from '@/entities/word';
 import {
   asLanguage,
   isVerbLanguage,
@@ -7,10 +8,8 @@ import {
 } from '@/shared/config/languages';
 import { asText } from '@/shared/lib/util';
 
-import { type Word } from './types';
-
 /* The "Devoirs:" block for homework Claude made from a lesson, in the lesson's language and in
-   words the homework checklist reads (src/lib/homework.ts), so each task opens its exercise:
+   words the homework checklist reads (src/entities/homework/model/homework.ts), so each task opens its exercise:
 
      Devoirs:
      - mots de la leçon 6 — surtout : la boulangerie, le croissant

@@ -1,4 +1,4 @@
-import type { Form } from './types';
+import { type Form } from '../model/types';
 
 /* The futur proche is aller in the présent + the infinitive (je vais manger), so the app builds it
    from the infinitive instead of asking Claude: verb tables saved before it was added get it too. */

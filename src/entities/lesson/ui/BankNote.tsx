@@ -1,7 +1,7 @@
 import { useTranslation } from '@/shared/i18n/core';
 import { common } from '@/shared/i18n/messages/common';
 
-import type { Bank } from '../lib/bank';
+import { type Bank } from '../model/bank';
 
 // Says when some lessons aren't in the cross-lesson pages yet: still preparing, failed, or never opened.
 export default function BankNote({ bank }: { bank: Bank }) {

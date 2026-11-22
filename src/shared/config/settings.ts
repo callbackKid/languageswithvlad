@@ -10,7 +10,7 @@ import {
   VERB_LANGUAGES,
   type VerbLanguage,
 } from './languages';
-import type { Section } from './routes';
+import { type Section } from './routes';
 
 /* The student's settings, saved in this browser. The interface language has its own store
    (src/shared/i18n/core.tsx); everything else lives here. */

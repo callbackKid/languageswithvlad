@@ -1,7 +1,8 @@
 import { type MouseEvent, useEffect, useMemo, useState } from 'react';
 
+import { type Analysis } from '@/entities/lesson';
 import { api, ApiError } from '@/shared/api';
-import type { Language } from '@/shared/config/languages';
+import { type Language } from '@/shared/config/languages';
 import { getSettings } from '@/shared/config/settings';
 import { translator, useTranslation } from '@/shared/i18n/core';
 import { common } from '@/shared/i18n/messages/common';
@@ -17,7 +18,7 @@ import {
   normalizeTranslation,
   normalizeWordCard,
 } from '../lib/parse';
-import type { Analysis, ReaderText, TextStudy } from '../lib/types';
+import { type ReaderText, type TextStudy } from '../lib/types';
 import { CARD_EVENT, cardNote, lookUp, menuPlace, sentenceAround } from '../lib/wordActions';
 import WordNotesTable from './WordNotesTable';
 import WordsTab from './WordsTab';

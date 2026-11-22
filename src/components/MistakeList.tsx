@@ -1,9 +1,7 @@
+import { type FormStat, Transcription, type WordStat } from '@/entities/word';
 import { languageOfTense } from '@/shared/config/languages';
 import { useTranslation } from '@/shared/i18n/core';
 import { common } from '@/shared/i18n/messages/common';
-
-import type { FormStat, WordStat } from '../lib/progress';
-import Transcription from './Transcription';
 
 // Missed words and verb forms with how often each was missed.
 export default function MistakeList({

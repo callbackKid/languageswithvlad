@@ -1,5 +1,23 @@
 import { useState } from 'react';
 
+import {
+  type Analysis,
+  buildDictation,
+  buildQuiz,
+  pickWords,
+  removedCount,
+  removeWord,
+  restore,
+  useRemoved,
+} from '@/entities/lesson';
+import {
+  getProgress,
+  LEARNED_STREAK,
+  Transcription,
+  useProgress,
+  type Word,
+  wordKey,
+} from '@/entities/word';
 import { useTranslation } from '@/shared/i18n/core';
 import { common } from '@/shared/i18n/messages/common';
 import { exercises } from '@/shared/i18n/messages/exercises';
@@ -7,16 +25,11 @@ import { canSpeak } from '@/shared/lib/speech';
 import { downloadText } from '@/shared/lib/util';
 import Speak from '@/shared/ui/Speak';
 
-import { getProgress, LEARNED_STREAK, useProgress, wordKey } from '../lib/progress';
-import { buildDictation, buildQuiz, pickWords } from '../lib/quiz';
-import { removedCount, removeWord, restore, useRemoved } from '../lib/removed';
-import type { Analysis, Word } from '../lib/types';
 import { groupWords, useWordGroups } from '../lib/wordGroups';
 import Flashcards from './Flashcards';
 import GapFill from './GapFill';
 import Match, { type MatchPair } from './Match';
 import Star from './Star';
-import Transcription from './Transcription';
 import WordQuiz from './WordQuiz';
 
 type Exercise = null | 'quiz' | 'cards' | 'match' | 'syn' | 'gap' | 'dictation';

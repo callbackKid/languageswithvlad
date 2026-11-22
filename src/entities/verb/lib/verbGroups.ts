@@ -1,6 +1,6 @@
 import { isVerbLanguage, type Language, type VerbLanguage } from '@/shared/config/languages';
 
-import { type Conjugation } from './types';
+import { type Conjugation } from '../model/types';
 
 /* The group (conjugation class) of a verb, for sorting a lesson's verbs, and the two orders the
    Verbs tab offers. French has the three groups learners know: 1 for -er verbs (but aller), 2 for

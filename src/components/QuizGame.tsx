@@ -1,15 +1,18 @@
 import { useEffect, useRef, useState } from 'react';
 
+import {
+  type Bank,
+  buildChoiceQuiz,
+  type Lesson,
+  lessonWords,
+  type QuizItem,
+} from '@/entities/lesson';
+import { recordWord, type Word } from '@/entities/word';
 import { useTranslation } from '@/shared/i18n/core';
 import { game } from '@/shared/i18n/messages/game';
 import { asFields, asList, load, save } from '@/shared/lib/storage';
 import ExerciseHead from '@/shared/ui/ExerciseHead';
 import Speak from '@/shared/ui/Speak';
-
-import { type Bank, lessonWords } from '../lib/bank';
-import { recordWord } from '../lib/progress';
-import { buildChoiceQuiz, type QuizItem } from '../lib/quiz';
-import type { Lesson, Word } from '../lib/types';
 
 // Questions in a round, and seconds for each.
 export const GAME_QUESTIONS = 10;

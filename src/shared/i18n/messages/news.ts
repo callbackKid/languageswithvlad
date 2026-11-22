@@ -1,6 +1,6 @@
 import { defineMessages } from '../core';
 
-// The News page. The news itself is in src/lib/news.ts.
+// The News page. The news itself is in src/entities/news/model/news.ts.
 export const newsText = defineMessages({
   en: {
     intro: 'What changed in the app, newest first.',

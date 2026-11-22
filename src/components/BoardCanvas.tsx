@@ -20,7 +20,7 @@ import {
   type BoardServer,
   connectBoard,
 } from '@/shared/api/boardSync';
-import type { UiLanguage } from '@/shared/i18n/core';
+import { type UiLanguage } from '@/shared/i18n/core';
 import { loadChecked, save } from '@/shared/lib/storage';
 
 import {

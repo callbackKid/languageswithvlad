@@ -1,27 +1,16 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
+import { type Conjugation, normalizeConjugation, type VerbRef } from '@/entities/verb/@x/lesson';
+import { type Pair, type Word, wordKey } from '@/entities/word/@x/lesson';
 import { api } from '@/shared/api';
 import { isVerbLanguage, type VerbLanguage } from '@/shared/config/languages';
 import { useSettings } from '@/shared/config/settings';
 import { loadChecked, save } from '@/shared/lib/storage';
 
-import {
-  languageOfLesson,
-  localParse,
-  markKeyWords,
-  normalizeAnalysis,
-  normalizeConjugation,
-} from './parse';
-import { wordKey } from './progress';
+import { languageOfLesson, localParse, markKeyWords } from '../lib/document';
+import { normalizeAnalysis } from './normalize';
 import { getRemoved, useRemoved, withoutRemoved } from './removed';
-import {
-  type Analysis,
-  type Conjugation,
-  type Lesson,
-  type Pair,
-  type VerbRef,
-  type Word,
-} from './types';
+import { type Analysis, type Lesson } from './types';
 
 // Only the newest lessons are prepared on their own; older ones wait until the student opens them.
 export const AUTO_PREPARE = 1;

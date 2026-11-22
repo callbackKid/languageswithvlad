@@ -1,7 +1,9 @@
 import { useState } from 'react';
 
+import { type Lesson } from '@/entities/lesson';
+import { type Word } from '@/entities/word';
 import { api, ApiError } from '@/shared/api';
-import type { Language } from '@/shared/config/languages';
+import { type Language } from '@/shared/config/languages';
 import { getSettings, type Level, LEVELS } from '@/shared/config/settings';
 import { translator, useTranslation } from '@/shared/i18n/core';
 import { common } from '@/shared/i18n/messages/common';
@@ -14,7 +16,6 @@ import {
   MAX_TRANSLATE_SENTENCES,
   MIN_TRANSLATE_SENTENCES,
 } from '../lib/makeHomework';
-import type { Lesson, Word } from '../lib/types';
 
 type Step = 'idle' | 'making' | 'review' | 'saving' | 'done';
 

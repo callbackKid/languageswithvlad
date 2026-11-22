@@ -1,5 +1,21 @@
 import { useEffect, useState } from 'react';
 
+import { type Homework, type HomeworkItem, homeworkKey, writingKey } from '@/entities/homework';
+import {
+  type Bank,
+  buildQuiz,
+  fetchConjugation,
+  type Lesson,
+  lessonWords,
+  parseNextLesson,
+  pickWords,
+  readAnalysis,
+  readConjugation,
+  usePreparedLesson,
+  verbForms,
+} from '@/entities/lesson';
+import { type Conjugation } from '@/entities/verb';
+import { getProgress } from '@/entities/word';
 import { isVerbLanguage, languageOfTense, type VerbLanguage } from '@/shared/config/languages';
 import { lessonPath } from '@/shared/config/routes';
 import { useTranslation } from '@/shared/i18n/core';
@@ -10,19 +26,6 @@ import { loadTexts, save } from '@/shared/lib/storage';
 import { shuffle } from '@/shared/lib/util';
 import WaitingFact from '@/shared/ui/WaitingFact';
 
-import {
-  type Bank,
-  fetchConjugation,
-  lessonWords,
-  readAnalysis,
-  readConjugation,
-  usePreparedLesson,
-} from '../lib/bank';
-import { type Homework, type HomeworkItem, homeworkKey, writingKey } from '../lib/homework';
-import { parseNextLesson } from '../lib/nextLesson';
-import { getProgress } from '../lib/progress';
-import { buildQuiz, pickWords, verbForms } from '../lib/quiz';
-import { type Conjugation, type Lesson } from '../lib/types';
 import GapFill from './GapFill';
 import SendToTeacher from './SendToTeacher';
 import WordQuiz from './WordQuiz';

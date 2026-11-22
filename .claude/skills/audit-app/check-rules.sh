@@ -9,7 +9,7 @@ cd "$(git rev-parse --show-toplevel)" || exit 1
 CODE='src api'
 INCLUDE=(--include='*.ts' --include='*.tsx')
 # files that are mostly texts or data, where "as", numbers and words are content, not code
-TEXT_FILES='i18n/messages|src/lib/news\.ts|src/shared/lib/facts\.ts|src/shared/config/guides\.ts|api/_lib/prompts\.ts'
+TEXT_FILES='i18n/messages|src/entities/news/model/news\.ts|src/shared/lib/facts\.ts|src/shared/config/guides\.ts|api/_lib/prompts\.ts'
 section() { printf '\n## %s\n' "$1"; }
 search() { grep -rnE "${INCLUDE[@]}" "$@" $CODE; }
 not_comment() { grep -vE '^[^:]+:[0-9]+:\s*(//|\*|/\*)'; }

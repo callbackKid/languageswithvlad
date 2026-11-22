@@ -1,14 +1,14 @@
 import { useState } from 'react';
 
+import { type GrammarRule, type HomeworkTask, type LessonExtras } from '@/entities/lesson';
 import { api } from '@/shared/api';
-import type { Language } from '@/shared/config/languages';
+import { type Language } from '@/shared/config/languages';
 import { getSettings } from '@/shared/config/settings';
 import { getUiLanguage, useTranslation } from '@/shared/i18n/core';
 import { paper } from '@/shared/i18n/messages/paper';
 import { followLink, hrefFor } from '@/shared/lib/router';
 import { loadTexts, save } from '@/shared/lib/storage';
 
-import type { GrammarRule, HomeworkTask, LessonExtras } from '../lib/types';
 import BookImport from './BookImport';
 import { GapRound } from './GapFill';
 import GrammarRuleBox from './GrammarRuleBox';

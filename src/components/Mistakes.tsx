@@ -1,14 +1,13 @@
 import { useState } from 'react';
 
-import type { Tense } from '@/shared/config/languages';
+import { type Bank, buildQuiz, type FormQuestion } from '@/entities/lesson';
+import { statWord, topMistakes, useProgress } from '@/entities/word';
+import { type Tense } from '@/shared/config/languages';
 import { useTranslation } from '@/shared/i18n/core';
 import { pages } from '@/shared/i18n/messages/pages';
 import { shuffle } from '@/shared/lib/util';
 import PageHead from '@/shared/ui/PageHead';
 
-import type { Bank } from '../lib/bank';
-import { statWord, topMistakes, useProgress } from '../lib/progress';
-import { buildQuiz, type FormQuestion } from '../lib/quiz';
 import MistakeList from './MistakeList';
 import WordQuiz from './WordQuiz';
 

@@ -1,3 +1,5 @@
+import { type Analysis } from '@/entities/lesson';
+import { statWord, useProgress } from '@/entities/word';
 import { isStudied, useSettings } from '@/shared/config/settings';
 import { useTranslation } from '@/shared/i18n/core';
 import { learning } from '@/shared/i18n/messages/common';
@@ -5,8 +7,6 @@ import { pages } from '@/shared/i18n/messages/pages';
 import { followLink, hrefFor } from '@/shared/lib/router';
 import PageHead from '@/shared/ui/PageHead';
 
-import { statWord, useProgress } from '../lib/progress';
-import type { Analysis } from '../lib/types';
 import LookUpWord from './LookUpWord';
 import WordsTab from './WordsTab';
 

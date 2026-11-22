@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 
+import { type Word } from '@/entities/word';
 import { api } from '@/shared/api';
-import type { UiLanguage } from '@/shared/i18n/core';
+import { type UiLanguage } from '@/shared/i18n/core';
 import { loadChecked, save } from '@/shared/lib/storage';
 
 import { normalizeWordGroups } from './parse';
-import type { Word } from './types';
 
 /* Words sorted into groups by meaning (Food, Time and dates…) for the word lists of a lesson and
    of Words to learn. Claude names the groups in the interface language. Each word's group is kept

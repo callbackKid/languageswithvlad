@@ -1,7 +1,7 @@
 /* Finding one lesson in a document, so text can be written under it rather than at the end.
    A lesson starts with a line like "12.11.2026 7 Leçon"; the app names it "2026-11-12_7", and a
    second lesson with the same date and number "2026-11-12_7-2".
-   Keep the heading words in step with splitLessons in src/lib/parse.ts. */
+   Keep the heading words in step with splitLessons in src/entities/lesson/lib/document.ts. */
 
 const HEADING =
   /^\s*(\d{1,2})\.(\d{1,2})\.(\d{4})[ \t]+(\d+)[ \t]*(?:le[çc]on|lesson|lektion|lecci[óo]n|clase|li[çc][ãa]o|aula|lezione)(?![\p{L}])/iu;

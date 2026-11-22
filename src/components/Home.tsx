@@ -1,14 +1,18 @@
+import { findHomework } from '@/entities/homework';
+import {
+  type Bank,
+  BankNote,
+  buildQuiz,
+  type Lesson,
+  pickForms,
+  pickWords,
+} from '@/entities/lesson';
+import { dailyStats, getProgress, isLearned, useProgress, wordKey } from '@/entities/word';
 import { isStudied, useSettings } from '@/shared/config/settings';
 import { useTranslation } from '@/shared/i18n/core';
 import { pages } from '@/shared/i18n/messages/pages';
 import PageHead from '@/shared/ui/PageHead';
 
-import type { Bank } from '../lib/bank';
-import { findHomework } from '../lib/homework';
-import { dailyStats, getProgress, isLearned, useProgress, wordKey } from '../lib/progress';
-import { buildQuiz, pickForms, pickWords } from '../lib/quiz';
-import type { Lesson } from '../lib/types';
-import BankNote from './BankNote';
 import HomeworkCard from './HomeworkCard';
 import LessonSummary from './LessonSummary';
 import PrepareCard from './PrepareCard';

@@ -1,10 +1,9 @@
 import { type ReactNode, useEffect, useState } from 'react';
 
+import { parseNextLesson } from '@/entities/lesson';
 import { useTranslation } from '@/shared/i18n/core';
 import { app } from '@/shared/i18n/messages/app';
 import { daysBetween } from '@/shared/lib/dates';
-
-import { parseNextLesson } from '../lib/nextLesson';
 
 /** The next lesson's date and time, read from the newest "le cours prochain:" / "next lesson:" line in
     the document, with the button that enters the lesson: a widget in the middle of the top bar. */

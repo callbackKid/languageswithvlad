@@ -1,5 +1,28 @@
 import { useEffect, useRef, useState } from 'react';
 
+import {
+  fetchConjugation,
+  type FormQuestion,
+  readConjugation,
+  removedCount,
+  removeVerb,
+  restore,
+  useRemoved,
+  verbForms,
+  verbLanguageOf,
+} from '@/entities/lesson';
+import {
+  type Conjugation,
+  ConjugationTable,
+  type Form,
+  negate,
+  sortVerbs,
+  VERB_SORTS,
+  verbGroup,
+  type VerbRef,
+  type VerbSort,
+} from '@/entities/verb';
+import { recordForm } from '@/entities/word';
 import { ApiError } from '@/shared/api';
 import {
   COMPOUND_PAST,
@@ -11,20 +34,11 @@ import {
 import { useTranslation } from '@/shared/i18n/core';
 import { common } from '@/shared/i18n/messages/common';
 import { exercises } from '@/shared/i18n/messages/exercises';
+import { type Grade, grade } from '@/shared/lib/grade';
 import { load, save } from '@/shared/lib/storage';
 import { keepBracketsTogether, shuffle } from '@/shared/lib/util';
 import ExerciseHead from '@/shared/ui/ExerciseHead';
-import Speak from '@/shared/ui/Speak';
 import WaitingFact from '@/shared/ui/WaitingFact';
-
-import { fetchConjugation, readConjugation, verbLanguageOf } from '../lib/bank';
-import { type Grade, grade } from '../lib/grade';
-import { negate } from '../lib/negation';
-import { recordForm } from '../lib/progress';
-import { type FormQuestion, verbForms } from '../lib/quiz';
-import { removedCount, removeVerb, restore, useRemoved } from '../lib/removed';
-import { type Conjugation, type Form, type VerbRef } from '../lib/types';
-import { sortVerbs, VERB_SORTS, verbGroup, type VerbSort } from '../lib/verbGroups';
 
 // the order of the verb list, kept on the device for every lesson
 const SORT_KEY = 'verb-sort';
@@ -357,21 +371,7 @@ export default function VerbsTab({
             />
           ) : (
             <>
-              <table className="conj" lang={language}>
-                <tbody>
-                  {rows.map((row, index) => (
-                    <tr key={index}>
-                      <td className="p">{row.p}</td>
-                      <td className="f">
-                        <div className="conj-form">
-                          <span>{keepBracketsTogether(row.f)}</span>
-                          <Speak text={`${row.p} ${row.f}`} language={language} />
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+              <ConjugationTable rows={rows} language={language} />
               <div className="row-actions">
                 <button type="button" className="btn primary" onClick={() => setMode('drill')}>
                   {t('practiseTense')}

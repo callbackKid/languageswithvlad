@@ -1,6 +1,6 @@
 import { type FormEvent, useRef, useState } from 'react';
 
-import type { Language } from '@/shared/config/languages';
+import { type Language } from '@/shared/config/languages';
 import { useSettings } from '@/shared/config/settings';
 import { useTranslation } from '@/shared/i18n/core';
 import { learning } from '@/shared/i18n/messages/common';

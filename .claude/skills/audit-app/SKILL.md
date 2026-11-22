@@ -25,7 +25,7 @@ for dep in $(node -p "Object.keys(require('./package.json').dependencies).join('
 
 ## 2. Exercise logic: run it, don't just read it
 
-Grading, conjugation, homework and date parsing are plain functions in `src/lib/`, so try them on real cases. Write a probe in the scratchpad (not in the repo; tests are the owner's to write) and run it with `npx tsx <probe>.ts`, importing by absolute path:
+Grading, conjugation, homework and date parsing are plain functions in `src/entities/*/lib`, `src/entities/*/model` and `src/lib/`, so try them on real cases. Write a probe in the scratchpad (not in the repo; tests are the owner's to write) and run it with `npx tsx <probe>.ts`, importing by absolute path:
 
 | Function                                    | Cases to try                                                                                                                                                                                                                                 |
 | ------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

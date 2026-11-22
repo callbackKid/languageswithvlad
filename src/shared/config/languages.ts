@@ -8,7 +8,7 @@ export const asLanguage = (value: unknown): Language =>
 
 /** The languages with verb tables, and their tenses in the order the tabs show them. The names
     differ between languages, so a tense alone tells which language a saved form is in. The
-    futur proche is built by the app (futurProche.ts), so Claude is never asked for it. */
+    futur proche is built by the app (entities/verb/lib/futurProche.ts), so Claude is never asked for it. */
 export const TENSES_BY_LANGUAGE = {
   fr: [
     'présent',

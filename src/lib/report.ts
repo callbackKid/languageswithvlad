@@ -1,13 +1,11 @@
+import { type Homework, homeworkKey, normalizeWriting, writingKey } from '@/entities/homework';
+import { type Lesson } from '@/entities/lesson';
+import { isLearned, type Progress } from '@/entities/word';
 import { getSettings, isStudied } from '@/shared/config/settings';
 import { translator } from '@/shared/i18n/core';
 import { homework as homeworkText } from '@/shared/i18n/messages/homework';
 import { dayKey, startOfDay } from '@/shared/lib/dates';
 import { loadChecked, loadTexts } from '@/shared/lib/storage';
-
-import { type Homework, homeworkKey, writingKey } from './homework';
-import { normalizeWriting } from './parse';
-import { isLearned, type Progress } from './progress';
-import type { Lesson } from './types';
 
 /* The student's report to the teacher, added to the document under the lesson it is about.
    Every line starts with an emoji, or with spaces for the lines of a written answer, and the

@@ -129,7 +129,9 @@ for (const file of files) {
 }
 
 if (!only || only.includes('news')) {
-  const { NEWS } = (await import(pathToFileURL(join(ROOT, 'src/lib/news.ts')).href)) as {
+  const { NEWS } = (await import(
+    pathToFileURL(join(ROOT, 'src/entities/news/model/news.ts')).href
+  )) as {
     NEWS: { date: string; items: { text: Record<string, string> }[] }[];
   };
   let previous = '9999-99-99';

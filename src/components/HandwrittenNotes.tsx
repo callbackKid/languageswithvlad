@@ -1,17 +1,17 @@
 import { useState } from 'react';
 
+import { type Lesson } from '@/entities/lesson';
 import { api, ApiError } from '@/shared/api';
 import { useTranslation } from '@/shared/i18n/core';
 import { common } from '@/shared/i18n/messages/common';
 import { paper } from '@/shared/i18n/messages/paper';
 import { shrinkImage } from '@/shared/lib/image';
+import { asObjectText } from '@/shared/lib/json';
 import { extractPages, MAX_PDF_PAGES, pdfPageCount } from '@/shared/lib/pdf';
 import { asFields, asList, load, save } from '@/shared/lib/storage';
 import { hash } from '@/shared/lib/util';
 import WaitingFact from '@/shared/ui/WaitingFact';
 
-import { asObjectText } from '../lib/parse';
-import type { Lesson } from '../lib/types';
 import AddToDoc, { type DocTarget } from './AddToDoc';
 import LessonView from './LessonView';
 

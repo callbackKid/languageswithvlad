@@ -1,5 +1,18 @@
 import { useState } from 'react';
 
+import {
+  type Bank,
+  buildQuiz,
+  getRemoved,
+  keyWordsFirst,
+  type Lesson,
+  lessonWords,
+  normalizeExtras,
+  pickWords,
+  readAnalysis,
+  withoutRemoved,
+} from '@/entities/lesson';
+import { getProgress } from '@/entities/word';
 import { lessonPath } from '@/shared/config/routes';
 import { useTranslation } from '@/shared/i18n/core';
 import { homeCards } from '@/shared/i18n/messages/homeCards';
@@ -8,12 +21,6 @@ import { followLink, hrefFor } from '@/shared/lib/router';
 import { load, loadChecked, save } from '@/shared/lib/storage';
 import { shownTopic } from '@/shared/lib/util';
 
-import { type Bank, lessonWords, readAnalysis } from '../lib/bank';
-import { normalizeExtras } from '../lib/parse';
-import { getProgress } from '../lib/progress';
-import { buildQuiz, keyWordsFirst, pickWords } from '../lib/quiz';
-import { getRemoved, withoutRemoved } from '../lib/removed';
-import type { Lesson } from '../lib/types';
 import WordQuiz from './WordQuiz';
 
 const ROUND = 10;

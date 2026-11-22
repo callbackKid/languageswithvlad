@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-import { parseNextLesson } from './nextLesson';
+import { parseNextLesson } from '../lib/nextLesson';
 
 // How often the document is read again while a lesson is on.
 export const LIVE_SYNC_INTERVAL = 60_000;

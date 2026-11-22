@@ -1,4 +1,4 @@
-import type { Language } from '@/shared/config/languages';
+import { type Language } from '@/shared/config/languages';
 import { getSettings, type SpeechSpeed } from '@/shared/config/settings';
 
 const LOCALES: Record<Language, string> = {

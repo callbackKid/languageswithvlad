@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
+import { type Bank } from '@/entities/lesson';
 import { api, ApiError } from '@/shared/api';
-import type { Language } from '@/shared/config/languages';
-import { asLanguage } from '@/shared/config/languages';
+import { asLanguage, type Language } from '@/shared/config/languages';
 import { LEVELS, useSettings } from '@/shared/config/settings';
 import { useTranslation } from '@/shared/i18n/core';
 import { common, learning } from '@/shared/i18n/messages/common';
@@ -13,9 +13,8 @@ import PageHead from '@/shared/ui/PageHead';
 import Speak from '@/shared/ui/Speak';
 import WaitingFact from '@/shared/ui/WaitingFact';
 
-import type { Bank } from '../lib/bank';
 import { normalizeDiscussion } from '../lib/parse';
-import type { Discussion } from '../lib/types';
+import { type Discussion } from '../lib/types';
 import GrammarRuleBox from './GrammarRuleBox';
 import Star from './Star';
 

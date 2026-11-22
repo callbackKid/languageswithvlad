@@ -1,15 +1,15 @@
 import { useState } from 'react';
 
+import { findHomework } from '@/entities/homework';
+import { type Lesson } from '@/entities/lesson';
+import { getProgress } from '@/entities/word';
 import { api, ApiError } from '@/shared/api';
 import { useTranslation } from '@/shared/i18n/core';
 import { common } from '@/shared/i18n/messages/common';
 import { homework as homeworkText } from '@/shared/i18n/messages/homework';
 import { load, save } from '@/shared/lib/storage';
 
-import { findHomework } from '../lib/homework';
-import { getProgress } from '../lib/progress';
 import { buildReport } from '../lib/report';
-import type { Lesson } from '../lib/types';
 
 type Step = 'idle' | 'review' | 'saving' | 'done';
 

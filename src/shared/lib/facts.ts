@@ -1,5 +1,5 @@
-import type { Language } from '@/shared/config/languages';
-import type { UiLanguage } from '@/shared/i18n/core';
+import { type Language } from '@/shared/config/languages';
+import { type UiLanguage } from '@/shared/i18n/core';
 
 // A short fact or expression shown while Claude is working: the phrase in the language being learned, then a note in the interface language.
 export interface Fact {

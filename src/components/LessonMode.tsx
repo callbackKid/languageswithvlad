@@ -1,6 +1,24 @@
 import { type ReactNode, useEffect, useRef, useState } from 'react';
 
-import type { BoardServer } from '@/shared/api/boardSync';
+import {
+  homeworkItems,
+  normalizeWriting,
+  readItem,
+  type Writing,
+  writingKey,
+} from '@/entities/homework';
+import {
+  type Bank,
+  findCall,
+  keyWordsFirst,
+  languageOfLesson,
+  type Lesson,
+  openCallWindow,
+  readAnalysis,
+  usePreparedLesson,
+} from '@/entities/lesson';
+import { getProgress } from '@/entities/word';
+import { type BoardServer } from '@/shared/api/boardSync';
 import { lessonPath } from '@/shared/config/routes';
 import { getSettings } from '@/shared/config/settings';
 import { useTranslation } from '@/shared/i18n/core';
@@ -18,14 +36,7 @@ import CallCard from '@/shared/ui/CallCard';
 import PageHead from '@/shared/ui/PageHead';
 import Speak from '@/shared/ui/Speak';
 
-import { type Bank, readAnalysis, usePreparedLesson } from '../lib/bank';
-import { findCall, openCallWindow } from '../lib/call';
-import { homeworkItems, readItem, writingKey } from '../lib/homework';
 import { homeworkLabel } from '../lib/makeHomework';
-import { languageOfLesson, normalizeWriting } from '../lib/parse';
-import { getProgress } from '../lib/progress';
-import { keyWordsFirst } from '../lib/quiz';
-import type { Lesson, Writing } from '../lib/types';
 import { previousLesson, warmUpRound } from '../lib/warmUp';
 import AddToDoc, { type DocTarget } from './AddToDoc';
 import BookImport from './BookImport';

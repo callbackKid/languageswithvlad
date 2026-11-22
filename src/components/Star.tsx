@@ -1,8 +1,6 @@
+import { setHard, useProgress, type Word, wordKey } from '@/entities/word';
 import { useTranslation } from '@/shared/i18n/core';
 import { common } from '@/shared/i18n/messages/common';
-
-import { setHard, useProgress, wordKey } from '../lib/progress';
-import type { Word } from '../lib/types';
 
 // Adds a word to, or removes it from, the "Words to learn" list.
 export default function Star({ word }: { word: Word }) {

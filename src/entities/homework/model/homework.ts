@@ -1,3 +1,4 @@
+import { type Lesson } from '@/entities/lesson/@x/homework';
 import {
   type Tense,
   type TENSES_BY_LANGUAGE,
@@ -5,8 +6,6 @@ import {
   type VerbLanguage,
 } from '@/shared/config/languages';
 import { hash } from '@/shared/lib/util';
-
-import { type Lesson } from './types';
 
 /* "Devoirs: verbes être, avoir — présent; mots de la leçon 5; 5 phrases au passé composé"
    in a lesson: the homework for the next lesson. Read straight from the text, like

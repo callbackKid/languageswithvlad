@@ -1,12 +1,10 @@
 import { useState } from 'react';
 
+import { docIdFrom, sourceUrl } from '@/entities/lesson';
 import { useTranslation } from '@/shared/i18n/core';
 import { app } from '@/shared/i18n/messages/app';
 import { common } from '@/shared/i18n/messages/common';
 import LanguagePicker from '@/shared/ui/LanguagePicker';
-
-import { docIdFrom } from '../lib/parse';
-import { sourceUrl } from '../lib/source';
 
 // The first screen: paste the link of the lesson document (a Google Doc or a Notion page).
 export default function Connect({

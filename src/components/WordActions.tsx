@@ -1,5 +1,6 @@
 import { type ReactNode, useEffect, useLayoutEffect, useRef, useState } from 'react';
 
+import { type Lesson } from '@/entities/lesson';
 import { api, ApiError } from '@/shared/api';
 import { TENSES_BY_LANGUAGE } from '@/shared/config/languages';
 import { translator, useTranslation } from '@/shared/i18n/core';
@@ -9,7 +10,7 @@ import Speak from '@/shared/ui/Speak';
 import WaitingFact from '@/shared/ui/WaitingFact';
 
 import { normalizeWordCard } from '../lib/parse';
-import { type Lesson, type WordCard } from '../lib/types';
+import { type WordCard } from '../lib/types';
 import {
   asLookUp,
   CARD_EVENT,

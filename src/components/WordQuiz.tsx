@@ -1,17 +1,15 @@
 import { type FormEvent, type ReactNode, useEffect, useRef, useState } from 'react';
 
+import { dictationForm, type QuizItem } from '@/entities/lesson';
+import { recordForm, recordWord, Transcription } from '@/entities/word';
 import { type Language, languageOfTense } from '@/shared/config/languages';
 import { useTranslation } from '@/shared/i18n/core';
 import { common, learning } from '@/shared/i18n/messages/common';
 import { exercises } from '@/shared/i18n/messages/exercises';
+import { grade } from '@/shared/lib/grade';
 import { speak } from '@/shared/lib/speech';
 import ExerciseHead from '@/shared/ui/ExerciseHead';
 import Speak from '@/shared/ui/Speak';
-
-import { grade } from '../lib/grade';
-import { recordForm, recordWord } from '../lib/progress';
-import { dictationForm, type QuizItem } from '../lib/quiz';
-import Transcription from './Transcription';
 
 type Result = 'ok' | 'bad' | 'accent' | 'article';
 // a noun typed without its article is a near miss, not a mistake

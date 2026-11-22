@@ -1,11 +1,10 @@
 import type { ReactNode } from 'react';
 
-import type { Language } from '@/shared/config/languages';
+import { type GrammarRule } from '@/entities/lesson';
+import { type Language } from '@/shared/config/languages';
 import { useTranslation } from '@/shared/i18n/core';
 import { talk } from '@/shared/i18n/messages/talk';
 import Speak from '@/shared/ui/Speak';
-
-import type { GrammarRule } from '../lib/types';
 
 /** A grammar point explained: what it is, how it's formed, when it's used, examples and the usual
     mistake. Folded away until opened; used in Discuss and in a lesson's Grammar tab. */

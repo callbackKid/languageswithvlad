@@ -1,9 +1,9 @@
 import { useSyncExternalStore } from 'react';
 
+import { wordKey } from '@/entities/word/@x/lesson';
 import { load, save } from '@/shared/lib/storage';
 
-import { wordKey } from './progress';
-import type { Analysis } from './types';
+import { type Analysis } from './types';
 
 /* What the student took out of a lesson's lists on this device: words and verbs Claude picked up
    by mistake, or that the student doesn't want to practise. They leave the lesson's tabs and every

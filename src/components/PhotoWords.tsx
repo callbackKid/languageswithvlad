@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
+import { type Lesson } from '@/entities/lesson';
 import { api, ApiError } from '@/shared/api';
 import { translator, useTranslation } from '@/shared/i18n/core';
 import { common } from '@/shared/i18n/messages/common';
@@ -9,7 +10,7 @@ import { asFields, loadChecked, save } from '@/shared/lib/storage';
 import WaitingFact from '@/shared/ui/WaitingFact';
 
 import { mergePhotoItems, normalizePhoto, normalizePhotoItems } from '../lib/parse';
-import type { Lesson, PhotoItem } from '../lib/types';
+import { type PhotoItem } from '../lib/types';
 import { docLine } from '../lib/wordActions';
 import AddToDoc, { type DocTarget } from './AddToDoc';
 import WordNotesTable from './WordNotesTable';

@@ -6,12 +6,12 @@ import { getSettings, type Level, LEVELS } from '@/shared/config/settings';
 import { translator, useTranslation } from '@/shared/i18n/core';
 import { common } from '@/shared/i18n/messages/common';
 import { makeExerciseText } from '@/shared/i18n/messages/makeExercise';
+import { type Grade, grade } from '@/shared/lib/grade';
 import { loadChecked, save } from '@/shared/lib/storage';
 import { shuffle } from '@/shared/lib/util';
 import ExerciseHead from '@/shared/ui/ExerciseHead';
 import WaitingFact from '@/shared/ui/WaitingFact';
 
-import { type Grade, grade } from '../lib/grade';
 import { normalizeExercise } from '../lib/parse';
 import { type ExerciseQuestion, type MadeExercise } from '../lib/types';
 

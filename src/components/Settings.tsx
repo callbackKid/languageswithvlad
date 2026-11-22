@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import { knownTenses, tensesForLevel } from '@/entities/verb';
 import {
   type Language,
   LANGUAGES,
@@ -30,7 +31,6 @@ import { shrinkImage } from '@/shared/lib/image';
 import { canSpeak, speak } from '@/shared/lib/speech';
 import PageHead from '@/shared/ui/PageHead';
 
-import { knownTenses, tensesForLevel } from '../lib/tenses';
 import TeacherCard from './TeacherCard';
 
 // each lesson tab under the name it has on the lesson page

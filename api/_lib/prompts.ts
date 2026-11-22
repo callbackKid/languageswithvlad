@@ -74,7 +74,7 @@ ${body}
 
 /** How each language's verb tables are asked for. The tense names must be unique across languages
     (the app tells a saved form's language by its tense): keep them in step with TENSES_BY_LANGUAGE
-    in src/lib/types.ts, except the futur proche, which the app builds itself. */
+    in src/shared/config/languages.ts, except the futur proche, which the app builds itself. */
 const VERB_TABLES = {
   fr: {
     tenses: [
