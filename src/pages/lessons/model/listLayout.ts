@@ -15,9 +15,11 @@ export function readListView(): LessonListView {
   return LESSON_LIST_VIEWS.find((view) => view === stored) ?? 'column';
 }
 
+// Keeps the view chosen on this device.
 export const saveListView = (view: LessonListView) => save(VIEW_KEY, view);
 
 // Whether the list is open; open unless it was folded on this device.
 export const readListOpen = (): boolean => load<unknown>(OPEN_KEY) !== false;
 
+// Keeps on this device whether the list is open or folded.
 export const saveListOpen = (open: boolean) => save(OPEN_KEY, open);

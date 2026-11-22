@@ -12,4 +12,5 @@ export function readListenPause(): ListenPause {
   return LISTEN_PAUSES.find((pause) => pause === stored) ?? 2;
 }
 
+// Keeps the pause chosen on this device.
 export const saveListenPause = (pause: ListenPause) => save(PAUSE_KEY, pause);
