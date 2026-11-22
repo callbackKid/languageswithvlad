@@ -218,7 +218,7 @@ export default function HomeworkCard({
     (item.lessonNumber !== undefined &&
       [...lessons].reverse().find((candidate) => candidate.n === item.lessonNumber)) ||
     homework.lesson;
-  // verb tables exist for French and German; a verbs task in another language just opens the lesson
+  // a verbs task conjugates in a language with verb tables (all but English); otherwise it opens the lesson
   const lessonLanguage = readLessonLanguage(homework.lesson.hash) ?? 'fr';
   const verbLanguage = isVerbLanguage(lessonLanguage) ? lessonLanguage : null;
   const action = (item: HomeworkItem): string | null => {
