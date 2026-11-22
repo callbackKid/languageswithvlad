@@ -2,9 +2,11 @@ import { asText } from './util';
 
 type JsonObject = Record<string, unknown>;
 
+// The fields of an answer's object, or {} when it isn't one (null, a string, a number).
 export const asObject = (value: unknown): JsonObject =>
   value && typeof value === 'object' ? (value as JsonObject) : {};
 
+// A list, or an empty list for anything else.
 export const asArray = (value: unknown): unknown[] => (Array.isArray(value) ? value : []);
 
 // The non-empty strings of a list.

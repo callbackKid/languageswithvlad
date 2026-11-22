@@ -73,6 +73,7 @@ export function normalizeAnalysis(raw: unknown): Analysis {
   return { language, topic: asText(data.topic), words, pairs, verbs, local: false };
 }
 
+// The grammar rule Claude explains for a lesson; null when the answer has neither a title nor a summary.
 export function normalizeGrammarRule(raw: unknown): GrammarRule | null {
   const data = asObject(raw);
   const title = asText(data.title);

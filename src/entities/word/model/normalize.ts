@@ -4,6 +4,7 @@ import { asText } from '@/shared/lib/util';
 
 import { type PhotoItem, type WordCard } from './wordCard';
 
+// One word or phrase Claude found in a photo, tagged with the language of the photo.
 export function photoItem(raw: unknown, language: Language): PhotoItem {
   const item = asObject(raw);
   return {

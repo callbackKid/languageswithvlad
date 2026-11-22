@@ -13,6 +13,7 @@ export interface SharedElement extends JsonObject {
   type: string;
   version: number;
 }
+// The shapes in a message, without the ones that aren't shapes.
 export function asSharedElements(value: unknown): SharedElement[] {
   return (Array.isArray(value) ? value : []).filter(
     (element): element is SharedElement =>
@@ -52,6 +53,7 @@ export interface SavedBoard {
   elements: SharedElement[];
   files: Record<string, BinaryFileData>;
 }
+// The board saved on this device; null when nothing usable was saved.
 export function asSavedBoard(raw: unknown): SavedBoard | null {
   if (!isObject(raw)) return null;
   const files = asSharedFiles(Object.values(isObject(raw.files) ? raw.files : {}));
