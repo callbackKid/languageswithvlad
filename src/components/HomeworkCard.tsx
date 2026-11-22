@@ -1,7 +1,15 @@
 import { useEffect, useState } from 'react';
 
-import { useTranslation } from '../i18n/core';
-import { homework as homeworkText } from '../i18n/messages/homework';
+import { isVerbLanguage, languageOfTense, type VerbLanguage } from '@/shared/config/languages';
+import { lessonPath } from '@/shared/config/routes';
+import { useTranslation } from '@/shared/i18n/core';
+import { homework as homeworkText } from '@/shared/i18n/messages/homework';
+import { daysBetween } from '@/shared/lib/dates';
+import { followLink, hrefFor } from '@/shared/lib/router';
+import { loadTexts, save } from '@/shared/lib/storage';
+import { shuffle } from '@/shared/lib/util';
+import WaitingFact from '@/shared/ui/WaitingFact';
+
 import {
   type Bank,
   fetchConjugation,
@@ -10,25 +18,13 @@ import {
   readConjugation,
   usePreparedLesson,
 } from '../lib/bank';
-import { daysBetween } from '../lib/dates';
 import { type Homework, type HomeworkItem, homeworkKey, writingKey } from '../lib/homework';
 import { parseNextLesson } from '../lib/nextLesson';
 import { getProgress } from '../lib/progress';
 import { buildQuiz, pickWords, verbForms } from '../lib/quiz';
-import { followLink, hrefFor } from '../lib/router';
-import { lessonPath } from '../lib/sections';
-import { loadTexts, save } from '../lib/storage';
-import {
-  type Conjugation,
-  isVerbLanguage,
-  languageOfTense,
-  type Lesson,
-  type VerbLanguage,
-} from '../lib/types';
-import { shuffle } from '../lib/util';
+import { type Conjugation, type Lesson } from '../lib/types';
 import GapFill from './GapFill';
 import SendToTeacher from './SendToTeacher';
-import WaitingFact from './WaitingFact';
 import WordQuiz from './WordQuiz';
 import WritingTask from './WritingTask';
 

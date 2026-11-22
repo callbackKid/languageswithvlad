@@ -26,7 +26,8 @@
     "allowUmdGlobalAccess": false,
     "noResolve": false,
     "checkJs": false,
-    "incremental": true
+    "incremental": true,
+    "paths": { "@/*": ["./src/*"] }
   },
   "include": ["src/**/*"]
 }

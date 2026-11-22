@@ -1,6 +1,6 @@
 import { Fragment, type ReactNode, useSyncExternalStore } from 'react';
 
-import { load, save } from '../lib/storage';
+import { load, save } from '@/shared/lib/storage';
 
 // The language of the interface (buttons, hints, the Tutorial). Translations of words stay Russian.
 export type UiLanguage = 'en' | 'ru' | 'fr' | 'de' | 'es' | 'pt' | 'it';

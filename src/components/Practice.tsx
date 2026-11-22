@@ -1,12 +1,14 @@
 import { useMemo, useState } from 'react';
 
-import { useTranslation } from '../i18n/core';
-import { app } from '../i18n/messages/app';
-import { pages } from '../i18n/messages/pages';
+import { useTranslation } from '@/shared/i18n/core';
+import { app } from '@/shared/i18n/messages/app';
+import { pages } from '@/shared/i18n/messages/pages';
+import { shownTopic } from '@/shared/lib/util';
+import PageHead from '@/shared/ui/PageHead';
+
 import type { Bank } from '../lib/bank';
 import type { Analysis } from '../lib/types';
-import { shownTopic } from '../lib/util';
-import PageHead, { BankNote } from './PageHead';
+import BankNote from './BankNote';
 import VerbsTab from './VerbsTab';
 import WordsTab from './WordsTab';
 

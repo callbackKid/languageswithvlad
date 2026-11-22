@@ -1,12 +1,13 @@
 import { useState } from 'react';
 
-import { useTranslation } from '../i18n/core';
-import { learning } from '../i18n/messages/common';
-import { exercises } from '../i18n/messages/exercises';
+import { useTranslation } from '@/shared/i18n/core';
+import { learning } from '@/shared/i18n/messages/common';
+import { exercises } from '@/shared/i18n/messages/exercises';
+import { shuffle } from '@/shared/lib/util';
+import ExerciseHead from '@/shared/ui/ExerciseHead';
+
 import { recordWord } from '../lib/progress';
 import type { Word } from '../lib/types';
-import { shuffle } from '../lib/util';
-import ExerciseHead from './ExerciseHead';
 
 // word is set for translation pairs, so results count towards progress.
 export interface MatchPair {

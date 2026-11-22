@@ -1,21 +1,23 @@
 import { useState } from 'react';
 
-import { useTranslation } from '../i18n/core';
-import { common, learning } from '../i18n/messages/common';
-import { talk } from '../i18n/messages/talk';
-import { api, ApiError } from '../lib/api';
+import { api, ApiError } from '@/shared/api';
+import type { Language } from '@/shared/config/languages';
+import { asLanguage } from '@/shared/config/languages';
+import { LEVELS, useSettings } from '@/shared/config/settings';
+import { useTranslation } from '@/shared/i18n/core';
+import { common, learning } from '@/shared/i18n/messages/common';
+import { talk } from '@/shared/i18n/messages/talk';
+import { asFields, load, loadChecked, save } from '@/shared/lib/storage';
+import { shownTopic } from '@/shared/lib/util';
+import PageHead from '@/shared/ui/PageHead';
+import Speak from '@/shared/ui/Speak';
+import WaitingFact from '@/shared/ui/WaitingFact';
+
 import type { Bank } from '../lib/bank';
 import { normalizeDiscussion } from '../lib/parse';
-import { LEVELS, useSettings } from '../lib/settings';
-import { asFields, load, loadChecked, save } from '../lib/storage';
-import type { Discussion, Language } from '../lib/types';
-import { asLanguage } from '../lib/types';
-import { shownTopic } from '../lib/util';
+import type { Discussion } from '../lib/types';
 import GrammarRuleBox from './GrammarRuleBox';
-import PageHead from './PageHead';
-import Speak from './Speak';
 import Star from './Star';
-import WaitingFact from './WaitingFact';
 
 const CUSTOM = '__custom';
 // the student's own topic; the server cuts it at the same length (api/discussion.ts)

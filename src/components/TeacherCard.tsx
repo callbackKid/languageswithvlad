@@ -1,10 +1,10 @@
 import { useState } from 'react';
 
-import { useTranslation } from '../i18n/core';
-import { common } from '../i18n/messages/common';
-import { settingsText } from '../i18n/messages/settings';
-import { api } from '../lib/api';
-import { forgetTeacherCode, saveTeacherCode, useTeacher } from '../lib/teacher';
+import { api } from '@/shared/api';
+import { forgetTeacherCode, saveTeacherCode, useTeacher } from '@/shared/config/teacher';
+import { useTranslation } from '@/shared/i18n/core';
+import { common } from '@/shared/i18n/messages/common';
+import { settingsText } from '@/shared/i18n/messages/settings';
 
 /** The Settings card where the teacher turns the teacher's tools on, with the teacher code.
     Shown only when the server has a teacher code set up. */

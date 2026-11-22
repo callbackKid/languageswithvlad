@@ -1,21 +1,21 @@
 import { type ReactNode, useEffect } from 'react';
 
-import { useTranslation } from '../i18n/core';
-import { app } from '../i18n/messages/app';
-import { exercises } from '../i18n/messages/exercises';
-import { pages } from '../i18n/messages/pages';
-import { paper } from '../i18n/messages/paper';
-import { tutorial } from '../i18n/messages/tutorial';
-import { GUIDES } from '../lib/guides';
-import { followLink, hrefFor } from '../lib/router';
-import { type Section, SECTIONS } from '../lib/sections';
-import { useTeacher } from '../lib/teacher';
-import PageHead from './PageHead';
+import { GUIDES } from '@/shared/config/guides';
+import { type Section, SECTIONS } from '@/shared/config/routes';
+import { useTeacher } from '@/shared/config/teacher';
+import { useTranslation } from '@/shared/i18n/core';
+import { app } from '@/shared/i18n/messages/app';
+import { exercises } from '@/shared/i18n/messages/exercises';
+import { pages } from '@/shared/i18n/messages/pages';
+import { paper } from '@/shared/i18n/messages/paper';
+import { tutorial } from '@/shared/i18n/messages/tutorial';
+import { followLink, hrefFor } from '@/shared/lib/router';
+import PageHead from '@/shared/ui/PageHead';
 
 /* A guide for someone opening the app for the first time: a quick start, a map of the sections,
    then one card per section with what it is for, how to use it, a small picture of the screen
    and a link that opens it. The pictures are drawings, not working controls. The texts live in
-   i18n/messages/tutorial.ts; the drawings reuse the real labels of the app. */
+   shared/i18n/messages/tutorial.ts; the drawings reuse the real labels of the app. */
 
 type TutorialKey = keyof (typeof tutorial)['en'];
 

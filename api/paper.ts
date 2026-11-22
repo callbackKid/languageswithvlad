@@ -21,7 +21,7 @@ import {
 // keep in step with MAX_PAGES in src/components/HandwrittenNotes.tsx
 const MAX_HANDWRITTEN_PAGES = 4;
 // The app cuts the chosen pages out of the PDF before sending; Vercel refuses bodies over 4.5 MB.
-// Keep in step with MAX_BASE64_LENGTH in src/lib/pdf.ts.
+// Keep in step with MAX_BASE64_LENGTH in src/shared/lib/pdf.ts.
 const MAX_PDF_BASE64_LENGTH = 4_000_000;
 
 // From paper: underlined words on a photo, handwritten notes, textbook pages or exercises from the book (body.kind).

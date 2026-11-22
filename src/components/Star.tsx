@@ -1,5 +1,6 @@
-import { useTranslation } from '../i18n/core';
-import { common } from '../i18n/messages/common';
+import { useTranslation } from '@/shared/i18n/core';
+import { common } from '@/shared/i18n/messages/common';
+
 import { setHard, useProgress, wordKey } from '../lib/progress';
 import type { Word } from '../lib/types';
 

@@ -1,16 +1,17 @@
 import { useEffect, useRef, useState } from 'react';
 
-import { translator, useTranslation } from '../i18n/core';
-import { common } from '../i18n/messages/common';
-import { paper } from '../i18n/messages/paper';
-import { api, ApiError } from '../lib/api';
-import { shrinkImage } from '../lib/image';
+import { api, ApiError } from '@/shared/api';
+import { translator, useTranslation } from '@/shared/i18n/core';
+import { common } from '@/shared/i18n/messages/common';
+import { paper } from '@/shared/i18n/messages/paper';
+import { shrinkImage } from '@/shared/lib/image';
+import { asFields, loadChecked, save } from '@/shared/lib/storage';
+import WaitingFact from '@/shared/ui/WaitingFact';
+
 import { mergePhotoItems, normalizePhoto, normalizePhotoItems } from '../lib/parse';
-import { asFields, loadChecked, save } from '../lib/storage';
 import type { Lesson, PhotoItem } from '../lib/types';
 import { docLine } from '../lib/wordActions';
 import AddToDoc, { type DocTarget } from './AddToDoc';
-import WaitingFact from './WaitingFact';
 import WordNotesTable from './WordNotesTable';
 
 const LAST_KEY = 'photo:last';

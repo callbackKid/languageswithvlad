@@ -1,17 +1,19 @@
 import { type FormEvent, useState } from 'react';
 
-import { translator, useTranslation } from '../i18n/core';
-import { common } from '../i18n/messages/common';
-import { makeExerciseText } from '../i18n/messages/makeExercise';
-import { api, ApiError } from '../lib/api';
+import { api, ApiError } from '@/shared/api';
+import { asLanguage, type Language } from '@/shared/config/languages';
+import { getSettings, type Level, LEVELS } from '@/shared/config/settings';
+import { translator, useTranslation } from '@/shared/i18n/core';
+import { common } from '@/shared/i18n/messages/common';
+import { makeExerciseText } from '@/shared/i18n/messages/makeExercise';
+import { loadChecked, save } from '@/shared/lib/storage';
+import { shuffle } from '@/shared/lib/util';
+import ExerciseHead from '@/shared/ui/ExerciseHead';
+import WaitingFact from '@/shared/ui/WaitingFact';
+
 import { type Grade, grade } from '../lib/grade';
 import { normalizeExercise } from '../lib/parse';
-import { getSettings, type Level, LEVELS } from '../lib/settings';
-import { loadChecked, save } from '../lib/storage';
-import { asLanguage, type ExerciseQuestion, type Language, type MadeExercise } from '../lib/types';
-import { shuffle } from '../lib/util';
-import ExerciseHead from './ExerciseHead';
-import WaitingFact from './WaitingFact';
+import { type ExerciseQuestion, type MadeExercise } from '../lib/types';
 
 // the last exercise made, kept on this device so a reload during the lesson doesn't lose it
 const LAST_KEY = 'exercise:last';

@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 
-import { getUiLanguage, translator, useTranslation } from '../i18n/core';
-import { call } from '../i18n/messages/call';
-import { api, ApiError } from '../lib/api';
+import { api, ApiError } from '@/shared/api';
+import { getUiLanguage, translator, useTranslation } from '@/shared/i18n/core';
+import { call } from '@/shared/i18n/messages/call';
 
 // Jitsi as a Service: every call runs on 8x8's servers, under the app's AppID
 const JAAS_DOMAIN = '8x8.vc';

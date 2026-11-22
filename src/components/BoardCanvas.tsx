@@ -14,7 +14,15 @@ import type {
 } from '@excalidraw/excalidraw/types';
 import { useCallback, useEffect, useRef } from 'react';
 
-import type { UiLanguage } from '../i18n/core';
+import {
+  type BoardConnection,
+  type BoardPeer,
+  type BoardServer,
+  connectBoard,
+} from '@/shared/api/boardSync';
+import type { UiLanguage } from '@/shared/i18n/core';
+import { loadChecked, save } from '@/shared/lib/storage';
+
 import {
   asPointer,
   asPointerButton,
@@ -22,17 +30,10 @@ import {
   asSharedElements,
   asSharedFiles,
 } from '../lib/boardPayload';
-import {
-  type BoardConnection,
-  type BoardPeer,
-  type BoardServer,
-  connectBoard,
-} from '../lib/boardSync';
-import { loadChecked, save } from '../lib/storage';
 
 /* The drawing itself (Excalidraw, MIT). It's a big library, so LessonBoard loads this file only
    when the board is opened. With a connection, every change is sent to the other people on the
-   board and theirs are merged in (see src/lib/boardSync.ts for the messages). */
+   board and theirs are merged in (see src/shared/api/boardSync.ts for the messages). */
 
 const LANG_CODES: Record<UiLanguage, string> = {
   en: 'en',

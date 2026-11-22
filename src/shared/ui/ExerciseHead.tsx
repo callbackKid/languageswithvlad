@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 
-import { useTranslation } from '../i18n/core';
-import { common } from '../i18n/messages/common';
+import { useTranslation } from '@/shared/i18n/core';
+import { common } from '@/shared/i18n/messages/common';
 
 // The title row of an exercise: its name, a progress counter, and a way back.
 export default function ExerciseHead({

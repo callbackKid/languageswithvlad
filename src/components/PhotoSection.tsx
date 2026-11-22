@@ -1,12 +1,13 @@
 import { useState } from 'react';
 
-import { useTranslation } from '../i18n/core';
-import { paper } from '../i18n/messages/paper';
-import { load, save } from '../lib/storage';
+import { useTranslation } from '@/shared/i18n/core';
+import { paper } from '@/shared/i18n/messages/paper';
+import { load, save } from '@/shared/lib/storage';
+import PageHead from '@/shared/ui/PageHead';
+
 import type { Lesson } from '../lib/types';
 import type { DocTarget } from './AddToDoc';
 import HandwrittenNotes from './HandwrittenNotes';
-import PageHead from './PageHead';
 import PhotoWords from './PhotoWords';
 
 const MODES = ['underlined', 'handwritten', 'textbook'] as const;

@@ -1,6 +1,6 @@
 import type { BinaryFileData, Collaborator } from '@excalidraw/excalidraw/types';
 
-/* What the other people on the board send (src/lib/boardSync.ts), checked before it reaches
+/* What the other people on the board send (src/shared/api/boardSync.ts), checked before it reaches
    Excalidraw: a message from another device is outside data, and one malformed shape or picture
    must not break the board for everyone. Only the fields Excalidraw relies on are checked. */
 

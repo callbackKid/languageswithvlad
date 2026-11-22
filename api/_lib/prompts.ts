@@ -409,7 +409,7 @@ export function grammarPracticePrompt({
 Reply with only a JSON array of objects: {"before": string, "after": string, "answer": string, "options": [string, string, string], "ru": string, "why": string}. before and after are the text around the gap, answer the exact text of the gap, options three wrong answers that are typical mistakes with this grammar point (a wrong form, ending, auxiliary, agreement or preposition), never another correct answer. ru is a Russian translation of the whole sentence. why is one short sentence in ${EXPLAIN_NAMES[explainIn]} saying why the answer is right.`;
 }
 
-// The parts of a book page a lesson can take; keep in step with BOOK_PARTS in src/lib/api.ts.
+// The parts of a book page a lesson can take; keep in step with BOOK_PARTS in src/shared/api/index.ts.
 export const BOOK_PARTS = ['exercises', 'text', 'grammar'] as const;
 export type BookPart = (typeof BOOK_PARTS)[number];
 

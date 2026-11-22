@@ -1,13 +1,14 @@
 import { useState } from 'react';
 
-import { useTranslation } from '../i18n/core';
-import { common } from '../i18n/messages/common';
-import { homework as homeworkText } from '../i18n/messages/homework';
-import { api, ApiError } from '../lib/api';
+import { api, ApiError } from '@/shared/api';
+import { useTranslation } from '@/shared/i18n/core';
+import { common } from '@/shared/i18n/messages/common';
+import { homework as homeworkText } from '@/shared/i18n/messages/homework';
+import { load, save } from '@/shared/lib/storage';
+
 import { findHomework } from '../lib/homework';
 import { getProgress } from '../lib/progress';
 import { buildReport } from '../lib/report';
-import { load, save } from '../lib/storage';
 import type { Lesson } from '../lib/types';
 
 type Step = 'idle' | 'review' | 'saving' | 'done';

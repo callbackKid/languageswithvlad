@@ -1,6 +1,6 @@
-import type { UiLanguage } from '../i18n/core';
-import { load, save } from './storage';
-import type { Language } from './types';
+import type { Language } from '@/shared/config/languages';
+import type { UiLanguage } from '@/shared/i18n/core';
+import { load, save } from '@/shared/lib/storage';
 
 /* What changed in the app, for the News page. Add an entry here with every change students
    will notice: the newest day goes first, and every text needs all seven interface languages. */

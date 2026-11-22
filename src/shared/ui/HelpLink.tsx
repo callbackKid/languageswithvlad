@@ -1,7 +1,7 @@
-import { useTranslation } from '../i18n/core';
-import { common } from '../i18n/messages/common';
-import { type GuideId, guidePath } from '../lib/guides';
-import { followLink, hrefFor } from '../lib/router';
+import { type GuideId, guidePath } from '@/shared/config/guides';
+import { useTranslation } from '@/shared/i18n/core';
+import { common } from '@/shared/i18n/messages/common';
+import { followLink, hrefFor } from '@/shared/lib/router';
 
 // A round "?" next to a page's title that opens the page's card in the Tutorial.
 export default function HelpLink({ guide }: { guide: GuideId }) {

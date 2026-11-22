@@ -1,12 +1,12 @@
 import { type ClipboardEvent, type DragEvent, useEffect, useRef, useState } from 'react';
 
-import { useTranslation } from '../i18n/core';
-import { common } from '../i18n/messages/common';
-import { talk } from '../i18n/messages/talk';
-import { api, ApiError, type FeedbackKind } from '../lib/api';
-import { type ImagePayload, shrinkImage } from '../lib/image';
-import { getSettings, isDark } from '../lib/settings';
-import { load, save } from '../lib/storage';
+import { api, ApiError, type FeedbackKind } from '@/shared/api';
+import { getSettings, isDark } from '@/shared/config/settings';
+import { useTranslation } from '@/shared/i18n/core';
+import { common } from '@/shared/i18n/messages/common';
+import { talk } from '@/shared/i18n/messages/talk';
+import { type ImagePayload, shrinkImage } from '@/shared/lib/image';
+import { load, save } from '@/shared/lib/storage';
 
 const MAX_PICTURES = 3;
 // the server cuts the message and the contact at the same lengths (api/feedback.ts)

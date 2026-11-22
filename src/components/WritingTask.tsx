@@ -1,15 +1,17 @@
 import { type ReactNode, useState } from 'react';
 
-import { getUiLanguage, translator, useTranslation } from '../i18n/core';
-import { common } from '../i18n/messages/common';
-import { homework as homeworkText } from '../i18n/messages/homework';
-import { api, ApiError } from '../lib/api';
+import { api, ApiError } from '@/shared/api';
+import type { Language } from '@/shared/config/languages';
+import { getSettings } from '@/shared/config/settings';
+import { getUiLanguage, translator, useTranslation } from '@/shared/i18n/core';
+import { common } from '@/shared/i18n/messages/common';
+import { homework as homeworkText } from '@/shared/i18n/messages/homework';
+import { loadChecked, save } from '@/shared/lib/storage';
+import ExerciseHead from '@/shared/ui/ExerciseHead';
+import WaitingFact from '@/shared/ui/WaitingFact';
+
 import { normalizeWriting, normalizeWritingCheck } from '../lib/parse';
-import { getSettings } from '../lib/settings';
-import { loadChecked, save } from '../lib/storage';
-import type { Language, Writing, WritingCheck } from '../lib/types';
-import ExerciseHead from './ExerciseHead';
-import WaitingFact from './WaitingFact';
+import type { Writing, WritingCheck } from '../lib/types';
 
 // The corrected text with every fix marked, in order.
 function markFixes(corrected: string, check: WritingCheck): ReactNode[] {

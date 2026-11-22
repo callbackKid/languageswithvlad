@@ -49,7 +49,7 @@ Also: keys that ignore the language (`wordKey`, the bank's dedupe by `inf`: `ser
 Read `api/_lib/http.ts`, then each endpoint, against CODE_STYLE.md, Server. Check:
 
 - every field read with `text()`/`asLevel`/…, with a named size limit;
-- error codes the app translates: list what the server sends and compare with `messageFor` in `src/lib/api.ts`:
+- error codes the app translates: list what the server sends and compare with `messageFor` in `src/shared/api/index.ts`:
   ```bash
   grep -rhoE "(error: |Error\([0-9]+, )'[^']+'" api | sort | uniq -c
   ```

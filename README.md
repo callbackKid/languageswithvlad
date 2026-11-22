@@ -283,9 +283,14 @@ api/                serverless functions (Vercel)
   health.ts         what the server is set up for
 src/
   App.tsx           top bar, menu and pages
-  components/       one file per page or exercise
-  i18n/             interface languages: core.tsx, and messages/ with every text in en, ru, fr, de, es, pt, it
-  lib/              logic without UI: parsing, grading, progress, routing, speech
+  shared/           code that knows nothing of lessons or words (Feature-Sliced Design's lowest layer)
+    api/            the client for the functions in api/, and the live board's connection
+    config/         routes, settings, the teacher code, languages and tenses, Tutorial cards
+    i18n/           interface languages: core.tsx, and messages/ with every text in en, ru, fr, de, es, pt, it
+    lib/            storage, dates, the router, speech, images, PDF pages, small helpers
+    ui/             PageHead, HelpLink, WaitingFact, Speak, ExerciseHead, CallCard, LanguagePicker
+  components/       one file per page or exercise (moving into the FSD layers)
+  lib/              logic without UI: parsing, grading, progress (moving into the FSD layers)
 public/             the app icon (icon.svg and the PNGs drawn from it) and manifest.webmanifest
 ```
 

@@ -1,6 +1,6 @@
 import { useSyncExternalStore } from 'react';
 
-import { load, remove, save } from './storage';
+import { load, remove, save } from '@/shared/lib/storage';
 
 /* Whether this device has the teacher's tools on. The teacher enters the teacher code
    (APP_TEACHER_CODE on the server) once in Settings and it is kept here. The server checks the

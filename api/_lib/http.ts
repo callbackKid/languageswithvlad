@@ -72,7 +72,7 @@ export function fail(response: VercelResponse, error: unknown) {
 export const text = (value: unknown, maxLength: number): string =>
   typeof value === 'string' ? value.trim().slice(0, maxLength) : '';
 
-// CEFR levels, with A0 for a complete beginner. Keep in step with LEVELS in src/lib/settings.ts.
+// CEFR levels, with A0 for a complete beginner. Keep in step with LEVELS in src/shared/config/settings.ts.
 export const LEVELS = ['A0', 'A1', 'A2', 'B1', 'B2', 'C1', 'C2'] as const;
 export type Level = (typeof LEVELS)[number];
 // The level a request asks for, or null when it isn't one.

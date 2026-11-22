@@ -1,31 +1,30 @@
 import { useEffect, useRef, useState } from 'react';
 
-import { useTranslation } from '../i18n/core';
-import { common } from '../i18n/messages/common';
-import { exercises } from '../i18n/messages/exercises';
-import { ApiError } from '../lib/api';
+import { ApiError } from '@/shared/api';
+import {
+  COMPOUND_PAST,
+  languageOfTense,
+  type Tense,
+  TENSES_BY_LANGUAGE,
+  type VerbLanguage,
+} from '@/shared/config/languages';
+import { useTranslation } from '@/shared/i18n/core';
+import { common } from '@/shared/i18n/messages/common';
+import { exercises } from '@/shared/i18n/messages/exercises';
+import { load, save } from '@/shared/lib/storage';
+import { keepBracketsTogether, shuffle } from '@/shared/lib/util';
+import ExerciseHead from '@/shared/ui/ExerciseHead';
+import Speak from '@/shared/ui/Speak';
+import WaitingFact from '@/shared/ui/WaitingFact';
+
 import { fetchConjugation, readConjugation, verbLanguageOf } from '../lib/bank';
 import { type Grade, grade } from '../lib/grade';
 import { negate } from '../lib/negation';
 import { recordForm } from '../lib/progress';
 import { type FormQuestion, verbForms } from '../lib/quiz';
 import { removedCount, removeVerb, restore, useRemoved } from '../lib/removed';
-import { load, save } from '../lib/storage';
-import {
-  COMPOUND_PAST,
-  type Conjugation,
-  type Form,
-  languageOfTense,
-  type Tense,
-  TENSES_BY_LANGUAGE,
-  type VerbLanguage,
-  type VerbRef,
-} from '../lib/types';
-import { keepBracketsTogether, shuffle } from '../lib/util';
+import { type Conjugation, type Form, type VerbRef } from '../lib/types';
 import { sortVerbs, VERB_SORTS, verbGroup, type VerbSort } from '../lib/verbGroups';
-import ExerciseHead from './ExerciseHead';
-import Speak from './Speak';
-import WaitingFact from './WaitingFact';
 
 // the order of the verb list, kept on the device for every lesson
 const SORT_KEY = 'verb-sort';

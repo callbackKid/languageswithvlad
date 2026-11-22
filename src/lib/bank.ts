@@ -1,6 +1,10 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import { api } from './api';
+import { api } from '@/shared/api';
+import { isVerbLanguage, type VerbLanguage } from '@/shared/config/languages';
+import { useSettings } from '@/shared/config/settings';
+import { loadChecked, save } from '@/shared/lib/storage';
+
 import {
   languageOfLesson,
   localParse,
@@ -10,15 +14,11 @@ import {
 } from './parse';
 import { wordKey } from './progress';
 import { getRemoved, useRemoved, withoutRemoved } from './removed';
-import { useSettings } from './settings';
-import { loadChecked, save } from './storage';
 import {
   type Analysis,
   type Conjugation,
-  isVerbLanguage,
   type Lesson,
   type Pair,
-  type VerbLanguage,
   type VerbRef,
   type Word,
 } from './types';

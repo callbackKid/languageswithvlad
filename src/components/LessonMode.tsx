@@ -1,36 +1,38 @@
 import { type ReactNode, useEffect, useRef, useState } from 'react';
 
-import { useTranslation } from '../i18n/core';
-import { call } from '../i18n/messages/call';
-import { game } from '../i18n/messages/game';
-import { homework as homeworkText } from '../i18n/messages/homework';
-import { makeExerciseText } from '../i18n/messages/makeExercise';
-import { paper } from '../i18n/messages/paper';
-import { talk } from '../i18n/messages/talk';
+import type { BoardServer } from '@/shared/api/boardSync';
+import { lessonPath } from '@/shared/config/routes';
+import { getSettings } from '@/shared/config/settings';
+import { useTranslation } from '@/shared/i18n/core';
+import { call } from '@/shared/i18n/messages/call';
+import { game } from '@/shared/i18n/messages/game';
+import { homework as homeworkText } from '@/shared/i18n/messages/homework';
+import { makeExerciseText } from '@/shared/i18n/messages/makeExercise';
+import { paper } from '@/shared/i18n/messages/paper';
+import { talk } from '@/shared/i18n/messages/talk';
+import { clockTime, dayKey } from '@/shared/lib/dates';
+import { followLink, hrefFor } from '@/shared/lib/router';
+import { load, loadChecked, remove, save } from '@/shared/lib/storage';
+import { hash } from '@/shared/lib/util';
+import CallCard from '@/shared/ui/CallCard';
+import PageHead from '@/shared/ui/PageHead';
+import Speak from '@/shared/ui/Speak';
+
 import { type Bank, readAnalysis, usePreparedLesson } from '../lib/bank';
-import type { BoardServer } from '../lib/boardSync';
 import { findCall, openCallWindow } from '../lib/call';
-import { clockTime, dayKey } from '../lib/dates';
 import { homeworkItems, readItem, writingKey } from '../lib/homework';
 import { homeworkLabel } from '../lib/makeHomework';
 import { languageOfLesson, normalizeWriting } from '../lib/parse';
 import { getProgress } from '../lib/progress';
 import { keyWordsFirst } from '../lib/quiz';
-import { followLink, hrefFor } from '../lib/router';
-import { lessonPath } from '../lib/sections';
-import { getSettings } from '../lib/settings';
-import { load, loadChecked, remove, save } from '../lib/storage';
 import type { Lesson, Writing } from '../lib/types';
-import { hash } from '../lib/util';
 import { previousLesson, warmUpRound } from '../lib/warmUp';
 import AddToDoc, { type DocTarget } from './AddToDoc';
 import BookImport from './BookImport';
-import CallCard from './CallCard';
 import Discuss from './Discuss';
 import JitsiCall from './JitsiCall';
 import LessonBoard from './LessonBoard';
 import MakeExercise from './MakeExercise';
-import PageHead from './PageHead';
 import QuizGame, {
   GAME_QUESTIONS,
   GAME_SECONDS,
@@ -38,7 +40,6 @@ import QuizGame, {
   readRecords,
   RecordsTable,
 } from './QuizGame';
-import Speak from './Speak';
 import WordQuiz from './WordQuiz';
 import { KeyBadge } from './WordsTab';
 import { WritingResult } from './WritingTask';

@@ -1,13 +1,14 @@
 import { useState } from 'react';
 
-import { translator, useTranslation } from '../i18n/core';
-import { common } from '../i18n/messages/common';
-import { paper } from '../i18n/messages/paper';
-import { api, ApiError, BOOK_PARTS, type BookPart } from '../lib/api';
-import { shrinkImage } from '../lib/image';
+import { api, ApiError, BOOK_PARTS, type BookPart } from '@/shared/api';
+import { translator, useTranslation } from '@/shared/i18n/core';
+import { common } from '@/shared/i18n/messages/common';
+import { paper } from '@/shared/i18n/messages/paper';
+import { shrinkImage } from '@/shared/lib/image';
+import { extractPages, pdfPageCount } from '@/shared/lib/pdf';
+import WaitingFact from '@/shared/ui/WaitingFact';
+
 import { asObjectText } from '../lib/parse';
-import { extractPages, pdfPageCount } from '../lib/pdf';
-import WaitingFact from './WaitingFact';
 
 // keep in step with MAX_HANDWRITTEN_PAGES in api/paper.ts
 const MAX_PHOTOS = 4;

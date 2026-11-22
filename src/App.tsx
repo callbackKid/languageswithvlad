@@ -1,5 +1,16 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
+import { api, ApiError } from '@/shared/api';
+import type { BoardServer } from '@/shared/api/boardSync';
+import { lessonPath, NEEDS_LESSONS, parsePath, SECTIONS } from '@/shared/config/routes';
+import { isStudied, useSettings } from '@/shared/config/settings';
+import { applyTeacherHealth } from '@/shared/config/teacher';
+import { type Translator, translator, useTranslation } from '@/shared/i18n/core';
+import { app } from '@/shared/i18n/messages/app';
+import { followLink, hrefFor, navigate, usePath } from '@/shared/lib/router';
+import { stopSpeaking } from '@/shared/lib/speech';
+import { asFields, load, loadChecked, remove, save } from '@/shared/lib/storage';
+
 import CodeGate from './components/CodeGate';
 import Connect from './components/Connect';
 import Discuss from './components/Discuss';
@@ -19,23 +30,13 @@ import Stats from './components/Stats';
 import TooltipLayer from './components/TooltipLayer';
 import Tutorial from './components/Tutorial';
 import WordActions from './components/WordActions';
-import { type Translator, translator, useTranslation } from './i18n/core';
-import { app } from './i18n/messages/app';
-import { api, ApiError } from './lib/api';
 import { useBank } from './lib/bank';
-import type { BoardServer } from './lib/boardSync';
 import { findCall } from './lib/call';
 import { useLessonOn, useLiveSync } from './lib/liveSync';
 import { hasUnseenNews } from './lib/news';
 import { docIdFrom, splitLessons } from './lib/parse';
 import { setProgressDoc, useProgress } from './lib/progress';
-import { followLink, hrefFor, navigate, usePath } from './lib/router';
-import { lessonPath, NEEDS_LESSONS, parsePath, SECTIONS } from './lib/sections';
-import { isStudied, useSettings } from './lib/settings';
 import { isNotion, sourceUrl } from './lib/source';
-import { stopSpeaking } from './lib/speech';
-import { asFields, load, loadChecked, remove, save } from './lib/storage';
-import { applyTeacherHealth } from './lib/teacher';
 
 interface DocCache {
   title: string;

@@ -4,9 +4,10 @@ import {
   type Language,
   type Tense,
   TENSES_BY_LANGUAGE,
-  type Word,
-} from './types';
-import { asText } from './util';
+} from '@/shared/config/languages';
+import { asText } from '@/shared/lib/util';
+
+import { type Word } from './types';
 
 /* The "Devoirs:" block for homework Claude made from a lesson, in the lesson's language and in
    words the homework checklist reads (src/lib/homework.ts), so each task opens its exercise:

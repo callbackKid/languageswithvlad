@@ -1,11 +1,15 @@
 import { type ReactNode, useEffect, useLayoutEffect, useRef, useState } from 'react';
 
-import { translator, useTranslation } from '../i18n/core';
-import { common } from '../i18n/messages/common';
-import { wordActions } from '../i18n/messages/wordActions';
-import { api, ApiError } from '../lib/api';
+import { api, ApiError } from '@/shared/api';
+import { TENSES_BY_LANGUAGE } from '@/shared/config/languages';
+import { translator, useTranslation } from '@/shared/i18n/core';
+import { common } from '@/shared/i18n/messages/common';
+import { wordActions } from '@/shared/i18n/messages/wordActions';
+import Speak from '@/shared/ui/Speak';
+import WaitingFact from '@/shared/ui/WaitingFact';
+
 import { normalizeWordCard } from '../lib/parse';
-import { type Lesson, TENSES_BY_LANGUAGE, type WordCard } from '../lib/types';
+import { type Lesson, type WordCard } from '../lib/types';
 import {
   asLookUp,
   CARD_EVENT,
@@ -21,10 +25,8 @@ import {
   saveWordCard,
   sentenceAround,
 } from '../lib/wordActions';
-import Speak from './Speak';
 import Star from './Star';
 import VerbsTab from './VerbsTab';
-import WaitingFact from './WaitingFact';
 
 // Where the menu never opens on a selection: exercises (it would give the answers away), form
 // fields, places marked data-no-word-actions, and the menu itself.

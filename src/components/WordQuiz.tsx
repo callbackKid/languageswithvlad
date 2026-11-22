@@ -1,15 +1,16 @@
 import { type FormEvent, type ReactNode, useEffect, useRef, useState } from 'react';
 
-import { useTranslation } from '../i18n/core';
-import { common, learning } from '../i18n/messages/common';
-import { exercises } from '../i18n/messages/exercises';
+import { type Language, languageOfTense } from '@/shared/config/languages';
+import { useTranslation } from '@/shared/i18n/core';
+import { common, learning } from '@/shared/i18n/messages/common';
+import { exercises } from '@/shared/i18n/messages/exercises';
+import { speak } from '@/shared/lib/speech';
+import ExerciseHead from '@/shared/ui/ExerciseHead';
+import Speak from '@/shared/ui/Speak';
+
 import { grade } from '../lib/grade';
 import { recordForm, recordWord } from '../lib/progress';
 import { dictationForm, type QuizItem } from '../lib/quiz';
-import { speak } from '../lib/speech';
-import { type Language, languageOfTense } from '../lib/types';
-import ExerciseHead from './ExerciseHead';
-import Speak from './Speak';
 import Transcription from './Transcription';
 
 type Result = 'ok' | 'bad' | 'accent' | 'article';

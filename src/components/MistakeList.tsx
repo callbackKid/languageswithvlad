@@ -1,7 +1,8 @@
-import { useTranslation } from '../i18n/core';
-import { common } from '../i18n/messages/common';
+import { languageOfTense } from '@/shared/config/languages';
+import { useTranslation } from '@/shared/i18n/core';
+import { common } from '@/shared/i18n/messages/common';
+
 import type { FormStat, WordStat } from '../lib/progress';
-import { languageOfTense } from '../lib/types';
 import Transcription from './Transcription';
 
 // Missed words and verb forms with how often each was missed.

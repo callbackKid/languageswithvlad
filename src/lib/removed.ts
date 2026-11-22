@@ -1,7 +1,8 @@
 import { useSyncExternalStore } from 'react';
 
+import { load, save } from '@/shared/lib/storage';
+
 import { wordKey } from './progress';
-import { load, save } from './storage';
 import type { Analysis } from './types';
 
 /* What the student took out of a lesson's lists on this device: words and verbs Claude picked up

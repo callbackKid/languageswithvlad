@@ -1,14 +1,16 @@
 import { useMemo } from 'react';
 
-import { useTranslation } from '../i18n/core';
-import { pages } from '../i18n/messages/pages';
+import { isStudied, useSettings } from '@/shared/config/settings';
+import { useTranslation } from '@/shared/i18n/core';
+import { pages } from '@/shared/i18n/messages/pages';
+import { shownTopic } from '@/shared/lib/util';
+import PageHead from '@/shared/ui/PageHead';
+
 import type { Bank } from '../lib/bank';
 import { isLearned, topMistakes, useProgress, wordKey } from '../lib/progress';
-import { isStudied, useSettings } from '../lib/settings';
 import type { Lesson } from '../lib/types';
-import { shownTopic } from '../lib/util';
+import BankNote from './BankNote';
 import MistakeList from './MistakeList';
-import PageHead, { BankNote } from './PageHead';
 import SendToTeacher from './SendToTeacher';
 
 // Fewer answers than this say too little about a topic to call it weak.

@@ -1,11 +1,12 @@
 import { useState } from 'react';
 
-import { useTranslation } from '../i18n/core';
-import { homeCards } from '../i18n/messages/homeCards';
+import { useTranslation } from '@/shared/i18n/core';
+import { homeCards } from '@/shared/i18n/messages/homeCards';
+import { load, save } from '@/shared/lib/storage';
+
 import { type Bank, lessonWords } from '../lib/bank';
 import { parseNextLesson } from '../lib/nextLesson';
 import { getProgress } from '../lib/progress';
-import { load, save } from '../lib/storage';
 import type { Lesson } from '../lib/types';
 import { prepareRound } from '../lib/warmUp';
 import WordQuiz from './WordQuiz';

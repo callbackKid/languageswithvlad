@@ -1,9 +1,9 @@
 import { type ReactNode, useEffect, useState } from 'react';
 
-import { useTranslation } from '../i18n/core';
-import { common } from '../i18n/messages/common';
-import { FACTS } from '../lib/facts';
-import type { Language } from '../lib/types';
+import type { Language } from '@/shared/config/languages';
+import { useTranslation } from '@/shared/i18n/core';
+import { common } from '@/shared/i18n/messages/common';
+import { FACTS } from '@/shared/lib/facts';
 
 // long enough to read a phrase and its note; "Next fact" is there for faster readers
 const ROTATE_EVERY = 20_000;

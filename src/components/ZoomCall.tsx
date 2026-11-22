@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 
-import { getUiLanguage, translator, type UiLanguage, useTranslation } from '../i18n/core';
-import { call } from '../i18n/messages/call';
-import { api, ApiError } from '../lib/api';
+import { api, ApiError } from '@/shared/api';
+import { getUiLanguage, translator, type UiLanguage, useTranslation } from '@/shared/i18n/core';
+import { call } from '@/shared/i18n/messages/call';
 
 // the Zoom window speaks the same language as the app
 // the size of the call inside the page, in pixels: 16:9, as wide as the lesson mode's column

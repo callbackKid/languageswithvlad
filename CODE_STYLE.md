@@ -26,7 +26,7 @@ Prettier decides: 100 columns, single quotes, semicolons, trailing commas where 
 - `camelCase` for variables and functions, `PascalCase` for components and types, `UPPER_SNAKE_CASE` for module-level constants (`MAX_PDF_PAGES`).
 - Booleans read as a fact: `isStarred`, `hasTime`, `needsCode`, `zoomReady`.
 - A function that turns unknown data into a typed value is `normalizeX` (it may throw) or `asX` (it falls back to a default).
-- Files: a component file is named after its component (`LessonView.tsx`); logic files are `camelCase.ts`; one message file per area in `src/i18n/messages/`.
+- Files: a component file is named after its component (`LessonView.tsx`); logic files are `camelCase.ts`; one message file per area in `src/shared/i18n/messages/`.
 
 ## TypeScript
 
@@ -43,7 +43,8 @@ Prettier decides: 100 columns, single quotes, semicolons, trailing commas where 
 ## Imports 🤖
 
 - Sorted automatically into one order: side-effect imports, packages, then project files. Don't reorder by hand.
-- Relative paths inside the project.
+- `src/` is moving to [Feature-Sliced Design](https://feature-sliced.design/) layers: `app` → `pages` → `widgets` → `features` → `entities` → `shared`. A file imports only from layers below its own, and slices of one layer don't import each other.
+- Between slices (and between segments of `shared`), import through the `@/` alias: `@/shared/lib/storage`, `@/shared/i18n/core`. Inside one slice or segment, use relative paths. Code not moved yet (`src/components/`, `src/lib/`) imports its old neighbours relatively.
 - No `import React`; import what is used: `import { type ReactNode, useState } from 'react'`.
 - Heavy libraries are loaded with `import()` where they are needed (pdf-lib, the Zoom SDK, Excalidraw), never at the top of a file that every page loads.
 
@@ -62,13 +63,13 @@ Prettier decides: 100 columns, single quotes, semicolons, trailing commas where 
 
 ## State and storage
 
-- `localStorage` only through `load` / `save` / `remove` in `src/lib/storage.ts`. Anything read back is checked before use (see `sanitize` in `settings.ts`).
-- Stores shared between pages (`settings.ts`, `progress.ts`, `i18n/core.tsx`) expose a hook built on `useSyncExternalStore` and plain getters for code outside React. Their snapshot is a new object whenever something changed.
+- `localStorage` only through `load` / `save` / `remove` in `src/shared/lib/storage.ts`. Anything read back is checked before use (see `sanitize` in `settings.ts`).
+- Stores shared between pages (`settings.ts`, `progress.ts`, `shared/i18n/core.tsx`) expose a hook built on `useSyncExternalStore` and plain getters for code outside React. Their snapshot is a new object whenever something changed.
 - Logic without UI lives in `src/lib/` as plain functions, so it can be tested without a browser. Components call it; they don't contain parsing, grading or date arithmetic.
 
 ## Texts
 
-- No user-visible text in components. Every text is a key in `src/i18n/messages/<area>.ts` with all seven interface languages; a missing translation is a type error 🤖.
+- No user-visible text in components. Every text is a key in `src/shared/i18n/messages/<area>.ts` with all seven interface languages; a missing translation is a type error 🤖.
 - Variables are `{placeholders}`; counts use plural forms (`one`, `few`, `many`, `other`), never `count === 1 ? … : …` in code.
 - Markup inside a sentence uses tags (`<b>…</b>`, `<link>…</link>`) and `rich()`, so each language keeps its own word order. Don't glue a sentence together from pieces.
 - Quotes follow the language: `“ ”` in English, `« »` in Russian and French, `„ “` in German. Apostrophes are `’`.
@@ -80,7 +81,7 @@ Prettier decides: 100 columns, single quotes, semicolons, trailing commas where 
 
 - An endpoint is thin: check the method and the class code first (`onlyPost`, `checkAccess`), validate the input, call a helper in `api/_lib/`, answer. Logic lives in `_lib/`.
 - Every field of a request is read defensively (`text(value, maxLength)`, `asLevel`, `asLanguage`) and limited in size. Limits are named constants.
-- Errors are `HttpError`s (`ClaudeError`, `GoogleError`, `NotionError`, `TelegramError`) and every handler ends with `fail(response, error)`. Every error the server sends is a `snake_case` code (`not_shared`, `lesson_too_long`), never an English sentence, so the student reads it in the interface language: add its text to `common.ts` and its code to `ERROR_TEXTS` in `src/lib/api.ts`. A value the text needs goes along in the error's `details` (`{ email }`, `{ count }`).
+- Errors are `HttpError`s (`ClaudeError`, `GoogleError`, `NotionError`, `TelegramError`) and every handler ends with `fail(response, error)`. Every error the server sends is a `snake_case` code (`not_shared`, `lesson_too_long`), never an English sentence, so the student reads it in the interface language: add its text to `common.ts` and its code to `ERROR_TEXTS` in `src/shared/api/index.ts`. A value the text needs goes along in the error's `details` (`{ email }`, `{ count }`).
 - Secrets come only from environment variables, are never sent to the browser and never logged. New variables are documented in the README table.
 - All prompts are in `api/_lib/prompts.ts`. A prompt says what JSON to return; the app never trusts that JSON without a `normalizeX` function.
 - Only `console.error` and `console.warn`, and only for real problems 🤖.

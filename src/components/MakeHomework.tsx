@@ -1,18 +1,20 @@
 import { useState } from 'react';
 
-import { translator, useTranslation } from '../i18n/core';
-import { common } from '../i18n/messages/common';
-import { homework as homeworkText } from '../i18n/messages/homework';
-import { api, ApiError } from '../lib/api';
+import { api, ApiError } from '@/shared/api';
+import type { Language } from '@/shared/config/languages';
+import { getSettings, type Level, LEVELS } from '@/shared/config/settings';
+import { translator, useTranslation } from '@/shared/i18n/core';
+import { common } from '@/shared/i18n/messages/common';
+import { homework as homeworkText } from '@/shared/i18n/messages/homework';
+import WaitingFact from '@/shared/ui/WaitingFact';
+
 import {
   homeworkBlock,
   homeworkLabel,
   MAX_TRANSLATE_SENTENCES,
   MIN_TRANSLATE_SENTENCES,
 } from '../lib/makeHomework';
-import { getSettings, type Level, LEVELS } from '../lib/settings';
-import type { Language, Lesson, Word } from '../lib/types';
-import WaitingFact from './WaitingFact';
+import type { Lesson, Word } from '../lib/types';
 
 type Step = 'idle' | 'making' | 'review' | 'saving' | 'done';
 

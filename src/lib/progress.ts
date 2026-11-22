@@ -1,9 +1,11 @@
 import { useSyncExternalStore } from 'react';
 
-import { dayKey } from './dates';
-import { getSettings, isStudied } from './settings';
-import { asFields, loadChecked, save } from './storage';
-import { asLanguage, type Language, languageOfTense, type Word } from './types';
+import { asLanguage, type Language, languageOfTense } from '@/shared/config/languages';
+import { getSettings, isStudied } from '@/shared/config/settings';
+import { dayKey } from '@/shared/lib/dates';
+import { asFields, loadChecked, save } from '@/shared/lib/storage';
+
+import { type Word } from './types';
 
 // Correct answers in a row that make a word learned (and take it off the hard list).
 export const LEARNED_STREAK = 3;

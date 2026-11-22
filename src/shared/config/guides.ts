@@ -1,7 +1,7 @@
-import type { Section } from './sections';
+import type { Section } from './routes';
 
 /* The Tutorial's cards: one per section, and two for a lesson (its words, its verbs). The texts
-   are in i18n/messages/tutorial.ts under "<id>.title", "<id>.step1"…; each card is the anchor
+   are in shared/i18n/messages/tutorial.ts under "<id>.title", "<id>.step1"…; each card is the anchor
    #guide-<id>, which the help icon on a page (PageHead's guide) opens. */
 
 export interface Guide {

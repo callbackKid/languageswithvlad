@@ -1,9 +1,14 @@
 import { useEffect, useState } from 'react';
 
-import { useTranslation } from '../i18n/core';
-import { app } from '../i18n/messages/app';
-import { learning } from '../i18n/messages/common';
-import { newsText } from '../i18n/messages/news';
+import type { Language } from '@/shared/config/languages';
+import { useSettings } from '@/shared/config/settings';
+import { useTeacher } from '@/shared/config/teacher';
+import { useTranslation } from '@/shared/i18n/core';
+import { app } from '@/shared/i18n/messages/app';
+import { learning } from '@/shared/i18n/messages/common';
+import { newsText } from '@/shared/i18n/messages/news';
+import PageHead from '@/shared/ui/PageHead';
+
 import {
   markNewsSeen,
   NEWS,
@@ -13,10 +18,6 @@ import {
   newsFor,
   type NewsTab,
 } from '../lib/news';
-import { useSettings } from '../lib/settings';
-import { useTeacher } from '../lib/teacher';
-import type { Language } from '../lib/types';
-import PageHead from './PageHead';
 
 /** What changed in the app, by day: new features and fixes on two tabs, for one of the student's
     languages (the news about every language stays), and for the teacher, by audience. Opening

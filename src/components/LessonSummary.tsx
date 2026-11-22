@@ -1,18 +1,19 @@
 import { useState } from 'react';
 
-import { useTranslation } from '../i18n/core';
-import { homeCards } from '../i18n/messages/homeCards';
+import { lessonPath } from '@/shared/config/routes';
+import { useTranslation } from '@/shared/i18n/core';
+import { homeCards } from '@/shared/i18n/messages/homeCards';
+import { daysBetween } from '@/shared/lib/dates';
+import { followLink, hrefFor } from '@/shared/lib/router';
+import { load, loadChecked, save } from '@/shared/lib/storage';
+import { shownTopic } from '@/shared/lib/util';
+
 import { type Bank, lessonWords, readAnalysis } from '../lib/bank';
-import { daysBetween } from '../lib/dates';
 import { normalizeExtras } from '../lib/parse';
 import { getProgress } from '../lib/progress';
 import { buildQuiz, keyWordsFirst, pickWords } from '../lib/quiz';
 import { getRemoved, withoutRemoved } from '../lib/removed';
-import { followLink, hrefFor } from '../lib/router';
-import { lessonPath } from '../lib/sections';
-import { load, loadChecked, save } from '../lib/storage';
 import type { Lesson } from '../lib/types';
-import { shownTopic } from '../lib/util';
 import WordQuiz from './WordQuiz';
 
 const ROUND = 10;

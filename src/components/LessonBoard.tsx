@@ -1,11 +1,12 @@
 import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react';
 
-import { useTranslation } from '../i18n/core';
-import { call } from '../i18n/messages/call';
-import type { BoardPeer, BoardServer } from '../lib/boardSync';
-import { isDark, useSettings } from '../lib/settings';
+import type { BoardPeer, BoardServer } from '@/shared/api/boardSync';
+import { isDark, useSettings } from '@/shared/config/settings';
+import { useTranslation } from '@/shared/i18n/core';
+import { call } from '@/shared/i18n/messages/call';
+import CallCard from '@/shared/ui/CallCard';
+
 import type { BoardHandle } from './BoardCanvas';
-import CallCard from './CallCard';
 
 // the download has started by then, so the file's address can be let go (milliseconds)
 const RELEASE_AFTER = 1000;

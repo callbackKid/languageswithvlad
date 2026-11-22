@@ -2,10 +2,12 @@
    the cards Claude already wrote (kept on this device, so the same word in the same sentence is
    never asked twice), and the line a card adds to a lesson in the document. */
 
+import { type Language, LANGUAGES } from '@/shared/config/languages';
+import { asFields, load, save } from '@/shared/lib/storage';
+import { hash } from '@/shared/lib/util';
+
 import { normalizeWordCard } from './parse';
-import { asFields, load, save } from './storage';
-import { type Language, LANGUAGES, type PhotoItem, type Word, type WordCard } from './types';
-import { hash } from './util';
+import { type PhotoItem, type Word, type WordCard } from './types';
 
 // the server takes up to 200 characters (MAX_SELECTION_LENGTH in api/text.ts): a phrase, not a paragraph
 export const MAX_SELECTION_LENGTH = 200;

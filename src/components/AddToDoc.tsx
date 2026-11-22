@@ -1,9 +1,10 @@
 import { useState } from 'react';
 
-import { useTranslation } from '../i18n/core';
-import { common } from '../i18n/messages/common';
-import { api, ApiError } from '../lib/api';
-import { documentDate } from '../lib/dates';
+import { api, ApiError } from '@/shared/api';
+import { useTranslation } from '@/shared/i18n/core';
+import { common } from '@/shared/i18n/messages/common';
+import { documentDate } from '@/shared/lib/dates';
+
 import type { Lesson } from '../lib/types';
 
 // Where new lessons go: the connected document, the lesson number to use next, and whether the server can write.

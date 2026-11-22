@@ -1,4 +1,4 @@
-// Checks every interface text (src/i18n/messages/*.ts) and every News entry in all seven languages
+// Checks every interface text (src/shared/i18n/messages/*.ts) and every News entry in all seven languages
 // for what the type checker can't see: placeholders and tags that differ from English, plural forms
 // a language needs, quotes and apostrophes of the wrong kind, "..." instead of "…", texts left in
 // English, stray spaces. Prints one line per finding; the exit code is 1 when there are any.
@@ -12,7 +12,7 @@ type Message = string | Record<string, string>;
 type Dictionary = Record<string, Record<string, Message>>;
 
 const ROOT = process.cwd();
-const MESSAGES_DIR = join(ROOT, 'src/i18n/messages');
+const MESSAGES_DIR = join(ROOT, 'src/shared/i18n/messages');
 const LANGUAGES = ['en', 'ru', 'fr', 'de', 'es', 'pt', 'it'] as const;
 // the plural forms each language needs for whole counts (Intl.PluralRules, ignoring `many` for
 // millions in French, Spanish, Italian and Portuguese, where `other` is the right fallback)

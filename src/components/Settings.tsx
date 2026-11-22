@@ -1,12 +1,14 @@
 import { useState } from 'react';
 
-import { setUiLanguage, UI_LANGUAGES, useTranslation } from '../i18n/core';
-import { app } from '../i18n/messages/app';
-import { learning } from '../i18n/messages/common';
-import { paper } from '../i18n/messages/paper';
-import { settingsText } from '../i18n/messages/settings';
-import { shrinkImage } from '../lib/image';
-import { type Section, SECTIONS } from '../lib/sections';
+import {
+  type Language,
+  LANGUAGES,
+  type Tense,
+  TENSES_BY_LANGUAGE,
+  VERB_LANGUAGES,
+  type VerbLanguage,
+} from '@/shared/config/languages';
+import { type Section, SECTIONS } from '@/shared/config/routes';
 import {
   ALWAYS_SHOWN,
   DAILY_GOALS,
@@ -18,18 +20,17 @@ import {
   THEMES,
   updateSettings,
   useSettings,
-} from '../lib/settings';
-import { canSpeak, speak } from '../lib/speech';
+} from '@/shared/config/settings';
+import { setUiLanguage, UI_LANGUAGES, useTranslation } from '@/shared/i18n/core';
+import { app } from '@/shared/i18n/messages/app';
+import { learning } from '@/shared/i18n/messages/common';
+import { paper } from '@/shared/i18n/messages/paper';
+import { settingsText } from '@/shared/i18n/messages/settings';
+import { shrinkImage } from '@/shared/lib/image';
+import { canSpeak, speak } from '@/shared/lib/speech';
+import PageHead from '@/shared/ui/PageHead';
+
 import { knownTenses, tensesForLevel } from '../lib/tenses';
-import {
-  type Language,
-  LANGUAGES,
-  type Tense,
-  TENSES_BY_LANGUAGE,
-  VERB_LANGUAGES,
-  type VerbLanguage,
-} from '../lib/types';
-import PageHead from './PageHead';
 import TeacherCard from './TeacherCard';
 
 // each lesson tab under the name it has on the lesson page

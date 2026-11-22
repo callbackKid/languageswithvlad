@@ -1,9 +1,17 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 
-import { getUiLanguage, translator, useTranslation } from '../i18n/core';
-import { common } from '../i18n/messages/common';
-import { paper } from '../i18n/messages/paper';
-import { api, ApiError } from '../lib/api';
+import { api, ApiError } from '@/shared/api';
+import { isVerbLanguage } from '@/shared/config/languages';
+import { LESSON_TABS, type LessonTab, useSettings } from '@/shared/config/settings';
+import { useTeacher } from '@/shared/config/teacher';
+import { getUiLanguage, translator, useTranslation } from '@/shared/i18n/core';
+import { common } from '@/shared/i18n/messages/common';
+import { paper } from '@/shared/i18n/messages/paper';
+import { loadChecked, save } from '@/shared/lib/storage';
+import { shownTopic } from '@/shared/lib/util';
+import HelpLink from '@/shared/ui/HelpLink';
+import WaitingFact from '@/shared/ui/WaitingFact';
+
 import { analysisKey, readAnalysis } from '../lib/bank';
 import { homeworkItems, homeworkKey } from '../lib/homework';
 import {
@@ -14,18 +22,12 @@ import {
   normalizeExtras,
 } from '../lib/parse';
 import { useRemoved, withoutRemoved } from '../lib/removed';
-import { LESSON_TABS, type LessonTab, useSettings } from '../lib/settings';
-import { loadChecked, save } from '../lib/storage';
-import { useTeacher } from '../lib/teacher';
-import { type Analysis, isVerbLanguage, type Lesson, type LessonExtras } from '../lib/types';
-import { shownTopic } from '../lib/util';
-import HelpLink from './HelpLink';
+import { type Analysis, type Lesson, type LessonExtras } from '../lib/types';
 import LessonDrawings from './LessonDrawings';
 import { BookTab, GrammarTab, HomeworkTab } from './LessonExtrasTabs';
 import MakeHomework from './MakeHomework';
 import Notes from './Notes';
 import VerbsTab from './VerbsTab';
-import WaitingFact from './WaitingFact';
 import WordsTab from './WordsTab';
 
 type Tab = LessonTab;

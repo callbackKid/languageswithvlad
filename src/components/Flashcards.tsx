@@ -1,12 +1,13 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { useTranslation } from '../i18n/core';
-import { exercises } from '../i18n/messages/exercises';
+import { useTranslation } from '@/shared/i18n/core';
+import { exercises } from '@/shared/i18n/messages/exercises';
+import { shuffle } from '@/shared/lib/util';
+import ExerciseHead from '@/shared/ui/ExerciseHead';
+import Speak from '@/shared/ui/Speak';
+
 import { recordWord } from '../lib/progress';
 import type { Word } from '../lib/types';
-import { shuffle } from '../lib/util';
-import ExerciseHead from './ExerciseHead';
-import Speak from './Speak';
 import Transcription from './Transcription';
 
 // Cards with a word on one side and its translation on the other; a card not known comes back later.

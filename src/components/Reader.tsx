@@ -1,22 +1,24 @@
 import { type MouseEvent, useEffect, useMemo, useState } from 'react';
 
-import { translator, useTranslation } from '../i18n/core';
-import { common } from '../i18n/messages/common';
-import { reader } from '../i18n/messages/reader';
-import { api, ApiError } from '../lib/api';
+import { api, ApiError } from '@/shared/api';
+import type { Language } from '@/shared/config/languages';
+import { getSettings } from '@/shared/config/settings';
+import { translator, useTranslation } from '@/shared/i18n/core';
+import { common } from '@/shared/i18n/messages/common';
+import { reader } from '@/shared/i18n/messages/reader';
+import { asList, load, save } from '@/shared/lib/storage';
+import PageHead from '@/shared/ui/PageHead';
+import Speak from '@/shared/ui/Speak';
+import WaitingFact from '@/shared/ui/WaitingFact';
+
 import {
   normalizeReaderText,
   normalizeStudy,
   normalizeTranslation,
   normalizeWordCard,
 } from '../lib/parse';
-import { getSettings } from '../lib/settings';
-import { asList, load, save } from '../lib/storage';
-import type { Analysis, Language, ReaderText, TextStudy } from '../lib/types';
+import type { Analysis, ReaderText, TextStudy } from '../lib/types';
 import { CARD_EVENT, cardNote, lookUp, menuPlace, sentenceAround } from '../lib/wordActions';
-import PageHead from './PageHead';
-import Speak from './Speak';
-import WaitingFact from './WaitingFact';
 import WordNotesTable from './WordNotesTable';
 import WordsTab from './WordsTab';
 

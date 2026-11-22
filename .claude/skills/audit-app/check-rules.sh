@@ -9,7 +9,7 @@ cd "$(git rev-parse --show-toplevel)" || exit 1
 CODE='src api'
 INCLUDE=(--include='*.ts' --include='*.tsx')
 # files that are mostly texts or data, where "as", numbers and words are content, not code
-TEXT_FILES='i18n/messages|src/lib/news\.ts|src/lib/facts\.ts|src/lib/guides\.ts|api/_lib/prompts\.ts'
+TEXT_FILES='i18n/messages|src/lib/news\.ts|src/shared/lib/facts\.ts|src/shared/config/guides\.ts|api/_lib/prompts\.ts'
 section() { printf '\n## %s\n' "$1"; }
 search() { grep -rnE "${INCLUDE[@]}" "$@" $CODE; }
 not_comment() { grep -vE '^[^:]+:[0-9]+:\s*(//|\*|/\*)'; }
@@ -47,8 +47,8 @@ for file in $(grep -rlE 'api\.(analyze|lessonExtras|grammarPractice|bookExercise
   grep -qE 'WaitingFact|waiting=' "$file" || echo "$file"
 done
 
-section 'Storage: localStorage outside src/lib/storage.ts'
-search 'localStorage|sessionStorage' | grep -v 'src/lib/storage.ts'
+section 'Storage: localStorage outside src/shared/lib/storage.ts'
+search 'localStorage|sessionStorage' | grep -v 'src/shared/lib/storage.ts'
 
 section 'Storage: saved objects used without a check (load<T>(…) with no normalize/as/sanitize)'
 search 'load<[^>]+>\(' | grep -vE 'load<(unknown|string|boolean|number)>|normalize|sanitize|as[A-Z]|Array\.isArray|typeof|function load'
@@ -76,9 +76,9 @@ grep -nE 'request\.body\??\.[a-zA-Z]+' api/*.ts |
 section 'Server: errors sent as sentences instead of snake_case codes (shown in English to everyone)'
 grep -rnE "(error: |Error\([0-9]+, )['\`][^'\`]*[ A-Z.][^'\`]*['\`]" api
 
-section 'Server: error codes the app has no text for (ERROR_TEXTS in src/lib/api.ts)'
+section 'Server: error codes the app has no text for (ERROR_TEXTS in src/shared/api/index.ts)'
 for code in $(grep -rhoE "(error: |Error\([0-9]+, )'[a-z_]+'" api | grep -oE "'[a-z_]+'" | tr -d "'" | sort -u); do
-  grep -qE "^\s+$code: '" src/lib/api.ts || [ "$code" = access_code ] || echo "$code"
+  grep -qE "^\s+$code: '" src/shared/api/index.ts || [ "$code" = access_code ] || echo "$code"
 done
 
 section 'Server: limits written as numbers instead of named constants'
@@ -148,6 +148,6 @@ section 'Completeness: pages without a guide (PageHead guide=…, the Tutorial c
 grep -nE '<PageHead' src/components/*.tsx | grep -v 'guide=' | grep -v 'Tutorial.tsx'
 
 section 'Completeness: sections in the menu without a Tutorial card or a README Pages row'
-for path in $(grep -oE "'/[a-z-]+'" src/lib/sections.ts | tr -d "'" | sort -u); do
+for path in $(grep -oE "'/[a-z-]+'" src/shared/config/routes.ts | tr -d "'" | sort -u); do
   grep -q "\`$path" README.md || echo "README Pages table has no $path"
 done

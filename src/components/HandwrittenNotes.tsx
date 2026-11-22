@@ -1,18 +1,19 @@
 import { useState } from 'react';
 
-import { useTranslation } from '../i18n/core';
-import { common } from '../i18n/messages/common';
-import { paper } from '../i18n/messages/paper';
-import { api, ApiError } from '../lib/api';
-import { shrinkImage } from '../lib/image';
+import { api, ApiError } from '@/shared/api';
+import { useTranslation } from '@/shared/i18n/core';
+import { common } from '@/shared/i18n/messages/common';
+import { paper } from '@/shared/i18n/messages/paper';
+import { shrinkImage } from '@/shared/lib/image';
+import { extractPages, MAX_PDF_PAGES, pdfPageCount } from '@/shared/lib/pdf';
+import { asFields, asList, load, save } from '@/shared/lib/storage';
+import { hash } from '@/shared/lib/util';
+import WaitingFact from '@/shared/ui/WaitingFact';
+
 import { asObjectText } from '../lib/parse';
-import { extractPages, MAX_PDF_PAGES, pdfPageCount } from '../lib/pdf';
-import { asFields, asList, load, save } from '../lib/storage';
 import type { Lesson } from '../lib/types';
-import { hash } from '../lib/util';
 import AddToDoc, { type DocTarget } from './AddToDoc';
 import LessonView from './LessonView';
-import WaitingFact from './WaitingFact';
 
 // Where the lesson comes from: photos of handwritten notes, or pages of a textbook PDF.
 export type PaperSource = 'handwritten' | 'textbook';

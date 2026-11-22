@@ -1,4 +1,6 @@
-import type { Form, Tense } from './types';
+import type { Tense } from '@/shared/config/languages';
+
+import type { Form } from './types';
 
 const VOWEL = /^[aeiouyàâäéèêëîïôöûùüœæh]/i;
 // verbs whose h is aspirated keep a full "ne": je ne hais pas

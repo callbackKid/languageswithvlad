@@ -1,7 +1,8 @@
-import { useTranslation } from '../i18n/core';
-import { paper } from '../i18n/messages/paper';
+import { useTranslation } from '@/shared/i18n/core';
+import { paper } from '@/shared/i18n/messages/paper';
+import Speak from '@/shared/ui/Speak';
+
 import type { PhotoItem, Word } from '../lib/types';
-import Speak from './Speak';
 import Star from './Star';
 
 // What goes onto Words to learn: the dictionary form when there is one.

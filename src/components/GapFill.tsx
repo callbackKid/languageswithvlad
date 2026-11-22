@@ -1,17 +1,19 @@
 import { type ReactNode, useEffect, useRef, useState } from 'react';
 
-import { translator, useTranslation } from '../i18n/core';
-import { common } from '../i18n/messages/common';
-import { exercises } from '../i18n/messages/exercises';
-import { api, ApiError } from '../lib/api';
+import { api, ApiError } from '@/shared/api';
+import type { Language } from '@/shared/config/languages';
+import { getSettings } from '@/shared/config/settings';
+import { translator, useTranslation } from '@/shared/i18n/core';
+import { common } from '@/shared/i18n/messages/common';
+import { exercises } from '@/shared/i18n/messages/exercises';
+import { shuffle } from '@/shared/lib/util';
+import ExerciseHead from '@/shared/ui/ExerciseHead';
+import WaitingFact from '@/shared/ui/WaitingFact';
+
 import { normalizeGaps } from '../lib/parse';
 import { recordWord } from '../lib/progress';
 import { keyWordsFirst } from '../lib/quiz';
-import { getSettings } from '../lib/settings';
-import type { GapItem, Language, Word } from '../lib/types';
-import { shuffle } from '../lib/util';
-import ExerciseHead from './ExerciseHead';
-import WaitingFact from './WaitingFact';
+import type { GapItem, Word } from '../lib/types';
 
 // Fill the gap with the lesson's words: sentences Claude writes around them.
 export default function GapFill({

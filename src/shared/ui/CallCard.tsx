@@ -1,6 +1,6 @@
 import { type ReactNode, useId, useState } from 'react';
 
-import { loadTexts, save } from '../lib/storage';
+import { loadTexts, save } from '@/shared/lib/storage';
 
 // the ids of the folded cards, kept on this device for every lesson
 const FOLDED_KEY = 'call:folded';

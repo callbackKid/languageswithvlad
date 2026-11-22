@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 
-import { useTranslation } from '../i18n/core';
-import { common } from '../i18n/messages/common';
-import { load, save } from '../lib/storage';
+import { useTranslation } from '@/shared/i18n/core';
+import { common } from '@/shared/i18n/messages/common';
+import { load, save } from '@/shared/lib/storage';
 
 // A notepad, saved on this device as the student types.
 export default function Notes({ storageKey }: { storageKey: string }) {

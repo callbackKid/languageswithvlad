@@ -1,7 +1,7 @@
 import { useSyncExternalStore } from 'react';
 
-import type { Section } from './sections';
-import { load, save } from './storage';
+import { load, save } from '@/shared/lib/storage';
+
 import {
   type Language,
   LANGUAGES,
@@ -9,10 +9,11 @@ import {
   TENSES_BY_LANGUAGE,
   VERB_LANGUAGES,
   type VerbLanguage,
-} from './types';
+} from './languages';
+import type { Section } from './routes';
 
 /* The student's settings, saved in this browser. The interface language has its own store
-   (src/i18n/core.tsx); everything else lives here. */
+   (src/shared/i18n/core.tsx); everything else lives here. */
 
 export const LEVELS = ['A0', 'A1', 'A2', 'B1', 'B2', 'C1', 'C2'] as const;
 export type Level = (typeof LEVELS)[number];

@@ -1,14 +1,15 @@
 import { useState } from 'react';
 
-import { useTranslation } from '../i18n/core';
-import { pages } from '../i18n/messages/pages';
+import type { Tense } from '@/shared/config/languages';
+import { useTranslation } from '@/shared/i18n/core';
+import { pages } from '@/shared/i18n/messages/pages';
+import { shuffle } from '@/shared/lib/util';
+import PageHead from '@/shared/ui/PageHead';
+
 import type { Bank } from '../lib/bank';
 import { statWord, topMistakes, useProgress } from '../lib/progress';
 import { buildQuiz, type FormQuestion } from '../lib/quiz';
-import type { Tense } from '../lib/types';
-import { shuffle } from '../lib/util';
 import MistakeList from './MistakeList';
-import PageHead from './PageHead';
 import WordQuiz from './WordQuiz';
 
 // The words and verb forms missed most often, and a quiz on just those.

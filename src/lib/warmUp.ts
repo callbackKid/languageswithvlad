@@ -1,9 +1,11 @@
+import { languageOfTense, type Tense } from '@/shared/config/languages';
+import { getSettings, isStudied } from '@/shared/config/settings';
+import { startOfDay } from '@/shared/lib/dates';
+
 import type { Bank } from './bank';
-import { startOfDay } from './dates';
 import { isLearned, type Progress, statWord } from './progress';
 import { buildQuiz, type FormQuestion, pickWords, type QuizItem } from './quiz';
-import { getSettings, isStudied } from './settings';
-import { languageOfTense, type Lesson, type Tense, type Word } from './types';
+import { type Lesson, type Word } from './types';
 
 // About five minutes of questions.
 export const WARM_UP_QUESTIONS = 12;

@@ -1,3 +1,7 @@
+import type { Language } from '@/shared/config/languages';
+import { asLanguage, TENSES_BY_LANGUAGE, type VerbLanguage } from '@/shared/config/languages';
+import { asText, hash, shuffle } from '@/shared/lib/util';
+
 import { futurProche } from './futurProche';
 import { notionIdFrom } from './source';
 import type {
@@ -8,7 +12,6 @@ import type {
   Form,
   GapItem,
   GrammarRule,
-  Language,
   Lesson,
   LessonExtras,
   LessonWord,
@@ -23,8 +26,6 @@ import type {
   Writing,
   WritingCheck,
 } from './types';
-import { asLanguage, TENSES_BY_LANGUAGE, type VerbLanguage } from './types';
-import { asText, hash, shuffle } from './util';
 
 // The lessons' source from a pasted link: a Google Docs id, or "notion-<id>" for a Notion page.
 export function docIdFrom(input: string): string | null {

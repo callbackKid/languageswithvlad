@@ -1,11 +1,12 @@
-import { translator } from '../i18n/core';
-import { homework as homeworkText } from '../i18n/messages/homework';
-import { dayKey, startOfDay } from './dates';
+import { getSettings, isStudied } from '@/shared/config/settings';
+import { translator } from '@/shared/i18n/core';
+import { homework as homeworkText } from '@/shared/i18n/messages/homework';
+import { dayKey, startOfDay } from '@/shared/lib/dates';
+import { loadChecked, loadTexts } from '@/shared/lib/storage';
+
 import { type Homework, homeworkKey, writingKey } from './homework';
 import { normalizeWriting } from './parse';
 import { isLearned, type Progress } from './progress';
-import { getSettings, isStudied } from './settings';
-import { loadChecked, loadTexts } from './storage';
 import type { Lesson } from './types';
 
 /* The student's report to the teacher, added to the document under the lesson it is about.

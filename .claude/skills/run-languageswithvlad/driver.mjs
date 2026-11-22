@@ -94,7 +94,8 @@ for (const theme of options.themes.split(',')) {
     if (message.type() === 'error') problems.push(`[${theme}] console: ${message.text()}`);
   });
   page.on('pageerror', (error) => problems.push(`[${theme}] page error: ${error.message}`));
-  await page.route('**/api/**', async (route) => {
+  // only the site's own /api/, not Vite's /src/shared/api/… modules
+  await page.route(`${BASE_URL}/api/**`, async (route) => {
     const request = route.request();
     let body = null;
     try {

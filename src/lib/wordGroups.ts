@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 
-import type { UiLanguage } from '../i18n/core';
-import { api } from './api';
+import { api } from '@/shared/api';
+import type { UiLanguage } from '@/shared/i18n/core';
+import { loadChecked, save } from '@/shared/lib/storage';
+
 import { normalizeWordGroups } from './parse';
-import { loadChecked, save } from './storage';
 import type { Word } from './types';
 
 /* Words sorted into groups by meaning (Food, Time and dates…) for the word lists of a lesson and

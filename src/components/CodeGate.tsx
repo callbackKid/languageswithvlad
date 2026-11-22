@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
-import { useTranslation } from '../i18n/core';
-import { app } from '../i18n/messages/app';
-import LanguagePicker from './LanguagePicker';
+import { useTranslation } from '@/shared/i18n/core';
+import { app } from '@/shared/i18n/messages/app';
+import LanguagePicker from '@/shared/ui/LanguagePicker';
 
 // Asks for the class code once, when the server wants one (APP_ACCESS_CODE).
 export default function CodeGate({

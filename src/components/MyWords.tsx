@@ -1,12 +1,13 @@
-import { useTranslation } from '../i18n/core';
-import { learning } from '../i18n/messages/common';
-import { pages } from '../i18n/messages/pages';
+import { isStudied, useSettings } from '@/shared/config/settings';
+import { useTranslation } from '@/shared/i18n/core';
+import { learning } from '@/shared/i18n/messages/common';
+import { pages } from '@/shared/i18n/messages/pages';
+import { followLink, hrefFor } from '@/shared/lib/router';
+import PageHead from '@/shared/ui/PageHead';
+
 import { statWord, useProgress } from '../lib/progress';
-import { followLink, hrefFor } from '../lib/router';
-import { isStudied, useSettings } from '../lib/settings';
 import type { Analysis } from '../lib/types';
 import LookUpWord from './LookUpWord';
-import PageHead from './PageHead';
 import WordsTab from './WordsTab';
 
 // The student's list of unfamiliar words: starred by hand or missed in an exercise.
