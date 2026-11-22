@@ -51,6 +51,78 @@ export const NEWS: NewsDay[] = [
     date: '2026-11-23',
     items: [
       {
+        kind: 'fixed',
+        text: {
+          en: 'A homework line such as “5 предложений в passé composé” is now a written task with its exercise, like “5 phrases au passé composé”.',
+          ru: 'Строка домашнего задания вроде «5 предложений в passé composé» теперь становится письменным заданием со своим упражнением, как и «5 phrases au passé composé».',
+          fr: 'Une ligne de devoirs comme « 5 предложений в passé composé » devient maintenant une tâche écrite avec son exercice, comme « 5 phrases au passé composé ».',
+          de: 'Eine Hausaufgabenzeile wie „5 предложений в passé composé“ wird jetzt eine schriftliche Aufgabe mit ihrer Übung, wie schon „5 phrases au passé composé“.',
+          es: 'Una línea de los deberes como «5 предложений в passé composé» ahora es una tarea escrita con su ejercicio, igual que «5 phrases au passé composé».',
+          pt: 'Uma linha dos trabalhos de casa como «5 предложений в passé composé» passa a ser uma tarefa escrita com o seu exercício, tal como «5 phrases au passé composé».',
+          it: 'Una riga dei compiti come «5 предложений в passé composé» ora diventa un compito scritto con il suo esercizio, come «5 phrases au passé composé».',
+        },
+      },
+      {
+        kind: 'fixed',
+        text: {
+          en: 'Stats shows the weak tenses in every language you learn that has verb tables, not only French.',
+          ru: 'В «Статистике» теперь видны слабые времена во всех изучаемых языках с таблицами глаголов, а не только во французском.',
+          fr: 'Les « Statistiques » montrent les temps qui vous posent problème dans chaque langue apprise avec des tableaux de conjugaison, pas seulement en français.',
+          de: 'Die „Statistik“ zeigt deine schwachen Zeitformen in jeder Sprache, die du mit Verbtabellen lernst, nicht nur im Französischen.',
+          es: 'En «Estadísticas» aparecen tus tiempos verbales flojos en todos los idiomas que aprendes con tablas de verbos, no solo en francés.',
+          pt: 'Em «Estatísticas» aparecem os seus tempos verbais fracos em todas as línguas que aprende com tabelas de verbos, não só em francês.',
+          it: 'In «Statistiche» compaiono i tuoi tempi verbali deboli in ogni lingua che studi con le tabelle dei verbi, non solo in francese.',
+        },
+      },
+      {
+        kind: 'fixed',
+        text: {
+          en: 'Flashcards name the language of your translations on the direction switch (FR → EN), not always RU.',
+          ru: 'В «Карточках» на переключателе направления теперь указан язык ваших переводов (FR → EN), а не всегда RU.',
+          fr: 'Dans les « Cartes », le sélecteur de sens indique la langue de vos traductions (FR → EN), et plus toujours RU.',
+          de: 'Bei den „Karteikarten“ zeigt der Richtungsschalter jetzt die Sprache deiner Übersetzungen (FR → EN) statt immer RU.',
+          es: 'En «Tarjetas», el selector de dirección indica el idioma de tus traducciones (FR → EN), y no siempre RU.',
+          pt: 'Nos «Cartões», o seletor de sentido indica a língua das suas traduções (FR → EN), e não sempre RU.',
+          it: 'Nelle «Flashcard» il selettore di direzione indica la lingua delle tue traduzioni (FR → EN), non sempre RU.',
+        },
+      },
+      {
+        kind: 'fixed',
+        text: {
+          en: 'A next-lesson date past the end of its month, such as 31.02, now means the month’s last day instead of a date in the next month.',
+          ru: 'Дата следующего урока, которой нет в месяце, например 31.02, теперь означает последний день месяца, а не число следующего месяца.',
+          fr: 'Une date de prochain cours au-delà de la fin du mois, comme 31.02, correspond maintenant au dernier jour du mois, et non à une date du mois suivant.',
+          de: 'Ein Datum der nächsten Stunde, das es im Monat nicht gibt, etwa 31.02, gilt jetzt als letzter Tag des Monats statt als Tag im Folgemonat.',
+          es: 'Una fecha de la próxima clase que no existe en su mes, como 31.02, ahora indica el último día del mes y no una fecha del mes siguiente.',
+          pt: 'Uma data da próxima aula que não existe no mês, como 31.02, passa a indicar o último dia do mês, e não uma data do mês seguinte.',
+          it: 'Una data della prossima lezione oltre la fine del mese, come 31.02, ora indica l’ultimo giorno del mese invece di un giorno del mese successivo.',
+        },
+      },
+      {
+        kind: 'fixed',
+        text: {
+          en: 'Grammar and Phonetics say why a lesson couldn’t be read (too long, no access), not only that it couldn’t.',
+          ru: 'Вкладки «Грамматика» и «Фонетика» теперь объясняют, почему не удалось прочитать урок (слишком длинный, нет доступа), а не только сообщают, что не удалось.',
+          fr: 'Les onglets « Grammaire » et « Phonétique » disent maintenant pourquoi une leçon n’a pas pu être lue (trop longue, pas d’accès), et pas seulement qu’elle n’a pas pu l’être.',
+          de: 'Die Tabs „Grammatik“ und „Aussprache“ sagen jetzt, warum eine Lektion nicht gelesen werden konnte (zu lang, kein Zugriff), nicht nur, dass es nicht ging.',
+          es: 'Las pestañas «Gramática» y «Fonética» dicen ahora por qué no se pudo leer una lección (demasiado larga, sin acceso), y no solo que no se pudo.',
+          pt: 'Os separadores «Gramática» e «Fonética» dizem agora porque não foi possível ler uma lição (demasiado longa, sem acesso), e não apenas que não foi possível.',
+          it: 'Le schede «Grammatica» e «Fonetica» ora dicono perché non è stato possibile leggere una lezione (troppo lunga, nessun accesso), non solo che non è stato possibile.',
+        },
+      },
+      {
+        kind: 'fixed',
+        text: {
+          en: 'Home now says so when an address doesn’t exist in the app, instead of opening without a word.',
+          ru: 'Если такого адреса в приложении нет, Главная теперь сообщает об этом, а не открывается молча.',
+          fr: 'Si une adresse n’existe pas dans l’app, l’Accueil le signale maintenant au lieu de s’ouvrir sans rien dire.',
+          de: 'Gibt es eine Adresse in der App nicht, sagt die Startseite das jetzt, statt sich kommentarlos zu öffnen.',
+          es: 'Si una dirección no existe en la app, Inicio ahora lo avisa en lugar de abrirse sin decir nada.',
+          pt: 'Quando um endereço não existe na app, o Início passa a avisar, em vez de abrir sem dizer nada.',
+          it: 'Se un indirizzo non esiste nell’app, la Home ora lo segnala invece di aprirsi senza dire nulla.',
+        },
+      },
+      {
         kind: 'new',
         text: {
           en: 'A lesson’s new Phonetics tab: the sounds and reading rules from the lesson notes, explained with transcribed examples to listen to, and Practise under each for a round of questions on it.',
