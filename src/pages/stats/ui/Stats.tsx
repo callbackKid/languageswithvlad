@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import { type Bank, BankNote, type Lesson } from '@/entities/lesson';
 import { isLearned, MistakeList, topMistakes, useProgress, wordKey } from '@/entities/word';
 import { SendToTeacher } from '@/features/send-to-teacher';
-import { isStudied, useSettings } from '@/shared/config';
+import { isStudied, isVerbLanguage, TENSES_BY_LANGUAGE, useSettings } from '@/shared/config';
 import { pages, useTranslation } from '@/shared/i18n';
 import { shownTopic } from '@/shared/lib/util';
 import PageHead from '@/shared/ui/PageHead';
@@ -151,8 +151,14 @@ export default function Stats({
       if (name) addTo(byLesson, stat.lesson, name, stat.right, stat.wrong);
       addTo(byKind, asKind(stat.kind), t(`kind.${asKind(stat.kind)}`), stat.right, stat.wrong);
     }
-    for (const formStat of settings.studying.includes('fr') ? Object.values(progress.forms) : [])
-      addTo(byTense, formStat.t, formStat.t, formStat.right, formStat.wrong);
+    // verb forms of the languages studied: each language names its tenses its own way, so a
+    // form's tense tells its language (forms are kept without one)
+    const studiedTenses = new Set<string>(
+      settings.studying.filter(isVerbLanguage).flatMap((language) => TENSES_BY_LANGUAGE[language])
+    );
+    for (const formStat of Object.values(progress.forms))
+      if (studiedTenses.has(formStat.t))
+        addTo(byTense, formStat.t, formStat.t, formStat.right, formStat.wrong);
     const tenses = weakest(byTense);
     const weakLessons = weakest(byLesson).slice(0, 5),
       weakKinds = weakest(byKind);
