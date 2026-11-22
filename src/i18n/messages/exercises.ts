@@ -32,7 +32,18 @@ export const exercises = defineMessages({
     starLegend:
       '☆ adds a word to Words to learn. Words you miss in exercises are added too, and leave the list after 3 right answers in a row.',
     learnProgress: '{count} of {total} right answers in a row',
-    // ✕ on a lesson's word: takes it out of the lesson's list and its exercises, on this device
+    // the Verbs tab's list: alphabetical or by group (French 1er, 2e, 3e groupe; -ar, -er, -ir)
+    sortVerbs: 'Order of the verbs',
+    sortAlphabet: 'A–Z',
+    sortByGroup: 'By group',
+    verbGroup: 'Group {n}',
+    noVerbGroup: 'No group',
+    restoreVerbs: {
+      one: 'Bring back {count} removed verb',
+      other: 'Bring back {count} removed verbs',
+    },
+    // ✕ on a lesson's word or verb: takes it out of the lesson's list and its exercises, on this
+    // device ({word} is the verb's infinitive on a verb)
     removeWord: 'Remove from the lesson',
     removeWordLabel: 'Remove “{word}” from the lesson',
     restoreWords: {
@@ -133,6 +144,17 @@ export const exercises = defineMessages({
     starLegend:
       '☆ добавляет слово в «Слова на изучении». Слова с ошибками в упражнениях попадают туда сами и уходят после 3 верных ответов подряд.',
     learnProgress: '{count} из {total} верных ответов подряд',
+    sortVerbs: 'Порядок глаголов',
+    sortAlphabet: 'По алфавиту',
+    sortByGroup: 'По группам',
+    verbGroup: '{n}-я группа',
+    noVerbGroup: 'Без группы',
+    restoreVerbs: {
+      one: 'Вернуть {count} убранный глагол',
+      few: 'Вернуть {count} убранных глагола',
+      many: 'Вернуть {count} убранных глаголов',
+      other: 'Вернуть {count} убранного глагола',
+    },
     removeWord: 'Убрать из урока',
     removeWordLabel: 'Убрать «{word}» из урока',
     restoreWords: {
@@ -236,6 +258,15 @@ export const exercises = defineMessages({
     starLegend:
       '☆ ajoute un mot aux Mots à apprendre. Les mots ratés dans les exercices s’y ajoutent aussi et en sortent après 3 bonnes réponses d’affilée.',
     learnProgress: '{count} sur {total} bonnes réponses d’affilée',
+    sortVerbs: 'Ordre des verbes',
+    sortAlphabet: 'A–Z',
+    sortByGroup: 'Par groupe',
+    verbGroup: 'Groupe {n}',
+    noVerbGroup: 'Sans groupe',
+    restoreVerbs: {
+      one: 'Remettre {count} verbe retiré',
+      other: 'Remettre les {count} verbes retirés',
+    },
     removeWord: 'Retirer de la leçon',
     removeWordLabel: 'Retirer « {word} » de la leçon',
     restoreWords: {
@@ -331,6 +362,15 @@ export const exercises = defineMessages({
     starLegend:
       '☆ fügt ein Wort zu den Lernwörtern hinzu. Wörter, die du in Übungen falsch hast, kommen auch dazu und verschwinden nach 3 richtigen Antworten in Folge.',
     learnProgress: '{count} von {total} richtigen Antworten in Folge',
+    sortVerbs: 'Reihenfolge der Verben',
+    sortAlphabet: 'A–Z',
+    sortByGroup: 'Nach Gruppe',
+    verbGroup: '{n}. Gruppe',
+    noVerbGroup: 'Ohne Gruppe',
+    restoreVerbs: {
+      one: '{count} entferntes Verb zurückholen',
+      other: '{count} entfernte Verben zurückholen',
+    },
     removeWord: 'Aus der Lektion entfernen',
     removeWordLabel: '„{word}“ aus der Lektion entfernen',
     restoreWords: {
@@ -428,6 +468,15 @@ export const exercises = defineMessages({
     starLegend:
       '☆ añade una palabra a Palabras por aprender. Las palabras que fallas en los ejercicios también se añaden y salen de la lista tras 3 aciertos seguidos.',
     learnProgress: '{count} de {total} aciertos seguidos',
+    sortVerbs: 'Orden de los verbos',
+    sortAlphabet: 'A–Z',
+    sortByGroup: 'Por grupo',
+    verbGroup: 'Grupo {n}',
+    noVerbGroup: 'Sin grupo',
+    restoreVerbs: {
+      one: 'Recuperar {count} verbo quitado',
+      other: 'Recuperar los {count} verbos quitados',
+    },
     removeWord: 'Quitar de la lección',
     removeWordLabel: 'Quitar «{word}» de la lección',
     restoreWords: {
@@ -526,6 +575,15 @@ export const exercises = defineMessages({
     starLegend:
       '☆ acrescenta uma palavra às Palavras por aprender. As palavras que erra nos exercícios também entram e saem da lista após 3 respostas certas seguidas.',
     learnProgress: '{count} de {total} respostas certas seguidas',
+    sortVerbs: 'Ordem dos verbos',
+    sortAlphabet: 'A–Z',
+    sortByGroup: 'Por grupo',
+    verbGroup: 'Grupo {n}',
+    noVerbGroup: 'Sem grupo',
+    restoreVerbs: {
+      one: 'Repor {count} verbo retirado',
+      other: 'Repor os {count} verbos retirados',
+    },
     removeWord: 'Retirar da lição',
     removeWordLabel: 'Retirar «{word}» da lição',
     restoreWords: {
@@ -624,6 +682,15 @@ export const exercises = defineMessages({
     starLegend:
       '☆ aggiunge una parola alle Parole da imparare. Ci finiscono anche le parole sbagliate negli esercizi, che escono dalla lista dopo 3 risposte giuste di fila.',
     learnProgress: '{count} su {total} risposte giuste di fila',
+    sortVerbs: 'Ordine dei verbi',
+    sortAlphabet: 'A–Z',
+    sortByGroup: 'Per gruppo',
+    verbGroup: 'Gruppo {n}',
+    noVerbGroup: 'Senza gruppo',
+    restoreVerbs: {
+      one: 'Recupera {count} verbo tolto',
+      other: 'Recupera i {count} verbi tolti',
+    },
     removeWord: 'Togli dalla lezione',
     removeWordLabel: 'Togli «{word}» dalla lezione',
     restoreWords: {

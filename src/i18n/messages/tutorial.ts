@@ -105,7 +105,8 @@ export const tutorial = defineMessages({
     'verbs.summary': 'Conjugation tables and drills (Verbs tab of a lesson)',
     'verbs.intro':
       'The <b>Verbs</b> tab of a lesson in any language but English has a conjugation table for every verb in it: French in seven tenses, affirmative and negative; German, Spanish, Italian and Portuguese in their five or six main tenses.',
-    'verbs.step1': 'Press a verb to open its table.',
+    'verbs.step1':
+      'Press a verb in the list to open its table. <b>A–Z</b> and <b>By group</b> (1, 2, 3) change the order; ✕ takes a verb out of the lesson.',
     'verbs.step2':
       'Choose a tense (présent, passé composé, imparfait, futur proche, futur simple, conditionnel présent, impératif) and <b>affirmative</b> or <b>negative</b>. 🔊 reads each form.',
     'verbs.step3':
@@ -364,7 +365,8 @@ export const tutorial = defineMessages({
     'verbs.summary': 'Таблицы спряжения и тренировка (вкладка «Глаголы» в уроке)',
     'verbs.intro':
       'На вкладке <b>Глаголы</b> урока на любом языке, кроме английского, есть таблица спряжения для каждого глагола: французские — в семи временах, утвердительная и отрицательная формы; немецкие, испанские, итальянские и португальские — в пяти-шести основных временах.',
-    'verbs.step1': 'Нажмите на глагол, чтобы открыть его таблицу.',
+    'verbs.step1':
+      'Нажмите на глагол в списке, чтобы открыть его таблицу. <b>По алфавиту</b> и <b>По группам</b> (1, 2, 3) меняют порядок; ✕ убирает глагол из урока.',
     'verbs.step2':
       'Выберите время (présent, passé composé, imparfait, futur proche, futur simple, conditionnel présent, impératif) и <b>утверждение</b> или <b>отрицание</b>. 🔊 читает каждую форму.',
     'verbs.step3':
@@ -621,7 +623,8 @@ export const tutorial = defineMessages({
     'verbs.summary': 'Tableaux de conjugaison et exercices (onglet Verbes d’une leçon)',
     'verbs.intro':
       'L’onglet <b>Verbes</b> d’une leçon dans toute langue sauf l’anglais contient un tableau de conjugaison pour chaque verbe : le français à sept temps, à l’affirmatif et au négatif ; l’allemand, l’espagnol, l’italien et le portugais à leurs cinq ou six temps principaux.',
-    'verbs.step1': 'Appuyez sur un verbe pour ouvrir son tableau.',
+    'verbs.step1':
+      'Appuyez sur un verbe de la liste pour ouvrir son tableau. <b>A–Z</b> et <b>Par groupe</b> (1, 2, 3) changent l’ordre ; ✕ retire un verbe de la leçon.',
     'verbs.step2':
       'Choisissez un temps (présent, passé composé, imparfait, futur proche, futur simple, conditionnel présent, impératif) et <b>affirmatif</b> ou <b>négatif</b>. 🔊 lit chaque forme.',
     'verbs.step3':
@@ -887,7 +890,8 @@ export const tutorial = defineMessages({
     'verbs.summary': 'Konjugationstabellen und Übungen (Tab Verben einer Lektion)',
     'verbs.intro':
       'Der Tab <b>Verben</b> einer Lektion in jeder Sprache außer Englisch hat für jedes Verb eine Konjugationstabelle: Französisch in sieben Zeitformen, bejaht und verneint; Deutsch, Spanisch, Italienisch und Portugiesisch in ihren fünf oder sechs wichtigsten Zeitformen.',
-    'verbs.step1': 'Tippe auf ein Verb, um seine Tabelle zu öffnen.',
+    'verbs.step1':
+      'Tippe auf ein Verb in der Liste, um seine Tabelle zu öffnen. <b>A–Z</b> und <b>Nach Gruppe</b> (1, 2, 3) ändern die Reihenfolge; ✕ entfernt ein Verb aus der Lektion.',
     'verbs.step2':
       'Wähle eine Zeitform (présent, passé composé, imparfait, futur proche, futur simple, conditionnel présent, impératif) und <b>bejaht</b> oder <b>verneint</b>. 🔊 liest jede Form vor.',
     'verbs.step3':
@@ -1147,7 +1151,8 @@ export const tutorial = defineMessages({
     'verbs.summary': 'Tablas de conjugación y ejercicios (pestaña Verbos de una lección)',
     'verbs.intro':
       'La pestaña <b>Verbos</b> de una lección en cualquier idioma salvo el inglés tiene una tabla de conjugación para cada verbo: el francés en siete tiempos, en afirmativa y negativa; el alemán, el español, el italiano y el portugués en sus cinco o seis tiempos principales.',
-    'verbs.step1': 'Pulsa un verbo para abrir su tabla.',
+    'verbs.step1':
+      'Pulsa un verbo de la lista para abrir su tabla. <b>A–Z</b> y <b>Por grupo</b> (1, 2, 3) cambian el orden; ✕ quita un verbo de la lección.',
     'verbs.step2':
       'Elige un tiempo (présent, passé composé, imparfait, futur proche, futur simple, conditionnel présent, impératif) y <b>afirmativa</b> o <b>negativa</b>. 🔊 lee cada forma.',
     'verbs.step3':
@@ -1410,7 +1415,8 @@ export const tutorial = defineMessages({
     'verbs.summary': 'Tabelas de conjugação e exercícios (separador Verbos de uma lição)',
     'verbs.intro':
       'O separador <b>Verbos</b> de uma lição em qualquer língua exceto o inglês tem uma tabela de conjugação para cada verbo: o francês em sete tempos, na afirmativa e na negativa; o alemão, o espanhol, o italiano e o português nos seus cinco ou seis tempos principais.',
-    'verbs.step1': 'Carregue num verbo para abrir a tabela.',
+    'verbs.step1':
+      'Carregue num verbo da lista para abrir a tabela. <b>A–Z</b> e <b>Por grupo</b> (1, 2, 3) mudam a ordem; ✕ retira um verbo da lição.',
     'verbs.step2':
       'Escolha um tempo (présent, passé composé, imparfait, futur proche, futur simple, conditionnel présent, impératif) e <b>afirmativa</b> ou <b>negativa</b>. 🔊 lê cada forma.',
     'verbs.step3':
@@ -1672,7 +1678,8 @@ export const tutorial = defineMessages({
     'verbs.summary': 'Tabelle di coniugazione ed esercizi (scheda Verbi di una lezione)',
     'verbs.intro':
       'La scheda <b>Verbi</b> di una lezione in qualsiasi lingua tranne l’inglese ha una tabella di coniugazione per ogni verbo: il francese in sette tempi, affermativa e negativa; il tedesco, lo spagnolo, l’italiano e il portoghese nei loro cinque o sei tempi principali.',
-    'verbs.step1': 'Premi un verbo per aprire la sua tabella.',
+    'verbs.step1':
+      'Premi un verbo della lista per aprire la sua tabella. <b>A–Z</b> e <b>Per gruppo</b> (1, 2, 3) cambiano l’ordine; ✕ toglie un verbo dalla lezione.',
     'verbs.step2':
       'Scegli un tempo (présent, passé composé, imparfait, futur proche, futur simple, conditionnel présent, impératif) e <b>affermativa</b> o <b>negativa</b>. 🔊 legge ogni forma.',
     'verbs.step3':

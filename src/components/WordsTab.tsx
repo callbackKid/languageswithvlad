@@ -5,7 +5,7 @@ import { common } from '../i18n/messages/common';
 import { exercises } from '../i18n/messages/exercises';
 import { getProgress, LEARNED_STREAK, useProgress, wordKey } from '../lib/progress';
 import { buildDictation, buildQuiz, pickWords } from '../lib/quiz';
-import { removedWordCount, removeWord, restoreWords, useRemoved } from '../lib/removed';
+import { removedCount, removeWord, restore, useRemoved } from '../lib/removed';
 import { canSpeak } from '../lib/speech';
 import type { Analysis, Word } from '../lib/types';
 import { downloadText } from '../lib/util';
@@ -80,7 +80,7 @@ export default function WordsTab({
   const [chosenGroup, setChosenGroup] = useState<string | null>(null);
   const [exercise, setExercise] = useState<Exercise>(null);
   const [run, setRun] = useState(0);
-  const removedCount = removedWordCount(useRemoved(), lessonKey ? [lessonKey] : []);
+  const removedWords = removedCount(useRemoved(), 'words', lessonKey ? [lessonKey] : []);
   const grouping = useWordGroups(analysis.words, grouped && hasClaude, uiLanguage);
   const { groupOf } = grouping;
 
@@ -363,13 +363,13 @@ export default function WordsTab({
             {t('ankiExport', { count: picked.length })}
           </button>
         )}
-        {lessonKey && removedCount > 0 && (
+        {lessonKey && removedWords > 0 && (
           <button
             type="button"
             className="btn ghost flush"
-            onClick={() => restoreWords([lessonKey])}
+            onClick={() => restore('words', [lessonKey])}
           >
-            {t('restoreWords', { count: removedCount })}
+            {t('restoreWords', { count: removedWords })}
           </button>
         )}
         {onRefresh && (

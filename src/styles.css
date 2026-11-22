@@ -389,7 +389,7 @@ a {
   margin: 0 0 18px;
 }
 
-/* ☆ adds a word to Words to learn; ✕ takes a word out of its lesson's list */
+/* ☆ adds a word to Words to learn; ✕ takes a word or a verb out of its lesson's list */
 .star,
 .row-remove {
   flex: none;
@@ -1993,33 +1993,69 @@ pre.source {
 
 /* ==========================================================================
    Verbs
-   Verb chips, conjugation tables and the drill.
+   The verb list, conjugation tables and the drill.
    ========================================================================== */
 
-.verbs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+/* the order of the list: A–Z or by group */
+.verb-sort {
+  margin-bottom: 12px;
+}
+/* the verbs of one group, under its name (by group); the whole list in A–Z */
+.verb-group {
   margin-bottom: 20px;
 }
+.verb-group-name {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  margin: 0 0 6px;
+}
 
+.verbs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  columns: 2 300px;
+  column-gap: 28px;
+}
+.verb-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  border-bottom: 1px solid var(--line);
+  break-inside: avoid;
+}
+/* a row of the list: the verb and its translation; the open one is filled */
 .verb {
-  border: 1px solid var(--line);
-  background: var(--surface);
-  border-radius: 999px;
-  padding: 6px 14px;
-  cursor: pointer;
-  display: inline-flex;
-  gap: 8px;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  gap: 10px;
   align-items: baseline;
+  margin: 3px 0;
+  padding: 6px 8px;
+  border: 0;
+  border-radius: 8px;
+  background: none;
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.verb:hover {
+  background: var(--soft);
 }
 .verb .fr {
   font-family: var(--serif);
-  font-size: 16px;
+  font-size: 17px;
 }
 .verb .ru {
-  font-size: 13px;
+  margin-left: auto;
+  font-size: 14px;
   color: var(--muted);
+  text-align: right;
 }
 .verb[aria-pressed='true'] {
   background: var(--accent);

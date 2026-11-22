@@ -274,6 +274,9 @@ const ANALYSIS = {
   verbs: [
     { inf: 'se lever', ru: 'вставать' },
     { inf: 'aimer', ru: 'любить' },
+    // a 2nd- and a 3rd-group verb, for the Verbs tab's order by group (no tables: opening one fails)
+    { inf: 'finir', ru: 'заканчивать' },
+    { inf: 'partir', ru: 'уезжать' },
   ],
 };
 

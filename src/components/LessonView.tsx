@@ -154,22 +154,25 @@ export default function LessonView({
   }, [extrasKey, lesson.body, wantsExtras, hasClaude, freshExtras]);
 
   const removed = useRemoved();
-  // Words carry their lesson so progress and stats can group by lesson; the ones the student took
-  // out of the lesson are left out.
-  const tagged = useMemo(
-    () =>
-      analysis && {
-        ...analysis,
-        words: markKeyWords(withoutRemoved(analysis, lesson.key, removed).words, lesson.body).map(
-          (word) => ({
-            ...word,
-            lesson: lesson.key,
-            language: analysis.language,
-          })
-        ),
-      },
-    [analysis, lesson.key, lesson.body, removed]
-  );
+  // Words and verbs carry their lesson (progress and stats group by it, ✕ takes them out of it);
+  // the ones the student took out of the lesson are left out.
+  const tagged = useMemo(() => {
+    if (!analysis) return null;
+    const kept = withoutRemoved(analysis, lesson.key, removed);
+    return {
+      ...kept,
+      words: markKeyWords(kept.words, lesson.body).map((word) => ({
+        ...word,
+        lesson: lesson.key,
+        language: analysis.language,
+      })),
+      verbs: kept.verbs.map((verb) => ({
+        ...verb,
+        lesson: lesson.key,
+        language: analysis.language,
+      })),
+    };
+  }, [analysis, lesson.key, lesson.body, removed]);
 
   const tabButton = (id: Tab, label: string, count?: number) =>
     shownTabs.includes(id) && (
@@ -226,7 +229,7 @@ export default function LessonView({
       <section className="panel">
         <div className="tabs" role="tablist" ref={tabList}>
           {tabButton('words', t('words'), tagged?.words.length ?? 0)}
-          {tabButton('verbs', t('verbs'), analysis?.verbs.length ?? 0)}
+          {tabButton('verbs', t('verbs'), tagged?.verbs.length ?? 0)}
           {tabButton('grammar', t('grammar'), extras?.grammar.length)}
           {tabButton('homework', t('homework'), extras?.homework.length)}
           {tabButton('book', t('book'), extras?.book.length)}
@@ -252,11 +255,12 @@ export default function LessonView({
           {tab === 'verbs' && analysis && !isVerbLanguage(analysis.language) && (
             <p className="empty">{t('noEnglishVerbTables')}</p>
           )}
-          {tab === 'verbs' && analysis && isVerbLanguage(analysis.language) && (
+          {tab === 'verbs' && tagged && isVerbLanguage(tagged.language) && (
             <VerbsTab
               key={lesson.hash}
-              verbs={analysis.verbs.map((verb) => ({ ...verb, language: analysis.language }))}
-              hasClaude={hasClaude && !analysis.local}
+              verbs={tagged.verbs}
+              lessonKey={lesson.key}
+              hasClaude={hasClaude && !tagged.local}
               waiting={state === 'loading'}
             />
           )}

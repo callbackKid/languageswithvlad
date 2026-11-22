@@ -51,6 +51,18 @@ export const NEWS: NewsDay[] = [
     date: '2026-11-22',
     items: [
       {
+        kind: 'better',
+        text: {
+          en: 'Verbs tab: the verbs are a list now, in alphabetical order or by group (1, 2, 3 for French; -ar, -er, -ir and the like for Spanish, Portuguese and Italian). ✕ takes a verb out of the lesson, as for words, and Bring back removed verbs puts them back.',
+          ru: 'Вкладка «Глаголы»: глаголы теперь идут списком, по алфавиту или по группам (1, 2, 3 у французских; -ar, -er, -ir и похожие у испанских, португальских и итальянских). ✕ убирает глагол из урока, как и слово, а «Вернуть убранные глаголы» возвращает их обратно.',
+          fr: 'Onglet Verbes : les verbes forment maintenant une liste, par ordre alphabétique ou par groupe (1er, 2e, 3e groupe pour le français ; -ar, -er, -ir et leurs équivalents pour l’espagnol, le portugais et l’italien). ✕ retire un verbe de la leçon, comme pour les mots, et « Remettre les verbes retirés » les remet.',
+          de: 'Tab Verben: Die Verben stehen jetzt in einer Liste, alphabetisch oder nach Gruppe (1, 2, 3 im Französischen; -ar, -er, -ir und Ähnliches im Spanischen, Portugiesischen und Italienischen). ✕ nimmt ein Verb aus der Lektion, wie bei Wörtern, und „Entfernte Verben zurückholen“ holt sie zurück.',
+          es: 'Pestaña Verbos: los verbos son ahora una lista, por orden alfabético o por grupo (1, 2, 3 en francés; -ar, -er, -ir y similares en español, portugués e italiano). ✕ quita un verbo de la lección, como con las palabras, y «Recuperar los verbos quitados» los devuelve.',
+          pt: 'Separador Verbos: os verbos são agora uma lista, por ordem alfabética ou por grupo (1, 2, 3 em francês; -ar, -er, -ir e semelhantes em espanhol, português e italiano). ✕ retira um verbo da lição, tal como as palavras, e «Repor os verbos retirados» volta a pô-los.',
+          it: 'Scheda Verbi: i verbi ora sono in una lista, in ordine alfabetico o per gruppo (1, 2, 3 per il francese; -ar, -er, -ir e simili per spagnolo, portoghese e italiano). ✕ toglie un verbo dalla lezione, come per le parole, e «Recupera i verbi tolti» li rimette.',
+        },
+      },
+      {
         kind: 'new',
         text: {
           en: 'Lesson words: ✕ on a word’s row takes it out of the lesson’s list and its exercises, for a word Claude picked up by mistake or one you don’t want to practise. Bring back removed words, under the list, puts them back.',

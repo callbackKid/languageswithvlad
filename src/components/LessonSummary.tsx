@@ -7,6 +7,7 @@ import { daysBetween } from '../lib/dates';
 import { normalizeExtras } from '../lib/parse';
 import { getProgress } from '../lib/progress';
 import { buildQuiz, keyWordsFirst, pickWords } from '../lib/quiz';
+import { getRemoved, withoutRemoved } from '../lib/removed';
 import { followLink, hrefFor } from '../lib/router';
 import { lessonPath } from '../lib/sections';
 import { load, loadChecked, save } from '../lib/storage';
@@ -42,6 +43,8 @@ export default function LessonSummary({
   if (hidden || days < 0 || days > 1 || !analysis) return null;
 
   const words = keyWordsFirst(lessonWords(lesson, bank, hasClaude));
+  // without the verbs the student took out of the lesson, as lessonWords does for words
+  const verbCount = withoutRemoved(analysis, lesson.key, getRemoved()).verbs.length;
   if (revising)
     return (
       <section className="home-card exercise">
@@ -61,7 +64,7 @@ export default function LessonSummary({
 
   const counts = [
     t('newWords', { count: words.length }),
-    ...(analysis.verbs.length ? [t('verbs', { count: analysis.verbs.length })] : []),
+    ...(verbCount ? [t('verbs', { count: verbCount })] : []),
   ].join(', ');
   // grammar is known once the lesson's Grammar tab has been read, in this interface language
   const grammar =

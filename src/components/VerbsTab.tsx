@@ -9,6 +9,8 @@ import { type Grade, grade } from '../lib/grade';
 import { negate } from '../lib/negation';
 import { recordForm } from '../lib/progress';
 import { type FormQuestion, verbForms } from '../lib/quiz';
+import { removedCount, removeVerb, restore, useRemoved } from '../lib/removed';
+import { load, save } from '../lib/storage';
 import {
   COMPOUND_PAST,
   type Conjugation,
@@ -20,24 +22,36 @@ import {
   type VerbRef,
 } from '../lib/types';
 import { keepBracketsTogether, shuffle } from '../lib/util';
+import { sortVerbs, VERB_SORTS, verbGroup, type VerbSort } from '../lib/verbGroups';
 import ExerciseHead from './ExerciseHead';
 import Speak from './Speak';
 import WaitingFact from './WaitingFact';
 
-// A lesson's verbs: a table in each tense, a typing drill per tense and a quick quiz.
+// the order of the verb list, kept on the device for every lesson
+const SORT_KEY = 'verb-sort';
+const savedSort = (): VerbSort => {
+  const stored = load<unknown>(SORT_KEY);
+  return VERB_SORTS.includes(stored as VerbSort) ? (stored as VerbSort) : 'alphabet';
+};
+
+/** A lesson's verbs as a list, in alphabetical order or by group (1, 2, 3), with a table in each
+    tense, a typing drill per tense and a quick quiz. */
 export default function VerbsTab({
   verbs,
   hasClaude,
   waiting,
   openFirst = false,
+  lessonKey,
 }: {
   verbs: VerbRef[];
   hasClaude: boolean;
   waiting: boolean;
   // open the first verb's table at once, as for the one verb looked up from a word's menu
   openFirst?: boolean;
+  // one lesson's own verbs: they can be taken out of it (✕) and brought back
+  lessonKey?: string;
 }) {
-  const { t, rich } = useTranslation(exercises);
+  const { t, rich, language: uiLanguage } = useTranslation(exercises);
   const commonText = useTranslation(common);
   const [currentVerb, setCurrentVerb] = useState<string | null>(null);
   const [tense, setTense] = useState<Tense>('présent');
@@ -52,6 +66,8 @@ export default function VerbsTab({
   });
   const [status, setStatus] = useState<Record<string, string>>({});
   const [mode, setMode] = useState<'table' | 'drill' | 'quiz'>('table');
+  const [sort, setSort] = useState<VerbSort>(savedSort);
+  const removedVerbs = removedCount(useRemoved(), 'verbs', lessonKey ? [lessonKey] : []);
 
   // fresh: ignore the saved table and ask Claude again
   async function open(verb: VerbRef, fresh = false) {
@@ -99,9 +115,24 @@ export default function VerbsTab({
     void open(first);
   });
 
+  // under the list, and in place of it once every verb is taken out
+  const restoreLink = lessonKey && removedVerbs > 0 && (
+    <p className="legend legend-actions">
+      <button
+        type="button"
+        className="btn ghost flush"
+        onClick={() => restore('verbs', [lessonKey])}
+      >
+        {t('restoreVerbs', { count: removedVerbs })}
+      </button>
+    </p>
+  );
   if (!verbs.length)
     return waiting ? null : (
-      <p className="empty">{hasClaude ? t('noVerbs') : commonText.t('needsClaude')}</p>
+      <>
+        <p className="empty">{hasClaude ? t('noVerbs') : commonText.t('needsClaude')}</p>
+        {restoreLink}
+      </>
     );
   const loaded = verbs.filter((verb) => conjugations[verb.inf]);
 
@@ -130,26 +161,79 @@ export default function VerbsTab({
     ? affirmativeRows.map((row) => negate(row, shownTense))
     : affirmativeRows;
 
+  // a French -ir verb whose table is loaded is placed by its nous form
+  const groupOf = (verb: VerbRef) =>
+    verbGroup(verb.inf, verbLanguageOf(verb), conjugations[verb.inf]);
+  // German verbs have no groups: then the list is alphabetical, with nothing to choose
+  const hasGroups = verbs.some((verb) => groupOf(verb) !== null);
+  const shownSort: VerbSort = hasGroups ? sort : 'alphabet';
+  const sections = sortVerbs(verbs, shownSort, groupOf, uiLanguage);
+
   return (
     <>
-      <div className="verbs">
-        {verbs.map((verb) => (
-          <button
-            type="button"
-            key={verb.inf}
-            className="verb"
-            aria-pressed={currentVerb === verb.inf}
-            onClick={() => void open(verb)}
+      {hasGroups && verbs.length > 1 && (
+        <div className="seg verb-sort" role="group" aria-label={t('sortVerbs')}>
+          {VERB_SORTS.map((option) => (
+            <button
+              type="button"
+              key={option}
+              aria-pressed={shownSort === option}
+              onClick={() => {
+                setSort(option);
+                save(SORT_KEY, option);
+              }}
+            >
+              {t(option === 'alphabet' ? 'sortAlphabet' : 'sortByGroup')}
+            </button>
+          ))}
+        </div>
+      )}
+      {sections.map((section) => {
+        const name = section.group ? t('verbGroup', { n: section.group }) : t('noVerbGroup');
+        return (
+          <section
+            key={section.group ?? 'none'}
+            className="verb-group"
+            aria-label={shownSort === 'group' ? name : undefined}
           >
-            <span className="fr" lang={verbLanguageOf(verb)}>
-              {verb.inf}
-            </span>
-            <span className="ru" lang="ru">
-              {verb.ru}
-            </span>
-          </button>
-        ))}
-      </div>
+            {shownSort === 'group' && <h3 className="verb-group-name">{name}</h3>}
+            <ul className="verbs">
+              {section.verbs.map((verb) => (
+                <li key={verb.inf} className="verb-row">
+                  <button
+                    type="button"
+                    className="verb"
+                    aria-pressed={currentVerb === verb.inf}
+                    onClick={() => void open(verb)}
+                  >
+                    <span className="fr" lang={verbLanguageOf(verb)}>
+                      {verb.inf}
+                    </span>
+                    <span className="ru" lang="ru">
+                      {verb.ru}
+                    </span>
+                  </button>
+                  {lessonKey && (
+                    <button
+                      type="button"
+                      className="row-remove"
+                      data-tooltip={t('removeWord')}
+                      aria-label={t('removeWordLabel', { word: verb.inf })}
+                      onClick={() => {
+                        removeVerb(lessonKey, verb.inf);
+                        if (currentVerb === verb.inf) setCurrentVerb(null);
+                      }}
+                    >
+                      ✕
+                    </button>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </section>
+        );
+      })}
+      {restoreLink}
       <div className="row-actions quiz-bar">
         <button
           type="button"

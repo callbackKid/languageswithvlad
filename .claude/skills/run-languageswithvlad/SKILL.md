@@ -70,7 +70,7 @@ Lines starting with `#` are skipped. A line `---` ends a block: when a step fail
 
 ### Test data
 
-`fixtures.mjs` serves four lessons. The newest, French, is dated today: six words (★ `se lever` is a key word; `grec`, an adjective, makes the dictation name the form to write), the verbs `se lever` and `aimer` with their conjugations, a `Devoirs:` line, a Meet link and the next lesson. Before it, one lesson each in German (yesterday: `aufstehen`, `sich waschen`), Spanish (`hablar`) and Portuguese (`falar`), with their verb tables; open them at `/lessons/<date>_1`. It also answers grammar and homework (`analyze` extras), Make homework, the words' groups by meaning (`aimer` and `grec` are left out, so they show under Other), a written answer's correction, a word's explanation (Text analysis) and a discussion question; `{}` for the rest. A page that needs more needs a branch in `answerFor`; copy the response shape from the endpoint in `api/` and its `normalizeX` in `src/lib/parse.ts`.
+`fixtures.mjs` serves four lessons. The newest, French, is dated today: six words (★ `se lever` is a key word; `grec`, an adjective, makes the dictation name the form to write), the verbs `se lever` and `aimer` with their conjugations (and `finir`, `partir` without tables, for the order by group), a `Devoirs:` line, a Meet link and the next lesson. Before it, one lesson each in German (yesterday: `aufstehen`, `sich waschen`), Spanish (`hablar`) and Portuguese (`falar`), with their verb tables; open them at `/lessons/<date>_1`. It also answers grammar and homework (`analyze` extras), Make homework, the words' groups by meaning (`aimer` and `grec` are left out, so they show under Other), a written answer's correction, a word's explanation (Text analysis) and a discussion question; `{}` for the rest. A page that needs more needs a branch in `answerFor`; copy the response shape from the endpoint in `api/` and its `normalizeX` in `src/lib/parse.ts`.
 
 The next lesson's time depends on the **scenario**, computed from now: `upcoming` (default; in 20 hours: Home shows the summary and Revise before the lesson), `now` (started 10 minutes ago: Lesson now, lesson mode), `finished` (ended today). The app keeps the document it loaded, so after `scenario` press `click button Sync`.
 
@@ -82,7 +82,7 @@ The server's teacher code is `test-teacher` (Settings → Teacher turns the teac
 
 ## Gotchas
 
-- **Lesson tabs are `tab`, not `button`, and their names carry a count**: "Verbs 2". Use `click tab /^Verbs/`; `click button Verbs` times out.
+- **Lesson tabs are `tab`, not `button`, and their names carry a count**: "Verbs 4". Use `click tab /^Verbs/`; `click button Verbs` times out.
 - **The tense and the affirmative/negative choice carry over when you switch verbs.** After `click button negative` on one verb, the next verb's drill expects negative forms.
 - **Tense buttons without forms are disabled.** The fixture has no imparfait, futur or conditionnel, so clicking them times out.
 - `/api/*` must be answered with JSON: under `yarn dev` alone Vite returns `index.html` for it and the app shows "no server". The driver's route mock covers every `/api/` path.
