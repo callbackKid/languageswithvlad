@@ -4108,10 +4108,80 @@ li .open-link {
 }
 
 .settings-profile .avatar.letter {
-  font-size: 30px;
+  font-size: 40px;
+}
+
+/* Profile and Interface in one row; each card keeps its own height */
+.settings-top {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  gap: 18px;
+  align-items: start;
+  margin-bottom: 18px;
+}
+.settings-top > .settings-card {
+  margin-bottom: 0;
+  min-width: 0;
+}
+
+/* the profile picture, with the pencil on its corner and the menu under it */
+.settings-picture {
+  position: relative;
+  flex: none;
+}
+.picture-edit {
+  position: absolute;
+  right: -2px;
+  bottom: -2px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--paper);
+  color: var(--text);
+  cursor: pointer;
+}
+.picture-edit:hover {
+  border-color: var(--muted);
+}
+.picture-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  min-width: 180px;
+  padding: 4px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--paper);
+  box-shadow: 0 6px 24px var(--shadow);
+}
+.picture-menu button {
+  padding: 8px 12px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.picture-menu button:hover,
+.picture-menu button:focus-visible {
+  background: var(--soft);
 }
 
 @media (max-width: 760px) {
+  .settings-top {
+    grid-template-columns: 1fr;
+  }
   /* four goals don't fit in one row: two by two, rather than three and one */
   .settings-row .seg.goal-choice {
     display: grid;

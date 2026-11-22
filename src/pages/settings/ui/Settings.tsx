@@ -28,6 +28,7 @@ import Avatar from '@/shared/ui/Avatar';
 import PageHead from '@/shared/ui/PageHead';
 
 import { settingsText } from '../i18n/settings';
+import PictureMenu from './PictureMenu';
 import TeacherCard from './TeacherCard';
 
 // each lesson tab under the name it has on the lesson page
@@ -149,54 +150,103 @@ export default function Settings({ lessonDocument }: { lessonDocument: DocumentI
         {t('intro')}
       </PageHead>
 
-      <section className="settings-card">
-        <h2>{t('profile')}</h2>
-        <div className="settings-profile">
-          <Avatar size={72} />
-          <div className="settings-profile-fields">
-            <div className="row-actions">
-              <label className="btn">
-                {settings.avatar ? t('changePicture') : t('addPicture')}
+      {/* Profile and Interface side by side on a wide screen, one under the other on a phone */}
+      <div className="settings-top">
+        <section className="settings-card">
+          <h2>{t('profile')}</h2>
+          <div className="settings-profile">
+            <PictureMenu
+              hasPicture={!!settings.avatar}
+              onFile={(file) => void choosePicture(file)}
+              onRemove={() => updateSettings({ avatar: '' })}
+            >
+              <Avatar size={96} />
+            </PictureMenu>
+            <div className="settings-profile-fields">
+              {hasPictureError && (
+                <p className="field-error" role="alert">
+                  {t('pictureFailed')}
+                </p>
+              )}
+              <label className="form-field">
+                <span>{t('name')}</span>
                 <input
-                  type="file"
-                  accept="image/*"
-                  hidden
-                  onChange={(event) => {
-                    const file = event.target.files?.[0];
-                    event.target.value = '';
-                    if (file) void choosePicture(file);
-                  }}
+                  type="text"
+                  maxLength={MAX_NAME_LENGTH}
+                  value={settings.name}
+                  placeholder={t('namePlaceholder')}
+                  onChange={(event) => updateSettings({ name: event.target.value })}
                 />
               </label>
-              {settings.avatar && (
-                <button
-                  type="button"
-                  className="btn ghost"
-                  onClick={() => updateSettings({ avatar: '' })}
-                >
-                  {t('removePicture')}
-                </button>
-              )}
+              <small className="hint">{t('nameHint')}</small>
             </div>
-            {hasPictureError && (
-              <p className="field-error" role="alert">
-                {t('pictureFailed')}
-              </p>
-            )}
-            <label className="form-field">
-              <span>{t('name')}</span>
-              <input
-                type="text"
-                maxLength={MAX_NAME_LENGTH}
-                value={settings.name}
-                placeholder={t('namePlaceholder')}
-                onChange={(event) => updateSettings({ name: event.target.value })}
-              />
-            </label>
-            <small className="hint">{t('nameHint')}</small>
           </div>
-        </div>
-      </section>
+        </section>
+        <section className="settings-card">
+          <h2>{t('interface')}</h2>
+          <div className="settings-row">
+            <label className="settings-label" htmlFor="settings-ui-language">
+              {t('interfaceLanguage')}
+            </label>
+            <select
+              id="settings-ui-language"
+              className="settings-select"
+              value={uiLanguage}
+              onChange={(event) => {
+                const chosen = UI_LANGUAGES.find((option) => option.id === event.target.value);
+                if (chosen) setUiLanguage(chosen.id);
+              }}
+            >
+              {UI_LANGUAGES.map((option) => (
+                <option key={option.id} value={option.id}>
+                  {option.flag} {option.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="settings-row">
+            <label className="settings-label" htmlFor="settings-translate-to">
+              {t('translateTo')}
+            </label>
+            <select
+              id="settings-translate-to"
+              className="settings-select"
+              value={settings.translateTo}
+              onChange={(event) => {
+                const translateTo = UI_LANGUAGES.find((option) => option.id === event.target.value);
+                if (!translateTo) return;
+                updateSettings({ translateTo: translateTo.id });
+              }}
+            >
+              {UI_LANGUAGES.map((option) => (
+                <option key={option.id} value={option.id}>
+                  {option.flag} {option.name}
+                </option>
+              ))}
+            </select>
+            <small className="hint settings-row-note">{t('translateToHint')}</small>
+          </div>
+          {/* always on the page, so a screen reader reads the note when it appears */}
+          <small className="hint settings-status" role="status">
+            {settings.translateTo !== openedTranslateTo && t('translateToChanged')}
+          </small>
+          <div className="settings-row">
+            <span className="settings-label">{t('theme')}</span>
+            <div className="seg" role="group" aria-label={t('theme')}>
+              {THEMES.map((theme) => (
+                <button
+                  key={theme}
+                  type="button"
+                  aria-pressed={settings.theme === theme}
+                  onClick={() => updateSettings({ theme })}
+                >
+                  {t(`theme.${theme}`)}
+                </button>
+              ))}
+            </div>
+          </div>
+        </section>
+      </div>
 
       <section className="settings-card">
         <h2>{t('document')}</h2>
@@ -216,66 +266,6 @@ export default function Settings({ lessonDocument }: { lessonDocument: DocumentI
           </button>
         </div>
         <small className="hint">{t('studentLinkHint')}</small>
-      </section>
-
-      <section className="settings-card">
-        <h2>{t('interface')}</h2>
-        <div className="settings-row">
-          <span className="settings-label">{t('interfaceLanguage')}</span>
-          <div className="seg" role="group" aria-label={t('interfaceLanguage')}>
-            {UI_LANGUAGES.map((option) => (
-              <button
-                key={option.id}
-                type="button"
-                aria-pressed={uiLanguage === option.id}
-                onClick={() => setUiLanguage(option.id)}
-              >
-                {option.flag} {option.name}
-              </button>
-            ))}
-          </div>
-        </div>
-        <div className="settings-row">
-          <label className="settings-label" htmlFor="settings-translate-to">
-            {t('translateTo')}
-          </label>
-          <select
-            id="settings-translate-to"
-            className="settings-select"
-            value={settings.translateTo}
-            onChange={(event) => {
-              const translateTo = UI_LANGUAGES.find((option) => option.id === event.target.value);
-              if (!translateTo) return;
-              updateSettings({ translateTo: translateTo.id });
-            }}
-          >
-            {UI_LANGUAGES.map((option) => (
-              <option key={option.id} value={option.id}>
-                {option.flag} {option.name}
-              </option>
-            ))}
-          </select>
-          <small className="hint settings-row-note">{t('translateToHint')}</small>
-        </div>
-        {/* always on the page, so a screen reader reads the note when it appears */}
-        <small className="hint settings-status" role="status">
-          {settings.translateTo !== openedTranslateTo && t('translateToChanged')}
-        </small>
-        <div className="settings-row">
-          <span className="settings-label">{t('theme')}</span>
-          <div className="seg" role="group" aria-label={t('theme')}>
-            {THEMES.map((theme) => (
-              <button
-                key={theme}
-                type="button"
-                aria-pressed={settings.theme === theme}
-                onClick={() => updateSettings({ theme })}
-              >
-                {t(`theme.${theme}`)}
-              </button>
-            ))}
-          </div>
-        </div>
       </section>
 
       <section className="settings-card">
