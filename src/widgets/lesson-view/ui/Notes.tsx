@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 
 import { common, useTranslation } from '@/shared/i18n';
-import { load, save } from '@/shared/lib/storage';
+import { loadText, save } from '@/shared/lib/storage';
 
 // A notepad, saved on this device as the student types.
 export default function Notes({ storageKey }: { storageKey: string }) {
   const { t } = useTranslation(common);
-  const [text, setText] = useState(() => load<string>(storageKey) || '');
+  const [text, setText] = useState(() => loadText(storageKey) || '');
   const [status, setStatus] = useState<'' | 'saving' | 'saved'>('');
   const timer = useRef<number>();
   const pending = useRef<string | null>(null);

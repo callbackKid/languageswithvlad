@@ -8,7 +8,7 @@ import {
 } from '@/shared/config';
 import { common, getUiLanguage, translator, type UiLanguage } from '@/shared/i18n';
 import { type ImagePayload } from '@/shared/lib/image';
-import { load } from '@/shared/lib/storage';
+import { loadText } from '@/shared/lib/storage';
 
 import { type BoardServer } from './boardSync';
 
@@ -41,7 +41,7 @@ export class ApiError extends Error {
 // teacherCode replaces the saved one, to check a code before it is kept.
 async function request<T>(path: string, init?: RequestInit, teacherCode?: string): Promise<T> {
   const headers: Record<string, string> = { 'content-type': 'application/json' };
-  const code = load<string>('code');
+  const code = loadText('code');
   if (code) headers['x-access-code'] = code;
   const teacher = teacherCode ?? getTeacherCode();
   if (teacher) headers['x-teacher-code'] = teacher;

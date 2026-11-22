@@ -31,7 +31,7 @@ import { getSettings, lessonPath, useTranslationLanguage } from '@/shared/config
 import { call, homework as homeworkText, paper, talk, useTranslation } from '@/shared/i18n';
 import { clockTime, dayKey } from '@/shared/lib/dates';
 import { followLink, hrefFor } from '@/shared/lib/router';
-import { load, loadChecked, remove, save } from '@/shared/lib/storage';
+import { loadChecked, loadText, remove, save } from '@/shared/lib/storage';
 import { hash } from '@/shared/lib/util';
 import CallCard from '@/shared/ui/CallCard';
 import PageHead from '@/shared/ui/PageHead';
@@ -66,7 +66,7 @@ const utcDay = () => new Date().toISOString().slice(0, 10);
     the student join the same room for this document, a new one each day (in UTC, like the board). */
 function JitsiCard({ appId, docId }: { appId: string; docId: string }) {
   const { t } = useTranslation(call);
-  const [name, setName] = useState(() => load<string>(NAME_KEY) ?? getSettings().name);
+  const [name, setName] = useState(() => loadText(NAME_KEY) ?? getSettings().name);
   const [joined, setJoined] = useState(false);
   return (
     <CallCard id="jitsi" title={t('jitsiTitle')}>
@@ -125,7 +125,7 @@ function CallPanel({
   const { t } = useTranslation(call);
   const link = findCall(docText);
   const [blocked, setBlocked] = useState(false);
-  const [name, setName] = useState(() => load<string>(NAME_KEY) ?? getSettings().name);
+  const [name, setName] = useState(() => loadText(NAME_KEY) ?? getSettings().name);
   const [passcode, setPasscode] = useState(link?.kind === 'zoom' ? link.passcode : '');
   const [joined, setJoined] = useState(false);
 
@@ -233,7 +233,7 @@ function CallPanel({
 function LessonNotes({ docId, target }: { docId: string; target: DocTarget }) {
   const { t } = useTranslation(call);
   const storageKey = `call-notes:${docId}:${today()}`;
-  const [text, setText] = useState(() => load<string>(storageKey) ?? '');
+  const [text, setText] = useState(() => loadText(storageKey) ?? '');
   const area = useRef<HTMLTextAreaElement>(null);
 
   const change = (value: string) => {
@@ -310,7 +310,7 @@ function HomeworkNotes({
 }) {
   const { t } = useTranslation(call);
   const storageKey = `call-homework:${docId}:${today()}`;
-  const [text, setText] = useState(() => load<string>(storageKey) ?? '');
+  const [text, setText] = useState(() => loadText(storageKey) ?? '');
   const newest = lessons[lessons.length - 1] ?? null;
   const tasks = text
     .split('\n')

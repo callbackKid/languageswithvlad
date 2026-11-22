@@ -38,7 +38,7 @@ import {
 import { app, type Translator, translator, useTranslation } from '@/shared/i18n';
 import { followLink, hrefFor, navigate, usePath } from '@/shared/lib/router';
 import { stopSpeaking } from '@/shared/lib/speech';
-import { asFields, load, loadChecked, remove, save } from '@/shared/lib/storage';
+import { asFields, load, loadChecked, loadText, remove, save } from '@/shared/lib/storage';
 import Avatar from '@/shared/ui/Avatar';
 import { Discuss } from '@/widgets/discussion';
 import { Feedback } from '@/widgets/feedback';
@@ -79,7 +79,7 @@ function initialDocId(): string | null {
     save('doc', fromUrl);
     return fromUrl;
   }
-  return load<string>('doc');
+  return loadText('doc');
 }
 
 // the round buttons' icons, drawn on a 16×16 grid around its centre (8, 8): text characters
@@ -164,7 +164,7 @@ export default function App() {
         setNotionReady(!!health.notion);
         setBoardServer(health.board ?? null);
         applyTeacherHealth(!!health.teacherCode, !!health.teacher);
-        if (health.needsCode && !load<string>('code')) setNeedsCode(true);
+        if (health.needsCode && !loadText('code')) setNeedsCode(true);
       })
       .catch(() => {
         // keep defaults

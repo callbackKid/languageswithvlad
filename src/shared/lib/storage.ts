@@ -38,6 +38,12 @@ export function hasSavedKey(prefix: string): boolean {
 }
 
 // A saved list of texts (ticked homework tasks): anything else in it is dropped.
+// A saved text; null when there is none or what is kept there isn't a text (damaged, or another shape).
+export function loadText(key: string): string | null {
+  const stored = load<unknown>(key);
+  return typeof stored === 'string' ? stored : null;
+}
+
 export function loadTexts(key: string): string[] {
   const stored = load<unknown>(key);
   return Array.isArray(stored)

@@ -1,6 +1,6 @@
 import { Fragment, type ReactNode, useSyncExternalStore } from 'react';
 
-import { load, save } from '@/shared/lib/storage';
+import { loadText, save } from '@/shared/lib/storage';
 
 // The language of the interface (buttons, hints, the Tutorial); translations have their own setting.
 export type UiLanguage = 'en' | 'ru' | 'fr' | 'de' | 'es' | 'pt' | 'it';
@@ -53,7 +53,7 @@ function browserLanguage(): UiLanguage {
 }
 
 let current: UiLanguage = (() => {
-  const saved = load<string>(STORAGE_KEY);
+  const saved = loadText(STORAGE_KEY);
   return isUiLanguage(saved) ? saved : browserLanguage();
 })();
 const listeners = new Set<() => void>();
