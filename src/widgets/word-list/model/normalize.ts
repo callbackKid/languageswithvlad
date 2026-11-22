@@ -9,20 +9,23 @@ const ARTICLE =
 // a group name from Claude is cut to this length, like the names sent back to it (api/analyze.ts)
 const MAX_GROUP_NAME_LENGTH = 60;
 
+// A word as it is matched with Claude's copy of it: any case, and any apostrophe (l'école = l’école).
+const comparable = (word: string) => word.toLowerCase().replace(/[’‘ʼ`]/g, "'");
+
 /** Claude's groups by meaning for the words sent: each word (as sent) to its group's name, its
-    spelling matched without regard to case. Words left out aren't in the map, even when that is
+    spelling matched without regard to case or the kind of apostrophe. Words left out aren't in the map, even when that is
     all of them (the caller keeps them as in no group, so they aren't asked about again); throws
     only when the answer has no list of groups at all. */
 export function normalizeWordGroups(raw: unknown, sent: string[]): Map<string, string> {
   const { groups } = asObject(raw);
   if (!Array.isArray(groups)) throw new Error('no_groups');
-  const wanted = new Map(sent.map((word) => [word.toLowerCase(), word]));
+  const wanted = new Map(sent.map((word) => [comparable(word), word]));
   const found = new Map<string, string>();
   for (const group of asArray(groups).map(asObject)) {
     const name = asText(group.name).slice(0, MAX_GROUP_NAME_LENGTH);
     if (!name) continue;
     for (const listed of asArray(group.words).map(asText)) {
-      const word = wanted.get(listed.toLowerCase());
+      const word = wanted.get(comparable(listed));
       if (word && !found.has(word)) found.set(word, name);
     }
   }
