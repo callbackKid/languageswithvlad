@@ -6,6 +6,8 @@ import { asExplainLanguage, asLanguage, definitionPrompt, gapPrompt } from './_l
 
 // at most this many words get sentences in one request, each word and translation this long
 const MAX_WORDS = 30;
+// the longest answer, in tokens: room for the sentences or definitions asked for, and a cost cap
+const GAPS_TOKENS = 3000;
 const MAX_WORD_LENGTH = 80;
 const MAX_TRANSLATION_LENGTH = 120;
 // the sentences in a round: one a word, between these
@@ -40,7 +42,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
     response.status(200).json(
       await claudeJSON(prompt, {
         model: FAST_MODEL,
-        maxTokens: 3000,
+        maxTokens: GAPS_TOKENS,
         cache: false,
       })
     );

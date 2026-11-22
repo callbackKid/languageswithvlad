@@ -3,6 +3,8 @@ import { HttpError } from './http.js';
 const API_URL = 'https://api.anthropic.com/v1/messages';
 export const MODEL = process.env.CLAUDE_MODEL || 'claude-sonnet-5-5';
 export const FAST_MODEL = process.env.CLAUDE_FAST_MODEL || 'claude-haiku-5-5';
+// the longest answer, in tokens, when a request doesn't set its own (each endpoint names its limits)
+const DEFAULT_MAX_TOKENS = 4000;
 
 /* Small in-memory cache: warm instances skip repeated identical prompts
    (many students opening the same lesson or the same verb). */
@@ -89,7 +91,7 @@ export async function claudeJSON(
     },
     body: JSON.stringify({
       model,
-      max_tokens: options.maxTokens ?? 4000,
+      max_tokens: options.maxTokens ?? DEFAULT_MAX_TOKENS,
       messages: [
         {
           role: 'user',

@@ -7,6 +7,8 @@ import { asExplainLanguage, asLanguage, discussionPrompt } from './_lib/prompts.
 // A topic or grammar point is a few words ("the TV series Dexter"). Keep in step with
 // MAX_TOPIC_LENGTH in src/widgets/discussion/ui/Discuss.tsx.
 const MAX_TOPIC_LENGTH = 120;
+// the longest answer, in tokens: the question, follow-ups, words and the grammar rule
+const DISCUSSION_TOKENS = 5000;
 
 // A discussion question for the start of a lesson, for a chosen level, vocabulary topic and grammar point.
 export default async function handler(request: VercelRequest, response: VercelResponse) {
@@ -25,7 +27,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
     // a new question every time, so no caching
     response
       .status(200)
-      .json(await claudeJSON(prompt, { model: MODEL, maxTokens: 5000, cache: false }));
+      .json(await claudeJSON(prompt, { model: MODEL, maxTokens: DISCUSSION_TOKENS, cache: false }));
   } catch (error) {
     fail(response, error);
   }

@@ -6,6 +6,8 @@ import { asExplainLanguage, asVerbLanguage, conjugationPrompt } from './_lib/pro
 
 // an infinitive is a word or two ("se lever", "sich waschen"); its translation a few words
 const MAX_INFINITIVE_LENGTH = 60;
+// the longest answer, in tokens: room for every tense of a verb, and a cost cap
+const CONJUGATION_TOKENS = 3000;
 const MAX_TRANSLATION_LENGTH = 100;
 
 // A verb's conjugation tables, in any language that has them (French, German, Spanish, Italian, Portuguese).
@@ -26,7 +28,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
         conjugationPrompt(infinitive, ru, language, asExplainLanguage(request.body?.translateTo)),
         {
           model: MODEL,
-          maxTokens: 3000,
+          maxTokens: CONJUGATION_TOKENS,
           cache: !fresh,
         }
       )

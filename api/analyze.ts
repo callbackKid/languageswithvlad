@@ -21,6 +21,13 @@ const MAX_LESSON_LENGTH = 20_000;
 const PRACTICE_SENTENCES = 8;
 // questions in a round on one pronunciation point
 const PHONETICS_QUESTIONS = 8;
+/** The longest answer for each action, in tokens: room for its biggest answer (a long lesson's
+   words, 15 questions with explanations), and a cap on what one request can cost. */
+const LESSON_TOKENS = 16000;
+const PRACTICE_TOKENS = 4000;
+const HOMEWORK_TOKENS = 3000;
+const EXERCISE_TOKENS = 6000;
+const GROUPS_TOKENS = 4000;
 // a grammar point's title and its summary, as the Grammar tab shows them
 const MAX_TITLE_LENGTH = 200;
 const MAX_SUMMARY_LENGTH = 600;
@@ -72,7 +79,9 @@ export default async function handler(request: VercelRequest, response: VercelRe
         explainIn: asExplainLanguage(request.body?.explainIn),
         translateTo: asExplainLanguage(request.body?.translateTo),
       });
-      return response.status(200).json(await claudeJSON(prompt, { model: MODEL, maxTokens: 4000 }));
+      return response
+        .status(200)
+        .json(await claudeJSON(prompt, { model: MODEL, maxTokens: PRACTICE_TOKENS }));
     }
     if (action === 'phonetics-practice') {
       const title = text(request.body?.title, MAX_TITLE_LENGTH);
@@ -88,7 +97,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
       // asked again for another round: never the same questions twice
       return response
         .status(200)
-        .json(await claudeJSON(prompt, { model: MODEL, maxTokens: 4000, cache: false }));
+        .json(await claudeJSON(prompt, { model: MODEL, maxTokens: PRACTICE_TOKENS, cache: false }));
     }
     if (action === 'homework') {
       // making homework is the teacher's tool
@@ -111,7 +120,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
       // asked again for another version: never the same answer twice
       return response
         .status(200)
-        .json(await claudeJSON(prompt, { model: MODEL, maxTokens: 3000, cache: false }));
+        .json(await claudeJSON(prompt, { model: MODEL, maxTokens: HOMEWORK_TOKENS, cache: false }));
     }
     if (action === 'exercise') {
       const grammar = text(request.body?.grammar, MAX_GRAMMAR_LENGTH);
@@ -132,7 +141,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
       // asked again for another exercise: never the same questions twice
       return response
         .status(200)
-        .json(await claudeJSON(prompt, { model: MODEL, maxTokens: 6000, cache: false }));
+        .json(await claudeJSON(prompt, { model: MODEL, maxTokens: EXERCISE_TOKENS, cache: false }));
     }
     if (action === 'groups') {
       const words = (Array.isArray(request.body?.words) ? request.body.words : [])
@@ -151,7 +160,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
       const prompt = wordGroupsPrompt(words, known, asExplainLanguage(request.body?.explainIn));
       return response
         .status(200)
-        .json(await claudeJSON(prompt, { model: FAST_MODEL, maxTokens: 4000 }));
+        .json(await claudeJSON(prompt, { model: FAST_MODEL, maxTokens: GROUPS_TOKENS }));
     }
     if (action !== 'words' && action !== 'extras' && action !== 'phonetics')
       return response.status(400).json({ error: 'bad_request' });
@@ -170,7 +179,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
           : analysisPrompt(body, levels, asTranslationRequest(request.body));
     return response
       .status(200)
-      .json(await claudeJSON(prompt, { model: MODEL, maxTokens: 16000, cache: !fresh }));
+      .json(await claudeJSON(prompt, { model: MODEL, maxTokens: LESSON_TOKENS, cache: !fresh }));
   } catch (error) {
     return fail(response, error);
   }

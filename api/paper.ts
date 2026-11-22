@@ -21,6 +21,9 @@ import {
 
 // keep in step with MAX_PAGES in src/pages/photo/ui/HandwrittenNotes.tsx
 const MAX_HANDWRITTEN_PAGES = 4;
+// the longest answer, in tokens: a page of underlined words is short; a PDF or handwritten pages are long
+const SHORT_PAPER_TOKENS = 8000;
+const LONG_PAPER_TOKENS = 16000;
 // The app cuts the chosen pages out of the PDF before sending; Vercel refuses bodies over 4.5 MB.
 // Keep in step with MAX_BASE64_LENGTH in src/shared/lib/pdf.ts.
 const MAX_PDF_BASE64_LENGTH = 4_000_000;
@@ -43,7 +46,9 @@ export default async function handler(request: VercelRequest, response: VercelRe
           : bookExercisesPrompt(bookParts(request.body?.parts));
       return response
         .status(200)
-        .json(await claudeJSON(prompt, { model: MODEL, maxTokens: 16000, pdfs: [data] }));
+        .json(
+          await claudeJSON(prompt, { model: MODEL, maxTokens: LONG_PAPER_TOKENS, pdfs: [data] })
+        );
     }
     if (kind !== 'underlined' && kind !== 'handwritten' && kind !== 'exercises')
       return response.status(400).json({ error: 'bad_request' });
@@ -59,7 +64,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
     return response.status(200).json(
       await claudeJSON(prompt, {
         model: MODEL,
-        maxTokens: kind === 'underlined' ? 8000 : 16000,
+        maxTokens: kind === 'underlined' ? SHORT_PAPER_TOKENS : LONG_PAPER_TOKENS,
         images,
       })
     );

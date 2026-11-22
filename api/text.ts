@@ -20,6 +20,11 @@ import {
 
 // Longest text taken at once: a long article. Keep in step with MAX_TEXT_LENGTH in src/pages/text/ui/Reader.tsx.
 const MAX_TEXT_LENGTH = 8000;
+// the longest answer for each action, in tokens: room for its biggest answer, and a cost cap
+const WORD_TOKENS = 2500;
+const TRANSLATION_TOKENS = 12000;
+const CORRECTION_TOKENS = 6000;
+const STUDY_TOKENS = 6000;
 const MAX_SELECTION_LENGTH = 200;
 const MAX_CONTEXT_LENGTH = 600;
 const MAX_TASK_LENGTH = 600;
@@ -38,7 +43,9 @@ export default async function handler(request: VercelRequest, response: VercelRe
         asLevels(body.levels),
         asTranslationRequest(body)
       );
-      return response.status(200).json(await claudeJSON(prompt, { model: MODEL, maxTokens: 2500 }));
+      return response
+        .status(200)
+        .json(await claudeJSON(prompt, { model: MODEL, maxTokens: WORD_TOKENS }));
     }
 
     const whole = typeof body.text === 'string' ? body.text.trim() : '';
@@ -50,7 +57,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
       return response.status(200).json(
         await claudeJSON(translatePrompt(paragraphs, asTranslationRequest(body)), {
           model: MODEL,
-          maxTokens: 12000,
+          maxTokens: TRANSLATION_TOKENS,
         })
       );
     }
@@ -66,11 +73,15 @@ export default async function handler(request: VercelRequest, response: VercelRe
       // the student may send the same text again after reading the answer: a new check each time
       return response
         .status(200)
-        .json(await claudeJSON(prompt, { model: MODEL, maxTokens: 6000, cache: false }));
+        .json(
+          await claudeJSON(prompt, { model: MODEL, maxTokens: CORRECTION_TOKENS, cache: false })
+        );
     }
     if (body.action === 'study') {
       const prompt = studyPrompt(whole, asLevels(body.levels), asTranslationRequest(body));
-      return response.status(200).json(await claudeJSON(prompt, { model: MODEL, maxTokens: 6000 }));
+      return response
+        .status(200)
+        .json(await claudeJSON(prompt, { model: MODEL, maxTokens: STUDY_TOKENS }));
     }
     return response.status(400).json({ error: 'bad_request' });
   } catch (error) {
