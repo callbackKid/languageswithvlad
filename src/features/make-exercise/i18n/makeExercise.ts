@@ -24,6 +24,15 @@ export const makeExerciseText = defineMessages({
     translate: 'Translate:',
     again: 'Do it again',
     makeAnother: 'Create another',
+    // the button next to a group of words, and the round it makes
+    groupButton: 'Exercise',
+    groupLabel: 'An exercise on the words of “{name}”',
+    groupTooltip: '15 questions by Claude on these words',
+    groupTooFew: {
+      one: 'Tick at least {count} word of this group',
+      other: 'Tick at least {count} words of this group',
+    },
+    groupTitle: 'Exercise: {name}',
   },
   ru: {
     title: 'Составить упражнение',
@@ -54,6 +63,17 @@ export const makeExerciseText = defineMessages({
     translate: 'Переведите:',
     again: 'Пройти ещё раз',
     makeAnother: 'Составить ещё одно',
+    // the button next to a group of words, and the round it makes
+    groupButton: 'Упражнение',
+    groupLabel: 'Упражнение по словам группы «{name}»',
+    groupTooltip: '15 вопросов от Claude по этим словам',
+    groupTooFew: {
+      one: 'Отметьте хотя бы {count} слово этой группы',
+      few: 'Отметьте хотя бы {count} слова этой группы',
+      many: 'Отметьте хотя бы {count} слов этой группы',
+      other: 'Отметьте хотя бы {count} слова этой группы',
+    },
+    groupTitle: 'Упражнение: {name}',
   },
   fr: {
     title: 'Créer un exercice',
@@ -77,6 +97,15 @@ export const makeExerciseText = defineMessages({
     translate: 'Traduisez :',
     again: 'Recommencer',
     makeAnother: 'En créer un autre',
+    // the button next to a group of words, and the round it makes
+    groupButton: 'Exercice',
+    groupLabel: 'Exercice sur les mots du groupe « {name} »',
+    groupTooltip: '15 questions de Claude sur ces mots',
+    groupTooFew: {
+      one: 'Cochez au moins {count} mot de ce groupe',
+      other: 'Cochez au moins {count} mots de ce groupe',
+    },
+    groupTitle: 'Exercice : {name}',
   },
   de: {
     title: 'Übung erstellen',
@@ -100,6 +129,15 @@ export const makeExerciseText = defineMessages({
     translate: 'Übersetze:',
     again: 'Nochmal machen',
     makeAnother: 'Noch eine erstellen',
+    // the button next to a group of words, and the round it makes
+    groupButton: 'Übung',
+    groupLabel: 'Übung zu den Wörtern der Gruppe „{name}“',
+    groupTooltip: '15 Fragen von Claude zu diesen Wörtern',
+    groupTooFew: {
+      one: 'Hake mindestens {count} Wort dieser Gruppe an',
+      other: 'Hake mindestens {count} Wörter dieser Gruppe an',
+    },
+    groupTitle: 'Übung: {name}',
   },
   es: {
     title: 'Crear un ejercicio',
@@ -126,6 +164,15 @@ export const makeExerciseText = defineMessages({
     translate: 'Traduce:',
     again: 'Hacerlo otra vez',
     makeAnother: 'Crear otro',
+    // the button next to a group of words, and the round it makes
+    groupButton: 'Ejercicio',
+    groupLabel: 'Ejercicio con las palabras del grupo «{name}»',
+    groupTooltip: '15 preguntas de Claude sobre estas palabras',
+    groupTooFew: {
+      one: 'Marca al menos {count} palabra de este grupo',
+      other: 'Marca al menos {count} palabras de este grupo',
+    },
+    groupTitle: 'Ejercicio: {name}',
   },
   pt: {
     title: 'Criar um exercício',
@@ -152,6 +199,15 @@ export const makeExerciseText = defineMessages({
     translate: 'Traduza:',
     again: 'Fazer outra vez',
     makeAnother: 'Criar outro',
+    // the button next to a group of words, and the round it makes
+    groupButton: 'Exercício',
+    groupLabel: 'Exercício com as palavras do grupo «{name}»',
+    groupTooltip: '15 perguntas do Claude sobre estas palavras',
+    groupTooFew: {
+      one: 'Marque pelo menos {count} palavra deste grupo',
+      other: 'Marque pelo menos {count} palavras deste grupo',
+    },
+    groupTitle: 'Exercício: {name}',
   },
   it: {
     title: 'Crea un esercizio',
@@ -178,5 +234,14 @@ export const makeExerciseText = defineMessages({
     translate: 'Traduci:',
     again: 'Rifallo',
     makeAnother: 'Creane un altro',
+    // the button next to a group of words, and the round it makes
+    groupButton: 'Esercizio',
+    groupLabel: 'Esercizio sulle parole del gruppo «{name}»',
+    groupTooltip: '15 domande di Claude su queste parole',
+    groupTooFew: {
+      one: 'Spunta almeno {count} parola di questo gruppo',
+      other: 'Spunta almeno {count} parole di questo gruppo',
+    },
+    groupTitle: 'Esercizio: {name}',
   },
 });

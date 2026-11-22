@@ -22,6 +22,7 @@ import {
 import { getProgress } from '@/entities/word';
 import { AddToDoc, type DocTarget } from '@/features/add-to-doc';
 import { BookImport } from '@/features/import-book';
+import { MakeExercise, makeExerciseText } from '@/features/make-exercise';
 import { homeworkLabel } from '@/features/make-homework';
 import { WordQuiz } from '@/features/quiz';
 import { WritingResult } from '@/features/writing-task';
@@ -39,10 +40,8 @@ import { Discuss } from '@/widgets/discussion';
 import { KeyBadge } from '@/widgets/word-list';
 
 import { game } from '../i18n/game';
-import { makeExerciseText } from '../i18n/makeExercise';
 import JitsiCall from './JitsiCall';
 import LessonBoard from './LessonBoard';
-import MakeExercise from './MakeExercise';
 import QuizGame, {
   GAME_QUESTIONS,
   GAME_SECONDS,

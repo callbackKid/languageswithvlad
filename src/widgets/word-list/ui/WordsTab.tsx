@@ -19,6 +19,12 @@ import {
   wordKey,
 } from '@/entities/word';
 import { GapFill } from '@/features/gap-fill';
+import {
+  canMakeGroupExercise,
+  GroupExercise,
+  makeExerciseText,
+  MIN_GROUP_WORDS,
+} from '@/features/make-exercise';
 import { WordQuiz } from '@/features/quiz';
 import { Star } from '@/features/star-word';
 import { useTranslationLanguage } from '@/shared/config';
@@ -32,12 +38,38 @@ import Flashcards from './Flashcards';
 import Match, { type MatchPair } from './Match';
 import WordBlitz from './WordBlitz';
 
-type Exercise = null | 'quiz' | 'cards' | 'match' | 'syn' | 'gap' | 'blitz' | 'dictation';
+type Exercise = null | 'quiz' | 'cards' | 'match' | 'syn' | 'gap' | 'blitz' | 'dictation' | 'group';
 
 // The mark of a key word of the lesson (★ in the document).
 export function KeyBadge() {
   const { t } = useTranslation(exercises);
   return <span className="key-word">{t('keyWord')}</span>;
+}
+
+// The button next to a group's name: a round by Claude on its ticked words, once there are enough.
+function GroupButton({
+  name,
+  words,
+  onStart,
+}: {
+  name: string;
+  words: Word[];
+  onStart: (round: { name: string; words: Word[] }) => void;
+}) {
+  const { t } = useTranslation(makeExerciseText);
+  const isEnough = canMakeGroupExercise(words);
+  return (
+    <button
+      type="button"
+      className="btn ghost flush word-group-exercise"
+      aria-label={t('groupLabel', { name })}
+      data-tooltip={isEnough ? t('groupTooltip') : t('groupTooFew', { count: MIN_GROUP_WORDS })}
+      disabled={!isEnough}
+      onClick={() => onStart({ name, words })}
+    >
+      {t('groupButton')}
+    </button>
+  );
 }
 
 // How close a word on Words to learn is to leaving it: ●●○ for 2 right answers in a row of the 3 needed.
@@ -95,6 +127,8 @@ export default function WordsTab({
   const [chosenGroup, setChosenGroup] = useState<string | null>(null);
   const [exercise, setExercise] = useState<Exercise>(null);
   const [run, setRun] = useState(0);
+  // the group a round by Claude is on: its words as they were ticked when the button was pressed
+  const [groupRound, setGroupRound] = useState<{ name: string; words: Word[] } | null>(null);
   const removedWords = removedCount(useRemoved(), 'words', lessonKey ? [lessonKey] : []);
   const grouping = useWordGroups(analysis.words, grouped && hasClaude, uiLanguage);
   const { groupOf } = grouping;
@@ -163,6 +197,10 @@ export default function WordsTab({
   }
   if (exercise === 'gap')
     return <GapFill key={run} words={picked} onClose={close} onRestart={() => start('gap')} />;
+  if (exercise === 'group' && groupRound)
+    return (
+      <GroupExercise key={run} words={groupRound.words} name={groupRound.name} onClose={close} />
+    );
   if (exercise === 'blitz')
     return <WordBlitz key={run} words={picked} onClose={close} onRestart={() => start('blitz')} />;
 
@@ -302,10 +340,25 @@ export default function WordsTab({
             aria-label={hasGroups ? listed.name || t('otherGroup') : undefined}
           >
             {hasGroups && (
-              <h2 className="word-group-name">
-                {listed.name || t('otherGroup')}
-                <span className="count">{listed.words.length}</span>
-              </h2>
+              <div className="word-group-head">
+                <h2 className="word-group-name">
+                  {listed.name || t('otherGroup')}
+                  <span className="count">{listed.words.length}</span>
+                </h2>
+                {hasClaude && (
+                  <GroupButton
+                    name={listed.name || t('otherGroup')}
+                    // the whole group's ticked words, not only those Filter words shows
+                    words={(
+                      groups.find((candidate) => candidate.name === listed.name)?.words ?? []
+                    ).filter((word) => !unpicked.has(word.fr))}
+                    onStart={(round) => {
+                      setGroupRound(round);
+                      start('group');
+                    }}
+                  />
+                )}
+              </div>
             )}
             <ul className="words">
               {listed.words.map((word) => (

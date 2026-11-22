@@ -1601,13 +1601,31 @@ pre.source {
 .word-group + .word-group {
   margin-top: 18px;
 }
+/* the group's name with its Exercise button; they wrap under each other when the name is long */
+.word-group-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 12px;
+  margin: 0 0 6px;
+}
 .word-group-name {
   font-size: 13px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--muted);
-  margin: 0 0 6px;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.word-group-exercise {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+}
+.word-group-exercise::before {
+  content: '▶ ';
+  font-size: 10px;
 }
 .word-group-name .count {
   margin-left: 6px;

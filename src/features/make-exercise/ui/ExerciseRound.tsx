@@ -1,0 +1,184 @@
+import { useState } from 'react';
+
+import { common, useTranslation } from '@/shared/i18n';
+import { type Grade, grade } from '@/shared/lib/grade';
+import { shuffle } from '@/shared/lib/util';
+import ExerciseHead from '@/shared/ui/ExerciseHead';
+
+import { makeExerciseText } from '../i18n/makeExercise';
+import { type ExerciseQuestion, type MadeExercise } from '../model/types';
+
+// How an answer compares with the right one and the others just as right: the best of them.
+function gradeAnswer(input: string, question: ExerciseQuestion): Grade {
+  const grades = [question.answer, ...question.accept].map((answer) => grade(input, answer));
+  if (grades.includes('ok')) return 'ok';
+  if (grades.includes('accent')) return 'accent';
+  return grades[0] ?? 'bad';
+}
+
+/** One round of a made exercise: a question at a time, checked, explained, and a score at the
+    end. onAnother (Create another) asks for a new round; without it, the round just closes. */
+export default function ExerciseRound({
+  exercise,
+  onClose,
+  onAnother,
+}: {
+  exercise: MadeExercise;
+  onClose: () => void;
+  onAnother?: () => void;
+}) {
+  const { t } = useTranslation(makeExerciseText);
+  const commonText = useTranslation(common);
+  const [questions, setQuestions] = useState(() => shuffle(exercise.questions));
+  const [index, setIndex] = useState(0);
+  const [typed, setTyped] = useState('');
+  const [result, setResult] = useState<Grade | null>(null);
+  const [picked, setPicked] = useState<string | null>(null);
+  // the translation would give the answer away: folded until the student opens it or answers
+  const [showRu, setShowRu] = useState(false);
+  const [score, setScore] = useState(0);
+  const { language } = exercise;
+  const question = questions[index];
+
+  function answer(given: string) {
+    if (!question) return;
+    const graded = gradeAnswer(given, question);
+    if (graded === 'empty') return;
+    setResult(graded);
+    setShowRu(true);
+    if (graded !== 'bad') setScore((previous) => previous + 1);
+  }
+  // to the next question, or, from the start, a new order of the same questions
+  function goTo(position: number) {
+    setIndex(position);
+    setTyped('');
+    setPicked(null);
+    setResult(null);
+    setShowRu(false);
+  }
+  const next = () => goTo(index + 1);
+  function again() {
+    setQuestions(shuffle(exercise.questions));
+    setScore(0);
+    goTo(0);
+  }
+
+  const head = (
+    <ExerciseHead
+      title={exercise.title || t('title')}
+      onClose={onClose}
+      closeLabel={commonText.t('close')}
+    />
+  );
+  if (!question)
+    return (
+      <div className="ex made-exercise">
+        {head}
+        <p className="score">{commonText.t('scoreLine', { score, total: questions.length })}</p>
+        <div className="row-actions">
+          <button type="button" className="btn primary" onClick={again}>
+            {t('again')}
+          </button>
+          <button type="button" className="btn" onClick={onAnother ?? onClose}>
+            {t('makeAnother')}
+          </button>
+        </div>
+      </div>
+    );
+
+  const isTranslate = question.type === 'translate';
+  return (
+    <div className="ex made-exercise">
+      {head}
+      <p className="hint">{t('progress', { current: index + 1, total: questions.length })}</p>
+      {isTranslate && <p className="hint">{t('translate')}</p>}
+      <p className="made-exercise-prompt" lang={isTranslate ? exercise.translatedTo : language}>
+        {question.prompt}
+      </p>
+      {question.ru && (
+        <details
+          className="translation-peek"
+          open={showRu}
+          onToggle={(event) => setShowRu(event.currentTarget.open)}
+        >
+          <summary>{commonText.t('translation')}</summary>
+          <p lang={exercise.translatedTo}>{question.ru}</p>
+        </details>
+      )}
+
+      {question.type === 'choice' ? (
+        <div className="choices">
+          {question.options.map((option) => {
+            const stateClass =
+              picked === null
+                ? ''
+                : option === question.answer
+                  ? ' ok'
+                  : option === picked
+                    ? ' bad'
+                    : '';
+            return (
+              <button
+                type="button"
+                key={option}
+                className={'choice' + stateClass}
+                lang={language}
+                disabled={picked !== null}
+                onClick={() => {
+                  setPicked(option);
+                  answer(option);
+                }}
+              >
+                {option}
+              </button>
+            );
+          })}
+        </div>
+      ) : (
+        <form
+          className="quiz-input"
+          onSubmit={(event) => {
+            event.preventDefault();
+            if (result) next();
+            else answer(typed);
+          }}
+        >
+          <input
+            lang={language}
+            value={typed}
+            readOnly={!!result}
+            onChange={(event) => setTyped(event.target.value)}
+            autoComplete="off"
+            autoCapitalize="off"
+            autoCorrect="off"
+            spellCheck={false}
+            aria-label={commonText.t('yourAnswer')}
+          />
+          {!result && (
+            <button type="submit" className="btn primary">
+              {commonText.t('check')}
+            </button>
+          )}
+        </form>
+      )}
+
+      {result && (
+        <div className={'feedback ' + (result === 'bad' ? 'bad' : 'ok')} role="status">
+          <p>
+            {result === 'ok'
+              ? commonText.t('right')
+              : commonText.rich(
+                  result === 'accent' ? 'almostAccents' : 'answerIs',
+                  { b: (chunk) => <b lang={language}>{chunk}</b> },
+                  { answer: question.answer }
+                )}
+          </p>
+          {question.explanation && <p lang={exercise.translatedTo}>{question.explanation}</p>}
+          <button type="button" className="btn primary" onClick={next}>
+            {index + 1 < questions.length ? commonText.t('next') : commonText.t('seeScore')}
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}

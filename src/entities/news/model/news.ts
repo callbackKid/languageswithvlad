@@ -51,6 +51,18 @@ export const NEWS: NewsDay[] = [
     date: '2026-11-22',
     items: [
       {
+        kind: 'new',
+        text: {
+          en: 'Each group of words in a lesson and on Words to learn now has an Exercise button: Claude writes 15 mixed questions on that group’s words (choose the answer, fill the gap, translate a sentence), and every answer is explained.',
+          ru: 'У каждой группы слов в уроке и в разделе «Слова на изучении» теперь есть кнопка «Упражнение»: Claude составит 15 вопросов разных типов по словам группы (выбрать ответ, вставить пропущенное слово, перевести предложение) и объяснит каждый ответ.',
+          fr: 'Chaque groupe de mots d’une leçon et de « Mots à apprendre » a maintenant un bouton « Exercice » : Claude écrit 15 questions variées sur les mots du groupe (choisir la réponse, compléter les trous, traduire une phrase), et chaque réponse est expliquée.',
+          de: 'Jede Wortgruppe in einer Lektion und in den „Lernwörtern“ hat jetzt eine Schaltfläche „Übung“: Claude schreibt 15 gemischte Fragen zu den Wörtern der Gruppe (die Antwort wählen, die Lücke füllen, einen Satz übersetzen), und jede Antwort wird erklärt.',
+          es: 'Cada grupo de palabras de una lección y de «Palabras por aprender» tiene ahora un botón «Ejercicio»: Claude escribe 15 preguntas variadas sobre las palabras del grupo (elegir la respuesta, rellenar el hueco, traducir una frase), y cada respuesta se explica.',
+          pt: 'Cada grupo de palavras de uma lição e de «Palavras por aprender» tem agora um botão «Exercício»: o Claude escreve 15 perguntas variadas sobre as palavras do grupo (escolher a resposta, preencher o espaço, traduzir uma frase), e cada resposta é explicada.',
+          it: 'Ogni gruppo di parole di una lezione e di «Parole da imparare» ha ora un pulsante «Esercizio»: Claude scrive 15 domande di vario tipo sulle parole del gruppo (scegliere la risposta, riempire lo spazio vuoto, tradurre una frase), e ogni risposta viene spiegata.',
+        },
+      },
+      {
         kind: 'better',
         text: {
           en: 'Fill the gap, Vocabulary blitz, the practice sentences of the Grammar tab, Create an exercise and A question for discussion now translate into the language chosen under “Translations in”; grammar explanations stay in the interface language.',
