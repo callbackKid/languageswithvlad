@@ -48,6 +48,23 @@ export interface NewsDay {
 
 export const NEWS: NewsDay[] = [
   {
+    date: '2026-11-22',
+    items: [
+      {
+        kind: 'fixed',
+        text: {
+          en: 'Homework now shows up when the lesson writes it as “les devoirs:”, with an article. The next lesson is found when it is written “le prochain cours: …” or with a two-digit year (24.11.26).',
+          ru: 'Домашнее задание теперь появляется, когда в уроке оно записано как «les devoirs:», с артиклем. Следующий урок теперь находится и тогда, когда он записан как «le prochain cours: …» или с годом из двух цифр (24.11.26).',
+          fr: 'Les devoirs s’affichent maintenant quand ils sont écrits « les devoirs: » dans la leçon, avec l’article. Le prochain cours est aussi trouvé quand il est écrit « le prochain cours: … » ou avec l’année sur deux chiffres (24.11.26).',
+          de: 'Hausaufgaben werden jetzt angezeigt, wenn sie in der Lektion mit Artikel als „les devoirs:“ stehen. Die nächste Stunde wird auch erkannt, wenn sie als „le prochain cours: …“ oder mit zweistelliger Jahreszahl (24.11.26) geschrieben ist.',
+          es: 'Los deberes ya aparecen cuando en la lección se escriben «les devoirs:», con artículo. La próxima clase también se encuentra cuando se escribe «le prochain cours: …» o con el año en dos cifras (24.11.26).',
+          pt: 'O trabalho de casa passa a aparecer quando na lição está escrito «les devoirs:», com artigo. A próxima aula também é encontrada quando está escrita «le prochain cours: …» ou com o ano em dois algarismos (24.11.26).',
+          it: 'I compiti ora compaiono quando nella lezione sono scritti «les devoirs:», con l’articolo. La prossima lezione viene trovata anche quando è scritta «le prochain cours: …» o con l’anno a due cifre (24.11.26).',
+        },
+      },
+    ],
+  },
+  {
     date: '2026-11-21',
     items: [
       {

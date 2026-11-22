@@ -15,10 +15,11 @@ import { hash } from './util';
      - mots de la leçon 5
      - 5 phrases au passé composé */
 
-// the label, in the app's languages; only spaces or a list mark may come before it, so a line
-// of the student's report (it starts with an emoji) is never read as homework
+/** The label, in the app's languages, also with an article or "my" ("les devoirs:", "my homework:").
+    Only spaces or a list mark may come before it, so a line of the student's report (it starts
+    with an emoji) is never read as homework. */
 const LABEL =
-  /^\s*(?:[-•*]\s*)?(?:devoirs?|homework|hausaufgaben?|deberes|tareas?|trabalhos? de casa|tpc|compiti|д\/?з|домашнее задание|домашка)\s*(?::|—|–|-)\s*/iu;
+  /^\s*(?:[-•*]\s*)?(?:(?:les|mes|the|my|die|meine|los|las|la|mis|i|miei|os|as|meus|minhas)\s+)?(?:devoirs?|homework|hausaufgaben?|deberes|tareas?|trabalhos? de casa|tpc|compiti|д\/?з|домашнее задание|домашка)\s*(?::|—|–|-)\s*/iu;
 const LIST_ITEM = /^\s*(?:[-•*]|\d{1,2}[.)])\s+/;
 
 export type HomeworkKind = 'words' | 'gaps' | 'verbs' | 'writing' | 'other';

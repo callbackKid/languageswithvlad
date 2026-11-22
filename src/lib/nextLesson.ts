@@ -1,11 +1,12 @@
-/* "le cours prochain: 22.11.2026 18:00 de Paris", "next lesson: 22/11/2026 18h00 (Moscow)",
+/* "le cours prochain: 22.11.2026 18:00 de Paris" (or "le prochain cours", and a year of two digits:
+   22.11.26), "next lesson: 22/11/2026 18h00 (Moscow)",
    "nächste Stunde: 22.11.2026 18:00 Berlin", "próxima clase: …", "próxima aula: …" or "prossima lezione: …":
    the last such line in the document says when the next lesson is. */
 
 const LINE =
-  /(?:le\s+)?(?:cours|leçon)\s+prochain(?:e)?|next\s+lesson|n(?:ä|ae)chste\s+(?:stunde|lektion|unterricht)|n(?:ä|ae)chster\s+unterricht|pr[óo]xim[ao]\s+(?:clase|lecci[óo]n|aula|li[çc][ãa]o)|prossim[ao]\s+lezione/i;
+  /(?:l[ae]\s+)?(?:cours|leçon)\s+prochain(?:e)?|(?:l[ae]\s+)?prochain(?:e)?\s+(?:cours|leçon)|next\s+lesson|n(?:ä|ae)chste\s+(?:stunde|lektion|unterricht)|n(?:ä|ae)chster\s+unterricht|pr[óo]xim[ao]\s+(?:clase|lecci[óo]n|aula|li[çc][ãa]o)|prossim[ao]\s+lezione/i;
 const DATE_TIME =
-  /(\d{1,2})[./-](\d{1,2})[./-](\d{4})(?:[\s,à@at]+(\d{1,2})\s*[:hH.]\s*(\d{2})?)?(.*)$/;
+  /(\d{1,2})[./-](\d{1,2})[./-](\d{4}|\d{2})(?!\d)(?:[\s,à@at]+(\d{1,2})\s*[:hH.]\s*(\d{2})?)?(.*)$/;
 
 // cities a time may be given in, in the spellings of the app's languages
 const ZONES: [RegExp, string][] = [
@@ -112,7 +113,8 @@ export function parseNextLesson(text: string, now = new Date()): NextLesson | 'u
   const [, dayText, monthText, yearText, hourText, minuteText, rest] = match;
   const day = Number(dayText),
     month = Number(monthText),
-    year = Number(yearText);
+    // "22.11.26" is 2026
+    year = (yearText ?? '').length === 2 ? 2000 + Number(yearText) : Number(yearText);
   if (month < 1 || month > 12 || day < 1 || day > 31) return 'unconfirmed';
   const hasTime = hourText !== undefined;
   const hour = hasTime ? Number(hourText) : 0,
