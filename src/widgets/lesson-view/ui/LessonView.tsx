@@ -33,6 +33,7 @@ import {
   type UiLanguage,
   useTranslation,
 } from '@/shared/i18n';
+import { requestOnce } from '@/shared/lib/once';
 import { loadChecked, save } from '@/shared/lib/storage';
 import { shownTopic } from '@/shared/lib/util';
 import HelpLink from '@/shared/ui/HelpLink';
@@ -174,8 +175,8 @@ export default function LessonView({
     if (cached || !wantsExtras || !hasClaude) return;
     let alive = true;
     setExtrasState('loading');
-    api
-      .lessonExtras(lesson.body, getUiLanguage(), freshExtras > 0)
+    // a reading already on its way (the tab left and opened again) is waited for, not paid twice
+    requestOnce(extrasKey, () => api.lessonExtras(lesson.body, getUiLanguage(), freshExtras > 0))
       .then((raw) => {
         const read = normalizeExtras(raw);
         save(extrasKey, read);

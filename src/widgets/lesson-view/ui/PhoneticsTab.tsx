@@ -10,6 +10,7 @@ import { normalizeExercise, RoundLoader } from '@/features/make-exercise';
 import { api, ApiError } from '@/shared/api';
 import { getSettings, type Language } from '@/shared/config';
 import { common, getUiLanguage, paper, translator, useTranslation } from '@/shared/i18n';
+import { requestOnce } from '@/shared/lib/once';
 import { canSpeak, hasVoice } from '@/shared/lib/speech';
 import { loadChecked, save } from '@/shared/lib/storage';
 import WaitingFact from '@/shared/ui/WaitingFact';
@@ -59,8 +60,7 @@ export default function PhoneticsTab({
     if (cached || !hasClaude) return;
     let alive = true;
     setState('loading');
-    api
-      .lessonPhonetics(body, getUiLanguage())
+    requestOnce(storageKey, () => api.lessonPhonetics(body, getUiLanguage()))
       .then((raw) => {
         const read = normalizePhonetics(raw);
         // Claude's answer as it came, so it is read back the same way; kept even if the tab was

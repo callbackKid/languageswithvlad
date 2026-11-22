@@ -38,10 +38,15 @@ export default function RoundLoader({
     latestLoad.current = load;
   });
 
+  // the current attempt's request: StrictMode runs the effect twice, and the second run waits for
+  // it rather than paying Claude for another round
+  const request = useRef<{ attempt: number; made: Promise<MadeExercise> } | null>(null);
+
   useEffect(() => {
     let alive = true;
-    latestLoad
-      .current()
+    if (request.current?.attempt !== attempt)
+      request.current = { attempt, made: latestLoad.current() };
+    request.current.made
       .then((made) => {
         if (alive) setExercise(made);
       })
