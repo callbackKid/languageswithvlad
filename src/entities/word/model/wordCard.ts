@@ -1,4 +1,4 @@
-import { type Language } from '@/shared/config/languages';
+import { type Language } from '@/shared/config';
 
 // A word or phrase the student marked: underlined on a photo of a book page, or picked in a pasted text.
 export interface PhotoItem {

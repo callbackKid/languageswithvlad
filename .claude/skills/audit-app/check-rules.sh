@@ -103,17 +103,17 @@ search 'eslint-disable.*exhaustive-deps'
 
 section 'Styles: colours written out instead of var(--…) (outside the colour variables at the top)'
 awk '/^:root|^\[data-theme|:root\[data-theme/ {inVars=1} inVars && /^}/ {inVars=0; next}
-  !inVars && /#[0-9a-fA-F]{3,8}\b|rgba?\(|hsla?\(/ && !/var\(--/ {print "src/styles.css:" NR ": " $0}' src/styles.css
+  !inVars && /#[0-9a-fA-F]{3,8}\b|rgba?\(|hsla?\(/ && !/var\(--/ {print "src/app/styles.css:" NR ": " $0}' src/app/styles.css
 
 section 'Styles: breakpoints other than 760px (and 860px for lesson mode)'
-grep -nE '@media[^{]*(max|min)-width' src/styles.css | grep -vE '760px|860px' | sed 's|^|src/styles.css:|'
+grep -nE '@media[^{]*(max|min)-width' src/app/styles.css | grep -vE '760px|860px' | sed 's|^|src/app/styles.css:|'
 
 section 'Styles: animations and transitions vs prefers-reduced-motion'
 printf 'animation or transition rules: %s; reduced-motion blocks: %s (each animated part needs one)\n' \
-  "$(grep -cE '^\s*(animation|transition)' src/styles.css)" "$(grep -c 'prefers-reduced-motion' src/styles.css)"
+  "$(grep -cE '^\s*(animation|transition)' src/app/styles.css)" "$(grep -c 'prefers-reduced-motion' src/app/styles.css)"
 
 section 'Styles: classes no component uses (a class built with `${…}` shows up here too: check)'
-for class in $(grep -oE '\.[a-z][a-z0-9-]*[a-z0-9]' src/styles.css | sort -u | sed 's/^\.//'); do
+for class in $(grep -oE '\.[a-z][a-z0-9-]*[a-z0-9]' src/app/styles.css | sort -u | sed 's/^\.//'); do
   grep -rqE --include='*.tsx' --include='*.ts' --include='*.html' \
     "(^|[\"'\` ])$class([\"'\` ]|$)" src index.html || echo ".$class"
 done | grep -vE '^\.(js|ts|tsx|css|svg|png|com|json|md)$'

@@ -1,9 +1,7 @@
 import { useState } from 'react';
 
 import { api, ApiError, BOOK_PARTS, type BookPart } from '@/shared/api';
-import { translator, useTranslation } from '@/shared/i18n/core';
-import { common } from '@/shared/i18n/messages/common';
-import { paper } from '@/shared/i18n/messages/paper';
+import { common, paper, translator, useTranslation } from '@/shared/i18n';
 import { shrinkImage } from '@/shared/lib/image';
 import { asObjectText } from '@/shared/lib/json';
 import { extractPages, pdfPageCount } from '@/shared/lib/pdf';

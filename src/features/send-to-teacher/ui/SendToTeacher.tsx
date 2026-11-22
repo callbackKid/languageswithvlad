@@ -4,9 +4,7 @@ import { findHomework } from '@/entities/homework';
 import { type Lesson } from '@/entities/lesson';
 import { getProgress } from '@/entities/word';
 import { api, ApiError } from '@/shared/api';
-import { useTranslation } from '@/shared/i18n/core';
-import { common } from '@/shared/i18n/messages/common';
-import { homework as homeworkText } from '@/shared/i18n/messages/homework';
+import { common, homework as homeworkText, useTranslation } from '@/shared/i18n';
 import { load, save } from '@/shared/lib/storage';
 
 import { buildReport } from '../model/report';

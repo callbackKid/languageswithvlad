@@ -224,15 +224,15 @@ echo "ANTHROPIC_API_KEY=your-key" > .env.local
 yarn start   # the UI and the api/ functions together (vercel dev)
 ```
 
-| Command                             | What it does                                                  |
-| ----------------------------------- | ------------------------------------------------------------- |
-| `yarn start`                        | Runs the app with its API functions (needs `.env.local`).     |
-| `yarn dev`                          | UI only (Vite); documents won’t load without the API.         |
-| `yarn build`                        | Type-checks and builds into `dist/`.                          |
-| `yarn typecheck`                    | Type-checks the app and the API functions.                    |
-| `yarn lint` / `yarn lint:fix`       | ESLint (with Prettier as a rule); `:fix` repairs what it can. |
-| `yarn format` / `yarn format:check` | Prettier on every file, or only a check.                      |
-| `yarn verify`                       | Lint, format check and typecheck in one go.                   |
+| Command                             | What it does                                                                           |
+| ----------------------------------- | -------------------------------------------------------------------------------------- |
+| `yarn start`                        | Runs the app with its API functions (needs `.env.local`).                              |
+| `yarn dev`                          | UI only (Vite); documents won’t load without the API.                                  |
+| `yarn build`                        | Type-checks and builds into `dist/`.                                                   |
+| `yarn typecheck`                    | Type-checks the app and the API functions.                                             |
+| `yarn lint` / `yarn lint:fix`       | ESLint (with Prettier as a rule); `:fix` repairs what it can.                          |
+| `yarn format` / `yarn format:check` | Prettier on every file, or only a check.                                               |
+| `yarn verify`                       | Lint, format check, typecheck and the FSD layer rules (`yarn fsd`, Steiger) in one go. |
 
 In VS Code, the workspace settings in `.vscode/` format and fix files on save (needs the ESLint and Prettier extensions, which VS Code suggests).
 
@@ -281,15 +281,18 @@ api/                serverless functions (Vercel)
   feedback.ts       bug reports and ideas from students, to Telegram
   call-token.ts     a Zoom signature or a Jitsi (JaaS) token for joining a call inside the app
   health.ts         what the server is set up for
-src/
-  App.tsx           top bar, menu and pages
-  widgets/          big blocks several pages share: word-list (a word list with its exercises), lesson-view
-                    (a lesson with its tabs; the page hands it the word list), word-menu, discussion,
-                    word-notes, next-lesson-badge, feedback
+src/                the app in Feature-Sliced Design layers; a layer imports only from the layers below it
+  app/              the shell: App.tsx (top bar, menu, routing; the Lessons and Document sections are drawn
+                    here), main.tsx, styles.css, TooltipLayer
+  pages/            one slice per section: home, call (lesson mode, with the board, video calls, Make an
+                    exercise and the quiz game), practice, my-words, mistakes, stats, photo, text, tutorial,
+                    news, settings, connect, code-gate; code only one page needs stays inside it
+  widgets/          big blocks several pages share: word-list (a word list with its exercises, flashcards,
+                    match and groups by meaning), lesson-view (a lesson with its tabs; the page hands it the
+                    word list), word-menu, discussion, word-notes, next-lesson-badge, feedback
   features/         one thing the student or teacher does, each a slice with its UI and logic: add-to-doc,
-                    import-book, make-homework, send-to-teacher, look-up-word, star-word, group-words,
-                    conjugate-verb (a verb list with tables, drill and quiz), and the exercises quiz,
-                    flashcards, match, gap-fill, writing-task, quiz-game
+                    import-book, make-homework, send-to-teacher, look-up-word, star-word, conjugate-verb (a
+                    verb list with tables, drill and quiz), quiz, gap-fill, writing-task
   entities/         the app's things, each with its types, Claude normalizers, logic and small UI;
                     used from outside only through its index.ts (@x/ holds what one entity lends another)
     lesson/         Lesson, reading the document, the lesson bank, removed words, quizzes, warm-up, next lesson,
@@ -305,9 +308,7 @@ src/
     config/         routes, settings, the teacher code, languages and tenses, Tutorial cards
     i18n/           interface languages: core.tsx, and messages/ with every text in en, ru, fr, de, es, pt, it
     lib/            storage, dates, the router, speech, images, PDF pages, grading, JSON helpers
-    ui/             PageHead, HelpLink, WaitingFact, Speak, ExerciseHead, CallCard, LanguagePicker
-  components/       one file per page or exercise (moving into the FSD layers)
-  lib/              types and Claude normalizers of pages not yet moved (Text, Photo, Make an exercise)
+    ui/             PageHead, HelpLink, WaitingFact, Speak, ExerciseHead, CallCard, LanguagePicker, Avatar
 public/             the app icon (icon.svg and the PNGs drawn from it) and manifest.webmanifest
 ```
 

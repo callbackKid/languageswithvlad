@@ -1,8 +1,15 @@
 /* Which tenses a student has learned, so quizzes don't ask an A0 student for the passé composé.
    By default it follows the level; a student who ticks tenses in Settings overrides it for that
    language. The Verbs tab still shows every tense: there the student picks one on purpose. */
-import { type Tense, TENSES_BY_LANGUAGE, type VerbLanguage } from '@/shared/config/languages';
-import { getSettings, type Level, LEVELS, type Settings } from '@/shared/config/settings';
+import {
+  getSettings,
+  type Level,
+  LEVELS,
+  type Settings,
+  type Tense,
+  TENSES_BY_LANGUAGE,
+  type VerbLanguage,
+} from '@/shared/config';
 
 // The level at which each tense is usually taught: a quiz asks the tenses up to the student's.
 const FIRST_LEVEL: {

@@ -1,6 +1,6 @@
 import { type VerbRef } from '@/entities/verb/@x/lesson';
 import { type Pair, type Word } from '@/entities/word/@x/lesson';
-import { type Language } from '@/shared/config/languages';
+import { type Language } from '@/shared/config';
 
 export interface Analysis {
   language: Language;

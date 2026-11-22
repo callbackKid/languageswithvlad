@@ -3,8 +3,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { type Conjugation, normalizeConjugation, type VerbRef } from '@/entities/verb/@x/lesson';
 import { type Pair, type Word, wordKey } from '@/entities/word/@x/lesson';
 import { api } from '@/shared/api';
-import { isVerbLanguage, type VerbLanguage } from '@/shared/config/languages';
-import { useSettings } from '@/shared/config/settings';
+import { isVerbLanguage, useSettings, type VerbLanguage } from '@/shared/config';
 import { loadChecked, save } from '@/shared/lib/storage';
 
 import { languageOfLesson, localParse, markKeyWords } from '../lib/document';

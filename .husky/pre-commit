@@ -3,3 +3,5 @@
 yarn -s lint-staged
 # 2. the whole project must still typecheck, app and server
 yarn -s typecheck
+# 3. the FSD layer rules (steiger.config.js)
+yarn -s fsd

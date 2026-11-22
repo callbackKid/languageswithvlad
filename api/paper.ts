@@ -18,7 +18,7 @@ import {
    - "exercises": a student's book pages (photos or PDF pages) copied out as text for a lesson: the
      exercises, the reading text and/or the grammar (body.parts), never their answers. */
 
-// keep in step with MAX_PAGES in src/components/HandwrittenNotes.tsx
+// keep in step with MAX_PAGES in src/pages/photo/ui/HandwrittenNotes.tsx
 const MAX_HANDWRITTEN_PAGES = 4;
 // The app cuts the chosen pages out of the PDF before sending; Vercel refuses bodies over 4.5 MB.
 // Keep in step with MAX_BASE64_LENGTH in src/shared/lib/pdf.ts.

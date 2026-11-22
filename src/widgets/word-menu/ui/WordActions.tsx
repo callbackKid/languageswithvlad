@@ -20,10 +20,8 @@ import {
 } from '@/features/look-up-word';
 import { Star } from '@/features/star-word';
 import { api, ApiError } from '@/shared/api';
-import { TENSES_BY_LANGUAGE } from '@/shared/config/languages';
-import { translator, useTranslation } from '@/shared/i18n/core';
-import { common } from '@/shared/i18n/messages/common';
-import { wordActions } from '@/shared/i18n/messages/wordActions';
+import { TENSES_BY_LANGUAGE } from '@/shared/config';
+import { common, translator, useTranslation, wordActions } from '@/shared/i18n';
 import Speak from '@/shared/ui/Speak';
 import WaitingFact from '@/shared/ui/WaitingFact';
 

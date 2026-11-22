@@ -1,7 +1,6 @@
 import { type PhotoItem, type Word } from '@/entities/word';
 import { Star } from '@/features/star-word';
-import { useTranslation } from '@/shared/i18n/core';
-import { paper } from '@/shared/i18n/messages/paper';
+import { paper, useTranslation } from '@/shared/i18n';
 import Speak from '@/shared/ui/Speak';
 
 // What goes onto Words to learn: the dictionary form when there is one.

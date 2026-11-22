@@ -1,8 +1,7 @@
 import { type ReactNode, useEffect, useState } from 'react';
 
 import { parseNextLesson } from '@/entities/lesson';
-import { useTranslation } from '@/shared/i18n/core';
-import { app } from '@/shared/i18n/messages/app';
+import { app, useTranslation } from '@/shared/i18n';
 import { daysBetween } from '@/shared/lib/dates';
 
 /** The next lesson's date and time, read from the newest "le cours prochain:" / "next lesson:" line in

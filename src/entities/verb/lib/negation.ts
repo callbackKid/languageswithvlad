@@ -1,4 +1,4 @@
-import { type Tense } from '@/shared/config/languages';
+import { type Tense } from '@/shared/config';
 
 import { type Form } from '../model/types';
 

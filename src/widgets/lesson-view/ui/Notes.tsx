@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-import { useTranslation } from '@/shared/i18n/core';
-import { common } from '@/shared/i18n/messages/common';
+import { common, useTranslation } from '@/shared/i18n';
 import { load, save } from '@/shared/lib/storage';
 
 // A notepad, saved on this device as the student types.

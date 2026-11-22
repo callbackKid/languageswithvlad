@@ -1,4 +1,4 @@
-import { TENSES_BY_LANGUAGE, type VerbLanguage } from '@/shared/config/languages';
+import { TENSES_BY_LANGUAGE, type VerbLanguage } from '@/shared/config';
 import { asArray, asObject } from '@/shared/lib/json';
 import { asText } from '@/shared/lib/util';
 

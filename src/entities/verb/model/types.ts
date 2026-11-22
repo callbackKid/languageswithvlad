@@ -1,4 +1,4 @@
-import { type Language, type Tense, type VerbLanguage } from '@/shared/config/languages';
+import { type Language, type Tense, type VerbLanguage } from '@/shared/config';
 
 export interface VerbRef {
   inf: string;

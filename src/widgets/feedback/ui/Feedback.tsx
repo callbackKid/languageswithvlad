@@ -1,10 +1,8 @@
 import { type ClipboardEvent, type DragEvent, useEffect, useRef, useState } from 'react';
 
 import { api, ApiError, type FeedbackKind } from '@/shared/api';
-import { getSettings, isDark } from '@/shared/config/settings';
-import { useTranslation } from '@/shared/i18n/core';
-import { common } from '@/shared/i18n/messages/common';
-import { talk } from '@/shared/i18n/messages/talk';
+import { getSettings, isDark } from '@/shared/config';
+import { common, talk, useTranslation } from '@/shared/i18n';
 import { type ImagePayload, shrinkImage } from '@/shared/lib/image';
 import { load, save } from '@/shared/lib/storage';
 

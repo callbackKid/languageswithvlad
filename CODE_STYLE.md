@@ -4,15 +4,15 @@ The rules for all code in this repository. Rules marked 🤖 are checked by tool
 
 ## How the rules are enforced
 
-| When               | What runs                                                                                            |
-| ------------------ | ---------------------------------------------------------------------------------------------------- |
-| On save in VS Code | Prettier formats the file, ESLint fixes what it can (`.vscode/settings.json`).                       |
-| Before each commit | The hook in `.husky/pre-commit`: ESLint with fixes and Prettier on the staged files, then typecheck. |
-| Any time           | `yarn verify` runs lint, the format check and the typecheck for the whole project.                   |
+| When               | What runs                                                                                                        |
+| ------------------ | ---------------------------------------------------------------------------------------------------------------- |
+| On save in VS Code | Prettier formats the file, ESLint fixes what it can (`.vscode/settings.json`).                                   |
+| Before each commit | The hook in `.husky/pre-commit`: ESLint with fixes and Prettier on the staged files, then typecheck and Steiger. |
+| Any time           | `yarn verify` runs lint, the format check, the typecheck and Steiger (FSD layers) for the whole project.         |
 
 A commit that breaks a 🤖 rule is refused; fix the problem and commit again. `yarn lint:fix` and `yarn format` fix everything fixable at once. Don't skip the hook with `--no-verify`.
 
-The hook is installed by `yarn install` (the `prepare` script). The checkable rules live in `eslint.config.js`, `.prettierrc.js` and the two `tsconfig.json` files; when a rule here changes, change it there too.
+The hook is installed by `yarn install` (the `prepare` script). The checkable rules live in `eslint.config.js`, `.prettierrc.js`, `steiger.config.js` and the two `tsconfig.json` files; when a rule here changes, change it there too.
 
 ## Formatting 🤖
 
@@ -43,15 +43,15 @@ Prettier decides: 100 columns, single quotes, semicolons, trailing commas where 
 ## Imports 🤖
 
 - Sorted automatically into one order: side-effect imports, packages, then project files. Don't reorder by hand.
-- `src/` is moving to [Feature-Sliced Design](https://feature-sliced.design/) layers: `app` → `pages` → `widgets` → `features` → `entities` → `shared`. A file imports only from layers below its own, and slices of one layer don't import each other.
-- Between slices (and between segments of `shared`), import through the `@/` alias: `@/shared/lib/storage`, `@/shared/i18n/core`. Inside one slice or segment, use relative paths. Code not moved yet (`src/components/`, `src/lib/`) imports its old neighbours relatively.
+- `src/` follows [Feature-Sliced Design](https://feature-sliced.design/): layers `app` → `pages` → `widgets` → `features` → `entities` → `shared`. A file imports only from layers below its own, and slices of one layer don't import each other 🤖 (Steiger, `steiger.config.js`, in `yarn verify` and the pre-commit hook). New code goes in the lowest layer that has everything it needs, and into the page that uses it until a second page needs it too.
+- Between slices (and between segments of `shared`), import through the `@/` alias; inside one slice or segment, use relative paths. `shared/lib` and `shared/ui` are imported file by file (`@/shared/lib/storage`, `@/shared/ui/PageHead`); `shared/api`, `shared/config` and `shared/i18n` through their `index.ts` (`@/shared/i18n`).
 - A slice of `entities`, `features`, `widgets` or `pages` is used from outside only through its `index.ts` (`@/entities/word`, not `@/entities/word/model/progress`); add a name there when another layer needs it. When one entity needs another (a lesson holds words), it imports from that entity's `@x/<its own name>.ts` (`@/entities/word/@x/lesson`), which lists exactly what is lent.
 - No `import React`; import what is used: `import { type ReactNode, useState } from 'react'`.
 - Heavy libraries are loaded with `import()` where they are needed (pdf-lib, the Zoom SDK, Excalidraw), never at the top of a file that every page loads.
 
 ## React
 
-- Function components, default-exported, one main component per file. Small helper components used only by it may live in the same file.
+- Function components, default-exported, one main component per file; a slice's `index.ts` exports it by name (`export { default as WordsTab } from './ui/WordsTab'`). Small helper components used only by it may live in the same file.
 - Props are typed inline next to the destructuring; shared shapes are exported interfaces.
 - The rules of hooks and complete dependency lists 🤖. Don't silence `react-hooks/exhaustive-deps`: if an effect must not re-run for some value, read that value when it is needed (a ref, or `translator(messages)` for a text) instead of leaving it out of the list.
 - **Rendering and state updaters are pure.** No saving, no `URL.createObjectURL`, no requests inside `setState((previous) => …)` or in the component body: React may run them twice. Do the side effect next to the `setState` call or in an effect.
@@ -66,7 +66,7 @@ Prettier decides: 100 columns, single quotes, semicolons, trailing commas where 
 
 - `localStorage` only through `load` / `save` / `remove` in `src/shared/lib/storage.ts`. Anything read back is checked before use (see `sanitize` in `settings.ts`).
 - Stores shared between pages (`settings.ts`, `entities/word/model/progress.ts`, `shared/i18n/core.tsx`) expose a hook built on `useSyncExternalStore` and plain getters for code outside React. Their snapshot is a new object whenever something changed.
-- Logic without UI is plain functions in the `lib/` and `model/` segments of a slice (`src/entities/verb/lib/negation.ts`), or in `src/lib/` for code not moved yet, so it can be tested without a browser. Components call it; they don't contain parsing, grading or date arithmetic.
+- Logic without UI is plain functions in the `lib/` and `model/` segments of a slice (`src/entities/verb/lib/negation.ts`), so it can be tested without a browser. Components call it; they don't contain parsing, grading or date arithmetic.
 
 ## Texts
 
@@ -96,7 +96,7 @@ Prettier decides: 100 columns, single quotes, semicolons, trailing commas where 
 - Comments are in English and stay true: when the code changes, change or delete the comment.
 - An `eslint-disable` needs a reason on the same line, and is the last resort.
 
-## Styles (`src/styles.css`)
+## Styles (`src/app/styles.css`)
 
 - The file is divided into titled sections: the colour variables, Base, Shared pieces, App shell, then one section per page. A new rule goes into the section of the page or part it styles, next to the rules for the same element; a selector is defined once.
 - Rules for narrow screens and for reduced motion sit at the end of their section, not at the end of the file. There is one phone breakpoint, `max-width: 760px` (lesson mode also folds its two columns at 860px).

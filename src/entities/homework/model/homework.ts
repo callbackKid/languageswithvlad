@@ -4,7 +4,7 @@ import {
   type TENSES_BY_LANGUAGE,
   VERB_LANGUAGES,
   type VerbLanguage,
-} from '@/shared/config/languages';
+} from '@/shared/config';
 import { hash } from '@/shared/lib/util';
 
 /* "Devoirs: verbes être, avoir — présent; mots de la leçon 5; 5 phrases au passé composé"

@@ -1,12 +1,11 @@
-import { type Language, type VerbLanguage } from '@/shared/config/languages';
-import { getSettings } from '@/shared/config/settings';
-import { getTeacherCode } from '@/shared/config/teacher';
-import { translator } from '@/shared/i18n/core';
-import { common } from '@/shared/i18n/messages/common';
+import { getSettings, getTeacherCode, type Language, type VerbLanguage } from '@/shared/config';
+import { common, translator } from '@/shared/i18n';
 import { type ImagePayload } from '@/shared/lib/image';
 import { load } from '@/shared/lib/storage';
 
 import { type BoardServer } from './boardSync';
+
+export * from './boardSync';
 
 export type FeedbackKind = 'bug' | 'idea' | 'other';
 export interface FeedbackReport {

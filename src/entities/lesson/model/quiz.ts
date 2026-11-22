@@ -1,6 +1,6 @@
 import { type Conjugation, knownTenses, negate, type VerbRef } from '@/entities/verb/@x/lesson';
 import { formKey, isLearned, type Progress, type Word, wordKey } from '@/entities/word/@x/lesson';
-import { type Tense } from '@/shared/config/languages';
+import { type Tense } from '@/shared/config';
 import { canSpeak } from '@/shared/lib/speech';
 import { shuffle } from '@/shared/lib/util';
 

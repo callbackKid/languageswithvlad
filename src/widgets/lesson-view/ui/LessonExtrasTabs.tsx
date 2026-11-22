@@ -9,10 +9,8 @@ import {
 import { GapRound } from '@/features/gap-fill';
 import { BookImport } from '@/features/import-book';
 import { api } from '@/shared/api';
-import { type Language } from '@/shared/config/languages';
-import { getSettings } from '@/shared/config/settings';
-import { getUiLanguage, useTranslation } from '@/shared/i18n/core';
-import { paper } from '@/shared/i18n/messages/paper';
+import { getSettings, type Language } from '@/shared/config';
+import { getUiLanguage, paper, useTranslation } from '@/shared/i18n';
 import { followLink, hrefFor } from '@/shared/lib/router';
 import { loadTexts, save } from '@/shared/lib/storage';
 

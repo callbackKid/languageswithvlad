@@ -7,11 +7,14 @@ import {
   type WritingCheck,
 } from '@/entities/homework';
 import { api, ApiError } from '@/shared/api';
-import { type Language } from '@/shared/config/languages';
-import { getSettings } from '@/shared/config/settings';
-import { getUiLanguage, translator, useTranslation } from '@/shared/i18n/core';
-import { common } from '@/shared/i18n/messages/common';
-import { homework as homeworkText } from '@/shared/i18n/messages/homework';
+import { getSettings, type Language } from '@/shared/config';
+import {
+  common,
+  getUiLanguage,
+  homework as homeworkText,
+  translator,
+  useTranslation,
+} from '@/shared/i18n';
 import { loadChecked, save } from '@/shared/lib/storage';
 import ExerciseHead from '@/shared/ui/ExerciseHead';
 import WaitingFact from '@/shared/ui/WaitingFact';

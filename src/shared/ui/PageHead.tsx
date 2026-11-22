@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-import { type GuideId } from '@/shared/config/guides';
+import { type GuideId } from '@/shared/config';
 
 import HelpLink from './HelpLink';
 

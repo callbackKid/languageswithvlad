@@ -5,7 +5,7 @@ import {
   type Language,
   type Tense,
   TENSES_BY_LANGUAGE,
-} from '@/shared/config/languages';
+} from '@/shared/config';
 import { asText } from '@/shared/lib/util';
 
 /* The "Devoirs:" block for homework Claude made from a lesson, in the lesson's language and in

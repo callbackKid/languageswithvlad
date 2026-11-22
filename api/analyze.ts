@@ -27,14 +27,14 @@ const MAX_KEY_WORD_LENGTH = 80;
 const MIN_TRANSLATE_SENTENCES = 2;
 const MAX_TRANSLATE_SENTENCES = 8;
 const DEFAULT_TRANSLATE_SENTENCES = 4;
-// a made exercise: its questions (keep in step with src/components/MakeExercise.tsx), the grammar
+// a made exercise: its questions (keep in step with src/pages/call/ui/MakeExercise.tsx), the grammar
 // point as the teacher types it, and the lesson's words it practises
 const MIN_EXERCISE_QUESTIONS = 3;
 const MAX_EXERCISE_QUESTIONS = 15;
 const DEFAULT_EXERCISE_QUESTIONS = 8;
 const MAX_GRAMMAR_LENGTH = 200;
 const MAX_EXERCISE_WORDS = 30;
-// words sorted into groups in one request (keep in step with src/features/group-words/model/wordGroups.ts), each word
+// words sorted into groups in one request (keep in step with src/widgets/word-list/model/wordGroups.ts), each word
 // and translation this long, and the group names the student's other words already have
 const MAX_GROUP_WORDS = 60;
 const MAX_WORD_LENGTH = 80;

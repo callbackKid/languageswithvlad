@@ -55,7 +55,7 @@ Read the changed components against CODE_STYLE.md, section Accessibility, and al
 
 ## Reporting
 
-Group findings by rule, most severe first, with the page, theme and selector; say which are in the changed code and which were already there. Fix contrast through the colour variables at the top of `src/styles.css` (both themes), not per element.
+Group findings by rule, most severe first, with the page, theme and selector; say which are in the changed code and which were already there. Fix contrast through the colour variables at the top of `src/app/styles.css` (both themes), not per element.
 
 ## Known findings
 

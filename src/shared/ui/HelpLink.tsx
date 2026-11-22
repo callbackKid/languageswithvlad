@@ -1,6 +1,5 @@
-import { type GuideId, guidePath } from '@/shared/config/guides';
-import { useTranslation } from '@/shared/i18n/core';
-import { common } from '@/shared/i18n/messages/common';
+import { type GuideId, guidePath } from '@/shared/config';
+import { common, useTranslation } from '@/shared/i18n';
 import { followLink, hrefFor } from '@/shared/lib/router';
 
 // A round "?" next to a page's title that opens the page's card in the Tutorial.

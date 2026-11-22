@@ -10,7 +10,7 @@ The code rules are in CODE_STYLE.md and are binding; follow them from the first 
 
 ## Commands
 
-- `yarn verify` — lint, format check and typecheck for everything. Run it before saying a change is done.
+- `yarn verify` — lint, format check, typecheck and the FSD layer rules (`yarn fsd`, Steiger) for everything. Run it before saying a change is done.
 - `yarn typecheck` — app and `api/` together. Don't use `tsc -p .` alone, it misses `api/`.
 - `yarn lint:fix`, `yarn format` — fix what can be fixed automatically.
 - `yarn start` — UI with the API functions (needs `.env.local`); `yarn dev` — UI only.
@@ -19,7 +19,7 @@ The code rules are in CODE_STYLE.md and are binding; follow them from the first 
 
 - **Check UI changes in the running app**, not just with the typecheck: the changed page and its neighbours, light and dark theme, 390 px wide.
 - **Stored data is in students' browsers.** Field names of stored or Claude-returned data (`fr`, `ru`, `tr`, `p`, `f`, `inf`, `a`, `b`, `n`…) never change. Changing the shape of a cached value needs a migration on read (see `readAnalysis` / `readConjugation` in `src/entities/lesson/model/bank.ts`) or a new key version (`an2:` → `an3:`); a new key makes every student re-pay Claude for every lesson, so ask before bumping it.
-- **Prompts** live only in `api/_lib/prompts.ts`; whatever Claude returns goes through a `normalizeX` function: in the entity it belongs to (`src/entities/*/model/normalize.ts`), or in `src/lib/parse.ts` until the rest moves.
+- **Prompts** live only in `api/_lib/prompts.ts`; whatever Claude returns goes through a `normalizeX` function in the `model/normalize.ts` of the slice it belongs to (`src/entities/lesson/model/normalize.ts`, `src/pages/text/model/normalize.ts`…).
 - **Texts**: every new interface text in all seven languages in `src/shared/i18n/messages/`; write the English, then hand the other six to the `translator` subagent. A change students will notice gets an entry in `src/entities/news/model/news.ts` (text only, no pictures; an entry about the teacher's tools gets `audience: 'teacher'`); a finished TODO item is removed from `TODO.md`.
 - **Teacher's tools** (only Make homework so far) are shown only with the teacher code (`useTeacher()` in `src/shared/config/teacher.ts`), and the server checks it too (`checkTeacher` in `api/_lib/http.ts`). A new one does both.
 - **Help and tooltips**: a new page passes `guide` to `PageHead` (its Tutorial card, `src/shared/config/guides.ts`); an icon or icon button has `data-tooltip`, never `title`.

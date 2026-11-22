@@ -1,4 +1,4 @@
-import { type Language } from '@/shared/config/languages';
+import { type Language } from '@/shared/config';
 
 export interface Word {
   fr: string;

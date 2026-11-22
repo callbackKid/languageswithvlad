@@ -1,5 +1,4 @@
-import { translator } from '@/shared/i18n/core';
-import { paper } from '@/shared/i18n/messages/paper';
+import { paper, translator } from '@/shared/i18n';
 /* Cutting pages out of a PDF in the browser, so only the chapter is uploaded: Vercel accepts
    at most 4.5 MB per request and whole textbooks are much larger. pdf-lib is loaded only when
    a PDF is actually opened, so it doesn't slow down the rest of the app. */

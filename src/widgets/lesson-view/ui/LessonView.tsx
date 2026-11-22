@@ -18,12 +18,14 @@ import {
 import { VerbsTab } from '@/features/conjugate-verb';
 import { MakeHomework } from '@/features/make-homework';
 import { api, ApiError } from '@/shared/api';
-import { isVerbLanguage } from '@/shared/config/languages';
-import { LESSON_TABS, type LessonTab, useSettings } from '@/shared/config/settings';
-import { useTeacher } from '@/shared/config/teacher';
-import { getUiLanguage, translator, useTranslation } from '@/shared/i18n/core';
-import { common } from '@/shared/i18n/messages/common';
-import { paper } from '@/shared/i18n/messages/paper';
+import {
+  isVerbLanguage,
+  LESSON_TABS,
+  type LessonTab,
+  useSettings,
+  useTeacher,
+} from '@/shared/config';
+import { common, getUiLanguage, paper, translator, useTranslation } from '@/shared/i18n';
 import { loadChecked, save } from '@/shared/lib/storage';
 import { shownTopic } from '@/shared/lib/util';
 import HelpLink from '@/shared/ui/HelpLink';

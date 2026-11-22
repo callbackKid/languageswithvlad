@@ -1,8 +1,7 @@
 import { type ReactNode, useEffect, useState } from 'react';
 
-import { type Language } from '@/shared/config/languages';
-import { useTranslation } from '@/shared/i18n/core';
-import { common } from '@/shared/i18n/messages/common';
+import { type Language } from '@/shared/config';
+import { common, useTranslation } from '@/shared/i18n';
 import { FACTS } from '@/shared/lib/facts';
 
 // long enough to read a phrase and its note; "Next fact" is there for faster readers

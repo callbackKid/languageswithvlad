@@ -2,10 +2,8 @@ import { type FormEvent, type ReactNode, useEffect, useRef, useState } from 'rea
 
 import { dictationForm, type QuizItem } from '@/entities/lesson';
 import { recordForm, recordWord, Transcription } from '@/entities/word';
-import { type Language, languageOfTense } from '@/shared/config/languages';
-import { useTranslation } from '@/shared/i18n/core';
-import { common, learning } from '@/shared/i18n/messages/common';
-import { exercises } from '@/shared/i18n/messages/exercises';
+import { type Language, languageOfTense } from '@/shared/config';
+import { common, exercises, learning, useTranslation } from '@/shared/i18n';
 import { grade } from '@/shared/lib/grade';
 import { speak } from '@/shared/lib/speech';
 import ExerciseHead from '@/shared/ui/ExerciseHead';

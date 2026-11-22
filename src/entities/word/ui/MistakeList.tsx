@@ -1,6 +1,5 @@
-import { languageOfTense } from '@/shared/config/languages';
-import { useTranslation } from '@/shared/i18n/core';
-import { common } from '@/shared/i18n/messages/common';
+import { languageOfTense } from '@/shared/config';
+import { common, useTranslation } from '@/shared/i18n';
 
 import { type FormStat, type WordStat } from '../model/progress';
 import Transcription from './Transcription';

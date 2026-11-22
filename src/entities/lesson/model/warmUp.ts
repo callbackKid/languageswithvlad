@@ -1,6 +1,5 @@
 import { isLearned, type Progress, statWord, type Word } from '@/entities/word/@x/lesson';
-import { languageOfTense, type Tense } from '@/shared/config/languages';
-import { getSettings, isStudied } from '@/shared/config/settings';
+import { getSettings, isStudied, languageOfTense, type Tense } from '@/shared/config';
 import { startOfDay } from '@/shared/lib/dates';
 
 import { type Bank } from './bank';

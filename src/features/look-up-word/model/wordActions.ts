@@ -3,7 +3,7 @@
    never asked twice), and the line a card adds to a lesson in the document. */
 
 import { normalizeWordCard, type PhotoItem, type Word, type WordCard } from '@/entities/word';
-import { type Language, LANGUAGES } from '@/shared/config/languages';
+import { type Language, LANGUAGES } from '@/shared/config';
 import { asFields, load, save } from '@/shared/lib/storage';
 import { hash } from '@/shared/lib/util';
 

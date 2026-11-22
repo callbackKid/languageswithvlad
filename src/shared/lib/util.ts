@@ -1,4 +1,4 @@
-import { type UiLanguage } from '@/shared/i18n/core';
+import { type UiLanguage } from '@/shared/i18n';
 
 // the download has started by then, so the file's address can be let go (milliseconds)
 const RELEASE_AFTER = 1000;

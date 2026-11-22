@@ -1,9 +1,8 @@
 import { type Homework, homeworkKey, normalizeWriting, writingKey } from '@/entities/homework';
 import { type Lesson } from '@/entities/lesson';
 import { isLearned, type Progress } from '@/entities/word';
-import { getSettings, isStudied } from '@/shared/config/settings';
-import { translator } from '@/shared/i18n/core';
-import { homework as homeworkText } from '@/shared/i18n/messages/homework';
+import { getSettings, isStudied } from '@/shared/config';
+import { homework as homeworkText, translator } from '@/shared/i18n';
 import { dayKey, startOfDay } from '@/shared/lib/dates';
 import { loadChecked, loadTexts } from '@/shared/lib/storage';
 

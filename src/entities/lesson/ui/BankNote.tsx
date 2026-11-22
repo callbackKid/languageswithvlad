@@ -1,5 +1,4 @@
-import { useTranslation } from '@/shared/i18n/core';
-import { common } from '@/shared/i18n/messages/common';
+import { common, useTranslation } from '@/shared/i18n';
 
 import { type Bank } from '../model/bank';
 

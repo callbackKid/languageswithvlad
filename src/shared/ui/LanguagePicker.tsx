@@ -1,5 +1,4 @@
-import { setUiLanguage, UI_LANGUAGES, type UiLanguage, useTranslation } from '@/shared/i18n/core';
-import { app } from '@/shared/i18n/messages/app';
+import { app, setUiLanguage, UI_LANGUAGES, type UiLanguage, useTranslation } from '@/shared/i18n';
 
 // The dropdown in the top bar that changes the language of the interface.
 export default function LanguagePicker() {

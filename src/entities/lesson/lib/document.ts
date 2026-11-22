@@ -1,5 +1,5 @@
 import { splitTranscription, type Word } from '@/entities/word/@x/lesson';
-import { type Language } from '@/shared/config/languages';
+import { type Language } from '@/shared/config';
 import { hash } from '@/shared/lib/util';
 
 import { type Analysis, type Lesson, type LessonWord } from '../model/types';

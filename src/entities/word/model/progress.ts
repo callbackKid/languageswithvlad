@@ -1,7 +1,12 @@
 import { useSyncExternalStore } from 'react';
 
-import { asLanguage, type Language, languageOfTense } from '@/shared/config/languages';
-import { getSettings, isStudied } from '@/shared/config/settings';
+import {
+  asLanguage,
+  getSettings,
+  isStudied,
+  type Language,
+  languageOfTense,
+} from '@/shared/config';
 import { dayKey } from '@/shared/lib/dates';
 import { asFields, loadChecked, save } from '@/shared/lib/storage';
 

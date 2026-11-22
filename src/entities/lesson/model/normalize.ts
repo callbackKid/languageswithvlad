@@ -1,6 +1,6 @@
 import { type VerbRef } from '@/entities/verb/@x/lesson';
 import { type Pair, withTranscription, type Word } from '@/entities/word/@x/lesson';
-import { asLanguage } from '@/shared/config/languages';
+import { asLanguage } from '@/shared/config';
 import { asArray, asObject, asTexts } from '@/shared/lib/json';
 import { asText } from '@/shared/lib/util';
 

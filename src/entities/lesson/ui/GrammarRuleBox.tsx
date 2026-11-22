@@ -1,8 +1,7 @@
 import type { ReactNode } from 'react';
 
-import { type Language } from '@/shared/config/languages';
-import { useTranslation } from '@/shared/i18n/core';
-import { talk } from '@/shared/i18n/messages/talk';
+import { type Language } from '@/shared/config';
+import { talk, useTranslation } from '@/shared/i18n';
 import Speak from '@/shared/ui/Speak';
 
 import { type GrammarRule } from '../model/types';

@@ -1,4 +1,4 @@
-import { isVerbLanguage, type Language, type VerbLanguage } from '@/shared/config/languages';
+import { isVerbLanguage, type Language, type VerbLanguage } from '@/shared/config';
 
 import { type Conjugation } from '../model/types';
 

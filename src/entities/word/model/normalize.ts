@@ -1,4 +1,4 @@
-import { asLanguage, type Language } from '@/shared/config/languages';
+import { asLanguage, type Language } from '@/shared/config';
 import { asArray, asObject } from '@/shared/lib/json';
 import { asText } from '@/shared/lib/util';
 
