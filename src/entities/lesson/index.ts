@@ -52,3 +52,4 @@ export {
 } from './model/types';
 export { prepareRound, previousLesson, warmUpRound } from './model/warmUp';
 export { default as BankNote } from './ui/BankNote';
+export { default as GrammarRuleBox } from './ui/GrammarRuleBox';

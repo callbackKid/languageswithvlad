@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { Fragment, type ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 
 import { homeworkItems, homeworkKey } from '@/entities/homework';
 import {
@@ -15,6 +15,7 @@ import {
   useRemoved,
   withoutRemoved,
 } from '@/entities/lesson';
+import { VerbsTab } from '@/features/conjugate-verb';
 import { MakeHomework } from '@/features/make-homework';
 import { api, ApiError } from '@/shared/api';
 import { isVerbLanguage } from '@/shared/config/languages';
@@ -31,13 +32,19 @@ import WaitingFact from '@/shared/ui/WaitingFact';
 import LessonDrawings from './LessonDrawings';
 import { BookTab, GrammarTab, HomeworkTab } from './LessonExtrasTabs';
 import Notes from './Notes';
-import VerbsTab from './VerbsTab';
-import WordsTab from './WordsTab';
 
 type Tab = LessonTab;
 const EXTRA_TABS: Tab[] = ['grammar', 'homework', 'book'];
 
 // One lesson's page: its heading and its tabs (Words, Verbs, Grammar, Homework, Book exercises, My notes, Original).
+// What LessonView hands the word list it shows in its Words tab.
+export interface LessonWordsProps {
+  analysis: Analysis;
+  hasClaude: boolean;
+  lessonKey: string;
+  onRefresh?: () => void;
+}
+
 export default function LessonView({
   lesson,
   docId,
@@ -45,6 +52,7 @@ export default function LessonView({
   docWriter,
   onAnalysis,
   isNewest = false,
+  renderWords,
 }: {
   lesson: Lesson;
   docId: string;
@@ -55,6 +63,9 @@ export default function LessonView({
   onAnalysis?: (lessonKey: string, analysis: Analysis) => void;
   // the newest lesson in the document, whose homework Home shows with an exercise per task
   isNewest?: boolean;
+  /** the Words tab's list, given by the page: it is another widget (word-list), and one widget
+      can't import another */
+  renderWords: (props: LessonWordsProps) => ReactNode;
 }) {
   const { t, locale, language: uiLanguage } = useTranslation(paper);
   const commonText = useTranslation(common);
@@ -245,18 +256,17 @@ export default function LessonView({
         <div className="body">
           {(tab === 'words' || tab === 'verbs') && note}
           {tab === 'words' && tagged && (
-            <WordsTab
-              key={lesson.hash + (tagged.local ? 'l' : 'c')}
-              analysis={tagged}
-              hasClaude={hasClaude && !tagged.local}
-              grouped
-              lessonKey={lesson.key}
-              onRefresh={
-                hasClaude && state === 'ready' && !tagged.local
-                  ? () => setFresh((previous) => previous + 1)
-                  : undefined
-              }
-            />
+            <Fragment key={lesson.hash + (tagged.local ? 'l' : 'c')}>
+              {renderWords({
+                analysis: tagged,
+                hasClaude: hasClaude && !tagged.local,
+                lessonKey: lesson.key,
+                onRefresh:
+                  hasClaude && state === 'ready' && !tagged.local
+                    ? () => setFresh((previous) => previous + 1)
+                    : undefined,
+              })}
+            </Fragment>
           )}
           {tab === 'verbs' && analysis && !isVerbLanguage(analysis.language) && (
             <p className="empty">{t('noEnglishVerbTables')}</p>

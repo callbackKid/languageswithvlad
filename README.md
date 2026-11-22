@@ -283,15 +283,22 @@ api/                serverless functions (Vercel)
   health.ts         what the server is set up for
 src/
   App.tsx           top bar, menu and pages
+  widgets/          big blocks several pages share: word-list (a word list with its exercises), lesson-view
+                    (a lesson with its tabs; the page hands it the word list), word-menu, discussion,
+                    word-notes, next-lesson-badge, feedback
   features/         one thing the student or teacher does, each a slice with its UI and logic: add-to-doc,
-                    import-book, make-homework, send-to-teacher, look-up-word, star-word, group-words, and the
-                    exercises quiz, flashcards, match, gap-fill, writing-task, quiz-game
+                    import-book, make-homework, send-to-teacher, look-up-word, star-word, group-words,
+                    conjugate-verb (a verb list with tables, drill and quiz), and the exercises quiz,
+                    flashcards, match, gap-fill, writing-task, quiz-game
   entities/         the app's things, each with its types, Claude normalizers, logic and small UI;
                     used from outside only through its index.ts (@x/ holds what one entity lends another)
-    lesson/         Lesson, reading the document, the lesson bank, removed words, quizzes, warm-up, next lesson
-    word/           Word, progress, transcription, word notes and cards (from photos, texts, the word menu)
+    lesson/         Lesson, reading the document, the lesson bank, removed words, quizzes, warm-up, next lesson,
+                    the grammar rule box
+    word/           Word, progress, transcription, word notes and cards (from photos, texts, the word menu),
+                    the list of mistakes
     verb/           verb types, tenses, negation, futur proche, verb groups, the conjugation table
     homework/       the homework line and written answers
+    board/          what the live board sends and saves, checked
     news/           the News entries
   shared/           code that knows nothing of lessons or words (Feature-Sliced Design's lowest layer)
     api/            the client for the functions in api/, and the live board's connection
@@ -300,7 +307,7 @@ src/
     lib/            storage, dates, the router, speech, images, PDF pages, grading, JSON helpers
     ui/             PageHead, HelpLink, WaitingFact, Speak, ExerciseHead, CallCard, LanguagePicker
   components/       one file per page or exercise (moving into the FSD layers)
-  lib/              types and Claude normalizers of pages not yet moved (Text, Photo, Discuss, Make an exercise), the board's payload
+  lib/              types and Claude normalizers of pages not yet moved (Text, Photo, Make an exercise)
 public/             the app icon (icon.svg and the PNGs drawn from it) and manifest.webmanifest
 ```
 

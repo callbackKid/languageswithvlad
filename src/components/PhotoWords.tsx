@@ -11,9 +11,9 @@ import { paper } from '@/shared/i18n/messages/paper';
 import { shrinkImage } from '@/shared/lib/image';
 import { asFields, loadChecked, save } from '@/shared/lib/storage';
 import WaitingFact from '@/shared/ui/WaitingFact';
+import { WordNotesTable } from '@/widgets/word-notes';
 
 import { mergePhotoItems, normalizePhoto } from '../lib/parse';
-import WordNotesTable from './WordNotesTable';
 
 const LAST_KEY = 'photo:last';
 // long side in pixels: enough to read book print, small enough for the server's upload limit

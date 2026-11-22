@@ -5,7 +5,7 @@ import { asLevel, checkAccess, fail, onlyPost, text } from './_lib/http.js';
 import { asExplainLanguage, asLanguage, discussionPrompt } from './_lib/prompts.js';
 
 // A topic or grammar point is a few words ("the TV series Dexter"). Keep in step with
-// MAX_TOPIC_LENGTH in src/components/Discuss.tsx.
+// MAX_TOPIC_LENGTH in src/widgets/discussion/ui/Discuss.tsx.
 const MAX_TOPIC_LENGTH = 120;
 
 // A discussion question for the start of a lesson, for a chosen level, vocabulary topic and grammar point.

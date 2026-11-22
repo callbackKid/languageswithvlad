@@ -2,6 +2,7 @@ import { type ReactNode, useEffect, useLayoutEffect, useRef, useState } from 're
 
 import { type Lesson } from '@/entities/lesson';
 import { normalizeWordCard, type WordCard } from '@/entities/word';
+import { VerbsTab } from '@/features/conjugate-verb';
 import {
   asLookUp,
   CARD_EVENT,
@@ -25,8 +26,6 @@ import { common } from '@/shared/i18n/messages/common';
 import { wordActions } from '@/shared/i18n/messages/wordActions';
 import Speak from '@/shared/ui/Speak';
 import WaitingFact from '@/shared/ui/WaitingFact';
-
-import VerbsTab from './VerbsTab';
 
 // Where the menu never opens on a selection: exercises (it would give the answers away), form
 // fields, places marked data-no-word-actions, and the menu itself.

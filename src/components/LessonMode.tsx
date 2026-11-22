@@ -50,12 +50,12 @@ import { hash } from '@/shared/lib/util';
 import CallCard from '@/shared/ui/CallCard';
 import PageHead from '@/shared/ui/PageHead';
 import Speak from '@/shared/ui/Speak';
+import { Discuss } from '@/widgets/discussion';
+import { KeyBadge } from '@/widgets/word-list';
 
-import Discuss from './Discuss';
 import JitsiCall from './JitsiCall';
 import LessonBoard from './LessonBoard';
 import MakeExercise from './MakeExercise';
-import { KeyBadge } from './WordsTab';
 import ZoomCall from './ZoomCall';
 
 const NAME_KEY = 'call:name';

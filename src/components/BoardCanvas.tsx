@@ -15,6 +15,13 @@ import type {
 import { useCallback, useEffect, useRef } from 'react';
 
 import {
+  asPointer,
+  asPointerButton,
+  asSavedBoard,
+  asSharedElements,
+  asSharedFiles,
+} from '@/entities/board';
+import {
   type BoardConnection,
   type BoardPeer,
   type BoardServer,
@@ -22,14 +29,6 @@ import {
 } from '@/shared/api/boardSync';
 import { type UiLanguage } from '@/shared/i18n/core';
 import { loadChecked, save } from '@/shared/lib/storage';
-
-import {
-  asPointer,
-  asPointerButton,
-  asSavedBoard,
-  asSharedElements,
-  asSharedFiles,
-} from '../lib/boardPayload';
 
 /* The drawing itself (Excalidraw, MIT). It's a big library, so LessonBoard loads this file only
    when the board is opened. With a connection, every change is sent to the other people on the

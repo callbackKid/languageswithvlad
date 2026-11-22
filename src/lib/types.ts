@@ -1,4 +1,3 @@
-import { type GrammarRule } from '@/entities/lesson';
 import { type PhotoItem, type Word } from '@/entities/word';
 import { type Language } from '@/shared/config/languages';
 
@@ -46,17 +45,4 @@ export interface ReaderText {
   // the Russian translation, one item per paragraph
   translation?: string[];
   study?: TextStudy;
-}
-
-// A discussion question for the start of a lesson.
-export interface Discussion {
-  question: string;
-  ru: string;
-  followUps: string[];
-  vocabulary: { word: string; ru: string }[];
-  // sentence beginnings that use the grammar topic
-  starters: string[];
-  grammarTip: string;
-  // the grammar point explained, when one was chosen; in the interface language
-  grammarRule: GrammarRule | null;
 }

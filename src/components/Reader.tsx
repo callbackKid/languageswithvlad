@@ -13,11 +13,11 @@ import { asList, load, save } from '@/shared/lib/storage';
 import PageHead from '@/shared/ui/PageHead';
 import Speak from '@/shared/ui/Speak';
 import WaitingFact from '@/shared/ui/WaitingFact';
+import { WordsTab } from '@/widgets/word-list';
+import { WordNotesTable } from '@/widgets/word-notes';
 
 import { normalizeReaderText, normalizeStudy, normalizeTranslation } from '../lib/parse';
 import { type ReaderText, type TextStudy } from '../lib/types';
-import WordNotesTable from './WordNotesTable';
-import WordsTab from './WordsTab';
 
 const STORAGE_KEY = 'reader:texts';
 // Keep in step with MAX_TEXT_LENGTH in api/text.ts.

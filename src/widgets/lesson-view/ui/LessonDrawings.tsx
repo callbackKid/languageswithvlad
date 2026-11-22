@@ -1,12 +1,11 @@
 import { lazy, Suspense, useMemo } from 'react';
 
+import { asSavedBoard } from '@/entities/board';
 import { isDark, useSettings } from '@/shared/config/settings';
 import { useTranslation } from '@/shared/i18n/core';
 import { paper } from '@/shared/i18n/messages/paper';
 import { dayKey } from '@/shared/lib/dates';
 import { load, loadChecked } from '@/shared/lib/storage';
-
-import { asSavedBoard } from '../lib/boardPayload';
 
 const BoardPicture = lazy(() => import('./BoardPicture'));
 

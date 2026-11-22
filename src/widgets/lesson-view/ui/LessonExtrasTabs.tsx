@@ -1,6 +1,11 @@
 import { useState } from 'react';
 
-import { type GrammarRule, type HomeworkTask, type LessonExtras } from '@/entities/lesson';
+import {
+  type GrammarRule,
+  GrammarRuleBox,
+  type HomeworkTask,
+  type LessonExtras,
+} from '@/entities/lesson';
 import { GapRound } from '@/features/gap-fill';
 import { BookImport } from '@/features/import-book';
 import { api } from '@/shared/api';
@@ -10,8 +15,6 @@ import { getUiLanguage, useTranslation } from '@/shared/i18n/core';
 import { paper } from '@/shared/i18n/messages/paper';
 import { followLink, hrefFor } from '@/shared/lib/router';
 import { loadTexts, save } from '@/shared/lib/storage';
-
-import GrammarRuleBox from './GrammarRuleBox';
 
 /* The lesson's Grammar, Homework and Book exercises tabs. What they show comes from one reading
    of the lesson by Claude (LessonView keeps it), explained in the interface language. */

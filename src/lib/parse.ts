@@ -1,16 +1,9 @@
-import { normalizeGrammarRule } from '@/entities/lesson';
 import { normalizePhotoItems, type PhotoItem, photoItem, type Word } from '@/entities/word';
 import { asLanguage, type Language } from '@/shared/config/languages';
 import { asArray, asObject, asTexts } from '@/shared/lib/json';
 import { asText } from '@/shared/lib/util';
 
-import {
-  type Discussion,
-  type ExerciseQuestion,
-  type MadeExercise,
-  type ReaderText,
-  type TextStudy,
-} from './types';
+import { type ExerciseQuestion, type MadeExercise, type ReaderText, type TextStudy } from './types';
 
 // A pasted text as saved on the device, with what Claude made of it; null when it has no text.
 export function normalizeReaderText(raw: unknown): ReaderText | null {
@@ -131,23 +124,4 @@ export function normalizeStudy(raw: unknown): { language: Language; study: TextS
     .filter((item) => item.text);
   if (!words.length && !questions.length && !statements.length) throw new Error('empty');
   return { language, study: { title: asText(data.title), words, questions, statements } };
-}
-
-// A discussion question and what comes with it; null when the answer has no question.
-export function normalizeDiscussion(raw: unknown): Discussion | null {
-  const data = asObject(raw);
-  const question = asText(data.question);
-  if (!question) return null;
-  return {
-    question,
-    ru: asText(data.ru),
-    followUps: asTexts(data.followUps),
-    vocabulary: asArray(data.vocabulary)
-      .map(asObject)
-      .map((item) => ({ word: asText(item.word), ru: asText(item.ru) }))
-      .filter((item) => item.word),
-    starters: asTexts(data.starters),
-    grammarTip: asText(data.grammarTip),
-    grammarRule: normalizeGrammarRule(data.grammarRule),
-  };
 }

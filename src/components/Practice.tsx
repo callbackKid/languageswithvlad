@@ -1,14 +1,13 @@
 import { useMemo, useState } from 'react';
 
 import { type Analysis, type Bank, BankNote } from '@/entities/lesson';
+import { VerbsTab } from '@/features/conjugate-verb';
 import { useTranslation } from '@/shared/i18n/core';
 import { app } from '@/shared/i18n/messages/app';
 import { pages } from '@/shared/i18n/messages/pages';
 import { shownTopic } from '@/shared/lib/util';
 import PageHead from '@/shared/ui/PageHead';
-
-import VerbsTab from './VerbsTab';
-import WordsTab from './WordsTab';
+import { WordsTab } from '@/widgets/word-list';
 
 // Every exercise, run on the words and verbs of all lessons or the ones picked.
 export default function Practice({ bank, hasClaude }: { bank: Bank; hasClaude: boolean }) {

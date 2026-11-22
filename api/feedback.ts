@@ -9,7 +9,7 @@ const KINDS: Record<string, string> = {
   other: '💬 Message',
 };
 const MAX_PHOTOS = 3;
-// the message itself; keep in step with maxLength in src/components/Feedback.tsx
+// the message itself; keep in step with maxLength in src/widgets/feedback/ui/Feedback.tsx
 const MAX_MESSAGE_LENGTH = 3000;
 // the contact, the page and the document's name
 const MAX_DETAIL_LENGTH = 200;

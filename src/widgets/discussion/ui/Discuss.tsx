@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { type Bank } from '@/entities/lesson';
+import { type Bank, GrammarRuleBox } from '@/entities/lesson';
 import { Star } from '@/features/star-word';
 import { api, ApiError } from '@/shared/api';
 import { asLanguage, type Language } from '@/shared/config/languages';
@@ -14,9 +14,8 @@ import PageHead from '@/shared/ui/PageHead';
 import Speak from '@/shared/ui/Speak';
 import WaitingFact from '@/shared/ui/WaitingFact';
 
-import { normalizeDiscussion } from '../lib/parse';
-import { type Discussion } from '../lib/types';
-import GrammarRuleBox from './GrammarRuleBox';
+import { normalizeDiscussion } from '../model/normalize';
+import { type Discussion } from '../model/types';
 
 const CUSTOM = '__custom';
 // the student's own topic; the server cuts it at the same length (api/discussion.ts)

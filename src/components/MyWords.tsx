@@ -7,8 +7,7 @@ import { learning } from '@/shared/i18n/messages/common';
 import { pages } from '@/shared/i18n/messages/pages';
 import { followLink, hrefFor } from '@/shared/lib/router';
 import PageHead from '@/shared/ui/PageHead';
-
-import WordsTab from './WordsTab';
+import { WordsTab } from '@/widgets/word-list';
 
 // The student's list of unfamiliar words: starred by hand or missed in an exercise.
 export default function MyWords({ hasClaude }: { hasClaude: boolean }) {

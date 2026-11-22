@@ -12,8 +12,8 @@ import { extractPages, MAX_PDF_PAGES, pdfPageCount } from '@/shared/lib/pdf';
 import { asFields, asList, load, save } from '@/shared/lib/storage';
 import { hash } from '@/shared/lib/util';
 import WaitingFact from '@/shared/ui/WaitingFact';
-
-import LessonView from './LessonView';
+import { LessonView } from '@/widgets/lesson-view';
+import { WordsTab } from '@/widgets/word-list';
 
 // Where the lesson comes from: photos of handwritten notes, or pages of a textbook PDF.
 export type PaperSource = 'handwritten' | 'textbook';
@@ -344,6 +344,7 @@ export default function HandwrittenNotes({
               lesson={toLesson(current, entries.length - 1 - currentIndex, source, name)}
               docId={storageKey}
               hasClaude={hasClaude}
+              renderWords={(props) => <WordsTab grouped {...props} />}
             />
           </>
         ))}

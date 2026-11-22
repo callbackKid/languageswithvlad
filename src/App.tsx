@@ -22,18 +22,20 @@ import { app } from '@/shared/i18n/messages/app';
 import { followLink, hrefFor, navigate, usePath } from '@/shared/lib/router';
 import { stopSpeaking } from '@/shared/lib/speech';
 import { asFields, load, loadChecked, remove, save } from '@/shared/lib/storage';
+import { Discuss } from '@/widgets/discussion';
+import { Feedback } from '@/widgets/feedback';
+import { LessonView } from '@/widgets/lesson-view';
+import { NextLessonBadge } from '@/widgets/next-lesson-badge';
+import { WordsTab } from '@/widgets/word-list';
+import { WordActions } from '@/widgets/word-menu';
 
 import CodeGate from './components/CodeGate';
 import Connect from './components/Connect';
-import Discuss from './components/Discuss';
-import Feedback from './components/Feedback';
 import Home from './components/Home';
 import LessonMode from './components/LessonMode';
-import LessonView from './components/LessonView';
 import Mistakes from './components/Mistakes';
 import MyWords from './components/MyWords';
 import News from './components/News';
-import NextLessonBadge from './components/NextLessonBadge';
 import PhotoSection from './components/PhotoSection';
 import Practice from './components/Practice';
 import Reader from './components/Reader';
@@ -41,7 +43,6 @@ import Settings, { Avatar } from './components/Settings';
 import Stats from './components/Stats';
 import TooltipLayer from './components/TooltipLayer';
 import Tutorial from './components/Tutorial';
-import WordActions from './components/WordActions';
 
 interface DocCache {
   title: string;
@@ -531,6 +532,7 @@ export default function App() {
                         docWriter={!!docTarget.docWriter}
                         onAnalysis={bank.put}
                         isNewest={lesson.key === lessons[lessons.length - 1]?.key}
+                        renderWords={(props) => <WordsTab grouped {...props} />}
                       />
                     )}
                   </main>

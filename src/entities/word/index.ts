@@ -19,4 +19,5 @@ export {
 } from './model/progress';
 export { type Word } from './model/types';
 export { type PhotoItem, type WordCard } from './model/wordCard';
+export { default as MistakeList } from './ui/MistakeList';
 export { default as Transcription } from './ui/Transcription';
