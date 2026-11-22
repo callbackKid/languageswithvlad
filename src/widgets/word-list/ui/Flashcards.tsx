@@ -23,6 +23,8 @@ export default function Flashcards({
   const language = words[0]?.language ?? 'fr';
   const translation = useTranslationLanguage()(language);
   const code = language.toUpperCase();
+  // the translation language's code: RU, EN… (Settings → Translations in)
+  const translationCode = translation.toUpperCase();
   const [done, setDone] = useState(0);
   const [flipped, setFlipped] = useState(false);
   const [direction, setDirection] = useState<'fr' | 'ru'>('fr');
@@ -68,7 +70,7 @@ export default function Flashcards({
           setFlipped(false);
         }}
       >
-        {code} → RU
+        {code} → {translationCode}
       </button>
       <button
         type="button"
@@ -78,7 +80,7 @@ export default function Flashcards({
           setFlipped(false);
         }}
       >
-        RU → {code}
+        {translationCode} → {code}
       </button>
     </span>
   );
