@@ -20,6 +20,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
       topic: text(request.body?.topic, MAX_TOPIC_LENGTH),
       grammar: text(request.body?.grammar, MAX_TOPIC_LENGTH),
       explainIn: asExplainLanguage(request.body?.explainIn),
+      translateTo: asExplainLanguage(request.body?.translateTo),
     });
     // a new question every time, so no caching
     response

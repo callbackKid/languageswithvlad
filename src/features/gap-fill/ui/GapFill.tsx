@@ -3,7 +3,7 @@ import { type ReactNode, useEffect, useRef, useState } from 'react';
 import { keyWordsFirst } from '@/entities/lesson';
 import { recordWord, type Word } from '@/entities/word';
 import { api, ApiError } from '@/shared/api';
-import { getSettings, type Language } from '@/shared/config';
+import { getSettings, type Language, useTranslationLanguage } from '@/shared/config';
 import { common, exercises, translator, useTranslation } from '@/shared/i18n';
 import { shuffle } from '@/shared/lib/util';
 import ExerciseHead from '@/shared/ui/ExerciseHead';
@@ -85,6 +85,7 @@ export function GapRound({
 }) {
   const { t } = useTranslation(exercises);
   const commonText = useTranslation(common);
+  const translationOf = useTranslationLanguage();
   const [items, setItems] = useState<GapItem[] | null>(null);
   const [error, setError] = useState('');
   const [index, setIndex] = useState(0);
@@ -175,7 +176,7 @@ export function GapRound({
         onToggle={(event) => setShowRu(event.currentTarget.open)}
       >
         <summary>{commonText.t('translation')}</summary>
-        <p lang="ru">{item.ru}</p>
+        <p lang={translationOf(language)}>{item.ru}</p>
       </details>
       <div className="choices">
         {item.choices.map((choice) => {

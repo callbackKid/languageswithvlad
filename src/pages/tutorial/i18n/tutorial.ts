@@ -193,7 +193,7 @@ export const tutorial = defineMessages({
     'discuss.step2':
       'Pick a <b>vocabulary topic</b>: from the list or from your lessons, or write any topic of your own under <b>Or your own topic</b>: a TV series, a hobby, new slang words. Pick a <b>grammar topic</b>, or leave <b>Any</b>.',
     'discuss.step3':
-      'Press <pbtn>Write a question</pbtn>. You get the question (🔊 reads it, <b>Show translation</b> shows it in Russian), follow-up questions, sentence beginnings that use the grammar, and useful words. With a grammar topic, <b>📘 The rule</b> opens an explanation with examples.',
+      'Press <pbtn>Write a question</pbtn>. You get the question (🔊 reads it, <b>Show translation</b> shows its translation), follow-up questions, sentence beginnings that use the grammar, and useful words. With a grammar topic, <b>📘 The rule</b> opens an explanation with examples.',
     'discuss.step4': '<pbtn>Ask a question</pbtn> writes a new one with the same settings.',
     'discuss.tip1': '☆ next to a useful word puts it on Words to learn.',
 
@@ -210,7 +210,7 @@ export const tutorial = defineMessages({
     'settings.step4':
       'Also there: the daily goal for the 🔥 streak, the speed of 🔊, which sections the menu shows and which tabs a lesson page shows.',
     'settings.tip1':
-      '“Translations in” sets the language word and verb translations are written in, apart from the interface language; a lesson is prepared again in that language when you open it.',
+      '“Translations in” sets the language Claude’s translations are written in, apart from the interface language; a lesson is prepared again in that language when you open it.',
     'call.title': 'Lesson mode',
     'call.summary': 'The call, notes and the lesson’s words on one screen',
     'call.intro':
@@ -452,7 +452,7 @@ export const tutorial = defineMessages({
     'discuss.step2':
       'Выберите <b>лексическую тему</b>: из списка или из ваших уроков — или впишите любую свою в поле <b>Или своя тема</b>: сериал, хобби, новые сленговые слова. Выберите <b>грамматическую тему</b> или оставьте <b>Любая</b>.',
     'discuss.step3':
-      'Нажмите <pbtn>Придумать вопрос</pbtn>. Вы получите вопрос (🔊 прочитает его, <b>Показать перевод</b> покажет его по-русски), вопросы для продолжения разговора, начала фраз с нужной грамматикой и полезные слова. Если выбрана грамматика, <b>📘 Правило</b> раскрывает объяснение с примерами.',
+      'Нажмите <pbtn>Придумать вопрос</pbtn>. Вы получите вопрос (🔊 прочитает его, <b>Показать перевод</b> покажет его в переводе), вопросы для продолжения разговора, начала фраз с нужной грамматикой и полезные слова. Если выбрана грамматика, <b>📘 Правило</b> раскрывает объяснение с примерами.',
     'discuss.step4': '<pbtn>Задать вопрос</pbtn> придумает новый с теми же настройками.',
     'discuss.tip1': '☆ рядом с полезным словом добавляет его в «Слова на изучении».',
 
@@ -469,7 +469,7 @@ export const tutorial = defineMessages({
     'settings.step4':
       'Ещё там: цель на день для 🔥 серии, скорость озвучки 🔊, какие разделы показывать в меню и какие вкладки — на странице урока.',
     'settings.tip1':
-      'Настройка «Язык переводов» задаёт, на каком языке написаны переводы слов и глаголов, независимо от языка интерфейса; урок заново готовится на этом языке, когда вы его открываете.',
+      'Настройка «Язык переводов» задаёт, на каком языке Claude пишет переводы, независимо от языка интерфейса; урок заново готовится на этом языке, когда вы его открываете.',
     'call.title': 'Режим урока',
     'call.summary': 'Звонок, заметки и слова урока на одном экране',
     'call.intro':
@@ -716,7 +716,7 @@ export const tutorial = defineMessages({
     'discuss.step2':
       'Choisissez un <b>thème de vocabulaire</b> : dans la liste ou dans vos leçons, ou écrivez n’importe quel thème sous <b>Ou votre propre thème</b> : une série, un loisir, des mots d’argot. Choisissez un <b>point de grammaire</b>, ou laissez <b>Peu importe</b>.',
     'discuss.step3':
-      'Appuyez sur <pbtn>Écrire une question</pbtn>. Vous obtenez la question (🔊 la lit, <b>Afficher la traduction</b> la montre en russe), des questions de relance, des débuts de phrase avec la grammaire, et des mots utiles. Avec un point de grammaire, <b>📘 La règle</b> ouvre une explication avec des exemples.',
+      'Appuyez sur <pbtn>Écrire une question</pbtn>. Vous obtenez la question (🔊 la lit, <b>Afficher la traduction</b> la montre traduite), des questions de relance, des débuts de phrase avec la grammaire, et des mots utiles. Avec un point de grammaire, <b>📘 La règle</b> ouvre une explication avec des exemples.',
     'discuss.step4':
       '<pbtn>Poser une question</pbtn> en écrit une nouvelle avec les mêmes réglages.',
     'discuss.tip1': '☆ à côté d’un mot utile l’ajoute aux Mots à apprendre.',
@@ -734,7 +734,7 @@ export const tutorial = defineMessages({
     'settings.step4':
       'Aussi : l’objectif du jour pour la 🔥 série, la vitesse de 🔊, les sections affichées dans le menu et les onglets affichés sur la page d’une leçon.',
     'settings.tip1':
-      '« Langue des traductions » fixe la langue dans laquelle sont écrites les traductions des mots et des verbes, indépendamment de celle de l’interface ; une leçon est de nouveau préparée dans cette langue quand vous l’ouvrez.',
+      '« Langue des traductions » fixe la langue dans laquelle Claude écrit ses traductions, indépendamment de celle de l’interface ; une leçon est de nouveau préparée dans cette langue quand vous l’ouvrez.',
     'call.title': 'Mode cours',
     'call.summary': 'L’appel, les notes et les mots de la leçon sur un seul écran',
     'call.intro':
@@ -980,7 +980,7 @@ export const tutorial = defineMessages({
     'discuss.step2':
       'Wähle ein <b>Wortschatzthema</b>: aus der Liste oder aus deinen Lektionen, oder schreib unter <b>Oder ein eigenes Thema</b> ein beliebiges: eine Serie, ein Hobby, neue Slangwörter. Wähle ein <b>Grammatikthema</b> oder lass <b>Beliebig</b>.',
     'discuss.step3':
-      'Tippe auf <pbtn>Frage schreiben</pbtn>. Du bekommst die Frage (🔊 liest sie vor, <b>Übersetzung zeigen</b> zeigt sie auf Russisch), Anschlussfragen, Satzanfänge mit der Grammatik und nützliche Wörter. Mit einem Grammatikthema öffnet <b>📘 Die Regel</b> eine Erklärung mit Beispielen.',
+      'Tippe auf <pbtn>Frage schreiben</pbtn>. Du bekommst die Frage (🔊 liest sie vor, <b>Übersetzung zeigen</b> zeigt sie übersetzt), Anschlussfragen, Satzanfänge mit der Grammatik und nützliche Wörter. Mit einem Grammatikthema öffnet <b>📘 Die Regel</b> eine Erklärung mit Beispielen.',
     'discuss.step4': '<pbtn>Frage stellen</pbtn> schreibt eine neue mit denselben Einstellungen.',
     'discuss.tip1': '☆ neben einem nützlichen Wort fügt es zu den Lernwörtern hinzu.',
 
@@ -997,7 +997,7 @@ export const tutorial = defineMessages({
     'settings.step4':
       'Außerdem: das Tagesziel für die 🔥 Serie, das Tempo von 🔊, welche Bereiche das Menü und welche Tabs die Lektionsseite zeigt.',
     'settings.tip1':
-      'Unter „Übersetzungssprache“ wählst du, in welche Sprache Wörter und Verben übersetzt werden, unabhängig von der Sprache der Oberfläche; eine Lektion wird in dieser Sprache neu vorbereitet, wenn du sie öffnest.',
+      'Unter „Übersetzungssprache“ wählst du, in welche Sprache Claude übersetzt, unabhängig von der Sprache der Oberfläche; eine Lektion wird in dieser Sprache neu vorbereitet, wenn du sie öffnest.',
     'call.title': 'Unterrichtsmodus',
     'call.summary': 'Anruf, Notizen und die Wörter der Lektion auf einem Bildschirm',
     'call.intro':
@@ -1244,7 +1244,7 @@ export const tutorial = defineMessages({
     'discuss.step2':
       'Elige un <b>tema de vocabulario</b>: de la lista o de tus lecciones, o escribe cualquier tema propio en <b>O tu propio tema</b>: una serie, un pasatiempo, palabras nuevas de jerga. Elige un <b>tema de gramática</b> o deja <b>Cualquiera</b>.',
     'discuss.step3':
-      'Pulsa <pbtn>Escribir una pregunta</pbtn>. Recibes la pregunta (🔊 la lee, <b>Mostrar la traducción</b> la muestra en ruso), preguntas para seguir, comienzos de frase que usan la gramática y palabras útiles. Con un tema de gramática, <b>📘 La regla</b> abre una explicación con ejemplos.',
+      'Pulsa <pbtn>Escribir una pregunta</pbtn>. Recibes la pregunta (🔊 la lee, <b>Mostrar la traducción</b> la muestra traducida), preguntas para seguir, comienzos de frase que usan la gramática y palabras útiles. Con un tema de gramática, <b>📘 La regla</b> abre una explicación con ejemplos.',
     'discuss.step4': '<pbtn>Hacer una pregunta</pbtn> escribe una nueva con los mismos ajustes.',
     'discuss.tip1': '☆ junto a una palabra útil la pone en Palabras por aprender.',
 
@@ -1261,7 +1261,7 @@ export const tutorial = defineMessages({
     'settings.step4':
       'También están allí: el objetivo diario para la racha 🔥, la velocidad de 🔊, qué secciones muestra el menú y qué pestañas muestra la página de una lección.',
     'settings.tip1':
-      '«Idioma de las traducciones» elige el idioma en el que se escriben las traducciones de palabras y verbos, independientemente del idioma de la interfaz; una lección se vuelve a preparar en ese idioma cuando la abres.',
+      '«Idioma de las traducciones» elige el idioma en el que Claude escribe las traducciones, independientemente del idioma de la interfaz; una lección se vuelve a preparar en ese idioma cuando la abres.',
     'call.title': 'Modo clase',
     'call.summary': 'La llamada, las notas y las palabras de la lección en una pantalla',
     'call.intro':
@@ -1507,7 +1507,7 @@ export const tutorial = defineMessages({
     'discuss.step2':
       'Escolha um <b>tema de vocabulário</b>: da lista ou das suas lições, ou escreva qualquer tema seu em <b>Ou o seu próprio tema</b>: uma série, um passatempo, novas palavras de calão. Escolha um <b>tema de gramática</b> ou deixe <b>Qualquer</b>.',
     'discuss.step3':
-      'Carregue em <pbtn>Escrever uma pergunta</pbtn>. Recebe a pergunta (🔊 lê-a, <b>Mostrar a tradução</b> mostra-a em russo), perguntas para continuar, inícios de frase que usam a gramática e palavras úteis. Com um tema de gramática, <b>📘 A regra</b> abre uma explicação com exemplos.',
+      'Carregue em <pbtn>Escrever uma pergunta</pbtn>. Recebe a pergunta (🔊 lê-a, <b>Mostrar a tradução</b> mostra-a traduzida), perguntas para continuar, inícios de frase que usam a gramática e palavras úteis. Com um tema de gramática, <b>📘 A regra</b> abre uma explicação com exemplos.',
     'discuss.step4': '<pbtn>Fazer uma pergunta</pbtn> escreve uma nova com as mesmas definições.',
     'discuss.tip1': '☆ ao lado de uma palavra útil põe-na nas Palavras por aprender.',
 
@@ -1524,7 +1524,7 @@ export const tutorial = defineMessages({
     'settings.step4':
       'Também lá estão: o objetivo diário para a série 🔥, a velocidade do 🔊, as secções que o menu mostra e os separadores que a página de uma lição mostra.',
     'settings.tip1':
-      '«Idioma das traduções» define o idioma em que são escritas as traduções das palavras e dos verbos, independentemente do idioma da interface; uma lição volta a ser preparada nesse idioma quando a abre.',
+      '«Idioma das traduções» define o idioma em que o Claude escreve as traduções, independentemente do idioma da interface; uma lição volta a ser preparada nesse idioma quando a abre.',
     'call.title': 'Modo aula',
     'call.summary': 'A chamada, as notas e as palavras da lição num só ecrã',
     'call.intro':
@@ -1770,7 +1770,7 @@ export const tutorial = defineMessages({
     'discuss.step2':
       'Scegli un <b>tema di lessico</b>: dalla lista o dalle tue lezioni, oppure scrivi un tuo tema in <b>Oppure un tuo tema</b>: una serie, un hobby, parole nuove di slang. Scegli un <b>tema di grammatica</b> o lascia <b>Qualsiasi</b>.',
     'discuss.step3':
-      'Premi <pbtn>Scrivi una domanda</pbtn>. Ricevi la domanda (🔊 la legge, <b>Mostra la traduzione</b> la mostra in russo), domande per continuare, inizi di frase che usano la grammatica e parole utili. Con un tema di grammatica, <b>📘 La regola</b> apre una spiegazione con esempi.',
+      'Premi <pbtn>Scrivi una domanda</pbtn>. Ricevi la domanda (🔊 la legge, <b>Mostra la traduzione</b> la mostra tradotta), domande per continuare, inizi di frase che usano la grammatica e parole utili. Con un tema di grammatica, <b>📘 La regola</b> apre una spiegazione con esempi.',
     'discuss.step4': '<pbtn>Fai una domanda</pbtn> ne scrive una nuova con le stesse impostazioni.',
     'discuss.tip1': '☆ accanto a una parola utile la mette nelle Parole da imparare.',
 
@@ -1787,7 +1787,7 @@ export const tutorial = defineMessages({
     'settings.step4':
       'Lì trovi anche: l’obiettivo giornaliero per la serie 🔥, la velocità del 🔊, quali sezioni mostra il menu e quali schede mostra la pagina di una lezione.',
     'settings.tip1':
-      '«Lingua delle traduzioni» sceglie la lingua in cui sono scritte le traduzioni di parole e verbi, indipendentemente da quella dell’interfaccia; una lezione viene preparata di nuovo in questa lingua quando la apri.',
+      '«Lingua delle traduzioni» sceglie la lingua in cui Claude scrive le traduzioni, indipendentemente da quella dell’interfaccia; una lezione viene preparata di nuovo in questa lingua quando la apri.',
     'call.title': 'Modalità lezione',
     'call.summary': 'La chiamata, gli appunti e le parole della lezione in un’unica schermata',
     'call.intro':

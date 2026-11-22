@@ -251,7 +251,17 @@ export default function WordQuiz({
         <p className="feedback bad">
           {rich(
             'answerIs',
-            { b: (chunk) => <b lang={question.kind === 'pick-ru' ? 'ru' : language}>{chunk}</b> },
+            {
+              b: (chunk) => (
+                <b
+                  lang={
+                    question.kind === 'pick-ru' ? translationOf(question.word.language) : language
+                  }
+                >
+                  {chunk}
+                </b>
+              ),
+            },
             { answer }
           )}
           {/* a gap's answer is a form of the word, which the word's transcription doesn't match */}
@@ -268,11 +278,7 @@ export default function WordQuiz({
         </p>
       )}
       {(question.kind === 'listen' || question.kind === 'define' || question.kind === 'gap') && (
-        // gap sentences are still translated into Russian
-        <p
-          className="ru-line"
-          lang={question.kind === 'gap' ? 'ru' : translationOf(question.word.language)}
-        >
+        <p className="ru-line" lang={translationOf(question.word.language)}>
           {question.kind === 'gap' ? question.ru : question.word.ru}
         </p>
       )}
@@ -323,7 +329,9 @@ export default function WordQuiz({
                 type="button"
                 key={choice}
                 className={'choice' + stateClass + (question.kind === 'pick-ru' ? ' ru' : '')}
-                lang={question.kind === 'pick-ru' ? 'ru' : language}
+                lang={
+                  question.kind === 'pick-ru' ? translationOf(question.word.language) : language
+                }
                 disabled={picked != null}
                 onClick={() => {
                   setPicked(choice);

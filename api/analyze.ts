@@ -64,6 +64,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
         summary: text(request.body?.summary, MAX_SUMMARY_LENGTH),
         count: PRACTICE_SENTENCES,
         explainIn: asExplainLanguage(request.body?.explainIn),
+        translateTo: asExplainLanguage(request.body?.translateTo),
       });
       return response.status(200).json(await claudeJSON(prompt, { model: MODEL, maxTokens: 4000 }));
     }
@@ -83,6 +84,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
         keyWords,
         level: asLevel(request.body?.level) ?? 'A2',
         sentences: sentenceCount(request.body?.sentences),
+        translation: asTranslationRequest(request.body),
       });
       // asked again for another version: never the same answer twice
       return response
@@ -102,6 +104,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
         grammar,
         words,
         count: questionCount(request.body?.count),
+        translateTo: asExplainLanguage(request.body?.translateTo),
       });
       // asked again for another exercise: never the same questions twice
       return response

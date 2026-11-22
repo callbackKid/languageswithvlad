@@ -175,11 +175,12 @@ export function gapPrompt(
   words: { fr: string; ru: string }[],
   count: number,
   language: LearnLanguage,
-  level = 'A1'
+  level = 'A1',
+  translateTo: ExplainLanguage = 'ru'
 ): string {
   const list = words.map((word) => `- ${word.fr} = ${word.ru}`).join('\n');
-  return `Write ${count} short, simple ${LANGUAGE_NAMES[language]} sentences at CEFR level ${level} (A0 means a complete beginner: very short sentences with the most common words) for a Russian-speaking learner. Each sentence uses one word from the list below, and that word is the gap to fill. Use each word at most once; reuse words only if the list is shorter than ${count}. The gapped text is the exact form the word takes in the sentence (conjugated verb, agreed adjective, article included for nouns if natural).
-Reply with only a JSON array of objects: {"before": string, "after": string, "answer": string, "word": string, "ru": string, "options": [string, string, string]}. before and after are the text around the gap, answer the gapped text, word the list entry it comes from, ru a Russian translation of the whole sentence, options three plausible wrong answers of the same kind (other forms or other words from the list).
+  return `Write ${count} short, simple ${LANGUAGE_NAMES[language]} sentences at CEFR level ${level} (A0 means a complete beginner: very short sentences with the most common words) for a learner. Each sentence uses one word from the list below (each with its meaning; a meaning may be in another language), and that word is the gap to fill. Use each word at most once; reuse words only if the list is shorter than ${count}. The gapped text is the exact form the word takes in the sentence (conjugated verb, agreed adjective, article included for nouns if natural).
+Reply with only a JSON array of objects: {"before": string, "after": string, "answer": string, "word": string, "ru": string, "options": [string, string, string]}. before and after are the text around the gap, answer the gapped text, word the list entry it comes from, ru a ${EXPLAIN_NAMES[translateTo]} translation of the whole sentence, options three plausible wrong answers of the same kind (other forms or other words from the list).
 
 Words:
 ${list}`;
@@ -189,11 +190,12 @@ ${list}`;
 export function definitionPrompt(
   words: { fr: string; ru: string }[],
   language: LearnLanguage,
-  level = 'A1'
+  level = 'A1',
+  translateTo: ExplainLanguage = 'ru'
 ): string {
   const list = words.map((word) => `- ${word.fr} = ${word.ru}`).join('\n');
   const name = LANGUAGE_NAMES[language];
-  return `For each ${name} word or expression below (with its Russian meaning in this lesson), write a short definition in ${name} for a Russian-speaking learner at CEFR level ${level} (A0 means a complete beginner: only the most common words), the way a learner's dictionary explains a word: one simple sentence of at most about 15 words, with words easier than the one defined. The learner reads the definition and has to guess the word, so the definition never contains the word itself, a word of the same root or its translation, and it fits only this word, not another word of the list. A noun may start with what kind of thing it is (in French: un endroit où…, une personne qui…, un objet pour…); a verb with what you do.
+  return `For each ${name} word or expression below (with its meaning in this lesson, in ${EXPLAIN_NAMES[translateTo]} or possibly in another language), write a short definition in ${name} for a learner at CEFR level ${level} (A0 means a complete beginner: only the most common words), the way a learner's dictionary explains a word: one simple sentence of at most about 15 words, with words easier than the one defined. The learner reads the definition and has to guess the word, so the definition never contains the word itself, a word of the same root or its translation, and it fits only this word, not another word of the list. A noun may start with what kind of thing it is (in French: un endroit où…, une personne qui…, un objet pour…); a verb with what you do.
 Reply with only a JSON array of objects, in the order of the list: {"word": string, "definition": string}. word is the list entry exactly as given.
 
 Words:
@@ -242,35 +244,39 @@ ${MARKED_ITEM_RULES}
 
 /** An exercise the teacher makes in lesson mode: a mixed round on a grammar point and/or some
     words, at a level, for the student to do in the app. Each question has one answer the app can
-    check (with the other right answers listed), and a short reason in Russian. */
+    check (with the other right answers listed), and a short reason in the translation language. */
 export function exercisePrompt({
   language,
   level,
   grammar,
   words,
   count,
+  translateTo,
 }: {
   language: LearnLanguage;
   level: string;
   grammar: string;
   words: string[];
   count: number;
+  // already resolved: never the language of the exercise
+  translateTo: ExplainLanguage;
 }): string {
   const name = LANGUAGE_NAMES[language];
+  const translationName = EXPLAIN_NAMES[translateTo];
   const focus = [
     grammar ? `the grammar point "${grammar}"` : '',
     words.length ? `these words from the lesson: ${words.join(', ')}` : '',
   ]
     .filter(Boolean)
     .join(', and ');
-  return `Write a ${name} exercise for a Russian-speaking learner at CEFR level ${level} (A0 is a complete beginner): ${count} questions practising ${focus}.
-${LEVEL_STYLE} ${translationRule({ language: 'ru', fallback: 'ru' }, 'text')}
+  return `Write a ${name} exercise for a learner at CEFR level ${level} (A0 is a complete beginner): ${count} questions practising ${focus}.
+${LEVEL_STYLE} ${translationRule({ language: translateTo, fallback: translateTo }, 'text')}
 Mix three kinds of question, about a third of each, in a varied order:
 - "choice": prompt is a ${name} sentence with one gap written ___, or a short question; options are 3 or 4 answers in ${name}, exactly one of them right; answer is that option, written exactly as in options.
 - "gap": prompt is a ${name} sentence with one gap written ___, followed in brackets by the word to put in the right form when the form is what is practised ("Hier, nous ___ (aller) au cinéma."); answer is what goes in the gap.
-- "translate": prompt is a short everyday Russian sentence (4 to 8 words); answer is its natural ${name} translation, using what is practised.
-Every question practises the point${grammar && words.length ? 's' : ''} above, with vocabulary of the level, and has one clear answer. accept lists other answers that are just as right (another word order, a contraction, a synonym); [] when there are none. ru is the Russian translation of the prompt for "choice" and "gap", "" for "translate". explanation is one short sentence in Russian saying why the answer is right. options is [] for "gap" and "translate".
-Reply with only a JSON object: {"title": string, "questions": [{"type": "choice" | "gap" | "translate", "prompt": string, "options": [string], "answer": string, "accept": [string], "ru": string, "explanation": string}]}. title says what the exercise practises, in Russian, in at most 6 words.`;
+- "translate": prompt is a short everyday ${translationName} sentence (4 to 8 words); answer is its natural ${name} translation, using what is practised.
+Every question practises the point${grammar && words.length ? 's' : ''} above, with vocabulary of the level, and has one clear answer. accept lists other answers that are just as right (another word order, a contraction, a synonym); [] when there are none. ru is the ${translationName} translation of the prompt for "choice" and "gap", "" for "translate". explanation is one short sentence in ${translationName} saying why the answer is right. options is [] for "gap" and "translate".
+Reply with only a JSON object: {"title": string, "questions": [{"type": "choice" | "gap" | "translate", "prompt": string, "options": [string], "answer": string, "accept": [string], "ru": string, "explanation": string}]}. title says what the exercise practises, in ${translationName}, in at most 6 words.`;
 }
 
 // A natural translation of a text into the translation language, paragraph by paragraph.
@@ -305,7 +311,7 @@ ${body}
 
 // The prompt for photos of handwritten notes, copied out as the text of a lesson.
 export function transcribePrompt(pageCount: number): string {
-  return `${pageCount === 1 ? 'The image is a photo' : `The ${pageCount} images are photos, in order,`} of handwritten notes from a language lesson: ${LANGUAGE_LIST} words and phrases, Russian translations, conjugation tables, example sentences, pronunciation in square brackets.
+  return `${pageCount === 1 ? 'The image is a photo' : `The ${pageCount} images are photos, in order,`} of handwritten notes from a language lesson: ${LANGUAGE_LIST} words and phrases, translations (often Russian), conjugation tables, example sentences, pronunciation in square brackets.
 Transcribe every line exactly as written, top to bottom, keeping the writer's line breaks, punctuation, dashes, arrows (→) and square brackets. Keep the writer's spelling and accents; do not correct, translate or add anything. Write a word you cannot read as [?]. Leave out crossed-out text, page numbers and doodles. Separate pages with an empty line.
 Reply with only a JSON object: {"title": string, "text": string}. title is what the notes are about, in English, at most 6 words; text is the transcription.`;
 }
@@ -330,6 +336,8 @@ export interface DiscussionRequest {
   grammar: string;
   // the interface language: the grammar explanation is written in it
   explainIn: ExplainLanguage;
+  // the translations: the question's, the vocabulary's and the rule's examples
+  translateTo: ExplainLanguage;
 }
 
 const EXPLAIN_NAMES = {
@@ -369,7 +377,8 @@ function translationRule(
   source: 'lesson' | 'text' | 'page' | 'selection'
 ): string {
   const name = EXPLAIN_NAMES[language];
-  const isLearned = LEARN_LANGUAGES.some((code) => code === language);
+  // a language the app already resolved (it knows what is learned) comes with itself as fallback
+  const isLearned = LEARN_LANGUAGES.some((code) => code === language) && fallback !== language;
   const instead = isLearned
     ? `, or ${EXPLAIN_NAMES[fallback]} for a ${source} in ${name} itself`
     : '';
@@ -388,7 +397,7 @@ export function wordGroupsPrompt(
   const knownLine = known.length
     ? `The learner's other words are already in these groups: ${known.map((name) => `"${name}"`).join(', ')}. When a word fits one of them, use that name exactly as written.\n`
     : '';
-  return `Sort the words and phrases a Russian-speaking learner is studying into groups by meaning: topics such as food, time, the home, feelings, travel or work. Name each group in ${EXPLAIN_NAMES[explainIn]} with one to three words starting with a capital letter ("Food", "Time and dates"). Keep the groups few and broad, about one for every 4 to 8 words, and avoid a group of one word when another group fits it. A word that fits no topic (a linking word, a pronoun) goes into a group named after its kind ("Linking words").
+  return `Sort the words and phrases a learner is studying into groups by meaning: topics such as food, time, the home, feelings, travel or work. Name each group in ${EXPLAIN_NAMES[explainIn]} with one to three words starting with a capital letter ("Food", "Time and dates"). Keep the groups few and broad, about one for every 4 to 8 words, and avoid a group of one word when another group fits it. A word that fits no topic (a linking word, a pronoun) goes into a group named after its kind ("Linking words").
 ${knownLine}Reply with only a JSON object: {"groups": [{"name": string, "words": [string]}]}. Every word from the list goes into exactly one group, copied exactly as written before the "=".
 
 Words:
@@ -402,10 +411,12 @@ export function discussionPrompt({
   topic,
   grammar,
   explainIn,
+  translateTo,
 }: DiscussionRequest): string {
   const languageName = LANGUAGE_NAMES[language];
   const explainName = EXPLAIN_NAMES[explainIn];
-  return `You help a teacher start a ${languageName} lesson with a Russian-speaking student at CEFR level ${level}. Write one open discussion question for the start of the lesson.
+  const translationName = EXPLAIN_NAMES[translateTo];
+  return `You help a teacher start a ${languageName} lesson with a student at CEFR level ${level}. Write one open discussion question for the start of the lesson.
 - Vocabulary topic: ${topic || 'any everyday topic'}. The student may have typed this topic themselves, and it can be anything: a TV series or film (ask about their opinion of it, its characters or its world, without spoiling the plot), a hobby, a news story, a trip, or a kind of words ("new slang words", "words about money"), in which case the question should make them use such words. Build the question, the follow-ups and the vocabulary around it.
 - Grammar to practise: ${grammar || 'none in particular'}. The question should make the student answer using it (a question about childhood memories calls for the imparfait, plans for the future call for the futur proche, and so on).
 - Match the level strictly: at A1–A2 short, concrete, personal questions with common words; at B1–B2 opinions and experiences; at C1–C2 abstract or debatable questions.
@@ -414,12 +425,12 @@ export function discussionPrompt({
 Reply with only a JSON object:
 {"question": string, "ru": string, "followUps": [string], "vocabulary": [{"word": string, "ru": string}], "starters": [string], "grammarTip": string, "grammarRule": {"title": string, "summary": string, "formation": [string], "usage": [string], "examples": [{"text": string, "translation": string}], "pitfall": string} | null}
 - question: the question in ${languageName}.
-- ru: its Russian translation.
+- ru: its ${translationName} translation.
 - followUps: 3 or 4 short follow-up questions in ${languageName} that keep the conversation going.
-- vocabulary: 6 to 8 words or expressions useful for answering, in ${languageName} (${WORD_FORMS[language]}), each with a Russian translation.
+- vocabulary: 6 to 8 words or expressions useful for answering, in ${languageName} (${WORD_FORMS[language]}), each with a ${translationName} translation.
 - starters: 3 sentence beginnings in ${languageName} that use the grammar topic, for the student to finish (for example “Quand j’étais petit, je…”).
 - grammarTip: one or two sentences in ${explainName} reminding how to form the grammar point, with a ${languageName} example; "" if there is no grammar topic.
-- grammarRule: null if there is no grammar topic. Otherwise a short, clear explanation of the rule for a student at ${level}, written in ${explainName} (forms and examples in ${languageName}): title is the name of the grammar point; summary is one or two sentences on what it is; formation lists the steps or forms (for a tense, how it is built, with the endings or the auxiliary, and irregular forms worth knowing), each item one short line; usage lists when it is used, each item one short line with a tiny ${languageName} example; examples are 3 or 4 natural ${languageName} sentences on the vocabulary topic, each with its ${explainName} translation; pitfall is the most common mistake learners make with it and how to avoid it, one or two sentences.`;
+- grammarRule: null if there is no grammar topic. Otherwise a short, clear explanation of the rule for a student at ${level}, written in ${explainName} (forms and examples in ${languageName}): title is the name of the grammar point; summary is one or two sentences on what it is; formation lists the steps or forms (for a tense, how it is built, with the endings or the auxiliary, and irregular forms worth knowing), each item one short line; usage lists when it is used, each item one short line with a tiny ${languageName} example; examples are 3 or 4 natural ${languageName} sentences on the vocabulary topic, each with its ${translationName} translation; pitfall is the most common mistake learners make with it and how to avoid it, one or two sentences.`;
 }
 
 // The heading that starts exercises copied from a book into a lesson, in each language.
@@ -433,7 +444,7 @@ export function lessonExtrasPrompt(
   levels: Levels
 ): string {
   const explainName = EXPLAIN_NAMES[explainIn];
-  return `Below are a teacher's notes from one language lesson for a Russian-speaking student. The lesson teaches ${LANGUAGE_LIST}, and the notes mix that language with Russian. Find three things in them.
+  return `Below are a teacher's notes from one language lesson for a student. The lesson teaches ${LANGUAGE_LIST}, and the notes mix that language with translations, often in Russian. Find three things in them.
 ${levelLine(levels)} Explain the grammar for that level: at A0 and A1 a short summary, two or three formation lines and the simplest examples, leaving out rare exceptions; at A2 simple but complete; at B1 and above complete, with the exceptions and nuances that level is ready for. Explanations stay in ${explainName}. Leave out the student's report and questions: a line beginning with 📝 or ❓ and every line after it that begins with an emoji or with spaces.
 
 Reply with only a JSON object:
@@ -456,7 +467,10 @@ export interface GrammarPracticeRequest {
   title: string;
   summary: string;
   count: number;
+  // why each answer is right is explained in it
   explainIn: ExplainLanguage;
+  // the sentences' translations
+  translateTo: ExplainLanguage;
 }
 
 // Gap sentences that practise one grammar point.
@@ -467,10 +481,11 @@ export function grammarPracticePrompt({
   summary,
   count,
   explainIn,
+  translateTo,
 }: GrammarPracticeRequest): string {
   const languageName = LANGUAGE_NAMES[language];
-  return `Write ${count} short ${languageName} sentences at CEFR level ${level} that practise this grammar point: "${title}"${summary ? ` (${summary})` : ''}. A Russian-speaking learner fills one gap in each, where the grammar point decides the answer. Vary the sentences: different persons, verbs and situations, from easy to harder.
-Reply with only a JSON array of objects: {"before": string, "after": string, "answer": string, "options": [string, string, string], "ru": string, "why": string}. before and after are the text around the gap, answer the exact text of the gap, options three wrong answers that are typical mistakes with this grammar point (a wrong form, ending, auxiliary, agreement or preposition), never another correct answer. ru is a Russian translation of the whole sentence. why is one short sentence in ${EXPLAIN_NAMES[explainIn]} saying why the answer is right.`;
+  return `Write ${count} short ${languageName} sentences at CEFR level ${level} that practise this grammar point: "${title}"${summary ? ` (${summary})` : ''}. A learner fills one gap in each, where the grammar point decides the answer. Vary the sentences: different persons, verbs and situations, from easy to harder.
+Reply with only a JSON array of objects: {"before": string, "after": string, "answer": string, "options": [string, string, string], "ru": string, "why": string}. before and after are the text around the gap, answer the exact text of the gap, options three wrong answers that are typical mistakes with this grammar point (a wrong form, ending, auxiliary, agreement or preposition), never another correct answer. ru is a ${EXPLAIN_NAMES[translateTo]} translation of the whole sentence. why is one short sentence in ${EXPLAIN_NAMES[explainIn]} saying why the answer is right.`;
 }
 
 // The parts of a book page a lesson can take; keep in step with BOOK_PARTS in src/shared/api/index.ts.
@@ -514,7 +529,7 @@ export function writingCheckPrompt({
   explainIn: ExplainLanguage;
 }): string {
   const explainName = EXPLAIN_NAMES[explainIn];
-  return `You are a friendly language tutor checking a Russian-speaking student's written homework, at CEFR level ${level}. The student learns ${LANGUAGE_LIST}.
+  return `You are a friendly language tutor checking a student's written homework, at CEFR level ${level}. The student learns ${LANGUAGE_LIST}.
 The task, as the teacher wrote it: """${task}"""
 The student's answer:
 """
@@ -535,14 +550,22 @@ export function homeworkPrompt({
   keyWords,
   level,
   sentences,
+  translation,
 }: {
   body: string;
   keyWords: string[];
   level: string;
   // how many sentences to translate
   sentences: number;
+  // the language the sentences to translate are written in
+  translation: TranslationRequest;
 }): string {
-  return `Below are a teacher's notes from one language lesson for a Russian-speaking student at CEFR level ${level}. The lesson teaches ${LANGUAGE_LIST}, and the notes mix that language with Russian. Write homework for the next lesson from this lesson's words and grammar.${
+  const name = EXPLAIN_NAMES[translation.language];
+  const isLearned = LEARN_LANGUAGES.some((code) => code === translation.language);
+  const instead = isLearned
+    ? ` (in ${EXPLAIN_NAMES[translation.fallback]} for a lesson in ${name} itself)`
+    : '';
+  return `Below are a teacher's notes from one language lesson for a student at CEFR level ${level}. The lesson teaches ${LANGUAGE_LIST}, and the notes mix that language with translations, often in Russian. Write homework for the next lesson from this lesson's words and grammar.${
     keyWords.length
       ? ` The teacher marked these as the lesson's key words; use them first: ${keyWords.join(', ')}.`
       : ''
@@ -550,7 +573,7 @@ export function homeworkPrompt({
 
 Reply with only a JSON object: {"language": ${LANGUAGE_CODES}, "translate": [string], "writing": string, "verbs": [string], "tense": string}.
 - language: the language the lesson teaches: ${LANGUAGE_KEY}.
-- translate: exactly ${sentences} short Russian sentences for the student to translate into that language, each using the lesson's words (key words first) and its grammar, at the student's level. No semicolons.
+- translate: exactly ${sentences} short sentences in ${name}${instead} for the student to translate into the lesson's language, each using the lesson's words (key words first) and its grammar, at the student's level. No semicolons.
 - writing: one short writing task in the lesson's language, starting with its verb for "write" (écrire, write, schreiben, escribir, escrever, scrivere), that practises the lesson's grammar or topic and says how much to write ("écrire 5 phrases au passé composé sur votre week-end"). No semicolons.
 - verbs: for a lesson in any language but English, 2 or 3 verbs of the lesson in the infinitive to conjugate, the ones it teaches or uses most; [] for English.
 - tense: the tense to conjugate them in, the one the lesson practises: ${TENSE_CHOICES}; "" for English.

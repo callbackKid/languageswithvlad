@@ -57,6 +57,7 @@ export const homework = defineMessages({
     makeHint:
       'Claude writes a “{label}:” block from the lesson’s words and grammar, key words ★ first: the words to revise, gap sentences, verbs to conjugate, sentences to translate and a short text to write. You check it, then it goes into the document under this lesson, and Home shows it to the student as a checklist.',
     makeSentences: 'Sentences to translate',
+    makeTranslateTo: 'Language of the sentences',
     makeLevel: 'Level',
     makeButton: 'Make homework with Claude',
     making: 'Claude is writing the homework…',
@@ -131,6 +132,7 @@ export const homework = defineMessages({
     makeHint:
       'Claude составит блок «{label}:» по словам и грамматике урока, сначала ключевые слова ★: слова повторить, предложения с пропусками, глаголы проспрягать, фразы перевести и короткий текст написать. Вы его проверите, потом он попадёт в документ под этот урок, а ученик увидит его на Главной чек-листом.',
     makeSentences: 'Фразы для перевода',
+    makeTranslateTo: 'Язык фраз для перевода',
     makeLevel: 'Уровень',
     makeButton: 'Составить с Claude',
     making: 'Claude составляет задание…',
@@ -195,6 +197,7 @@ export const homework = defineMessages({
     makeHint:
       'Claude rédige un bloc « {label}: » à partir des mots et de la grammaire de la leçon, mots clés ★ d’abord : mots à réviser, phrases à trous, verbes à conjuguer, phrases à traduire et un court texte à écrire. Vous le vérifiez, puis il va dans le document sous cette leçon, et l’Accueil le montre à l’élève en liste à cocher.',
     makeSentences: 'Phrases à traduire',
+    makeTranslateTo: 'Langue des phrases à traduire',
     makeLevel: 'Niveau',
     makeButton: 'Préparer les devoirs avec Claude',
     making: 'Claude rédige les devoirs…',
@@ -259,6 +262,7 @@ export const homework = defineMessages({
     makeHint:
       'Claude schreibt einen Block „{label}:“ aus den Wörtern und der Grammatik der Lektion, Schlüsselwörter ★ zuerst: Wörter zum Wiederholen, Lückensätze, Verben zum Konjugieren, Sätze zum Übersetzen und einen kurzen Text. Du prüfst ihn, dann kommt er ins Dokument unter diese Lektion, und die Startseite zeigt ihn als Checkliste.',
     makeSentences: 'Sätze zum Übersetzen',
+    makeTranslateTo: 'Sprache der Sätze zum Übersetzen',
     makeLevel: 'Niveau',
     makeButton: 'Mit Claude erstellen',
     making: 'Claude schreibt die Hausaufgaben…',
@@ -324,6 +328,7 @@ export const homework = defineMessages({
     makeHint:
       'Claude redacta un bloque «{label}:» con las palabras y la gramática de la lección, las palabras clave ★ primero: palabras para repasar, frases con huecos, verbos para conjugar, frases para traducir y un texto corto. Lo revisas, luego va al documento debajo de esta lección, e Inicio se lo muestra al alumno como lista.',
     makeSentences: 'Frases para traducir',
+    makeTranslateTo: 'Idioma de las frases para traducir',
     makeLevel: 'Nivel',
     makeButton: 'Preparar los deberes con Claude',
     making: 'Claude está escribiendo los deberes…',
@@ -388,6 +393,7 @@ export const homework = defineMessages({
     makeHint:
       'O Claude escreve um bloco «{label}:» com as palavras e a gramática da lição, as palavras-chave ★ primeiro: palavras para rever, frases com lacunas, verbos para conjugar, frases para traduzir e um texto curto. Verifica-o, depois vai para o documento por baixo desta lição, e o Início mostra-o ao aluno como lista.',
     makeSentences: 'Frases para traduzir',
+    makeTranslateTo: 'Língua das frases para traduzir',
     makeLevel: 'Nível',
     makeButton: 'Fazer com o Claude',
     making: 'O Claude está a escrever o trabalho de casa…',
@@ -455,6 +461,7 @@ export const homework = defineMessages({
     makeHint:
       'Claude scrive un blocco «{label}:» con le parole e la grammatica della lezione, prima le parole chiave ★: parole da ripassare, frasi con spazi vuoti, verbi da coniugare, frasi da tradurre e un breve testo. Lo controlli, poi va nel documento sotto questa lezione, e la Home lo mostra allo studente come lista.',
     makeSentences: 'Frasi da tradurre',
+    makeTranslateTo: 'Lingua delle frasi da tradurre',
     makeLevel: 'Livello',
     makeButton: 'Crea con Claude',
     making: 'Claude sta scrivendo i compiti…',

@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 
 import { type Language } from '@/shared/config';
-import { talk, useTranslation } from '@/shared/i18n';
+import { talk, type UiLanguage, useTranslation } from '@/shared/i18n';
 import Speak from '@/shared/ui/Speak';
 
 import { type GrammarRule } from '../model/types';
@@ -14,6 +14,7 @@ export default function GrammarRuleBox({
   label,
   level = 3,
   open = false,
+  translationLanguage,
   children,
 }: {
   rule: GrammarRule;
@@ -23,6 +24,8 @@ export default function GrammarRuleBox({
   // the heading level of that line where the box stands; its parts are one level below
   level?: 2 | 3;
   open?: boolean;
+  // the language of the examples' translations, when not the interface's (Discuss: Translations in)
+  translationLanguage?: UiLanguage;
   // buttons under the explanation
   children?: ReactNode;
 }) {
@@ -65,7 +68,15 @@ export default function GrammarRuleBox({
                   <span lang={language}>{example.text}</span>{' '}
                   <Speak text={example.text} language={language} />
                   {example.translation && (
-                    <span className="translation"> — {example.translation}</span>
+                    // a translation, maybe in a language being learned: the word menu stays closed on it
+                    <span
+                      className="translation"
+                      data-no-word-actions
+                      lang={translationLanguage ?? uiLanguage}
+                    >
+                      {' '}
+                      — {example.translation}
+                    </span>
                   )}
                 </li>
               ))}

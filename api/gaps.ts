@@ -2,7 +2,7 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 import { claudeJSON, FAST_MODEL } from './_lib/claude.js';
 import { asLevel, checkAccess, fail, onlyPost, text } from './_lib/http.js';
-import { asLanguage, definitionPrompt, gapPrompt } from './_lib/prompts.js';
+import { asExplainLanguage, asLanguage, definitionPrompt, gapPrompt } from './_lib/prompts.js';
 
 // at most this many words get sentences in one request, each word and translation this long
 const MAX_WORDS = 30;
@@ -29,10 +29,12 @@ export default async function handler(request: VercelRequest, response: VercelRe
   const count = Math.min(MAX_SENTENCES, Math.max(MIN_SENTENCES, words.length));
   const language = asLanguage(request.body?.language);
   const level = asLevel(request.body?.level) ?? 'A1';
+  // already resolved by the app: never the language of the words
+  const translateTo = asExplainLanguage(request.body?.translateTo);
   const prompt =
     request.body?.action === 'definitions'
-      ? definitionPrompt(words.slice(0, MAX_SENTENCES), language, level)
-      : gapPrompt(words, count, language, level);
+      ? definitionPrompt(words.slice(0, MAX_SENTENCES), language, level, translateTo)
+      : gapPrompt(words, count, language, level, translateTo);
   try {
     // Fresh sentences every time, so no caching.
     response.status(200).json(

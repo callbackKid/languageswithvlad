@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import { recordWord, type Word } from '@/entities/word';
+import { useTranslationLanguage } from '@/shared/config';
 import { exercises, learning, useTranslation } from '@/shared/i18n';
 import { shuffle } from '@/shared/lib/util';
 import ExerciseHead from '@/shared/ui/ExerciseHead';
@@ -70,6 +71,7 @@ export default function Match({
   const [mistakes, setMistakes] = useState(0);
 
   const language = pairs[0]?.word?.language ?? 'fr';
+  const translation = useTranslationLanguage()(language);
   const byId = Object.fromEntries(round.map((pair) => [pair.id, pair]));
   const roundDone = round.length > 0 && done.size === round.length;
   const title = mode === 'syn' ? t('synonyms') : t('matchTranslations');
@@ -123,7 +125,7 @@ export default function Match({
         className={tileClass}
         disabled={isDone}
         onClick={() => choose(side, id)}
-        lang={side === 'left' || mode === 'syn' ? language : 'ru'}
+        lang={side === 'left' || mode === 'syn' ? language : translation}
       >
         {side === 'left' ? pair.a : pair.b}
         {side === 'right' && isDone && mode === 'syn' && (

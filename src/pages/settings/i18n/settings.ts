@@ -21,7 +21,8 @@ export const settingsText = defineMessages({
     interface: 'Interface',
     interfaceLanguage: 'Interface language',
     translateTo: 'Translations in',
-    translateToHint: 'The language Claude writes word and verb translations in.',
+    translateToHint:
+      'The language Claude writes translations in: words, verbs, texts, exercises and discussion questions.',
     translateToChanged:
       'Each lesson is prepared again in this language when you open it; until then its words are left out of practice.',
     theme: 'Colour theme',
@@ -80,7 +81,8 @@ export const settingsText = defineMessages({
     interface: 'Интерфейс',
     interfaceLanguage: 'Язык интерфейса',
     translateTo: 'Язык переводов',
-    translateToHint: 'Язык, на котором Claude пишет переводы слов и глаголов.',
+    translateToHint:
+      'Язык, на котором Claude пишет переводы: слов, глаголов, текстов, упражнений и вопросов для обсуждения.',
     translateToChanged:
       'Каждый урок будет подготовлен заново на этом языке, когда вы его откроете; до тех пор его слова не попадают в упражнения.',
     theme: 'Цветовая тема',
@@ -146,7 +148,8 @@ export const settingsText = defineMessages({
     interface: 'Interface',
     interfaceLanguage: 'Langue de l’interface',
     translateTo: 'Langue des traductions',
-    translateToHint: 'La langue dans laquelle Claude écrit les traductions des mots et des verbes.',
+    translateToHint:
+      'La langue dans laquelle Claude écrit les traductions : mots, verbes, textes, exercices et questions à discuter.',
     translateToChanged:
       'Chaque leçon est de nouveau préparée dans cette langue quand vous l’ouvrez ; d’ici là, ses mots sont exclus des exercices.',
     theme: 'Thème',
@@ -207,7 +210,8 @@ export const settingsText = defineMessages({
     interface: 'Oberfläche',
     interfaceLanguage: 'Sprache der Oberfläche',
     translateTo: 'Übersetzungssprache',
-    translateToHint: 'Die Sprache, in die Claude Wörter und Verben übersetzt.',
+    translateToHint:
+      'Die Sprache, in die Claude übersetzt: Wörter, Verben, Texte, Übungen und Diskussionsfragen.',
     translateToChanged:
       'Jede Lektion wird beim Öffnen neu in dieser Sprache vorbereitet; bis dahin fehlen ihre Wörter in den Übungen.',
     theme: 'Farbschema',
@@ -268,7 +272,8 @@ export const settingsText = defineMessages({
     interface: 'Interfaz',
     interfaceLanguage: 'Idioma de la interfaz',
     translateTo: 'Idioma de las traducciones',
-    translateToHint: 'El idioma en el que Claude escribe las traducciones de palabras y verbos.',
+    translateToHint:
+      'El idioma en el que Claude escribe las traducciones: palabras, verbos, textos, ejercicios y preguntas para debatir.',
     translateToChanged:
       'Cada lección se vuelve a preparar en este idioma cuando la abres; hasta entonces, sus palabras quedan fuera de los ejercicios.',
     theme: 'Tema de color',
@@ -329,7 +334,8 @@ export const settingsText = defineMessages({
     interface: 'Interface',
     interfaceLanguage: 'Idioma da interface',
     translateTo: 'Idioma das traduções',
-    translateToHint: 'O idioma em que o Claude escreve as traduções das palavras e dos verbos.',
+    translateToHint:
+      'O idioma em que o Claude escreve as traduções: palavras, verbos, textos, exercícios e perguntas para debate.',
     translateToChanged:
       'Cada lição volta a ser preparada neste idioma quando a abrir; até lá, as suas palavras ficam de fora dos exercícios.',
     theme: 'Tema de cores',
@@ -390,7 +396,8 @@ export const settingsText = defineMessages({
     interface: 'Interfaccia',
     interfaceLanguage: 'Lingua dell’interfaccia',
     translateTo: 'Lingua delle traduzioni',
-    translateToHint: 'La lingua in cui Claude scrive le traduzioni di parole e verbi.',
+    translateToHint:
+      'La lingua in cui Claude scrive le traduzioni: parole, verbi, testi, esercizi e domande di discussione.',
     translateToChanged:
       'Ogni lezione viene preparata di nuovo in questa lingua quando la apri; fino ad allora le sue parole restano fuori dagli esercizi.',
     theme: 'Tema',

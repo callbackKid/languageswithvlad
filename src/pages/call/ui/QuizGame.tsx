@@ -266,7 +266,7 @@ export default function QuizGame({
               type="button"
               key={choice}
               className={'choice' + state + (question.kind === 'pick-ru' ? ' ru' : '')}
-              lang={question.kind === 'pick-ru' ? 'ru' : language}
+              lang={question.kind === 'pick-ru' ? translationOf(question.word.language) : language}
               disabled={!!answer}
               onClick={() => choose(choice)}
             >

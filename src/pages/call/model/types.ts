@@ -1,7 +1,7 @@
 import { type Language } from '@/shared/config';
 
 /** A question of an exercise the teacher makes in lesson mode: choose the answer, fill the gap,
-    or translate a Russian sentence. */
+    or translate a sentence from the translation language. */
 export interface ExerciseQuestion {
   type: 'choice' | 'gap' | 'translate';
   prompt: string;
@@ -10,9 +10,9 @@ export interface ExerciseQuestion {
   answer: string;
   // other answers that are just as right
   accept: string[];
-  // the Russian translation of the prompt ("" for "translate", whose prompt is Russian)
+  // the translation of the prompt ("" for "translate", whose prompt is in the translation language)
   ru: string;
-  // why the answer is right, in Russian
+  // why the answer is right, in the translation language
   explanation: string;
 }
 

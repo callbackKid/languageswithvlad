@@ -3,6 +3,7 @@ import {
   getTeacherCode,
   type Language,
   translationFields,
+  translationLanguage,
   type VerbLanguage,
 } from '@/shared/config';
 import { common, translator, type UiLanguage } from '@/shared/i18n';
@@ -224,7 +225,11 @@ export const api = {
   }) =>
     request<unknown>('/api/analyze', {
       method: 'POST',
-      body: JSON.stringify({ action: 'practice', ...options }),
+      body: JSON.stringify({
+        action: 'practice',
+        ...options,
+        translateTo: translationLanguage(options.language),
+      }),
     }),
   // exercises from the student's book, from photos or from PDF pages, copied out as text
   // book pages copied out for a lesson: the parts asked for, never their answers
@@ -261,7 +266,11 @@ export const api = {
     topic: string;
     grammar: string;
     explainIn: string;
-  }) => request<unknown>('/api/discussion', { method: 'POST', body: JSON.stringify(options) }),
+  }) =>
+    request<unknown>('/api/discussion', {
+      method: 'POST',
+      body: JSON.stringify({ ...options, translateTo: translationLanguage(options.language) }),
+    }),
   textbook: (data: string) =>
     request<unknown>('/api/paper', {
       method: 'POST',
@@ -287,7 +296,11 @@ export const api = {
   }) =>
     request<unknown>('/api/analyze', {
       method: 'POST',
-      body: JSON.stringify({ action: 'exercise', ...options }),
+      body: JSON.stringify({
+        action: 'exercise',
+        ...options,
+        translateTo: translationLanguage(options.language),
+      }),
     }),
   /** a word or phrase selected anywhere in the app: explained in its sentence, defined, with
       examples, in translateTo (the card is saved under that language) */
@@ -314,11 +327,21 @@ export const api = {
       method: 'POST',
       body: JSON.stringify({ action: 'study', text, levels, ...translationFields() }),
     }),
-  // homework for the next lesson, made by Claude from a lesson's words and grammar
-  makeHomework: (input: { body: string; keyWords: string[]; level: string; sentences: number }) =>
+  /** homework for the next lesson, made by Claude from a lesson's words and grammar; its
+      sentences to translate are in translateTo (Make homework's own choice) */
+  makeHomework: ({
+    translateTo,
+    ...input
+  }: {
+    body: string;
+    keyWords: string[];
+    level: string;
+    sentences: number;
+    translateTo: UiLanguage;
+  }) =>
     request<unknown>('/api/analyze', {
       method: 'POST',
-      body: JSON.stringify({ action: 'homework', ...input }),
+      body: JSON.stringify({ action: 'homework', ...input, ...translationFields(translateTo) }),
     }),
   // a written homework answer, its mistakes fixed and explained in the interface language
   checkWriting: (input: { task: string; text: string; level: string; explainIn: string }) =>
@@ -335,12 +358,18 @@ export const api = {
   gaps: (words: { fr: string; ru: string }[], language: Language, level: string) =>
     request<unknown>('/api/gaps', {
       method: 'POST',
-      body: JSON.stringify({ words, language, level }),
+      body: JSON.stringify({ words, language, level, translateTo: translationLanguage(language) }),
     }),
   // a definition of each word in its own language, for the blitz
   definitions: (words: { fr: string; ru: string }[], language: Language, level: string) =>
     request<unknown>('/api/gaps', {
       method: 'POST',
-      body: JSON.stringify({ action: 'definitions', words, language, level }),
+      body: JSON.stringify({
+        action: 'definitions',
+        words,
+        language,
+        level,
+        translateTo: translationLanguage(language),
+      }),
     }),
 };

@@ -53,6 +53,31 @@ export const NEWS: NewsDay[] = [
       {
         kind: 'better',
         text: {
+          en: 'Fill the gap, Vocabulary blitz, the practice sentences of the Grammar tab, Create an exercise and A question for discussion now translate into the language chosen under Translations in; grammar explanations stay in the interface language.',
+          ru: 'В упражнениях «Вставьте слово» и «Словарный блиц», в тренировке грамматики, в карточке «Составить упражнение» и в разделе «Вопрос для обсуждения» переводы теперь пишутся на языке, выбранном в строке «Язык переводов»; объяснения грамматики остаются на языке интерфейса.',
+          fr: '« Texte à trous », « Vocabulaire éclair », l’entraînement à la grammaire, « Créer un exercice » et « Une question à discuter » traduisent maintenant dans la langue choisie sous « Langue des traductions » ; les explications de grammaire restent dans la langue de l’interface.',
+          de: '„Lückentext“, „Vokabelblitz“, die Grammatikübungen, „Übung erstellen“ und „Eine Frage zum Diskutieren“ übersetzen jetzt in die Sprache, die du unter „Übersetzungssprache“ gewählt hast; Grammatikerklärungen bleiben in der Sprache der Oberfläche.',
+          es: '«Rellena el hueco», «Vocabulario relámpago», la práctica de gramática, «Crear un ejercicio» y «Una pregunta para debatir» traducen ahora al idioma elegido en «Idioma de las traducciones»; las explicaciones de gramática siguen en el idioma de la interfaz.',
+          pt: '«Preencha o espaço», «Vocabulário relâmpago», a prática de gramática, «Criar um exercício» e «Uma pergunta para debate» traduzem agora para o idioma escolhido em «Idioma das traduções»; as explicações de gramática continuam no idioma da interface.',
+          it: '«Completa la frase», «Vocabolario lampo», gli esercizi di grammatica, «Crea un esercizio» e «Una domanda di discussione» ora traducono nella lingua scelta in «Lingua delle traduzioni»; le spiegazioni di grammatica restano nella lingua dell’interfaccia.',
+        },
+      },
+      {
+        kind: 'new',
+        audience: 'teacher',
+        text: {
+          en: 'Make homework from this lesson: choose the language of the sentences to translate.',
+          ru: '«Домашнее задание по этому уроку»: теперь можно выбрать, на каком языке будут фразы для перевода.',
+          fr: '« Des devoirs à partir de cette leçon » : choisissez la langue des phrases à traduire.',
+          de: '„Hausaufgaben aus dieser Lektion“: Wähle die Sprache der Sätze, die übersetzt werden sollen.',
+          es: '«Deberes a partir de esta lección»: elige el idioma de las frases que hay que traducir.',
+          pt: '«Trabalho de casa a partir desta lição»: escolha o idioma das frases a traduzir.',
+          it: '«Compiti da questa lezione»: scegli la lingua delle frasi da tradurre.',
+        },
+      },
+      {
+        kind: 'better',
+        text: {
           en: 'The word menu, Photo parsing, Text analysis and textbook notes now translate into the language chosen under Translations in, explanations included.',
           ru: 'Переводы и объяснения в меню слова, «Разборе фото», «Разборе текста» и записях по учебнику теперь пишутся на языке, выбранном в строке «Язык переводов».',
           fr: 'Le menu des mots, Analyse de photo, Analyse de texte et les notes tirées d’un manuel traduisent maintenant dans la langue choisie sous « Langue des traductions », explications comprises.',

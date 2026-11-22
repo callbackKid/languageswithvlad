@@ -1,7 +1,14 @@
 import { type FormEvent, useState } from 'react';
 
 import { api, ApiError } from '@/shared/api';
-import { asLanguage, getSettings, type Language, type Level, LEVELS } from '@/shared/config';
+import {
+  asLanguage,
+  getSettings,
+  type Language,
+  type Level,
+  LEVELS,
+  useTranslationLanguage,
+} from '@/shared/config';
 import { common, translator, useTranslation } from '@/shared/i18n';
 import { type Grade, grade } from '@/shared/lib/grade';
 import { loadChecked, save } from '@/shared/lib/storage';
@@ -176,6 +183,7 @@ export default function MakeExercise({
 function ExerciseRound({ exercise, onClose }: { exercise: MadeExercise; onClose: () => void }) {
   const { t } = useTranslation(makeExerciseText);
   const commonText = useTranslation(common);
+  const translationOf = useTranslationLanguage();
   const [questions, setQuestions] = useState(() => shuffle(exercise.questions));
   const [index, setIndex] = useState(0);
   const [typed, setTyped] = useState('');
@@ -239,7 +247,7 @@ function ExerciseRound({ exercise, onClose }: { exercise: MadeExercise; onClose:
       {head}
       <p className="hint">{t('progress', { current: index + 1, total: questions.length })}</p>
       {isTranslate && <p className="hint">{t('translate')}</p>}
-      <p className="made-exercise-prompt" lang={isTranslate ? 'ru' : language}>
+      <p className="made-exercise-prompt" lang={isTranslate ? translationOf(language) : language}>
         {question.prompt}
       </p>
       {question.ru && (
@@ -249,7 +257,7 @@ function ExerciseRound({ exercise, onClose }: { exercise: MadeExercise; onClose:
           onToggle={(event) => setShowRu(event.currentTarget.open)}
         >
           <summary>{commonText.t('translation')}</summary>
-          <p lang="ru">{question.ru}</p>
+          <p lang={translationOf(language)}>{question.ru}</p>
         </details>
       )}
 
@@ -320,7 +328,7 @@ function ExerciseRound({ exercise, onClose }: { exercise: MadeExercise; onClose:
                   { answer: question.answer }
                 )}
           </p>
-          {question.explanation && <p lang="ru">{question.explanation}</p>}
+          {question.explanation && <p lang={translationOf(language)}>{question.explanation}</p>}
           <button type="button" className="btn primary" onClick={next}>
             {index + 1 < questions.length ? commonText.t('next') : commonText.t('seeScore')}
           </button>

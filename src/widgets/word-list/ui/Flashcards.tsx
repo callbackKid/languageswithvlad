@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { recordWord, Transcription, type Word } from '@/entities/word';
+import { useTranslationLanguage } from '@/shared/config';
 import { exercises, useTranslation } from '@/shared/i18n';
 import { shuffle } from '@/shared/lib/util';
 import ExerciseHead from '@/shared/ui/ExerciseHead';
@@ -18,8 +19,9 @@ export default function Flashcards({
 }) {
   const { t } = useTranslation(exercises);
   const [deck, setDeck] = useState(() => shuffle(words));
-  // "fr" direction means from the language being learned into Russian, whichever language that is
+  // "fr" direction means from the language being learned into the translation language
   const language = words[0]?.language ?? 'fr';
+  const translation = useTranslationLanguage()(language);
   const code = language.toUpperCase();
   const [done, setDone] = useState(0);
   const [flipped, setFlipped] = useState(false);
@@ -110,12 +112,12 @@ export default function Flashcards({
         onClick={() => setFlipped((previous) => !previous)}
         aria-label={t('flipCard')}
       >
-        <span className="face" lang={direction === 'fr' ? language : 'ru'}>
+        <span className="face" lang={direction === 'fr' ? language : translation}>
           {front}
         </span>
         {direction === 'fr' && card.tr && <Transcription tr={card.tr} />}
         {flipped ? (
-          <span className="back" lang={direction === 'fr' ? 'ru' : language}>
+          <span className="back" lang={direction === 'fr' ? translation : language}>
             {back}
             {direction === 'ru' && card.tr && (
               <>

@@ -4,7 +4,15 @@ import { type Lesson } from '@/entities/lesson';
 import { type Word } from '@/entities/word';
 import { api, ApiError } from '@/shared/api';
 import { getSettings, type Language, type Level, LEVELS } from '@/shared/config';
-import { common, homework as homeworkText, translator, useTranslation } from '@/shared/i18n';
+import {
+  common,
+  homework as homeworkText,
+  translator,
+  UI_LANGUAGES,
+  type UiLanguage,
+  useTranslation,
+} from '@/shared/i18n';
+import { load, save } from '@/shared/lib/storage';
 import WaitingFact from '@/shared/ui/WaitingFact';
 
 import {
@@ -17,6 +25,14 @@ import {
 type Step = 'idle' | 'making' | 'review' | 'saving' | 'done';
 
 const DEFAULT_TRANSLATE_SENTENCES = 4;
+// The language of the sentences to translate the teacher chose last, kept on this device.
+const TRANSLATE_TO_KEY = 'homework:translate-to';
+
+// The teacher's last choice when it is still one of the languages, their own translation language otherwise.
+function savedTranslateTo(): UiLanguage {
+  const saved = load<unknown>(TRANSLATE_TO_KEY);
+  return UI_LANGUAGES.find((option) => option.id === saved)?.id ?? getSettings().translateTo;
+}
 const SENTENCE_COUNTS = Array.from(
   { length: MAX_TRANSLATE_SENTENCES - MIN_TRANSLATE_SENTENCES + 1 },
   (_empty, position) => MIN_TRANSLATE_SENTENCES + position
@@ -49,6 +65,7 @@ export default function MakeHomework({
   const [sentences, setSentences] = useState(DEFAULT_TRANSLATE_SENTENCES);
   // the teacher's own level for this language to start with; the student's may differ
   const [level, setLevel] = useState<Level>(() => getSettings().levels[language]);
+  const [translateTo, setTranslateTo] = useState<UiLanguage>(savedTranslateTo);
 
   async function make() {
     setStep('making');
@@ -59,6 +76,7 @@ export default function MakeHomework({
         keyWords: words.filter((word) => word.key).map((word) => word.fr),
         level,
         sentences,
+        translateTo,
       });
       setText(homeworkBlock({ raw, lessonNumber: lesson.n, words, gaps: hasClaude }));
       setStep('review');
@@ -122,6 +140,24 @@ export default function MakeHomework({
                   {LEVELS.map((choice) => (
                     <option key={choice} value={choice}>
                       {choice}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label className="form-field">
+                <span>{t('makeTranslateTo')}</span>
+                <select
+                  value={translateTo}
+                  onChange={(event) => {
+                    const chosen = UI_LANGUAGES.find((option) => option.id === event.target.value);
+                    if (!chosen) return;
+                    setTranslateTo(chosen.id);
+                    save(TRANSLATE_TO_KEY, chosen.id);
+                  }}
+                >
+                  {UI_LANGUAGES.map((option) => (
+                    <option key={option.id} value={option.id}>
+                      {option.flag} {option.name}
                     </option>
                   ))}
                 </select>

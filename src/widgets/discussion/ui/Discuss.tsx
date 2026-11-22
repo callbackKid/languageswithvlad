@@ -3,7 +3,13 @@ import { useState } from 'react';
 import { type Bank, GrammarRuleBox } from '@/entities/lesson';
 import { Star } from '@/features/star-word';
 import { api, ApiError } from '@/shared/api';
-import { asLanguage, type Language, LEVELS, useSettings } from '@/shared/config';
+import {
+  asLanguage,
+  type Language,
+  LEVELS,
+  useSettings,
+  useTranslationLanguage,
+} from '@/shared/config';
 import { common, learning, talk, useTranslation } from '@/shared/i18n';
 import { asFields, load, loadChecked, save } from '@/shared/lib/storage';
 import { shownTopic } from '@/shared/lib/util';
@@ -350,6 +356,7 @@ export default function Discuss({
   embedded?: boolean;
 }) {
   const { t, language: uiLanguage } = useTranslation(talk);
+  const translationOf = useTranslationLanguage();
   const commonText = useTranslation(common);
   const names = useTranslation(learning);
   const settings = useSettings();
@@ -558,7 +565,7 @@ export default function Discuss({
               </p>
               {discussion.ru &&
                 (showTranslation ? (
-                  <p className="discussion-ru" lang="ru">
+                  <p className="discussion-ru" data-no-word-actions lang={translationOf(language)}>
                     {discussion.ru}
                   </p>
                 ) : (
@@ -603,6 +610,7 @@ export default function Discuss({
                 <GrammarRuleBox
                   rule={discussion.grammarRule}
                   language={language}
+                  translationLanguage={translationOf(language)}
                   label={`📘 ${t('ruleSummary', { title: discussion.grammarRule.title })}`}
                 />
               )}
@@ -616,7 +624,7 @@ export default function Discuss({
                         <span className="fr" lang={language}>
                           {item.word}
                         </span>
-                        <span className="ru" lang="ru">
+                        <span className="ru" data-no-word-actions lang={translationOf(language)}>
                           {item.ru}
                         </span>
                         <Speak text={item.word} language={language} />
