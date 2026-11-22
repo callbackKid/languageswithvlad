@@ -179,6 +179,8 @@ function ExerciseRound({ exercise, onClose }: { exercise: MadeExercise; onClose:
   const [typed, setTyped] = useState('');
   const [result, setResult] = useState<Grade | null>(null);
   const [picked, setPicked] = useState<string | null>(null);
+  // the translation would give the answer away: folded until the student opens it or answers
+  const [showRu, setShowRu] = useState(false);
   const [score, setScore] = useState(0);
   const { language } = exercise;
   const question = questions[index];
@@ -188,6 +190,7 @@ function ExerciseRound({ exercise, onClose }: { exercise: MadeExercise; onClose:
     const graded = gradeAnswer(given, question);
     if (graded === 'empty') return;
     setResult(graded);
+    setShowRu(true);
     if (graded !== 'bad') setScore((previous) => previous + 1);
   }
   // to the next question, or, from the start, a new order of the same questions
@@ -196,6 +199,7 @@ function ExerciseRound({ exercise, onClose }: { exercise: MadeExercise; onClose:
     setTyped('');
     setPicked(null);
     setResult(null);
+    setShowRu(false);
   }
   const next = () => goTo(index + 1);
   function again() {
@@ -237,9 +241,14 @@ function ExerciseRound({ exercise, onClose }: { exercise: MadeExercise; onClose:
         {question.prompt}
       </p>
       {question.ru && (
-        <p className="hint" lang="ru">
-          {question.ru}
-        </p>
+        <details
+          className="translation-peek"
+          open={showRu}
+          onToggle={(event) => setShowRu(event.currentTarget.open)}
+        >
+          <summary>{commonText.t('translation')}</summary>
+          <p lang="ru">{question.ru}</p>
+        </details>
       )}
 
       {question.type === 'choice' ? (

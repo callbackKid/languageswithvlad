@@ -1834,6 +1834,20 @@ pre.source {
   font-size: 15px;
   margin: 0 0 14px;
 }
+/* a question's translation, folded so it doesn't give the answer away (gap sentences, a made
+   exercise) */
+.translation-peek {
+  margin: 4px 0 14px;
+  font-size: 15px;
+  color: var(--muted);
+}
+.translation-peek summary {
+  cursor: pointer;
+  width: fit-content;
+}
+.translation-peek p {
+  margin: 4px 0 0;
+}
 
 .choices {
   display: grid;

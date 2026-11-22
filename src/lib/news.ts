@@ -51,6 +51,18 @@ export const NEWS: NewsDay[] = [
     date: '2026-11-22',
     items: [
       {
+        kind: 'better',
+        text: {
+          en: 'In an exercise made with Create an exercise, the Russian translation of a sentence no longer gives the answer away: it stays folded under Translation until you open it or give your answer.',
+          ru: 'В упражнении, составленном в карточке «Составить упражнение», русский перевод предложения больше не выдаёт ответ: он остаётся свёрнутым в строке «Перевод», пока вы её не раскроете или не ответите.',
+          fr: 'Dans un exercice fait avec « Créer un exercice », la traduction russe d’une phrase ne donne plus la réponse : elle reste repliée sous « Traduction » jusqu’à ce que vous l’ouvriez ou que vous répondiez.',
+          de: 'In einer Übung aus „Übung erstellen“ verrät die russische Übersetzung eines Satzes die Antwort nicht mehr: Sie bleibt unter „Übersetzung“ eingeklappt, bis du sie aufklappst oder antwortest.',
+          es: 'En un ejercicio hecho con «Crear un ejercicio», la traducción al ruso de una frase ya no delata la respuesta: queda plegada bajo «Traducción» hasta que la abras o respondas.',
+          pt: 'Num exercício feito com «Criar um exercício», a tradução russa de uma frase já não revela a resposta: fica recolhida sob «Tradução» até a abrir ou responder.',
+          it: 'In un esercizio fatto con «Crea un esercizio», la traduzione russa di una frase non svela più la risposta: resta chiusa sotto «Traduzione» finché non la apri o non rispondi.',
+        },
+      },
+      {
         kind: 'fixed',
         text: {
           en: 'Homework now shows up when the lesson writes it as “les devoirs:”, with an article. The next lesson is found when it is written “le prochain cours: …” or with a two-digit year (24.11.26).',

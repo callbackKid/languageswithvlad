@@ -169,17 +169,15 @@ export function GapRound({
         </span>{' '}
         {item.after}
       </p>
-      {showRu || picked != null ? (
-        <p className="ru-line" lang="ru">
-          {item.ru}
-        </p>
-      ) : (
-        <p className="ru-line">
-          <button type="button" className="btn ghost flush" onClick={() => setShowRu(true)}>
-            {commonText.t('showTranslation')}
-          </button>
-        </p>
-      )}
+      {/* folded so it doesn't give the answer away; it opens by itself once the student answers */}
+      <details
+        className="translation-peek"
+        open={showRu}
+        onToggle={(event) => setShowRu(event.currentTarget.open)}
+      >
+        <summary>{commonText.t('translation')}</summary>
+        <p lang="ru">{item.ru}</p>
+      </details>
       <div className="choices">
         {item.choices.map((choice) => {
           const stateClass =
@@ -193,6 +191,7 @@ export function GapRound({
               disabled={picked != null}
               onClick={() => {
                 setPicked(choice);
+                setShowRu(true);
                 if (choice === item.answer) setScore((previous) => previous + 1);
                 onAnswer?.(item, choice === item.answer);
               }}

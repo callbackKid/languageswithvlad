@@ -372,6 +372,26 @@ const UNDERLINED = {
   ],
 };
 
+// Gap sentences on the lesson's words (Words tab → Fill the gap, homework tasks).
+const GAPS = [
+  {
+    before: 'Le matin, je',
+    after: 'à sept heures.',
+    answer: 'me lève',
+    word: 'se lever',
+    ru: 'Утром я встаю в семь часов.',
+    options: ['lève', 'me lever', 'levé'],
+  },
+  {
+    before: 'J’',
+    after: 'beaucoup le fromage.',
+    answer: 'aime',
+    word: 'aimer',
+    ru: 'Я очень люблю сыр.',
+    options: ['aimes', 'aimer', 'aimé'],
+  },
+];
+
 // An exercise the teacher makes in lesson mode: one question of each kind.
 const MADE_EXERCISE = {
   title: 'Passé composé с être',
@@ -474,6 +494,7 @@ export function answerFor(url, body, headers = {}, scenario = 'upcoming') {
     return {};
   }
   if (path === '/api/discussion') return DISCUSSION;
+  if (path === '/api/gaps') return GAPS;
   if (path === '/api/append') return { ok: true };
   if (path === '/api/call-token' && body?.kind === 'jitsi')
     return { token: 'test-token', roomName: `vpaas-magic-cookie-test/${body.room}` };
