@@ -15,12 +15,13 @@ import { setProgressDoc, useProgress } from '@/entities/word';
 import { LessonMode } from '@/pages/call';
 import { CodeGate } from '@/pages/code-gate';
 import { Connect } from '@/pages/connect';
+import { LessonDocument } from '@/pages/document';
 import { Home } from '@/pages/home';
+import { Lessons } from '@/pages/lessons';
 import { Mistakes } from '@/pages/mistakes';
 import { MyWords } from '@/pages/my-words';
 import { News } from '@/pages/news';
 import { PhotoSection } from '@/pages/photo';
-import { Practice } from '@/pages/practice';
 import { Settings } from '@/pages/settings';
 import { Stats } from '@/pages/stats';
 import { Reader } from '@/pages/text';
@@ -29,7 +30,6 @@ import { api, ApiError, type BoardServer } from '@/shared/api';
 import {
   applyTeacherHealth,
   isStudied,
-  lessonPath,
   NEEDS_LESSONS,
   parsePath,
   SECTIONS,
@@ -42,9 +42,7 @@ import { asFields, load, loadChecked, remove, save } from '@/shared/lib/storage'
 import Avatar from '@/shared/ui/Avatar';
 import { Discuss } from '@/widgets/discussion';
 import { Feedback } from '@/widgets/feedback';
-import { LessonView } from '@/widgets/lesson-view';
 import { NextLessonBadge } from '@/widgets/next-lesson-badge';
-import { WordsTab } from '@/widgets/word-list';
 import { WordActions } from '@/widgets/word-menu';
 
 import TooltipLayer from './TooltipLayer';
@@ -115,7 +113,7 @@ function ButtonIcon({ name }: { name: keyof typeof ICON_PATHS }) {
 export default function App() {
   const translation = useTranslation(app);
   const settings = useSettings();
-  const { t, rich, locale } = translation;
+  const { t, rich } = translation;
   const [needsCode, setNeedsCode] = useState(false);
   const [hasClaude, setHasClaude] = useState(true);
   const [docWriter, setDocWriter] = useState<string | null>(null);
@@ -241,18 +239,6 @@ export default function App() {
     lessons[lessons.length - 1] ??
     null;
   const currentLessonKey = lesson?.key ?? null;
-  // The lesson list runs oldest to newest; the open lesson (usually the newest) is scrolled into
-  // view, along the row on a phone and down the column on a computer, without moving the page.
-  const lessonList = useRef<HTMLElement>(null);
-  useEffect(() => {
-    const list = lessonList.current;
-    const link = list?.querySelector<HTMLElement>('[aria-current="page"]');
-    if (!list || !link) return;
-    const box = list.getBoundingClientRect();
-    const own = link.getBoundingClientRect();
-    list.scrollLeft += own.left - box.left - (box.width - own.width) / 2;
-    list.scrollTop += own.top - box.top - (box.height - own.height) / 2;
-  }, [currentLessonKey, section, lessons.length]);
 
   function connect(id: string) {
     if (id !== docId) {
@@ -304,7 +290,6 @@ export default function App() {
   else if (doc)
     status = t('synced', { count: lessons.length, ago: ago(doc.fetchedAt, translation) });
   else status = t('notSynced');
-  const shortDateFormat = new Intl.DateTimeFormat(locale, { day: 'numeric', month: 'short' });
   // pages about the lessons have nothing to show until the document has one
   const waitingForLessons = !lessons.length && NEEDS_LESSONS.includes(section);
   const example = (text: string) => <span className="example">{text}</span>;
@@ -450,31 +435,8 @@ export default function App() {
                 )}
               </p>
             </main>
-          ) : section === 'document' && notion ? (
-            <main className="page">
-              <p className="empty">
-                {rich('notionDocument', {
-                  link: (chunk) => (
-                    <a href={docUrl} target="_blank" rel="noopener noreferrer">
-                      {chunk}
-                    </a>
-                  ),
-                })}
-              </p>
-            </main>
           ) : section === 'document' ? (
-            <main className="doc-editor">
-              <p className="hint">
-                {rich('editorHint', {
-                  link: (chunk) => (
-                    <a href={docUrl} target="_blank" rel="noopener noreferrer">
-                      {chunk}
-                    </a>
-                  ),
-                })}
-              </p>
-              <iframe title="Google Doc" src={docUrl} allow="clipboard-read; clipboard-write" />
-            </main>
+            <LessonDocument url={docUrl} isNotion={notion} />
           ) : section === 'call' ? (
             <main className="page wide">
               <LessonMode
@@ -490,60 +452,15 @@ export default function App() {
               />
             </main>
           ) : section === 'lessons' || section === 'practice' ? (
-            <div className="history">
-              <nav className="tabs history-tabs" aria-label={t('section.lessons')}>
-                {(['lessons', 'practice'] as const).map((tabSection) => {
-                  const tabPath = tabSection === 'lessons' ? '/lessons' : '/all-lessons';
-                  return (
-                    <a
-                      key={tabSection}
-                      className="tab"
-                      href={hrefFor(tabPath)}
-                      aria-current={section === tabSection ? 'page' : undefined}
-                      onClick={(event) => followLink(event, tabPath)}
-                    >
-                      {tabSection === 'lessons' ? t('lessonsLabel') : t('section.practice')}
-                    </a>
-                  );
-                })}
-              </nav>
-              {section === 'practice' ? (
-                <main className="history-practice">
-                  <Practice bank={bank} hasClaude={hasClaude} />
-                </main>
-              ) : (
-                <div className="layout">
-                  <nav className="lessons" aria-label={t('lessonsLabel')} ref={lessonList}>
-                    {lessons.map((listedLesson) => (
-                      <a
-                        key={listedLesson.key}
-                        className="lesson-link"
-                        href={hrefFor(lessonPath(listedLesson.key))}
-                        aria-current={listedLesson.key === currentLessonKey ? 'page' : undefined}
-                        onClick={(event) => followLink(event, lessonPath(listedLesson.key))}
-                      >
-                        <span className="n">{listedLesson.n}</span>
-                        <span className="d">{shortDateFormat.format(listedLesson.date)}</span>
-                      </a>
-                    ))}
-                  </nav>
-                  <main>
-                    {lesson && (
-                      <LessonView
-                        key={lesson.key}
-                        lesson={lesson}
-                        docId={docId}
-                        hasClaude={hasClaude}
-                        docWriter={!!docTarget.docWriter}
-                        onAnalysis={bank.put}
-                        isNewest={lesson.key === lessons[lessons.length - 1]?.key}
-                        renderWords={(props) => <WordsTab grouped {...props} />}
-                      />
-                    )}
-                  </main>
-                </div>
-              )}
-            </div>
+            <Lessons
+              tab={section}
+              lessons={lessons}
+              lesson={lesson}
+              bank={bank}
+              docId={docId}
+              hasClaude={hasClaude}
+              canWrite={!!docTarget.docWriter}
+            />
           ) : (
             <main className="page">
               {section === 'home' && (

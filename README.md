@@ -282,11 +282,12 @@ api/                serverless functions (Vercel)
   call-token.ts     a Zoom signature or a Jitsi (JaaS) token for joining a call inside the app
   health.ts         what the server is set up for
 src/                the app in Feature-Sliced Design layers; a layer imports only from the layers below it
-  app/              the shell: App.tsx (top bar, menu, routing; the Lessons and Document sections are drawn
-                    here), main.tsx, styles.css, TooltipLayer
-  pages/            one slice per section: home, call (lesson mode, with the board, video calls, Make an
-                    exercise and the quiz game), practice, my-words, mistakes, stats, photo, text, tutorial,
-                    news, settings, connect, code-gate; code only one page needs stays inside it
+  app/              the shell: App.tsx (top bar, menu, routing, syncing the document), main.tsx, styles.css,
+                    TooltipLayer
+  pages/            one slice per section: home, lessons (Lesson history with its two tabs, Lessons and
+                    Downloaded lessons), document, call (lesson mode, with the board, video calls, Make an
+                    exercise and the quiz game), my-words, mistakes, stats, photo, text, tutorial, news,
+                    settings, connect, code-gate; code only one page needs stays inside it
   widgets/          big blocks several pages share: word-list (a word list with its exercises, flashcards,
                     match and groups by meaning), lesson-view (a lesson with its tabs; the page hands it the
                     word list), word-menu, discussion, word-notes, next-lesson-badge, feedback
