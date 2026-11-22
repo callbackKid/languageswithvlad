@@ -32,6 +32,13 @@ export const exercises = defineMessages({
     starLegend:
       '☆ adds a word to Words to learn. Words you miss in exercises are added too, and leave the list after 3 right answers in a row.',
     learnProgress: '{count} of {total} right answers in a row',
+    // ✕ on a lesson's word: takes it out of the lesson's list and its exercises, on this device
+    removeWord: 'Remove from the lesson',
+    removeWordLabel: 'Remove “{word}” from the lesson',
+    restoreWords: {
+      one: 'Bring back {count} removed word',
+      other: 'Bring back {count} removed words',
+    },
     progressLegend:
       '●●○ shows right answers in a row, in any exercise. After {total} the word is learned and leaves the list; a mistake starts the count again.',
     ankiTitle: 'Tab-separated: word, translation, transcription. In Anki: File → Import.',
@@ -126,6 +133,14 @@ export const exercises = defineMessages({
     starLegend:
       '☆ добавляет слово в «Слова на изучении». Слова с ошибками в упражнениях попадают туда сами и уходят после 3 верных ответов подряд.',
     learnProgress: '{count} из {total} верных ответов подряд',
+    removeWord: 'Убрать из урока',
+    removeWordLabel: 'Убрать «{word}» из урока',
+    restoreWords: {
+      one: 'Вернуть {count} убранное слово',
+      few: 'Вернуть {count} убранных слова',
+      many: 'Вернуть {count} убранных слов',
+      other: 'Вернуть {count} убранного слова',
+    },
     progressLegend:
       '●●○ — верные ответы подряд в любом упражнении. Когда их {total}, слово считается выученным и уходит из списка; после ошибки счёт начинается заново.',
     ankiTitle: 'Через табуляцию: слово, перевод, транскрипция. В Anki: Файл → Импорт.',
@@ -221,6 +236,12 @@ export const exercises = defineMessages({
     starLegend:
       '☆ ajoute un mot aux Mots à apprendre. Les mots ratés dans les exercices s’y ajoutent aussi et en sortent après 3 bonnes réponses d’affilée.',
     learnProgress: '{count} sur {total} bonnes réponses d’affilée',
+    removeWord: 'Retirer de la leçon',
+    removeWordLabel: 'Retirer « {word} » de la leçon',
+    restoreWords: {
+      one: 'Remettre {count} mot retiré',
+      other: 'Remettre les {count} mots retirés',
+    },
     progressLegend:
       '●●○ indique les bonnes réponses d’affilée, dans n’importe quel exercice. Au bout de {total}, le mot est appris et quitte la liste ; une erreur remet le compteur à zéro.',
     ankiTitle:
@@ -310,6 +331,12 @@ export const exercises = defineMessages({
     starLegend:
       '☆ fügt ein Wort zu den Lernwörtern hinzu. Wörter, die du in Übungen falsch hast, kommen auch dazu und verschwinden nach 3 richtigen Antworten in Folge.',
     learnProgress: '{count} von {total} richtigen Antworten in Folge',
+    removeWord: 'Aus der Lektion entfernen',
+    removeWordLabel: '„{word}“ aus der Lektion entfernen',
+    restoreWords: {
+      one: '{count} entferntes Wort zurückholen',
+      other: '{count} entfernte Wörter zurückholen',
+    },
     progressLegend:
       '●●○ zeigt die richtigen Antworten in Folge, in jeder Übung. Bei {total} gilt das Wort als gelernt und verlässt die Liste; ein Fehler setzt die Zählung zurück.',
     ankiTitle: 'Tabulatorgetrennt: Wort, Übersetzung, Aussprache. In Anki: Datei → Importieren.',
@@ -401,6 +428,12 @@ export const exercises = defineMessages({
     starLegend:
       '☆ añade una palabra a Palabras por aprender. Las palabras que fallas en los ejercicios también se añaden y salen de la lista tras 3 aciertos seguidos.',
     learnProgress: '{count} de {total} aciertos seguidos',
+    removeWord: 'Quitar de la lección',
+    removeWordLabel: 'Quitar «{word}» de la lección',
+    restoreWords: {
+      one: 'Recuperar {count} palabra quitada',
+      other: 'Recuperar las {count} palabras quitadas',
+    },
     progressLegend:
       '●●○ muestra los aciertos seguidos, en cualquier ejercicio. Al llegar a {total}, la palabra se da por aprendida y sale de la lista; un fallo reinicia la cuenta.',
     ankiTitle:
@@ -493,6 +526,12 @@ export const exercises = defineMessages({
     starLegend:
       '☆ acrescenta uma palavra às Palavras por aprender. As palavras que erra nos exercícios também entram e saem da lista após 3 respostas certas seguidas.',
     learnProgress: '{count} de {total} respostas certas seguidas',
+    removeWord: 'Retirar da lição',
+    removeWordLabel: 'Retirar «{word}» da lição',
+    restoreWords: {
+      one: 'Repor {count} palavra retirada',
+      other: 'Repor as {count} palavras retiradas',
+    },
     progressLegend:
       '●●○ mostra as respostas certas seguidas, em qualquer exercício. Ao chegar a {total}, a palavra fica aprendida e sai da lista; um erro recomeça a contagem.',
     ankiTitle:
@@ -585,6 +624,12 @@ export const exercises = defineMessages({
     starLegend:
       '☆ aggiunge una parola alle Parole da imparare. Ci finiscono anche le parole sbagliate negli esercizi, che escono dalla lista dopo 3 risposte giuste di fila.',
     learnProgress: '{count} su {total} risposte giuste di fila',
+    removeWord: 'Togli dalla lezione',
+    removeWordLabel: 'Togli «{word}» dalla lezione',
+    restoreWords: {
+      one: 'Recupera {count} parola tolta',
+      other: 'Recupera le {count} parole tolte',
+    },
     progressLegend:
       '●●○ mostra le risposte giuste di fila, in qualsiasi esercizio. Arrivati a {total}, la parola è imparata ed esce dalla lista; un errore fa ripartire il conteggio.',
     ankiTitle:

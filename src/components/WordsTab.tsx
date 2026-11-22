@@ -5,6 +5,7 @@ import { common } from '../i18n/messages/common';
 import { exercises } from '../i18n/messages/exercises';
 import { getProgress, LEARNED_STREAK, useProgress, wordKey } from '../lib/progress';
 import { buildDictation, buildQuiz, pickWords } from '../lib/quiz';
+import { removedWordCount, removeWord, restoreWords, useRemoved } from '../lib/removed';
 import { canSpeak } from '../lib/speech';
 import type { Analysis, Word } from '../lib/types';
 import { downloadText } from '../lib/util';
@@ -57,6 +58,7 @@ export default function WordsTab({
   hidePairs,
   showProgress = false,
   grouped = false,
+  lessonKey,
 }: {
   analysis: Analysis;
   hasClaude: boolean;
@@ -66,6 +68,8 @@ export default function WordsTab({
   showProgress?: boolean;
   // the words under groups by meaning, which Claude makes, with a group to choose in the filters
   grouped?: boolean;
+  // one lesson's own list: its words can be taken out of it (✕) and brought back
+  lessonKey?: string;
 }) {
   const { t, rich, language: uiLanguage } = useTranslation(exercises);
   const commonText = useTranslation(common);
@@ -76,6 +80,7 @@ export default function WordsTab({
   const [chosenGroup, setChosenGroup] = useState<string | null>(null);
   const [exercise, setExercise] = useState<Exercise>(null);
   const [run, setRun] = useState(0);
+  const removedCount = removedWordCount(useRemoved(), lessonKey ? [lessonKey] : []);
   const grouping = useWordGroups(analysis.words, grouped && hasClaude, uiLanguage);
   const { groupOf } = grouping;
 
@@ -314,6 +319,17 @@ export default function WordsTab({
                   {showProgress && <LearnProgress word={word} />}
                   <Speak text={word.fr} language={word.language ?? 'fr'} />
                   <Star word={word} />
+                  {lessonKey && (
+                    <button
+                      type="button"
+                      className="row-remove"
+                      data-tooltip={t('removeWord')}
+                      aria-label={t('removeWordLabel', { word: word.fr })}
+                      onClick={() => removeWord(lessonKey, word.fr)}
+                    >
+                      ✕
+                    </button>
+                  )}
                 </li>
               ))}
             </ul>
@@ -345,6 +361,15 @@ export default function WordsTab({
             data-tooltip={t('ankiTitle')}
           >
             {t('ankiExport', { count: picked.length })}
+          </button>
+        )}
+        {lessonKey && removedCount > 0 && (
+          <button
+            type="button"
+            className="btn ghost flush"
+            onClick={() => restoreWords([lessonKey])}
+          >
+            {t('restoreWords', { count: removedCount })}
           </button>
         )}
         {onRefresh && (

@@ -389,7 +389,9 @@ a {
   margin: 0 0 18px;
 }
 
-.star {
+/* ☆ adds a word to Words to learn; ✕ takes a word out of its lesson's list */
+.star,
+.row-remove {
   flex: none;
   background: none;
   border: 0;
@@ -400,7 +402,8 @@ a {
   color: var(--muted);
   border-radius: 6px;
 }
-.star:hover {
+.star:hover,
+.row-remove:hover {
   color: var(--text);
   background: var(--soft);
 }

@@ -51,6 +51,18 @@ export const NEWS: NewsDay[] = [
     date: '2026-11-22',
     items: [
       {
+        kind: 'new',
+        text: {
+          en: 'Lesson words: ✕ on a word’s row takes it out of the lesson’s list and its exercises, for a word Claude picked up by mistake or one you don’t want to practise. Bring back removed words, under the list, puts them back.',
+          ru: 'Слова урока: ✕ в строке слова убирает его из списка урока и из упражнений — если Claude взял слово по ошибке или вы не хотите его тренировать. «Вернуть убранные слова» под списком возвращает их обратно.',
+          fr: 'Mots de la leçon : ✕ sur la ligne d’un mot le retire de la liste de la leçon et de ses exercices, pour un mot que Claude a relevé par erreur ou que vous ne voulez pas travailler. « Remettre les mots retirés », sous la liste, les remet.',
+          de: 'Lektionswörter: ✕ in der Zeile eines Wortes nimmt es aus der Wortliste der Lektion und aus ihren Übungen, etwa ein Wort, das Claude versehentlich aufgenommen hat, oder eines, das du nicht üben willst. „Entfernte Wörter zurückholen“ unter der Liste holt sie zurück.',
+          es: 'Palabras de la lección: ✕ en la fila de una palabra la quita de la lista de la lección y de sus ejercicios, para una palabra que Claude cogió por error o que no quieres practicar. «Recuperar las palabras quitadas», debajo de la lista, las devuelve.',
+          pt: 'Palavras da lição: ✕ na linha de uma palavra retira-a da lista da lição e dos seus exercícios, para uma palavra que o Claude apanhou por engano ou que não quer praticar. «Repor as palavras retiradas», por baixo da lista, volta a pô-las.',
+          it: 'Parole della lezione: ✕ sulla riga di una parola la toglie dalla lista della lezione e dai suoi esercizi, per una parola che Claude ha preso per errore o su cui non vuoi esercitarti. «Recupera le parole tolte», sotto la lista, le rimette.',
+        },
+      },
+      {
         kind: 'fixed',
         languages: ['fr'],
         text: {

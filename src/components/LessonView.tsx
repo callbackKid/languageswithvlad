@@ -13,6 +13,7 @@ import {
   normalizeAnalysis,
   normalizeExtras,
 } from '../lib/parse';
+import { useRemoved, withoutRemoved } from '../lib/removed';
 import { LESSON_TABS, type LessonTab, useSettings } from '../lib/settings';
 import { loadChecked, save } from '../lib/storage';
 import { useTeacher } from '../lib/teacher';
@@ -152,18 +153,22 @@ export default function LessonView({
     };
   }, [extrasKey, lesson.body, wantsExtras, hasClaude, freshExtras]);
 
-  // Words carry their lesson so progress and stats can group by lesson.
+  const removed = useRemoved();
+  // Words carry their lesson so progress and stats can group by lesson; the ones the student took
+  // out of the lesson are left out.
   const tagged = useMemo(
     () =>
       analysis && {
         ...analysis,
-        words: markKeyWords(analysis.words, lesson.body).map((word) => ({
-          ...word,
-          lesson: lesson.key,
-          language: analysis.language,
-        })),
+        words: markKeyWords(withoutRemoved(analysis, lesson.key, removed).words, lesson.body).map(
+          (word) => ({
+            ...word,
+            lesson: lesson.key,
+            language: analysis.language,
+          })
+        ),
       },
-    [analysis, lesson.key, lesson.body]
+    [analysis, lesson.key, lesson.body, removed]
   );
 
   const tabButton = (id: Tab, label: string, count?: number) =>
@@ -220,7 +225,7 @@ export default function LessonView({
       </section>
       <section className="panel">
         <div className="tabs" role="tablist" ref={tabList}>
-          {tabButton('words', t('words'), analysis?.words.length ?? 0)}
+          {tabButton('words', t('words'), tagged?.words.length ?? 0)}
           {tabButton('verbs', t('verbs'), analysis?.verbs.length ?? 0)}
           {tabButton('grammar', t('grammar'), extras?.grammar.length)}
           {tabButton('homework', t('homework'), extras?.homework.length)}
@@ -236,6 +241,7 @@ export default function LessonView({
               analysis={tagged}
               hasClaude={hasClaude && !tagged.local}
               grouped
+              lessonKey={lesson.key}
               onRefresh={
                 hasClaude && state === 'ready' && !tagged.local
                   ? () => setFresh((previous) => previous + 1)

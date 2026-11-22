@@ -9,6 +9,7 @@ import {
   normalizeConjugation,
 } from './parse';
 import { wordKey } from './progress';
+import { getRemoved, useRemoved, withoutRemoved } from './removed';
 import { useSettings } from './settings';
 import { loadChecked, save } from './storage';
 import {
@@ -166,6 +167,7 @@ export function useBank(lessons: Lesson[], hasClaude: boolean): Bank {
   );
 
   const { studying } = useSettings();
+  const removed = useRemoved();
   return useMemo(() => {
     const words: Word[] = [],
       pairs: BankPair[] = [],
@@ -174,7 +176,9 @@ export function useBank(lessons: Lesson[], hasClaude: boolean): Bank {
     const seenWords = new Set<string>(),
       seenVerbs = new Set<string>();
     for (const lesson of [...lessons].reverse()) {
-      const analysis = shown[lesson.key];
+      const prepared = shown[lesson.key];
+      // without the words the student took out of the lesson
+      const analysis = prepared && withoutRemoved(prepared, lesson.key, removed);
       // lessons in languages the student doesn't learn stay out of practice (Settings)
       if (analysis && !studying.includes(analysis.language)) continue;
       lessonInfos.push({
@@ -217,7 +221,7 @@ export function useBank(lessons: Lesson[], hasClaude: boolean): Bank {
       waiting,
       put,
     };
-  }, [lessons, analyses, shown, failed, hasClaude, put, studying]);
+  }, [lessons, analyses, shown, failed, hasClaude, put, studying, removed]);
 }
 
 /** Only the newest lesson is prepared by itself (AUTO_PREPARE). An older one a page needs (the
@@ -253,13 +257,15 @@ export function usePreparedLesson(lesson: Lesson | null, bank: Bank, hasClaude: 
   return preparing;
 }
 
-/** One lesson's own words, with their lesson and language, key words (★) marked. The bank keeps
-    a word under the newest lesson that has it, so this reads the lesson's analysis instead. */
+/** One lesson's own words, with their lesson and language, key words (★) marked, without those
+    the student took out. The bank keeps a word under the newest lesson that has it, so this reads
+    the lesson's analysis instead. */
 export function lessonWords(lesson: Lesson, bank: Bank, hasClaude: boolean): Word[] {
-  const analysis =
+  const prepared =
     readAnalysis(lesson.hash) ??
     (hasClaude ? null : localParse(lesson.body, languageOfLesson(lesson)));
-  if (!analysis) return bank.words.filter((word) => word.lesson === lesson.key);
+  if (!prepared) return bank.words.filter((word) => word.lesson === lesson.key);
+  const analysis = withoutRemoved(prepared, lesson.key, getRemoved());
   return markKeyWords(analysis.words, lesson.body).map((word) => ({
     ...word,
     lesson: lesson.key,
