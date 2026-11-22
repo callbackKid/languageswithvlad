@@ -1282,18 +1282,19 @@ nav.lessons {
 }
 
 /* seven tabs: on narrow pages they wrap onto a second line instead of hiding off the edge */
+/* a lesson's eight tabs fit one row at a laptop's width; a narrower window wraps them */
 .tabs {
   display: flex;
   flex-wrap: wrap;
   column-gap: 4px;
-  padding: 0 16px;
+  padding: 0 12px;
   border-bottom: 1px solid var(--line);
 }
 
 .tab {
   background: none;
   border: 0;
-  padding: 14px 12px 12px;
+  padding: 14px 10px 12px;
   cursor: pointer;
   font-weight: 500;
   color: var(--muted);
