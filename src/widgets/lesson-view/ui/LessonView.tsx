@@ -39,6 +39,7 @@ import { shownTopic } from '@/shared/lib/util';
 import HelpLink from '@/shared/ui/HelpLink';
 import WaitingFact from '@/shared/ui/WaitingFact';
 
+import { phoneticsKey, readPhonetics } from '../model/phonetics';
 import LessonDrawings from './LessonDrawings';
 import { BookTab, GrammarTab, HomeworkTab } from './LessonExtrasTabs';
 import Notes from './Notes';
@@ -197,6 +198,14 @@ export default function LessonView({
     };
   }, [extrasKey, lesson.body, wantsExtras, hasClaude, freshExtras]);
 
+  // the Phonetics tab's count: from the reading kept on the device, or from the tab once it reads
+  const phoneticsStorageKey = phoneticsKey(lesson.hash, uiLanguage);
+  const [phoneticsFound, setPhoneticsFound] = useState<{ key: string; count: number } | null>(null);
+  const phoneticsCount =
+    phoneticsFound?.key === phoneticsStorageKey
+      ? phoneticsFound.count
+      : readPhonetics(phoneticsStorageKey)?.topics.length;
+
   const removed = useRemoved();
   // Words and verbs carry their lesson (progress and stats group by it, ✕ takes them out of it);
   // the ones the student took out of the lesson are left out.
@@ -275,7 +284,7 @@ export default function LessonView({
           {tabButton('words', t('words'), tagged?.words.length ?? 0)}
           {tabButton('verbs', t('verbs'), tagged?.verbs.length ?? 0)}
           {tabButton('grammar', t('grammar'), extras?.grammar.length)}
-          {tabButton('phonetics', t('phonetics'))}
+          {tabButton('phonetics', t('phonetics'), phoneticsCount)}
           {tabButton('homework', t('homework'), extras?.homework.length)}
           {tabButton('book', t('book'), extras?.book.length)}
           {tabButton('notes', t('myNotes'))}
@@ -334,6 +343,7 @@ export default function LessonView({
               hash={lesson.hash}
               language={analysis?.language ?? headingLanguage}
               hasClaude={hasClaude}
+              onRead={(count) => setPhoneticsFound({ key: phoneticsStorageKey, count })}
             />
           )}
           {tab === 'homework' && extras && (
