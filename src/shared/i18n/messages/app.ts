@@ -27,6 +27,8 @@ export const app = defineMessages({
     syncing: 'Syncing with Google Docs…',
     synced: { one: '{count} lesson, synced {ago}', other: '{count} lessons, synced {ago}' },
     notSynced: 'Not synced yet',
+    // an address typed or followed that the app doesn't have; {path} is it, as typed
+    unknownAddress: 'There is no page at {path} in the app, so here is Home.',
     justNow: 'just now',
     minutesAgo: '{count} min ago',
     hoursAgo: '{count} h ago',
@@ -102,6 +104,8 @@ export const app = defineMessages({
       other: '{count} урока, синхронизировано {ago}',
     },
     notSynced: 'Ещё не синхронизировано',
+    // an address typed or followed that the app doesn't have; {path} is it, as typed
+    unknownAddress: 'В приложении нет страницы {path}, поэтому открыта Главная.',
     justNow: 'только что',
     minutesAgo: '{count} мин назад',
     hoursAgo: '{count} ч назад',
@@ -173,6 +177,8 @@ export const app = defineMessages({
       other: '{count} leçons, synchronisé {ago}',
     },
     notSynced: 'Pas encore synchronisé',
+    // an address typed or followed that the app doesn't have; {path} is it, as typed
+    unknownAddress: 'Il n’y a pas de page {path} dans l’app, voici donc l’Accueil.',
     justNow: 'à l’instant',
     minutesAgo: 'il y a {count} min',
     hoursAgo: 'il y a {count} h',
@@ -245,6 +251,8 @@ export const app = defineMessages({
       other: '{count} Lektionen, synchronisiert {ago}',
     },
     notSynced: 'Noch nicht synchronisiert',
+    // an address typed or followed that the app doesn't have; {path} is it, as typed
+    unknownAddress: 'In der App gibt es keine Seite {path}, darum siehst du die Startseite.',
     justNow: 'gerade eben',
     minutesAgo: 'vor {count} Min.',
     hoursAgo: 'vor {count} Std.',
@@ -316,6 +324,8 @@ export const app = defineMessages({
       other: '{count} lecciones, sincronizado {ago}',
     },
     notSynced: 'Aún sin sincronizar',
+    // an address typed or followed that the app doesn't have; {path} is it, as typed
+    unknownAddress: 'En la app no hay ninguna página {path}, así que aquí tienes Inicio.',
     justNow: 'ahora mismo',
     minutesAgo: 'hace {count} min',
     hoursAgo: 'hace {count} h',
@@ -387,6 +397,8 @@ export const app = defineMessages({
       other: '{count} lições, sincronizado {ago}',
     },
     notSynced: 'Ainda não sincronizado',
+    // an address typed or followed that the app doesn't have; {path} is it, as typed
+    unknownAddress: 'A app não tem nenhuma página {path}, por isso abriu o Início.',
     justNow: 'agora mesmo',
     minutesAgo: 'há {count} min',
     hoursAgo: 'há {count} h',
@@ -458,6 +470,8 @@ export const app = defineMessages({
       other: '{count} lezioni, sincronizzato {ago}',
     },
     notSynced: 'Non ancora sincronizzato',
+    // an address typed or followed that the app doesn't have; {path} is it, as typed
+    unknownAddress: 'Nell’app non c’è nessuna pagina {path}, quindi ecco la Home.',
     justNow: 'proprio ora',
     minutesAgo: '{count} min fa',
     hoursAgo: '{count} h fa',

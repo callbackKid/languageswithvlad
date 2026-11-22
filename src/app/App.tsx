@@ -148,9 +148,14 @@ export default function App() {
   const menuSection = SECTIONS.find((entry) => entry.id === section)?.tabOf ?? section;
   // an address the app doesn't have goes to Home
   const unknownPath = !route;
+  // an address the app doesn't have: Home shows instead, with a note naming it until the next page
+  const [missedPath, setMissedPath] = useState<string | null>(null);
   useEffect(() => {
-    if (unknownPath) navigate('/', { replace: true });
-  }, [unknownPath]);
+    if (unknownPath) {
+      setMissedPath(path);
+      navigate('/', { replace: true });
+    } else if (path !== '/') setMissedPath(null);
+  }, [unknownPath, path]);
 
   useEffect(() => {
     api
@@ -463,6 +468,11 @@ export default function App() {
             />
           ) : (
             <main className="page">
+              {section === 'home' && missedPath && (
+                <div className="note info" role="status">
+                  <p>{t('unknownAddress', { path: missedPath })}</p>
+                </div>
+              )}
               {section === 'home' && (
                 <Home
                   bank={bank}
