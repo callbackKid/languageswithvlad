@@ -1,4 +1,4 @@
-import { defineMessages } from '../core';
+import { defineMessages } from '@/shared/i18n';
 
 // The cards on Home around a lesson: the summary after it and the round to prepare for the next one.
 export const homeCards = defineMessages({

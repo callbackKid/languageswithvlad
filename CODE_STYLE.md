@@ -26,7 +26,7 @@ Prettier decides: 100 columns, single quotes, semicolons, trailing commas where 
 - `camelCase` for variables and functions, `PascalCase` for components and types, `UPPER_SNAKE_CASE` for module-level constants (`MAX_PDF_PAGES`).
 - Booleans read as a fact: `isStarred`, `hasTime`, `needsCode`, `zoomReady`.
 - A function that turns unknown data into a typed value is `normalizeX` (it may throw) or `asX` (it falls back to a default).
-- Files: a component file is named after its component (`LessonView.tsx`); logic files are `camelCase.ts`; one message file per area in `src/shared/i18n/messages/`.
+- Files: a component file is named after its component (`LessonView.tsx`); logic files are `camelCase.ts`; one message file per area: in `src/shared/i18n/messages/` when several slices use it, in the `i18n/` segment of the slice when only that slice does (`src/pages/call/i18n/game.ts`).
 
 ## TypeScript
 
@@ -70,7 +70,7 @@ Prettier decides: 100 columns, single quotes, semicolons, trailing commas where 
 
 ## Texts
 
-- No user-visible text in components. Every text is a key in `src/shared/i18n/messages/<area>.ts` with all seven interface languages; a missing translation is a type error 🤖.
+- No user-visible text in components. Every text is a key in a message file (`src/shared/i18n/messages/<area>.ts`, or a slice's `i18n/<area>.ts`) with all seven interface languages; a missing translation is a type error 🤖.
 - Variables are `{placeholders}`; counts use plural forms (`one`, `few`, `many`, `other`), never `count === 1 ? … : …` in code.
 - Markup inside a sentence uses tags (`<b>…</b>`, `<link>…</link>`) and `rich()`, so each language keeps its own word order. Don't glue a sentence together from pieces.
 - Quotes follow the language: `“ ”` in English, `« »` in Russian and French, `„ “` in German. Apostrophes are `’`.

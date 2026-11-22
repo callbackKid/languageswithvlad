@@ -1,4 +1,4 @@
-import { defineMessages } from '../core';
+import { defineMessages } from '@/shared/i18n';
 
 /* The Tutorial page. Tags inside the texts: <b> bold, <ex> an example line from the document,
    <btn> / <pbtn> a drawn (primary) button, <key> a keyboard key, <added> the ✱ mark,

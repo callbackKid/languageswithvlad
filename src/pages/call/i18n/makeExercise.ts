@@ -1,4 +1,4 @@
-import { defineMessages } from '../core';
+import { defineMessages } from '@/shared/i18n';
 
 // Create an exercise, a card in lesson mode, and the round the student then does.
 export const makeExerciseText = defineMessages({

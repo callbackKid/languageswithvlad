@@ -1,4 +1,4 @@
-// Checks every interface text (src/shared/i18n/messages/*.ts) and every News entry in all seven languages
+// Checks every interface text (src/shared/i18n/messages/*.ts and a slice's i18n/*.ts) and every News entry in all seven languages
 // for what the type checker can't see: placeholders and tags that differ from English, plural forms
 // a language needs, quotes and apostrophes of the wrong kind, "..." instead of "…", texts left in
 // English, stray spaces. Prints one line per finding; the exit code is 1 when there are any.
@@ -12,7 +12,8 @@ type Message = string | Record<string, string>;
 type Dictionary = Record<string, Record<string, Message>>;
 
 const ROOT = process.cwd();
-const MESSAGES_DIR = join(ROOT, 'src/shared/i18n/messages');
+// the shared texts, and the texts that belong to one slice (src/pages/call/i18n/game.ts)
+const TEXT_FILE = /^(shared\/i18n\/messages|[a-z]+\/[a-z-]+\/i18n)\/[a-zA-Z]+\.ts$/;
 const LANGUAGES = ['en', 'ru', 'fr', 'de', 'es', 'pt', 'it'] as const;
 // the plural forms each language needs for whole counts (Intl.PluralRules, ignoring `many` for
 // millions in French, Spanish, Italian and Portuguese, where `other` is the right fallback)
@@ -116,10 +117,12 @@ function checkDictionary(file: string, name: string, dictionary: Dictionary) {
   }
 }
 
-const files = readdirSync(MESSAGES_DIR).filter((file) => file.endsWith('.ts'));
+const files = readdirSync(join(ROOT, 'src'), { recursive: true, encoding: 'utf8' }).filter((file) =>
+  TEXT_FILE.test(file)
+);
 for (const file of files) {
   if (only && !file.includes(only)) continue;
-  const module = (await import(pathToFileURL(join(MESSAGES_DIR, file)).href)) as Record<
+  const module = (await import(pathToFileURL(join(ROOT, 'src', file)).href)) as Record<
     string,
     unknown
   >;

@@ -1,4 +1,4 @@
-import { defineMessages } from '../core';
+import { defineMessages } from '@/shared/i18n';
 
 // The Settings page.
 export const settingsText = defineMessages({

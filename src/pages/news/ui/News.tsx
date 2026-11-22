@@ -10,8 +10,10 @@ import {
   type NewsTab,
 } from '@/entities/news';
 import { type Language, useSettings, useTeacher } from '@/shared/config';
-import { app, learning, newsText, useTranslation } from '@/shared/i18n';
+import { app, learning, useTranslation } from '@/shared/i18n';
 import PageHead from '@/shared/ui/PageHead';
+
+import { newsText } from '../i18n/news';
 
 /** What changed in the app, by day: new features and fixes on two tabs, for one of the student's
     languages (the news about every language stays), and for the teacher, by audience. Opening

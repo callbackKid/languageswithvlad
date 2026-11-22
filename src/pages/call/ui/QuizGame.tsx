@@ -8,10 +8,12 @@ import {
   type QuizItem,
 } from '@/entities/lesson';
 import { recordWord, type Word } from '@/entities/word';
-import { game, useTranslation } from '@/shared/i18n';
+import { useTranslation } from '@/shared/i18n';
 import { asFields, asList, load, save } from '@/shared/lib/storage';
 import ExerciseHead from '@/shared/ui/ExerciseHead';
 import Speak from '@/shared/ui/Speak';
+
+import { game } from '../i18n/game';
 
 // Questions in a round, and seconds for each.
 export const GAME_QUESTIONS = 10;

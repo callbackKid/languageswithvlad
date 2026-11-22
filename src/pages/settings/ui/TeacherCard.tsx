@@ -2,7 +2,9 @@ import { useState } from 'react';
 
 import { api } from '@/shared/api';
 import { forgetTeacherCode, saveTeacherCode, useTeacher } from '@/shared/config';
-import { common, settingsText, useTranslation } from '@/shared/i18n';
+import { common, useTranslation } from '@/shared/i18n';
+
+import { settingsText } from '../i18n/settings';
 
 /** The Settings card where the teacher turns the teacher's tools on, with the teacher code.
     Shown only when the server has a teacher code set up. */

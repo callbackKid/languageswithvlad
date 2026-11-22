@@ -21,20 +21,13 @@ import {
   VERB_LANGUAGES,
   type VerbLanguage,
 } from '@/shared/config';
-import {
-  app,
-  learning,
-  paper,
-  settingsText,
-  setUiLanguage,
-  UI_LANGUAGES,
-  useTranslation,
-} from '@/shared/i18n';
+import { app, learning, paper, setUiLanguage, UI_LANGUAGES, useTranslation } from '@/shared/i18n';
 import { shrinkImage } from '@/shared/lib/image';
 import { canSpeak, speak } from '@/shared/lib/speech';
 import Avatar from '@/shared/ui/Avatar';
 import PageHead from '@/shared/ui/PageHead';
 
+import { settingsText } from '../i18n/settings';
 import TeacherCard from './TeacherCard';
 
 // each lesson tab under the name it has on the lesson page

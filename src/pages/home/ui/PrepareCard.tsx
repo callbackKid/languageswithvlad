@@ -9,8 +9,10 @@ import {
 } from '@/entities/lesson';
 import { getProgress } from '@/entities/word';
 import { WordQuiz } from '@/features/quiz';
-import { homeCards, useTranslation } from '@/shared/i18n';
+import { useTranslation } from '@/shared/i18n';
 import { load, save } from '@/shared/lib/storage';
+
+import { homeCards } from '../i18n/homeCards';
 
 // How long before a lesson the round is offered.
 const AHEAD = 24 * 60 * 60 * 1000;

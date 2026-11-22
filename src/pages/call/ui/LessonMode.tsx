@@ -27,15 +27,7 @@ import { WordQuiz } from '@/features/quiz';
 import { WritingResult } from '@/features/writing-task';
 import { type BoardServer } from '@/shared/api';
 import { getSettings, lessonPath } from '@/shared/config';
-import {
-  call,
-  game,
-  homework as homeworkText,
-  makeExerciseText,
-  paper,
-  talk,
-  useTranslation,
-} from '@/shared/i18n';
+import { call, homework as homeworkText, paper, talk, useTranslation } from '@/shared/i18n';
 import { clockTime, dayKey } from '@/shared/lib/dates';
 import { followLink, hrefFor } from '@/shared/lib/router';
 import { load, loadChecked, remove, save } from '@/shared/lib/storage';
@@ -46,6 +38,8 @@ import Speak from '@/shared/ui/Speak';
 import { Discuss } from '@/widgets/discussion';
 import { KeyBadge } from '@/widgets/word-list';
 
+import { game } from '../i18n/game';
+import { makeExerciseText } from '../i18n/makeExercise';
 import JitsiCall from './JitsiCall';
 import LessonBoard from './LessonBoard';
 import MakeExercise from './MakeExercise';

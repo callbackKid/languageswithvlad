@@ -15,11 +15,13 @@ import {
 import { getProgress } from '@/entities/word';
 import { WordQuiz } from '@/features/quiz';
 import { lessonPath } from '@/shared/config';
-import { homeCards, useTranslation } from '@/shared/i18n';
+import { useTranslation } from '@/shared/i18n';
 import { daysBetween } from '@/shared/lib/dates';
 import { followLink, hrefFor } from '@/shared/lib/router';
 import { load, loadChecked, save } from '@/shared/lib/storage';
 import { shownTopic } from '@/shared/lib/util';
+
+import { homeCards } from '../i18n/homeCards';
 
 const ROUND = 10;
 const SHOWN_WORDS = 8;

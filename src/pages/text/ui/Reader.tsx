@@ -5,7 +5,7 @@ import { normalizeWordCard } from '@/entities/word';
 import { CARD_EVENT, cardNote, lookUp, menuPlace, sentenceAround } from '@/features/look-up-word';
 import { api, ApiError } from '@/shared/api';
 import { getSettings, type Language } from '@/shared/config';
-import { common, reader, translator, useTranslation } from '@/shared/i18n';
+import { common, translator, useTranslation } from '@/shared/i18n';
 import { asList, load, save } from '@/shared/lib/storage';
 import PageHead from '@/shared/ui/PageHead';
 import Speak from '@/shared/ui/Speak';
@@ -13,6 +13,7 @@ import WaitingFact from '@/shared/ui/WaitingFact';
 import { WordsTab } from '@/widgets/word-list';
 import { WordNotesTable } from '@/widgets/word-notes';
 
+import { reader } from '../i18n/reader';
 import { normalizeReaderText, normalizeStudy, normalizeTranslation } from '../model/normalize';
 import { type ReaderText, type TextStudy } from '../model/types';
 

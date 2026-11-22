@@ -1,4 +1,4 @@
-import { defineMessages } from '../core';
+import { defineMessages } from '@/shared/i18n';
 
 // The Text page: a pasted text to read, with explanations, a translation and exercises.
 export const reader = defineMessages({

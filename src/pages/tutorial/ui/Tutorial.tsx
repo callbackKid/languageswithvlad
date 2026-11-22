@@ -1,9 +1,11 @@
 import { type ReactNode, useEffect } from 'react';
 
 import { GUIDES, type Section, SECTIONS, useTeacher } from '@/shared/config';
-import { app, exercises, pages, paper, tutorial, useTranslation } from '@/shared/i18n';
+import { app, exercises, pages, paper, useTranslation } from '@/shared/i18n';
 import { followLink, hrefFor } from '@/shared/lib/router';
 import PageHead from '@/shared/ui/PageHead';
+
+import { tutorial } from '../i18n/tutorial';
 
 /* A guide for someone opening the app for the first time: a quick start, a map of the sections,
    then one card per section with what it is for, how to use it, a small picture of the screen

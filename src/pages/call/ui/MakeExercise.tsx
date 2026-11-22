@@ -2,13 +2,14 @@ import { type FormEvent, useState } from 'react';
 
 import { api, ApiError } from '@/shared/api';
 import { asLanguage, getSettings, type Language, type Level, LEVELS } from '@/shared/config';
-import { common, makeExerciseText, translator, useTranslation } from '@/shared/i18n';
+import { common, translator, useTranslation } from '@/shared/i18n';
 import { type Grade, grade } from '@/shared/lib/grade';
 import { loadChecked, save } from '@/shared/lib/storage';
 import { shuffle } from '@/shared/lib/util';
 import ExerciseHead from '@/shared/ui/ExerciseHead';
 import WaitingFact from '@/shared/ui/WaitingFact';
 
+import { makeExerciseText } from '../i18n/makeExercise';
 import { normalizeExercise } from '../model/normalize';
 import { type ExerciseQuestion, type MadeExercise } from '../model/types';
 

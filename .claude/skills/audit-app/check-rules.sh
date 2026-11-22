@@ -9,7 +9,7 @@ cd "$(git rev-parse --show-toplevel)" || exit 1
 CODE='src api'
 INCLUDE=(--include='*.ts' --include='*.tsx')
 # files that are mostly texts or data, where "as", numbers and words are content, not code
-TEXT_FILES='i18n/messages|src/entities/news/model/news\.ts|src/shared/lib/facts\.ts|src/shared/config/guides\.ts|api/_lib/prompts\.ts'
+TEXT_FILES='i18n/messages/|src/[a-z]+/[a-z-]+/i18n/|src/entities/news/model/news\.ts|src/shared/lib/facts\.ts|src/shared/config/guides\.ts|api/_lib/prompts\.ts'
 section() { printf '\n## %s\n' "$1"; }
 search() { grep -rnE "${INCLUDE[@]}" "$@" $CODE; }
 not_comment() { grep -vE '^[^:]+:[0-9]+:\s*(//|\*|/\*)'; }
@@ -85,7 +85,7 @@ section 'Server: limits written as numbers instead of named constants'
 grep -nE 'text\([^,]+, [0-9]+\)|\.slice\(0, [0-9]+\)' api/*.ts api/_lib/*.ts | grep -v 'console\.'
 
 section 'Comments: exported functions and components without a comment above them'
-for file in $(git ls-files 'src/*.ts' 'src/*.tsx' 'api/*.ts' | grep -v 'i18n/messages'); do
+for file in $(git ls-files 'src/*.ts' 'src/*.tsx' 'api/*.ts' | grep -vE 'i18n/messages/|src/[a-z]+/[a-z-]+/i18n/'); do
   awk -v file="$file" '
     /^export (default )?(async )?function |^export const [a-zA-Z]+ = (\(|async|<)/ {
       if (previous !~ /\*\/\s*$/ && previous !~ /^\s*\/\// && previous !~ /^\s*\*/)

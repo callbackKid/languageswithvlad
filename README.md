@@ -289,7 +289,7 @@ src/                the app in Feature-Sliced Design layers; a layer imports onl
   pages/            one slice per section: home, lessons (Lesson history with its two tabs, Lessons and
                     Downloaded lessons), document, call (lesson mode, with the board, video calls, Make an
                     exercise and the quiz game), my-words, mistakes, stats, photo, text, tutorial, news,
-                    settings, connect, code-gate; code only one page needs stays inside it
+                    settings, connect, code-gate; code and texts (i18n/) only one page needs stay inside it
   widgets/          big blocks several pages share: word-list (a word list with its exercises, flashcards,
                     match and groups by meaning), lesson-view (a lesson with its tabs; the page hands it the
                     word list), word-menu, discussion, word-notes, next-lesson-badge, feedback
@@ -309,7 +309,8 @@ src/                the app in Feature-Sliced Design layers; a layer imports onl
   shared/           code that knows nothing of lessons or words (Feature-Sliced Design's lowest layer)
     api/            the client for the functions in api/, and the live board's connection
     config/         routes, settings, the teacher code, languages and tenses, Tutorial cards
-    i18n/           interface languages: core.tsx, and messages/ with every text in en, ru, fr, de, es, pt, it
+    i18n/           interface languages: core.tsx, and messages/ with the texts several slices use, in en, ru,
+                    fr, de, es, pt, it
     lib/            storage, dates, the router, speech, images, PDF pages, grading, JSON helpers
     ui/             PageHead, HelpLink, WaitingFact, Speak, ExerciseHead, CallCard, LanguagePicker, Avatar
 public/             the app icon (icon.svg and the PNGs drawn from it) and manifest.webmanifest

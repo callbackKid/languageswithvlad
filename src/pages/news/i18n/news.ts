@@ -1,4 +1,4 @@
-import { defineMessages } from '../core';
+import { defineMessages } from '@/shared/i18n';
 
 // The News page. The news itself is in src/entities/news/model/news.ts.
 export const newsText = defineMessages({

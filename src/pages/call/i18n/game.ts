@@ -1,4 +1,4 @@
-import { defineMessages } from '../core';
+import { defineMessages } from '@/shared/i18n';
 
 // The quiz game in lesson mode: a round against the clock on the lesson’s words, with records.
 export const game = defineMessages({
