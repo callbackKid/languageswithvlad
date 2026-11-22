@@ -52,6 +52,14 @@ export interface GrammarRule {
   summary: string;
   formation: string[];
   usage: string[];
-  examples: { text: string; translation: string }[];
+  // a transcription only on a pronunciation point's examples (the Phonetics tab)
+  examples: { text: string; translation: string; transcription?: string }[];
   pitfall: string;
+}
+
+/** A lesson's pronunciation points, read by Claude once in the interface language. Each is shaped
+    as a grammar rule: its reading rules in formation, usage empty, transcribed examples. */
+export interface LessonPhonetics {
+  language: Language;
+  topics: GrammarRule[];
 }

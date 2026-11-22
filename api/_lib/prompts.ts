@@ -466,6 +466,54 @@ ${body}
 """`;
 }
 
+// The pronunciation points of one lesson (sounds, spelling and sound, liaison, stress…), explained in the interface language.
+export function phoneticsPrompt(body: string, explainIn: ExplainLanguage, levels: Levels): string {
+  const explainName = EXPLAIN_NAMES[explainIn];
+  return `Below are a teacher's notes from one language lesson for a student. The lesson teaches ${LANGUAGE_LIST}, and the notes mix that language with translations, often in Russian. Find the phonetics the lesson teaches: a sound and how it is written, a rule for reading letters, silent letters, nasal vowels, liaison or elision, stress, rhythm or intonation. It is often after a word like Phonétique, Phonetics, Phonetik, Fonética, Fonetica, Prononciation, Pronunciation, Aussprache or Произношение, or in a remark about how something is pronounced. A transcription next to a single word ([bɔ̃ʒuʁ]) is not a topic on its own.
+${levelLine(levels)} Explain each point for that level, in ${explainName}. Leave out the student's report and questions: a line beginning with 📝 or ❓ and every line after it that begins with an emoji or with spaces.
+
+Reply with only a JSON object:
+{"language": ${LANGUAGE_CODES}, "phonetics": [{"title": string, "summary": string, "rules": [string], "examples": [{"text": string, "transcription": string, "translation": string}], "pitfall": string}]}
+
+- language: the language the lesson teaches: ${LANGUAGE_KEY}.
+- phonetics: every pronunciation point the lesson teaches. title names it in ${explainName}, with the sound in IPA in square brackets when there is one ("The sound [ʒ]", "Silent final -e"). summary is one or two sentences in ${explainName} on what it is. rules are 2 to 5 short lines in ${explainName} on how it is read or said (which letters make the sound, when a letter is silent, when the liaison is made), with tiny examples in the lesson's language. examples are 3 to 5 words or short phrases in the lesson's language that show it, taken from the notes when they have good ones, each with its IPA transcription (without brackets) and its translation in ${explainName}. pitfall is the most common mistake with it, often one a ${explainName} speaker makes, and how to avoid it, one sentence in ${explainName}, or "". [] when the lesson has no phonetics.
+
+Lesson notes:
+"""
+${body}
+"""`;
+}
+
+/** Choice questions on one pronunciation point, for the student to do in the app: which word has
+    the sound, which transcription is right, which letter is silent, what was heard. */
+export function phoneticsPracticePrompt({
+  language,
+  level,
+  title,
+  summary,
+  count,
+  explainIn,
+}: {
+  language: LearnLanguage;
+  level: string;
+  title: string;
+  summary: string;
+  count: number;
+  explainIn: ExplainLanguage;
+}): string {
+  const name = LANGUAGE_NAMES[language];
+  const explainName = EXPLAIN_NAMES[explainIn];
+  return `Write ${count} questions for a learner of ${name} at CEFR level ${level} (A0 is a complete beginner) on this pronunciation point: "${title}"${summary ? ` (${summary})` : ''}.
+${LEVEL_STYLE} Use common words of the level. Vary the kinds of question: which word has the sound, which word is not read like the others, which transcription is right, which letter is silent, whether the liaison is made, which word was heard (the app reads the word aloud). Every question has 3 or 4 options and exactly one right answer.
+Reply with only a JSON object: {"title": string, "questions": [{"type": "choice", "prompt": string, "options": [string], "answer": string, "accept": [], "ru": "", "explanation": string, "say": string, "heard": boolean}]}.
+- title says what is practised, in ${explainName}, in at most 6 words.
+- prompt is the question in ${explainName}; words of ${name} in it are written as they are, transcriptions in square brackets.
+- options are the answers: ${name} words or short phrases, or IPA transcriptions in square brackets; answer is the right one, written exactly as in options.
+- explanation is one short sentence in ${explainName} saying why the answer is right.
+- say is the ${name} word or phrase the app should read aloud for the question, when hearing it helps or the question asks what was heard; "" otherwise. say is never one of the options, except in a question that asks what was heard.
+- heard is true only for a question that asks which word was heard: its say is the answer, its prompt doesn't show it, and its options sound clearly different from each other (never homophones such as vert, verre, vers). At most a third of the questions are of this kind.`;
+}
+
 export interface GrammarPracticeRequest {
   language: LearnLanguage;
   level: string;

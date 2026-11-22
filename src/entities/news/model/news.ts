@@ -53,6 +53,18 @@ export const NEWS: NewsDay[] = [
       {
         kind: 'new',
         text: {
+          en: 'A lesson’s new Phonetics tab: the sounds and reading rules from the lesson notes, explained with transcribed examples to listen to, and Practise under each for a round of questions on it.',
+          ru: 'Новая вкладка урока — «Фонетика»: звуки и правила чтения из записей урока, объяснённые на примерах с транскрипцией, которые можно прослушать. Под каждой темой есть кнопка «Потренироваться»: Claude составит раунд вопросов по этой теме.',
+          fr: 'Nouvel onglet « Phonétique » dans chaque leçon : les sons et les règles de lecture des notes de cours, expliqués avec des exemples transcrits à écouter, et, sous chacun, « S’entraîner » pour un tour de questions sur ce point.',
+          de: 'Neuer Tab „Aussprache“ in jeder Lektion: die Laute und Leseregeln aus den Unterrichtsnotizen, erklärt mit Beispielen in Lautschrift zum Anhören, und unter jedem Punkt „Üben“ für eine Runde Fragen dazu.',
+          es: 'Nueva pestaña «Fonética» en cada lección: los sonidos y las reglas de lectura de las notas de clase, explicados con ejemplos transcritos para escuchar, y «Practicar» debajo de cada uno para hacer una ronda de preguntas sobre él.',
+          pt: 'Novo separador «Fonética» em cada lição: os sons e as regras de leitura das notas da aula, explicados com exemplos transcritos para ouvir, e «Praticar» por baixo de cada um para fazer uma ronda de perguntas sobre ele.',
+          it: 'Nuova scheda «Fonetica» in ogni lezione: i suoni e le regole di lettura degli appunti della lezione, spiegati con esempi trascritti da ascoltare, e «Esercitati» sotto ciascuno per fare un giro di domande su quel punto.',
+        },
+      },
+      {
+        kind: 'new',
+        text: {
           en: 'Listen, next to Dictation in every word list: the ticked words are read aloud one by one, each followed by its translation, with a pause of 1 to 5 seconds to say them back.',
           ru: '«Прослушивание» рядом с кнопкой «Диктант» в каждом списке слов: отмеченные слова читаются вслух по одному, после каждого — его перевод, а между ними пауза от 1 до 5 секунд, чтобы повторить вслух.',
           fr: '« Écoute », à côté de « Dictée » dans chaque liste de mots : les mots cochés sont lus à voix haute un par un, chacun suivi de sa traduction, avec une pause de 1 à 5 secondes pour les répéter.',

@@ -43,6 +43,7 @@ const TAB_NAMES = {
   words: 'words',
   verbs: 'verbs',
   grammar: 'grammar',
+  phonetics: 'phonetics',
   homework: 'homework',
   book: 'book',
   notes: 'myNotes',

@@ -432,6 +432,59 @@ const MADE_EXERCISE = {
   ],
 };
 
+// The Phonetics tab (action "phonetics") and a round on one of its points ("phonetics-practice").
+const PHONETICS = {
+  language: 'fr',
+  phonetics: [
+    {
+      title: 'The sound [ʒ]',
+      summary: 'A soft sound, like the s in “measure”.',
+      rules: ['j is always [ʒ]: je, jour', 'g before e, i, y is [ʒ]: manger, girafe'],
+      examples: [
+        { text: 'le jour', transcription: 'lə ʒuʁ', translation: 'день' },
+        { text: 'manger', transcription: 'mɑ̃ʒe', translation: 'есть' },
+      ],
+      pitfall: 'Don’t read j as the English [dʒ].',
+    },
+  ],
+};
+const PHONETICS_PRACTICE = {
+  title: 'The sound [ʒ]',
+  questions: [
+    {
+      type: 'choice',
+      prompt: 'Which word has the sound [ʒ]?',
+      options: ['gare', 'girafe', 'gomme'],
+      answer: 'girafe',
+      accept: [],
+      ru: '',
+      explanation: 'g before i is read [ʒ].',
+      say: '',
+    },
+    {
+      type: 'choice',
+      prompt: 'Which word did you hear?',
+      options: ['joue', 'chou', 'zoo'],
+      answer: 'joue',
+      accept: [],
+      ru: '',
+      explanation: 'j is [ʒ].',
+      say: 'joue',
+      heard: true,
+    },
+    {
+      type: 'choice',
+      prompt: 'Which transcription is right for “manger”?',
+      options: ['[maʒe]', '[mɑ̃ʒe]', '[mɑ̃ʒə]'],
+      answer: '[mɑ̃ʒe]',
+      accept: [],
+      ru: '',
+      explanation: 'an is the nasal [ɑ̃], and -er is [e].',
+      say: '',
+    },
+  ],
+};
+
 const DISCUSSION = {
   question: 'Qu’est-ce que vous faites le matin avant le travail ?',
   ru: 'Что вы делаете утром перед работой?',
@@ -491,6 +544,8 @@ export function answerFor(url, body, headers = {}, scenario = 'upcoming') {
     if (body.action === 'extras') return EXTRAS;
     if (body.action === 'homework') return MADE_HOMEWORK;
     if (body.action === 'exercise') return MADE_EXERCISE;
+    if (body.action === 'phonetics') return PHONETICS;
+    if (body.action === 'phonetics-practice') return PHONETICS_PRACTICE;
     if (body.action === 'groups') return wordGroupsFor(body.words);
     return {};
   }

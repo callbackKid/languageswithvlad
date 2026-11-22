@@ -32,6 +32,7 @@ export const LESSON_TABS = [
   'words',
   'verbs',
   'grammar',
+  'phonetics',
   'homework',
   'book',
   'notes',

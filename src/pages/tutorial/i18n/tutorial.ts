@@ -103,6 +103,8 @@ export const tutorial = defineMessages({
       'On a computer, the two round buttons at the start of the lesson list show it as a row above the lesson instead of a column, and fold it away when you need the room. The app remembers both.',
     'lessons.tip10':
       '<b>Listen</b> reads the ticked words aloud: each word, a pause to say it back, then its translation. Choose the pause (1–5 seconds) and <b>Shuffle</b> on its screen; keep the screen on while it plays.',
+    'lessons.tip11':
+      '<b>Phonetics</b> explains the sounds and reading rules the teacher wrote in the lesson, with transcribed examples to listen to. <pbtn>Practise</pbtn> under a point makes a round of questions on it.',
     'lessons.mock': 'the Words tab of a lesson',
 
     'verbs.title': 'Verbs',
@@ -368,6 +370,8 @@ export const tutorial = defineMessages({
       'На компьютере две круглые кнопки в начале списка уроков выстраивают его в ряд над уроком вместо колонки сбоку и сворачивают его, когда вам нужно больше места. Приложение запоминает и то и другое.',
     'lessons.tip10':
       '<b>Прослушивание</b> читает отмеченные слова вслух: слово, пауза, чтобы его повторить, затем перевод. На экране упражнения выберите паузу (1–5 секунд) и «Вперемешку»; не выключайте экран, пока идёт чтение.',
+    'lessons.tip11':
+      '<b>Фонетика</b> объясняет звуки и правила чтения, записанные преподавателем в уроке, на примерах с транскрипцией, которые можно прослушать. По кнопке <pbtn>Потренироваться</pbtn> под темой Claude составит раунд вопросов по ней.',
     'lessons.mock': 'вкладка «Слова» в уроке',
 
     'verbs.title': 'Глаголы',
@@ -631,6 +635,8 @@ export const tutorial = defineMessages({
       'Sur ordinateur, les deux boutons ronds au début de la liste des leçons l’affichent sur une ligne au-dessus de la leçon plutôt qu’en colonne, et la replient quand vous avez besoin de place. L’application retient les deux choix.',
     'lessons.tip10':
       '<b>Écoute</b> lit à voix haute les mots cochés : chaque mot, une pause pour le répéter, puis sa traduction. Sur l’écran de l’exercice, choisissez la pause (1 à 5 secondes) et « Mélanger » ; gardez l’écran allumé pendant la lecture.',
+    'lessons.tip11':
+      '<b>Phonétique</b> explique les sons et les règles de lecture que le professeur a notés dans la leçon, avec des exemples transcrits à écouter. Sous un point, <pbtn>S’entraîner</pbtn> fait écrire à Claude un tour de questions sur ce sujet.',
     'lessons.mock': 'l’onglet Mots d’une leçon',
 
     'verbs.title': 'Verbes',
@@ -902,6 +908,8 @@ export const tutorial = defineMessages({
       'Am Computer zeigen die zwei runden Knöpfe am Anfang der Lektionsliste sie als Reihe über der Lektion statt als Spalte und klappen sie ein, wenn du den Platz brauchst. Die App merkt sich beides.',
     'lessons.tip10':
       '<b>Anhören</b> liest die angehakten Wörter vor: jedes Wort, eine Pause zum Nachsprechen, dann seine Übersetzung. Auf dem Bildschirm der Übung wählst du die Pause (1–5 Sekunden) und „Mischen“; lass den Bildschirm an, solange vorgelesen wird.',
+    'lessons.tip11':
+      '<b>Aussprache</b> erklärt die Laute und Leseregeln, die die Lehrkraft in der Lektion notiert hat, mit Beispielen in Lautschrift zum Anhören. <pbtn>Üben</pbtn> unter einem Punkt lässt Claude eine Runde Fragen dazu schreiben.',
     'lessons.mock': 'der Tab Wörter einer Lektion',
 
     'verbs.title': 'Verben',
@@ -1167,6 +1175,8 @@ export const tutorial = defineMessages({
       'En el ordenador, los dos botones redondos al principio de la lista de lecciones la muestran en fila encima de la lección en lugar de en columna, y la pliegan cuando necesitas espacio. La aplicación recuerda ambas cosas.',
     'lessons.tip10':
       '<b>Escuchar</b> lee en voz alta las palabras marcadas: cada palabra, una pausa para repetirla y luego su traducción. En la pantalla del ejercicio, elige la pausa (1–5 segundos) y «Mezclar»; mantén la pantalla encendida durante la lectura.',
+    'lessons.tip11':
+      '<b>Fonética</b> explica los sonidos y las reglas de lectura que el profesor ha anotado en la lección, con ejemplos transcritos para escuchar. <pbtn>Practicar</pbtn>, debajo de un punto, pide a Claude una ronda de preguntas sobre él.',
     'lessons.mock': 'la pestaña Palabras de una lección',
 
     'verbs.title': 'Verbos',
@@ -1435,6 +1445,8 @@ export const tutorial = defineMessages({
       'No computador, os dois botões redondos no início da lista de lições mostram-na em fila por cima da lição em vez de em coluna, e recolhem-na quando precisar de espaço. A aplicação lembra-se de ambas as opções.',
     'lessons.tip10':
       '<b>Ouvir</b> lê em voz alta as palavras marcadas: cada palavra, uma pausa para a repetir e depois a tradução. No ecrã do exercício, escolha a pausa (1–5 segundos) e «Baralhar»; mantenha o ecrã ligado durante a leitura.',
+    'lessons.tip11':
+      '<b>Fonética</b> explica os sons e as regras de leitura que o professor anotou na lição, com exemplos transcritos para ouvir. <pbtn>Praticar</pbtn>, por baixo de um ponto, pede ao Claude uma ronda de perguntas sobre ele.',
     'lessons.mock': 'o separador Palavras de uma lição',
 
     'verbs.title': 'Verbos',
@@ -1702,6 +1714,8 @@ export const tutorial = defineMessages({
       'Sul computer, i due pulsanti rotondi all’inizio dell’elenco delle lezioni lo mostrano in fila sopra la lezione invece che in colonna, e lo nascondono quando ti serve spazio. L’app ricorda entrambe le scelte.',
     'lessons.tip10':
       '<b>Ascolto</b> legge ad alta voce le parole spuntate: ogni parola, una pausa per ripeterla, poi la traduzione. Nella schermata dell’esercizio scegli la pausa (1–5 secondi) e «Mescola»; tieni lo schermo acceso durante la lettura.',
+    'lessons.tip11':
+      '<b>Fonetica</b> spiega i suoni e le regole di lettura che l’insegnante ha scritto nella lezione, con esempi trascritti da ascoltare. <pbtn>Esercitati</pbtn>, sotto un punto, chiede a Claude un giro di domande su quell’argomento.',
     'lessons.mock': 'la scheda Parole di una lezione',
 
     'verbs.title': 'Verbi',

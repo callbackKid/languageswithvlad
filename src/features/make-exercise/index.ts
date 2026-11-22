@@ -6,3 +6,4 @@ export type { ExerciseQuestion, MadeExercise } from './model/types';
 export { default as ExerciseRound } from './ui/ExerciseRound';
 export { default as GroupExercise } from './ui/GroupExercise';
 export { default as MakeExercise } from './ui/MakeExercise';
+export { default as RoundLoader } from './ui/RoundLoader';

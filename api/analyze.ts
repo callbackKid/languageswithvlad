@@ -11,12 +11,16 @@ import {
   grammarPracticePrompt,
   homeworkPrompt,
   lessonExtrasPrompt,
+  phoneticsPracticePrompt,
+  phoneticsPrompt,
   wordGroupsPrompt,
 } from './_lib/prompts.js';
 
 // Longest lesson read in one go; a longer one is refused instead of being cut silently.
 const MAX_LESSON_LENGTH = 20_000;
 const PRACTICE_SENTENCES = 8;
+// questions in a round on one pronunciation point
+const PHONETICS_QUESTIONS = 8;
 // a grammar point's title and its summary, as the Grammar tab shows them
 const MAX_TITLE_LENGTH = 200;
 const MAX_SUMMARY_LENGTH = 600;
@@ -46,6 +50,8 @@ const MAX_GROUP_NAME_LENGTH = 60;
 /* Everything Claude prepares from one lesson, in one function (Vercel's free plan allows 12):
    - "words" (the default): its words with translations, synonym and antonym pairs, and verbs;
    - "extras": its grammar points, homework and exercises from the book;
+   - "phonetics": its pronunciation points, read when its Phonetics tab is first opened;
+   - "phonetics-practice": choice questions on one of its pronunciation points;
    - "practice": gap sentences on one of its grammar points;
    - "homework": homework for the next lesson, made from its words and grammar;
    - "exercise": a mixed exercise made in lesson mode, on a grammar point and/or words;
@@ -67,6 +73,22 @@ export default async function handler(request: VercelRequest, response: VercelRe
         translateTo: asExplainLanguage(request.body?.translateTo),
       });
       return response.status(200).json(await claudeJSON(prompt, { model: MODEL, maxTokens: 4000 }));
+    }
+    if (action === 'phonetics-practice') {
+      const title = text(request.body?.title, MAX_TITLE_LENGTH);
+      if (!title) return response.status(400).json({ error: 'nothing_sent' });
+      const prompt = phoneticsPracticePrompt({
+        language: asLanguage(request.body?.language),
+        level: asLevel(request.body?.level) ?? 'A2',
+        title,
+        summary: text(request.body?.summary, MAX_SUMMARY_LENGTH),
+        count: PHONETICS_QUESTIONS,
+        explainIn: asExplainLanguage(request.body?.explainIn),
+      });
+      // asked again for another round: never the same questions twice
+      return response
+        .status(200)
+        .json(await claudeJSON(prompt, { model: MODEL, maxTokens: 4000, cache: false }));
     }
     if (action === 'homework') {
       // making homework is the teacher's tool
@@ -131,7 +153,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
         .status(200)
         .json(await claudeJSON(prompt, { model: FAST_MODEL, maxTokens: 4000 }));
     }
-    if (action !== 'words' && action !== 'extras')
+    if (action !== 'words' && action !== 'extras' && action !== 'phonetics')
       return response.status(400).json({ error: 'bad_request' });
 
     const body = typeof request.body?.body === 'string' ? request.body.body : '';
@@ -143,7 +165,9 @@ export default async function handler(request: VercelRequest, response: VercelRe
     const prompt =
       action === 'extras'
         ? lessonExtrasPrompt(body, asExplainLanguage(request.body?.explainIn), levels)
-        : analysisPrompt(body, levels, asTranslationRequest(request.body));
+        : action === 'phonetics'
+          ? phoneticsPrompt(body, asExplainLanguage(request.body?.explainIn), levels)
+          : analysisPrompt(body, levels, asTranslationRequest(request.body));
     return response
       .status(200)
       .json(await claudeJSON(prompt, { model: MODEL, maxTokens: 16000, cache: !fresh }));

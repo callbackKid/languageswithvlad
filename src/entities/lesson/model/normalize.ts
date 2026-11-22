@@ -4,7 +4,7 @@ import { asLanguage } from '@/shared/config';
 import { asArray, asObject, asTexts } from '@/shared/lib/json';
 import { asText } from '@/shared/lib/util';
 
-import { type Analysis, type GrammarRule, type LessonExtras } from './types';
+import { type Analysis, type GrammarRule, type LessonExtras, type LessonPhonetics } from './types';
 
 // The grammar, homework and book exercises Claude found in a lesson; missing parts are empty.
 export function normalizeExtras(raw: unknown): LessonExtras {
@@ -26,6 +26,38 @@ export function normalizeExtras(raw: unknown): LessonExtras {
         items: asTexts(exercise.items),
       }))
       .filter((exercise) => exercise.title || exercise.instructions || exercise.items.length),
+  };
+}
+
+/** The pronunciation points Claude found in a lesson (or the device's copy of that answer, kept as
+    it came), as rules with transcribed examples; [] when the lesson has none. Throws when the
+    answer has no list of points at all. */
+export function normalizePhonetics(raw: unknown): LessonPhonetics {
+  const data = asObject(raw);
+  if (!Array.isArray(data.phonetics)) throw new Error('no_phonetics');
+  return {
+    language: asLanguage(data.language),
+    topics: asArray(data.phonetics)
+      .map(asObject)
+      .map(
+        (topic): GrammarRule => ({
+          title: asText(topic.title),
+          summary: asText(topic.summary),
+          formation: asTexts(topic.rules),
+          usage: [],
+          examples: asArray(topic.examples)
+            .map(asObject)
+            .map((item) => ({
+              text: asText(item.text),
+              translation: asText(item.translation),
+              // without the brackets or slashes Claude may add: Transcription adds its own
+              transcription: asText(item.transcription).replace(/^[[/]|[\]/]$/g, ''),
+            }))
+            .filter((item) => item.text),
+          pitfall: asText(topic.pitfall),
+        })
+      )
+      .filter((topic) => topic.title),
   };
 }
 

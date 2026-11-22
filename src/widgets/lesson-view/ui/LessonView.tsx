@@ -41,6 +41,7 @@ import WaitingFact from '@/shared/ui/WaitingFact';
 import LessonDrawings from './LessonDrawings';
 import { BookTab, GrammarTab, HomeworkTab } from './LessonExtrasTabs';
 import Notes from './Notes';
+import PhoneticsTab from './PhoneticsTab';
 
 type Tab = LessonTab;
 const EXTRA_TABS: Tab[] = ['grammar', 'homework', 'book'];
@@ -267,6 +268,7 @@ export default function LessonView({
           {tabButton('words', t('words'), tagged?.words.length ?? 0)}
           {tabButton('verbs', t('verbs'), tagged?.verbs.length ?? 0)}
           {tabButton('grammar', t('grammar'), extras?.grammar.length)}
+          {tabButton('phonetics', t('phonetics'))}
           {tabButton('homework', t('homework'), extras?.homework.length)}
           {tabButton('book', t('book'), extras?.book.length)}
           {tabButton('notes', t('myNotes'))}
@@ -318,6 +320,15 @@ export default function LessonView({
             </div>
           )}
           {tab === 'grammar' && extras && <GrammarTab key={extrasKey} extras={extras} />}
+          {tab === 'phonetics' && (
+            <PhoneticsTab
+              key={lesson.hash}
+              body={lesson.body}
+              hash={lesson.hash}
+              language={analysis?.language ?? headingLanguage}
+              hasClaude={hasClaude}
+            />
+          )}
           {tab === 'homework' && extras && (
             <HomeworkTab
               tasks={extras.homework}

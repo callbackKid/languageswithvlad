@@ -35,6 +35,8 @@ export function normalizeExercise(
         accept: asTexts(item.accept),
         ru: asText(item.ru),
         explanation: asText(item.explanation),
+        say: asText(item.say),
+        heard: item.heard === true && !!asText(item.say),
       };
     })
     .filter((question) => question.prompt && question.answer);

@@ -4,6 +4,7 @@ import { common, useTranslation } from '@/shared/i18n';
 import { type Grade, grade } from '@/shared/lib/grade';
 import { shuffle } from '@/shared/lib/util';
 import ExerciseHead from '@/shared/ui/ExerciseHead';
+import Speak from '@/shared/ui/Speak';
 
 import { makeExerciseText } from '../i18n/makeExercise';
 import { type ExerciseQuestion, type MadeExercise } from '../model/types';
@@ -42,7 +43,13 @@ export default function ExerciseRound({
 
   function answer(given: string) {
     if (!question) return;
-    const graded = gradeAnswer(given, question);
+    // a picked option has no typo to forgive: [maʒe] for [mɑ̃ʒe] is wrong, not "mind the accents"
+    const graded =
+      question.type === 'choice'
+        ? given === question.answer
+          ? 'ok'
+          : 'bad'
+        : gradeAnswer(given, question);
     if (graded === 'empty') return;
     setResult(graded);
     setShowRu(true);
@@ -92,8 +99,18 @@ export default function ExerciseRound({
       {head}
       <p className="hint">{t('progress', { current: index + 1, total: questions.length })}</p>
       {isTranslate && <p className="hint">{t('translate')}</p>}
-      <p className="made-exercise-prompt" lang={isTranslate ? exercise.translatedTo : language}>
+      <p
+        className="made-exercise-prompt"
+        lang={isTranslate ? exercise.translatedTo : (exercise.promptIn ?? language)}
+      >
         {question.prompt}
+        {question.say && (
+          <>
+            {' '}
+            {/* a label without the word, which may be the answer */}
+            <Speak text={question.say} language={language} label={commonText.t('listen')} />
+          </>
+        )}
       </p>
       {question.ru && (
         <details

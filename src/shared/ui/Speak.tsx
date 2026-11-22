@@ -2,8 +2,17 @@ import { type Language } from '@/shared/config';
 import { common, useTranslation } from '@/shared/i18n';
 import { canSpeak, speak } from '@/shared/lib/speech';
 
-// A small 🔊 button that reads the text aloud; hidden where the browser has no speech.
-export default function Speak({ text, language = 'fr' }: { text: string; language?: Language }) {
+/** A small 🔊 button that reads the text aloud; hidden where the browser has no speech. label
+    replaces "Listen: {text}" for a screen reader where the text must stay hidden (an answer). */
+export default function Speak({
+  text,
+  language = 'fr',
+  label,
+}: {
+  text: string;
+  language?: Language;
+  label?: string;
+}) {
   const { t } = useTranslation(common);
   if (!canSpeak) return null;
   return (
@@ -11,7 +20,7 @@ export default function Speak({ text, language = 'fr' }: { text: string; languag
       type="button"
       className="speak"
       data-tooltip={t('listen')}
-      aria-label={t('listenTo', { text })}
+      aria-label={label ?? t('listenTo', { text })}
       onClick={(event) => {
         event.stopPropagation();
         speak(text, language);

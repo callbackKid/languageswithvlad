@@ -215,6 +215,24 @@ export const api = {
         levels: getSettings().levels,
       }),
     }),
+  // the pronunciation points of a lesson, explained in the interface language
+  lessonPhonetics: (body: string, explainIn: string) =>
+    request<unknown>('/api/analyze', {
+      method: 'POST',
+      body: JSON.stringify({ action: 'phonetics', body, explainIn, levels: getSettings().levels }),
+    }),
+  // choice questions on one pronunciation point
+  phoneticsPractice: (options: {
+    language: Language;
+    level: string;
+    title: string;
+    summary: string;
+    explainIn: string;
+  }) =>
+    request<unknown>('/api/analyze', {
+      method: 'POST',
+      body: JSON.stringify({ action: 'phonetics-practice', ...options }),
+    }),
   // gap sentences on one grammar point
   grammarPractice: (options: {
     language: Language;

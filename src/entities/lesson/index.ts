@@ -22,7 +22,12 @@ export {
   verbLanguageOf,
 } from './model/bank';
 export { useLessonOn, useLiveSync } from './model/liveSync';
-export { normalizeAnalysis, normalizeExtras, normalizeGrammarRule } from './model/normalize';
+export {
+  normalizeAnalysis,
+  normalizeExtras,
+  normalizeGrammarRule,
+  normalizePhonetics,
+} from './model/normalize';
 export {
   buildChoiceQuiz,
   buildDictation,
@@ -50,6 +55,7 @@ export {
   type HomeworkTask,
   type Lesson,
   type LessonExtras,
+  type LessonPhonetics,
 } from './model/types';
 export { prepareRound, previousLesson, warmUpRound } from './model/warmUp';
 export { default as BankNote } from './ui/BankNote';
