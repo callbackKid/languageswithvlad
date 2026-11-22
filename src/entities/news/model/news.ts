@@ -48,6 +48,23 @@ export interface NewsDay {
 
 export const NEWS: NewsDay[] = [
   {
+    date: '2026-11-23',
+    items: [
+      {
+        kind: 'new',
+        text: {
+          en: 'On a computer, the lesson list in Lesson history can now be a row above the lesson instead of a column beside it, and it folds away like the main menu when the lesson needs the room.',
+          ru: 'На компьютере список уроков в «Истории уроков» теперь можно выстроить в ряд над уроком вместо колонки сбоку, а когда уроку нужно больше места, он сворачивается, как главное меню.',
+          fr: 'Sur ordinateur, la liste des leçons de l’« Historique des leçons » peut maintenant s’afficher sur une ligne au-dessus de la leçon plutôt qu’en colonne à côté, et elle se replie comme le menu principal quand la leçon a besoin de place.',
+          de: 'Am Computer kann die Lektionsliste im „Lektionsverlauf“ jetzt eine Reihe über der Lektion sein statt einer Spalte daneben, und sie klappt wie das Hauptmenü ein, wenn die Lektion den Platz braucht.',
+          es: 'En el ordenador, la lista de lecciones del «Historial de lecciones» ahora puede ser una fila encima de la lección en lugar de una columna al lado, y se pliega como el menú principal cuando la lección necesita espacio.',
+          pt: 'No computador, a lista de lições do «Histórico de lições» pode agora ser uma fila por cima da lição em vez de uma coluna ao lado, e recolhe-se como o menu principal quando a lição precisa de espaço.',
+          it: 'Sul computer, l’elenco delle lezioni della «Cronologia lezioni» ora può stare in fila sopra la lezione invece che in colonna accanto, e si nasconde come il menu principale quando la lezione ha bisogno di spazio.',
+        },
+      },
+    ],
+  },
+  {
     date: '2026-11-22',
     items: [
       {

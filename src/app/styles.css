@@ -1134,13 +1134,72 @@ main.page.wide {
   margin: 0 auto;
 }
 
-nav.lessons {
-  padding: 24px 12px 24px 24px;
+/* the list with its two buttons; as a column it stays in view while the lesson scrolls */
+.lessons-panel {
   position: sticky;
   top: 0;
   align-self: start;
+  display: flex;
+  flex-direction: column;
   max-height: 100vh;
+  min-width: 0;
+}
+.lessons-controls {
+  display: flex;
+  gap: 6px;
+  padding: 16px 12px 0 24px;
+}
+nav.lessons {
+  padding: 12px 12px 24px 24px;
   overflow: auto;
+  min-height: 0;
+}
+
+/* the list as a row above the lesson, scrolled sideways, as on a phone */
+.layout.lessons-as-row {
+  grid-template-columns: minmax(0, 1fr);
+}
+.lessons-as-row .lessons-panel {
+  position: static;
+  max-height: none;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 24px;
+  border-bottom: 1px solid var(--line);
+}
+.lessons-as-row .lessons-controls {
+  padding: 0;
+}
+.lessons-as-row nav.lessons {
+  flex: 1;
+  display: flex;
+  gap: 6px;
+  padding: 4px 0;
+  overflow-x: auto;
+}
+.lessons-as-row .lesson-link {
+  width: auto;
+  flex: none;
+  white-space: nowrap;
+}
+.lessons-as-row .lesson-link[aria-current='page'] {
+  box-shadow: inset 0 -3px 0 var(--margin);
+}
+
+/* folded: only the buttons are left; a folded column is a thin strip of them */
+.layout.lessons-folded {
+  grid-template-columns: auto minmax(0, 1fr);
+}
+.layout.lessons-folded.lessons-as-row {
+  grid-template-columns: minmax(0, 1fr);
+}
+.lessons-folded nav.lessons {
+  display: none;
+}
+.lessons-folded:not(.lessons-as-row) .lessons-controls {
+  flex-direction: column;
+  padding: 16px 8px 0 16px;
 }
 
 .lesson-link {
@@ -1510,11 +1569,27 @@ pre.source {
     padding: 20px 12px 48px;
   }
 
-  .layout {
+  .layout,
+  .layout.lessons-folded,
+  .layout.lessons-as-row {
     grid-template-columns: 1fr;
   }
 
-  nav.lessons {
+  /* a phone always shows the list as a row, without the buttons, even when folded on a computer */
+  .lessons-controls {
+    display: none;
+  }
+  .lessons-panel,
+  .lessons-as-row .lessons-panel {
+    position: static;
+    max-height: none;
+    padding: 0;
+    border-bottom: 0;
+  }
+
+  nav.lessons,
+  .lessons-as-row nav.lessons,
+  .lessons-folded nav.lessons {
     position: static;
     max-height: none;
     display: flex;

@@ -99,6 +99,8 @@ export const tutorial = defineMessages({
       'For the teacher: under <b>Homework</b>, <btn>Make homework with Claude</btn> writes a <ex>Devoirs:</ex> block from the lesson’s words and grammar (key words first). Check it, press <pbtn>Add to this lesson</pbtn>, and the student finds it on Home as a checklist.',
     'lessons.tip8':
       'The words are sorted into groups by meaning, such as food or time. Choose a group next to <b>Filter words</b> to see only its words: the exercises then use only them. <btn>Exercise</btn> next to a group’s name makes 15 mixed questions by Claude on its ticked words.',
+    'lessons.tip9':
+      'On a computer, the two round buttons at the start of the lesson list show it as a row above the lesson instead of a column, and fold it away when you need the room. The app remembers both.',
     'lessons.mock': 'the Words tab of a lesson',
 
     'verbs.title': 'Verbs',
@@ -360,6 +362,8 @@ export const tutorial = defineMessages({
       'Для преподавателя: во вкладке <b>Домашнее задание</b> кнопка <btn>Составить с Claude</btn> пишет блок <ex>Devoirs:</ex> по словам и грамматике урока (сначала ключевые слова). Проверьте, нажмите <pbtn>Добавить в этот урок</pbtn>, и ученик увидит его на Главной чек-листом.',
     'lessons.tip8':
       'Слова разделены на группы по смыслу, например еда или время. Выберите группу рядом с <b>Найти слово</b>, чтобы видеть только её слова: упражнения тогда будут только по ним. По кнопке <btn>Упражнение</btn> рядом с названием группы Claude составит 15 вопросов разных типов по её отмеченным словам.',
+    'lessons.tip9':
+      'На компьютере две круглые кнопки в начале списка уроков выстраивают его в ряд над уроком вместо колонки сбоку и сворачивают его, когда вам нужно больше места. Приложение запоминает и то и другое.',
     'lessons.mock': 'вкладка «Слова» в уроке',
 
     'verbs.title': 'Глаголы',
@@ -619,6 +623,8 @@ export const tutorial = defineMessages({
       'Pour le professeur : sous <b>Devoirs</b>, <btn>Préparer les devoirs avec Claude</btn> rédige un bloc <ex>Devoirs:</ex> à partir des mots et de la grammaire de la leçon (mots clés d’abord). Vérifiez-le, appuyez sur <pbtn>Ajouter à cette leçon</pbtn>, et l’élève le trouve sur l’accueil en liste à cocher.',
     'lessons.tip8':
       'Les mots sont classés en groupes par sens, par exemple la nourriture ou le temps. Choisissez un groupe à côté de <b>Filtrer les mots</b> pour ne voir que ses mots : les exercices n’utilisent alors qu’eux. À côté du nom d’un groupe, <btn>Exercice</btn> fait écrire à Claude 15 questions variées sur ses mots cochés.',
+    'lessons.tip9':
+      'Sur ordinateur, les deux boutons ronds au début de la liste des leçons l’affichent sur une ligne au-dessus de la leçon plutôt qu’en colonne, et la replient quand vous avez besoin de place. L’application retient les deux choix.',
     'lessons.mock': 'l’onglet Mots d’une leçon',
 
     'verbs.title': 'Verbes',
@@ -886,6 +892,8 @@ export const tutorial = defineMessages({
       'Für die Lehrkraft: Unter <b>Hausaufgaben</b> schreibt <btn>Mit Claude erstellen</btn> einen Block <ex>Devoirs:</ex> aus den Wörtern und der Grammatik der Lektion (Schlüsselwörter zuerst). Prüfe ihn, drück auf <pbtn>Zu dieser Lektion hinzufügen</pbtn>, und die Schülerin oder der Schüler findet ihn auf der Startseite als Checkliste.',
     'lessons.tip8':
       'Die Wörter sind nach Bedeutung in Gruppen sortiert, etwa Essen oder Zeit. Wähle neben <b>Wörter filtern</b> eine Gruppe, um nur ihre Wörter zu sehen: Die Übungen verwenden dann nur diese. <btn>Übung</btn> neben dem Namen einer Gruppe lässt Claude 15 gemischte Fragen zu ihren angehakten Wörtern schreiben.',
+    'lessons.tip9':
+      'Am Computer zeigen die zwei runden Knöpfe am Anfang der Lektionsliste sie als Reihe über der Lektion statt als Spalte und klappen sie ein, wenn du den Platz brauchst. Die App merkt sich beides.',
     'lessons.mock': 'der Tab Wörter einer Lektion',
 
     'verbs.title': 'Verben',
@@ -1147,6 +1155,8 @@ export const tutorial = defineMessages({
       'Para el profesor: en <b>Deberes</b>, <btn>Preparar los deberes con Claude</btn> redacta un bloque <ex>Devoirs:</ex> con las palabras y la gramática de la lección (primero las palabras clave). Revísalo, pulsa <pbtn>Añadir a esta lección</pbtn>, y el alumno lo encuentra en Inicio como lista para marcar.',
     'lessons.tip8':
       'Las palabras están ordenadas en grupos por significado, como la comida o el tiempo. Elige un grupo junto a <b>Filtrar palabras</b> para ver solo sus palabras: los ejercicios usarán solo esas. <btn>Ejercicio</btn>, junto al nombre de un grupo, pide a Claude 15 preguntas variadas sobre sus palabras marcadas.',
+    'lessons.tip9':
+      'En el ordenador, los dos botones redondos al principio de la lista de lecciones la muestran en fila encima de la lección en lugar de en columna, y la pliegan cuando necesitas espacio. La aplicación recuerda ambas cosas.',
     'lessons.mock': 'la pestaña Palabras de una lección',
 
     'verbs.title': 'Verbos',
@@ -1411,6 +1421,8 @@ export const tutorial = defineMessages({
       'Para o professor: em <b>Trabalhos de casa</b>, <btn>Fazer com o Claude</btn> escreve um bloco <ex>Devoirs:</ex> com as palavras e a gramática da lição (primeiro as palavras-chave). Verifique-o, carregue em <pbtn>Acrescentar a esta lição</pbtn>, e o aluno encontra-o no Início como lista para marcar.',
     'lessons.tip8':
       'As palavras estão organizadas em grupos por significado, como a comida ou o tempo. Escolha um grupo ao lado de <b>Filtrar palavras</b> para ver só as palavras dele: os exercícios passam a usar só essas. <btn>Exercício</btn>, ao lado do nome de um grupo, pede ao Claude 15 perguntas variadas sobre as palavras marcadas desse grupo.',
+    'lessons.tip9':
+      'No computador, os dois botões redondos no início da lista de lições mostram-na em fila por cima da lição em vez de em coluna, e recolhem-na quando precisar de espaço. A aplicação lembra-se de ambas as opções.',
     'lessons.mock': 'o separador Palavras de uma lição',
 
     'verbs.title': 'Verbos',
@@ -1674,6 +1686,8 @@ export const tutorial = defineMessages({
       'Per l’insegnante: in <b>Compiti</b>, <btn>Crea con Claude</btn> scrive un blocco <ex>Devoirs:</ex> con le parole e la grammatica della lezione (prima le parole chiave). Controllalo, premi <pbtn>Aggiungi a questa lezione</pbtn>, e lo studente lo trova nella Home come lista da spuntare.',
     'lessons.tip8':
       'Le parole sono divise in gruppi per significato, come il cibo o il tempo. Scegli un gruppo accanto a <b>Filtra le parole</b> per vedere solo le sue parole: gli esercizi useranno solo quelle. <btn>Esercizio</btn>, accanto al nome di un gruppo, chiede a Claude 15 domande di vario tipo sulle sue parole spuntate.',
+    'lessons.tip9':
+      'Sul computer, i due pulsanti rotondi all’inizio dell’elenco delle lezioni lo mostrano in fila sopra la lezione invece che in colonna, e lo nascondono quando ti serve spazio. L’app ricorda entrambe le scelte.',
     'lessons.mock': 'la scheda Parole di una lezione',
 
     'verbs.title': 'Verbi',
