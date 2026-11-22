@@ -153,7 +153,7 @@ function findTenses(text: string): { tenses: Tense[]; rest: string } {
   return { tenses: [...found], rest };
 }
 const WRITING =
-  /phrases?|sentences?|\bsätze\b|\bsatz\b|frases?|frasi|écri|rédig|\bwrite\b|schreib|escrib|escrev|scriv|напис|сочин|décri|describe|beschreib|descriv|descrev|опиши|tradu|translat|übersetz|перев(?:ест|ед|од)/iu;
+  /phrases?|sentences?|\bsätze\b|\bsatz\b|frases?|frasi|écri|rédig|\bwrite\b|schreib|escrib|escrev|scriv|напис|сочин|предложени|décri|describe|beschreib|descriv|descrev|опиши|tradu|translat|übersetz|перев(?:ест|ед|од)/iu;
 const WORDS =
   /\b(?:mots|words|wörter|vokabeln|palabras|palavras|parole|vocaboli)\b|vocabula|vokabular|лексик|слова/iu;
 const WORDS_FIRST = new RegExp(`^\\s*(?:${WORDS.source})`, 'iu');
