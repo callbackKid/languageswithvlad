@@ -1618,10 +1618,14 @@ pre.source {
   margin: 0;
   overflow-wrap: anywhere;
 }
-.word-group-exercise {
+/* two classes, so it wins over .btn.ghost's colour; --accent-text is the blue meant for text */
+.btn.word-group-exercise {
   font-size: 13px;
   font-weight: 600;
-  color: var(--accent);
+  color: var(--accent-text);
+}
+.word-group-note {
+  font-size: 13px;
 }
 .word-group-exercise::before {
   content: '▶ ';

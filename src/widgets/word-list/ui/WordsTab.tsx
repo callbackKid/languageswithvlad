@@ -24,6 +24,7 @@ import {
   GroupExercise,
   makeExerciseText,
   MIN_GROUP_WORDS,
+  mixesLanguages,
 } from '@/features/make-exercise';
 import { WordQuiz } from '@/features/quiz';
 import { Star } from '@/features/star-word';
@@ -46,7 +47,7 @@ export function KeyBadge() {
   return <span className="key-word">{t('keyWord')}</span>;
 }
 
-// The button next to a group's name: a round by Claude on its ticked words, once there are enough.
+// The button next to a group's name: a round by Claude on its ticked words; a note while there are too few.
 function GroupButton({
   name,
   words,
@@ -57,14 +58,21 @@ function GroupButton({
   onStart: (round: { name: string; words: Word[] }) => void;
 }) {
   const { t } = useTranslation(makeExerciseText);
-  const isEnough = canMakeGroupExercise(words);
+  // too few words: a note in its place, which everyone sees without hovering
+  if (!canMakeGroupExercise(words))
+    return (
+      <span className="hint word-group-note">
+        {t(mixesLanguages(words) ? 'groupTooFewLanguage' : 'groupTooFew', {
+          count: MIN_GROUP_WORDS,
+        })}
+      </span>
+    );
   return (
     <button
       type="button"
       className="btn ghost flush word-group-exercise"
       aria-label={t('groupLabel', { name })}
-      data-tooltip={isEnough ? t('groupTooltip') : t('groupTooFew', { count: MIN_GROUP_WORDS })}
-      disabled={!isEnough}
+      data-tooltip={t('groupTooltip')}
       onClick={() => onStart({ name, words })}
     >
       {t('groupButton')}

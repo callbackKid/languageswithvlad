@@ -8,7 +8,7 @@ import ExerciseHead from '@/shared/ui/ExerciseHead';
 import WaitingFact from '@/shared/ui/WaitingFact';
 
 import { makeExerciseText } from '../i18n/makeExercise';
-import { GROUP_QUESTIONS, wordsForGroupExercise } from '../model/groupWords';
+import { GROUP_QUESTIONS, MIN_GROUP_WORDS, wordsForGroupExercise } from '../model/groupWords';
 import { normalizeExercise } from '../model/normalize';
 import { type MadeExercise } from '../model/types';
 import ExerciseRound from './ExerciseRound';
@@ -78,7 +78,7 @@ export default function GroupExercise({
       />
       {error || !practised ? (
         <div className="note err" role="alert">
-          <p>{error || t('failed')}</p>
+          <p>{error || t('groupTooFew', { count: MIN_GROUP_WORDS })}</p>
           {practised && (
             <button type="button" className="btn" onClick={again}>
               {commonText.t('tryAgain')}
