@@ -1,4 +1,5 @@
-import { type Language } from '@/shared/config';
+import { asUiLanguage, type Language } from '@/shared/config';
+import { type UiLanguage } from '@/shared/i18n';
 import { asArray, asObject, asTexts } from '@/shared/lib/json';
 import { asText } from '@/shared/lib/util';
 
@@ -6,8 +7,13 @@ import { type ExerciseQuestion, type MadeExercise } from './types';
 
 /** A made exercise's questions, each checked: a choice keeps its answer among its options (or
     becomes a gap to type), and a question without a prompt or an answer is dropped. Throws when
-    none is left. */
-export function normalizeExercise(raw: unknown, language: Language): MadeExercise {
+    none is left. translatedTo: the language it was asked in (a saved one keeps its own; give
+    Russian for those, since one saved without it was made in Russian). */
+export function normalizeExercise(
+  raw: unknown,
+  language: Language,
+  translatedTo: UiLanguage
+): MadeExercise {
   const data = asObject(raw);
   const questions = asArray(data.questions)
     .map(asObject)
@@ -33,5 +39,10 @@ export function normalizeExercise(raw: unknown, language: Language): MadeExercis
     })
     .filter((question) => question.prompt && question.answer);
   if (!questions.length) throw new Error('empty');
-  return { title: asText(data.title), language, questions };
+  return {
+    title: asText(data.title),
+    language,
+    questions,
+    translatedTo: asUiLanguage(data.translatedTo) ?? translatedTo,
+  };
 }

@@ -1,10 +1,15 @@
-import { getUiLanguage, type UiLanguage, useUiLanguage } from '@/shared/i18n';
+import { getUiLanguage, UI_LANGUAGES, type UiLanguage, useUiLanguage } from '@/shared/i18n';
 
 import { type Language } from './languages';
 import { getSettings, useSettings } from './settings';
 
 /* Which language a translation is written in: the one chosen in Settings, unless that is the
    language of the word itself (a French word isn't "translated" into French). */
+
+/** A stored translation language, checked; null when it isn't one (a result saved before results
+    kept the language they were translated into: those are Russian). */
+export const asUiLanguage = (value: unknown): UiLanguage | null =>
+  UI_LANGUAGES.find((option) => option.id === value)?.id ?? null;
 
 /** The language a translation goes into when the chosen one is the word's own language: the
     interface language, or, when that is the same too, English (Russian for a learner of English). */

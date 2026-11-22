@@ -105,6 +105,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
         words,
         count: questionCount(request.body?.count),
         translateTo: asExplainLanguage(request.body?.translateTo),
+        explainIn: asExplainLanguage(request.body?.explainIn),
       });
       // asked again for another exercise: never the same questions twice
       return response

@@ -6,7 +6,7 @@ import {
   translationLanguage,
   type VerbLanguage,
 } from '@/shared/config';
-import { common, translator, type UiLanguage } from '@/shared/i18n';
+import { common, getUiLanguage, translator, type UiLanguage } from '@/shared/i18n';
 import { type ImagePayload } from '@/shared/lib/image';
 import { load } from '@/shared/lib/storage';
 
@@ -300,11 +300,13 @@ export const api = {
         action: 'exercise',
         ...options,
         translateTo: translationLanguage(options.language),
+        // the title is shown among the interface's texts
+        explainIn: getUiLanguage(),
       }),
     }),
   /** a word or phrase selected anywhere in the app: explained in its sentence, defined, with
-      examples, in translateTo (the card is saved under that language) */
-  word: (selection: string, context: string, translateTo: UiLanguage) =>
+      examples, in translation (already resolved for its language; the card is saved under it) */
+  word: (selection: string, context: string, translation: UiLanguage) =>
     request<unknown>('/api/text', {
       method: 'POST',
       body: JSON.stringify({
@@ -312,7 +314,7 @@ export const api = {
         selection,
         context,
         levels: getSettings().levels,
-        ...translationFields(translateTo),
+        ...translationFields(translation),
       }),
     }),
   // a pasted text translated, paragraph by paragraph

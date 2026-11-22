@@ -76,8 +76,9 @@ export default function Settings({ lessonDocument }: { lessonDocument: DocumentI
   const settings = useSettings();
   const [hasPictureError, setHasPictureError] = useState(false);
   const [copied, setCopied] = useState(false);
-  // shown once the translation language is changed: lessons are prepared again in it
-  const [translationChanged, setTranslationChanged] = useState(false);
+  /** the translation language when the page opened: once another is chosen, a note says lessons
+      are prepared again in it; choosing this one again takes the note away (its lessons are kept) */
+  const [openedTranslateTo] = useState(settings.translateTo);
 
   async function copyLink() {
     try {
@@ -246,7 +247,6 @@ export default function Settings({ lessonDocument }: { lessonDocument: DocumentI
               const translateTo = UI_LANGUAGES.find((option) => option.id === event.target.value);
               if (!translateTo) return;
               updateSettings({ translateTo: translateTo.id });
-              setTranslationChanged(true);
             }}
           >
             {UI_LANGUAGES.map((option) => (
@@ -256,12 +256,11 @@ export default function Settings({ lessonDocument }: { lessonDocument: DocumentI
             ))}
           </select>
           <small className="hint settings-row-note">{t('translateToHint')}</small>
-          {translationChanged && (
-            <small className="hint settings-row-note" role="status">
-              {t('translateToChanged')}
-            </small>
-          )}
         </div>
+        {/* always on the page, so a screen reader reads the note when it appears */}
+        <small className="hint settings-status" role="status">
+          {settings.translateTo !== openedTranslateTo && t('translateToChanged')}
+        </small>
         <div className="settings-row">
           <span className="settings-label">{t('theme')}</span>
           <div className="seg" role="group" aria-label={t('theme')}>

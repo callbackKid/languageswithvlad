@@ -131,9 +131,14 @@ export function useBank(lessons: Lesson[], hasClaude: boolean): Bank {
   // Bumped when the document changes, so answers for the old one are dropped.
   const generation = useRef(0);
 
+  // The translation language of the analyses shown, so a switch keeps no words in the old one.
+  const shownLanguage = useRef(translateTo);
+
   // Pick up cached lessons whenever the document or the translation language changes.
   useEffect(() => {
     generation.current++;
+    const isSameLanguage = shownLanguage.current === translateTo;
+    shownLanguage.current = translateTo;
     const out: Record<string, Analysis> = {};
     const kept: Record<string, Analysis> = {};
     const auto = new Set(lessons.slice(-AUTO_PREPARE).map((lesson) => lesson.key));
@@ -143,8 +148,9 @@ export function useBank(lessons: Lesson[], hasClaude: boolean): Bank {
         (hasClaude ? null : localParse(lesson.body, languageOfLesson(lesson)));
       const before = latestShown.current[lesson.key];
       if (analysis) out[lesson.key] = analysis;
-      // only lessons that are prepared again right away
-      else if (hasClaude && auto.has(lesson.key) && before) kept[lesson.key] = before;
+      // only lessons that are prepared again right away, in the language they were in
+      else if (hasClaude && isSameLanguage && auto.has(lesson.key) && before)
+        kept[lesson.key] = before;
     }
     setAnalyses(out);
     setStale(kept);

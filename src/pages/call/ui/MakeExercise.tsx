@@ -7,7 +7,7 @@ import {
   type Language,
   type Level,
   LEVELS,
-  useTranslationLanguage,
+  translationLanguage,
 } from '@/shared/config';
 import { common, translator, useTranslation } from '@/shared/i18n';
 import { type Grade, grade } from '@/shared/lib/grade';
@@ -32,7 +32,11 @@ const MAX_GRAMMAR_LENGTH = 200;
 const readLast = (): MadeExercise | null =>
   loadChecked(LAST_KEY, (raw) => {
     try {
-      return normalizeExercise(raw, asLanguage((raw as { language?: unknown } | null)?.language));
+      return normalizeExercise(
+        raw,
+        asLanguage((raw as { language?: unknown } | null)?.language),
+        'ru'
+      );
     } catch {
       return null;
     }
@@ -81,7 +85,8 @@ export default function MakeExercise({
     try {
       const made = normalizeExercise(
         await api.exercise({ language, level, grammar: grammar.trim(), words: practised, count }),
-        language
+        language,
+        translationLanguage(language)
       );
       save(LAST_KEY, made);
       setExercise(made);
@@ -183,7 +188,6 @@ export default function MakeExercise({
 function ExerciseRound({ exercise, onClose }: { exercise: MadeExercise; onClose: () => void }) {
   const { t } = useTranslation(makeExerciseText);
   const commonText = useTranslation(common);
-  const translationOf = useTranslationLanguage();
   const [questions, setQuestions] = useState(() => shuffle(exercise.questions));
   const [index, setIndex] = useState(0);
   const [typed, setTyped] = useState('');
@@ -247,7 +251,7 @@ function ExerciseRound({ exercise, onClose }: { exercise: MadeExercise; onClose:
       {head}
       <p className="hint">{t('progress', { current: index + 1, total: questions.length })}</p>
       {isTranslate && <p className="hint">{t('translate')}</p>}
-      <p className="made-exercise-prompt" lang={isTranslate ? translationOf(language) : language}>
+      <p className="made-exercise-prompt" lang={isTranslate ? exercise.translatedTo : language}>
         {question.prompt}
       </p>
       {question.ru && (
@@ -257,7 +261,7 @@ function ExerciseRound({ exercise, onClose }: { exercise: MadeExercise; onClose:
           onToggle={(event) => setShowRu(event.currentTarget.open)}
         >
           <summary>{commonText.t('translation')}</summary>
-          <p lang={translationOf(language)}>{question.ru}</p>
+          <p lang={exercise.translatedTo}>{question.ru}</p>
         </details>
       )}
 
@@ -328,7 +332,7 @@ function ExerciseRound({ exercise, onClose }: { exercise: MadeExercise; onClose:
                   { answer: question.answer }
                 )}
           </p>
-          {question.explanation && <p lang={translationOf(language)}>{question.explanation}</p>}
+          {question.explanation && <p lang={exercise.translatedTo}>{question.explanation}</p>}
           <button type="button" className="btn primary" onClick={next}>
             {index + 1 < questions.length ? commonText.t('next') : commonText.t('seeScore')}
           </button>

@@ -252,6 +252,7 @@ export function exercisePrompt({
   words,
   count,
   translateTo,
+  explainIn,
 }: {
   language: LearnLanguage;
   level: string;
@@ -260,6 +261,8 @@ export function exercisePrompt({
   count: number;
   // already resolved: never the language of the exercise
   translateTo: ExplainLanguage;
+  // the interface language: the title is shown among its texts
+  explainIn: ExplainLanguage;
 }): string {
   const name = LANGUAGE_NAMES[language];
   const translationName = EXPLAIN_NAMES[translateTo];
@@ -276,18 +279,16 @@ Mix three kinds of question, about a third of each, in a varied order:
 - "gap": prompt is a ${name} sentence with one gap written ___, followed in brackets by the word to put in the right form when the form is what is practised ("Hier, nous ___ (aller) au cinéma."); answer is what goes in the gap.
 - "translate": prompt is a short everyday ${translationName} sentence (4 to 8 words); answer is its natural ${name} translation, using what is practised.
 Every question practises the point${grammar && words.length ? 's' : ''} above, with vocabulary of the level, and has one clear answer. accept lists other answers that are just as right (another word order, a contraction, a synonym); [] when there are none. ru is the ${translationName} translation of the prompt for "choice" and "gap", "" for "translate". explanation is one short sentence in ${translationName} saying why the answer is right. options is [] for "gap" and "translate".
-Reply with only a JSON object: {"title": string, "questions": [{"type": "choice" | "gap" | "translate", "prompt": string, "options": [string], "answer": string, "accept": [string], "ru": string, "explanation": string}]}. title says what the exercise practises, in ${translationName}, in at most 6 words.`;
+Reply with only a JSON object: {"title": string, "questions": [{"type": "choice" | "gap" | "translate", "prompt": string, "options": [string], "answer": string, "accept": [string], "ru": string, "explanation": string}]}. title says what the exercise practises, in ${EXPLAIN_NAMES[explainIn]}, in at most 6 words.`;
 }
 
-// A natural translation of a text into the translation language, paragraph by paragraph.
+// A natural translation of a text into the translation language, paragraph by paragraph, and the text's language.
 export function translatePrompt(paragraphs: string[], translation: TranslationRequest): string {
   const name = EXPLAIN_NAMES[translation.language];
-  const isLearned = LEARN_LANGUAGES.some((code) => code === translation.language);
-  const instead = isLearned
-    ? ` If it is already in ${name}, translate it into ${EXPLAIN_NAMES[translation.fallback]}.`
-    : '';
+  const fallback = fallbackName(translation);
+  const instead = fallback ? ` If it is already in ${name}, translate it into ${fallback}.` : '';
   return `Translate this text into natural, fluent ${name}, the way a good translator would: keep the meaning, tone and register, don't translate word for word, and don't add or leave out anything.${instead} It has ${paragraphs.length} paragraph${paragraphs.length === 1 ? '' : 's'}, numbered below.
-Reply with only a JSON object: {"paragraphs": [string]} with exactly ${paragraphs.length} item${paragraphs.length === 1 ? '' : 's'}: the translation of each paragraph, in the same order, without the numbers.
+Reply with only a JSON object: {"language": ${LANGUAGE_CODES}, "paragraphs": [string]}. language is the language of the text: ${LANGUAGE_KEY}. paragraphs has exactly ${paragraphs.length} item${paragraphs.length === 1 ? '' : 's'}: the translation of each paragraph, in the same order, without the numbers.
 
 ${paragraphs.map((paragraph, index) => `[${index + 1}] ${paragraph}`).join('\n\n')}`;
 }
@@ -370,19 +371,23 @@ export const asTranslationRequest = (body: unknown): TranslationRequest => {
     fallback: asExplainLanguage(fields.translateFallback),
   };
 };
+/** The name of the language to use instead for a text in the translation language itself, or null
+    when there can't be one: Russian is never learned, and a language the app already resolved
+    (it knows what is learned) comes with itself as the fallback. */
+function fallbackName({ language, fallback }: TranslationRequest): string | null {
+  const isLearned = LEARN_LANGUAGES.some((code) => code === language);
+  return isLearned && fallback !== language ? EXPLAIN_NAMES[fallback] : null;
+}
 /** "The translation language is French, or German for a lesson in French itself: …". source
     names what Claude reads, whose language it finds out itself. */
 function translationRule(
-  { language, fallback }: TranslationRequest,
+  translation: TranslationRequest,
   source: 'lesson' | 'text' | 'page' | 'selection'
 ): string {
-  const name = EXPLAIN_NAMES[language];
-  // a language the app already resolved (it knows what is learned) comes with itself as fallback
-  const isLearned = LEARN_LANGUAGES.some((code) => code === language) && fallback !== language;
-  const instead = isLearned
-    ? `, or ${EXPLAIN_NAMES[fallback]} for a ${source} in ${name} itself`
-    : '';
-  return `The translation language is ${name}${instead}: write every translation (ru) and explanation in it.`;
+  const name = EXPLAIN_NAMES[translation.language];
+  const fallback = fallbackName(translation);
+  const instead = fallback ? `, or ${fallback} for a ${source} in ${name} itself` : '';
+  return `The translation language is ${name}${instead}: write every translation and explanation in it.`;
 }
 
 /** The prompt that sorts a learner's words into groups by meaning, named in the interface
@@ -561,10 +566,8 @@ export function homeworkPrompt({
   translation: TranslationRequest;
 }): string {
   const name = EXPLAIN_NAMES[translation.language];
-  const isLearned = LEARN_LANGUAGES.some((code) => code === translation.language);
-  const instead = isLearned
-    ? ` (in ${EXPLAIN_NAMES[translation.fallback]} for a lesson in ${name} itself)`
-    : '';
+  const fallback = fallbackName(translation);
+  const instead = fallback ? ` (in ${fallback} for a lesson in ${name} itself)` : '';
   return `Below are a teacher's notes from one language lesson for a student at CEFR level ${level}. The lesson teaches ${LANGUAGE_LIST}, and the notes mix that language with translations, often in Russian. Write homework for the next lesson from this lesson's words and grammar.${
     keyWords.length
       ? ` The teacher marked these as the lesson's key words; use them first: ${keyWords.join(', ')}.`

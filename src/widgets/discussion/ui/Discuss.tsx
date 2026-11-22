@@ -7,8 +7,8 @@ import {
   asLanguage,
   type Language,
   LEVELS,
+  translationLanguage,
   useSettings,
-  useTranslationLanguage,
 } from '@/shared/config';
 import { common, learning, talk, useTranslation } from '@/shared/i18n';
 import { asFields, load, loadChecked, save } from '@/shared/lib/storage';
@@ -356,7 +356,6 @@ export default function Discuss({
   embedded?: boolean;
 }) {
   const { t, language: uiLanguage } = useTranslation(talk);
-  const translationOf = useTranslationLanguage();
   const commonText = useTranslation(common);
   const names = useTranslation(learning);
   const settings = useSettings();
@@ -390,7 +389,8 @@ export default function Discuss({
     ? choice.language
     : (settings.studying[0] ?? 'fr');
   const [discussion, setDiscussion] = useState<Discussion | null>(() =>
-    loadChecked('discuss:last', normalizeDiscussion)
+    // one saved without its translation language was made in Russian
+    loadChecked('discuss:last', (raw) => normalizeDiscussion(raw, 'ru'))
   );
   const [state, setState] = useState<'idle' | 'loading' | 'error'>('idle');
   const [error, setError] = useState('');
@@ -427,7 +427,8 @@ export default function Discuss({
           topic,
           grammar,
           explainIn: uiLanguage,
-        })
+        }),
+        translationLanguage(language)
       );
       if (!next) throw new ApiError(0, 'empty', t('noQuestion'));
       setDiscussion(next);
@@ -565,7 +566,7 @@ export default function Discuss({
               </p>
               {discussion.ru &&
                 (showTranslation ? (
-                  <p className="discussion-ru" data-no-word-actions lang={translationOf(language)}>
+                  <p className="discussion-ru" data-no-word-actions lang={discussion.translatedTo}>
                     {discussion.ru}
                   </p>
                 ) : (
@@ -610,7 +611,7 @@ export default function Discuss({
                 <GrammarRuleBox
                   rule={discussion.grammarRule}
                   language={language}
-                  translationLanguage={translationOf(language)}
+                  translationLanguage={discussion.translatedTo}
                   label={`📘 ${t('ruleSummary', { title: discussion.grammarRule.title })}`}
                 />
               )}
@@ -624,7 +625,7 @@ export default function Discuss({
                         <span className="fr" lang={language}>
                           {item.word}
                         </span>
-                        <span className="ru" data-no-word-actions lang={translationOf(language)}>
+                        <span className="ru" data-no-word-actions lang={discussion.translatedTo}>
                           {item.ru}
                         </span>
                         <Speak text={item.word} language={language} />

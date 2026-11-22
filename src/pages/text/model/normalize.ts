@@ -1,5 +1,5 @@
 import { normalizePhotoItems, type Word } from '@/entities/word';
-import { asLanguage, type Language } from '@/shared/config';
+import { asLanguage, type Language, LANGUAGES } from '@/shared/config';
 import { asArray, asObject, asTexts } from '@/shared/lib/json';
 import { asText } from '@/shared/lib/util';
 
@@ -30,11 +30,16 @@ export function normalizeReaderText(raw: unknown): ReaderText | null {
   };
 }
 
-// The translated paragraphs; throws when the answer has none.
-export function normalizeTranslation(raw: unknown): string[] {
-  const paragraphs = asTexts(asObject(raw).paragraphs);
+/** The translated paragraphs, and the text's language when Claude named one it knows (null
+    otherwise); throws when the answer has no paragraphs. */
+export function normalizeTranslation(raw: unknown): {
+  paragraphs: string[];
+  language: Language | null;
+} {
+  const data = asObject(raw);
+  const paragraphs = asTexts(data.paragraphs);
   if (!paragraphs.length) throw new Error('empty');
-  return paragraphs;
+  return { paragraphs, language: LANGUAGES.find((code) => code === data.language) ?? null };
 }
 
 // Words, questions and statements built from a text, with the text's language.

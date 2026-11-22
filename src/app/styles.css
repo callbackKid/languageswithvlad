@@ -4011,6 +4011,14 @@ li .open-link {
   flex-basis: 100%;
 }
 
+/* a note that appears under a row; it takes no room while empty */
+.settings-card > small.settings-status {
+  margin: 0 0 10px;
+}
+.settings-card > small.settings-status:empty {
+  margin: 0;
+}
+
 .settings-profile {
   display: flex;
   gap: 18px;

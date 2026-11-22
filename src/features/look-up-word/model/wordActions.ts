@@ -3,7 +3,7 @@
    never asked twice), and the line a card adds to a lesson in the document. */
 
 import { normalizeWordCard, type PhotoItem, type Word, type WordCard } from '@/entities/word';
-import { getSettings, type Language, LANGUAGES } from '@/shared/config';
+import { type Language, LANGUAGES } from '@/shared/config';
 import { type UiLanguage } from '@/shared/i18n';
 import { asFields, load, save } from '@/shared/lib/storage';
 import { hash } from '@/shared/lib/util';
@@ -50,10 +50,11 @@ interface SavedCard {
   card: unknown;
   at: number;
 }
-/** A card's key: Russian cards keep the key they always had, so they open without Claude; a card in
-    another translation language gets its own. */
-export const cardKey = (selection: string, context: string, translateTo: UiLanguage) =>
-  hash(`${selection.toLowerCase()}|${context}`) + (translateTo === 'ru' ? '' : ':' + translateTo);
+/** A card's key, by the language its translations are in (already resolved for the selection's
+    language, so a change of interface language that changes the fallback asks again): Russian
+    cards keep the key they always had, so they open without Claude; another language gets its own. */
+export const cardKey = (selection: string, context: string, translation: UiLanguage) =>
+  hash(`${selection.toLowerCase()}|${context}`) + (translation === 'ru' ? '' : ':' + translation);
 // The saved cards by key; an entry without its time is dropped (its card is checked when read).
 function savedCards(): Record<string, SavedCard> {
   const raw = load<unknown>(CARDS_KEY);
@@ -66,27 +67,26 @@ function savedCards(): Record<string, SavedCard> {
   );
 }
 
-/** The card Claude wrote for this selection in this sentence, in translateTo (the current setting
-    when left out), checked; null when there is none. */
+// The card Claude wrote for this selection in this sentence, in translation, checked; null when there is none.
 export function readWordCard(
   selection: string,
   context: string,
-  translateTo: UiLanguage = getSettings().translateTo
+  translation: UiLanguage
 ): WordCard | null {
-  const saved = savedCards()[cardKey(selection, context, translateTo)];
+  const saved = savedCards()[cardKey(selection, context, translation)];
   return saved ? normalizeWordCard(saved.card, selection) : null;
 }
 
-// Keeps a card made in translateTo, dropping the oldest beyond MAX_CARDS.
+// Keeps a card made in translation, dropping the oldest beyond MAX_CARDS.
 export function saveWordCard(
   selection: string,
   context: string,
   card: WordCard,
-  translateTo: UiLanguage
+  translation: UiLanguage
 ): void {
   const entries = Object.entries({
     ...savedCards(),
-    [cardKey(selection, context, translateTo)]: { card, at: Date.now() },
+    [cardKey(selection, context, translation)]: { card, at: Date.now() },
   })
     .sort(([, a], [, b]) => b.at - a.at)
     .slice(0, MAX_CARDS);

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { type Lesson } from '@/entities/lesson';
 import { type Word } from '@/entities/word';
 import { api, ApiError } from '@/shared/api';
-import { getSettings, type Language, type Level, LEVELS } from '@/shared/config';
+import { asUiLanguage, getSettings, type Language, type Level, LEVELS } from '@/shared/config';
 import {
   common,
   homework as homeworkText,
@@ -28,11 +28,12 @@ const DEFAULT_TRANSLATE_SENTENCES = 4;
 // The language of the sentences to translate the teacher chose last, kept on this device.
 const TRANSLATE_TO_KEY = 'homework:translate-to';
 
-// The teacher's last choice when it is still one of the languages, their own translation language otherwise.
+/** The teacher's last choice when it is still one of the languages, their own translation
+    language otherwise. */
 function savedTranslateTo(): UiLanguage {
-  const saved = load<unknown>(TRANSLATE_TO_KEY);
-  return UI_LANGUAGES.find((option) => option.id === saved)?.id ?? getSettings().translateTo;
+  return asUiLanguage(load<unknown>(TRANSLATE_TO_KEY)) ?? getSettings().translateTo;
 }
+
 const SENTENCE_COUNTS = Array.from(
   { length: MAX_TRANSLATE_SENTENCES - MIN_TRANSLATE_SENTENCES + 1 },
   (_empty, position) => MIN_TRANSLATE_SENTENCES + position

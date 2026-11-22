@@ -20,7 +20,7 @@ import {
 } from '@/features/look-up-word';
 import { Star } from '@/features/star-word';
 import { api, ApiError } from '@/shared/api';
-import { getSettings, TENSES_BY_LANGUAGE, useTranslationLanguage } from '@/shared/config';
+import { TENSES_BY_LANGUAGE, translationLanguage, useTranslationLanguage } from '@/shared/config';
 import { common, translator, useTranslation, wordActions } from '@/shared/i18n';
 import Speak from '@/shared/ui/Speak';
 import WaitingFact from '@/shared/ui/WaitingFact';
@@ -103,7 +103,7 @@ export default function WordActions({
       if (!next) return;
       pickCount.current += 1;
       setPicked(next);
-      setCard(readWordCard(next.text, next.context));
+      setCard(readWordCard(next.text, next.context, translationLanguage(next.language)));
       setView(null);
       setState('idle');
       setError('');
@@ -169,14 +169,14 @@ export default function WordActions({
     setState('loading');
     setError('');
     // once, so the request and the key it is saved under always agree
-    const translateTo = getSettings().translateTo;
+    const translation = translationLanguage(picked.language);
     try {
       const answer = normalizeWordCard(
-        await api.word(picked.text, picked.context, translateTo),
+        await api.word(picked.text, picked.context, translation),
         picked.text
       );
       if (!answer) throw new Error('empty');
-      saveWordCard(picked.text, picked.context, answer, translateTo);
+      saveWordCard(picked.text, picked.context, answer, translation);
       if (pick !== pickCount.current) return null;
       setCard(answer);
       setState('idle');

@@ -137,6 +137,9 @@ const FILLER = new Set([
   ...['los', 'las', 'una', 'del', 'con', 'para', 'por'],
   ...['uma', 'dos', 'das', 'com'],
   ...['della', 'per'],
+  // "oneself", "someone", "something": every reflexive or object verb's translation has one
+  ...['oneself', 'someone', 'something', 'etwas', 'jemanden', 'jemandem'],
+  ...['quelqu', 'quelque', 'chose', 'algo', 'alguien', 'alguém', 'qualcosa', 'qualcuno', 'gli'],
 ]);
 // The words of a translation in any alphabet, lowercase, without the short and the filler ones.
 const translationWords = (text: string) =>

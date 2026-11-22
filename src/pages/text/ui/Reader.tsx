@@ -211,7 +211,11 @@ export default function Reader({ hasClaude }: { hasClaude: boolean }) {
     setError('');
     try {
       const translated = normalizeTranslation(await api.translate(current.text));
-      patch(current.id, () => ({ translation: translated }));
+      // the text's language, known from now on if nothing told it before (its lang, its 🔊)
+      patch(current.id, (entry) => ({
+        translation: translated.paragraphs,
+        ...(!entry.language && translated.language && { language: translated.language }),
+      }));
       setShowTranslation(true);
       setTranslating('idle');
     } catch (problem) {
