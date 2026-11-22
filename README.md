@@ -234,6 +234,8 @@ yarn start   # the UI and the api/ functions together (vercel dev)
 | `yarn format` / `yarn format:check` | Prettier on every file, or only a check.                                               |
 | `yarn verify`                       | Lint, format check, typecheck and the FSD layer rules (`yarn fsd`, Steiger) in one go. |
 
+`resolutions` in `package.json` forces patched versions of `nanoid`, `lodash-es` and `katex`, which Excalidraw 0.18.1 (the newest) pulls in with known vulnerabilities; `yarn audit --groups dependencies` then finds none. Remove them when an Excalidraw release brings those versions itself, and check the board’s Mermaid tool (More tools → Mermaid to Excalidraw) after changing them.
+
 In VS Code, the workspace settings in `.vscode/` format and fix files on save (needs the ESLint and Prettier extensions, which VS Code suggests).
 
 ### Code style
