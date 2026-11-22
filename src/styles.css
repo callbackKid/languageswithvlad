@@ -544,7 +544,8 @@ a.btn {
   color: var(--muted);
 }
 .form-field textarea,
-.form-field input[type='text'] {
+.form-field input[type='text'],
+.form-field input[type='password'] {
   width: 100%;
   box-sizing: border-box;
   padding: 8px 10px;
@@ -3484,7 +3485,12 @@ li .open-link {
 .call-card-body {
   margin-top: 6px;
 }
-/* the discussion question in lesson mode: the card already frames it */
+/* the discussion question in lesson mode: the card already frames it, so the form has no frame */
+.discuss-card .discuss-form {
+  padding: 0;
+  border: 0;
+  background: none;
+}
 .discuss-card .discuss-form:last-child {
   margin-bottom: 0;
 }
