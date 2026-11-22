@@ -7,9 +7,9 @@ import {
   normalizePhonetics,
 } from '@/entities/lesson';
 import { normalizeExercise, RoundLoader } from '@/features/make-exercise';
-import { api } from '@/shared/api';
+import { api, ApiError } from '@/shared/api';
 import { getSettings, type Language } from '@/shared/config';
-import { common, getUiLanguage, paper, useTranslation } from '@/shared/i18n';
+import { common, getUiLanguage, paper, translator, useTranslation } from '@/shared/i18n';
 import { canSpeak, hasVoice } from '@/shared/lib/speech';
 import { loadChecked, save } from '@/shared/lib/storage';
 import WaitingFact from '@/shared/ui/WaitingFact';
@@ -46,6 +46,8 @@ export default function PhoneticsTab({
     loadChecked(storageKey, readCached)
   );
   const [state, setState] = useState<'idle' | 'loading' | 'error'>('idle');
+  // why the reading failed, in the interface language (a lesson too long, no access…)
+  const [error, setError] = useState('');
   const [attempt, setAttempt] = useState(0);
   const [practising, setPractising] = useState<GrammarRule | null>(null);
   const [round, setRound] = useState(0);
@@ -69,8 +71,12 @@ export default function PhoneticsTab({
           setState('idle');
         }
       })
-      .catch(() => {
-        if (alive) setState('error');
+      .catch((failure: unknown) => {
+        if (!alive) return;
+        setState('error');
+        setError(
+          failure instanceof ApiError ? failure.message : translator(common).t('unreadable')
+        );
       });
     return () => {
       alive = false;
@@ -118,7 +124,7 @@ export default function PhoneticsTab({
   if (state === 'error')
     return (
       <div className="note err" role="alert">
-        <p>{commonText.t('unreadable')}</p>
+        <p>{error}</p>
         <button
           type="button"
           className="btn"

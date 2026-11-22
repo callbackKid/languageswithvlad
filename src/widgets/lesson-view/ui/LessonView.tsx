@@ -163,6 +163,8 @@ export default function LessonView({
     loadChecked(extrasKey, normalizeExtras)
   );
   const [extrasState, setExtrasState] = useState<'idle' | 'loading' | 'error'>('idle');
+  // why the reading failed, in the interface language (a lesson too long, no access…)
+  const [extrasError, setExtrasError] = useState('');
   const [freshExtras, setFreshExtras] = useState(0);
   const wantsExtras = EXTRA_TABS.includes(tab);
   useEffect(() => {
@@ -182,8 +184,12 @@ export default function LessonView({
           setExtrasState('idle');
         }
       })
-      .catch(() => {
-        if (alive) setExtrasState('error');
+      .catch((failure: unknown) => {
+        if (!alive) return;
+        setExtrasState('error');
+        setExtrasError(
+          failure instanceof ApiError ? failure.message : translator(common).t('unreadable')
+        );
       });
     return () => {
       alive = false;
@@ -308,8 +314,8 @@ export default function LessonView({
             <WaitingFact language={analysis?.language}>{t('readingExtras')}</WaitingFact>
           )}
           {wantsExtras && extrasState === 'error' && (
-            <div className="note err">
-              <p>{commonText.t('unreadable')}</p>
+            <div className="note err" role="alert">
+              <p>{extrasError}</p>
               <button
                 type="button"
                 className="btn"
