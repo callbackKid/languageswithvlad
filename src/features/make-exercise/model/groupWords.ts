@@ -29,10 +29,6 @@ export function canMakeGroupExercise(words: Word[]): boolean {
   return (inMainLanguage(words)?.words.length ?? 0) >= MIN_GROUP_WORDS;
 }
 
-// Whether the words are in more than one language (a group on Words to learn can mix them).
-export const mixesLanguages = (words: Word[]): boolean =>
-  new Set(words.map((word) => word.language ?? 'fr')).size > 1;
-
 /** The words a round on one group practises: those in the group's main language, the weaker ones
     first when there are too many. null when fewer than MIN_GROUP_WORDS are left. */
 export function wordsForGroupExercise(

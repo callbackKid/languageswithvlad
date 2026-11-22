@@ -39,9 +39,9 @@ click button /An exercise on the words of “Morning routine”/
 wait-text Question 1 of
 shot group-exercise
 ---
-# a group with fewer than 3 words shows a note instead of the button
+# groups with fewer than 3 words: one note over the list, and no button on them
 nav /lessons
-wait-text An exercise needs at least 3 ticked words
+wait-text An exercise on a group needs at least 3 ticked words
 shot group-note
 ---
 nav /lessons

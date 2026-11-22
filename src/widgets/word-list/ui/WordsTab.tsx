@@ -24,7 +24,6 @@ import {
   GroupExercise,
   makeExerciseText,
   MIN_GROUP_WORDS,
-  mixesLanguages,
 } from '@/features/make-exercise';
 import { WordQuiz } from '@/features/quiz';
 import { Star } from '@/features/star-word';
@@ -58,7 +57,7 @@ export function KeyBadge() {
   return <span className="key-word">{t('keyWord')}</span>;
 }
 
-// The button next to a group's name: a round by Claude on its ticked words; a note while there are too few.
+// The button next to a group's name: a round by Claude on its ticked words, once there are enough.
 function GroupButton({
   name,
   words,
@@ -69,15 +68,8 @@ function GroupButton({
   onStart: (round: { name: string; words: Word[] }) => void;
 }) {
   const { t } = useTranslation(makeExerciseText);
-  // too few words: a note in its place, which everyone sees without hovering
-  if (!canMakeGroupExercise(words))
-    return (
-      <span className="hint word-group-note">
-        {t(mixesLanguages(words) ? 'groupTooFewLanguage' : 'groupTooFew', {
-          count: MIN_GROUP_WORDS,
-        })}
-      </span>
-    );
+  // too few: one note over the list says why (groupNote), rather than one under every group
+  if (!canMakeGroupExercise(words)) return null;
   return (
     <button
       type="button"
@@ -138,6 +130,7 @@ export default function WordsTab({
 }) {
   const { t, rich, language: uiLanguage } = useTranslation(exercises);
   const commonText = useTranslation(common);
+  const exerciseText = useTranslation(makeExerciseText);
   const translationOf = useTranslationLanguage();
   // Tracks the words left out, so words that arrive later (more lessons prepared) start picked.
   const [unpicked, setUnpicked] = useState<Set<string>>(() => new Set());
@@ -155,6 +148,14 @@ export default function WordsTab({
   const groups = grouped ? groupWords(analysis.words, groupOf) : [];
   // no group to show before the first answer, or without Claude
   const hasGroups = groups.some((group) => group.name);
+  // a group's ticked words: the whole group, not only those Filter words shows
+  const tickedOf = (name: string) =>
+    (groups.find((candidate) => candidate.name === name)?.words ?? []).filter(
+      (word) => !unpicked.has(word.fr)
+    );
+  // some group has too few ticked words for its Exercise: one note over the list says why
+  const hasSmallGroup =
+    hasClaude && hasGroups && groups.some((listed) => !canMakeGroupExercise(tickedOf(listed.name)));
   // a group that is gone (its words left the list) stops filtering
   const group =
     hasGroups && groups.some((listed) => listed.name === chosenGroup) ? chosenGroup : null;
@@ -353,6 +354,11 @@ export default function WordsTab({
           </select>
         )}
       </div>
+      {hasSmallGroup && (
+        <p className="hint word-group-note">
+          {exerciseText.t('groupNote', { count: MIN_GROUP_WORDS })}
+        </p>
+      )}
       {grouping.state === 'loading' && (
         <p className="hint grouping-status" role="status">
           <span className="spinner" aria-hidden="true" /> {t('grouping')}
@@ -383,9 +389,7 @@ export default function WordsTab({
                   <GroupButton
                     name={listed.name || t('otherGroup')}
                     // the whole group's ticked words, not only those Filter words shows
-                    words={(
-                      groups.find((candidate) => candidate.name === listed.name)?.words ?? []
-                    ).filter((word) => !unpicked.has(word.fr))}
+                    words={tickedOf(listed.name)}
                     onStart={(round) => {
                       setGroupRound(round);
                       start('group');

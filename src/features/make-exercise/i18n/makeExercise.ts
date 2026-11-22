@@ -32,9 +32,10 @@ export const makeExerciseText = defineMessages({
       one: 'An exercise needs at least {count} ticked word',
       other: 'An exercise needs at least {count} ticked words',
     },
-    groupTooFewLanguage: {
-      one: 'An exercise needs at least {count} ticked word in one language',
-      other: 'An exercise needs at least {count} ticked words in one language',
+    // one note over a grouped word list when a group has too few ticked words for its Exercise
+    groupNote: {
+      one: 'An exercise on a group needs at least {count} ticked word in one language.',
+      other: 'An exercise on a group needs at least {count} ticked words in one language.',
     },
     groupTitle: 'Exercise: {name}',
   },
@@ -77,11 +78,12 @@ export const makeExerciseText = defineMessages({
       many: 'Для упражнения нужно хотя бы {count} отмеченных слов',
       other: 'Для упражнения нужно хотя бы {count} отмеченного слова',
     },
-    groupTooFewLanguage: {
-      one: 'Для упражнения нужно хотя бы {count} отмеченное слово на одном языке',
-      few: 'Для упражнения нужно хотя бы {count} отмеченных слова на одном языке',
-      many: 'Для упражнения нужно хотя бы {count} отмеченных слов на одном языке',
-      other: 'Для упражнения нужно хотя бы {count} отмеченного слова на одном языке',
+    // one note over a grouped word list when a group has too few ticked words for its Exercise
+    groupNote: {
+      one: 'Для упражнения по группе нужно хотя бы {count} отмеченное слово на одном языке.',
+      few: 'Для упражнения по группе нужно хотя бы {count} отмеченных слова на одном языке.',
+      many: 'Для упражнения по группе нужно хотя бы {count} отмеченных слов на одном языке.',
+      other: 'Для упражнения по группе нужно хотя бы {count} отмеченного слова на одном языке.',
     },
     groupTitle: 'Упражнение: {name}',
   },
@@ -115,9 +117,10 @@ export const makeExerciseText = defineMessages({
       one: 'Un exercice demande au moins {count} mot coché',
       other: 'Un exercice demande au moins {count} mots cochés',
     },
-    groupTooFewLanguage: {
-      one: 'Un exercice demande au moins {count} mot coché dans une même langue',
-      other: 'Un exercice demande au moins {count} mots cochés dans une même langue',
+    // one note over a grouped word list when a group has too few ticked words for its Exercise
+    groupNote: {
+      one: 'Un exercice sur un groupe demande au moins {count} mot coché dans une même langue.',
+      other: 'Un exercice sur un groupe demande au moins {count} mots cochés dans une même langue.',
     },
     groupTitle: 'Exercice : {name}',
   },
@@ -151,9 +154,11 @@ export const makeExerciseText = defineMessages({
       one: 'Eine Übung braucht mindestens {count} angehaktes Wort',
       other: 'Eine Übung braucht mindestens {count} angehakte Wörter',
     },
-    groupTooFewLanguage: {
-      one: 'Eine Übung braucht mindestens {count} angehaktes Wort in derselben Sprache',
-      other: 'Eine Übung braucht mindestens {count} angehakte Wörter in derselben Sprache',
+    // one note over a grouped word list when a group has too few ticked words for its Exercise
+    groupNote: {
+      one: 'Eine Übung zu einer Gruppe braucht mindestens {count} angehaktes Wort in derselben Sprache.',
+      other:
+        'Eine Übung zu einer Gruppe braucht mindestens {count} angehakte Wörter in derselben Sprache.',
     },
     groupTitle: 'Übung: {name}',
   },
@@ -190,9 +195,11 @@ export const makeExerciseText = defineMessages({
       one: 'Un ejercicio necesita al menos {count} palabra marcada',
       other: 'Un ejercicio necesita al menos {count} palabras marcadas',
     },
-    groupTooFewLanguage: {
-      one: 'Un ejercicio necesita al menos {count} palabra marcada en un mismo idioma',
-      other: 'Un ejercicio necesita al menos {count} palabras marcadas en un mismo idioma',
+    // one note over a grouped word list when a group has too few ticked words for its Exercise
+    groupNote: {
+      one: 'Un ejercicio sobre un grupo necesita al menos {count} palabra marcada en un mismo idioma.',
+      other:
+        'Un ejercicio sobre un grupo necesita al menos {count} palabras marcadas en un mismo idioma.',
     },
     groupTitle: 'Ejercicio: {name}',
   },
@@ -229,9 +236,11 @@ export const makeExerciseText = defineMessages({
       one: 'Um exercício precisa de pelo menos {count} palavra marcada',
       other: 'Um exercício precisa de pelo menos {count} palavras marcadas',
     },
-    groupTooFewLanguage: {
-      one: 'Um exercício precisa de pelo menos {count} palavra marcada na mesma língua',
-      other: 'Um exercício precisa de pelo menos {count} palavras marcadas na mesma língua',
+    // one note over a grouped word list when a group has too few ticked words for its Exercise
+    groupNote: {
+      one: 'Um exercício sobre um grupo precisa de pelo menos {count} palavra marcada na mesma língua.',
+      other:
+        'Um exercício sobre um grupo precisa de pelo menos {count} palavras marcadas na mesma língua.',
     },
     groupTitle: 'Exercício: {name}',
   },
@@ -268,9 +277,11 @@ export const makeExerciseText = defineMessages({
       one: 'Un esercizio richiede almeno {count} parola spuntata',
       other: 'Un esercizio richiede almeno {count} parole spuntate',
     },
-    groupTooFewLanguage: {
-      one: 'Un esercizio richiede almeno {count} parola spuntata nella stessa lingua',
-      other: 'Un esercizio richiede almeno {count} parole spuntate nella stessa lingua',
+    // one note over a grouped word list when a group has too few ticked words for its Exercise
+    groupNote: {
+      one: 'Un esercizio su un gruppo richiede almeno {count} parola spuntata nella stessa lingua.',
+      other:
+        'Un esercizio su un gruppo richiede almeno {count} parole spuntate nella stessa lingua.',
     },
     groupTitle: 'Esercizio: {name}',
   },

@@ -1701,6 +1701,7 @@ pre.source {
   color: var(--accent-text);
 }
 .word-group-note {
+  margin: 0 0 10px;
   font-size: 13px;
 }
 .word-group-exercise::before {
