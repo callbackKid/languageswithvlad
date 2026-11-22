@@ -1892,6 +1892,13 @@ pre.source {
   gap: 10px 16px;
   margin-top: 16px;
 }
+/* Shuffle reads at the size of the pause choices beside it */
+.listen-settings .check {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+}
 
 .kbd {
   font-size: 12px;
