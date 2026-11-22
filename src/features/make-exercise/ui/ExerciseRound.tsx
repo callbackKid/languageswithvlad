@@ -23,10 +23,13 @@ export default function ExerciseRound({
   exercise,
   onClose,
   onAnother,
+  closeLabel,
 }: {
   exercise: MadeExercise;
   onClose: () => void;
   onAnother?: () => void;
+  // the way out's name: Close by default, Back to words when the round was opened from a word list
+  closeLabel?: string;
 }) {
   const { t } = useTranslation(makeExerciseText);
   const commonText = useTranslation(common);
@@ -74,7 +77,7 @@ export default function ExerciseRound({
     <ExerciseHead
       title={exercise.title || t('title')}
       onClose={onClose}
-      closeLabel={commonText.t('close')}
+      closeLabel={closeLabel ?? commonText.t('close')}
     />
   );
   if (!question)

@@ -18,6 +18,7 @@ export default function RoundLoader({
   waiting,
   load,
   onClose,
+  closeLabel,
 }: {
   // the heading while it loads; the round then shows its own title
   title: string;
@@ -26,6 +27,8 @@ export default function RoundLoader({
   waiting: string;
   load: () => Promise<MadeExercise>;
   onClose: () => void;
+  // the way out's name, when not Close (see ExerciseRound)
+  closeLabel?: string;
 }) {
   const commonText = useTranslation(common);
   // counts the requests: each change asks Claude for a new round
@@ -68,10 +71,22 @@ export default function RoundLoader({
     setAttempt((previous) => previous + 1);
   }
 
-  if (exercise) return <ExerciseRound exercise={exercise} onClose={onClose} onAnother={again} />;
+  if (exercise)
+    return (
+      <ExerciseRound
+        exercise={exercise}
+        onClose={onClose}
+        onAnother={again}
+        closeLabel={closeLabel}
+      />
+    );
   return (
     <div className="ex made-exercise">
-      <ExerciseHead title={title} onClose={onClose} closeLabel={commonText.t('close')} />
+      <ExerciseHead
+        title={title}
+        onClose={onClose}
+        closeLabel={closeLabel ?? commonText.t('close')}
+      />
       {error ? (
         <div className="note err" role="alert">
           <p>{error}</p>

@@ -34,7 +34,7 @@ export default function GroupExercise({
         <ExerciseHead
           title={t('groupTitle', { name })}
           onClose={onClose}
-          closeLabel={commonText.t('close')}
+          closeLabel={commonText.t('backToWords')}
         />
         <div className="note err" role="alert">
           <p>{t('groupTooFew', { count: MIN_GROUP_WORDS })}</p>
@@ -62,6 +62,8 @@ export default function GroupExercise({
         )
       }
       onClose={onClose}
+      // opened from a word list, like the list's other exercises
+      closeLabel={commonText.t('backToWords')}
     />
   );
 }
