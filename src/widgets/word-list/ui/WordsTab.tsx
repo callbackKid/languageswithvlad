@@ -30,16 +30,27 @@ import { WordQuiz } from '@/features/quiz';
 import { Star } from '@/features/star-word';
 import { useTranslationLanguage } from '@/shared/config';
 import { common, exercises, useTranslation } from '@/shared/i18n';
-import { canSpeak } from '@/shared/lib/speech';
+import { canSpeak, unlockSpeech } from '@/shared/lib/speech';
 import { downloadText } from '@/shared/lib/util';
 import Speak from '@/shared/ui/Speak';
 
 import { groupWords, useWordGroups } from '../model/wordGroups';
 import Flashcards from './Flashcards';
+import Listen from './Listen';
 import Match, { type MatchPair } from './Match';
 import WordBlitz from './WordBlitz';
 
-type Exercise = null | 'quiz' | 'cards' | 'match' | 'syn' | 'gap' | 'blitz' | 'dictation' | 'group';
+type Exercise =
+  | null
+  | 'quiz'
+  | 'cards'
+  | 'match'
+  | 'syn'
+  | 'gap'
+  | 'blitz'
+  | 'dictation'
+  | 'group'
+  | 'listen';
 
 // The mark of a key word of the lesson (★ in the document).
 export function KeyBadge() {
@@ -209,6 +220,7 @@ export default function WordsTab({
     return (
       <GroupExercise key={run} words={groupRound.words} name={groupRound.name} onClose={close} />
     );
+  if (exercise === 'listen') return <Listen key={run} words={picked} onClose={close} />;
   if (exercise === 'blitz')
     return <WordBlitz key={run} words={picked} onClose={close} onRestart={() => start('blitz')} />;
 
@@ -282,6 +294,20 @@ export default function WordsTab({
             onClick={() => start('dictation')}
           >
             {t('dictation')}
+          </button>
+        )}
+        {canSpeak && (
+          <button
+            type="button"
+            className="btn"
+            disabled={picked.length < 1}
+            onClick={() => {
+              // on the tap itself, so an iPhone lets the read-through speak
+              unlockSpeech();
+              start('listen');
+            }}
+          >
+            {t('listen')}
           </button>
         )}
         <span className="hint">{t('picked', { picked: picked.length, total: shown.length })}</span>

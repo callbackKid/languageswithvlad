@@ -101,6 +101,8 @@ export const tutorial = defineMessages({
       'The words are sorted into groups by meaning, such as food or time. Choose a group next to <b>Filter words</b> to see only its words: the exercises then use only them. <btn>Exercise</btn> next to a group’s name makes 15 mixed questions by Claude on its ticked words.',
     'lessons.tip9':
       'On a computer, the two round buttons at the start of the lesson list show it as a row above the lesson instead of a column, and fold it away when you need the room. The app remembers both.',
+    'lessons.tip10':
+      '<b>Listen</b> reads the ticked words aloud: each word, a pause to say it back, then its translation. Choose the pause (1–5 seconds) and <b>Shuffle</b> on its screen; keep the screen on while it plays.',
     'lessons.mock': 'the Words tab of a lesson',
 
     'verbs.title': 'Verbs',
@@ -364,6 +366,8 @@ export const tutorial = defineMessages({
       'Слова разделены на группы по смыслу, например еда или время. Выберите группу рядом с <b>Найти слово</b>, чтобы видеть только её слова: упражнения тогда будут только по ним. По кнопке <btn>Упражнение</btn> рядом с названием группы Claude составит 15 вопросов разных типов по её отмеченным словам.',
     'lessons.tip9':
       'На компьютере две круглые кнопки в начале списка уроков выстраивают его в ряд над уроком вместо колонки сбоку и сворачивают его, когда вам нужно больше места. Приложение запоминает и то и другое.',
+    'lessons.tip10':
+      '<b>Прослушивание</b> читает отмеченные слова вслух: слово, пауза, чтобы его повторить, затем перевод. На экране упражнения выберите паузу (1–5 секунд) и «Вперемешку»; не выключайте экран, пока идёт чтение.',
     'lessons.mock': 'вкладка «Слова» в уроке',
 
     'verbs.title': 'Глаголы',
@@ -625,6 +629,8 @@ export const tutorial = defineMessages({
       'Les mots sont classés en groupes par sens, par exemple la nourriture ou le temps. Choisissez un groupe à côté de <b>Filtrer les mots</b> pour ne voir que ses mots : les exercices n’utilisent alors qu’eux. À côté du nom d’un groupe, <btn>Exercice</btn> fait écrire à Claude 15 questions variées sur ses mots cochés.',
     'lessons.tip9':
       'Sur ordinateur, les deux boutons ronds au début de la liste des leçons l’affichent sur une ligne au-dessus de la leçon plutôt qu’en colonne, et la replient quand vous avez besoin de place. L’application retient les deux choix.',
+    'lessons.tip10':
+      '<b>Écoute</b> lit à voix haute les mots cochés : chaque mot, une pause pour le répéter, puis sa traduction. Sur l’écran de l’exercice, choisissez la pause (1 à 5 secondes) et « Mélanger » ; gardez l’écran allumé pendant la lecture.',
     'lessons.mock': 'l’onglet Mots d’une leçon',
 
     'verbs.title': 'Verbes',
@@ -894,6 +900,8 @@ export const tutorial = defineMessages({
       'Die Wörter sind nach Bedeutung in Gruppen sortiert, etwa Essen oder Zeit. Wähle neben <b>Wörter filtern</b> eine Gruppe, um nur ihre Wörter zu sehen: Die Übungen verwenden dann nur diese. <btn>Übung</btn> neben dem Namen einer Gruppe lässt Claude 15 gemischte Fragen zu ihren angehakten Wörtern schreiben.',
     'lessons.tip9':
       'Am Computer zeigen die zwei runden Knöpfe am Anfang der Lektionsliste sie als Reihe über der Lektion statt als Spalte und klappen sie ein, wenn du den Platz brauchst. Die App merkt sich beides.',
+    'lessons.tip10':
+      '<b>Anhören</b> liest die angehakten Wörter vor: jedes Wort, eine Pause zum Nachsprechen, dann seine Übersetzung. Auf dem Bildschirm der Übung wählst du die Pause (1–5 Sekunden) und „Mischen“; lass den Bildschirm an, solange vorgelesen wird.',
     'lessons.mock': 'der Tab Wörter einer Lektion',
 
     'verbs.title': 'Verben',
@@ -1157,6 +1165,8 @@ export const tutorial = defineMessages({
       'Las palabras están ordenadas en grupos por significado, como la comida o el tiempo. Elige un grupo junto a <b>Filtrar palabras</b> para ver solo sus palabras: los ejercicios usarán solo esas. <btn>Ejercicio</btn>, junto al nombre de un grupo, pide a Claude 15 preguntas variadas sobre sus palabras marcadas.',
     'lessons.tip9':
       'En el ordenador, los dos botones redondos al principio de la lista de lecciones la muestran en fila encima de la lección en lugar de en columna, y la pliegan cuando necesitas espacio. La aplicación recuerda ambas cosas.',
+    'lessons.tip10':
+      '<b>Escuchar</b> lee en voz alta las palabras marcadas: cada palabra, una pausa para repetirla y luego su traducción. En la pantalla del ejercicio, elige la pausa (1–5 segundos) y «Mezclar»; mantén la pantalla encendida durante la lectura.',
     'lessons.mock': 'la pestaña Palabras de una lección',
 
     'verbs.title': 'Verbos',
@@ -1423,6 +1433,8 @@ export const tutorial = defineMessages({
       'As palavras estão organizadas em grupos por significado, como a comida ou o tempo. Escolha um grupo ao lado de <b>Filtrar palavras</b> para ver só as palavras dele: os exercícios passam a usar só essas. <btn>Exercício</btn>, ao lado do nome de um grupo, pede ao Claude 15 perguntas variadas sobre as palavras marcadas desse grupo.',
     'lessons.tip9':
       'No computador, os dois botões redondos no início da lista de lições mostram-na em fila por cima da lição em vez de em coluna, e recolhem-na quando precisar de espaço. A aplicação lembra-se de ambas as opções.',
+    'lessons.tip10':
+      '<b>Ouvir</b> lê em voz alta as palavras marcadas: cada palavra, uma pausa para a repetir e depois a tradução. No ecrã do exercício, escolha a pausa (1–5 segundos) e «Baralhar»; mantenha o ecrã ligado durante a leitura.',
     'lessons.mock': 'o separador Palavras de uma lição',
 
     'verbs.title': 'Verbos',
@@ -1688,6 +1700,8 @@ export const tutorial = defineMessages({
       'Le parole sono divise in gruppi per significato, come il cibo o il tempo. Scegli un gruppo accanto a <b>Filtra le parole</b> per vedere solo le sue parole: gli esercizi useranno solo quelle. <btn>Esercizio</btn>, accanto al nome di un gruppo, chiede a Claude 15 domande di vario tipo sulle sue parole spuntate.',
     'lessons.tip9':
       'Sul computer, i due pulsanti rotondi all’inizio dell’elenco delle lezioni lo mostrano in fila sopra la lezione invece che in colonna, e lo nascondono quando ti serve spazio. L’app ricorda entrambe le scelte.',
+    'lessons.tip10':
+      '<b>Ascolto</b> legge ad alta voce le parole spuntate: ogni parola, una pausa per ripeterla, poi la traduzione. Nella schermata dell’esercizio scegli la pausa (1–5 secondi) e «Mescola»; tieni lo schermo acceso durante la lettura.',
     'lessons.mock': 'la scheda Parole di una lezione',
 
     'verbs.title': 'Verbi',

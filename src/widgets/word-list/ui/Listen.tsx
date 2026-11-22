@@ -1,0 +1,148 @@
+import { useEffect, useState } from 'react';
+
+import { type Word } from '@/entities/word';
+import { useTranslationLanguage } from '@/shared/config';
+import { common, exercises, useTranslation } from '@/shared/i18n';
+import { speakAndWait, stopSpeaking, unlockSpeech } from '@/shared/lib/speech';
+import { shuffle } from '@/shared/lib/util';
+import ExerciseHead from '@/shared/ui/ExerciseHead';
+
+import { LISTEN_PAUSES, type ListenPause, readListenPause, saveListenPause } from '../model/listen';
+
+/** The ticked words read aloud one by one: the word in the language learned, a pause to say it
+    back, its translation, another pause, then the next word. Nothing is graded. */
+export default function Listen({ words, onClose }: { words: Word[]; onClose: () => void }) {
+  const { t } = useTranslation(exercises);
+  const commonText = useTranslation(common);
+  const translationOf = useTranslationLanguage();
+  const [order, setOrder] = useState(words);
+  const [isShuffled, setShuffled] = useState(false);
+  const [index, setIndex] = useState(0);
+  // what is being read: the word, then its translation
+  const [phase, setPhase] = useState<'word' | 'translation'>('word');
+  const [isPaused, setPaused] = useState(false);
+  const [pause, setPause] = useState<ListenPause>(readListenPause);
+
+  const word = order[index];
+  const language = word?.language ?? 'fr';
+  const translation = translationOf(language);
+
+  // reads what is due, waits the pause, then moves on; stopped by Pause, Next, ✕ or a new pause
+  useEffect(() => {
+    if (!word || isPaused) return;
+    let alive = true;
+    let timer = 0;
+    const read =
+      phase === 'word' ? speakAndWait(word.fr, language) : speakAndWait(word.ru, translation);
+    void read
+      .then(
+        () =>
+          new Promise<void>((resolve) => {
+            timer = window.setTimeout(resolve, pause * 1000);
+          })
+      )
+      .then(() => {
+        if (!alive) return;
+        if (phase === 'word' && word.ru) setPhase('translation');
+        else {
+          setPhase('word');
+          setIndex((previous) => previous + 1);
+        }
+      });
+    return () => {
+      alive = false;
+      window.clearTimeout(timer);
+      stopSpeaking();
+    };
+  }, [word, phase, isPaused, pause, language, translation]);
+
+  function goTo(position: number) {
+    setIndex(position);
+    setPhase('word');
+  }
+  function toggleShuffle() {
+    const shuffled = !isShuffled;
+    setShuffled(shuffled);
+    setOrder(shuffled ? shuffle(words) : words);
+    goTo(0);
+  }
+  function choosePause(chosen: ListenPause) {
+    setPause(chosen);
+    saveListenPause(chosen);
+  }
+  function listenAgain() {
+    unlockSpeech();
+    setPaused(false);
+    goTo(0);
+  }
+
+  const settings = (
+    <div className="listen-settings">
+      <span className="hint" id="listen-pause-label">
+        {t('listenPause')}
+      </span>
+      <span className="seg" role="group" aria-labelledby="listen-pause-label">
+        {LISTEN_PAUSES.map((option) => (
+          <button
+            key={option}
+            type="button"
+            aria-pressed={pause === option}
+            onClick={() => choosePause(option)}
+          >
+            {t('seconds', { count: option })}
+          </button>
+        ))}
+      </span>
+      <label className="check">
+        <input type="checkbox" checked={isShuffled} onChange={toggleShuffle} />
+        {t('shuffle')}
+      </label>
+    </div>
+  );
+
+  const head = <ExerciseHead title={t('listen')} onClose={onClose} />;
+  if (!word)
+    return (
+      <div className="ex listen">
+        {head}
+        <p className="score">{t('listenDone', { count: order.length })}</p>
+        {settings}
+        <div className="row-actions">
+          <button type="button" className="btn primary" onClick={listenAgain}>
+            {t('listenRestart')}
+          </button>
+        </div>
+      </div>
+    );
+
+  return (
+    <div className="ex listen">
+      {head}
+      <p className="hint">{t('listenProgress', { current: index + 1, total: order.length })}</p>
+      <div className="listen-card" aria-live="polite">
+        <p className="listen-word" lang={language}>
+          {word.fr}
+        </p>
+        <p className="listen-translation" lang={translation}>
+          {phase === 'translation' ? word.ru : ' '}
+        </p>
+      </div>
+      <div className="row-actions">
+        <button
+          type="button"
+          className="btn primary"
+          onClick={() => {
+            if (isPaused) unlockSpeech();
+            setPaused((previous) => !previous);
+          }}
+        >
+          {isPaused ? t('listenContinue') : t('listenStop')}
+        </button>
+        <button type="button" className="btn" onClick={() => goTo(index + 1)}>
+          {commonText.t('next')}
+        </button>
+      </div>
+      {settings}
+    </div>
+  );
+}

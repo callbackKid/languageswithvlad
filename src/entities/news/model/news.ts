@@ -53,6 +53,18 @@ export const NEWS: NewsDay[] = [
       {
         kind: 'new',
         text: {
+          en: 'Listen, next to Dictation in every word list: the ticked words are read aloud one by one, each followed by its translation, with a pause of 1 to 5 seconds to say them back.',
+          ru: '«Прослушивание» рядом с кнопкой «Диктант» в каждом списке слов: отмеченные слова читаются вслух по одному, после каждого — его перевод, а между ними пауза от 1 до 5 секунд, чтобы повторить вслух.',
+          fr: '« Écoute », à côté de « Dictée » dans chaque liste de mots : les mots cochés sont lus à voix haute un par un, chacun suivi de sa traduction, avec une pause de 1 à 5 secondes pour les répéter.',
+          de: '„Anhören“, neben „Diktat“ in jeder Wortliste: Die angehakten Wörter werden einzeln vorgelesen, jedes gefolgt von seiner Übersetzung, mit einer Pause von 1 bis 5 Sekunden zum Nachsprechen.',
+          es: '«Escuchar», junto a «Dictado» en cada lista de palabras: las palabras marcadas se leen en voz alta una a una, cada una seguida de su traducción, con una pausa de 1 a 5 segundos para repetirlas.',
+          pt: '«Ouvir», ao lado de «Ditado» em cada lista de palavras: as palavras marcadas são lidas em voz alta uma a uma, cada uma seguida da sua tradução, com uma pausa de 1 a 5 segundos para as repetir.',
+          it: '«Ascolto», accanto a «Dettato» in ogni elenco di parole: le parole spuntate vengono lette ad alta voce una alla volta, ciascuna seguita dalla sua traduzione, con una pausa da 1 a 5 secondi per ripeterle.',
+        },
+      },
+      {
+        kind: 'new',
+        text: {
           en: 'On a computer, the lesson list in Lesson history can now be a row above the lesson instead of a column beside it, and it folds away like the main menu when the lesson needs the room.',
           ru: 'На компьютере список уроков в «Истории уроков» теперь можно выстроить в ряд над уроком вместо колонки сбоку, а когда уроку нужно больше места, он сворачивается, как главное меню.',
           fr: 'Sur ordinateur, la liste des leçons de l’« Historique des leçons » peut maintenant s’afficher sur une ligne au-dessus de la leçon plutôt qu’en colonne à côté, et elle se replie comme le menu principal quand la leçon a besoin de place.',
