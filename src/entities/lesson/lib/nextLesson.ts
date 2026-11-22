@@ -111,11 +111,12 @@ export function parseNextLesson(text: string, now = new Date()): NextLesson | 'u
   const match = afterLabel.match(DATE_TIME);
   if (!match) return 'unconfirmed';
   const [, dayText, monthText, yearText, hourText, minuteText, rest] = match;
-  const day = Number(dayText),
-    month = Number(monthText),
+  const month = Number(monthText),
     // "22.11.26" is 2026
     year = (yearText ?? '').length === 2 ? 2000 + Number(yearText) : Number(yearText);
-  if (month < 1 || month > 12 || day < 1 || day > 31) return 'unconfirmed';
+  if (month < 1 || month > 12 || Number(dayText) < 1 || Number(dayText) > 31) return 'unconfirmed';
+  // "31.02" is a typo for the end of February, not 3 March, as with a lesson's heading
+  const day = Math.min(Number(dayText), new Date(year, month, 0).getDate());
   const hasTime = hourText !== undefined;
   const hour = hasTime ? Number(hourText) : 0,
     minute = hasTime ? +(minuteText || 0) : 0;
