@@ -39,7 +39,8 @@ export type Params = Record<string, string | number>;
 /* The chosen language lives here and in the browser, so every component sees the same one
    and changing it re-renders them all. */
 const STORAGE_KEY = 'ui-language';
-const isUiLanguage = (value: unknown): value is UiLanguage =>
+// Whether a value is one of the interface languages (a saved or typed one is checked with it).
+export const isUiLanguage = (value: unknown): value is UiLanguage =>
   UI_LANGUAGES.some((language) => language.id === value);
 
 // The browser's language when the app supports it, English otherwise.

@@ -1,6 +1,6 @@
 import { useSyncExternalStore } from 'react';
 
-import { getUiLanguage, UI_LANGUAGES, type UiLanguage } from '@/shared/i18n';
+import { getUiLanguage, isUiLanguage, type UiLanguage } from '@/shared/i18n';
 import { hasSavedKey, load, save } from '@/shared/lib/storage';
 
 import {
@@ -82,9 +82,6 @@ const KEY = 'settings';
     it could be chosen (their lessons are prepared in Russian), their interface language otherwise. */
 export const defaultTranslateTo = (hasHistory: boolean, uiLanguage: UiLanguage): UiLanguage =>
   hasHistory ? 'ru' : uiLanguage;
-
-const isUiLanguage = (value: unknown): value is UiLanguage =>
-  UI_LANGUAGES.some((language) => language.id === value);
 
 /** Older or hand-edited values never break the app: anything unknown falls back to the default.
     missingTranslateTo is used when no valid translation language is saved. */
