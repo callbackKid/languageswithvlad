@@ -105,8 +105,8 @@ section 'Styles: colours written out instead of var(--…) (outside the colour v
 awk '/^:root|^\[data-theme|:root\[data-theme/ {inVars=1} inVars && /^}/ {inVars=0; next}
   !inVars && /#[0-9a-fA-F]{3,8}\b|rgba?\(|hsla?\(/ && !/var\(--/ {print "src/app/styles.css:" NR ": " $0}' src/app/styles.css
 
-section 'Styles: breakpoints other than 760px (and 860px for lesson mode)'
-grep -nE '@media[^{]*(max|min)-width' src/app/styles.css | grep -vE '760px|860px' | sed 's|^|src/app/styles.css:|'
+section 'Styles: breakpoints other than 760px (and 860px for lesson mode, 1180px for the top bar)'
+grep -nE '@media[^{]*(max|min)-width' src/app/styles.css | grep -vE '760px|860px|1180px' | sed 's|^|src/app/styles.css:|'
 
 section 'Styles: animations and transitions vs prefers-reduced-motion'
 printf 'animation or transition rules: %s; reduced-motion blocks: %s (each animated part needs one)\n' \

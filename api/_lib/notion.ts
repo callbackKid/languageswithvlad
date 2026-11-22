@@ -129,7 +129,9 @@ function rowTitle(row: Page, position: number): string {
   const start = properties.find((property) => property.type === 'date' && property.date?.start)
     ?.date?.start;
   if (!start) return title;
-  const [year, month, day] = start.slice(0, 10).split('-').map(Number);
+  // Notion gives "2026-11-22", or "2026-11-22T10:00:00.000+02:00" when the date has a time
+  const [date = ''] = start.split('T');
+  const [year, month, day] = date.split('-').map(Number);
   if (!year || !month || !day) return title;
   return `${pad(day)}.${pad(month)}.${year} ${position + 1} Leçon${title ? `\n${title}` : ''}`;
 }

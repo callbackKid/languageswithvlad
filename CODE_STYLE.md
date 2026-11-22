@@ -99,7 +99,7 @@ Prettier decides: 100 columns, single quotes, semicolons, trailing commas where 
 ## Styles (`src/app/styles.css`)
 
 - The file is divided into titled sections: the colour variables, Base, Shared pieces, App shell, then one section per page. A new rule goes into the section of the page or part it styles, next to the rules for the same element; a selector is defined once.
-- Rules for narrow screens and for reduced motion sit at the end of their section, not at the end of the file. There is one phone breakpoint, `max-width: 760px` (lesson mode also folds its two columns at 860px).
+- Rules for narrow screens and for reduced motion sit at the end of their section, not at the end of the file. There is one phone breakpoint, `max-width: 760px`. Two others are allowed, each for one layout: lesson mode folds its two columns at 860px, and the top bar gives the next lesson a row of its own at 1180px.
 - Colours, fonts and radii only through the CSS variables at the top (`var(--accent)`, `var(--line)`…), so both themes work. The dark values are defined once, under `:root[data-theme='dark']`; `settings.ts` and the small script in `index.html` set `data-theme`.
 - Check every change in light and dark, and at phone width (390 px): nothing may scroll sideways.
 - Class names are lowercase with hyphens, named after what the element is (`lesson-link`, `next-lesson-widget`), not how it looks. A class shared by several pages has a general name (`form-field`), not the name of the first page that used it.

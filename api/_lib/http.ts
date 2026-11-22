@@ -75,9 +75,11 @@ export const text = (value: unknown, maxLength: number): string =>
 // CEFR levels, with A0 for a complete beginner. Keep in step with LEVELS in src/shared/config/settings.ts.
 export const LEVELS = ['A0', 'A1', 'A2', 'B1', 'B2', 'C1', 'C2'] as const;
 export type Level = (typeof LEVELS)[number];
+// a level's code is two characters ("A0"…"C2")
+const LEVEL_LENGTH = 2;
 // The level a request asks for, or null when it isn't one.
 export const asLevel = (value: unknown): Level | null => {
-  const level = text(value, 2).toUpperCase();
+  const level = text(value, LEVEL_LENGTH).toUpperCase();
   return LEVELS.includes(level as Level) ? (level as Level) : null;
 };
 
