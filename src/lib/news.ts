@@ -51,6 +51,19 @@ export const NEWS: NewsDay[] = [
     date: '2026-11-22',
     items: [
       {
+        kind: 'fixed',
+        languages: ['fr'],
+        text: {
+          en: 'Dictation: a French adjective whose masculine and feminine sound the same (grec, grecque) now says which form to write, so a right spelling of the other form is no longer a mistake out of nowhere.',
+          ru: 'Диктант: если у французского прилагательного мужской и женский род звучат одинаково (grec, grecque), теперь подсказывается, какую форму написать, так что правильно написанная другая форма больше не становится ошибкой на ровном месте.',
+          fr: 'Dictée : quand un adjectif français se prononce de la même façon au masculin et au féminin (grec, grecque), la consigne indique maintenant quelle forme écrire ; l’autre forme, même bien orthographiée, n’est donc plus une erreur sortie de nulle part.',
+          de: 'Diktat: Bei einem französischen Adjektiv, dessen maskuline und feminine Form gleich klingen (grec, grecque), steht jetzt dabei, welche Form du schreiben sollst, sodass die richtig geschriebene andere Form nicht mehr aus heiterem Himmel als Fehler zählt.',
+          es: 'Dictado: cuando un adjetivo francés suena igual en masculino y en femenino (grec, grecque), ahora se indica qué forma escribir, así que escribir bien la otra forma ya no es un error salido de la nada.',
+          pt: 'Ditado: quando um adjetivo francês soa igual no masculino e no feminino (grec, grecque), agora indica-se que forma escrever, por isso a outra forma, bem escrita, já não conta como um erro sem razão aparente.',
+          it: 'Dettato: quando un aggettivo francese suona uguale al maschile e al femminile (grec, grecque), ora viene indicato quale forma scrivere, quindi scrivere correttamente l’altra forma non è più un errore venuto dal nulla.',
+        },
+      },
+      {
         kind: 'better',
         text: {
           en: 'In an exercise made with Create an exercise, the Russian translation of a sentence no longer gives the answer away: it stays folded under Translation until you open it or give your answer.',

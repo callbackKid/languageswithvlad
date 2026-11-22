@@ -146,6 +146,27 @@ function distractors(word: Word, pool: Word[], side: 'fr' | 'ru'): string[] | nu
   return null;
 }
 
+// The form of an adjective a dictation asks for, when its forms sound alike.
+export type DictationForm = 'masculine' | 'feminine';
+
+/** For a French adjective, the form to write: its masculine and feminine often sound the same
+    (grec, grecque; bleu, bleue), so the dictation says which one is meant. It is read from the
+    ending of the Russian translation (греческий, греческая), which is right even when the teacher
+    wrote the feminine. null when it can't be told (a Russian plural doesn't say which gender) or
+    doesn't matter. */
+export function dictationForm(word: Word): DictationForm | null {
+  if ((word.language ?? 'fr') !== 'fr' || word.kind !== 'adjective') return null;
+  // both forms written ("grec, grecque"): the dictation reads them both
+  if (/[,/]/.test(word.fr)) return null;
+  const [first = ''] = word.ru
+    .trim()
+    .toLowerCase()
+    .split(/[\s,;(]/);
+  if (/(ая|яя)$/.test(first)) return 'feminine';
+  if (/(ый|ий|ой)$/.test(first)) return 'masculine';
+  return null;
+}
+
 // Every word read aloud once, to be typed.
 export function buildDictation(targets: Word[]): QuizItem[] {
   return shuffle(targets).map((word) => ({ kind: 'listen' as const, word }));

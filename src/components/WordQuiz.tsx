@@ -5,7 +5,7 @@ import { common, learning } from '../i18n/messages/common';
 import { exercises } from '../i18n/messages/exercises';
 import { grade } from '../lib/grade';
 import { recordForm, recordWord } from '../lib/progress';
-import type { QuizItem } from '../lib/quiz';
+import { dictationForm, type QuizItem } from '../lib/quiz';
 import { speak } from '../lib/speech';
 import { type Language, languageOfTense } from '../lib/types';
 import ExerciseHead from './ExerciseHead';
@@ -201,6 +201,8 @@ export default function WordQuiz({
   // a verb form's tense names its language; words carry the language of their lesson
   const language =
     question.kind === 'form' ? languageOfTense(question.form.t) : (question.word.language ?? 'fr');
+  // a dictated adjective whose forms sound alike says which form to write
+  const form = question.kind === 'listen' ? dictationForm(question.word) : null;
   const answer =
     question.kind === 'form'
       ? `${question.form.p} ${question.form.f}`
@@ -341,7 +343,9 @@ export default function WordQuiz({
               {autoSpeak ? tx('listenAgain') : tx('listenFirst')}
             </button>
           </p>
-          <p className="ru-line">{tx('writeWhatYouHear')}</p>
+          <p className="ru-line">
+            {form ? tx(`writeWhatYouHearForm.${form}`) : tx('writeWhatYouHear')}
+          </p>
         </>
       ) : (
         <>

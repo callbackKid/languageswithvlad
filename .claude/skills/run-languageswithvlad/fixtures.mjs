@@ -49,6 +49,7 @@ function lessonText(scenario) {
     'la boulangerie — пекарня',
     'le pain — хлеб',
     'le matin — утро',
+    'grec — греческий',
     'https://meet.google.com/abc-defg-hij',
     'Devoirs: verbes se lever, aimer — présent; mots de la leçon 1; 5 phrases au passé composé',
     `le cours prochain: ${day(next)} ${time(next)}`,
@@ -267,6 +268,8 @@ const ANALYSIS = {
     { fr: 'la boulangerie', ru: 'пекарня', tr: '', kind: 'noun', added: false },
     { fr: 'le pain', ru: 'хлеб', tr: '', kind: 'noun', added: false },
     { fr: 'le matin', ru: 'утро', tr: '', kind: 'noun', added: false },
+    // an adjective whose feminine sounds the same (grecque): the dictation names the form
+    { fr: 'grec', ru: 'греческий', tr: '', kind: 'adjective', added: false },
   ],
   verbs: [
     { inf: 'se lever', ru: 'вставать' },
