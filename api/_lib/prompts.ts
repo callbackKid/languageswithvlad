@@ -465,7 +465,7 @@ Reply with only a JSON object: {"language": ${LANGUAGE_CODES}, "corrected": stri
 }
 
 /** Homework made from one lesson: the parts Claude writes. The app builds the "Devoirs:" block
-    around them (src/lib/makeHomework.ts), in a form its homework checklist reads. */
+    around them (src/features/make-homework/model/makeHomework.ts), in a form its homework checklist reads. */
 export function homeworkPrompt({
   body,
   keyWords,

@@ -1,12 +1,12 @@
 import { useState } from 'react';
 
 import { type Lesson } from '@/entities/lesson';
+import { type DocTarget } from '@/features/add-to-doc';
 import { useTranslation } from '@/shared/i18n/core';
 import { paper } from '@/shared/i18n/messages/paper';
 import { load, save } from '@/shared/lib/storage';
 import PageHead from '@/shared/ui/PageHead';
 
-import { type DocTarget } from './AddToDoc';
 import HandwrittenNotes from './HandwrittenNotes';
 import PhotoWords from './PhotoWords';
 

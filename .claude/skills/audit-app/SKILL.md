@@ -39,7 +39,7 @@ Grading, conjugation, homework and date parsing are plain functions in `src/enti
 Then read, in this order, looking for where one language was handled and the others forgotten (French was first; German, Spanish, Italian, Portuguese came later): `grade.ts`, `quiz.ts`, `progress.ts`, `tenses.ts`, `bank.ts`, `parse.ts`, `homework.ts`, `nextLesson.ts`, `warmUp.ts`, `report.ts`, `makeHomework.ts`. Grep for leftovers:
 
 ```bash
-grep -rn "'fr'\|French" src/lib src/components --include='*.ts' --include='*.tsx' | grep -v i18n
+grep -rn "'fr'\|French" src --include='*.ts' --include='*.tsx' | grep -v i18n
 ```
 
 Also: keys that ignore the language (`wordKey`, the bank's dedupe by `inf`: `ser`, `ir`, `partir`, `casa` exist in several languages), cached values read without a check (`load<T>` used as is), and comments that sit above the wrong function.
@@ -89,7 +89,7 @@ Each block is one rule, with candidates as `file:line`; an empty block passed. *
 | REVIEW: URLs, busy states                               | user data in a URL without `encodeURIComponent`; a loading or sending state that an error leaves on                                                                                     |
 | Completeness                                            | a page without `guide`, a section missing from the README Pages table                                                                                                                   |
 
-Then read for the rules no search can judge, file by file in `src/components` and `src/lib`:
+Then read for the rules no search can judge, file by file in `src/` (every layer, and `src/components` and `src/lib` until they are moved):
 
 - **React**: one main component per file; state that could be computed from props or other state; `useMemo` on light work (or missing on the word bank and statistics); every async effect guarded and cleaned up;
 - **Texts**: `—` for an empty value, dates and numbers through `Intl` with the interface locale, `lang={language}` on words in the learned language and `lang="ru"` on Russian, no sentence glued from pieces;
@@ -100,8 +100,8 @@ Then read for the rules no search can judge, file by file in `src/components` an
 Also look for side effects inside state updaters and effects without a late-answer guard:
 
 ```bash
-grep -n -A4 "set[A-Z]\w*((previous" src/components/*.tsx | grep -E "save\(|record|api\.|ObjectURL"
-for f in src/components/*.tsx; do grep -q useEffect $f && grep -q "\.then(\|await " $f && ! grep -q "alive\|AbortController" $f && echo $f; done
+grep -n -A4 "set[A-Z]\w*((previous" $(git ls-files 'src/*.tsx') | grep -E "save\(|record|api\.|ObjectURL"
+for f in $(git ls-files 'src/*.tsx'); do grep -q useEffect $f && grep -q "\.then(\|await " $f && ! grep -q "alive\|AbortController" $f && echo $f; done
 ```
 
 A call next to the `setState` call is fine; one inside the `(previous) => …` function is not.

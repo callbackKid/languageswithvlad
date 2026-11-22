@@ -16,6 +16,10 @@ import {
 } from '@/entities/lesson';
 import { type Conjugation } from '@/entities/verb';
 import { getProgress } from '@/entities/word';
+import { GapFill } from '@/features/gap-fill';
+import { WordQuiz } from '@/features/quiz';
+import { SendToTeacher } from '@/features/send-to-teacher';
+import { WritingTask } from '@/features/writing-task';
 import { isVerbLanguage, languageOfTense, type VerbLanguage } from '@/shared/config/languages';
 import { lessonPath } from '@/shared/config/routes';
 import { useTranslation } from '@/shared/i18n/core';
@@ -25,11 +29,6 @@ import { followLink, hrefFor } from '@/shared/lib/router';
 import { loadTexts, save } from '@/shared/lib/storage';
 import { shuffle } from '@/shared/lib/util';
 import WaitingFact from '@/shared/ui/WaitingFact';
-
-import GapFill from './GapFill';
-import SendToTeacher from './SendToTeacher';
-import WordQuiz from './WordQuiz';
-import WritingTask from './WritingTask';
 
 const ROUND = 10;
 const VERB_FORMS = 12;

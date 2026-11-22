@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 
 import { type Bank, BankNote, type Lesson } from '@/entities/lesson';
 import { isLearned, topMistakes, useProgress, wordKey } from '@/entities/word';
+import { SendToTeacher } from '@/features/send-to-teacher';
 import { isStudied, useSettings } from '@/shared/config/settings';
 import { useTranslation } from '@/shared/i18n/core';
 import { pages } from '@/shared/i18n/messages/pages';
@@ -9,7 +10,6 @@ import { shownTopic } from '@/shared/lib/util';
 import PageHead from '@/shared/ui/PageHead';
 
 import MistakeList from './MistakeList';
-import SendToTeacher from './SendToTeacher';
 
 // Fewer answers than this say too little about a topic to call it weak.
 const MIN_ANSWERS = 4;

@@ -1,15 +1,11 @@
-import {
-  type Bank,
-  buildQuiz,
-  type FormQuestion,
-  type Lesson,
-  pickWords,
-  type QuizItem,
-} from '@/entities/lesson';
-import { isLearned, type Progress, statWord, type Word } from '@/entities/word';
+import { isLearned, type Progress, statWord, type Word } from '@/entities/word/@x/lesson';
 import { languageOfTense, type Tense } from '@/shared/config/languages';
 import { getSettings, isStudied } from '@/shared/config/settings';
 import { startOfDay } from '@/shared/lib/dates';
+
+import { type Bank } from './bank';
+import { buildQuiz, type FormQuestion, pickWords, type QuizItem } from './quiz';
+import { type Lesson } from './types';
 
 // About five minutes of questions.
 export const WARM_UP_QUESTIONS = 12;

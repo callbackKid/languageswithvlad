@@ -5,7 +5,7 @@ import { api } from '@/shared/api';
 import { type UiLanguage } from '@/shared/i18n/core';
 import { loadChecked, save } from '@/shared/lib/storage';
 
-import { normalizeWordGroups } from './parse';
+import { normalizeWordGroups } from './normalize';
 
 /* Words sorted into groups by meaning (Food, Time and dates…) for the word lists of a lesson and
    of Words to learn. Claude names the groups in the interface language. Each word's group is kept

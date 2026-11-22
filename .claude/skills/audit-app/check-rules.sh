@@ -43,7 +43,7 @@ section 'React: external links without rel="noopener noreferrer"'
 search 'target="_blank"' | grep -v 'noopener noreferrer'
 
 section 'React: components that call Claude (api.*) without WaitingFact'
-for file in $(grep -rlE 'api\.(analyze|lessonExtras|grammarPractice|bookExercises|conjugate|photo|discussion|textbook|transcribe|explain|translate|study|makeHomework|checkWriting|gaps)\(' src/components); do
+for file in $(grep -rlE 'api\.(analyze|lessonExtras|grammarPractice|bookExercises|conjugate|photo|discussion|textbook|transcribe|explain|translate|study|makeHomework|checkWriting|gaps)\(' $(git ls-files 'src/*.tsx')); do
   grep -qE 'WaitingFact|waiting=' "$file" || echo "$file"
 done
 
@@ -54,7 +54,7 @@ section 'Storage: saved objects used without a check (load<T>(…) with no norma
 search 'load<[^>]+>\(' | grep -vE 'load<(unknown|string|boolean|number)>|normalize|sanitize|as[A-Z]|Array\.isArray|typeof|function load'
 
 section 'Logic in components: date arithmetic and parsing that belong in src/lib'
-grep -nE 'new RegExp|getFullYear|setDate\(|Date\.UTC|\.normalize\(' src/components/*.tsx
+grep -nE 'new RegExp|getFullYear|setDate\(|Date\.UTC|\.normalize\(' $(git ls-files 'src/*.tsx')
 
 section 'Texts: plurals by hand (count === 1 ? …) in the interface'
 search '(count|length|total|number) === 1 \?' --include='*.tsx'
@@ -140,12 +140,12 @@ section 'REVIEW: user data put into a URL without encodeURIComponent'
 search '(fetch\(|href=\{?|url *=|src=\{?)`[^`]*\$\{' | grep -vE 'encodeURIComponent|\$\{(url|API_URL|BASE_URL)\}'
 
 section 'REVIEW: busy state (loading, sending…) with neither catch nor finally to reset it'
-for file in $(grep -lE "set(State|Loading|Busy|Sending|Saving|Checking)\((true|'loading'|'sending'|'saving'|'checking')\)" src/components/*.tsx); do
+for file in $(grep -lE "set(State|Loading|Busy|Sending|Saving|Checking)\((true|'loading'|'sending'|'saving'|'checking')\)" $(git ls-files 'src/*.tsx')); do
   grep -qE 'finally|catch' "$file" || echo "$file"
 done
 
 section 'Completeness: pages without a guide (PageHead guide=…, the Tutorial card)'
-grep -nE '<PageHead' src/components/*.tsx | grep -v 'guide=' | grep -v 'Tutorial.tsx'
+grep -nE '<PageHead' $(git ls-files 'src/*.tsx') | grep -v 'guide=' | grep -v 'Tutorial.tsx'
 
 section 'Completeness: sections in the menu without a Tutorial card or a README Pages row'
 for path in $(grep -oE "'/[a-z-]+'" src/shared/config/routes.ts | tr -d "'" | sort -u); do

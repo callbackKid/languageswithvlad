@@ -14,10 +14,25 @@ import {
   languageOfLesson,
   type Lesson,
   openCallWindow,
+  previousLesson,
   readAnalysis,
   usePreparedLesson,
+  warmUpRound,
 } from '@/entities/lesson';
 import { getProgress } from '@/entities/word';
+import { AddToDoc, type DocTarget } from '@/features/add-to-doc';
+import { BookImport } from '@/features/import-book';
+import { homeworkLabel } from '@/features/make-homework';
+import { WordQuiz } from '@/features/quiz';
+import {
+  GAME_QUESTIONS,
+  GAME_SECONDS,
+  gameWords,
+  QuizGame,
+  readRecords,
+  RecordsTable,
+} from '@/features/quiz-game';
+import { WritingResult } from '@/features/writing-task';
 import { type BoardServer } from '@/shared/api/boardSync';
 import { lessonPath } from '@/shared/config/routes';
 import { getSettings } from '@/shared/config/settings';
@@ -36,24 +51,11 @@ import CallCard from '@/shared/ui/CallCard';
 import PageHead from '@/shared/ui/PageHead';
 import Speak from '@/shared/ui/Speak';
 
-import { homeworkLabel } from '../lib/makeHomework';
-import { previousLesson, warmUpRound } from '../lib/warmUp';
-import AddToDoc, { type DocTarget } from './AddToDoc';
-import BookImport from './BookImport';
 import Discuss from './Discuss';
 import JitsiCall from './JitsiCall';
 import LessonBoard from './LessonBoard';
 import MakeExercise from './MakeExercise';
-import QuizGame, {
-  GAME_QUESTIONS,
-  GAME_SECONDS,
-  gameWords,
-  readRecords,
-  RecordsTable,
-} from './QuizGame';
-import WordQuiz from './WordQuiz';
 import { KeyBadge } from './WordsTab';
-import { WritingResult } from './WritingTask';
 import ZoomCall from './ZoomCall';
 
 const NAME_KEY = 'call:name';

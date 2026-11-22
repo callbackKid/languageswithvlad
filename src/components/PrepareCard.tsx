@@ -1,13 +1,17 @@
 import { useState } from 'react';
 
-import { type Bank, type Lesson, lessonWords, parseNextLesson } from '@/entities/lesson';
+import {
+  type Bank,
+  type Lesson,
+  lessonWords,
+  parseNextLesson,
+  prepareRound,
+} from '@/entities/lesson';
 import { getProgress } from '@/entities/word';
+import { WordQuiz } from '@/features/quiz';
 import { useTranslation } from '@/shared/i18n/core';
 import { homeCards } from '@/shared/i18n/messages/homeCards';
 import { load, save } from '@/shared/lib/storage';
-
-import { prepareRound } from '../lib/warmUp';
-import WordQuiz from './WordQuiz';
 
 // How long before a lesson the round is offered.
 const AHEAD = 24 * 60 * 60 * 1000;

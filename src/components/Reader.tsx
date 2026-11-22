@@ -1,6 +1,8 @@
 import { type MouseEvent, useEffect, useMemo, useState } from 'react';
 
 import { type Analysis } from '@/entities/lesson';
+import { normalizeWordCard } from '@/entities/word';
+import { CARD_EVENT, cardNote, lookUp, menuPlace, sentenceAround } from '@/features/look-up-word';
 import { api, ApiError } from '@/shared/api';
 import { type Language } from '@/shared/config/languages';
 import { getSettings } from '@/shared/config/settings';
@@ -12,14 +14,8 @@ import PageHead from '@/shared/ui/PageHead';
 import Speak from '@/shared/ui/Speak';
 import WaitingFact from '@/shared/ui/WaitingFact';
 
-import {
-  normalizeReaderText,
-  normalizeStudy,
-  normalizeTranslation,
-  normalizeWordCard,
-} from '../lib/parse';
+import { normalizeReaderText, normalizeStudy, normalizeTranslation } from '../lib/parse';
 import { type ReaderText, type TextStudy } from '../lib/types';
-import { CARD_EVENT, cardNote, lookUp, menuPlace, sentenceAround } from '../lib/wordActions';
 import WordNotesTable from './WordNotesTable';
 import WordsTab from './WordsTab';
 

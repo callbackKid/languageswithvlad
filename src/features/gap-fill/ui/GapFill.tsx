@@ -12,8 +12,8 @@ import { shuffle } from '@/shared/lib/util';
 import ExerciseHead from '@/shared/ui/ExerciseHead';
 import WaitingFact from '@/shared/ui/WaitingFact';
 
-import { normalizeGaps } from '../lib/parse';
-import { type GapItem } from '../lib/types';
+import { normalizeGaps } from '../model/normalize';
+import { type GapItem } from '../model/types';
 
 // Fill the gap with the lesson's words: sentences Claude writes around them.
 export default function GapFill({

@@ -23,7 +23,7 @@ const MAX_SUMMARY_LENGTH = 600;
 const MAX_KEY_WORDS = 20;
 const MAX_KEY_WORD_LENGTH = 80;
 /** Sentences to translate in made homework: what the teacher picks, within the app's range
-    (src/lib/makeHomework.ts). */
+    (src/features/make-homework/model/makeHomework.ts). */
 const MIN_TRANSLATE_SENTENCES = 2;
 const MAX_TRANSLATE_SENTENCES = 8;
 const DEFAULT_TRANSLATE_SENTENCES = 4;
@@ -34,7 +34,7 @@ const MAX_EXERCISE_QUESTIONS = 15;
 const DEFAULT_EXERCISE_QUESTIONS = 8;
 const MAX_GRAMMAR_LENGTH = 200;
 const MAX_EXERCISE_WORDS = 30;
-// words sorted into groups in one request (keep in step with src/lib/wordGroups.ts), each word
+// words sorted into groups in one request (keep in step with src/features/group-words/model/wordGroups.ts), each word
 // and translation this long, and the group names the student's other words already have
 const MAX_GROUP_WORDS = 60;
 const MAX_WORD_LENGTH = 80;

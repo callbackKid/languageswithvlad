@@ -15,7 +15,7 @@ import {
   homeworkLabel,
   MAX_TRANSLATE_SENTENCES,
   MIN_TRANSLATE_SENTENCES,
-} from '../lib/makeHomework';
+} from '../model/makeHomework';
 
 type Step = 'idle' | 'making' | 'review' | 'saving' | 'done';
 

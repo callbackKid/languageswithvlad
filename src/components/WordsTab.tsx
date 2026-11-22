@@ -18,19 +18,18 @@ import {
   type Word,
   wordKey,
 } from '@/entities/word';
+import { Flashcards } from '@/features/flashcards';
+import { GapFill } from '@/features/gap-fill';
+import { groupWords, useWordGroups } from '@/features/group-words';
+import { Match, type MatchPair } from '@/features/match';
+import { WordQuiz } from '@/features/quiz';
+import { Star } from '@/features/star-word';
 import { useTranslation } from '@/shared/i18n/core';
 import { common } from '@/shared/i18n/messages/common';
 import { exercises } from '@/shared/i18n/messages/exercises';
 import { canSpeak } from '@/shared/lib/speech';
 import { downloadText } from '@/shared/lib/util';
 import Speak from '@/shared/ui/Speak';
-
-import { groupWords, useWordGroups } from '../lib/wordGroups';
-import Flashcards from './Flashcards';
-import GapFill from './GapFill';
-import Match, { type MatchPair } from './Match';
-import Star from './Star';
-import WordQuiz from './WordQuiz';
 
 type Exercise = null | 'quiz' | 'cards' | 'match' | 'syn' | 'gap' | 'dictation';
 

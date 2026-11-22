@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import { type Lesson } from '@/entities/lesson';
+import { AddToDoc, type DocTarget } from '@/features/add-to-doc';
 import { api, ApiError } from '@/shared/api';
 import { useTranslation } from '@/shared/i18n/core';
 import { common } from '@/shared/i18n/messages/common';
@@ -12,7 +13,6 @@ import { asFields, asList, load, save } from '@/shared/lib/storage';
 import { hash } from '@/shared/lib/util';
 import WaitingFact from '@/shared/ui/WaitingFact';
 
-import AddToDoc, { type DocTarget } from './AddToDoc';
 import LessonView from './LessonView';
 
 // Where the lesson comes from: photos of handwritten notes, or pages of a textbook PDF.

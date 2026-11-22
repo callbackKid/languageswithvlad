@@ -9,7 +9,7 @@ session=$(jq -r '.session_id // "unknown"' <<<"$input")
 
 changed=$(git status --porcelain 2>/dev/null | cut -c4-)
 grep -qx 'src/entities/news/model/news.ts' <<<"$changed" && exit 0
-visible=$(grep -E '^(src/components/|src/shared/ui/|src/entities/[^/]+/ui/|src/App\.tsx$|src/styles\.css$|src/shared/i18n/messages/)' <<<"$changed")
+visible=$(grep -E '^(src/components/|src/shared/ui/|src/(entities|features|widgets|pages)/[^/]+/ui/|src/App\.tsx$|src/styles\.css$|src/shared/i18n/messages/)' <<<"$changed")
 [ -z "$visible" ] && exit 0
 
 seen_file="${TMPDIR:-/tmp}/claude-news-reminder-$session"

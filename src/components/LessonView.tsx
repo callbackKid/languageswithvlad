@@ -15,6 +15,7 @@ import {
   useRemoved,
   withoutRemoved,
 } from '@/entities/lesson';
+import { MakeHomework } from '@/features/make-homework';
 import { api, ApiError } from '@/shared/api';
 import { isVerbLanguage } from '@/shared/config/languages';
 import { LESSON_TABS, type LessonTab, useSettings } from '@/shared/config/settings';
@@ -29,7 +30,6 @@ import WaitingFact from '@/shared/ui/WaitingFact';
 
 import LessonDrawings from './LessonDrawings';
 import { BookTab, GrammarTab, HomeworkTab } from './LessonExtrasTabs';
-import MakeHomework from './MakeHomework';
 import Notes from './Notes';
 import VerbsTab from './VerbsTab';
 import WordsTab from './WordsTab';

@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import { type Bank, buildQuiz, type FormQuestion } from '@/entities/lesson';
 import { statWord, topMistakes, useProgress } from '@/entities/word';
+import { WordQuiz } from '@/features/quiz';
 import { type Tense } from '@/shared/config/languages';
 import { useTranslation } from '@/shared/i18n/core';
 import { pages } from '@/shared/i18n/messages/pages';
@@ -9,7 +10,6 @@ import { shuffle } from '@/shared/lib/util';
 import PageHead from '@/shared/ui/PageHead';
 
 import MistakeList from './MistakeList';
-import WordQuiz from './WordQuiz';
 
 // The words and verb forms missed most often, and a quiz on just those.
 export default function Mistakes({ bank }: { bank: Bank }) {

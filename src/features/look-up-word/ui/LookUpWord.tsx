@@ -6,7 +6,7 @@ import { useTranslation } from '@/shared/i18n/core';
 import { learning } from '@/shared/i18n/messages/common';
 import { wordActions } from '@/shared/i18n/messages/wordActions';
 
-import { cleanSelection, lookUp, menuPlace } from '../lib/wordActions';
+import { cleanSelection, lookUp, menuPlace } from '../model/wordActions';
 
 // A word or phrase typed by hand, one that isn't in any text, opened in the word menu.
 export default function LookUpWord() {

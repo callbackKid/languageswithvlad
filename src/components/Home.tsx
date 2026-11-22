@@ -8,6 +8,7 @@ import {
   pickWords,
 } from '@/entities/lesson';
 import { dailyStats, getProgress, isLearned, useProgress, wordKey } from '@/entities/word';
+import { WordQuiz } from '@/features/quiz';
 import { isStudied, useSettings } from '@/shared/config/settings';
 import { useTranslation } from '@/shared/i18n/core';
 import { pages } from '@/shared/i18n/messages/pages';
@@ -16,7 +17,6 @@ import PageHead from '@/shared/ui/PageHead';
 import HomeworkCard from './HomeworkCard';
 import LessonSummary from './LessonSummary';
 import PrepareCard from './PrepareCard';
-import WordQuiz from './WordQuiz';
 
 const ROUND = 10;
 const FORMS = 2;

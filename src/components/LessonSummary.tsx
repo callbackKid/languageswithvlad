@@ -13,6 +13,7 @@ import {
   withoutRemoved,
 } from '@/entities/lesson';
 import { getProgress } from '@/entities/word';
+import { WordQuiz } from '@/features/quiz';
 import { lessonPath } from '@/shared/config/routes';
 import { useTranslation } from '@/shared/i18n/core';
 import { homeCards } from '@/shared/i18n/messages/homeCards';
@@ -20,8 +21,6 @@ import { daysBetween } from '@/shared/lib/dates';
 import { followLink, hrefFor } from '@/shared/lib/router';
 import { load, loadChecked, save } from '@/shared/lib/storage';
 import { shownTopic } from '@/shared/lib/util';
-
-import WordQuiz from './WordQuiz';
 
 const ROUND = 10;
 const SHOWN_WORDS = 8;

@@ -94,7 +94,7 @@ export function splitLessons(text: string): Lesson[] {
 const CYRILLIC = /[А-Яа-яЁё]/;
 
 // Fallback when Claude is unavailable: "mot - перевод" lines.
-// a line that starts with an emoji, or with spaces: still part of a report (src/lib/report.ts)
+// a line that starts with an emoji, or with spaces: still part of a report (src/features/send-to-teacher/model/report.ts)
 const REPORT_LINE = /^(?:\s|\p{Extended_Pictographic})/u;
 
 /** A lesson's text without the student's report and questions: from a line starting with 📝

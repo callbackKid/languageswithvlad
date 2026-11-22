@@ -9,7 +9,7 @@ import { common } from '@/shared/i18n/messages/common';
 import { homework as homeworkText } from '@/shared/i18n/messages/homework';
 import { load, save } from '@/shared/lib/storage';
 
-import { buildReport } from '../lib/report';
+import { buildReport } from '../model/report';
 
 type Step = 'idle' | 'review' | 'saving' | 'done';
 

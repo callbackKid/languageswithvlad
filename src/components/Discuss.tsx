@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import { type Bank } from '@/entities/lesson';
+import { Star } from '@/features/star-word';
 import { api, ApiError } from '@/shared/api';
 import { asLanguage, type Language } from '@/shared/config/languages';
 import { LEVELS, useSettings } from '@/shared/config/settings';
@@ -16,7 +17,6 @@ import WaitingFact from '@/shared/ui/WaitingFact';
 import { normalizeDiscussion } from '../lib/parse';
 import { type Discussion } from '../lib/types';
 import GrammarRuleBox from './GrammarRuleBox';
-import Star from './Star';
 
 const CUSTOM = '__custom';
 // the student's own topic; the server cuts it at the same length (api/discussion.ts)

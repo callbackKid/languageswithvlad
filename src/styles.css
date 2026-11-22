@@ -153,7 +153,7 @@ a {
 }
 
 /* the menu on a selected word (WordActions): under the selection on a wide screen, a sheet at
-   the bottom on a phone; the width is MENU_WIDTH in src/lib/wordActions.ts */
+   the bottom on a phone; the width is MENU_WIDTH in src/features/look-up-word/model/wordActions.ts */
 .word-actions {
   position: absolute;
   top: var(--word-top, 0);

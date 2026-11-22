@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 
 import { type Lesson } from '@/entities/lesson';
+import { normalizePhotoItems, type PhotoItem } from '@/entities/word';
+import { AddToDoc, type DocTarget } from '@/features/add-to-doc';
+import { docLine } from '@/features/look-up-word';
 import { api, ApiError } from '@/shared/api';
 import { translator, useTranslation } from '@/shared/i18n/core';
 import { common } from '@/shared/i18n/messages/common';
@@ -9,10 +12,7 @@ import { shrinkImage } from '@/shared/lib/image';
 import { asFields, loadChecked, save } from '@/shared/lib/storage';
 import WaitingFact from '@/shared/ui/WaitingFact';
 
-import { mergePhotoItems, normalizePhoto, normalizePhotoItems } from '../lib/parse';
-import { type PhotoItem } from '../lib/types';
-import { docLine } from '../lib/wordActions';
-import AddToDoc, { type DocTarget } from './AddToDoc';
+import { mergePhotoItems, normalizePhoto } from '../lib/parse';
 import WordNotesTable from './WordNotesTable';
 
 const LAST_KEY = 'photo:last';
