@@ -57,6 +57,9 @@ export const exercises = defineMessages({
     // device ({word} is the verb's infinitive on a verb)
     removeWord: 'Remove from the lesson',
     removeWordLabel: 'Remove “{word}” from the lesson',
+    // asked before ✕ takes a word or a verb out
+    removeWordConfirm:
+      'Remove “{word}” from this lesson and its exercises? “Bring back” under the list returns it.',
     restoreWords: {
       one: 'Bring back {count} removed word',
       other: 'Bring back {count} removed words',
@@ -187,6 +190,8 @@ export const exercises = defineMessages({
     },
     removeWord: 'Убрать из урока',
     removeWordLabel: 'Убрать «{word}» из урока',
+    removeWordConfirm:
+      'Убрать «{word}» из этого урока и его упражнений? Вернуть его можно кнопкой «Вернуть» под списком.',
     restoreWords: {
       one: 'Вернуть {count} убранное слово',
       few: 'Вернуть {count} убранных слова',
@@ -313,6 +318,8 @@ export const exercises = defineMessages({
     },
     removeWord: 'Retirer de la leçon',
     removeWordLabel: 'Retirer « {word} » de la leçon',
+    removeWordConfirm:
+      'Retirer « {word} » de cette leçon et de ses exercices ? Le bouton « Remettre » sous la liste le fait revenir.',
     restoreWords: {
       one: 'Remettre {count} mot retiré',
       other: 'Remettre les {count} mots retirés',
@@ -431,6 +438,8 @@ export const exercises = defineMessages({
     },
     removeWord: 'Aus der Lektion entfernen',
     removeWordLabel: '„{word}“ aus der Lektion entfernen',
+    removeWordConfirm:
+      '„{word}“ aus dieser Lektion und ihren Übungen entfernen? Mit „… zurückholen“ unter der Liste holst du es zurück.',
     restoreWords: {
       one: '{count} entferntes Wort zurückholen',
       other: '{count} entfernte Wörter zurückholen',
@@ -551,6 +560,8 @@ export const exercises = defineMessages({
     },
     removeWord: 'Quitar de la lección',
     removeWordLabel: 'Quitar «{word}» de la lección',
+    removeWordConfirm:
+      '¿Quitar «{word}» de esta lección y de sus ejercicios? Puedes recuperarlo con «Recuperar» debajo de la lista.',
     restoreWords: {
       one: 'Recuperar {count} palabra quitada',
       other: 'Recuperar las {count} palabras quitadas',
@@ -672,6 +683,8 @@ export const exercises = defineMessages({
     },
     removeWord: 'Retirar da lição',
     removeWordLabel: 'Retirar «{word}» da lição',
+    removeWordConfirm:
+      'Retirar «{word}» desta lição e dos seus exercícios? Pode repô-lo com «Repor», por baixo da lista.',
     restoreWords: {
       one: 'Repor {count} palavra retirada',
       other: 'Repor as {count} palavras retiradas',
@@ -793,6 +806,8 @@ export const exercises = defineMessages({
     },
     removeWord: 'Togli dalla lezione',
     removeWordLabel: 'Togli «{word}» dalla lezione',
+    removeWordConfirm:
+      'Togliere «{word}» da questa lezione e dai suoi esercizi? Puoi recuperarlo con «Recupera» sotto la lista.',
     restoreWords: {
       one: 'Recupera {count} parola tolta',
       other: 'Recupera le {count} parole tolte',

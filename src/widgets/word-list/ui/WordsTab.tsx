@@ -441,7 +441,10 @@ export default function WordsTab({
                       className="row-remove"
                       data-tooltip={t('removeWord')}
                       aria-label={t('removeWordLabel', { word: word.fr })}
-                      onClick={() => removeWord(lessonKey, word.fr)}
+                      onClick={() => {
+                        if (window.confirm(t('removeWordConfirm', { word: word.fr })))
+                          removeWord(lessonKey, word.fr);
+                      }}
                     >
                       ✕
                     </button>

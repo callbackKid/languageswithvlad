@@ -233,6 +233,7 @@ export default function VerbsTab({
                       data-tooltip={t('removeWord')}
                       aria-label={t('removeWordLabel', { word: verb.inf })}
                       onClick={() => {
+                        if (!window.confirm(t('removeWordConfirm', { word: verb.inf }))) return;
                         removeVerb(lessonKey, verb.inf);
                         if (currentVerb === verb.inf) setCurrentVerb(null);
                       }}

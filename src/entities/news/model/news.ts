@@ -53,6 +53,18 @@ export const NEWS: NewsDay[] = [
       {
         kind: 'better',
         text: {
+          en: '✕ on a word or a verb in a lesson now asks before taking it out, so a slip of the finger doesn’t remove it.',
+          ru: '✕ у слова или глагола в уроке теперь переспрашивает, прежде чем убрать его, — случайное нажатие ничего не удалит.',
+          fr: '✕ sur un mot ou un verbe d’une leçon demande maintenant confirmation avant de le retirer : un faux mouvement ne l’enlève plus.',
+          de: '✕ bei einem Wort oder Verb einer Lektion fragt jetzt nach, bevor es entfernt wird, damit nichts aus Versehen verschwindet.',
+          es: '✕ en una palabra o un verbo de una lección ahora pregunta antes de quitarlo, así que un toque sin querer no lo borra.',
+          pt: '✕ numa palavra ou num verbo de uma lição pergunta agora antes de o retirar, para que um toque por engano não o apague.',
+          it: '✕ su una parola o un verbo di una lezione ora chiede conferma prima di toglierlo, così un tocco per sbaglio non lo rimuove.',
+        },
+      },
+      {
+        kind: 'better',
+        text: {
           en: 'When 🔊 stays silent, a note now says why and what to do: the browser has no voices, has no voice for the language, or couldn’t read the word.',
           ru: 'Когда 🔊 молчит, теперь появляется подсказка, почему так и что делать: в браузере нет голосов, нет голоса для этого языка или браузер не смог прочитать слово.',
           fr: 'Quand 🔊 reste muet, un message explique maintenant pourquoi et quoi faire : le navigateur n’a aucune voix, n’a pas de voix pour la langue, ou n’a pas pu lire le mot.',
