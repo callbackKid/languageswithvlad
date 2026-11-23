@@ -37,6 +37,7 @@ import { type Grade, grade } from '@/shared/lib/grade';
 import { load, save } from '@/shared/lib/storage';
 import { keepBracketsTogether, shuffle } from '@/shared/lib/util';
 import ExerciseHead from '@/shared/ui/ExerciseHead';
+import InlineConfirm from '@/shared/ui/InlineConfirm';
 import WaitingFact from '@/shared/ui/WaitingFact';
 
 // the order of the verb list, kept on the device for every lesson
@@ -67,6 +68,8 @@ export default function VerbsTab({
   const commonText = useTranslation(common);
   const translationOf = useTranslationLanguage();
   const [currentVerb, setCurrentVerb] = useState<string | null>(null);
+  // the verb whose ✕ was pressed: its row asks before taking it out
+  const [removing, setRemoving] = useState<string | null>(null);
   const [tense, setTense] = useState<Tense>('présent');
   const [isNegative, setIsNegative] = useState(false);
   const [conjugations, setConjugations] = useState<Record<string, Conjugation>>(() => {
@@ -232,14 +235,23 @@ export default function VerbsTab({
                       className="row-remove"
                       data-tooltip={t('removeWord')}
                       aria-label={t('removeWordLabel', { word: verb.inf })}
-                      onClick={() => {
-                        if (!window.confirm(t('removeWordConfirm', { word: verb.inf }))) return;
-                        removeVerb(lessonKey, verb.inf);
-                        if (currentVerb === verb.inf) setCurrentVerb(null);
-                      }}
+                      aria-expanded={removing === verb.inf}
+                      onClick={() => setRemoving(removing === verb.inf ? null : verb.inf)}
                     >
                       ✕
                     </button>
+                  )}
+                  {lessonKey && removing === verb.inf && (
+                    <InlineConfirm
+                      question={t('removeWordConfirm', { word: verb.inf })}
+                      yesLabel={t('removeWord')}
+                      onYes={() => {
+                        removeVerb(lessonKey, verb.inf);
+                        if (currentVerb === verb.inf) setCurrentVerb(null);
+                        setRemoving(null);
+                      }}
+                      onNo={() => setRemoving(null)}
+                    />
                   )}
                 </li>
               ))}

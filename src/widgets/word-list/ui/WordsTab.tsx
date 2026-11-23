@@ -31,6 +31,7 @@ import { useTranslationLanguage } from '@/shared/config';
 import { common, exercises, useTranslation } from '@/shared/i18n';
 import { canSpeak, unlockSpeech } from '@/shared/lib/speech';
 import { downloadText } from '@/shared/lib/util';
+import InlineConfirm from '@/shared/ui/InlineConfirm';
 import Speak from '@/shared/ui/Speak';
 
 import { groupWords, useWordGroups } from '../model/wordGroups';
@@ -140,6 +141,8 @@ export default function WordsTab({
   const [exercise, setExercise] = useState<Exercise>(null);
   const [run, setRun] = useState(0);
   // the group a round by Claude is on: its words as they were ticked when the button was pressed
+  // the word whose ✕ was pressed: its row asks before taking it out
+  const [removing, setRemoving] = useState<string | null>(null);
   const [groupRound, setGroupRound] = useState<{ name: string; words: Word[] } | null>(null);
   const removedWords = removedCount(useRemoved(), 'words', lessonKey ? [lessonKey] : []);
   const grouping = useWordGroups(analysis.words, grouped && hasClaude, uiLanguage);
@@ -441,13 +444,22 @@ export default function WordsTab({
                       className="row-remove"
                       data-tooltip={t('removeWord')}
                       aria-label={t('removeWordLabel', { word: word.fr })}
-                      onClick={() => {
-                        if (window.confirm(t('removeWordConfirm', { word: word.fr })))
-                          removeWord(lessonKey, word.fr);
-                      }}
+                      aria-expanded={removing === word.fr}
+                      onClick={() => setRemoving(removing === word.fr ? null : word.fr)}
                     >
                       ✕
                     </button>
+                  )}
+                  {lessonKey && removing === word.fr && (
+                    <InlineConfirm
+                      question={t('removeWordConfirm', { word: word.fr })}
+                      yesLabel={t('removeWord')}
+                      onYes={() => {
+                        removeWord(lessonKey, word.fr);
+                        setRemoving(null);
+                      }}
+                      onNo={() => setRemoving(null)}
+                    />
                   )}
                 </li>
               ))}

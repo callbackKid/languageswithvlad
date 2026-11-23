@@ -444,6 +444,44 @@ a {
 .star.on {
   color: var(--text);
 }
+/* the question a row asks before ✕ takes it out (InlineConfirm), on a line of its own under the
+   row: ✓ in green does it, ✕ in red doesn't */
+.inline-confirm {
+  flex-basis: 100%;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 4px 8px;
+}
+.inline-confirm p {
+  flex: 1;
+  margin: 0;
+  font-size: 14px;
+  color: var(--text);
+}
+.inline-confirm-yes,
+.inline-confirm-no {
+  flex: none;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+  padding: 6px;
+  border-radius: 6px;
+}
+.inline-confirm-yes {
+  color: var(--ok);
+}
+.inline-confirm-yes:hover {
+  background: var(--ok-soft);
+}
+.inline-confirm-no {
+  color: var(--bad);
+}
+.inline-confirm-no:hover {
+  background: var(--bad-soft);
+}
 
 .tr {
   font-family: var(--sans);
@@ -1814,6 +1852,7 @@ pre.source {
 
 .word-row {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 4px;
   border-bottom: 1px solid var(--line);
@@ -2229,6 +2268,7 @@ pre.source {
 }
 .verb-row {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 4px;
   border-bottom: 1px solid var(--line);
