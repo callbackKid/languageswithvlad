@@ -428,6 +428,14 @@ a {
 .star.on {
   color: var(--text);
 }
+/* the ✕ has the blue border of the other buttons; 1px less padding keeps it the same size */
+.row-remove {
+  border: 1px solid var(--accent);
+  padding: 5px;
+}
+.row-remove:hover {
+  border-color: var(--accent-text);
+}
 
 .tr {
   font-family: var(--sans);
