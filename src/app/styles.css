@@ -281,7 +281,9 @@ a {
   background: transparent;
   color: var(--ink);
 }
-/* a button inside a line of text stays borderless, like the text around it */
+/* a × that closes or clears something, and a button inside a line of text, stay borderless,
+   like the icons and text around them */
+.btn.ghost.dismiss,
 .btn.ghost.inline {
   border-color: transparent;
 }
@@ -441,14 +443,6 @@ a {
 }
 .star.on {
   color: var(--text);
-}
-/* the ✕ has the blue border of the other buttons; 1px less padding keeps it the same size */
-.row-remove {
-  border: 1px solid var(--accent);
-  padding: 5px;
-}
-.row-remove:hover {
-  border-color: var(--accent-text);
 }
 
 .tr {
