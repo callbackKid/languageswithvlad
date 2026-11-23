@@ -241,7 +241,8 @@ a {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  border: 1px solid var(--line);
+  /* blue, so a button stands out from the cards and fields around it */
+  border: 1px solid var(--accent);
   background: var(--surface);
   border-radius: 8px;
   padding: 7px 14px;
@@ -251,7 +252,7 @@ a {
   line-height: 1.3;
 }
 .btn:hover {
-  border-color: var(--ink);
+  border-color: var(--accent-text);
 }
 .btn.primary {
   background: var(--accent);
