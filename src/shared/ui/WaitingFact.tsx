@@ -53,7 +53,7 @@ export default function WaitingFact({
             {fact.phrase}
           </b>
           <figcaption>{fact.note[uiLanguage]}</figcaption>
-          <button type="button" className="btn ghost flush fact-next" onClick={next}>
+          <button type="button" className="btn ghost fact-next" onClick={next}>
             {t('nextFact')}
           </button>
         </figure>

@@ -342,7 +342,7 @@ export default function Settings({ lessonDocument }: { lessonDocument: DocumentI
                   {settings.tenses[language] && (
                     <button
                       type="button"
-                      className="btn ghost flush"
+                      className="btn ghost"
                       onClick={() => followLevel(language)}
                     >
                       {t('tensesByLevel', { level: settings.levels[language] })}

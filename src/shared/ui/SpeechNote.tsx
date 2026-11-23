@@ -19,7 +19,7 @@ export default function SpeechNote() {
       <p>{describe(problem)}</p>
       <button
         type="button"
-        className="btn ghost"
+        className="btn ghost dismiss"
         aria-label={t('close')}
         data-tooltip={t('close')}
         onClick={dismissSpeechProblem}

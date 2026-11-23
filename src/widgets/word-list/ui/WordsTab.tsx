@@ -73,7 +73,7 @@ function GroupButton({
   return (
     <button
       type="button"
-      className="btn ghost flush word-group-exercise"
+      className="btn ghost word-group-exercise"
       aria-label={t('groupLabel', { name })}
       data-tooltip={t('groupTooltip')}
       onClick={() => onStart({ name, words })}
@@ -472,7 +472,7 @@ export default function WordsTab({
         {picked.length > 0 && (
           <button
             type="button"
-            className="btn ghost flush"
+            className="btn ghost"
             onClick={() => downloadText('words.txt', ankiText(picked))}
             data-tooltip={t('ankiTitle')}
           >
@@ -480,18 +480,14 @@ export default function WordsTab({
           </button>
         )}
         {lessonKey && removedWords > 0 && (
-          <button
-            type="button"
-            className="btn ghost flush"
-            onClick={() => restore('words', [lessonKey])}
-          >
+          <button type="button" className="btn ghost" onClick={() => restore('words', [lessonKey])}>
             {t('restoreWords', { count: removedWords })}
           </button>
         )}
         {onRefresh && (
           <button
             type="button"
-            className="btn ghost flush"
+            className="btn ghost"
             onClick={onRefresh}
             data-tooltip={t('refreshTitle')}
           >

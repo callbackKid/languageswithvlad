@@ -88,7 +88,7 @@ export default function LessonSummary({
         </h2>
         <button
           type="button"
-          className="btn ghost"
+          className="btn ghost dismiss"
           data-tooltip={t('hide')}
           aria-label={t('hide')}
           onClick={() => {

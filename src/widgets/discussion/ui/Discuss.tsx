@@ -525,7 +525,7 @@ export default function Discuss({
                 {ownTopic && (
                   <button
                     type="button"
-                    className="btn ghost"
+                    className="btn ghost dismiss"
                     aria-label={t('clearOwnTopic')}
                     data-tooltip={t('clearOwnTopic')}
                     onClick={() => update({ customTopic: '' })}
@@ -574,7 +574,7 @@ export default function Discuss({
                 ) : (
                   <button
                     type="button"
-                    className="btn ghost flush"
+                    className="btn ghost"
                     onClick={() => setShowTranslation(true)}
                   >
                     {commonText.t('showTranslation')}

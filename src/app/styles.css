@@ -262,10 +262,18 @@ a {
 .btn.primary:hover {
   background: var(--accent-hover);
 }
+/* a quieter button: no fill, but the same blue border as the others */
 .btn.ghost {
-  border-color: transparent;
   background: transparent;
   color: var(--ink);
+}
+/* a × that closes or clears something, and a button inside a line of text, stay borderless,
+   like the icons and text around them */
+.btn.ghost.dismiss,
+.btn.ghost.inline {
+  border-color: transparent;
+}
+.btn.ghost.dismiss {
   padding-left: 8px;
   padding-right: 8px;
 }
@@ -376,10 +384,6 @@ a {
   border-top-color: var(--ink);
   border-radius: 50%;
   vertical-align: -2px;
-}
-
-.btn.flush {
-  padding-left: 0;
 }
 
 .field-error {

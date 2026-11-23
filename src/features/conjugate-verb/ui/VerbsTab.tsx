@@ -131,11 +131,7 @@ export default function VerbsTab({
   // under the list, and in place of it once every verb is taken out
   const restoreLink = lessonKey && removedVerbs > 0 && (
     <p className="legend legend-actions">
-      <button
-        type="button"
-        className="btn ghost flush"
-        onClick={() => restore('verbs', [lessonKey])}
-      >
+      <button type="button" className="btn ghost" onClick={() => restore('verbs', [lessonKey])}>
         {t('restoreVerbs', { count: removedVerbs })}
       </button>
     </p>
@@ -326,7 +322,7 @@ export default function VerbsTab({
                 ·{' '}
                 <button
                   type="button"
-                  className="btn ghost flush inline"
+                  className="btn ghost inline"
                   data-tooltip={t('conjugateAgainTitle')}
                   onClick={() => {
                     const verb = verbs.find((candidate) => candidate.inf === currentVerb);
