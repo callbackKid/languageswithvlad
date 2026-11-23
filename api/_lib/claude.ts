@@ -107,13 +107,21 @@ export async function claudeJSON(
       throw new ClaudeError(503, 'claude_busy');
     throw new ClaudeError(502, 'claude_failed');
   }
-  const data = (await apiResponse.json()) as { content?: { type: string; text?: string }[] };
+  const data = (await apiResponse.json()) as {
+    content?: { type: string; text?: string }[];
+    stop_reason?: string;
+    usage?: { output_tokens?: number };
+  };
   const text = (data.content || [])
     .filter((block) => block.type === 'text')
     .map((block) => block.text || '')
     .join('\n');
   const value = extractJSON(text);
-  if (value === undefined) throw new ClaudeError(502, 'claude_unreadable');
+  if (value === undefined) {
+    // an answer cut off at max_tokens (thinking counts towards it) ends mid-JSON: say so in the log
+    console.warn('Claude answer unreadable', data.stop_reason, data.usage?.output_tokens);
+    throw new ClaudeError(502, 'claude_unreadable');
+  }
 
   if (useCache) {
     if (cache.size >= MAX_CACHE) cache.delete(cache.keys().next().value as string);

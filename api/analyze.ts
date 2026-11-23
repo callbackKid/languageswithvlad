@@ -25,6 +25,9 @@ const PHONETICS_QUESTIONS = 8;
    words, 15 questions with explanations), and a cap on what one request can cost. */
 const LESSON_TOKENS = 16000;
 const PRACTICE_TOKENS = 4000;
+// a phonetics round thinks longer (IPA, options that must not sound alike) and thinking counts
+// towards the limit: at 4000 a round on "e muet" was cut off mid-JSON
+const PHONETICS_PRACTICE_TOKENS = 12000;
 const HOMEWORK_TOKENS = 3000;
 const EXERCISE_TOKENS = 6000;
 const GROUPS_TOKENS = 4000;
@@ -95,9 +98,13 @@ export default async function handler(request: VercelRequest, response: VercelRe
         explainIn: asExplainLanguage(request.body?.explainIn),
       });
       // asked again for another round: never the same questions twice
-      return response
-        .status(200)
-        .json(await claudeJSON(prompt, { model: MODEL, maxTokens: PRACTICE_TOKENS, cache: false }));
+      return response.status(200).json(
+        await claudeJSON(prompt, {
+          model: MODEL,
+          maxTokens: PHONETICS_PRACTICE_TOKENS,
+          cache: false,
+        })
+      );
     }
     if (action === 'homework') {
       // making homework is the teacher's tool
