@@ -50,6 +50,9 @@ export const call = defineMessages({
     jitsiExplain:
       'The teacher and the student both open lesson mode and press “Join the call”: they meet in the same room, with nothing to install. Allow the camera and the microphone when the browser asks.',
     joinCall: 'Join the call',
+    // the call bar beside lesson mode's title while a call runs in the page
+    inCall: 'In the call',
+    leaveCall: 'Leave the call',
     jitsiFailed: 'The call couldn’t start. Check the connection and try again.',
     // notes
     notesTitle: 'Lesson notes',
@@ -72,6 +75,10 @@ export const call = defineMessages({
     openLesson: 'Open the lesson',
     // warm-up
     warmUpTitle: 'Warm-up',
+    // the two tabs under the call in lesson mode
+    callTabs: 'What to show under the call',
+    lessonTab: 'Lesson',
+    activitiesTab: 'Warm-up and games',
     warmUpHint:
       'About 5 minutes at the start: questions on lesson {n} ({date}) and on what the student got wrong since. Do it on the student’s device, where their mistakes are kept, with the screen shared: the teacher sees at once what didn’t stick.',
     warmUpHintNoLesson:
@@ -130,6 +137,9 @@ export const call = defineMessages({
     jitsiExplain:
       'Преподаватель и ученик открывают режим урока и нажимают «Подключиться к звонку»: они встречаются в одной комнате, ничего не нужно устанавливать. Когда браузер спросит, разрешите доступ к камере и микрофону.',
     joinCall: 'Подключиться к звонку',
+    // the call bar beside lesson mode's title while a call runs in the page
+    inCall: 'В звонке',
+    leaveCall: 'Выйти из звонка',
     jitsiFailed: 'Звонок не запустился. Проверьте соединение и попробуйте ещё раз.',
     notesTitle: 'Заметки урока',
     notesHint:
@@ -150,6 +160,10 @@ export const call = defineMessages({
     openLesson: 'Открыть урок',
     // warm-up
     warmUpTitle: 'Разминка',
+    // the two tabs under the call in lesson mode
+    callTabs: 'Что показать под звонком',
+    lessonTab: 'Урок',
+    activitiesTab: 'Разминка и игры',
     warmUpHint:
       'Минут 5 в начале: вопросы по уроку {n} ({date}) и по ошибкам ученика с тех пор. Делайте на устройстве ученика, где хранятся его ошибки, с общим экраном: преподаватель сразу видит, что не закрепилось.',
     warmUpHintNoLesson:
@@ -209,6 +223,9 @@ export const call = defineMessages({
     jitsiExplain:
       'Le professeur et l’élève ouvrent tous les deux le mode cours et appuient sur « Rejoindre l’appel » : ils se retrouvent dans la même salle, sans rien installer. Autorisez la caméra et le micro quand le navigateur le demande.',
     joinCall: 'Rejoindre l’appel',
+    // the call bar beside lesson mode's title while a call runs in the page
+    inCall: 'En appel',
+    leaveCall: 'Quitter l’appel',
     jitsiFailed: 'L’appel n’a pas pu démarrer. Vérifiez la connexion et réessayez.',
     notesTitle: 'Notes du cours',
     notesHint:
@@ -229,6 +246,10 @@ export const call = defineMessages({
     openLesson: 'Ouvrir la leçon',
     // warm-up
     warmUpTitle: 'Échauffement',
+    // the two tabs under the call in lesson mode
+    callTabs: 'Ce qui s’affiche sous l’appel',
+    lessonTab: 'Cours',
+    activitiesTab: 'Échauffement et jeux',
     warmUpHint:
       'Environ 5 minutes au début : des questions sur la leçon {n} ({date}) et sur les erreurs de l’élève depuis. Faites-le sur l’appareil de l’élève, où ses erreurs sont gardées, avec l’écran partagé : le professeur voit tout de suite ce qui n’est pas acquis.',
     warmUpHintNoLesson:
@@ -289,6 +310,9 @@ export const call = defineMessages({
     jitsiExplain:
       'Lehrkraft und Schüler öffnen beide den Unterrichtsmodus und tippen auf „Anruf beitreten“: Sie treffen sich im selben Raum, ohne etwas zu installieren. Erlaube Kamera und Mikrofon, wenn der Browser fragt.',
     joinCall: 'Anruf beitreten',
+    // the call bar beside lesson mode's title while a call runs in the page
+    inCall: 'Im Anruf',
+    leaveCall: 'Anruf verlassen',
     jitsiFailed: 'Der Anruf konnte nicht starten. Prüfe die Verbindung und versuch es noch einmal.',
     notesTitle: 'Notizen zur Stunde',
     notesHint:
@@ -309,6 +333,10 @@ export const call = defineMessages({
     openLesson: 'Lektion öffnen',
     // warm-up
     warmUpTitle: 'Aufwärmen',
+    // the two tabs under the call in lesson mode
+    callTabs: 'Was unter dem Anruf angezeigt wird',
+    lessonTab: 'Unterricht',
+    activitiesTab: 'Aufwärmen und Spiele',
     warmUpHint:
       'Etwa 5 Minuten am Anfang: Fragen zur Lektion {n} ({date}) und zu den Fehlern seitdem. Am Gerät der Schülerin oder des Schülers, wo die Fehler gespeichert sind, mit geteiltem Bildschirm: Die Lehrkraft sieht sofort, was noch nicht sitzt.',
     warmUpHintNoLesson:
@@ -370,6 +398,9 @@ export const call = defineMessages({
     jitsiExplain:
       'El profesor y el alumno abren los dos el modo clase y pulsan «Unirse a la llamada»: se encuentran en la misma sala, sin instalar nada. Permite la cámara y el micrófono cuando el navegador lo pida.',
     joinCall: 'Unirse a la llamada',
+    // the call bar beside lesson mode's title while a call runs in the page
+    inCall: 'En la llamada',
+    leaveCall: 'Salir de la llamada',
     jitsiFailed: 'No se ha podido iniciar la llamada. Comprueba la conexión y vuelve a intentarlo.',
     notesTitle: 'Notas de la clase',
     notesHint:
@@ -390,6 +421,10 @@ export const call = defineMessages({
     openLesson: 'Abrir la lección',
     // warm-up
     warmUpTitle: 'Calentamiento',
+    // the two tabs under the call in lesson mode
+    callTabs: 'Qué mostrar debajo de la llamada',
+    lessonTab: 'Clase',
+    activitiesTab: 'Calentamiento y juegos',
     warmUpHint:
       'Unos 5 minutos al principio: preguntas sobre la lección {n} ({date}) y sobre los errores del alumno desde entonces. Hazlo en el dispositivo del alumno, donde se guardan sus errores, con la pantalla compartida: el profesor ve enseguida lo que no se ha fijado.',
     warmUpHintNoLesson:
@@ -451,6 +486,9 @@ export const call = defineMessages({
     jitsiExplain:
       'O professor e o aluno abrem os dois o modo aula e carregam em «Entrar na chamada»: encontram-se na mesma sala, sem instalar nada. Permita a câmara e o microfone quando o navegador pedir.',
     joinCall: 'Entrar na chamada',
+    // the call bar beside lesson mode's title while a call runs in the page
+    inCall: 'Na chamada',
+    leaveCall: 'Sair da chamada',
     jitsiFailed:
       'Não foi possível iniciar a chamada. Verifique a ligação à internet e tente de novo.',
     notesTitle: 'Notas da aula',
@@ -472,6 +510,10 @@ export const call = defineMessages({
     openLesson: 'Abrir a lição',
     // warm-up
     warmUpTitle: 'Aquecimento',
+    // the two tabs under the call in lesson mode
+    callTabs: 'O que mostrar por baixo da chamada',
+    lessonTab: 'Aula',
+    activitiesTab: 'Aquecimento e jogos',
     warmUpHint:
       'Cerca de 5 minutos no início: perguntas sobre a lição {n} ({date}) e sobre os erros do aluno desde então. Faça-o no dispositivo do aluno, onde os erros ficam guardados, com o ecrã partilhado: o professor vê logo o que não ficou.',
     warmUpHintNoLesson:
@@ -533,6 +575,9 @@ export const call = defineMessages({
     jitsiExplain:
       'L’insegnante e lo studente aprono entrambi la modalità lezione e premono «Partecipa alla chiamata»: si ritrovano nella stessa stanza, senza installare nulla. Consenti fotocamera e microfono quando il browser lo chiede.',
     joinCall: 'Partecipa alla chiamata',
+    // the call bar beside lesson mode's title while a call runs in the page
+    inCall: 'In chiamata',
+    leaveCall: 'Esci dalla chiamata',
     jitsiFailed: 'Impossibile avviare la chiamata. Controlla la connessione e riprova.',
     notesTitle: 'Appunti della lezione',
     notesHint:
@@ -553,6 +598,10 @@ export const call = defineMessages({
     openLesson: 'Apri la lezione',
     // warm-up
     warmUpTitle: 'Riscaldamento',
+    // the two tabs under the call in lesson mode
+    callTabs: 'Cosa mostrare sotto la chiamata',
+    lessonTab: 'Lezione',
+    activitiesTab: 'Riscaldamento e giochi',
     warmUpHint:
       'Circa 5 minuti all’inizio: domande sulla lezione {n} ({date}) e sugli errori dello studente da allora. Fatelo sul dispositivo dello studente, dove sono salvati i suoi errori, con lo schermo condiviso: l’insegnante vede subito cosa non è rimasto.',
     warmUpHintNoLesson:

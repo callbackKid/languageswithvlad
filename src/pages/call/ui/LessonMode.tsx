@@ -9,11 +9,9 @@ import {
 } from '@/entities/homework';
 import {
   type Bank,
-  findCall,
   keyWordsFirst,
   languageOfLesson,
   type Lesson,
-  openCallWindow,
   previousLesson,
   readLessonLanguage,
   usePreparedLesson,
@@ -40,6 +38,7 @@ import { Discuss } from '@/widgets/discussion';
 import { KeyBadge } from '@/widgets/word-list';
 
 import { game } from '../i18n/game';
+import CallBar, { type JoinedCall } from './CallBar';
 import JitsiCall from './JitsiCall';
 import LessonBoard from './LessonBoard';
 import QuizGame, {
@@ -51,183 +50,12 @@ import QuizGame, {
 } from './QuizGame';
 import ZoomCall from './ZoomCall';
 
-const NAME_KEY = 'call:name';
-// a name as Zoom shows it, and a meeting passcode (Zoom allows at most 10 characters; room to spare)
-const MAX_NAME_LENGTH = 60;
-const MAX_PASSCODE_LENGTH = 40;
 const today = () => dayKey(new Date());
 // the lesson's words an exercise practises at most; keep in step with MAX_EXERCISE_WORDS in api/analyze.ts
 const MAX_EXERCISE_WORDS = 30;
 
 // Today's date in UTC, the same for everyone wherever they are.
 const utcDay = () => new Date().toISOString().slice(0, 10);
-
-/** A video call on Jitsi inside the page, when the server is set up for it (JaaS): the teacher and
-    the student join the same room for this document, a new one each day (in UTC, like the board). */
-function JitsiCard({ appId, docId }: { appId: string; docId: string }) {
-  const { t } = useTranslation(call);
-  const [name, setName] = useState(() => loadText(NAME_KEY) ?? getSettings().name);
-  const [joined, setJoined] = useState(false);
-  return (
-    <CallCard id="jitsi" title={t('jitsiTitle')}>
-      {joined ? (
-        <JitsiCall
-          appId={appId}
-          room={`lesson-${hash(docId)}-${utcDay()}`}
-          userName={name.trim()}
-          onLeave={() => setJoined(false)}
-        />
-      ) : (
-        <>
-          <p className="hint">{t('jitsiExplain')}</p>
-          <form
-            className="call-join"
-            onSubmit={(event) => {
-              event.preventDefault();
-              if (!name.trim()) return;
-              save(NAME_KEY, name.trim());
-              setJoined(true);
-            }}
-          >
-            <label className="form-field">
-              <span>{t('yourName')}</span>
-              <input
-                type="text"
-                required
-                maxLength={MAX_NAME_LENGTH}
-                value={name}
-                onChange={(event) => setName(event.target.value)}
-              />
-            </label>
-            <div className="row-actions">
-              <button type="submit" className="btn primary" disabled={!name.trim()}>
-                {t('joinCall')}
-              </button>
-            </div>
-          </form>
-        </>
-      )}
-    </CallCard>
-  );
-}
-
-// The call: Meet in a small window beside the app (it can't be embedded), Zoom inside the page.
-function CallPanel({
-  docText,
-  zoomReady,
-  hasJitsi,
-}: {
-  docText: string;
-  zoomReady: boolean;
-  // a Jitsi call is offered above: the document's link is then a second way, not a must
-  hasJitsi: boolean;
-}) {
-  const { t } = useTranslation(call);
-  const link = findCall(docText);
-  const [blocked, setBlocked] = useState(false);
-  const [name, setName] = useState(() => loadText(NAME_KEY) ?? getSettings().name);
-  const [passcode, setPasscode] = useState(link?.kind === 'zoom' ? link.passcode : '');
-  const [joined, setJoined] = useState(false);
-
-  if (!link) return hasJitsi ? null : <p className="empty">{t('noCall')}</p>;
-
-  const newTab = (label: string) => (
-    <a className="btn" href={link.url} target="_blank" rel="noopener noreferrer">
-      {label}
-    </a>
-  );
-
-  if (link.kind === 'meet')
-    return (
-      <CallCard id="meet" title={t('meetTitle')}>
-        <p className="hint">{t('meetExplain')}</p>
-        <div className="row-actions">
-          <button
-            type="button"
-            className="btn primary"
-            onClick={() => setBlocked(!openCallWindow(link.url))}
-          >
-            {t('openMeet')}
-          </button>
-          <button
-            type="button"
-            className="btn"
-            onClick={() => setBlocked(!openCallWindow(link.url, 'half'))}
-          >
-            {t('sideBySide')}
-          </button>
-          {newTab(t('openInTab'))}
-        </div>
-        {blocked && (
-          <div className="note warn" role="alert">
-            <p>{t('popupBlocked')}</p>
-          </div>
-        )}
-        <p className="legend">{t('pipTip')}</p>
-      </CallCard>
-    );
-
-  // Zoom: inside the page when the server can sign, otherwise in Zoom itself
-  const { meetingNumber } = link;
-  if (!zoomReady || !meetingNumber)
-    return (
-      <CallCard id="zoom" title={t('zoomTitle')}>
-        <p className="hint">{!meetingNumber ? t('zoomNoNumber') : t('zoomNotSetUp')}</p>
-        <div className="row-actions">{newTab(t('openInZoom'))}</div>
-      </CallCard>
-    );
-  return (
-    <CallCard id="zoom" title={t('zoomTitle')}>
-      {joined ? (
-        <ZoomCall
-          meetingNumber={meetingNumber}
-          passcode={passcode}
-          userName={name.trim()}
-          onLeave={() => setJoined(false)}
-        />
-      ) : (
-        <>
-          <p className="hint">{t('zoomExplain')}</p>
-          <form
-            className="call-join"
-            onSubmit={(event) => {
-              event.preventDefault();
-              if (!name.trim()) return;
-              save(NAME_KEY, name.trim());
-              setJoined(true);
-            }}
-          >
-            <label className="form-field">
-              <span>{t('yourName')}</span>
-              <input
-                type="text"
-                required
-                maxLength={MAX_NAME_LENGTH}
-                value={name}
-                onChange={(event) => setName(event.target.value)}
-              />
-            </label>
-            <label className="form-field">
-              <span>{t('passcode')}</span>
-              <input
-                type="text"
-                maxLength={MAX_PASSCODE_LENGTH}
-                value={passcode}
-                onChange={(event) => setPasscode(event.target.value)}
-              />
-            </label>
-            <div className="row-actions">
-              <button type="submit" className="btn primary" disabled={!name.trim()}>
-                {t('joinHere')}
-              </button>
-              {newTab(t('openInZoom'))}
-            </div>
-          </form>
-        </>
-      )}
-    </CallCard>
-  );
-}
 
 // Notes taken during the lesson, saved per day, with a button that adds them to the Google Doc.
 function LessonNotes({ docId, target }: { docId: string; target: DocTarget }) {
@@ -569,6 +397,13 @@ function WarmUp({
 }
 
 // Lesson mode: the call, the warm-up and the game, the teacher's notes and the lesson's words on one screen.
+// The two tabs under the call: the lesson's own cards, and the warm-up, the game and Discuss.
+const CALL_TABS = ['lesson', 'activities'] as const;
+type CallTab = (typeof CALL_TABS)[number];
+// the tab last chosen, kept on this device
+const TAB_KEY = 'call:tab';
+const readCallTab = (): CallTab => CALL_TABS.find((tab) => tab === loadText(TAB_KEY)) ?? 'lesson';
+
 export default function LessonMode({
   docText,
   docId,
@@ -597,9 +432,29 @@ export default function LessonMode({
   const earlier = previousLesson(lessons);
   const preparing = usePreparedLesson(earlier, bank, hasClaude);
   const newest = lessons[lessons.length - 1] ?? null;
+  const [tab, setTab] = useState<CallTab>(readCallTab);
+  // the call running in the page (Jitsi or Zoom); its video sits above the tabs, so a tab never closes it
+  const [joined, setJoined] = useState<JoinedCall | null>(null);
+  function chooseTab(chosen: CallTab) {
+    setTab(chosen);
+    save(TAB_KEY, chosen);
+  }
   return (
     <>
-      <PageHead guide="call" title={t('title')}>
+      <PageHead
+        guide="call"
+        title={t('title')}
+        aside={
+          <CallBar
+            docText={docText}
+            zoomReady={zoomReady}
+            hasJitsi={!!jitsiAppId}
+            joined={joined}
+            onJoin={setJoined}
+            onLeave={() => setJoined(null)}
+          />
+        }
+      >
         {t('intro')}
       </PageHead>
       {/* above the call rather than instead of it: closing a Zoom call's panel would end the call */}
@@ -620,23 +475,75 @@ export default function LessonMode({
       )}
       <div className="lesson-mode">
         <div className="lesson-mode-side">
-          {jitsiAppId && <JitsiCard appId={jitsiAppId} docId={docId} />}
-          <CallPanel docText={docText} zoomReady={zoomReady} hasJitsi={!!jitsiAppId} />
-          {!activity && (
-            <WarmUpCard
-              lesson={earlier}
-              preparing={preparing}
-              onStart={() => setActivity('warm-up')}
-            />
+          {joined?.kind === 'jitsi' && jitsiAppId && (
+            <CallCard id="jitsi" title={t('jitsiTitle')}>
+              <JitsiCall
+                appId={jitsiAppId}
+                room={`lesson-${hash(docId)}-${utcDay()}`}
+                userName={joined.name}
+                onLeave={() => setJoined(null)}
+              />
+            </CallCard>
           )}
-          {!activity && newest && <GameCard docId={docId} onStart={() => setActivity('game')} />}
-          {hasClaude && <MakeExerciseCard bank={bank} lesson={newest} />}
-          <DiscussCard bank={bank} hasClaude={hasClaude} />
-          <WrittenHomework lesson={earlier} docId={docId} />
-          <LessonWords bank={bank} lesson={lessons[lessons.length - 1] ?? null} />
-          {hasClaude && newest && (
-            <BookCard docId={docId} lesson={newest} canWrite={!!target.docWriter} />
+          {joined?.kind === 'zoom' && (
+            <CallCard id="zoom" title={t('zoomTitle')}>
+              <ZoomCall
+                meetingNumber={joined.meetingNumber}
+                passcode={joined.passcode}
+                userName={joined.name}
+                onLeave={() => setJoined(null)}
+              />
+            </CallCard>
           )}
+          {/* under the call, so switching never closes it; both tabs stay on the page, hidden in
+              turn, so an exercise or a discussion question in progress isn't lost */}
+          <div className="tabs call-tabs" role="tablist" aria-label={t('callTabs')}>
+            {CALL_TABS.map((id) => (
+              <button
+                key={id}
+                type="button"
+                className="tab"
+                role="tab"
+                id={`call-tab-${id}`}
+                aria-controls={`call-panel-${id}`}
+                aria-selected={tab === id}
+                onClick={() => chooseTab(id)}
+              >
+                {id === 'lesson' ? t('lessonTab') : t('activitiesTab')}
+              </button>
+            ))}
+          </div>
+          <div
+            className="call-tab-panel"
+            role="tabpanel"
+            id="call-panel-lesson"
+            aria-labelledby="call-tab-lesson"
+            hidden={tab !== 'lesson'}
+          >
+            {hasClaude && <MakeExerciseCard bank={bank} lesson={newest} />}
+            <WrittenHomework lesson={earlier} docId={docId} />
+            <LessonWords bank={bank} lesson={newest} />
+            {hasClaude && newest && (
+              <BookCard docId={docId} lesson={newest} canWrite={!!target.docWriter} />
+            )}
+          </div>
+          <div
+            className="call-tab-panel"
+            role="tabpanel"
+            id="call-panel-activities"
+            aria-labelledby="call-tab-activities"
+            hidden={tab !== 'activities'}
+          >
+            {!activity && (
+              <WarmUpCard
+                lesson={earlier}
+                preparing={preparing}
+                onStart={() => setActivity('warm-up')}
+              />
+            )}
+            {!activity && newest && <GameCard docId={docId} onStart={() => setActivity('game')} />}
+            <DiscussCard bank={bank} hasClaude={hasClaude} />
+          </div>
         </div>
         <LessonNotes docId={docId} target={target} />
       </div>

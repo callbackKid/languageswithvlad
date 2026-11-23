@@ -222,9 +222,9 @@ export const tutorial = defineMessages({
     'call.intro':
       'Opens from <b>Enter the lesson</b> in the next-lesson widget at the top when the document has a Google Meet or Zoom link. Made for the lesson itself.',
     'call.step1':
-      '<b>Google Meet</b>: press <pbtn>Open the call in a small window</pbtn>. Meet can’t run inside other websites, so it opens as a small window at the side of the screen.',
+      '<b>Google Meet</b>: beside the title, open <btn>Google Meet ▾</btn> and press <pbtn>Open the call in a small window</pbtn>. Meet can’t run inside other websites, so it opens as a small window at the side of the screen.',
     'call.step2':
-      '<b>Zoom</b>: enter your name and press <pbtn>Join here</pbtn>. The call runs inside the page, in a window you can move and resize (needs a one-time Zoom setup on the server, see the README).',
+      '<b>Zoom</b>: beside the title, enter your name and press <pbtn>Join here</pbtn>. The call runs inside the page, above the tabs, in a window you can move and resize (needs a one-time Zoom setup on the server, see the README).',
     'call.step3':
       'Write in <b>Lesson notes</b> during the lesson: new words as “mot — перевод”, mistakes, homework. <btn>⏱ Time</btn> marks when something came up.',
     'call.step4':
@@ -232,17 +232,17 @@ export const tutorial = defineMessages({
     'call.step5':
       '<pbtn>Open the board</pbtn> under the notes: write, draw and paste pictures. With live sharing set up, the teacher and the student draw on the same board at once and see each other’s pointer; otherwise share your screen in the call. <b>Full screen</b> and <b>Save as picture</b> are above it.',
     'call.step6':
-      '<pbtn>Start the warm-up</pbtn> at the start of the lesson: about 5 minutes of questions on the previous lesson and on the student’s mistakes since. At the end, <b>Didn’t stick</b> lists every wrong answer for the teacher. Do it on the student’s device, where the mistakes are kept, and share the screen.',
+      'On the <b>Warm-up and games</b> tab, <pbtn>Start the warm-up</pbtn> at the start of the lesson: about 5 minutes of questions on the previous lesson and on the student’s mistakes since. At the end, <b>Didn’t stick</b> lists every wrong answer for the teacher. Do it on the student’s device, where the mistakes are kept, and share the screen.',
     'call.step7':
-      '<pbtn>Play</pbtn> under <b>Quiz game</b>: 10 questions on the lesson’s words, 15 seconds each, and a fast right answer scores more. Play it on the shared screen; the best rounds go into the <b>Records</b> table.',
+      'On the same tab, <pbtn>Play</pbtn> under <b>Quiz game</b>: 10 questions on the lesson’s words, 15 seconds each, and a fast right answer scores more. Play it on the shared screen; the best rounds go into the <b>Records</b> table.',
     'call.tip3':
       '<btn>Side by side (half the screen)</btn> opens Meet over the right half of the screen, next to the app.',
     'call.tip4':
-      '<b>Video call</b>: when the server is set up for Jitsi, press <pbtn>Join the call</pbtn>. The teacher and the student meet in the same room inside the page, with nothing to install (a one-time setup on the server, see the README).',
+      '<b>Video call</b>: when the server is set up for Jitsi, enter your name beside the title and press <pbtn>Join the call</pbtn>. The teacher and the student meet in the same room inside the page, above the tabs, with nothing to install (a one-time setup on the server, see the README).',
     'call.tip5':
       'Press a card’s title to fold it away; a folded card stays folded on this device until you open it again. A call or the board in a folded card goes on.',
     'call.tip6':
-      '<b>A question for discussion</b> is here too, to start the lesson with a conversation, as on its own page.',
+      'The cards under the call sit in two tabs: <b>Lesson</b> (Create an exercise, the written homework, the lesson’s words, the book) and <b>Warm-up and games</b> (the warm-up, the quiz game and A question for discussion, as on its own page). The call goes on whichever tab is open, and the app remembers the tab.',
     'call.tip7':
       '<b>Homework</b> at the end: write the tasks one per line during the lesson, then <pbtn>Add under Leçon 7</pbtn> puts them under that lesson, and the student gets them on Home as a checklist.',
     'call.tip8':
@@ -487,9 +487,9 @@ export const tutorial = defineMessages({
     'call.intro':
       'Открывается кнопкой <b>Войти в урок</b> в виджете следующего урока наверху, если в документе есть ссылка на Google Meet или Zoom. Для самого урока.',
     'call.step1':
-      '<b>Google Meet</b>: нажмите <pbtn>Открыть звонок в маленьком окне</pbtn>. Meet нельзя встроить в другие сайты, поэтому он открывается маленьким окном сбоку экрана.',
+      '<b>Google Meet</b>: рядом с заголовком откройте <btn>Google Meet ▾</btn> и нажмите <pbtn>Открыть звонок в маленьком окне</pbtn>. Meet нельзя встроить в другие сайты, поэтому он открывается маленьким окном сбоку экрана.',
     'call.step2':
-      '<b>Zoom</b>: введите своё имя и нажмите <pbtn>Подключиться здесь</pbtn>. Звонок идёт прямо на странице, в окне, которое можно двигать и менять по размеру (нужна разовая настройка Zoom на сервере, см. README).',
+      '<b>Zoom</b>: рядом с заголовком введите своё имя и нажмите <pbtn>Подключиться здесь</pbtn>. Звонок идёт прямо на странице, над вкладками, в окне, которое можно двигать и менять по размеру (нужна разовая настройка Zoom на сервере, см. README).',
     'call.step3':
       'Во время урока пишите в <b>Заметки урока</b>: новые слова в виде «mot — перевод», ошибки, домашнее задание. <btn>⏱ Время</btn> отмечает, когда что-то прозвучало.',
     'call.step4':
@@ -497,17 +497,17 @@ export const tutorial = defineMessages({
     'call.step5':
       '<pbtn>Открыть доску</pbtn> под заметками: пишите, рисуйте, вставляйте картинки. Если настроен общий доступ, преподаватель и ученик рисуют на одной доске одновременно и видят указатель друг друга; иначе покажите экран в звонке. Над ней — <b>На весь экран</b> и <b>Сохранить картинкой</b>.',
     'call.step6':
-      '<pbtn>Начать разминку</pbtn> в начале урока: минут 5 вопросов по прошлому уроку и ошибкам ученика с тех пор. В конце <b>Не закрепилось</b> показывает преподавателю все неверные ответы. Делайте на устройстве ученика, где хранятся ошибки, и покажите экран.',
+      'На вкладке <b>Разминка и игры</b> нажмите <pbtn>Начать разминку</pbtn> в начале урока: минут 5 вопросов по прошлому уроку и ошибкам ученика с тех пор. В конце <b>Не закрепилось</b> показывает преподавателю все неверные ответы. Делайте на устройстве ученика, где хранятся ошибки, и покажите экран.',
     'call.step7':
-      '<pbtn>Играть</pbtn> в карточке <b>Игра-квиз</b>: 10 вопросов по словам урока, на каждый 15 секунд, и чем быстрее верный ответ, тем больше очков. Играйте на общем экране; лучшие раунды попадают в таблицу <b>Рекорды</b>.',
+      'На той же вкладке нажмите <pbtn>Играть</pbtn> в карточке <b>Игра-квиз</b>: 10 вопросов по словам урока, на каждый 15 секунд, и чем быстрее верный ответ, тем больше очков. Играйте на общем экране; лучшие раунды попадают в таблицу <b>Рекорды</b>.',
     'call.tip3':
       '<btn>Рядом (половина экрана)</btn> открывает Meet на правой половине экрана, рядом с приложением.',
     'call.tip4':
-      '<b>Видеозвонок</b>: если сервер настроен для Jitsi, нажмите <pbtn>Подключиться к звонку</pbtn>. Преподаватель и ученик встречаются в одной комнате прямо на странице, ничего не устанавливая (нужна разовая настройка на сервере, см. README).',
+      '<b>Видеозвонок</b>: если сервер настроен для Jitsi, введите имя рядом с заголовком и нажмите <pbtn>Подключиться к звонку</pbtn>. Преподаватель и ученик встречаются в одной комнате прямо на странице, над вкладками, ничего не устанавливая (нужна разовая настройка на сервере, см. README).',
     'call.tip5':
       'Нажмите на заголовок карточки, чтобы свернуть её; свёрнутая карточка остаётся свёрнутой на этом устройстве, пока вы снова её не откроете. Звонок или доска в свёрнутой карточке продолжают работать.',
     'call.tip6':
-      '<b>Вопрос для обсуждения</b> тоже здесь — чтобы начать урок с разговора, как на его отдельной странице.',
+      'Карточки под звонком разложены по двум вкладкам: <b>Урок</b> («Составить упражнение», письменное домашнее задание, слова урока, учебник) и <b>Разминка и игры</b> (разминка, игра-квиз и «Вопрос для обсуждения», как на его отдельной странице). Звонок продолжается на любой открытой вкладке, а приложение запоминает вкладку.',
     'call.tip7':
       '<b>Домашнее задание</b> в конце: во время урока запишите задания по одному на строку, потом <pbtn>Добавить к Leçon 7</pbtn> добавит их под этот урок, а ученик увидит их на Главной чек-листом.',
     'call.tip8':
@@ -758,9 +758,9 @@ export const tutorial = defineMessages({
     'call.intro':
       'S’ouvre avec <b>Entrer dans le cours</b> dans le widget du prochain cours, en haut, quand le document contient un lien Google Meet ou Zoom. Pensé pour le cours lui-même.',
     'call.step1':
-      '<b>Google Meet</b> : appuyez sur <pbtn>Ouvrir l’appel dans une petite fenêtre</pbtn>. Meet ne peut pas s’afficher dans d’autres sites : il s’ouvre dans une petite fenêtre sur le côté de l’écran.',
+      '<b>Google Meet</b> : à côté du titre, ouvrez <btn>Google Meet ▾</btn> et appuyez sur <pbtn>Ouvrir l’appel dans une petite fenêtre</pbtn>. Meet ne peut pas s’afficher dans d’autres sites : il s’ouvre dans une petite fenêtre sur le côté de l’écran.',
     'call.step2':
-      '<b>Zoom</b> : saisissez votre nom et appuyez sur <pbtn>Rejoindre ici</pbtn>. L’appel se déroule dans la page, dans une fenêtre que vous pouvez déplacer et redimensionner (une configuration Zoom unique est nécessaire sur le serveur, voir le README).',
+      '<b>Zoom</b> : à côté du titre, saisissez votre nom et appuyez sur <pbtn>Rejoindre ici</pbtn>. L’appel se déroule dans la page, au-dessus des onglets, dans une fenêtre que vous pouvez déplacer et redimensionner (une configuration Zoom unique est nécessaire sur le serveur, voir le README).',
     'call.step3':
       'Pendant le cours, écrivez dans <b>Notes du cours</b> : les nouveaux mots sous la forme « mot — перевод », les erreurs, les devoirs. <btn>⏱ Heure</btn> marque le moment.',
     'call.step4':
@@ -768,17 +768,17 @@ export const tutorial = defineMessages({
     'call.step5':
       '<pbtn>Ouvrir le tableau</pbtn> sous les notes : écrivez, dessinez, collez des images. Avec le partage en direct configuré, le professeur et l’élève dessinent sur le même tableau en même temps et voient le pointeur de l’autre ; sinon, partagez votre écran dans l’appel. <b>Plein écran</b> et <b>Enregistrer en image</b> sont au-dessus.',
     'call.step6':
-      '<pbtn>Commencer l’échauffement</pbtn> au début du cours : environ 5 minutes de questions sur la leçon précédente et sur les erreurs de l’élève depuis. À la fin, <b>Pas encore acquis</b> liste toutes les mauvaises réponses pour le professeur. Faites-le sur l’appareil de l’élève, où ses erreurs sont gardées, et partagez l’écran.',
+      'Dans l’onglet <b>Échauffement et jeux</b>, appuyez sur <pbtn>Commencer l’échauffement</pbtn> au début du cours : environ 5 minutes de questions sur la leçon précédente et sur les erreurs de l’élève depuis. À la fin, <b>Pas encore acquis</b> liste toutes les mauvaises réponses pour le professeur. Faites-le sur l’appareil de l’élève, où ses erreurs sont gardées, et partagez l’écran.',
     'call.step7':
-      '<pbtn>Jouer</pbtn> sous <b>Quiz chrono</b> : 10 questions sur les mots de la leçon, 15 secondes chacune, et une bonne réponse rapide rapporte plus. Jouez sur l’écran partagé ; les meilleurs tours vont dans le tableau <b>Records</b>.',
+      'Dans le même onglet, appuyez sur <pbtn>Jouer</pbtn> sous <b>Quiz chrono</b> : 10 questions sur les mots de la leçon, 15 secondes chacune, et une bonne réponse rapide rapporte plus. Jouez sur l’écran partagé ; les meilleurs tours vont dans le tableau <b>Records</b>.',
     'call.tip3':
       '<btn>Côte à côte (moitié de l’écran)</btn> ouvre Meet sur la moitié droite de l’écran, à côté de l’application.',
     'call.tip4':
-      '<b>Appel vidéo</b> : quand le serveur est configuré pour Jitsi, appuyez sur <pbtn>Rejoindre l’appel</pbtn>. Le professeur et l’élève se retrouvent dans la même salle, dans la page, sans rien installer (une configuration unique est nécessaire sur le serveur, voir le README).',
+      '<b>Appel vidéo</b> : quand le serveur est configuré pour Jitsi, saisissez votre nom à côté du titre et appuyez sur <pbtn>Rejoindre l’appel</pbtn>. Le professeur et l’élève se retrouvent dans la même salle, dans la page, au-dessus des onglets, sans rien installer (une configuration unique est nécessaire sur le serveur, voir le README).',
     'call.tip5':
       'Appuyez sur le titre d’une carte pour la replier ; une carte repliée le reste sur cet appareil jusqu’à ce que vous la rouvriez. Un appel ou le tableau dans une carte repliée continue de fonctionner.',
     'call.tip6':
-      '<b>Une question à discuter</b> est là aussi, pour commencer le cours par une conversation, comme sur sa propre page.',
+      'Les cartes sous l’appel sont réparties en deux onglets : <b>Cours</b> (« Créer un exercice », les devoirs écrits, les mots de la leçon, le manuel) et <b>Échauffement et jeux</b> (l’échauffement, le Quiz chrono et « Une question à discuter », comme sur sa propre page). L’appel continue quel que soit l’onglet ouvert, et l’application retient l’onglet.',
     'call.tip7':
       '<b>Devoirs</b> à la fin : écrivez les tâches une par ligne pendant le cours, puis <pbtn>Ajouter sous Leçon 7</pbtn> les place sous cette leçon, et l’élève les retrouve sur l’Accueil en liste à cocher.',
     'call.tip8':
@@ -1027,9 +1027,9 @@ export const tutorial = defineMessages({
     'call.intro':
       'Öffnet sich über <b>Zur Stunde</b> im Widget der nächsten Stunde oben, wenn das Dokument einen Google-Meet- oder Zoom-Link enthält. Gemacht für die Stunde selbst.',
     'call.step1':
-      '<b>Google Meet</b>: Tippe auf <pbtn>Anruf in kleinem Fenster öffnen</pbtn>. Meet lässt sich nicht in andere Websites einbetten, deshalb öffnet es sich als kleines Fenster am Bildschirmrand.',
+      '<b>Google Meet</b>: Öffne neben dem Titel <btn>Google Meet ▾</btn> und tippe auf <pbtn>Anruf in kleinem Fenster öffnen</pbtn>. Meet lässt sich nicht in andere Websites einbetten, deshalb öffnet es sich als kleines Fenster am Bildschirmrand.',
     'call.step2':
-      '<b>Zoom</b>: Gib deinen Namen ein und tippe auf <pbtn>Hier beitreten</pbtn>. Der Anruf läuft direkt auf der Seite, in einem Fenster, das du verschieben und in der Größe ändern kannst (braucht eine einmalige Zoom-Einrichtung auf dem Server, siehe README).',
+      '<b>Zoom</b>: Gib neben dem Titel deinen Namen ein und tippe auf <pbtn>Hier beitreten</pbtn>. Der Anruf läuft direkt auf der Seite, über den Tabs, in einem Fenster, das du verschieben und in der Größe ändern kannst (braucht eine einmalige Zoom-Einrichtung auf dem Server, siehe README).',
     'call.step3':
       'Schreib während der Stunde in die <b>Notizen zur Stunde</b>: neue Wörter als „Wort — перевод“, Fehler, Hausaufgaben. <btn>⏱ Uhrzeit</btn> markiert, wann etwas vorkam.',
     'call.step4':
@@ -1037,17 +1037,17 @@ export const tutorial = defineMessages({
     'call.step5':
       '<pbtn>Tafel öffnen</pbtn> unter den Notizen: schreiben, zeichnen, Bilder einfügen. Ist das Live-Teilen eingerichtet, zeichnen Lehrkraft und Schüler gleichzeitig auf derselben Tafel und sehen den Zeiger des anderen; sonst teile deinen Bildschirm im Anruf. <b>Vollbild</b> und <b>Als Bild speichern</b> stehen darüber.',
     'call.step6':
-      '<pbtn>Aufwärmen starten</pbtn> zu Beginn der Stunde: etwa 5 Minuten Fragen zur letzten Lektion und zu den Fehlern seitdem. Am Ende listet <b>Sitzt noch nicht</b> alle falschen Antworten für die Lehrkraft auf. Mach das am Gerät der Schülerin oder des Schülers, wo die Fehler gespeichert sind, und teile den Bildschirm.',
+      'Tippe im Tab <b>Aufwärmen und Spiele</b> zu Beginn der Stunde auf <pbtn>Aufwärmen starten</pbtn>: etwa 5 Minuten Fragen zur letzten Lektion und zu den Fehlern seitdem. Am Ende listet <b>Sitzt noch nicht</b> alle falschen Antworten für die Lehrkraft auf. Mach das am Gerät der Schülerin oder des Schülers, wo die Fehler gespeichert sind, und teile den Bildschirm.',
     'call.step7':
-      '<pbtn>Spielen</pbtn> unter <b>Quizspiel</b>: 10 Fragen zu den Wörtern der Lektion, je 15 Sekunden, und eine schnelle richtige Antwort bringt mehr Punkte. Spielt auf dem geteilten Bildschirm; die besten Runden kommen in die Tabelle <b>Rekorde</b>.',
+      'Tippe im selben Tab unter <b>Quizspiel</b> auf <pbtn>Spielen</pbtn>: 10 Fragen zu den Wörtern der Lektion, je 15 Sekunden, und eine schnelle richtige Antwort bringt mehr Punkte. Spielt auf dem geteilten Bildschirm; die besten Runden kommen in die Tabelle <b>Rekorde</b>.',
     'call.tip3':
       '<btn>Nebeneinander (halber Bildschirm)</btn> öffnet Meet auf der rechten Bildschirmhälfte, neben der App.',
     'call.tip4':
-      '<b>Videoanruf</b>: Wenn der Server für Jitsi eingerichtet ist, tippe auf <pbtn>Anruf beitreten</pbtn>. Lehrkraft und Schüler treffen sich im selben Raum direkt auf der Seite, ohne etwas zu installieren (braucht eine einmalige Einrichtung auf dem Server, siehe README).',
+      '<b>Videoanruf</b>: Wenn der Server für Jitsi eingerichtet ist, gib neben dem Titel deinen Namen ein und tippe auf <pbtn>Anruf beitreten</pbtn>. Lehrkraft und Schüler treffen sich im selben Raum direkt auf der Seite, über den Tabs, ohne etwas zu installieren (braucht eine einmalige Einrichtung auf dem Server, siehe README).',
     'call.tip5':
       'Tippe auf den Titel einer Karte, um sie einzuklappen; eine eingeklappte Karte bleibt auf diesem Gerät eingeklappt, bis du sie wieder öffnest. Ein Anruf oder die Tafel in einer eingeklappten Karte läuft weiter.',
     'call.tip6':
-      '<b>Eine Frage zum Diskutieren</b> gibt es hier auch, um die Stunde mit einem Gespräch zu beginnen, wie auf ihrer eigenen Seite.',
+      'Die Karten unter dem Anruf liegen in zwei Tabs: <b>Unterricht</b> („Übung erstellen“, die schriftlichen Hausaufgaben, die Wörter der Lektion, das Lehrbuch) und <b>Aufwärmen und Spiele</b> (das Aufwärmen, das Quizspiel und „Eine Frage zum Diskutieren“, wie auf ihrer eigenen Seite). Der Anruf läuft weiter, egal welcher Tab offen ist, und die App merkt sich den Tab.',
     'call.tip7':
       '<b>Hausaufgaben</b> am Ende: Schreib während der Stunde die Aufgaben auf, eine pro Zeile, dann setzt <pbtn>Unter Leçon 7 hinzufügen</pbtn> sie unter diese Lektion, und der Schüler sieht sie auf der Startseite als Checkliste.',
     'call.tip8':
@@ -1297,9 +1297,9 @@ export const tutorial = defineMessages({
     'call.intro':
       'Se abre con <b>Entrar en la clase</b> en el widget de la próxima clase, arriba, cuando el documento tiene un enlace de Google Meet o Zoom. Pensado para la propia clase.',
     'call.step1':
-      '<b>Google Meet</b>: pulsa <pbtn>Abrir la llamada en una ventana pequeña</pbtn>. Meet no puede funcionar dentro de otras webs, así que se abre en una ventana pequeña a un lado de la pantalla.',
+      '<b>Google Meet</b>: junto al título, abre <btn>Google Meet ▾</btn> y pulsa <pbtn>Abrir la llamada en una ventana pequeña</pbtn>. Meet no puede funcionar dentro de otras webs, así que se abre en una ventana pequeña a un lado de la pantalla.',
     'call.step2':
-      '<b>Zoom</b>: escribe tu nombre y pulsa <pbtn>Unirse aquí</pbtn>. La llamada funciona dentro de la página, en una ventana que puedes mover y cambiar de tamaño (requiere configurar Zoom una vez en el servidor, ver el README).',
+      '<b>Zoom</b>: junto al título, escribe tu nombre y pulsa <pbtn>Unirse aquí</pbtn>. La llamada funciona dentro de la página, encima de las pestañas, en una ventana que puedes mover y cambiar de tamaño (requiere configurar Zoom una vez en el servidor, ver el README).',
     'call.step3':
       'Escribe en <b>Notas de la clase</b> durante la clase: palabras nuevas como «palabra — перевод», errores, deberes. <btn>⏱ Hora</btn> marca cuándo surgió algo.',
     'call.step4':
@@ -1307,17 +1307,17 @@ export const tutorial = defineMessages({
     'call.step5':
       '<pbtn>Abrir la pizarra</pbtn> debajo de las notas: escribe, dibuja y pega imágenes. Con el uso compartido en directo configurado, el profesor y el alumno dibujan a la vez en la misma pizarra y ven el puntero del otro; si no, comparte la pantalla en la llamada. <b>Pantalla completa</b> y <b>Guardar como imagen</b> están encima.',
     'call.step6':
-      '<pbtn>Empezar el calentamiento</pbtn> al principio de la clase: unos 5 minutos de preguntas sobre la lección anterior y sobre los errores del alumno desde entonces. Al final, <b>No se ha fijado</b> muestra al profesor todas las respuestas incorrectas. Hazlo en el dispositivo del alumno, donde se guardan los errores, y comparte la pantalla.',
+      'En la pestaña <b>Calentamiento y juegos</b>, pulsa <pbtn>Empezar el calentamiento</pbtn> al principio de la clase: unos 5 minutos de preguntas sobre la lección anterior y sobre los errores del alumno desde entonces. Al final, <b>No se ha fijado</b> muestra al profesor todas las respuestas incorrectas. Hazlo en el dispositivo del alumno, donde se guardan los errores, y comparte la pantalla.',
     'call.step7':
-      '<pbtn>Jugar</pbtn> en <b>Juego de preguntas</b>: 10 preguntas sobre las palabras de la lección, 15 segundos cada una, y una respuesta correcta rápida da más puntos. Jugad en la pantalla compartida; las mejores rondas van a la tabla <b>Récords</b>.',
+      'En la misma pestaña, pulsa <pbtn>Jugar</pbtn> en <b>Juego de preguntas</b>: 10 preguntas sobre las palabras de la lección, 15 segundos cada una, y una respuesta correcta rápida da más puntos. Jugad en la pantalla compartida; las mejores rondas van a la tabla <b>Récords</b>.',
     'call.tip3':
       '<btn>Lado a lado (media pantalla)</btn> abre Meet sobre la mitad derecha de la pantalla, junto a la aplicación.',
     'call.tip4':
-      '<b>Videollamada</b>: cuando el servidor esté configurado para Jitsi, pulsa <pbtn>Unirse a la llamada</pbtn>. El profesor y el alumno se encuentran en la misma sala dentro de la página, sin instalar nada (requiere una configuración única en el servidor, ver el README).',
+      '<b>Videollamada</b>: cuando el servidor esté configurado para Jitsi, escribe tu nombre junto al título y pulsa <pbtn>Unirse a la llamada</pbtn>. El profesor y el alumno se encuentran en la misma sala dentro de la página, encima de las pestañas, sin instalar nada (requiere una configuración única en el servidor, ver el README).',
     'call.tip5':
       'Pulsa el título de una tarjeta para contraerla; una tarjeta contraída se queda así en este dispositivo hasta que la vuelvas a abrir. Una llamada o la pizarra en una tarjeta contraída siguen en marcha.',
     'call.tip6':
-      '<b>Una pregunta para debatir</b> también está aquí, para empezar la clase con una conversación, como en su propia página.',
+      'Las tarjetas debajo de la llamada están en dos pestañas: <b>Clase</b> («Crear un ejercicio», los deberes escritos, las palabras de la lección, el libro) y <b>Calentamiento y juegos</b> (el calentamiento, el juego de preguntas y «Una pregunta para debatir», como en su propia página). La llamada sigue en cualquier pestaña que esté abierta, y la aplicación recuerda la pestaña.',
     'call.tip7':
       '<b>Deberes</b> al final: escribe las tareas una por línea durante la clase; luego <pbtn>Añadir bajo Leçon 7</pbtn> las pone bajo esa lección, y el alumno las ve en Inicio como lista.',
     'call.tip8':
@@ -1566,9 +1566,9 @@ export const tutorial = defineMessages({
     'call.intro':
       'Abre-se com <b>Entrar na aula</b> no widget da próxima aula, em cima, quando o documento tem uma ligação do Google Meet ou do Zoom. Feito para a própria aula.',
     'call.step1':
-      '<b>Google Meet</b>: carregue em <pbtn>Abrir a chamada numa janela pequena</pbtn>. O Meet não funciona dentro de outros sites, por isso abre numa janela pequena ao lado do ecrã.',
+      '<b>Google Meet</b>: ao lado do título, abra <btn>Google Meet ▾</btn> e carregue em <pbtn>Abrir a chamada numa janela pequena</pbtn>. O Meet não funciona dentro de outros sites, por isso abre numa janela pequena ao lado do ecrã.',
     'call.step2':
-      '<b>Zoom</b>: escreva o seu nome e carregue em <pbtn>Entrar aqui</pbtn>. A chamada funciona dentro da página, numa janela que pode mover e redimensionar (precisa de configurar o Zoom uma vez no servidor, ver o README).',
+      '<b>Zoom</b>: ao lado do título, escreva o seu nome e carregue em <pbtn>Entrar aqui</pbtn>. A chamada funciona dentro da página, por cima dos separadores, numa janela que pode mover e redimensionar (precisa de configurar o Zoom uma vez no servidor, ver o README).',
     'call.step3':
       'Escreva nas <b>Notas da aula</b> durante a aula: palavras novas como «palavra — перевод», erros, trabalhos de casa. <btn>⏱ Hora</btn> marca quando algo surgiu.',
     'call.step4':
@@ -1576,17 +1576,17 @@ export const tutorial = defineMessages({
     'call.step5':
       '<pbtn>Abrir o quadro</pbtn> por baixo das notas: escreva, desenhe e cole imagens. Com a partilha em direto configurada, o professor e o aluno desenham ao mesmo tempo no mesmo quadro e veem o ponteiro um do outro; caso contrário, partilhe o ecrã na chamada. <b>Ecrã inteiro</b> e <b>Guardar como imagem</b> estão por cima.',
     'call.step6':
-      '<pbtn>Começar o aquecimento</pbtn> no início da aula: cerca de 5 minutos de perguntas sobre a lição anterior e sobre os erros do aluno desde então. No fim, <b>Não ficou</b> mostra ao professor todas as respostas erradas. Faça-o no dispositivo do aluno, onde os erros ficam guardados, e partilhe o ecrã.',
+      'No separador <b>Aquecimento e jogos</b>, carregue em <pbtn>Começar o aquecimento</pbtn> no início da aula: cerca de 5 minutos de perguntas sobre a lição anterior e sobre os erros do aluno desde então. No fim, <b>Não ficou</b> mostra ao professor todas as respostas erradas. Faça-o no dispositivo do aluno, onde os erros ficam guardados, e partilhe o ecrã.',
     'call.step7':
-      '<pbtn>Jogar</pbtn> em <b>Jogo de perguntas</b>: 10 perguntas sobre as palavras da lição, 15 segundos cada, e uma resposta certa rápida vale mais. Joguem no ecrã partilhado; as melhores rondas vão para a tabela <b>Recordes</b>.',
+      'No mesmo separador, carregue em <pbtn>Jogar</pbtn> em <b>Jogo de perguntas</b>: 10 perguntas sobre as palavras da lição, 15 segundos cada, e uma resposta certa rápida vale mais. Joguem no ecrã partilhado; as melhores rondas vão para a tabela <b>Recordes</b>.',
     'call.tip3':
       '<btn>Lado a lado (meio ecrã)</btn> abre o Meet na metade direita do ecrã, ao lado da aplicação.',
     'call.tip4':
-      '<b>Videochamada</b>: quando o servidor estiver configurado para o Jitsi, carregue em <pbtn>Entrar na chamada</pbtn>. O professor e o aluno encontram-se na mesma sala dentro da página, sem instalar nada (requer uma configuração única no servidor, ver o README).',
+      '<b>Videochamada</b>: quando o servidor estiver configurado para o Jitsi, escreva o seu nome ao lado do título e carregue em <pbtn>Entrar na chamada</pbtn>. O professor e o aluno encontram-se na mesma sala dentro da página, por cima dos separadores, sem instalar nada (requer uma configuração única no servidor, ver o README).',
     'call.tip5':
       'Carregue no título de um cartão para o recolher; um cartão recolhido fica assim neste dispositivo até o voltar a abrir. Uma chamada ou o quadro num cartão recolhido continuam a funcionar.',
     'call.tip6':
-      '<b>Uma pergunta para debate</b> também está aqui, para começar a aula com uma conversa, como na sua própria página.',
+      'Os cartões por baixo da chamada estão em dois separadores: <b>Aula</b> («Criar um exercício», o trabalho de casa escrito, as palavras da lição, o manual) e <b>Aquecimento e jogos</b> (o aquecimento, o jogo de perguntas e «Uma pergunta para debate», como na sua própria página). A chamada continua seja qual for o separador aberto, e a aplicação lembra-se do separador.',
     'call.tip7':
       '<b>Trabalhos de casa</b> no fim: escreva as tarefas uma por linha durante a aula; depois, <pbtn>Acrescentar por baixo de Leçon 7</pbtn> põe-nas por baixo dessa lição, e o aluno vê-as no Início como lista.',
     'call.tip8':
@@ -1835,9 +1835,9 @@ export const tutorial = defineMessages({
     'call.intro':
       'Si apre con <b>Entra nella lezione</b> nel widget della prossima lezione, in alto, quando il documento ha un link di Google Meet o Zoom. Pensata per la lezione stessa.',
     'call.step1':
-      '<b>Google Meet</b>: premi <pbtn>Apri la chiamata in una piccola finestra</pbtn>. Meet non può funzionare dentro altri siti, quindi si apre in una piccola finestra a lato dello schermo.',
+      '<b>Google Meet</b>: accanto al titolo, apri <btn>Google Meet ▾</btn> e premi <pbtn>Apri la chiamata in una piccola finestra</pbtn>. Meet non può funzionare dentro altri siti, quindi si apre in una piccola finestra a lato dello schermo.',
     'call.step2':
-      '<b>Zoom</b>: inserisci il tuo nome e premi <pbtn>Partecipa qui</pbtn>. La chiamata funziona dentro la pagina, in una finestra che puoi spostare e ridimensionare (serve configurare Zoom una volta sul server, vedi il README).',
+      '<b>Zoom</b>: accanto al titolo, inserisci il tuo nome e premi <pbtn>Partecipa qui</pbtn>. La chiamata funziona dentro la pagina, sopra le schede, in una finestra che puoi spostare e ridimensionare (serve configurare Zoom una volta sul server, vedi il README).',
     'call.step3':
       'Scrivi negli <b>Appunti della lezione</b> durante la lezione: parole nuove come «parola — перевод», errori, compiti. <btn>⏱ Ora</btn> segna quando è venuto fuori qualcosa.',
     'call.step4':
@@ -1845,17 +1845,17 @@ export const tutorial = defineMessages({
     'call.step5':
       '<pbtn>Apri la lavagna</pbtn> sotto gli appunti: scrivi, disegna e incolla immagini. Con la condivisione in diretta configurata, insegnante e studente disegnano insieme sulla stessa lavagna e vedono il puntatore dell’altro; altrimenti condividi lo schermo nella chiamata. <b>Schermo intero</b> e <b>Salva come immagine</b> sono sopra.',
     'call.step6':
-      '<pbtn>Inizia il riscaldamento</pbtn> all’inizio della lezione: circa 5 minuti di domande sulla lezione precedente e sugli errori dello studente da allora. Alla fine, <b>Non è rimasto</b> mostra all’insegnante tutte le risposte sbagliate. Fatelo sul dispositivo dello studente, dove sono salvati gli errori, e condividete lo schermo.',
+      'Nella scheda <b>Riscaldamento e giochi</b>, premi <pbtn>Inizia il riscaldamento</pbtn> all’inizio della lezione: circa 5 minuti di domande sulla lezione precedente e sugli errori dello studente da allora. Alla fine, <b>Non è rimasto</b> mostra all’insegnante tutte le risposte sbagliate. Fatelo sul dispositivo dello studente, dove sono salvati gli errori, e condividete lo schermo.',
     'call.step7':
-      '<pbtn>Gioca</pbtn> in <b>Gioco a quiz</b>: 10 domande sulle parole della lezione, 15 secondi ciascuna, e una risposta giusta veloce vale di più. Giocate sullo schermo condiviso; i giri migliori finiscono nella tabella <b>Record</b>.',
+      'Nella stessa scheda, premi <pbtn>Gioca</pbtn> in <b>Gioco a quiz</b>: 10 domande sulle parole della lezione, 15 secondi ciascuna, e una risposta giusta veloce vale di più. Giocate sullo schermo condiviso; i giri migliori finiscono nella tabella <b>Record</b>.',
     'call.tip3':
       '<btn>Affiancata (metà schermo)</btn> apre Meet sulla metà destra dello schermo, accanto all’app.',
     'call.tip4':
-      '<b>Videochiamata</b>: quando il server è configurato per Jitsi, premi <pbtn>Partecipa alla chiamata</pbtn>. Insegnante e studente si ritrovano nella stessa stanza dentro la pagina, senza installare nulla (serve una configurazione una tantum sul server, vedi il README).',
+      '<b>Videochiamata</b>: quando il server è configurato per Jitsi, inserisci il tuo nome accanto al titolo e premi <pbtn>Partecipa alla chiamata</pbtn>. Insegnante e studente si ritrovano nella stessa stanza dentro la pagina, sopra le schede, senza installare nulla (serve una configurazione una tantum sul server, vedi il README).',
     'call.tip5':
       'Premi il titolo di un riquadro per comprimerlo; un riquadro compresso resta così su questo dispositivo finché non lo riapri. Una chiamata o la lavagna in un riquadro compresso vanno avanti.',
     'call.tip6':
-      '<b>Una domanda di discussione</b> c’è anche qui, per iniziare la lezione con una conversazione, come nella sua pagina.',
+      'I riquadri sotto la chiamata sono divisi in due schede: <b>Lezione</b> («Crea un esercizio», i compiti scritti, le parole della lezione, il libro) e <b>Riscaldamento e giochi</b> (il riscaldamento, il gioco a quiz e «Una domanda di discussione», come nella sua pagina). La chiamata continua qualunque scheda sia aperta, e l’app ricorda la scheda.',
     'call.tip7':
       '<b>Compiti</b> alla fine: scrivi i compiti uno per riga durante la lezione, poi <pbtn>Aggiungi sotto Leçon 7</pbtn> li mette sotto quella lezione, e lo studente li vede nella Home come lista.',
     'call.tip8':
