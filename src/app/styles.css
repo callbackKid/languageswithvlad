@@ -110,7 +110,8 @@ select {
   color: inherit;
 }
 /* a dropdown draws its own arrow: the browser's sits against the right border, and padding can't
-   move it. Rules below set background-color, not background, so the arrow stays. */
+   move it. Rules below set background-color, not background, so the arrow stays. No
+   cursor: pointer on a dropdown: Chrome makes it flicker between the hand and the arrow. */
 select {
   appearance: none;
   padding-right: 30px;
@@ -118,7 +119,6 @@ select {
   background-repeat: no-repeat;
   background-position: right 10px center;
   background-size: 10px 6px;
-  cursor: pointer;
 }
 
 a {
@@ -1155,7 +1155,6 @@ main.page.wide {
   border-radius: 8px;
   background-color: var(--surface);
   color: var(--text);
-  cursor: pointer;
 }
 
 .connect-language {
