@@ -43,6 +43,101 @@ function voiceFor(language: UiLanguage): SpeechSynthesisVoice | undefined {
   );
 }
 
+/** Why the browser couldn't read aloud, for the note that tells the student: it has no voices at
+    all, none for the language, or the voice failed (error is the browser's code, or "silent" when
+    the read never started). */
+export type SpeechProblem =
+  | { kind: 'noVoices' }
+  | { kind: 'noVoice'; language: UiLanguage }
+  | { kind: 'failed'; error: string };
+
+let problem: SpeechProblem | null = null;
+const problemListeners = new Set<() => void>();
+// the problems the student closed: not shown again until the page is reloaded
+const dismissed = new Set<string>();
+
+const problemKey = (value: SpeechProblem) =>
+  value.kind === 'noVoice' ? `noVoice:${value.language}` : value.kind;
+
+function setProblem(next: SpeechProblem | null) {
+  if (next && dismissed.has(problemKey(next))) return;
+  // the same problem again (another tap on 🔊) keeps the note as it is
+  if (JSON.stringify(next) === JSON.stringify(problem)) return;
+  problem = next;
+  problemListeners.forEach((listener) => listener());
+}
+
+// For useSyncExternalStore: the current problem, and a way to hear when it changes.
+export const getSpeechProblem = () => problem;
+export function subscribeSpeechProblem(listener: () => void) {
+  problemListeners.add(listener);
+  return () => {
+    problemListeners.delete(listener);
+  };
+}
+
+// The student closed the note: this problem stays quiet until the page is reloaded.
+export function dismissSpeechProblem() {
+  if (problem) dismissed.add(problemKey(problem));
+  setProblem(null);
+}
+
+// Says so when the voices are known and none reads the language (Chrome fills the list late).
+function checkVoice(language: UiLanguage) {
+  if (window.speechSynthesis.getVoices().length && !voiceFor(language))
+    setProblem({ kind: 'noVoice', language });
+}
+
+// Errors that only mean the read was stopped on purpose: by a new read, a page change or Stop.
+const STOPPED_ERRORS = ['interrupted', 'canceled'];
+// Errors the browser gives when it has no voice for the utterance's language.
+const NO_VOICE_ERRORS = ['language-unavailable', 'voice-unavailable'];
+// How long a read may take to start before it counts as silent: Chrome's online voices can need a
+// second or two to load.
+const START_TIMEOUT_MS = 5000;
+
+// the utterance whose start is being waited for, and the timer that gives up on it
+let watched: SpeechSynthesisUtterance | null = null;
+let startTimer = 0;
+
+function stopWatching() {
+  window.clearTimeout(startTimer);
+  watched = null;
+}
+
+/** Watches a read for the problems the student can't see: an error, or no start at all (no voices,
+    or the browser's speech stuck). A read that starts clears a failure shown before. */
+function watch(utterance: SpeechSynthesisUtterance, language: UiLanguage) {
+  stopWatching();
+  watched = utterance;
+  startTimer = window.setTimeout(() => {
+    if (watched !== utterance) return;
+    watched = null;
+    setProblem(
+      window.speechSynthesis.getVoices().length
+        ? { kind: 'failed', error: 'silent' }
+        : { kind: 'noVoices' }
+    );
+  }, START_TIMEOUT_MS);
+  const settle = () => {
+    if (watched === utterance) stopWatching();
+  };
+  utterance.addEventListener('start', () => {
+    settle();
+    if (problem && problem.kind !== 'noVoice') setProblem(null);
+  });
+  utterance.addEventListener('end', settle);
+  utterance.addEventListener('error', (event) => {
+    settle();
+    if (STOPPED_ERRORS.includes(event.error)) return;
+    setProblem(
+      NO_VOICE_ERRORS.includes(event.error)
+        ? { kind: 'noVoice', language }
+        : { kind: 'failed', error: event.error }
+    );
+  });
+}
+
 // The text as an utterance in the language's voice at the speed from Settings; null when empty.
 function utteranceFor(text: string, language: UiLanguage): SpeechSynthesisUtterance | null {
   if (!canSpeak) return null;
@@ -60,8 +155,10 @@ function utteranceFor(text: string, language: UiLanguage): SpeechSynthesisUttera
 export function speak(text: string, language: UiLanguage = 'fr') {
   const utterance = utteranceFor(text, language);
   if (!utterance) return;
+  checkVoice(language);
   playEvenWhenSilenced();
   window.speechSynthesis.cancel();
+  watch(utterance, language);
   window.speechSynthesis.speak(utterance);
 }
 
@@ -82,7 +179,11 @@ const MIN_READ_MS = 1500;
     when there is nothing to read or no voice for the language (the text is then only shown). */
 export function speakAndWait(text: string, language: UiLanguage): Promise<void> {
   const utterance = utteranceFor(text, language);
-  if (!utterance || !hasVoice(language)) return Promise.resolve();
+  if (!utterance) return Promise.resolve();
+  if (!hasVoice(language)) {
+    checkVoice(language);
+    return Promise.resolve();
+  }
   return new Promise((resolve) => {
     let timer = 0;
     const finish = () => {
@@ -101,6 +202,7 @@ export function speakAndWait(text: string, language: UiLanguage): Promise<void> 
     reading = utterance;
     playEvenWhenSilenced();
     window.speechSynthesis.cancel();
+    watch(utterance, language);
     window.speechSynthesis.speak(utterance);
   });
 }
@@ -118,7 +220,9 @@ export function unlockSpeech() {
 /** Stops whatever is being read aloud: on leaving a page and when the tab is hidden, so no word
     goes on playing over a page that has nothing to do with it. */
 export function stopSpeaking() {
-  if (canSpeak) window.speechSynthesis.cancel();
+  if (!canSpeak) return;
+  stopWatching();
+  window.speechSynthesis.cancel();
 }
 
 // "il/elle/on se lève" → "il se lève", "allé(e)s" → "allés": read one natural form, not the notation.

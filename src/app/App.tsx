@@ -40,6 +40,7 @@ import { followLink, hrefFor, navigate, usePath } from '@/shared/lib/router';
 import { stopSpeaking } from '@/shared/lib/speech';
 import { asFields, load, loadChecked, loadText, remove, save } from '@/shared/lib/storage';
 import Avatar from '@/shared/ui/Avatar';
+import SpeechNote from '@/shared/ui/SpeechNote';
 import { Discuss } from '@/widgets/discussion';
 import { Feedback } from '@/widgets/feedback';
 import { NextLessonBadge } from '@/widgets/next-lesson-badge';
@@ -522,6 +523,7 @@ export default function App() {
         lesson={section === 'lessons' || section === 'call' ? lesson : null}
         canWrite={!!docTarget.docWriter}
       />
+      <SpeechNote />
       <TooltipLayer />
     </>
   );

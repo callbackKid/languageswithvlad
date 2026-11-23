@@ -27,6 +27,14 @@ export const common = defineMessages({
     howItWorks: 'How this section works',
     teacherOnly: 'Only the teacher can do this. The teacher turns on teacher tools in Settings.',
     listenTo: 'Listen: {text}',
+    // the note when the browser can't read aloud; {language} is a language's name from Intl
+    // ("French"), {error} the browser's error code, shown so the teacher can tell what went wrong
+    speechNoVoices:
+      'This browser has no voices, so nothing can be read aloud. Add a voice in your device’s speech settings (on Linux, install speech-dispatcher), then restart the browser.',
+    speechNoVoice:
+      'This browser has no voice for {language}, so it can’t read {language} words properly. Add one in your device’s speech settings (on Windows: Time & language → Speech → Add voices), then restart the browser.',
+    speechFailed:
+      'The browser couldn’t read this aloud ({error}). Check that the sound is on. If it keeps happening, close the browser completely and open it again.',
     addToMyWords: 'Add to Words to learn',
     removeFromMyWords: 'Remove from Words to learn',
     starLabelAdd: 'Add to Words to learn: {word}',
@@ -139,6 +147,12 @@ export const common = defineMessages({
     teacherOnly:
       'Это может только преподаватель. Инструменты преподавателя включаются в Настройках.',
     listenTo: 'Послушать: {text}',
+    speechNoVoices:
+      'В этом браузере нет голосов, поэтому он ничего не может прочитать вслух. Добавьте голос в настройках речи на устройстве (в Linux установите speech-dispatcher) и перезапустите браузер.',
+    speechNoVoice:
+      'В этом браузере нет голоса для языка «{language}», поэтому он не может правильно читать слова на этом языке. Добавьте голос в настройках речи на устройстве (в Windows: Время и язык → Речь → Добавить голоса) и перезапустите браузер.',
+    speechFailed:
+      'Браузеру не удалось прочитать это вслух ({error}). Проверьте, что звук включён. Если это повторяется, полностью закройте браузер и откройте его снова.',
     addToMyWords: 'Добавить в «Слова на изучении»',
     removeFromMyWords: 'Убрать из «Слов на изучении»',
     starLabelAdd: 'Добавить в «Слова на изучении»: {word}',
@@ -262,6 +276,12 @@ export const common = defineMessages({
     teacherOnly:
       'Seul le professeur peut faire cela. Le professeur active ses outils dans les Réglages.',
     listenTo: 'Écouter : {text}',
+    speechNoVoices:
+      'Ce navigateur n’a aucune voix, il ne peut donc rien lire à voix haute. Ajoutez une voix dans les paramètres vocaux de votre appareil (sous Linux, installez speech-dispatcher), puis redémarrez le navigateur.',
+    speechNoVoice:
+      'Ce navigateur n’a pas de voix en {language}, il ne peut donc pas bien lire les mots en {language}. Ajoutez-en une dans les paramètres vocaux de votre appareil (sous Windows : Heure et langue → Voix → Ajouter des voix), puis redémarrez le navigateur.',
+    speechFailed:
+      'Le navigateur n’a pas pu lire ce texte à voix haute ({error}). Vérifiez que le son est activé. Si cela se reproduit, fermez complètement le navigateur et rouvrez-le.',
     addToMyWords: 'Ajouter aux Mots à apprendre',
     removeFromMyWords: 'Retirer des Mots à apprendre',
     starLabelAdd: 'Ajouter aux Mots à apprendre : {word}',
@@ -377,6 +397,12 @@ export const common = defineMessages({
     teacherOnly:
       'Das kann nur die Lehrkraft. Die Lehrkraft schaltet ihre Werkzeuge in den Einstellungen ein.',
     listenTo: 'Anhören: {text}',
+    speechNoVoices:
+      'Dieser Browser hat keine Stimmen, deshalb kann nichts vorgelesen werden. Füge in den Einstellungen deines Geräts eine Stimme für die Sprachausgabe hinzu (unter Linux: installiere speech-dispatcher) und starte den Browser dann neu.',
+    speechNoVoice:
+      'Dieser Browser hat keine Stimme für {language}, deshalb kann er Wörter auf {language} nicht richtig vorlesen. Füge in den Einstellungen deines Geräts eine hinzu (unter Windows: Zeit und Sprache → Spracherkennung → Stimmen hinzufügen) und starte den Browser dann neu.',
+    speechFailed:
+      'Der Browser konnte das nicht vorlesen ({error}). Prüfe, ob der Ton an ist. Wenn das immer wieder passiert, schließ den Browser ganz und öffne ihn erneut.',
     addToMyWords: 'Zu den Lernwörtern hinzufügen',
     removeFromMyWords: 'Aus den Lernwörtern entfernen',
     starLabelAdd: 'Zu den Lernwörtern hinzufügen: {word}',
@@ -493,6 +519,12 @@ export const common = defineMessages({
     teacherOnly:
       'Solo el profesor puede hacer esto. El profesor activa sus herramientas en Ajustes.',
     listenTo: 'Escuchar: {text}',
+    speechNoVoices:
+      'Este navegador no tiene voces, así que no puede leer nada en voz alta. Añade una voz en los ajustes de voz de tu dispositivo (en Linux, instala speech-dispatcher) y reinicia el navegador.',
+    speechNoVoice:
+      'Este navegador no tiene ninguna voz en {language}, así que no puede leer bien las palabras en {language}. Añade una en los ajustes de voz de tu dispositivo (en Windows: Hora e idioma → Voz → Agregar voces) y reinicia el navegador.',
+    speechFailed:
+      'El navegador no ha podido leer esto en voz alta ({error}). Comprueba que el sonido está activado. Si vuelve a pasar, cierra el navegador del todo y ábrelo de nuevo.',
     addToMyWords: 'Añadir a Palabras por aprender',
     removeFromMyWords: 'Quitar de Palabras por aprender',
     starLabelAdd: 'Añadir a Palabras por aprender: {word}',
@@ -607,6 +639,12 @@ export const common = defineMessages({
     teacherOnly:
       'Só o professor pode fazer isto. O professor ativa as suas ferramentas nas Definições.',
     listenTo: 'Ouvir: {text}',
+    speechNoVoices:
+      'Este navegador não tem vozes, por isso não consegue ler nada em voz alta. Adicione uma voz nas definições de voz do seu dispositivo (no Linux, instale o speech-dispatcher) e reinicie o navegador.',
+    speechNoVoice:
+      'Este navegador não tem nenhuma voz em {language}, por isso não consegue ler bem as palavras em {language}. Adicione uma nas definições de voz do seu dispositivo (no Windows: Hora e idioma → Voz → Adicionar vozes) e reinicie o navegador.',
+    speechFailed:
+      'O navegador não conseguiu ler isto em voz alta ({error}). Verifique se o som está ligado. Se continuar a acontecer, feche completamente o navegador e volte a abri-lo.',
     addToMyWords: 'Acrescentar às Palavras por aprender',
     removeFromMyWords: 'Retirar das Palavras por aprender',
     starLabelAdd: 'Acrescentar às Palavras por aprender: {word}',
@@ -722,6 +760,12 @@ export const common = defineMessages({
     teacherOnly:
       'Solo l’insegnante può farlo. L’insegnante attiva i suoi strumenti nelle Impostazioni.',
     listenTo: 'Ascolta: {text}',
+    speechNoVoices:
+      'Questo browser non ha voci, quindi non può leggere niente ad alta voce. Aggiungi una voce nelle impostazioni vocali del dispositivo (su Linux, installa speech-dispatcher), poi riavvia il browser.',
+    speechNoVoice:
+      'Questo browser non ha una voce in {language}, quindi non può leggere bene le parole in {language}. Aggiungine una nelle impostazioni vocali del dispositivo (su Windows: Ora e lingua → Voce → Aggiungi voci), poi riavvia il browser.',
+    speechFailed:
+      'Il browser non è riuscito a leggere questo testo ad alta voce ({error}). Controlla che l’audio sia attivo. Se succede ancora, chiudi del tutto il browser e riaprilo.',
     addToMyWords: 'Aggiungi alle Parole da imparare',
     removeFromMyWords: 'Togli dalle Parole da imparare',
     starLabelAdd: 'Aggiungi alle Parole da imparare: {word}',

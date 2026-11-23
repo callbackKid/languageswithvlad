@@ -53,6 +53,18 @@ export const NEWS: NewsDay[] = [
       {
         kind: 'better',
         text: {
+          en: 'When 🔊 stays silent, a note now says why and what to do: the browser has no voices, has no voice for the language, or couldn’t read the word.',
+          ru: 'Когда 🔊 молчит, теперь появляется подсказка, почему так и что делать: в браузере нет голосов, нет голоса для этого языка или браузер не смог прочитать слово.',
+          fr: 'Quand 🔊 reste muet, un message explique maintenant pourquoi et quoi faire : le navigateur n’a aucune voix, n’a pas de voix pour la langue, ou n’a pas pu lire le mot.',
+          de: 'Wenn 🔊 stumm bleibt, sagt dir jetzt ein Hinweis, warum und was zu tun ist: Der Browser hat keine Stimmen, keine Stimme für die Sprache, oder er konnte das Wort nicht vorlesen.',
+          es: 'Cuando 🔊 no suena, ahora un aviso explica por qué y qué hacer: el navegador no tiene voces, no tiene voz para el idioma o no ha podido leer la palabra.',
+          pt: 'Quando 🔊 fica em silêncio, um aviso explica agora porquê e o que fazer: o navegador não tem vozes, não tem voz para a língua ou não conseguiu ler a palavra.',
+          it: 'Quando 🔊 resta muto, ora un avviso spiega perché e cosa fare: il browser non ha voci, non ha una voce per la lingua o non è riuscito a leggere la parola.',
+        },
+      },
+      {
+        kind: 'better',
+        text: {
           en: 'Lesson mode is tidier: the way into the call sits beside the title, and the cards under it are in two tabs, Lesson and Warm-up and games (the warm-up, the quiz game and A question for discussion). Switching tabs never closes the call.',
           ru: 'Режим урока стал аккуратнее: вход в звонок теперь рядом с заголовком, а карточки под звонком разложены по двум вкладкам — «Урок» и «Разминка и игры» (разминка, игра-квиз и «Вопрос для обсуждения»). Переключение вкладок никогда не прерывает звонок.',
           fr: 'Le mode cours est mieux rangé : l’accès à l’appel se trouve à côté du titre, et les cartes en dessous sont réparties en deux onglets, « Cours » et « Échauffement et jeux » (l’échauffement, le Quiz chrono et « Une question à discuter »). Changer d’onglet ne coupe jamais l’appel.',
