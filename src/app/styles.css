@@ -267,12 +267,11 @@ a {
   background: transparent;
   color: var(--ink);
 }
-/* a × that closes or clears something, and a button inside a line of text, stay borderless,
-   like the icons and text around them */
-.btn.ghost.dismiss,
+/* a button inside a line of text stays borderless, like the text around it */
 .btn.ghost.inline {
   border-color: transparent;
 }
+/* a × that closes or clears something: narrower, as it holds one sign */
 .btn.ghost.dismiss {
   padding-left: 8px;
   padding-right: 8px;
