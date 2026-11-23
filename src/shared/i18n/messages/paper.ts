@@ -114,7 +114,7 @@ export const paper = defineMessages({
     addedToLesson: 'Added to the lesson in the document. Syncing…',
     drawingsHint: 'From the day of this lesson, saved on this device.',
     boardOfLesson: 'Board from this lesson',
-    callNotesOfLesson: 'Notes from lesson mode',
+    callNotesOfLesson: 'Notes from the lesson space',
     loadingPicture: 'Drawing the board…',
   },
   ru: {
@@ -231,7 +231,7 @@ export const paper = defineMessages({
     addedToLesson: 'Добавлено к уроку в документе. Синхронизирую…',
     drawingsHint: 'За день этого урока, сохранено на этом устройстве.',
     boardOfLesson: 'Доска с этого урока',
-    callNotesOfLesson: 'Заметки из режима урока',
+    callNotesOfLesson: 'Заметки из пространства урока',
     loadingPicture: 'Рисую доску…',
   },
   fr: {
@@ -343,7 +343,7 @@ export const paper = defineMessages({
     addedToLesson: 'Ajouté à la leçon dans le document. Synchronisation…',
     drawingsHint: 'Du jour de cette leçon, enregistré sur cet appareil.',
     boardOfLesson: 'Le tableau de cette leçon',
-    callNotesOfLesson: 'Notes du mode cours',
+    callNotesOfLesson: 'Notes de l’espace cours',
     loadingPicture: 'Je dessine le tableau…',
   },
   de: {
@@ -456,7 +456,7 @@ export const paper = defineMessages({
     addedToLesson: 'Zur Lektion im Dokument hinzugefügt. Synchronisiere…',
     drawingsHint: 'Vom Tag dieser Lektion, auf diesem Gerät gespeichert.',
     boardOfLesson: 'Die Tafel aus dieser Stunde',
-    callNotesOfLesson: 'Notizen aus dem Unterrichtsmodus',
+    callNotesOfLesson: 'Notizen aus dem Unterrichtsraum',
     loadingPicture: 'Ich zeichne die Tafel…',
   },
   es: {
@@ -568,7 +568,7 @@ export const paper = defineMessages({
     addedToLesson: 'Añadido a la lección en el documento. Sincronizando…',
     drawingsHint: 'Del día de esta lección, guardado en este dispositivo.',
     boardOfLesson: 'La pizarra de esta clase',
-    callNotesOfLesson: 'Notas del modo clase',
+    callNotesOfLesson: 'Notas del espacio de clase',
     loadingPicture: 'Dibujando la pizarra…',
   },
   pt: {
@@ -681,7 +681,7 @@ export const paper = defineMessages({
     addedToLesson: 'Acrescentado à lição no documento. A sincronizar…',
     drawingsHint: 'Do dia desta lição, guardado neste dispositivo.',
     boardOfLesson: 'O quadro desta aula',
-    callNotesOfLesson: 'Notas do modo aula',
+    callNotesOfLesson: 'Notas do espaço de aula',
     loadingPicture: 'A desenhar o quadro…',
   },
   it: {
@@ -792,7 +792,7 @@ export const paper = defineMessages({
     addedToLesson: 'Aggiunto alla lezione nel documento. Sincronizzazione…',
     drawingsHint: 'Dal giorno di questa lezione, salvato su questo dispositivo.',
     boardOfLesson: 'La lavagna di questa lezione',
-    callNotesOfLesson: 'Appunti della modalità lezione',
+    callNotesOfLesson: 'Appunti dello spazio lezione',
     loadingPicture: 'Disegno la lavagna…',
   },
 });

@@ -37,7 +37,7 @@ export const tutorial = defineMessages({
     'header.step2':
       '<b>Next lesson</b> shows the date from the newest line like <ex>le cours prochain: 22.11.2026 18:00 de Paris</ex>. A time given for a city is converted to yours. When the date has passed it says “not confirmed yet”.',
     'header.step3':
-      '<b>Enter the lesson</b> sits in the next-lesson widget when the document has a Google Meet or Zoom link, and opens lesson mode: the call next to the lesson and your notes.',
+      '<b>Lesson space</b> sits in the next-lesson widget when the document has a Google Meet or Zoom link, and opens it: the call next to the lesson and your notes.',
     'header.step4':
       '<b>Open document</b>, <b>Copy student link</b> and <b>Change document</b> are in <b>Settings</b>, under Document.',
     'header.step5':
@@ -61,7 +61,7 @@ export const tutorial = defineMessages({
     'home.tip1':
       'When the teacher writes the homework in the lesson (<ex>Devoirs: verbes être, avoir — présent; mots de la leçon 5; 5 phrases au passé composé</ex>), Home shows it as a checklist, with how long until the next lesson. <btn>Practise the words</btn>, <btn>Fill the gaps</btn> and <btn>Conjugate</btn> open the task’s exercise, and finishing it ticks the task.',
     'home.tip2':
-      'A written task (<ex>5 phrases au passé composé</ex>, a translation, “describe your day”) has <btn>Write</btn>: write your answer and press <pbtn>Check</pbtn>. Claude fixes the mistakes, explains each one like a tutor and says whether the answer does what the task asks. In lesson mode, <b>Written homework</b> shows the corrected answers to the teacher.',
+      'A written task (<ex>5 phrases au passé composé</ex>, a translation, “describe your day”) has <btn>Write</btn>: write your answer and press <pbtn>Check</pbtn>. Claude fixes the mistakes, explains each one like a tutor and says whether the answer does what the task asks. In the lesson space, <b>Written homework</b> shows the corrected answers to the teacher.',
     'home.tip3':
       '<btn>Prepare the report</btn> under the homework (and at the bottom of Stats) writes a short report for the teacher: the homework done, answers and mistakes since the lesson, your written answers as Claude corrected them. Read it, change it if you like, and <pbtn>Add to the document</pbtn> puts it under the lesson.',
     'home.tip4':
@@ -92,7 +92,7 @@ export const tutorial = defineMessages({
     'lessons.tip4':
       '<b>My notes</b> is your notepad for the lesson, saved as you type. <b>Original</b> shows the lesson exactly as written.',
     'lessons.tip5':
-      '<b>Grammar</b> explains every grammar point of the lesson, with <pbtn>Practise this rule</pbtn> for sentences on it. <b>Homework</b> lists what to do; tick tasks off as you finish. <b>Book exercises</b> shows exercises from the book, and <pbtn>Import from the book</pbtn> brings in book pages from photos or a PDF: tick the exercises, the text and/or the grammar, and Claude copies them into the lesson in the document, never with the answers. Under <b>My notes</b> you find the board and the lesson-mode notes from that day.',
+      '<b>Grammar</b> explains every grammar point of the lesson, with <pbtn>Practise this rule</pbtn> for sentences on it. <b>Homework</b> lists what to do; tick tasks off as you finish. <b>Book exercises</b> shows exercises from the book, and <pbtn>Import from the book</pbtn> brings in book pages from photos or a PDF: tick the exercises, the text and/or the grammar, and Claude copies them into the lesson in the document, never with the answers. Under <b>My notes</b> you find the board and the notes from the lesson space of that day.',
     'lessons.tip6':
       'A word the teacher marks with ★ in the document (<ex>★ la boulangerie — пекарня</ex>) is a <b>key word</b>: it has a <b>key</b> badge and comes up more often in exercises.',
     'lessons.tip7':
@@ -217,10 +217,10 @@ export const tutorial = defineMessages({
       'Also there: the daily goal for the 🔥 streak, the speed of 🔊, which sections the menu shows and which tabs a lesson page shows.',
     'settings.tip1':
       '“Translations in” sets the language Claude’s translations are written in, apart from the interface language; a lesson is prepared again in that language when you open it.',
-    'call.title': 'Lesson mode',
+    'call.title': 'Lesson space',
     'call.summary': 'The call, notes and the lesson’s words on one screen',
     'call.intro':
-      'Opens from <b>Enter the lesson</b> in the next-lesson widget at the top when the document has a Google Meet or Zoom link. Made for the lesson itself.',
+      'Opens from <b>Lesson space</b> in the next-lesson widget at the top when the document has a Google Meet or Zoom link. Made for the lesson itself.',
     'call.step1':
       '<b>Google Meet</b>: beside the title, open <btn>Google Meet ▾</btn> and press <pbtn>Open the call in a small window</pbtn>. Meet can’t run inside other websites, so it opens as a small window at the side of the screen.',
     'call.step2':
@@ -303,7 +303,7 @@ export const tutorial = defineMessages({
     'header.step2':
       '<b>Следующий урок</b> показывает дату из самой новой строки вроде <ex>le cours prochain: 22.11.2026 18:00 de Paris</ex>. Время, указанное для города, переводится в ваше. Если дата прошла, будет написано «пока не подтверждена».',
     'header.step3':
-      '<b>Войти в урок</b> появляется в виджете следующего урока, если в документе есть ссылка на Google Meet или Zoom, и открывает режим урока: звонок рядом с уроком и заметками.',
+      '<b>Пространство урока</b> появляется в виджете следующего урока, если в документе есть ссылка на Google Meet или Zoom, и открывает пространство урока: звонок рядом с уроком и заметками.',
     'header.step4':
       '<b>Открыть документ</b>, <b>Ссылка для ученика</b> и <b>Сменить документ</b> находятся в <b>Настройках</b>, в разделе «Документ».',
     'header.step5':
@@ -327,7 +327,7 @@ export const tutorial = defineMessages({
     'home.tip1':
       'Когда преподаватель пишет в уроке домашнее задание (<ex>Devoirs: verbes être, avoir — présent; mots de la leçon 5; 5 phrases au passé composé</ex>), на Главной появляется чек-лист и сколько осталось до урока. <btn>Повторить слова</btn>, <btn>Вставить слова</btn> и <btn>Проспрягать</btn> открывают упражнение к заданию, а когда оно закончено, галочка ставится сама.',
     'home.tip2':
-      'У письменного задания (<ex>5 phrases au passé composé</ex>, перевод, «опиши свой день») есть кнопка <btn>Написать</btn>: напишите ответ и нажмите <pbtn>Проверить</pbtn>. Claude исправит ошибки, коротко объяснит каждую, как репетитор, и скажет, выполнено ли задание. В режиме урока <b>Письменное домашнее задание</b> показывает преподавателю исправленные ответы.',
+      'У письменного задания (<ex>5 phrases au passé composé</ex>, перевод, «опиши свой день») есть кнопка <btn>Написать</btn>: напишите ответ и нажмите <pbtn>Проверить</pbtn>. Claude исправит ошибки, коротко объяснит каждую, как репетитор, и скажет, выполнено ли задание. В пространстве урока <b>Письменное домашнее задание</b> показывает преподавателю исправленные ответы.',
     'home.tip3':
       '<btn>Подготовить отчёт</btn> под домашним заданием (и внизу Статистики) собирает короткий отчёт для преподавателя: что сделано, ответы и ошибки с урока, письменные ответы, исправленные Claude. Прочитайте, при желании поправьте, и <pbtn>Добавить в документ</pbtn> поместит его под урок.',
     'home.tip4':
@@ -359,7 +359,7 @@ export const tutorial = defineMessages({
     'lessons.tip4':
       '<b>Мои заметки</b> — ваш блокнот к уроку, сохраняется по мере набора. <b>Оригинал</b> показывает урок так, как он записан.',
     'lessons.tip5':
-      '<b>Грамматика</b> объясняет каждую тему урока, а <pbtn>Потренировать это правило</pbtn> даёт предложения на неё. <b>Домашнее задание</b> — список того, что нужно сделать; отмечайте выполненное. <b>Упражнения из учебника</b> показывает упражнения из книги, а <pbtn>Добавить из учебника</pbtn> берёт страницы учебника с фото или из PDF: отметьте упражнения, текст и/или грамматику, и Claude перепишет их в урок в документе, всегда без ответов. В <b>Моих заметках</b> — доска и заметки из режима урока за тот день.',
+      '<b>Грамматика</b> объясняет каждую тему урока, а <pbtn>Потренировать это правило</pbtn> даёт предложения на неё. <b>Домашнее задание</b> — список того, что нужно сделать; отмечайте выполненное. <b>Упражнения из учебника</b> показывает упражнения из книги, а <pbtn>Добавить из учебника</pbtn> берёт страницы учебника с фото или из PDF: отметьте упражнения, текст и/или грамматику, и Claude перепишет их в урок в документе, всегда без ответов. В <b>Моих заметках</b> — доска и заметки из пространства урока за тот день.',
     'lessons.tip6':
       'Слово, которое преподаватель отметил в документе звёздочкой (<ex>★ la boulangerie — пекарня</ex>), — <b>ключевое</b>: у него метка <b>ключевое</b>, и в упражнениях оно встречается чаще.',
     'lessons.tip7':
@@ -482,10 +482,10 @@ export const tutorial = defineMessages({
       'Ещё там: цель на день для 🔥 серии, скорость озвучки 🔊, какие разделы показывать в меню и какие вкладки — на странице урока.',
     'settings.tip1':
       'Настройка «Язык переводов» задаёт, на каком языке Claude пишет переводы, независимо от языка интерфейса; урок заново готовится на этом языке, когда вы его открываете.',
-    'call.title': 'Режим урока',
+    'call.title': 'Пространство урока',
     'call.summary': 'Звонок, заметки и слова урока на одном экране',
     'call.intro':
-      'Открывается кнопкой <b>Войти в урок</b> в виджете следующего урока наверху, если в документе есть ссылка на Google Meet или Zoom. Для самого урока.',
+      'Открывается кнопкой <b>Пространство урока</b> в виджете следующего урока наверху, если в документе есть ссылка на Google Meet или Zoom. Для самого урока.',
     'call.step1':
       '<b>Google Meet</b>: рядом с заголовком откройте <btn>Google Meet ▾</btn> и нажмите <pbtn>Открыть звонок в маленьком окне</pbtn>. Meet нельзя встроить в другие сайты, поэтому он открывается маленьким окном сбоку экрана.',
     'call.step2':
@@ -569,7 +569,7 @@ export const tutorial = defineMessages({
     'header.step2':
       '<b>Prochain cours</b> affiche la date de la ligne la plus récente comme <ex>le cours prochain: 22.11.2026 18:00 de Paris</ex>. Une heure donnée pour une ville est convertie dans la vôtre. Une fois la date passée, il est écrit « pas encore confirmée ».',
     'header.step3':
-      '<b>Entrer dans le cours</b> apparaît dans le widget du prochain cours quand le document contient un lien Google Meet ou Zoom et ouvre le mode cours : l’appel à côté de la leçon et de vos notes.',
+      '<b>Espace cours</b> apparaît dans le widget du prochain cours quand le document contient un lien Google Meet ou Zoom et ouvre l’espace cours : l’appel à côté de la leçon et de vos notes.',
     'header.step4':
       '<b>Ouvrir le document</b>, <b>Copier le lien élève</b> et <b>Changer de document</b> se trouvent dans les <b>Réglages</b>, sous Document.',
     'header.step5':
@@ -593,7 +593,7 @@ export const tutorial = defineMessages({
     'home.tip1':
       'Quand le professeur écrit les devoirs dans la leçon (<ex>Devoirs: verbes être, avoir — présent; mots de la leçon 5; 5 phrases au passé composé</ex>), l’accueil les affiche en liste à cocher, avec le temps restant avant le prochain cours. <btn>Réviser les mots</btn>, <btn>Compléter les trous</btn> et <btn>Conjuguer</btn> ouvrent l’exercice de la tâche, et le finir la coche.',
     'home.tip2':
-      'Une tâche écrite (<ex>5 phrases au passé composé</ex>, une traduction, « décris ta journée ») a <btn>Écrire</btn> : écrivez votre réponse et appuyez sur <pbtn>Vérifier</pbtn>. Claude corrige les erreurs, explique chacune comme un professeur particulier et dit si la réponse fait ce que demande la tâche. Dans le mode cours, <b>Devoirs écrits</b> montre les réponses corrigées au professeur.',
+      'Une tâche écrite (<ex>5 phrases au passé composé</ex>, une traduction, « décris ta journée ») a <btn>Écrire</btn> : écrivez votre réponse et appuyez sur <pbtn>Vérifier</pbtn>. Claude corrige les erreurs, explique chacune comme un professeur particulier et dit si la réponse fait ce que demande la tâche. Dans l’espace cours, <b>Devoirs écrits</b> montre les réponses corrigées au professeur.',
     'home.tip3':
       '<btn>Préparer le rapport</btn> sous les devoirs (et en bas des Statistiques) rédige un court rapport pour le professeur : les devoirs faits, les réponses et les erreurs depuis le cours, vos réponses écrites corrigées par Claude. Relisez-le, modifiez-le si vous voulez, et <pbtn>Ajouter au document</pbtn> le place sous la leçon.',
     'home.tip4':
@@ -624,7 +624,7 @@ export const tutorial = defineMessages({
     'lessons.tip4':
       '<b>Mes notes</b> est votre bloc-notes pour la leçon, enregistré pendant la saisie. <b>Original</b> montre la leçon telle qu’elle est écrite.',
     'lessons.tip5':
-      '<b>Grammaire</b> explique chaque point de grammaire de la leçon, avec <pbtn>S’entraîner sur cette règle</pbtn> pour des phrases dessus. <b>Devoirs</b> liste ce qu’il faut faire ; cochez au fur et à mesure. <b>Exercices du manuel</b> affiche les exercices du livre, et <pbtn>Importer du manuel</pbtn> reprend des pages du manuel depuis des photos ou un PDF : cochez les exercices, le texte et/ou la grammaire, et Claude les recopie dans la leçon du document, jamais avec les réponses. Sous <b>Mes notes</b>, vous trouvez le tableau et les notes du mode cours de ce jour-là.',
+      '<b>Grammaire</b> explique chaque point de grammaire de la leçon, avec <pbtn>S’entraîner sur cette règle</pbtn> pour des phrases dessus. <b>Devoirs</b> liste ce qu’il faut faire ; cochez au fur et à mesure. <b>Exercices du manuel</b> affiche les exercices du livre, et <pbtn>Importer du manuel</pbtn> reprend des pages du manuel depuis des photos ou un PDF : cochez les exercices, le texte et/ou la grammaire, et Claude les recopie dans la leçon du document, jamais avec les réponses. Sous <b>Mes notes</b>, vous trouvez le tableau et les notes de l’espace cours de ce jour-là.',
     'lessons.tip6':
       'Un mot que le professeur marque d’une ★ dans le document (<ex>★ la boulangerie — пекарня</ex>) est un <b>mot clé</b> : il porte l’étiquette <b>clé</b> et revient plus souvent dans les exercices.',
     'lessons.tip7':
@@ -753,10 +753,10 @@ export const tutorial = defineMessages({
       'Aussi : l’objectif du jour pour la 🔥 série, la vitesse de 🔊, les sections affichées dans le menu et les onglets affichés sur la page d’une leçon.',
     'settings.tip1':
       '« Langue des traductions » fixe la langue dans laquelle Claude écrit ses traductions, indépendamment de celle de l’interface ; une leçon est de nouveau préparée dans cette langue quand vous l’ouvrez.',
-    'call.title': 'Mode cours',
+    'call.title': 'Espace cours',
     'call.summary': 'L’appel, les notes et les mots de la leçon sur un seul écran',
     'call.intro':
-      'S’ouvre avec <b>Entrer dans le cours</b> dans le widget du prochain cours, en haut, quand le document contient un lien Google Meet ou Zoom. Pensé pour le cours lui-même.',
+      'S’ouvre avec <b>Espace cours</b> dans le widget du prochain cours, en haut, quand le document contient un lien Google Meet ou Zoom. Pensé pour le cours lui-même.',
     'call.step1':
       '<b>Google Meet</b> : à côté du titre, ouvrez <btn>Google Meet ▾</btn> et appuyez sur <pbtn>Ouvrir l’appel dans une petite fenêtre</pbtn>. Meet ne peut pas s’afficher dans d’autres sites : il s’ouvre dans une petite fenêtre sur le côté de l’écran.',
     'call.step2':
@@ -841,7 +841,7 @@ export const tutorial = defineMessages({
     'header.step2':
       '<b>Nächste Stunde</b> zeigt das Datum aus der neuesten Zeile wie <ex>nächste Stunde: 22.11.2026 18:00 Berlin</ex>. Eine Uhrzeit für eine Stadt wird in deine umgerechnet. Ist das Datum vorbei, steht dort „noch nicht bestätigt“.',
     'header.step3':
-      '<b>Zur Stunde</b> erscheint im Widget der nächsten Stunde, wenn das Dokument einen Google-Meet- oder Zoom-Link enthält, und öffnet den Unterrichtsmodus: den Anruf neben der Lektion und deinen Notizen.',
+      '<b>Unterrichtsraum</b> erscheint im Widget der nächsten Stunde, wenn das Dokument einen Google-Meet- oder Zoom-Link enthält, und öffnet den Unterrichtsraum: den Anruf neben der Lektion und deinen Notizen.',
     'header.step4':
       '<b>Dokument öffnen</b>, <b>Schülerlink kopieren</b> und <b>Dokument wechseln</b> findest du in den <b>Einstellungen</b> unter Dokument.',
     'header.step5':
@@ -865,7 +865,7 @@ export const tutorial = defineMessages({
     'home.tip1':
       'Wenn die Lehrkraft die Hausaufgaben in die Lektion schreibt (<ex>Devoirs: verbes être, avoir — présent; mots de la leçon 5; 5 phrases au passé composé</ex>), zeigt die Startseite sie als Checkliste, dazu die Zeit bis zur nächsten Stunde. <btn>Wörter üben</btn>, <btn>Lücken füllen</btn> und <btn>Konjugieren</btn> öffnen die Übung zur Aufgabe; ist sie fertig, wird die Aufgabe abgehakt.',
     'home.tip2':
-      'Eine schriftliche Aufgabe (<ex>5 phrases au passé composé</ex>, eine Übersetzung, „beschreib deinen Tag“) hat <btn>Schreiben</btn>: Schreib deine Antwort und drück auf <pbtn>Prüfen</pbtn>. Claude korrigiert die Fehler, erklärt jeden wie ein Nachhilfelehrer und sagt, ob die Antwort die Aufgabe erfüllt. Im Unterrichtsmodus zeigt <b>Schriftliche Hausaufgaben</b> der Lehrkraft die korrigierten Antworten.',
+      'Eine schriftliche Aufgabe (<ex>5 phrases au passé composé</ex>, eine Übersetzung, „beschreib deinen Tag“) hat <btn>Schreiben</btn>: Schreib deine Antwort und drück auf <pbtn>Prüfen</pbtn>. Claude korrigiert die Fehler, erklärt jeden wie ein Nachhilfelehrer und sagt, ob die Antwort die Aufgabe erfüllt. Im Unterrichtsraum zeigt <b>Schriftliche Hausaufgaben</b> der Lehrkraft die korrigierten Antworten.',
     'home.tip3':
       '<btn>Bericht vorbereiten</btn> unter den Hausaufgaben (und unten in der Statistik) schreibt einen kurzen Bericht für die Lehrkraft: erledigte Hausaufgaben, Antworten und Fehler seit der Stunde, deine schriftlichen Antworten, wie Claude sie korrigiert hat. Lies ihn, ändere ihn bei Bedarf, und <pbtn>Ins Dokument einfügen</pbtn> setzt ihn unter die Lektion.',
     'home.tip4':
@@ -897,7 +897,7 @@ export const tutorial = defineMessages({
     'lessons.tip4':
       '<b>Meine Notizen</b> ist dein Notizblock zur Lektion, wird beim Tippen gespeichert. <b>Original</b> zeigt die Lektion so, wie sie geschrieben ist.',
     'lessons.tip5':
-      '<b>Grammatik</b> erklärt jedes Grammatikthema der Lektion, mit <pbtn>Diese Regel üben</pbtn> für Sätze dazu. <b>Hausaufgaben</b> zeigt, was zu tun ist; hake Erledigtes ab. <b>Übungen aus dem Lehrbuch</b> zeigt Übungen aus dem Buch, und <pbtn>Aus dem Lehrbuch importieren</pbtn> holt Lehrbuchseiten aus Fotos oder einem PDF: Kreuze die Übungen, den Text und/oder die Grammatik an, und Claude schreibt sie in die Lektion im Dokument ab, nie mit den Lösungen. Unter <b>Meine Notizen</b> findest du die Tafel und die Notizen aus dem Unterrichtsmodus von diesem Tag.',
+      '<b>Grammatik</b> erklärt jedes Grammatikthema der Lektion, mit <pbtn>Diese Regel üben</pbtn> für Sätze dazu. <b>Hausaufgaben</b> zeigt, was zu tun ist; hake Erledigtes ab. <b>Übungen aus dem Lehrbuch</b> zeigt Übungen aus dem Buch, und <pbtn>Aus dem Lehrbuch importieren</pbtn> holt Lehrbuchseiten aus Fotos oder einem PDF: Kreuze die Übungen, den Text und/oder die Grammatik an, und Claude schreibt sie in die Lektion im Dokument ab, nie mit den Lösungen. Unter <b>Meine Notizen</b> findest du die Tafel und die Notizen aus dem Unterrichtsraum von diesem Tag.',
     'lessons.tip6':
       'Ein Wort, das die Lehrkraft im Dokument mit ★ markiert (<ex>★ la boulangerie — пекарня</ex>), ist ein <b>Schlüsselwort</b>: Es trägt das Etikett <b>Schlüsselwort</b> und kommt in den Übungen öfter dran.',
     'lessons.tip7':
@@ -1022,10 +1022,10 @@ export const tutorial = defineMessages({
       'Außerdem: das Tagesziel für die 🔥 Serie, das Tempo von 🔊, welche Bereiche das Menü und welche Tabs die Lektionsseite zeigt.',
     'settings.tip1':
       'Unter „Übersetzungssprache“ wählst du, in welche Sprache Claude übersetzt, unabhängig von der Sprache der Oberfläche; eine Lektion wird in dieser Sprache neu vorbereitet, wenn du sie öffnest.',
-    'call.title': 'Unterrichtsmodus',
+    'call.title': 'Unterrichtsraum',
     'call.summary': 'Anruf, Notizen und die Wörter der Lektion auf einem Bildschirm',
     'call.intro':
-      'Öffnet sich über <b>Zur Stunde</b> im Widget der nächsten Stunde oben, wenn das Dokument einen Google-Meet- oder Zoom-Link enthält. Gemacht für die Stunde selbst.',
+      'Öffnet sich über <b>Unterrichtsraum</b> im Widget der nächsten Stunde oben, wenn das Dokument einen Google-Meet- oder Zoom-Link enthält. Gemacht für die Stunde selbst.',
     'call.step1':
       '<b>Google Meet</b>: Öffne neben dem Titel <btn>Google Meet ▾</btn> und tippe auf <pbtn>Anruf in kleinem Fenster öffnen</pbtn>. Meet lässt sich nicht in andere Websites einbetten, deshalb öffnet es sich als kleines Fenster am Bildschirmrand.',
     'call.step2':
@@ -1108,7 +1108,7 @@ export const tutorial = defineMessages({
     'header.step2':
       '<b>Próxima clase</b> muestra la fecha de la línea más reciente como <ex>próxima clase: 22.11.2026 18:00 Madrid</ex>. Una hora indicada para una ciudad se convierte a la tuya. Cuando la fecha ha pasado, dice «aún sin confirmar».',
     'header.step3':
-      '<b>Entrar en la clase</b> aparece en el widget de la próxima clase cuando el documento tiene un enlace de Google Meet o Zoom, y abre el modo clase: la llamada junto a la lección y tus notas.',
+      '<b>Espacio de clase</b> aparece en el widget de la próxima clase cuando el documento tiene un enlace de Google Meet o Zoom, y abre el espacio de clase: la llamada junto a la lección y tus notas.',
     'header.step4':
       '<b>Abrir el documento</b>, <b>Copiar el enlace del alumno</b> y <b>Cambiar de documento</b> están en <b>Ajustes</b>, en Documento.',
     'header.step5':
@@ -1132,7 +1132,7 @@ export const tutorial = defineMessages({
     'home.tip1':
       'Cuando el profesor escribe los deberes en la lección (<ex>Devoirs: verbes être, avoir — présent; mots de la leçon 5; 5 phrases au passé composé</ex>), Inicio los muestra como una lista para marcar, con lo que falta para la próxima clase. <btn>Practicar las palabras</btn>, <btn>Rellenar los huecos</btn> y <btn>Conjugar</btn> abren el ejercicio de la tarea, y al terminarlo se marca.',
     'home.tip2':
-      'Una tarea escrita (<ex>5 phrases au passé composé</ex>, una traducción, «describe tu día») tiene <btn>Escribir</btn>: escribe tu respuesta y pulsa <pbtn>Comprobar</pbtn>. Claude corrige los errores, explica cada uno como un profesor particular y dice si la respuesta cumple la tarea. En el modo clase, <b>Deberes escritos</b> muestra las respuestas corregidas al profesor.',
+      'Una tarea escrita (<ex>5 phrases au passé composé</ex>, una traducción, «describe tu día») tiene <btn>Escribir</btn>: escribe tu respuesta y pulsa <pbtn>Comprobar</pbtn>. Claude corrige los errores, explica cada uno como un profesor particular y dice si la respuesta cumple la tarea. En el espacio de clase, <b>Deberes escritos</b> muestra las respuestas corregidas al profesor.',
     'home.tip3':
       '<btn>Preparar el informe</btn> debajo de los deberes (y al final de Estadísticas) redacta un breve informe para el profesor: los deberes hechos, las respuestas y los errores desde la clase, tus respuestas escritas corregidas por Claude. Léelo, cámbialo si quieres, y <pbtn>Añadir al documento</pbtn> lo pone debajo de la lección.',
     'home.tip4':
@@ -1164,7 +1164,7 @@ export const tutorial = defineMessages({
     'lessons.tip4':
       '<b>Mis notas</b> es tu bloc de notas de la lección, se guarda mientras escribes. <b>Original</b> muestra la lección tal como está escrita.',
     'lessons.tip5':
-      '<b>Gramática</b> explica cada punto de gramática de la lección, con <pbtn>Practicar esta regla</pbtn> para hacer frases. <b>Deberes</b> muestra lo que hay que hacer; marca las tareas al terminarlas. <b>Ejercicios del libro</b> muestra los ejercicios del libro, y <pbtn>Importar del libro</pbtn> trae páginas del libro desde fotos o un PDF: marca los ejercicios, el texto y/o la gramática, y Claude los copia en la lección del documento, nunca con las soluciones. En <b>Mis notas</b> están la pizarra y las notas del modo clase de ese día.',
+      '<b>Gramática</b> explica cada punto de gramática de la lección, con <pbtn>Practicar esta regla</pbtn> para hacer frases. <b>Deberes</b> muestra lo que hay que hacer; marca las tareas al terminarlas. <b>Ejercicios del libro</b> muestra los ejercicios del libro, y <pbtn>Importar del libro</pbtn> trae páginas del libro desde fotos o un PDF: marca los ejercicios, el texto y/o la gramática, y Claude los copia en la lección del documento, nunca con las soluciones. En <b>Mis notas</b> están la pizarra y las notas del espacio de clase de ese día.',
     'lessons.tip6':
       'Una palabra que el profesor marca con ★ en el documento (<ex>★ la boulangerie — пекарня</ex>) es una <b>palabra clave</b>: lleva la etiqueta <b>clave</b> y sale más a menudo en los ejercicios.',
     'lessons.tip7':
@@ -1292,10 +1292,10 @@ export const tutorial = defineMessages({
       'También están allí: el objetivo diario para la racha 🔥, la velocidad de 🔊, qué secciones muestra el menú y qué pestañas muestra la página de una lección.',
     'settings.tip1':
       '«Idioma de las traducciones» elige el idioma en el que Claude escribe las traducciones, independientemente del idioma de la interfaz; una lección se vuelve a preparar en ese idioma cuando la abres.',
-    'call.title': 'Modo clase',
+    'call.title': 'Espacio de clase',
     'call.summary': 'La llamada, las notas y las palabras de la lección en una pantalla',
     'call.intro':
-      'Se abre con <b>Entrar en la clase</b> en el widget de la próxima clase, arriba, cuando el documento tiene un enlace de Google Meet o Zoom. Pensado para la propia clase.',
+      'Se abre con <b>Espacio de clase</b> en el widget de la próxima clase, arriba, cuando el documento tiene un enlace de Google Meet o Zoom. Pensado para la propia clase.',
     'call.step1':
       '<b>Google Meet</b>: junto al título, abre <btn>Google Meet ▾</btn> y pulsa <pbtn>Abrir la llamada en una ventana pequeña</pbtn>. Meet no puede funcionar dentro de otras webs, así que se abre en una ventana pequeña a un lado de la pantalla.',
     'call.step2':
@@ -1378,7 +1378,7 @@ export const tutorial = defineMessages({
     'header.step2':
       '<b>Próxima aula</b> mostra a data da linha mais recente como <ex>próxima aula: 22.11.2026 18:00 Lisboa</ex>. Uma hora indicada para uma cidade é convertida para a sua. Quando a data já passou, diz «ainda por confirmar».',
     'header.step3':
-      '<b>Entrar na aula</b> aparece no widget da próxima aula quando o documento tem uma ligação do Google Meet ou do Zoom, e abre o modo aula: a chamada ao lado da lição e das suas notas.',
+      '<b>Espaço de aula</b> aparece no widget da próxima aula quando o documento tem uma ligação do Google Meet ou do Zoom, e abre o espaço de aula: a chamada ao lado da lição e das suas notas.',
     'header.step4':
       '<b>Abrir o documento</b>, <b>Copiar a ligação do aluno</b> e <b>Mudar de documento</b> estão nas <b>Definições</b>, em Documento.',
     'header.step5':
@@ -1402,7 +1402,7 @@ export const tutorial = defineMessages({
     'home.tip1':
       'Quando o professor escreve o trabalho de casa na lição (<ex>Devoirs: verbes être, avoir — présent; mots de la leçon 5; 5 phrases au passé composé</ex>), o Início mostra-o como uma lista para marcar, com o tempo que falta para a próxima aula. <btn>Praticar as palavras</btn>, <btn>Preencher as lacunas</btn> e <btn>Conjugar</btn> abrem o exercício da tarefa, e ao terminá-lo a tarefa fica marcada.',
     'home.tip2':
-      'Uma tarefa escrita (<ex>5 phrases au passé composé</ex>, uma tradução, «descreve o teu dia») tem <btn>Escrever</btn>: escreva a resposta e carregue em <pbtn>Verificar</pbtn>. O Claude corrige os erros, explica cada um como um explicador e diz se a resposta cumpre a tarefa. No modo aula, <b>Trabalho de casa escrito</b> mostra as respostas corrigidas ao professor.',
+      'Uma tarefa escrita (<ex>5 phrases au passé composé</ex>, uma tradução, «descreve o teu dia») tem <btn>Escrever</btn>: escreva a resposta e carregue em <pbtn>Verificar</pbtn>. O Claude corrige os erros, explica cada um como um explicador e diz se a resposta cumpre a tarefa. No espaço de aula, <b>Trabalho de casa escrito</b> mostra as respostas corrigidas ao professor.',
     'home.tip3':
       '<btn>Preparar o relatório</btn> por baixo do trabalho de casa (e no fim das Estatísticas) escreve um pequeno relatório para o professor: o trabalho feito, as respostas e os erros desde a aula, as suas respostas escritas corrigidas pelo Claude. Leia-o, altere-o se quiser, e <pbtn>Acrescentar ao documento</pbtn> coloca-o por baixo da lição.',
     'home.tip4':
@@ -1434,7 +1434,7 @@ export const tutorial = defineMessages({
     'lessons.tip4':
       '<b>As minhas notas</b> é o seu bloco de notas da lição, guardado enquanto escreve. <b>Original</b> mostra a lição exatamente como está escrita.',
     'lessons.tip5':
-      '<b>Gramática</b> explica cada ponto de gramática da lição, com <pbtn>Praticar esta regra</pbtn> para fazer frases. <b>Trabalhos de casa</b> mostra o que há para fazer; marque as tarefas ao terminá-las. <b>Exercícios do manual</b> mostra os exercícios do livro, e <pbtn>Importar do manual</pbtn> traz páginas do manual a partir de fotos ou de um PDF: marque os exercícios, o texto e/ou a gramática, e o Claude copia-os para a lição no documento, nunca com as soluções. Em <b>As minhas notas</b> estão o quadro e as notas do modo aula desse dia.',
+      '<b>Gramática</b> explica cada ponto de gramática da lição, com <pbtn>Praticar esta regra</pbtn> para fazer frases. <b>Trabalhos de casa</b> mostra o que há para fazer; marque as tarefas ao terminá-las. <b>Exercícios do manual</b> mostra os exercícios do livro, e <pbtn>Importar do manual</pbtn> traz páginas do manual a partir de fotos ou de um PDF: marque os exercícios, o texto e/ou a gramática, e o Claude copia-os para a lição no documento, nunca com as soluções. Em <b>As minhas notas</b> estão o quadro e as notas do espaço de aula desse dia.',
     'lessons.tip6':
       'Uma palavra que o professor marca com ★ no documento (<ex>★ la boulangerie — пекарня</ex>) é uma <b>palavra-chave</b>: tem a etiqueta <b>chave</b> e aparece mais vezes nos exercícios.',
     'lessons.tip7':
@@ -1561,10 +1561,10 @@ export const tutorial = defineMessages({
       'Também lá estão: o objetivo diário para a série 🔥, a velocidade do 🔊, as secções que o menu mostra e os separadores que a página de uma lição mostra.',
     'settings.tip1':
       '«Idioma das traduções» define o idioma em que o Claude escreve as traduções, independentemente do idioma da interface; uma lição volta a ser preparada nesse idioma quando a abre.',
-    'call.title': 'Modo aula',
+    'call.title': 'Espaço de aula',
     'call.summary': 'A chamada, as notas e as palavras da lição num só ecrã',
     'call.intro':
-      'Abre-se com <b>Entrar na aula</b> no widget da próxima aula, em cima, quando o documento tem uma ligação do Google Meet ou do Zoom. Feito para a própria aula.',
+      'Abre-se com <b>Espaço de aula</b> no widget da próxima aula, em cima, quando o documento tem uma ligação do Google Meet ou do Zoom. Feito para a própria aula.',
     'call.step1':
       '<b>Google Meet</b>: ao lado do título, abra <btn>Google Meet ▾</btn> e carregue em <pbtn>Abrir a chamada numa janela pequena</pbtn>. O Meet não funciona dentro de outros sites, por isso abre numa janela pequena ao lado do ecrã.',
     'call.step2':
@@ -1647,7 +1647,7 @@ export const tutorial = defineMessages({
     'header.step2':
       '<b>Prossima lezione</b> mostra la data della riga più recente come <ex>prossima lezione: 22.11.2026 18:00 Roma</ex>. Un orario indicato per una città viene convertito nel tuo. Quando la data è passata, dice «non ancora confermata».',
     'header.step3':
-      '<b>Entra nella lezione</b> compare nel widget della prossima lezione quando il documento ha un link di Google Meet o Zoom, e apre la modalità lezione: la chiamata accanto alla lezione e ai tuoi appunti.',
+      '<b>Spazio lezione</b> compare nel widget della prossima lezione quando il documento ha un link di Google Meet o Zoom, e apre lo spazio lezione: la chiamata accanto alla lezione e ai tuoi appunti.',
     'header.step4':
       '<b>Apri il documento</b>, <b>Copia il link per lo studente</b> e <b>Cambia documento</b> sono nelle <b>Impostazioni</b>, sotto Documento.',
     'header.step5':
@@ -1671,7 +1671,7 @@ export const tutorial = defineMessages({
     'home.tip1':
       'Quando l’insegnante scrive i compiti nella lezione (<ex>Devoirs: verbes être, avoir — présent; mots de la leçon 5; 5 phrases au passé composé</ex>), la Home li mostra come lista da spuntare, con il tempo che manca alla prossima lezione. <btn>Ripassa le parole</btn>, <btn>Riempi gli spazi</btn> e <btn>Coniuga</btn> aprono l’esercizio del compito, e finirlo lo spunta.',
     'home.tip2':
-      'Un compito scritto (<ex>5 phrases au passé composé</ex>, una traduzione, «descrivi la tua giornata») ha <btn>Scrivi</btn>: scrivi la risposta e premi <pbtn>Controlla</pbtn>. Claude corregge gli errori, spiega ognuno come un insegnante privato e dice se la risposta fa ciò che chiede il compito. Nella modalità lezione, <b>Compiti scritti</b> mostra all’insegnante le risposte corrette.',
+      'Un compito scritto (<ex>5 phrases au passé composé</ex>, una traduzione, «descrivi la tua giornata») ha <btn>Scrivi</btn>: scrivi la risposta e premi <pbtn>Controlla</pbtn>. Claude corregge gli errori, spiega ognuno come un insegnante privato e dice se la risposta fa ciò che chiede il compito. Nello spazio lezione, <b>Compiti scritti</b> mostra all’insegnante le risposte corrette.',
     'home.tip3':
       '<btn>Prepara il resoconto</btn> sotto i compiti (e in fondo alle Statistiche) scrive un breve resoconto per l’insegnante: i compiti fatti, le risposte e gli errori dalla lezione, le tue risposte scritte corrette da Claude. Leggilo, cambialo se vuoi, e <pbtn>Aggiungi al documento</pbtn> lo mette sotto la lezione.',
     'home.tip4':
@@ -1703,7 +1703,7 @@ export const tutorial = defineMessages({
     'lessons.tip4':
       '<b>I miei appunti</b> è il tuo blocco note per la lezione, salvato mentre scrivi. <b>Originale</b> mostra la lezione esattamente com’è scritta.',
     'lessons.tip5':
-      '<b>Grammatica</b> spiega ogni punto di grammatica della lezione, con <pbtn>Esercitati su questa regola</pbtn> per fare frasi. <b>Compiti</b> elenca cosa fare; spunta i compiti finiti. <b>Esercizi dal libro</b> mostra gli esercizi del libro, e <pbtn>Importa dal libro</pbtn> prende pagine del libro da foto o da un PDF: spunta gli esercizi, il testo e/o la grammatica, e Claude li ricopia nella lezione del documento, mai con le soluzioni. In <b>I miei appunti</b> trovi la lavagna e gli appunti della modalità lezione di quel giorno.',
+      '<b>Grammatica</b> spiega ogni punto di grammatica della lezione, con <pbtn>Esercitati su questa regola</pbtn> per fare frasi. <b>Compiti</b> elenca cosa fare; spunta i compiti finiti. <b>Esercizi dal libro</b> mostra gli esercizi del libro, e <pbtn>Importa dal libro</pbtn> prende pagine del libro da foto o da un PDF: spunta gli esercizi, il testo e/o la grammatica, e Claude li ricopia nella lezione del documento, mai con le soluzioni. In <b>I miei appunti</b> trovi la lavagna e gli appunti dello spazio lezione di quel giorno.',
     'lessons.tip6':
       'Una parola che l’insegnante segna con ★ nel documento (<ex>★ la boulangerie — пекарня</ex>) è una <b>parola chiave</b>: ha l’etichetta <b>chiave</b> e compare più spesso negli esercizi.',
     'lessons.tip7':
@@ -1830,10 +1830,10 @@ export const tutorial = defineMessages({
       'Lì trovi anche: l’obiettivo giornaliero per la serie 🔥, la velocità del 🔊, quali sezioni mostra il menu e quali schede mostra la pagina di una lezione.',
     'settings.tip1':
       '«Lingua delle traduzioni» sceglie la lingua in cui Claude scrive le traduzioni, indipendentemente da quella dell’interfaccia; una lezione viene preparata di nuovo in questa lingua quando la apri.',
-    'call.title': 'Modalità lezione',
+    'call.title': 'Spazio lezione',
     'call.summary': 'La chiamata, gli appunti e le parole della lezione in un’unica schermata',
     'call.intro':
-      'Si apre con <b>Entra nella lezione</b> nel widget della prossima lezione, in alto, quando il documento ha un link di Google Meet o Zoom. Pensata per la lezione stessa.',
+      'Si apre con <b>Spazio lezione</b> nel widget della prossima lezione, in alto, quando il documento ha un link di Google Meet o Zoom. Pensata per la lezione stessa.',
     'call.step1':
       '<b>Google Meet</b>: accanto al titolo, apri <btn>Google Meet ▾</btn> e premi <pbtn>Apri la chiamata in una piccola finestra</pbtn>. Meet non può funzionare dentro altri siti, quindi si apre in una piccola finestra a lato dello schermo.',
     'call.step2':

@@ -3,7 +3,7 @@ import { defineMessages } from '../core';
 // Lesson mode: the video call, the teacher's notes and the lesson's words side by side.
 export const call = defineMessages({
   en: {
-    title: 'Lesson mode',
+    title: 'Lesson space',
     intro: 'The call, your notes and the lesson’s words in one place.',
     noCall:
       'There is no Google Meet or Zoom link in the document yet. Paste the lesson’s link into it and press ↻ (Sync) at the top.',
@@ -48,7 +48,7 @@ export const call = defineMessages({
     zoomFailed: 'Couldn’t join the call: {reason}',
     jitsiTitle: 'Video call',
     jitsiExplain:
-      'The teacher and the student both open lesson mode and press “Join the call”: they meet in the same room, with nothing to install. Allow the camera and the microphone when the browser asks.',
+      'The teacher and the student both open the lesson space and press “Join the call”: they meet in the same room, with nothing to install. Allow the camera and the microphone when the browser asks.',
     joinCall: 'Join the call',
     // the call bar beside lesson mode's title while a call runs in the page
     inCall: 'In the call',
@@ -92,7 +92,7 @@ export const call = defineMessages({
     allStuck: 'Everything stuck: no mistakes in this round.',
   },
   ru: {
-    title: 'Режим урока',
+    title: 'Пространство урока',
     intro: 'Звонок, ваши заметки и слова урока в одном месте.',
     noCall:
       'В документе пока нет ссылки на Google Meet или Zoom. Вставьте ссылку на урок и нажмите ↻ («Синхронизировать») наверху.',
@@ -135,7 +135,7 @@ export const call = defineMessages({
     zoomFailed: 'Не удалось подключиться к звонку: {reason}',
     jitsiTitle: 'Видеозвонок',
     jitsiExplain:
-      'Преподаватель и ученик открывают режим урока и нажимают «Подключиться к звонку»: они встречаются в одной комнате, ничего не нужно устанавливать. Когда браузер спросит, разрешите доступ к камере и микрофону.',
+      'Преподаватель и ученик открывают пространство урока и нажимают «Подключиться к звонку»: они встречаются в одной комнате, ничего не нужно устанавливать. Когда браузер спросит, разрешите доступ к камере и микрофону.',
     joinCall: 'Подключиться к звонку',
     // the call bar beside lesson mode's title while a call runs in the page
     inCall: 'В звонке',
@@ -177,7 +177,7 @@ export const call = defineMessages({
     allStuck: 'Всё закрепилось: в этом раунде ни одной ошибки.',
   },
   fr: {
-    title: 'Mode cours',
+    title: 'Espace cours',
     intro: 'L’appel, vos notes et les mots de la leçon au même endroit.',
     noCall:
       'Le document ne contient pas encore de lien Google Meet ou Zoom. Collez-y le lien du cours et appuyez sur ↻ (Synchroniser) en haut.',
@@ -221,7 +221,7 @@ export const call = defineMessages({
     zoomFailed: 'Impossible de rejoindre l’appel : {reason}',
     jitsiTitle: 'Appel vidéo',
     jitsiExplain:
-      'Le professeur et l’élève ouvrent tous les deux le mode cours et appuient sur « Rejoindre l’appel » : ils se retrouvent dans la même salle, sans rien installer. Autorisez la caméra et le micro quand le navigateur le demande.',
+      'Le professeur et l’élève ouvrent tous les deux l’espace cours et appuient sur « Rejoindre l’appel » : ils se retrouvent dans la même salle, sans rien installer. Autorisez la caméra et le micro quand le navigateur le demande.',
     joinCall: 'Rejoindre l’appel',
     // the call bar beside lesson mode's title while a call runs in the page
     inCall: 'En appel',
@@ -264,7 +264,7 @@ export const call = defineMessages({
     allStuck: 'Tout est acquis : aucune erreur dans ce tour.',
   },
   de: {
-    title: 'Unterrichtsmodus',
+    title: 'Unterrichtsraum',
     intro: 'Der Anruf, deine Notizen und die Wörter der Lektion an einem Ort.',
     noCall:
       'Im Dokument steht noch kein Google-Meet- oder Zoom-Link. Füge den Link der Stunde ein und tippe oben auf ↻ (Synchronisieren).',
@@ -308,7 +308,7 @@ export const call = defineMessages({
     zoomFailed: 'Beitritt zum Anruf nicht möglich: {reason}',
     jitsiTitle: 'Videoanruf',
     jitsiExplain:
-      'Lehrkraft und Schüler öffnen beide den Unterrichtsmodus und tippen auf „Anruf beitreten“: Sie treffen sich im selben Raum, ohne etwas zu installieren. Erlaube Kamera und Mikrofon, wenn der Browser fragt.',
+      'Lehrkraft und Schüler öffnen beide den Unterrichtsraum und tippen auf „Anruf beitreten“: Sie treffen sich im selben Raum, ohne etwas zu installieren. Erlaube Kamera und Mikrofon, wenn der Browser fragt.',
     joinCall: 'Anruf beitreten',
     // the call bar beside lesson mode's title while a call runs in the page
     inCall: 'Im Anruf',
@@ -351,7 +351,7 @@ export const call = defineMessages({
     allStuck: 'Alles sitzt: kein Fehler in dieser Runde.',
   },
   es: {
-    title: 'Modo clase',
+    title: 'Espacio de clase',
     intro: 'La llamada, tus notas y las palabras de la lección en un solo lugar.',
     noCall:
       'Todavía no hay ningún enlace de Google Meet o Zoom en el documento. Pega en él el enlace de la clase y pulsa ↻ (Sincronizar) arriba.',
@@ -396,7 +396,7 @@ export const call = defineMessages({
     zoomFailed: 'No se ha podido entrar en la llamada: {reason}',
     jitsiTitle: 'Videollamada',
     jitsiExplain:
-      'El profesor y el alumno abren los dos el modo clase y pulsan «Unirse a la llamada»: se encuentran en la misma sala, sin instalar nada. Permite la cámara y el micrófono cuando el navegador lo pida.',
+      'El profesor y el alumno abren los dos el espacio de clase y pulsan «Unirse a la llamada»: se encuentran en la misma sala, sin instalar nada. Permite la cámara y el micrófono cuando el navegador lo pida.',
     joinCall: 'Unirse a la llamada',
     // the call bar beside lesson mode's title while a call runs in the page
     inCall: 'En la llamada',
@@ -439,7 +439,7 @@ export const call = defineMessages({
     allStuck: 'Todo se ha fijado: ningún error en esta ronda.',
   },
   pt: {
-    title: 'Modo aula',
+    title: 'Espaço de aula',
     intro: 'A chamada, as suas notas e as palavras da lição num só lugar.',
     noCall:
       'Ainda não há nenhuma ligação do Google Meet ou do Zoom no documento. Cole lá a ligação da aula e carregue em ↻ (Sincronizar) em cima.',
@@ -484,7 +484,7 @@ export const call = defineMessages({
     zoomFailed: 'Não foi possível entrar na chamada: {reason}',
     jitsiTitle: 'Videochamada',
     jitsiExplain:
-      'O professor e o aluno abrem os dois o modo aula e carregam em «Entrar na chamada»: encontram-se na mesma sala, sem instalar nada. Permita a câmara e o microfone quando o navegador pedir.',
+      'O professor e o aluno abrem os dois o espaço de aula e carregam em «Entrar na chamada»: encontram-se na mesma sala, sem instalar nada. Permita a câmara e o microfone quando o navegador pedir.',
     joinCall: 'Entrar na chamada',
     // the call bar beside lesson mode's title while a call runs in the page
     inCall: 'Na chamada',
@@ -528,7 +528,7 @@ export const call = defineMessages({
     allStuck: 'Ficou tudo: nenhum erro nesta ronda.',
   },
   it: {
-    title: 'Modalità lezione',
+    title: 'Spazio lezione',
     intro: 'La chiamata, i tuoi appunti e le parole della lezione in un unico posto.',
     noCall:
       'Nel documento non c’è ancora un link di Google Meet o Zoom. Incolla il link della lezione e premi ↻ (Sincronizza) in alto.',
@@ -573,7 +573,7 @@ export const call = defineMessages({
     zoomFailed: 'Impossibile entrare nella chiamata: {reason}',
     jitsiTitle: 'Videochiamata',
     jitsiExplain:
-      'L’insegnante e lo studente aprono entrambi la modalità lezione e premono «Partecipa alla chiamata»: si ritrovano nella stessa stanza, senza installare nulla. Consenti fotocamera e microfono quando il browser lo chiede.',
+      'L’insegnante e lo studente aprono entrambi lo spazio lezione e premono «Partecipa alla chiamata»: si ritrovano nella stessa stanza, senza installare nulla. Consenti fotocamera e microfono quando il browser lo chiede.',
     joinCall: 'Partecipa alla chiamata',
     // the call bar beside lesson mode's title while a call runs in the page
     inCall: 'In chiamata',
