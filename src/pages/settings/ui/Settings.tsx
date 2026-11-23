@@ -1,33 +1,26 @@
 import { useState } from 'react';
 
-import { knownTenses, tensesForLevel } from '@/entities/verb';
 import {
   ALWAYS_SHOWN,
   DAILY_GOALS,
   type Language,
-  LANGUAGES,
   LESSON_TABS,
   type LessonTab,
-  type Level,
-  LEVELS,
   type Section,
   SECTIONS,
   SPEECH_SPEEDS,
-  type Tense,
-  TENSES_BY_LANGUAGE,
   THEMES,
   updateSettings,
   useSettings,
-  VERB_LANGUAGES,
-  type VerbLanguage,
 } from '@/shared/config';
-import { app, learning, paper, setUiLanguage, UI_LANGUAGES, useTranslation } from '@/shared/i18n';
+import { app, paper, setUiLanguage, UI_LANGUAGES, useTranslation } from '@/shared/i18n';
 import { shrinkImage } from '@/shared/lib/image';
 import { canSpeak, speak } from '@/shared/lib/speech';
 import Avatar from '@/shared/ui/Avatar';
 import PageHead from '@/shared/ui/PageHead';
 
 import { settingsText } from '../i18n/settings';
+import LearningCard from './LearningCard';
 import PictureMenu from './PictureMenu';
 import TeacherCard from './TeacherCard';
 
@@ -72,7 +65,6 @@ export interface DocumentInfo {
 // The student's settings: profile, document, interface, learning and the menu.
 export default function Settings({ lessonDocument }: { lessonDocument: DocumentInfo }) {
   const { t, language: uiLanguage } = useTranslation(settingsText);
-  const names = useTranslation(learning);
   const sectionNames = useTranslation(app);
   const tabNames = useTranslation(paper);
   const settings = useSettings();
@@ -102,35 +94,6 @@ export default function Settings({ lessonDocument }: { lessonDocument: DocumentI
       setHasPictureError(true);
     }
   }
-  const toggleTense = (language: VerbLanguage, tense: Tense) => {
-    const known = knownTenses(language, settings);
-    const all: readonly Tense[] = TENSES_BY_LANGUAGE[language];
-    const ticked = all.filter((name) =>
-      name === tense ? !known.includes(name) : known.includes(name)
-    );
-    if (!ticked.length) return;
-    // the same as the level's: follow the level again, so a new level brings its tenses
-    const sameAsLevel =
-      ticked.join('|') === tensesForLevel(language, settings.levels[language]).join('|');
-    updateSettings({
-      tenses: sameAsLevel ? withoutTenses(language) : { ...settings.tenses, [language]: ticked },
-    });
-  };
-  // the tenses ticked by hand, without one language's: that language follows its level
-  const withoutTenses = (language: VerbLanguage) => {
-    const others = { ...settings.tenses };
-    delete others[language];
-    return others;
-  };
-  const followLevel = (language: VerbLanguage) =>
-    updateSettings({ tenses: withoutTenses(language) });
-  const verbLanguages = VERB_LANGUAGES.filter((language) => settings.studying.includes(language));
-  const toggleLanguage = (language: Language) => {
-    const studying = settings.studying.includes(language)
-      ? settings.studying.filter((studied) => studied !== language)
-      : [...settings.studying, language];
-    if (studying.length) updateSettings({ studying });
-  };
   const toggleSection = (section: Section) =>
     updateSettings({
       hidden: settings.hidden.includes(section)
@@ -182,6 +145,48 @@ export default function Settings({ lessonDocument }: { lessonDocument: DocumentI
               <small className="hint">{t('nameHint')}</small>
             </div>
           </div>
+          <div className="settings-row">
+            <span className="settings-label">{t('dailyGoal')}</span>
+            <div className="seg goal-choice" role="group" aria-label={t('dailyGoal')}>
+              {DAILY_GOALS.map((goal) => (
+                <button
+                  key={goal}
+                  type="button"
+                  aria-pressed={settings.dailyGoal === goal}
+                  onClick={() => updateSettings({ dailyGoal: goal })}
+                >
+                  {t('goalValue', { count: goal })}
+                </button>
+              ))}
+            </div>
+          </div>
+          {canSpeak && (
+            <div className="settings-row">
+              <span className="settings-label">{t('speechSpeed')}</span>
+              <div className="seg" role="group" aria-label={t('speechSpeed')}>
+                {SPEECH_SPEEDS.map((speed) => (
+                  <button
+                    key={speed}
+                    type="button"
+                    aria-pressed={settings.speechSpeed === speed}
+                    onClick={() => updateSettings({ speechSpeed: speed })}
+                  >
+                    {t(`speed.${speed}`)}
+                  </button>
+                ))}
+              </div>
+              <button
+                type="button"
+                className="btn ghost"
+                onClick={() => {
+                  const language = settings.studying[0] ?? 'fr';
+                  speak(SAMPLES[language], language);
+                }}
+              >
+                🔊 {t('tryIt')}
+              </button>
+            </div>
+          )}
         </section>
         <section className="settings-card">
           <h2>{t('interface')}</h2>
@@ -249,154 +254,7 @@ export default function Settings({ lessonDocument }: { lessonDocument: DocumentI
         </section>
       </div>
 
-      <section className="settings-card">
-        <h2>{t('document')}</h2>
-        <p className="hint">{t('documentHint')}</p>
-        <p className="settings-document">
-          <span aria-hidden="true">📄</span> <b>{lessonDocument.title}</b>
-        </p>
-        <div className="row-actions">
-          <a className="btn" href={lessonDocument.url} target="_blank" rel="noopener noreferrer">
-            {sectionNames.t('openDocument')}
-          </a>
-          <button type="button" className="btn" onClick={() => void copyLink()}>
-            {copied ? sectionNames.t('linkCopied') : sectionNames.t('copyLink')}
-          </button>
-          <button type="button" className="btn ghost" onClick={lessonDocument.onChange}>
-            {sectionNames.t('changeDocument')}
-          </button>
-        </div>
-        <small className="hint">{t('studentLinkHint')}</small>
-      </section>
-
-      <section className="settings-card">
-        <h2>{t('learning')}</h2>
-        <div className="settings-row column">
-          <span className="settings-label">{t('studying')}</span>
-          <ul className="settings-languages">
-            {LANGUAGES.map((language) => {
-              const studied = settings.studying.includes(language);
-              const onlyOne = studied && settings.studying.length === 1;
-              return (
-                <li key={language}>
-                  <label data-tooltip={onlyOne ? t('atLeastOne') : undefined}>
-                    <input
-                      type="checkbox"
-                      checked={studied}
-                      disabled={onlyOne}
-                      onChange={() => toggleLanguage(language)}
-                    />
-                    {names.t(`name.${language}`)}
-                  </label>
-                  {studied && (
-                    <select
-                      aria-label={`${t('level')}: ${names.t(`name.${language}`)}`}
-                      value={settings.levels[language]}
-                      onChange={(event) =>
-                        updateSettings({
-                          levels: { ...settings.levels, [language]: event.target.value as Level },
-                        })
-                      }
-                    >
-                      {LEVELS.map((level) => (
-                        <option key={level} value={level}>
-                          {level}
-                        </option>
-                      ))}
-                    </select>
-                  )}
-                </li>
-              );
-            })}
-          </ul>
-          <small className="hint">{t('studyingHint')}</small>
-          <small className="hint">{t('levelsHint')}</small>
-        </div>
-        {verbLanguages.length > 0 && (
-          <div className="settings-row column">
-            <span className="settings-label">{t('quizTenses')}</span>
-            {verbLanguages.map((language) => {
-              const known = knownTenses(language, settings);
-              return (
-                <fieldset key={language} className="settings-tenses">
-                  <legend>{names.t(`name.${language}`)}</legend>
-                  <ul>
-                    {TENSES_BY_LANGUAGE[language].map((tense: Tense) => {
-                      const ticked = known.includes(tense);
-                      const lastOne = ticked && known.length === 1;
-                      return (
-                        <li key={tense}>
-                          <label data-tooltip={lastOne ? t('atLeastOneTense') : undefined}>
-                            <input
-                              type="checkbox"
-                              checked={ticked}
-                              disabled={lastOne}
-                              onChange={() => toggleTense(language, tense)}
-                            />
-                            <span lang={language}>{tense}</span>
-                          </label>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                  {settings.tenses[language] && (
-                    <button
-                      type="button"
-                      className="btn ghost"
-                      onClick={() => followLevel(language)}
-                    >
-                      {t('tensesByLevel', { level: settings.levels[language] })}
-                    </button>
-                  )}
-                </fieldset>
-              );
-            })}
-            <small className="hint">{t('quizTensesHint')}</small>
-          </div>
-        )}
-        <div className="settings-row">
-          <span className="settings-label">{t('dailyGoal')}</span>
-          <div className="seg goal-choice" role="group" aria-label={t('dailyGoal')}>
-            {DAILY_GOALS.map((goal) => (
-              <button
-                key={goal}
-                type="button"
-                aria-pressed={settings.dailyGoal === goal}
-                onClick={() => updateSettings({ dailyGoal: goal })}
-              >
-                {t('goalValue', { count: goal })}
-              </button>
-            ))}
-          </div>
-        </div>
-        {canSpeak && (
-          <div className="settings-row">
-            <span className="settings-label">{t('speechSpeed')}</span>
-            <div className="seg" role="group" aria-label={t('speechSpeed')}>
-              {SPEECH_SPEEDS.map((speed) => (
-                <button
-                  key={speed}
-                  type="button"
-                  aria-pressed={settings.speechSpeed === speed}
-                  onClick={() => updateSettings({ speechSpeed: speed })}
-                >
-                  {t(`speed.${speed}`)}
-                </button>
-              ))}
-            </div>
-            <button
-              type="button"
-              className="btn ghost"
-              onClick={() => {
-                const language = settings.studying[0] ?? 'fr';
-                speak(SAMPLES[language], language);
-              }}
-            >
-              🔊 {t('tryIt')}
-            </button>
-          </div>
-        )}
-      </section>
+      <LearningCard />
 
       <section className="settings-card">
         <h2>{t('menu')}</h2>
@@ -446,6 +304,26 @@ export default function Settings({ lessonDocument }: { lessonDocument: DocumentI
       </section>
 
       <TeacherCard />
+
+      <section className="settings-card">
+        <h2>{t('document')}</h2>
+        <p className="hint">{t('documentHint')}</p>
+        <p className="settings-document">
+          <span aria-hidden="true">📄</span> <b>{lessonDocument.title}</b>
+        </p>
+        <div className="row-actions">
+          <a className="btn" href={lessonDocument.url} target="_blank" rel="noopener noreferrer">
+            {sectionNames.t('openDocument')}
+          </a>
+          <button type="button" className="btn" onClick={() => void copyLink()}>
+            {copied ? sectionNames.t('linkCopied') : sectionNames.t('copyLink')}
+          </button>
+          <button type="button" className="btn ghost" onClick={lessonDocument.onChange}>
+            {sectionNames.t('changeDocument')}
+          </button>
+        </div>
+        <small className="hint">{t('studentLinkHint')}</small>
+      </section>
     </>
   );
 }

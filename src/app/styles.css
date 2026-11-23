@@ -40,7 +40,7 @@
   padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 /* Dark theme. settings.ts always sets data-theme to the theme in use: the one chosen in
-   Settings, or the system's when the choice is "Like the system". */
+   Settings, or the system's when the choice is "System". */
 :root[data-theme='dark'] {
   color-scheme: dark;
   --bg: #191919;
@@ -105,6 +105,10 @@ textarea,
 select {
   font: inherit;
   color: inherit;
+}
+/* room between a dropdown's text and its arrow, which the browser draws against the text */
+select {
+  padding-right: 24px;
 }
 
 a {
@@ -219,7 +223,7 @@ a {
 /* the field, the language and the button share one height and the app's field look */
 .look-up input,
 .look-up select {
-  padding: 7px 10px;
+  padding: 7px 24px 7px 10px;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: var(--surface);
@@ -499,7 +503,7 @@ a.btn {
 }
 .add-to-doc-place select {
   max-width: 100%;
-  padding: 7px 10px;
+  padding: 7px 24px 7px 10px;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: var(--surface);
@@ -1701,7 +1705,7 @@ pre.source {
 .sel-bar select {
   border: 1px solid var(--line);
   border-radius: 8px;
-  padding: 6px 10px;
+  padding: 6px 24px 6px 10px;
   background: var(--surface);
   color: var(--text);
 }
@@ -2890,7 +2894,7 @@ ul.mistakes .miss {
 .photo-pick select {
   font: inherit;
   font-size: 14px;
-  padding: 7px 10px;
+  padding: 7px 24px 7px 10px;
   border-radius: 8px;
   border: 1px solid var(--line);
   background: var(--surface);
@@ -2982,7 +2986,7 @@ ul.mistakes .miss {
 }
 .reader-select {
   max-width: 320px;
-  padding: 7px 10px;
+  padding: 7px 24px 7px 10px;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: var(--surface);
@@ -3841,7 +3845,7 @@ li .open-link {
   font-size: 14px;
 }
 .make-exercise-count select {
-  padding: 4px 8px;
+  padding: 4px 24px 4px 8px;
   border: 1px solid var(--line);
   border-radius: 6px;
   background: var(--surface);
@@ -4119,7 +4123,7 @@ li .open-link {
   font-weight: 600;
 }
 .news-filter select {
-  padding: 4px 6px;
+  padding: 4px 24px 4px 6px;
   border: 1px solid var(--line);
   border-radius: 6px;
   background: var(--paper);
@@ -4274,7 +4278,7 @@ li .open-link {
 
 .settings-select {
   max-width: 100%;
-  padding: 6px 8px;
+  padding: 6px 24px 6px 8px;
   border: 1px solid var(--line);
   border-radius: 6px;
   background: var(--paper);
@@ -4310,8 +4314,11 @@ li .open-link {
 .settings-profile-fields .row-actions {
   margin-top: 0;
 }
+/* the daily goal and speech speed under the picture and name */
+.settings-profile + .settings-row {
+  margin-top: 14px;
+}
 
-.settings-languages,
 .settings-sections {
   list-style: none;
   margin: 0;
@@ -4320,13 +4327,11 @@ li .open-link {
   flex-wrap: wrap;
   gap: 8px 22px;
 }
-.settings-languages li,
 .settings-sections li {
   display: flex;
   align-items: center;
   gap: 8px;
 }
-.settings-languages label,
 .settings-sections label {
   display: flex;
   align-items: center;
@@ -4341,7 +4346,9 @@ li .open-link {
 .settings-tenses legend {
   padding: 0;
   margin-bottom: 6px;
+  font-size: 13px;
   font-weight: 600;
+  color: var(--muted);
 }
 .settings-tenses ul {
   list-style: none;
@@ -4357,22 +4364,78 @@ li .open-link {
   gap: 6px;
   cursor: pointer;
 }
-.settings-languages select {
-  padding: 4px 6px;
+
+/* the Learning card: a heading over the list of languages */
+.settings-card > .settings-label {
+  display: block;
+  margin-bottom: 10px;
+}
+/* the languages being learned, a box each: name, level and ✕, then the quiz tenses */
+.settings-learned {
+  list-style: none;
+  margin: 0 0 12px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.settings-learned-language,
+.settings-add-language {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+.settings-learned-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.settings-learned-head + .settings-tenses {
+  margin-top: 10px;
+}
+/* ✕ at the far end of the row */
+.settings-learned-head .row-remove {
+  margin-left: auto;
+}
+.settings-level {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.settings-level select,
+.settings-add-fields select {
+  padding: 4px 24px 4px 6px;
   border: 1px solid var(--line);
   border-radius: 6px;
   background: var(--paper);
   color: var(--text);
+}
+/* the form that adds a language, in place of its button */
+.settings-add-language {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.settings-add-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 18px;
+}
+.settings-add-language .row-actions {
+  margin-top: 0;
 }
 
 .settings-profile .avatar.letter {
   font-size: 40px;
 }
 
-/* Profile and Interface in one row; each card keeps its own height */
+/* Profile (with the daily goal and speech speed) and Interface in one row, Profile the wider;
+   each card keeps its own height */
 .settings-top {
   display: grid;
-  grid-template-columns: 2fr 3fr;
+  grid-template-columns: 3fr 2fr;
   gap: 18px;
   align-items: start;
   margin-bottom: 18px;

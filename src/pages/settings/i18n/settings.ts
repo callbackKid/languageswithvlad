@@ -26,7 +26,7 @@ export const settingsText = defineMessages({
     translateToChanged:
       'Each lesson is prepared again in this language when you open it; until then its words are left out of practice.',
     theme: 'Colour theme',
-    'theme.system': 'Like the system',
+    'theme.system': 'System',
     'theme.light': '☀️ Light',
     'theme.dark': '🌙 Dark',
     learning: 'Learning',
@@ -34,6 +34,12 @@ export const settingsText = defineMessages({
     studyingHint:
       'Home, Downloaded lessons, Words to learn, Mistakes, Stats and the discussion questions show only these languages. Lessons in other languages stay in Lesson history.',
     atLeastOne: 'Keep at least one language.',
+    // the Learning card: a language is added with its level and tenses, and taken off with ✕
+    addLanguage: 'Add a language',
+    newLanguage: 'Language',
+    addThisLanguage: 'Add {language}',
+    stopLearning: 'Stop learning',
+    stopLearningLabel: 'Stop learning {language}',
     quizTenses: 'Tenses in quizzes',
     quizTensesHint:
       'The quick quiz and Home’s random exercises ask verb forms only in these tenses. They follow your level until you tick them yourself; the Verbs tab still shows every tense.',
@@ -86,7 +92,7 @@ export const settingsText = defineMessages({
     translateToChanged:
       'Каждый урок будет подготовлен заново на этом языке, когда вы его откроете; до тех пор его слова не попадают в упражнения.',
     theme: 'Цветовая тема',
-    'theme.system': 'Как в системе',
+    'theme.system': 'Системная',
     'theme.light': '☀️ Светлая',
     'theme.dark': '🌙 Тёмная',
     learning: 'Обучение',
@@ -94,6 +100,11 @@ export const settingsText = defineMessages({
     studyingHint:
       'Главная, «Загруженные уроки», «Слова на изучении», «Ошибки», «Статистика» и «Вопрос для обсуждения» показывают только эти языки. Уроки на других языках остаются в «Истории уроков».',
     atLeastOne: 'Оставьте хотя бы один язык.',
+    addLanguage: 'Добавить язык',
+    newLanguage: 'Язык',
+    addThisLanguage: 'Добавить: {language}',
+    stopLearning: 'Больше не учить',
+    stopLearningLabel: 'Больше не учить: {language}',
     quizTenses: 'Времена в тестах',
     quizTensesHint:
       '«Быстрый тест» и «Случайные упражнения» на Главной спрашивают формы глаголов только в этих временах. Пока вы не отметите их сами, они подбираются по вашему уровню; на вкладке «Глаголы» по-прежнему видны все времена.',
@@ -153,7 +164,7 @@ export const settingsText = defineMessages({
     translateToChanged:
       'Chaque leçon est de nouveau préparée dans cette langue quand vous l’ouvrez ; d’ici là, ses mots sont exclus des exercices.',
     theme: 'Thème',
-    'theme.system': 'Comme le système',
+    'theme.system': 'Système',
     'theme.light': '☀️ Clair',
     'theme.dark': '🌙 Sombre',
     learning: 'Apprentissage',
@@ -161,6 +172,11 @@ export const settingsText = defineMessages({
     studyingHint:
       'Accueil, Leçons téléchargées, Mots à apprendre, Erreurs, Statistiques et les questions à discuter n’affichent que ces langues. Les leçons dans d’autres langues restent dans Historique des leçons.',
     atLeastOne: 'Gardez au moins une langue.',
+    addLanguage: 'Ajouter une langue',
+    newLanguage: 'Langue',
+    addThisLanguage: 'Ajouter : {language}',
+    stopLearning: 'Ne plus apprendre',
+    stopLearningLabel: 'Ne plus apprendre : {language}',
     quizTenses: 'Temps dans les quiz',
     quizTensesHint:
       'Le quiz rapide et les exercices au hasard de l’Accueil ne demandent les formes verbales qu’à ces temps. Tant que vous ne les cochez pas vous-même, ils suivent votre niveau ; l’onglet Verbes montre toujours tous les temps.',
@@ -215,7 +231,7 @@ export const settingsText = defineMessages({
     translateToChanged:
       'Jede Lektion wird beim Öffnen neu in dieser Sprache vorbereitet; bis dahin fehlen ihre Wörter in den Übungen.',
     theme: 'Farbschema',
-    'theme.system': 'Wie das System',
+    'theme.system': 'System',
     'theme.light': '☀️ Hell',
     'theme.dark': '🌙 Dunkel',
     learning: 'Lernen',
@@ -223,6 +239,11 @@ export const settingsText = defineMessages({
     studyingHint:
       'Startseite, Geladene Lektionen, Lernwörter, Fehler, Statistik und die Diskussionsfragen zeigen nur diese Sprachen. Lektionen in anderen Sprachen bleiben im Lektionsverlauf.',
     atLeastOne: 'Behalte mindestens eine Sprache.',
+    addLanguage: 'Sprache hinzufügen',
+    newLanguage: 'Sprache',
+    addThisLanguage: '{language} hinzufügen',
+    stopLearning: 'Nicht mehr lernen',
+    stopLearningLabel: '{language} nicht mehr lernen',
     quizTenses: 'Zeitformen im Quiz',
     quizTensesHint:
       'Das Schnellquiz und die gemischten Übungen auf der Startseite fragen Verbformen nur in diesen Zeitformen ab. Bis du selbst welche anhakst, richtet sich die Auswahl nach deinem Niveau; der Tab Verben zeigt weiterhin alle Zeitformen.',
@@ -277,7 +298,7 @@ export const settingsText = defineMessages({
     translateToChanged:
       'Cada lección se vuelve a preparar en este idioma cuando la abres; hasta entonces, sus palabras quedan fuera de los ejercicios.',
     theme: 'Tema de color',
-    'theme.system': 'Como el sistema',
+    'theme.system': 'Del sistema',
     'theme.light': '☀️ Claro',
     'theme.dark': '🌙 Oscuro',
     learning: 'Aprendizaje',
@@ -285,6 +306,11 @@ export const settingsText = defineMessages({
     studyingHint:
       'Inicio, Lecciones descargadas, Palabras por aprender, Errores, Estadísticas y las preguntas para debatir muestran solo estos idiomas. Las lecciones en otros idiomas siguen en Historial de lecciones.',
     atLeastOne: 'Deja al menos un idioma.',
+    addLanguage: 'Añadir un idioma',
+    newLanguage: 'Idioma',
+    addThisLanguage: 'Añadir: {language}',
+    stopLearning: 'Dejar de aprender',
+    stopLearningLabel: 'Dejar de aprender: {language}',
     quizTenses: 'Tiempos en los tests',
     quizTensesHint:
       'El test rápido y los ejercicios al azar de Inicio solo preguntan formas verbales en estos tiempos. Hasta que los marques tú, siguen tu nivel; la pestaña Verbos sigue mostrando todos los tiempos.',
@@ -339,7 +365,7 @@ export const settingsText = defineMessages({
     translateToChanged:
       'Cada lição volta a ser preparada neste idioma quando a abrir; até lá, as suas palavras ficam de fora dos exercícios.',
     theme: 'Tema de cores',
-    'theme.system': 'Como o sistema',
+    'theme.system': 'Do sistema',
     'theme.light': '☀️ Claro',
     'theme.dark': '🌙 Escuro',
     learning: 'Aprendizagem',
@@ -347,6 +373,11 @@ export const settingsText = defineMessages({
     studyingHint:
       'Início, Lições descarregadas, Palavras por aprender, Erros, Estatísticas e as perguntas para debate mostram só estas línguas. As lições noutras línguas ficam no Histórico de lições.',
     atLeastOne: 'Mantenha pelo menos uma língua.',
+    addLanguage: 'Adicionar uma língua',
+    newLanguage: 'Língua',
+    addThisLanguage: 'Adicionar: {language}',
+    stopLearning: 'Deixar de aprender',
+    stopLearningLabel: 'Deixar de aprender: {language}',
     quizTenses: 'Tempos nos testes',
     quizTensesHint:
       'O teste rápido e os exercícios aleatórios do Início só pedem formas verbais nestes tempos. Até os marcar por si, seguem o seu nível; o separador Verbos continua a mostrar todos os tempos.',
@@ -401,7 +432,7 @@ export const settingsText = defineMessages({
     translateToChanged:
       'Ogni lezione viene preparata di nuovo in questa lingua quando la apri; fino ad allora le sue parole restano fuori dagli esercizi.',
     theme: 'Tema',
-    'theme.system': 'Come il sistema',
+    'theme.system': 'Di sistema',
     'theme.light': '☀️ Chiaro',
     'theme.dark': '🌙 Scuro',
     learning: 'Apprendimento',
@@ -409,6 +440,11 @@ export const settingsText = defineMessages({
     studyingHint:
       'Home, Lezioni scaricate, Parole da imparare, Errori, Statistiche e le domande di discussione mostrano solo queste lingue. Le lezioni in altre lingue restano in Cronologia lezioni.',
     atLeastOne: 'Tieni almeno una lingua.',
+    addLanguage: 'Aggiungi una lingua',
+    newLanguage: 'Lingua',
+    addThisLanguage: 'Aggiungi: {language}',
+    stopLearning: 'Smetti di studiare',
+    stopLearningLabel: 'Smetti di studiare: {language}',
     quizTenses: 'Tempi nei quiz',
     quizTensesHint:
       'Il quiz veloce e gli esercizi casuali della Home chiedono le forme verbali solo in questi tempi. Finché non li spunti tu, seguono il tuo livello; la scheda Verbi mostra comunque tutti i tempi.',

@@ -208,13 +208,13 @@ export const tutorial = defineMessages({
     'settings.intro':
       'Opens from <b>⚙️ Settings</b> on the right of the top bar. Everything saves straight away.',
     'settings.step1':
-      '<b>Profile</b>: add a picture and your name; the name is used in Zoom calls and in messages to the teacher.',
+      '<b>Profile</b>: add a picture and your name (used in Zoom calls and in messages to the teacher), the daily goal for the 🔥 streak and the speed of 🔊.',
     'settings.step2':
-      '<b>Interface</b>: the language of the app (English, Russian, French, German, Spanish, Portuguese, Italian) and the colour theme: like the system, light or dark.',
+      '<b>Interface</b>: the language of the app (English, Russian, French, German, Spanish, Portuguese, Italian) and the colour theme: System, light or dark.',
     'settings.step3':
-      '<b>Learning</b>: tick the languages you learn and choose your level in each. Exercises, Words to learn, Mistakes, Stats and the discussion questions then show only those languages, and the level is the default for discussion questions and in Fill the gap.',
+      '<b>Learning</b>: the languages you learn, each with your level and the tenses quizzes ask; <btn>+ Add a language</btn> adds one with the same choices, and ✕ takes one off. Exercises, Words to learn, Mistakes, Stats and the discussion questions then show only those languages, and the level is the default for discussion questions and in Fill the gap.',
     'settings.step4':
-      'Also there: the daily goal for the 🔥 streak, the speed of 🔊, which sections the menu shows and which tabs a lesson page shows.',
+      'Also there: which sections the menu shows, which tabs a lesson page shows and, at the bottom, the lesson document.',
     'settings.tip1':
       '“Translations in” sets the language Claude’s translations are written in, apart from the interface language; a lesson is prepared again in that language when you open it.',
     'call.title': 'Lesson space',
@@ -473,13 +473,13 @@ export const tutorial = defineMessages({
     'settings.intro':
       'Открываются кнопкой <b>⚙️ Настройки</b> справа в верхней панели. Всё сохраняется сразу.',
     'settings.step1':
-      '<b>Профиль</b>: добавьте картинку и имя; имя используется в звонках Zoom и в сообщениях преподавателю.',
+      '<b>Профиль</b>: добавьте картинку и имя (оно используется в звонках Zoom и в сообщениях преподавателю), цель на день для 🔥 серии и скорость озвучки 🔊.',
     'settings.step2':
-      '<b>Интерфейс</b>: язык приложения (английский, русский, французский, немецкий, испанский, португальский, итальянский) и цветовая тема: как в системе, светлая или тёмная.',
+      '<b>Интерфейс</b>: язык приложения (английский, русский, французский, немецкий, испанский, португальский, итальянский) и цветовая тема: системная, светлая или тёмная.',
     'settings.step3':
-      '<b>Обучение</b>: отметьте языки, которые учите, и выберите уровень для каждого. Упражнения, «Слова на изучении», «Ошибки», «Статистика» и «Вопрос для обсуждения» покажут только эти языки, а уровень подставится в «Вопрос для обсуждения» и «Вставьте слово».',
+      '<b>Обучение</b>: языки, которые вы учите, и для каждого — ваш уровень и времена в тестах; <btn>+ Добавить язык</btn> добавляет ещё один с теми же настройками, а ✕ убирает язык. Упражнения, «Слова на изучении», «Ошибки», «Статистика» и «Вопрос для обсуждения» покажут только эти языки, а уровень подставится в «Вопрос для обсуждения» и «Вставьте слово».',
     'settings.step4':
-      'Ещё там: цель на день для 🔥 серии, скорость озвучки 🔊, какие разделы показывать в меню и какие вкладки — на странице урока.',
+      'Ещё там: какие разделы показывать в меню, какие вкладки — на странице урока, а в самом низу — документ с уроками.',
     'settings.tip1':
       'Настройка «Язык переводов» задаёт, на каком языке Claude пишет переводы, независимо от языка интерфейса; урок заново готовится на этом языке, когда вы его открываете.',
     'call.title': 'Пространство урока',
@@ -744,13 +744,13 @@ export const tutorial = defineMessages({
     'settings.intro':
       'S’ouvrent avec <b>⚙️ Réglages</b> à droite de la barre du haut. Tout est enregistré tout de suite.',
     'settings.step1':
-      '<b>Profil</b> : ajoutez une image et votre nom ; le nom sert dans les appels Zoom et les messages au professeur.',
+      '<b>Profil</b> : ajoutez une image et votre nom (utilisé dans les appels Zoom et les messages au professeur), l’objectif du jour pour la 🔥 série et la vitesse de 🔊.',
     'settings.step2':
-      '<b>Interface</b> : la langue de l’application (anglais, russe, français, allemand, espagnol, portugais, italien) et le thème : comme le système, clair ou sombre.',
+      '<b>Interface</b> : la langue de l’application (anglais, russe, français, allemand, espagnol, portugais, italien) et le thème : celui du système, clair ou sombre.',
     'settings.step3':
-      '<b>Apprentissage</b> : cochez les langues que vous apprenez et choisissez votre niveau pour chacune. Les exercices, Mots à apprendre, Erreurs, Statistiques et les questions à discuter n’affichent alors que ces langues, et le niveau est choisi par défaut pour les questions à discuter et dans le Texte à trous.',
+      '<b>Apprentissage</b> : les langues que vous apprenez, chacune avec votre niveau et les temps demandés dans les quiz ; <btn>+ Ajouter une langue</btn> en ajoute une avec les mêmes choix, et ✕ en retire une. Les exercices, Mots à apprendre, Erreurs, Statistiques et les questions à discuter n’affichent alors que ces langues, et le niveau est choisi par défaut pour les questions à discuter et dans le Texte à trous.',
     'settings.step4':
-      'Aussi : l’objectif du jour pour la 🔥 série, la vitesse de 🔊, les sections affichées dans le menu et les onglets affichés sur la page d’une leçon.',
+      'Aussi : les sections affichées dans le menu, les onglets affichés sur la page d’une leçon et, tout en bas, le document des leçons.',
     'settings.tip1':
       '« Langue des traductions » fixe la langue dans laquelle Claude écrit ses traductions, indépendamment de celle de l’interface ; une leçon est de nouveau préparée dans cette langue quand vous l’ouvrez.',
     'call.title': 'Espace cours',
@@ -1013,13 +1013,13 @@ export const tutorial = defineMessages({
     'settings.intro':
       'Öffnen sich über <b>⚙️ Einstellungen</b> rechts in der oberen Leiste. Alles wird sofort gespeichert.',
     'settings.step1':
-      '<b>Profil</b>: Füge ein Bild und deinen Namen hinzu; der Name wird in Zoom-Anrufen und in Nachrichten an die Lehrkraft verwendet.',
+      '<b>Profil</b>: dein Bild und dein Name (er wird in Zoom-Anrufen und in Nachrichten an die Lehrkraft verwendet), das Tagesziel für die 🔥 Serie und das Tempo von 🔊.',
     'settings.step2':
-      '<b>Oberfläche</b>: die Sprache der App (Englisch, Russisch, Französisch, Deutsch, Spanisch, Portugiesisch, Italienisch) und das Farbschema: wie das System, hell oder dunkel.',
+      '<b>Oberfläche</b>: die Sprache der App (Englisch, Russisch, Französisch, Deutsch, Spanisch, Portugiesisch, Italienisch) und das Farbschema: das des Systems, hell oder dunkel.',
     'settings.step3':
-      '<b>Lernen</b>: Hake die Sprachen an, die du lernst, und wähle für jede dein Niveau. Übungen, Lernwörter, Fehler, Statistik und die Diskussionsfragen zeigen dann nur diese Sprachen, und das Niveau ist der Standard für Diskussionsfragen und im Lückentext.',
+      '<b>Lernen</b>: die Sprachen, die du lernst, jede mit deinem Niveau und den Zeitformen im Quiz; <btn>+ Sprache hinzufügen</btn> fügt eine weitere mit denselben Angaben hinzu, und ✕ entfernt eine. Übungen, Lernwörter, Fehler, Statistik und die Diskussionsfragen zeigen dann nur diese Sprachen, und das Niveau ist der Standard für Diskussionsfragen und im Lückentext.',
     'settings.step4':
-      'Außerdem: das Tagesziel für die 🔥 Serie, das Tempo von 🔊, welche Bereiche das Menü und welche Tabs die Lektionsseite zeigt.',
+      'Außerdem: welche Bereiche das Menü und welche Tabs die Lektionsseite zeigt und ganz unten das Dokument mit den Lektionen.',
     'settings.tip1':
       'Unter „Übersetzungssprache“ wählst du, in welche Sprache Claude übersetzt, unabhängig von der Sprache der Oberfläche; eine Lektion wird in dieser Sprache neu vorbereitet, wenn du sie öffnest.',
     'call.title': 'Unterrichtsraum',
@@ -1283,13 +1283,13 @@ export const tutorial = defineMessages({
     'settings.intro':
       'Se abren con <b>⚙️ Ajustes</b> a la derecha de la barra superior. Todo se guarda al instante.',
     'settings.step1':
-      '<b>Perfil</b>: añade una imagen y tu nombre; el nombre se usa en las llamadas de Zoom y en los mensajes al profesor.',
+      '<b>Perfil</b>: añade una imagen y tu nombre (se usa en las llamadas de Zoom y en los mensajes al profesor), el objetivo diario para la racha 🔥 y la velocidad de 🔊.',
     'settings.step2':
-      '<b>Interfaz</b>: el idioma de la aplicación (inglés, ruso, francés, alemán, español, portugués, italiano) y el tema de color: como el sistema, claro u oscuro.',
+      '<b>Interfaz</b>: el idioma de la aplicación (inglés, ruso, francés, alemán, español, portugués, italiano) y el tema de color: el del sistema, claro u oscuro.',
     'settings.step3':
-      '<b>Aprendizaje</b>: marca los idiomas que aprendes y elige tu nivel en cada uno. Los ejercicios, Palabras por aprender, Errores, Estadísticas y las preguntas para debatir muestran entonces solo esos idiomas, y el nivel se usa por defecto en las preguntas para debatir y en Rellena el hueco.',
+      '<b>Aprendizaje</b>: los idiomas que aprendes, cada uno con tu nivel y los tiempos que preguntan los tests; <btn>+ Añadir un idioma</btn> añade otro con las mismas opciones, y ✕ quita uno. Los ejercicios, Palabras por aprender, Errores, Estadísticas y las preguntas para debatir muestran entonces solo esos idiomas, y el nivel se usa por defecto en las preguntas para debatir y en Rellena el hueco.',
     'settings.step4':
-      'También están allí: el objetivo diario para la racha 🔥, la velocidad de 🔊, qué secciones muestra el menú y qué pestañas muestra la página de una lección.',
+      'También están allí: qué secciones muestra el menú, qué pestañas muestra la página de una lección y, al final, el documento de las lecciones.',
     'settings.tip1':
       '«Idioma de las traducciones» elige el idioma en el que Claude escribe las traducciones, independientemente del idioma de la interfaz; una lección se vuelve a preparar en ese idioma cuando la abres.',
     'call.title': 'Espacio de clase',
@@ -1552,13 +1552,13 @@ export const tutorial = defineMessages({
     'settings.intro':
       'Abrem-se com <b>⚙️ Definições</b> à direita da barra superior. Tudo fica guardado de imediato.',
     'settings.step1':
-      '<b>Perfil</b>: acrescente uma imagem e o seu nome; o nome é usado nas chamadas do Zoom e nas mensagens para o professor.',
+      '<b>Perfil</b>: acrescente uma imagem e o seu nome (usado nas chamadas do Zoom e nas mensagens para o professor), o objetivo diário para a série 🔥 e a velocidade do 🔊.',
     'settings.step2':
-      '<b>Interface</b>: o idioma da aplicação (inglês, russo, francês, alemão, espanhol, português, italiano) e o tema de cores: como o sistema, claro ou escuro.',
+      '<b>Interface</b>: o idioma da aplicação (inglês, russo, francês, alemão, espanhol, português, italiano) e o tema de cores: o do sistema, claro ou escuro.',
     'settings.step3':
-      '<b>Aprendizagem</b>: marque as línguas que aprende e escolha o seu nível em cada uma. Os exercícios, as Palavras por aprender, os Erros, as Estatísticas e as perguntas para debate mostram então só essas línguas, e o nível é usado por defeito nas perguntas para debate e em Preencha o espaço.',
+      '<b>Aprendizagem</b>: as línguas que aprende, cada uma com o seu nível e os tempos que os testes pedem; <btn>+ Adicionar uma língua</btn> acrescenta outra com as mesmas escolhas, e ✕ retira uma. Os exercícios, as Palavras por aprender, os Erros, as Estatísticas e as perguntas para debate mostram então só essas línguas, e o nível é usado por defeito nas perguntas para debate e em Preencha o espaço.',
     'settings.step4':
-      'Também lá estão: o objetivo diário para a série 🔥, a velocidade do 🔊, as secções que o menu mostra e os separadores que a página de uma lição mostra.',
+      'Também lá estão: as secções que o menu mostra, os separadores que a página de uma lição mostra e, no fim, o documento das lições.',
     'settings.tip1':
       '«Idioma das traduções» define o idioma em que o Claude escreve as traduções, independentemente do idioma da interface; uma lição volta a ser preparada nesse idioma quando a abre.',
     'call.title': 'Espaço de aula',
@@ -1821,13 +1821,13 @@ export const tutorial = defineMessages({
     'settings.intro':
       'Si aprono con <b>⚙️ Impostazioni</b> a destra della barra in alto. Tutto si salva subito.',
     'settings.step1':
-      '<b>Profilo</b>: aggiungi un’immagine e il tuo nome; il nome si usa nelle chiamate Zoom e nei messaggi all’insegnante.',
+      '<b>Profilo</b>: aggiungi un’immagine e il tuo nome (si usa nelle chiamate Zoom e nei messaggi all’insegnante), l’obiettivo giornaliero per la serie 🔥 e la velocità del 🔊.',
     'settings.step2':
-      '<b>Interfaccia</b>: la lingua dell’app (inglese, russo, francese, tedesco, spagnolo, portoghese, italiano) e il tema: come il sistema, chiaro o scuro.',
+      '<b>Interfaccia</b>: la lingua dell’app (inglese, russo, francese, tedesco, spagnolo, portoghese, italiano) e il tema: quello di sistema, chiaro o scuro.',
     'settings.step3':
-      '<b>Apprendimento</b>: spunta le lingue che studi e scegli il tuo livello in ognuna. Esercizi, Parole da imparare, Errori, Statistiche e le domande di discussione mostrano allora solo quelle lingue, e il livello è quello predefinito per le domande di discussione e per Completa la frase.',
+      '<b>Apprendimento</b>: le lingue che studi, ognuna con il tuo livello e i tempi chiesti nei quiz; <btn>+ Aggiungi una lingua</btn> ne aggiunge un’altra con le stesse scelte, e ✕ ne toglie una. Esercizi, Parole da imparare, Errori, Statistiche e le domande di discussione mostrano allora solo quelle lingue, e il livello è quello predefinito per le domande di discussione e per Completa la frase.',
     'settings.step4':
-      'Lì trovi anche: l’obiettivo giornaliero per la serie 🔥, la velocità del 🔊, quali sezioni mostra il menu e quali schede mostra la pagina di una lezione.',
+      'Lì trovi anche: quali sezioni mostra il menu, quali schede mostra la pagina di una lezione e, in fondo, il documento delle lezioni.',
     'settings.tip1':
       '«Lingua delle traduzioni» sceglie la lingua in cui Claude scrive le traduzioni, indipendentemente da quella dell’interfaccia; una lezione viene preparata di nuovo in questa lingua quando la apri.',
     'call.title': 'Spazio lezione',

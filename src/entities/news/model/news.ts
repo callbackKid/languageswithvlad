@@ -53,6 +53,18 @@ export const NEWS: NewsDay[] = [
       {
         kind: 'better',
         text: {
+          en: 'Settings are easier to find your way in: Learning shows only the languages you learn, each with its level and the tenses quizzes ask, and + Add a language asks for both before adding one. The daily goal and speech speed are under your profile, and the document is at the bottom.',
+          ru: '«Настройки» стали понятнее: в «Обучении» теперь только языки, которые вы учите, у каждого — уровень и времена в тестах, а «+ Добавить язык» спрашивает и то и другое, прежде чем добавить язык. Цель на день и скорость озвучки теперь в «Профиле», а документ — в самом низу.',
+          fr: 'On s’y retrouve mieux dans les « Réglages » : « Apprentissage » ne montre que les langues que vous apprenez, chacune avec son niveau et les temps demandés dans les quiz, et « + Ajouter une langue » demande les deux avant d’en ajouter une. L’objectif du jour et la vitesse de lecture sont dans le « Profil », et le document est tout en bas.',
+          de: 'In den „Einstellungen“ findest du dich leichter zurecht: „Lernen“ zeigt nur die Sprachen, die du lernst, jede mit ihrem Niveau und den Zeitformen im Quiz, und „+ Sprache hinzufügen“ fragt nach beidem, bevor eine dazukommt. Tagesziel und Sprechtempo stehen jetzt unter „Profil“, das Dokument ganz unten.',
+          es: 'Es más fácil orientarse en «Ajustes»: «Aprendizaje» muestra solo los idiomas que aprendes, cada uno con su nivel y los tiempos que preguntan los tests, y «+ Añadir un idioma» pide ambas cosas antes de añadir uno. El objetivo diario y la velocidad de voz están ahora en «Perfil», y el documento, al final.',
+          pt: 'É mais fácil orientar-se nas «Definições»: «Aprendizagem» mostra só as línguas que aprende, cada uma com o seu nível e os tempos que os testes pedem, e «+ Adicionar uma língua» pede as duas coisas antes de acrescentar uma. O objetivo diário e a velocidade da voz estão agora no «Perfil», e o documento fica no fim.',
+          it: 'Orientarsi nelle «Impostazioni» è più facile: «Apprendimento» mostra solo le lingue che studi, ognuna con il suo livello e i tempi chiesti nei quiz, e «+ Aggiungi una lingua» chiede entrambe le cose prima di aggiungerne una. L’obiettivo giornaliero e la velocità della voce ora sono nel «Profilo», e il documento è in fondo.',
+        },
+      },
+      {
+        kind: 'better',
+        text: {
           en: '✕ on a word or a verb in a lesson now asks before taking it out, so a slip of the finger doesn’t remove it.',
           ru: '✕ у слова или глагола в уроке теперь переспрашивает, прежде чем убрать его, — случайное нажатие ничего не удалит.',
           fr: '✕ sur un mot ou un verbe d’une leçon demande maintenant confirmation avant de le retirer : un faux mouvement ne l’enlève plus.',
