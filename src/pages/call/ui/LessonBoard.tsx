@@ -4,6 +4,7 @@ import { type BoardPeer, type BoardServer } from '@/shared/api';
 import { isDark, useSettings } from '@/shared/config';
 import { call, useTranslation } from '@/shared/i18n';
 import CallCard from '@/shared/ui/CallCard';
+import InlineConfirm from '@/shared/ui/InlineConfirm';
 
 import { type BoardHandle } from './BoardCanvas';
 
@@ -38,6 +39,8 @@ export default function LessonBoard({
   const handle = useRef<BoardHandle | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [isFullScreen, setIsFullScreen] = useState(false);
+  // Clear the board was pressed: the question at the top of the card asks first
+  const [isAskingToClear, setAskingToClear] = useState(false);
 
   useEffect(() => {
     const onFullScreen = () => setIsFullScreen(document.fullscreenElement === frame.current);
@@ -84,9 +87,8 @@ export default function LessonBoard({
               <button
                 type="button"
                 className="btn ghost"
-                onClick={() => {
-                  if (window.confirm(t('clearBoardConfirm'))) handle.current?.clear();
-                }}
+                aria-expanded={isAskingToClear}
+                onClick={() => setAskingToClear(!isAskingToClear)}
               >
                 {t('clearBoard')}
               </button>
@@ -95,6 +97,17 @@ export default function LessonBoard({
         </>
       }
     >
+      {isOpen && isAskingToClear && (
+        <InlineConfirm
+          question={t('clearBoardConfirm')}
+          yesLabel={t('clearBoard')}
+          onYes={() => {
+            handle.current?.clear();
+            setAskingToClear(false);
+          }}
+          onNo={() => setAskingToClear(false)}
+        />
+      )}
       <p className="hint">{shared ? t('boardHintShared') : t('boardHint')}</p>
       {isOpen && shared && (
         <p className={'board-status' + (others ? ' live' : '')} role="status">

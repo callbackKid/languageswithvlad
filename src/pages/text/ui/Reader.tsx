@@ -7,6 +7,7 @@ import { api, ApiError } from '@/shared/api';
 import { getSettings, type Language, useTranslationLanguage } from '@/shared/config';
 import { common, translator, useTranslation } from '@/shared/i18n';
 import { asList, load, save } from '@/shared/lib/storage';
+import InlineConfirm from '@/shared/ui/InlineConfirm';
 import PageHead from '@/shared/ui/PageHead';
 import Speak from '@/shared/ui/Speak';
 import WaitingFact from '@/shared/ui/WaitingFact';
@@ -109,6 +110,8 @@ export default function Reader({ hasClaude }: { hasClaude: boolean }) {
   const [studying, setStudying] = useState<Busy>('idle');
   const [error, setError] = useState('');
   const [showTranslation, setShowTranslation] = useState(true);
+  // the text whose Delete was pressed: the question under the buttons asks first
+  const [deleting, setDeleting] = useState<string | null>(null);
 
   const current = texts.find((entry) => entry.id === currentId) ?? null;
   // until Claude has read the text, guess the first language the student learns
@@ -184,7 +187,8 @@ export default function Reader({ hasClaude }: { hasClaude: boolean }) {
   }
 
   function removeCurrent() {
-    if (!current || !window.confirm(t('deleteConfirm', { title: current.title }))) return;
+    setDeleting(null);
+    if (!current) return;
     const next = texts.filter((entry) => entry.id !== current.id);
     setTexts(next);
     open(next[0]?.id ?? null);
@@ -337,9 +341,22 @@ export default function Reader({ hasClaude }: { hasClaude: boolean }) {
                   ? t('hideTranslation')
                   : t('showTranslation')}
             </button>
-            <button type="button" className="btn ghost" onClick={removeCurrent}>
+            <button
+              type="button"
+              className="btn ghost"
+              aria-expanded={deleting === current.id}
+              onClick={() => setDeleting(deleting === current.id ? null : current.id)}
+            >
               {t('delete')}
             </button>
+            {deleting === current.id && (
+              <InlineConfirm
+                question={t('deleteConfirm', { title: current.title })}
+                yesLabel={t('delete')}
+                onYes={removeCurrent}
+                onNo={() => setDeleting(null)}
+              />
+            )}
           </div>
 
           <section className="panel solo">

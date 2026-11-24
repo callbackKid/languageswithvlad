@@ -9,6 +9,7 @@ import { asObjectText } from '@/shared/lib/json';
 import { extractPages, MAX_PDF_PAGES, pdfPageCount } from '@/shared/lib/pdf';
 import { asFields, asList, load, save } from '@/shared/lib/storage';
 import { hash } from '@/shared/lib/util';
+import InlineConfirm from '@/shared/ui/InlineConfirm';
 import WaitingFact from '@/shared/ui/WaitingFact';
 import { LessonView } from '@/widgets/lesson-view';
 import { WordsTab } from '@/widgets/word-list';
@@ -74,6 +75,8 @@ export default function HandwrittenNotes({
   const [firstPage, setFirstPage] = useState(1);
   const [lastPage, setLastPage] = useState(1);
   const [currentId, setCurrentId] = useState<string | null>(() => entries[0]?.id ?? null);
+  // the notes whose Delete was pressed: the question under the buttons asks first
+  const [deleting, setDeleting] = useState<string | null>(null);
   const [draft, setDraft] = useState<string | null>(null);
   const [state, setState] = useState<'idle' | 'loading' | 'error'>('idle');
   const [error, setError] = useState('');
@@ -171,11 +174,8 @@ export default function HandwrittenNotes({
   }
 
   function remove() {
-    if (
-      !current ||
-      !window.confirm(t('deleteConfirm', { title: current.title || t('theseNotes') }))
-    )
-      return;
+    setDeleting(null);
+    if (!current) return;
     const next = entries.filter((entry) => entry.id !== current.id);
     store(next);
     setCurrentId(next[0]?.id ?? null);
@@ -328,9 +328,22 @@ export default function HandwrittenNotes({
               <button type="button" className="btn ghost" onClick={() => setDraft(current.text)}>
                 {t('editText')}
               </button>
-              <button type="button" className="btn ghost" onClick={remove}>
+              <button
+                type="button"
+                className="btn ghost"
+                aria-expanded={deleting === current.id}
+                onClick={() => setDeleting(deleting === current.id ? null : current.id)}
+              >
                 {t('delete')}
               </button>
+              {deleting === current.id && (
+                <InlineConfirm
+                  question={t('deleteConfirm', { title: current.title || t('theseNotes') })}
+                  yesLabel={t('delete')}
+                  onYes={remove}
+                  onNo={() => setDeleting(null)}
+                />
+              )}
             </div>
             <AddToDoc
               key={current.id + hash(current.text)}

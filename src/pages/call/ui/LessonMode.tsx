@@ -32,6 +32,7 @@ import { followLink, hrefFor } from '@/shared/lib/router';
 import { loadChecked, loadText, remove, save } from '@/shared/lib/storage';
 import { hash } from '@/shared/lib/util';
 import CallCard from '@/shared/ui/CallCard';
+import InlineConfirm from '@/shared/ui/InlineConfirm';
 import PageHead from '@/shared/ui/PageHead';
 import Speak from '@/shared/ui/Speak';
 import { Discuss } from '@/widgets/discussion';
@@ -62,6 +63,8 @@ function LessonNotes({ docId, target }: { docId: string; target: DocTarget }) {
   const { t } = useTranslation(call);
   const storageKey = `call-notes:${docId}:${today()}`;
   const [text, setText] = useState(() => loadText(storageKey) ?? '');
+  // Clear was pressed: the question at the top of the card asks first
+  const [isAskingToClear, setAskingToClear] = useState(false);
   const area = useRef<HTMLTextAreaElement>(null);
 
   const change = (value: string) => {
@@ -98,17 +101,26 @@ function LessonNotes({ docId, target }: { docId: string; target: DocTarget }) {
             type="button"
             className="btn ghost"
             disabled={!text}
-            onClick={() => {
-              if (!window.confirm(t('clearConfirm'))) return;
-              setText('');
-              remove(storageKey);
-            }}
+            aria-expanded={isAskingToClear}
+            onClick={() => setAskingToClear(!isAskingToClear)}
           >
             {t('clearNotes')}
           </button>
         </>
       }
     >
+      {isAskingToClear && (
+        <InlineConfirm
+          question={t('clearConfirm')}
+          yesLabel={t('clearNotes')}
+          onYes={() => {
+            setText('');
+            remove(storageKey);
+            setAskingToClear(false);
+          }}
+          onNo={() => setAskingToClear(false)}
+        />
+      )}
       <p className="hint">{t('notesHint')}</p>
       <textarea
         ref={area}
