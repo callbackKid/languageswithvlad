@@ -1409,6 +1409,10 @@ a.tab {
   color: var(--text);
   border-bottom-color: var(--ink);
 }
+/* the keyboard ring inside the tab: its bottom edge lies on the underline instead of doubling it */
+.tab:focus-visible {
+  outline-offset: -2px;
+}
 .tab .count {
   font-size: 12px;
   color: var(--muted);
