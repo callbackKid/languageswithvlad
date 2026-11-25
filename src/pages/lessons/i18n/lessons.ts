@@ -9,8 +9,8 @@ export const lessonsText = defineMessages({
     showList: 'Show the lesson list',
     // the red dot on a downloaded lesson whose homework isn't all ticked; {count} tasks are left
     homeworkLeft: {
-      one: 'Homework left: {count} task of {total}',
-      other: 'Homework left: {count} tasks of {total}',
+      one: 'Homework: {count} of {total} left',
+      other: 'Homework: {count} of {total} left',
     },
   },
   ru: {
@@ -19,10 +19,10 @@ export const lessonsText = defineMessages({
     hideList: 'Скрыть список уроков',
     showList: 'Показать список уроков',
     homeworkLeft: {
-      one: 'Домашнее задание: осталось {count} задание из {total}',
-      few: 'Домашнее задание: осталось {count} задания из {total}',
-      many: 'Домашнее задание: осталось {count} заданий из {total}',
-      other: 'Домашнее задание: осталось {count} задания из {total}',
+      one: 'Домашнее задание: осталось {count} из {total}',
+      few: 'Домашнее задание: осталось {count} из {total}',
+      many: 'Домашнее задание: осталось {count} из {total}',
+      other: 'Домашнее задание: осталось {count} из {total}',
     },
   },
   fr: {
@@ -31,8 +31,8 @@ export const lessonsText = defineMessages({
     hideList: 'Masquer la liste des leçons',
     showList: 'Afficher la liste des leçons',
     homeworkLeft: {
-      one: 'Devoirs : il reste {count} tâche sur {total}',
-      other: 'Devoirs : il reste {count} tâches sur {total}',
+      one: 'Devoirs : il en reste {count} sur {total}',
+      other: 'Devoirs : il en reste {count} sur {total}',
     },
   },
   de: {
@@ -41,8 +41,8 @@ export const lessonsText = defineMessages({
     hideList: 'Lektionsliste ausblenden',
     showList: 'Lektionsliste einblenden',
     homeworkLeft: {
-      one: 'Hausaufgaben: noch {count} Aufgabe von {total}',
-      other: 'Hausaufgaben: noch {count} Aufgaben von {total}',
+      one: 'Hausaufgaben: noch {count} von {total} offen',
+      other: 'Hausaufgaben: noch {count} von {total} offen',
     },
   },
   es: {
@@ -51,8 +51,8 @@ export const lessonsText = defineMessages({
     hideList: 'Ocultar la lista de lecciones',
     showList: 'Mostrar la lista de lecciones',
     homeworkLeft: {
-      one: 'Deberes: queda {count} tarea de {total}',
-      other: 'Deberes: quedan {count} tareas de {total}',
+      one: 'Deberes: queda {count} de {total}',
+      other: 'Deberes: quedan {count} de {total}',
     },
   },
   pt: {
@@ -61,8 +61,8 @@ export const lessonsText = defineMessages({
     hideList: 'Esconder a lista de lições',
     showList: 'Mostrar a lista de lições',
     homeworkLeft: {
-      one: 'Trabalho de casa: falta {count} tarefa de {total}',
-      other: 'Trabalho de casa: faltam {count} tarefas de {total}',
+      one: 'Trabalho de casa: falta {count} de {total}',
+      other: 'Trabalho de casa: faltam {count} de {total}',
     },
   },
   it: {
@@ -71,8 +71,8 @@ export const lessonsText = defineMessages({
     hideList: 'Nascondi l’elenco delle lezioni',
     showList: 'Mostra l’elenco delle lezioni',
     homeworkLeft: {
-      one: 'Compiti: manca {count} compito su {total}',
-      other: 'Compiti: mancano {count} compiti su {total}',
+      one: 'Compiti: ne manca {count} su {total}',
+      other: 'Compiti: ne mancano {count} su {total}',
     },
   },
 });
