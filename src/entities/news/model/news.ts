@@ -51,6 +51,18 @@ export const NEWS: NewsDay[] = [
     date: '2026-11-25',
     items: [
       {
+        kind: 'fixed',
+        text: {
+          en: 'Homework written under a heading without a colon (“Les devoirs”, then a numbered list) is now found: it shows on Home, and its lesson gets the red dot in Lesson history.',
+          ru: 'Теперь находится и домашнее задание, записанное под заголовком без двоеточия («Les devoirs», а затем нумерованный список): оно видно на Главной, и в «Истории уроков» у урока появляется красная точка.',
+          fr: 'Les devoirs écrits sous un titre sans deux-points (« Les devoirs », puis une liste numérotée) sont maintenant reconnus : ils s’affichent sur l’Accueil et ont leur point rouge dans l’« Historique des leçons ».',
+          de: 'Hausaufgaben unter einer Überschrift ohne Doppelpunkt („Les devoirs“, dann eine nummerierte Liste) werden jetzt gefunden: Sie erscheinen auf der Startseite und bekommen ihren roten Punkt im „Lektionsverlauf“.',
+          es: 'Ahora se encuentran los deberes escritos bajo un título sin dos puntos («Les devoirs» y luego una lista numerada): aparecen en Inicio y tienen su punto rojo en el «Historial de lecciones».',
+          pt: 'Os trabalhos de casa escritos sob um título sem dois pontos («Les devoirs», seguido de uma lista numerada) são agora encontrados: aparecem no Início e têm o seu ponto vermelho no «Histórico de lições».',
+          it: 'I compiti scritti sotto un titolo senza due punti («Les devoirs», poi un elenco numerato) ora vengono riconosciuti: compaiono nella Home e hanno il loro punto rosso nella «Cronologia lezioni».',
+        },
+      },
+      {
         kind: 'new',
         text: {
           en: 'A red dot in Lesson history marks a downloaded lesson whose homework isn’t finished yet, and its tooltip says how many tasks are left. Ticking a task on Home or in the lesson’s Homework tab now ticks it in both places.',

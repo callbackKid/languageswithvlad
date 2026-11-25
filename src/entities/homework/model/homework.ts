@@ -13,13 +13,17 @@ import { hash } from '@/shared/lib/util';
 
      Devoirs:
      - mots de la leçon 5
-     - 5 phrases au passé composé */
+     - 5 phrases au passé composé
+
+   or under the label alone as a heading, without a colon ("Les devoirs", then "1. …"). */
 
 /** The label, in the app's languages, also with an article or "my" ("les devoirs:", "my homework:").
     Only spaces or a list mark may come before it, so a line of the student's report (it starts
     with an emoji) is never read as homework. */
-const LABEL =
-  /^\s*(?:[-•*]\s*)?(?:(?:les|mes|the|my|die|meine|los|las|la|mis|i|miei|os|as|meus|minhas)\s+)?(?:devoirs?|homework|hausaufgaben?|deberes|tareas?|trabalhos? de casa|tpc|compiti|д\/?з|домашнее задание|домашка)\s*(?::|—|–|-)\s*/iu;
+const LABEL_NAME = String.raw`(?:(?:les|mes|the|my|die|meine|los|las|la|mis|i|miei|os|as|meus|minhas)\s+)?(?:devoirs?|homework|hausaufgaben?|deberes|tareas?|trabalhos? de casa|tpc|compiti|д\/?з|домашнее задание|домашка)`;
+const LABEL = new RegExp(String.raw`^\s*(?:[-•*]\s*)?${LABEL_NAME}\s*(?::|—|–|-)\s*`, 'iu');
+// The label alone on its line, as a heading over a list of tasks ("Les devoirs", "ДЗ").
+const LABEL_HEADING = new RegExp(String.raw`^\s*${LABEL_NAME}\s*$`, 'iu');
 const LIST_ITEM = /^\s*(?:[-•*]|\d{1,2}[.)])\s+/;
 
 export type HomeworkKind = 'words' | 'gaps' | 'verbs' | 'writing' | 'other';
@@ -202,18 +206,25 @@ export function homeworkItems(body: string): string[] {
   const lines = body.split('\n');
   let items: string[] = [];
   lines.forEach((line, index) => {
-    if (!LABEL.test(line)) return;
-    // a newer block in the same lesson replaces an older one
-    items = line
-      .replace(LABEL, '')
-      .split(';')
-      .map((item) => item.trim())
-      .filter(Boolean);
+    const isHeading = LABEL_HEADING.test(line);
+    if (!isHeading && !LABEL.test(line)) return;
+    const listed: string[] = [];
     for (const next of lines.slice(index + 1)) {
       if (!LIST_ITEM.test(next)) break;
       const item = next.replace(LIST_ITEM, '').trim();
-      if (item) items.push(item);
+      if (item) listed.push(item);
     }
+    // a heading counts only with a list under it: a line that just says "Devoirs" is no block
+    if (isHeading && !listed.length) return;
+    // a newer block in the same lesson replaces an older one
+    const inline = isHeading
+      ? []
+      : line
+          .replace(LABEL, '')
+          .split(';')
+          .map((item) => item.trim())
+          .filter(Boolean);
+    items = [...inline, ...listed];
   });
   return items.map((item) => item.replace(/[.;]+$/, ''));
 }
