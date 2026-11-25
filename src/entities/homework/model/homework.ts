@@ -218,6 +218,31 @@ export function homeworkItems(body: string): string[] {
   return items.map((item) => item.replace(/[.;]+$/, ''));
 }
 
+/** A task's text for comparing: case, punctuation, the kind of apostrophe and extra spaces
+    don't count, since the Homework tab ticks Claude's copy of a task and Home the teacher's. */
+const taskText = (text: string) =>
+  text
+    .normalize('NFC')
+    .toLowerCase()
+    .replace(/[’‘`ʼ]/g, "'")
+    .replace(/[^\p{L}\p{M}\p{N}\s]/gu, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+// Whether two texts are the same homework task ("Mots de la leçon 1." = "mots de la leçon 1").
+export const sameTask = (first: string, second: string) => taskText(first) === taskText(second);
+
+// Whether a task is among the ticked ones, however its text was copied.
+export const isTaskDone = (done: string[], task: string) =>
+  done.some((item) => sameTask(item, task));
+
+// How many of a lesson's homework tasks are not ticked yet; null when its text has no homework.
+export function homeworkLeft(body: string, done: string[]): { left: number; total: number } | null {
+  const items = homeworkItems(body);
+  if (!items.length) return null;
+  return { left: items.filter((item) => !isTaskDone(done, item)).length, total: items.length };
+}
+
 /** The homework of the newest lesson: what is due for the next lesson. Homework written in an
     older lesson is left out, since that lesson has happened since. */
 export function findHomework(lessons: Lesson[]): Homework | null {

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
+import { homeworkKey, homeworkLeft, loadDone, useHomeworkDone } from '@/entities/homework';
 import { type Bank, type Lesson } from '@/entities/lesson';
 import { lessonPath } from '@/shared/config';
 import { app, useTranslation } from '@/shared/i18n';
@@ -72,6 +73,16 @@ export default function Lessons({
   const currentLessonKey = lesson?.key ?? null;
   // lessons whose words are prepared and kept on this device (the Downloaded lessons tab)
   const downloaded = new Set(bank.lessons.filter((info) => info.ready).map((info) => info.key));
+  // re-renders the list when a task is ticked, so a dot goes as soon as the homework is done
+  useHomeworkDone();
+  // a downloaded lesson's homework tasks not ticked yet, for its red dot
+  const homeworkLeftLabel = (listed: Lesson): string | null => {
+    if (!downloaded.has(listed.key)) return null;
+    const homework = homeworkLeft(listed.body, loadDone(homeworkKey(docId, listed.key)));
+    return homework && homework.left > 0
+      ? listText.t('homeworkLeft', { count: homework.left, total: homework.total })
+      : null;
+  };
   // The lesson list runs oldest to newest; the open lesson (usually the newest) is scrolled into
   // view, along the row on a phone and down the column on a computer, without moving the page.
   const lessonList = useRef<HTMLElement>(null);
@@ -83,7 +94,8 @@ export default function Lessons({
     const own = link.getBoundingClientRect();
     list.scrollLeft += own.left - box.left - (box.width - own.width) / 2;
     list.scrollTop += own.top - box.top - (box.height - own.height) / 2;
-  }, [currentLessonKey, tab, lessons.length, listView, isListOpen]);
+    // again when lessons finish downloading: their ⤓ and homework dots widen the rows
+  }, [currentLessonKey, tab, lessons.length, listView, isListOpen, downloaded.size]);
 
   function toggleView() {
     const view = listView === 'row' ? 'column' : 'row';
@@ -156,37 +168,48 @@ export default function Lessons({
               aria-label={t('lessonsLabel')}
               ref={lessonList}
             >
-              {lessons.map((listedLesson) => (
-                <a
-                  key={listedLesson.key}
-                  className="lesson-link"
-                  href={hrefFor(lessonPath(listedLesson.key))}
-                  aria-current={listedLesson.key === currentLessonKey ? 'page' : undefined}
-                  onClick={(event) => followLink(event, lessonPath(listedLesson.key))}
-                >
-                  <span className="n">{listedLesson.n}</span>
-                  <span className="d">{shortDateFormat.format(listedLesson.date)}</span>
-                  {downloaded.has(listedLesson.key) && (
-                    <span
-                      className="lesson-downloaded"
-                      role="img"
-                      aria-label={downloadedLabel}
-                      data-tooltip={downloadedLabel}
-                    >
-                      <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
-                        <path
-                          d="M8 2v8M4.5 6.5 8 10l3.5-3.5M3 13.5h10"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="1.6"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </span>
-                  )}
-                </a>
-              ))}
+              {lessons.map((listedLesson) => {
+                const homeworkLabel = homeworkLeftLabel(listedLesson);
+                return (
+                  <a
+                    key={listedLesson.key}
+                    className="lesson-link"
+                    href={hrefFor(lessonPath(listedLesson.key))}
+                    aria-current={listedLesson.key === currentLessonKey ? 'page' : undefined}
+                    onClick={(event) => followLink(event, lessonPath(listedLesson.key))}
+                  >
+                    <span className="n">{listedLesson.n}</span>
+                    <span className="d">{shortDateFormat.format(listedLesson.date)}</span>
+                    {homeworkLabel && (
+                      <span
+                        className="lesson-homework-left"
+                        role="img"
+                        aria-label={homeworkLabel}
+                        data-tooltip={homeworkLabel}
+                      />
+                    )}
+                    {downloaded.has(listedLesson.key) && (
+                      <span
+                        className="lesson-downloaded"
+                        role="img"
+                        aria-label={downloadedLabel}
+                        data-tooltip={downloadedLabel}
+                      >
+                        <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+                          <path
+                            d="M8 2v8M4.5 6.5 8 10l3.5-3.5M3 13.5h10"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="1.6"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </span>
+                    )}
+                  </a>
+                );
+              })}
             </nav>
           </div>
           <main>

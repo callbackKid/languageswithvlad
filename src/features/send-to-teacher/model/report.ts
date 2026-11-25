@@ -1,10 +1,17 @@
-import { type Homework, homeworkKey, normalizeWriting, writingKey } from '@/entities/homework';
+import {
+  type Homework,
+  homeworkKey,
+  isTaskDone,
+  loadDone,
+  normalizeWriting,
+  writingKey,
+} from '@/entities/homework';
 import { type Lesson } from '@/entities/lesson';
 import { isLearned, type Progress } from '@/entities/word';
 import { getSettings, isStudied } from '@/shared/config';
 import { homework as homeworkText, translator } from '@/shared/i18n';
 import { dayKey, startOfDay } from '@/shared/lib/dates';
-import { loadChecked, loadTexts } from '@/shared/lib/storage';
+import { loadChecked } from '@/shared/lib/storage';
 
 /* The student's report to the teacher, added to the document under the lesson it is about.
    Every line starts with an emoji, or with spaces for the lines of a written answer, and the
@@ -48,11 +55,11 @@ export function buildReport({
   );
 
   if (homework) {
-    const done = loadTexts(homeworkKey(docId, lesson.key));
-    const doneCount = homework.items.filter((item) => done.includes(item.text)).length;
+    const done = loadDone(homeworkKey(docId, lesson.key));
+    const doneCount = homework.items.filter((item) => isTaskDone(done, item.text)).length;
     lines.push(t('reportHomework', { done: doneCount, total: homework.items.length }));
     for (const item of homework.items)
-      lines.push(`${done.includes(item.text) ? '✅' : '⬜'} ${item.text}`);
+      lines.push(`${isTaskDone(done, item.text) ? '✅' : '⬜'} ${item.text}`);
   }
 
   // answers given since the lesson's day, and the words learned meanwhile

@@ -1,6 +1,16 @@
 import { useEffect, useState } from 'react';
 
-import { type Homework, type HomeworkItem, homeworkKey, writingKey } from '@/entities/homework';
+import {
+  type Homework,
+  type HomeworkItem,
+  homeworkKey,
+  isTaskDone,
+  loadDone,
+  sameTask,
+  saveDone,
+  useHomeworkDone,
+  writingKey,
+} from '@/entities/homework';
 import {
   type Bank,
   buildQuiz,
@@ -24,7 +34,6 @@ import { isVerbLanguage, languageOfTense, lessonPath, type VerbLanguage } from '
 import { homework as homeworkText, useTranslation } from '@/shared/i18n';
 import { daysBetween } from '@/shared/lib/dates';
 import { followLink, hrefFor } from '@/shared/lib/router';
-import { loadTexts, save } from '@/shared/lib/storage';
 import { shuffle } from '@/shared/lib/util';
 import WaitingFact from '@/shared/ui/WaitingFact';
 
@@ -197,21 +206,20 @@ export default function HomeworkCard({
 }) {
   const { t } = useTranslation(homeworkText);
   const storageKey = homeworkKey(docId, homework.lesson.key);
-  const [done, setDone] = useState<string[]>(() => loadTexts(storageKey));
+  // read on every render: the store re-renders this card whenever ticks are saved anywhere
+  useHomeworkDone();
+  const done = loadDone(storageKey);
   const [open, setOpen] = useState<HomeworkItem | null>(null);
-  // another lesson's homework (after a sync) starts from its own ticks
+  // another lesson's homework (after a sync) closes the open exercise
   useEffect(() => {
-    setDone(loadTexts(storageKey));
     setOpen(null);
   }, [storageKey]);
 
   // read from the device, not from state: an exercise that finishes calls this from an older render
   const mark = (task: string, value: boolean) => {
-    const saved = loadTexts(storageKey);
-    if (saved.includes(task) === value) return;
-    const next = value ? [...saved, task] : saved.filter((item) => item !== task);
-    save(storageKey, next);
-    setDone(next);
+    const saved = loadDone(storageKey);
+    if (isTaskDone(saved, task) === value) return;
+    saveDone(storageKey, value ? [...saved, task] : saved.filter((item) => !sameTask(item, task)));
   };
   // "mots de la leçon 5": the newest lesson with that number; otherwise the homework's own
   const lessonOf = (item: HomeworkItem) =>
@@ -267,7 +275,7 @@ export default function HomeworkCard({
     );
   }
 
-  const doneCount = homework.items.filter((item) => done.includes(item.text)).length;
+  const doneCount = homework.items.filter((item) => isTaskDone(done, item.text)).length;
   const path = lessonPath(homework.lesson.key);
   return (
     <section className="homework-card">
@@ -283,11 +291,11 @@ export default function HomeworkCard({
         {homework.items.map((item) => {
           const label = action(item);
           return (
-            <li key={item.text} className={done.includes(item.text) ? 'done' : undefined}>
+            <li key={item.text} className={isTaskDone(done, item.text) ? 'done' : undefined}>
               <label>
                 <input
                   type="checkbox"
-                  checked={done.includes(item.text)}
+                  checked={isTaskDone(done, item.text)}
                   onChange={(event) => mark(item.text, event.target.checked)}
                 />
                 <span lang={lessonLanguage}>{item.text}</span>

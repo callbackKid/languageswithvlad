@@ -48,6 +48,23 @@ export interface NewsDay {
 
 export const NEWS: NewsDay[] = [
   {
+    date: '2026-11-25',
+    items: [
+      {
+        kind: 'new',
+        text: {
+          en: 'A red dot in Lesson history marks a downloaded lesson whose homework isn’t finished yet, and its tooltip says how many tasks are left. Ticking a task on Home or in the lesson’s Homework tab now ticks it in both places.',
+          ru: 'Красная точка в «Истории уроков» отмечает загруженный урок, домашнее задание которого ещё не сделано, а подсказка к ней показывает, сколько заданий осталось. Задание, отмеченное на Главной или на вкладке «Домашнее задание» урока, теперь отмечено в обоих местах.',
+          fr: 'Un point rouge dans l’« Historique des leçons » signale une leçon téléchargée dont les devoirs ne sont pas encore finis, et quand on le survole, il indique combien de tâches il reste. Cocher une tâche sur l’Accueil ou dans l’onglet « Devoirs » de la leçon la coche maintenant aux deux endroits.',
+          de: 'Ein roter Punkt im „Lektionsverlauf“ markiert eine geladene Lektion, deren Hausaufgaben noch nicht fertig sind, und wenn du darauf zeigst, sagt er, wie viele Aufgaben noch offen sind. Hakst du eine Aufgabe auf der Startseite oder im Tab „Hausaufgaben“ der Lektion ab, ist sie jetzt an beiden Stellen abgehakt.',
+          es: 'Un punto rojo en el «Historial de lecciones» marca una lección descargada cuyos deberes aún no están terminados, y al pasar el puntero muestra cuántas tareas quedan. Marcar una tarea en Inicio o en la pestaña «Deberes» de la lección ahora la marca en los dos sitios.',
+          pt: 'Um ponto vermelho no «Histórico de lições» assinala uma lição descarregada cujos trabalhos de casa ainda não estão terminados, e quando aponta para ele mostra quantas tarefas faltam. Marcar uma tarefa no Início ou no separador «Trabalhos de casa» da lição marca-a agora nos dois sítios.',
+          it: 'Un punto rosso nella «Cronologia lezioni» segna una lezione scaricata i cui compiti non sono ancora finiti, e quando ci passi sopra dice quanti compiti mancano. Spuntare un compito nella Home o nella scheda «Compiti» della lezione ora lo spunta in entrambi i posti.',
+        },
+      },
+    ],
+  },
+  {
     date: '2026-11-23',
     items: [
       {

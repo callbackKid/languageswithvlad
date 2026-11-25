@@ -1317,6 +1317,19 @@ nav.lessons {
   margin-left: auto;
   color: var(--muted);
 }
+/* homework left in a downloaded lesson: a red dot just before its ⤓ icon, both at the row's end */
+.lesson-homework-left {
+  flex-shrink: 0;
+  align-self: center;
+  width: 8px;
+  height: 8px;
+  margin-left: auto;
+  border-radius: 50%;
+  background: var(--bad);
+}
+.lesson-homework-left + .lesson-downloaded {
+  margin-left: -4px;
+}
 .lesson-link:hover {
   background: var(--surface);
 }

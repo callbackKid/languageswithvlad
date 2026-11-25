@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import { isTaskDone, loadDone, sameTask, saveDone, useHomeworkDone } from '@/entities/homework';
 import {
   type GrammarRule,
   GrammarRuleBox,
@@ -12,7 +13,6 @@ import { api } from '@/shared/api';
 import { getSettings, type Language } from '@/shared/config';
 import { getUiLanguage, paper, useTranslation } from '@/shared/i18n';
 import { followLink, hrefFor } from '@/shared/lib/router';
-import { loadTexts, save } from '@/shared/lib/storage';
 
 /* The lesson's Grammar, Homework and Book exercises tabs. What they show comes from one reading
    of the lesson by Claude (LessonView keeps it), explained in the interface language. */
@@ -89,15 +89,18 @@ export function HomeworkTab({
   onHome?: boolean;
 }) {
   const { t } = useTranslation(paper);
-  // the tasks done, by their text, so a task stays ticked when the lesson is edited around it
-  const [done, setDone] = useState<string[]>(() => loadTexts(storageKey));
+  // the tasks done, by their text, so a task stays ticked when the lesson is edited around it;
+  // read on every render, since the store re-renders the tab when ticks are saved (on Home too)
+  useHomeworkDone();
+  const done = loadDone(storageKey);
   if (!tasks.length) return <p className="empty">{t('noHomework')}</p>;
   const toggle = (task: string) => {
-    const next = done.includes(task) ? done.filter((item) => item !== task) : [...done, task];
-    setDone(next);
-    save(storageKey, next);
+    saveDone(
+      storageKey,
+      isTaskDone(done, task) ? done.filter((item) => !sameTask(item, task)) : [...done, task]
+    );
   };
-  const doneCount = tasks.filter((task) => done.includes(task.task)).length;
+  const doneCount = tasks.filter((task) => isTaskDone(done, task.task)).length;
   return (
     <>
       <p className="hint">
@@ -105,11 +108,11 @@ export function HomeworkTab({
       </p>
       <ul className="homework">
         {tasks.map((task) => (
-          <li key={task.task} className={done.includes(task.task) ? 'done' : undefined}>
+          <li key={task.task} className={isTaskDone(done, task.task) ? 'done' : undefined}>
             <label>
               <input
                 type="checkbox"
-                checked={done.includes(task.task)}
+                checked={isTaskDone(done, task.task)}
                 onChange={() => toggle(task.task)}
               />
               <span>

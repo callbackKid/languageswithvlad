@@ -72,6 +72,7 @@ Logic without UI, as `CODE_STYLE.md` asks for it, in the `lib/` and `model/` seg
 - [ ] `withPerson` (`src/entities/verb/model/normalize.ts`); `localParse`, `splitLessons` (`src/entities/lesson/lib/document.ts`).
 - [ ] `negate` (`src/entities/verb/lib/negation.ts`).
 - [ ] `readItem` (`src/entities/homework/model/homework.ts`): “5 предложений в passé composé” → `writing`, the same as “5 phrases au passé composé”; “слова урока 3” → `words`.
+- [ ] `sameTask` / `isTaskDone` / `homeworkLeft` (`src/entities/homework/model/homework.ts`): “Mots de la leçon 1.” = “mots de la leçon 1”; `’` = `'`; different tasks stay different; no `Devoirs:` block → `null`; 3 tasks, 1 ticked under Claude's wording → `{ left: 2, total: 3 }`.
 - [ ] `forSpeech` (`src/shared/lib/speech.ts`): “il/elle/on”, “allé(e)s”.
 - [ ] `parsePath` (`src/shared/config/routes.ts`): `/lessons/…`, an unknown address.
 
