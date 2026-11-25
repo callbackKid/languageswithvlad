@@ -4,7 +4,7 @@ import { loadTexts, save } from '@/shared/lib/storage';
 
 /* The ticked homework tasks of each lesson, under homeworkKey: a list of task texts, the shape
    kept in students' browsers since ticks existed. Saving through here tells every component
-   showing ticks (Home, a lesson's Homework tab, the lesson list's dots) to read them again. */
+   showing ticks (Home, a lesson's Homework tab, the lesson list's badges) to read them again. */
 
 let version = 0;
 const subscribers = new Set<() => void>();

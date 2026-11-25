@@ -26,6 +26,7 @@
   --ok-soft: #edf3ec;
   --bad: #d44c47;
   --bad-soft: #fdebec;
+  --on-bad: #ffffff;
   --warn: #8f6219;
   --warn-soft: #fbf3db;
   /* shadows under floating parts (tooltips, menus, dialogs) and the dim layer behind a dialog */
@@ -64,6 +65,7 @@
   --ok-soft: #243d30;
   --bad: #df5452;
   --bad-soft: #522e2a;
+  --on-bad: #ffffff;
   --warn: #e3b86f;
   --warn-soft: #564328;
   /* a black shadow barely shows on a dark page: deeper ones */
@@ -1317,15 +1319,25 @@ nav.lessons {
   margin-left: auto;
   color: var(--muted);
 }
-/* homework left in a downloaded lesson: a red dot just before its ⤓ icon, both at the row's end */
+/* homework left in a downloaded lesson: a red badge with the number of tasks, just before its ⤓
+   icon, both at the row's end; the red is darkened so the white number keeps a 4.5:1 contrast */
 .lesson-homework-left {
   flex-shrink: 0;
   align-self: center;
-  width: 8px;
-  height: 8px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
   margin-left: auto;
-  border-radius: 50%;
-  background: var(--bad);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--bad) 85%, black);
+  color: var(--on-bad);
+  font-family: var(--sans);
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 16px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
 }
 .lesson-homework-left + .lesson-downloaded {
   margin-left: -4px;

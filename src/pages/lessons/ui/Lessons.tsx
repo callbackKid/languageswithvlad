@@ -73,15 +73,15 @@ export default function Lessons({
   const currentLessonKey = lesson?.key ?? null;
   // lessons whose words are prepared and kept on this device (the Downloaded lessons tab)
   const downloaded = new Set(bank.lessons.filter((info) => info.ready).map((info) => info.key));
-  // re-renders the list when a task is ticked, so a dot goes as soon as the homework is done
+  // re-renders the list when a task is ticked, so a badge counts down or goes at once
   useHomeworkDone();
-  // a downloaded lesson's homework tasks not ticked yet, for its red dot
-  const homeworkLeftLabel = (listed: Lesson): string | null => {
+  // a downloaded lesson's homework tasks not ticked yet, for its red badge
+  const homeworkBadge = (listed: Lesson): { left: number; label: string } | null => {
     if (!downloaded.has(listed.key)) return null;
     const homework = homeworkLeft(listed.body, loadDone(homeworkKey(docId, listed.key)));
-    return homework && homework.left > 0
-      ? listText.t('homeworkLeft', { count: homework.left, total: homework.total })
-      : null;
+    if (!homework || homework.left === 0) return null;
+    const label = listText.t('homeworkLeft', { count: homework.left, total: homework.total });
+    return { left: homework.left, label };
   };
   // The lesson list runs oldest to newest; the open lesson (usually the newest) is scrolled into
   // view, along the row on a phone and down the column on a computer, without moving the page.
@@ -94,7 +94,7 @@ export default function Lessons({
     const own = link.getBoundingClientRect();
     list.scrollLeft += own.left - box.left - (box.width - own.width) / 2;
     list.scrollTop += own.top - box.top - (box.height - own.height) / 2;
-    // again when lessons finish downloading: their ⤓ and homework dots widen the rows
+    // again when lessons finish downloading: their ⤓ and homework badges widen the rows
   }, [currentLessonKey, tab, lessons.length, listView, isListOpen, downloaded.size]);
 
   function toggleView() {
@@ -169,7 +169,7 @@ export default function Lessons({
               ref={lessonList}
             >
               {lessons.map((listedLesson) => {
-                const homeworkLabel = homeworkLeftLabel(listedLesson);
+                const badge = homeworkBadge(listedLesson);
                 return (
                   <a
                     key={listedLesson.key}
@@ -180,13 +180,15 @@ export default function Lessons({
                   >
                     <span className="n">{listedLesson.n}</span>
                     <span className="d">{shortDateFormat.format(listedLesson.date)}</span>
-                    {homeworkLabel && (
+                    {badge && (
                       <span
                         className="lesson-homework-left"
                         role="img"
-                        aria-label={homeworkLabel}
-                        data-tooltip={homeworkLabel}
-                      />
+                        aria-label={badge.label}
+                        data-tooltip={badge.label}
+                      >
+                        {badge.left}
+                      </span>
                     )}
                     {downloaded.has(listedLesson.key) && (
                       <span

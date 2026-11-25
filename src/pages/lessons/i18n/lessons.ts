@@ -7,7 +7,7 @@ export const lessonsText = defineMessages({
     listAsRow: 'Lessons in a row',
     hideList: 'Hide the lesson list',
     showList: 'Show the lesson list',
-    // the red dot on a downloaded lesson whose homework isn't all ticked; {count} tasks are left
+    // the red badge on a downloaded lesson whose homework isn't all ticked; {count} tasks are left
     homeworkLeft: {
       one: 'Homework: {count} of {total} left',
       other: 'Homework: {count} of {total} left',
