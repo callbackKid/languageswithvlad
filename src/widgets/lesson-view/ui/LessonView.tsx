@@ -39,6 +39,7 @@ import { shownTopic } from '@/shared/lib/util';
 import HelpLink from '@/shared/ui/HelpLink';
 import WaitingFact from '@/shared/ui/WaitingFact';
 
+import { homeworkTasks } from '../model/homeworkTasks';
 import { phoneticsKey, readPhonetics } from '../model/phonetics';
 import LessonDrawings from './LessonDrawings';
 import { BookTab, GrammarTab, HomeworkTab } from './LessonExtrasTabs';
@@ -169,6 +170,9 @@ export default function LessonView({
   const [extrasError, setExtrasError] = useState('');
   const [freshExtras, setFreshExtras] = useState(0);
   const wantsExtras = EXTRA_TABS.includes(tab);
+  // the teacher's tasks when the text has a homework block, with what Claude says each asks
+  const homework = homeworkTasks(lesson.body, extras?.homework ?? null);
+  const hasTeacherHomework = homeworkItems(lesson.body).length > 0;
   useEffect(() => {
     const cached = freshExtras ? null : loadChecked(extrasKey, normalizeExtras);
     setExtras(cached);
@@ -285,7 +289,7 @@ export default function LessonView({
           {tabButton('verbs', t('verbs'), tagged?.verbs.length ?? 0)}
           {tabButton('grammar', t('grammar'), extras?.grammar.length)}
           {tabButton('phonetics', t('phonetics'), phoneticsCount)}
-          {tabButton('homework', t('homework'), extras?.homework.length)}
+          {tabButton('homework', t('homework'), homework?.length)}
           {tabButton('book', t('book'), extras?.book.length)}
           {tabButton('notes', t('myNotes'))}
           {tabButton('source', t('original'))}
@@ -317,7 +321,8 @@ export default function LessonView({
               waiting={state === 'loading'}
             />
           )}
-          {wantsExtras && !hasClaude && !extras && (
+          {/* the teacher's homework tasks show without Claude, only their explanations need it */}
+          {wantsExtras && !hasClaude && !extras && !(tab === 'homework' && hasTeacherHomework) && (
             <p className="empty">{commonText.t('needsClaude')}</p>
           )}
           {wantsExtras && extrasState === 'loading' && (
@@ -346,12 +351,12 @@ export default function LessonView({
               onRead={(count) => setPhoneticsFound({ key: phoneticsStorageKey, count })}
             />
           )}
-          {tab === 'homework' && extras && (
+          {tab === 'homework' && homework && (
             <HomeworkTab
-              tasks={extras.homework}
+              tasks={homework}
               storageKey={homeworkKey(docId, lesson.key)}
-              language={extras.language}
-              onHome={isNewest && homeworkItems(lesson.body).length > 0}
+              language={extras?.language ?? analysis?.language ?? headingLanguage}
+              onHome={isNewest && hasTeacherHomework}
             />
           )}
           {/* the teacher's tool, for a lesson that is in the document, with Claude to write it */}

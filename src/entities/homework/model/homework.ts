@@ -219,9 +219,12 @@ export function homeworkItems(body: string): string[] {
 }
 
 /** A task's text for comparing: case, punctuation, the kind of apostrophe and extra spaces
-    don't count, since the Homework tab ticks Claude's copy of a task and Home the teacher's. */
+    don't count, since the Homework tab ticks Claude's copy of a task and Home the teacher's.
+    Claude may keep what homeworkItems drops: the label ("Devoirs : …") or a list mark ("1. …"). */
 const taskText = (text: string) =>
   text
+    .replace(LABEL, '')
+    .replace(LIST_ITEM, '')
     .normalize('NFC')
     .toLowerCase()
     .replace(/[’‘`ʼ]/g, "'")
