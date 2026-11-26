@@ -5,6 +5,7 @@ import { forgetTeacherCode, saveTeacherCode, useTeacher } from '@/shared/config'
 import { common, useTranslation } from '@/shared/i18n';
 
 import { settingsText } from '../i18n/settings';
+import styles from './Settings.module.css';
 
 /** The Settings card where the teacher turns the teacher's tools on, with the teacher code.
     Shown only when the server has a teacher code set up. */
@@ -33,11 +34,11 @@ export default function TeacherCard() {
   };
 
   return (
-    <section className="settings-card">
+    <section className={styles.card}>
       <h2>{t('teacher')}</h2>
       <p className="hint">{t('teacherHint')}</p>
       {isTeacher ? (
-        <div className="settings-row">
+        <div className={styles.row}>
           <span role="status">{t('teacherOn')}</span>
           <button type="button" className="btn ghost" onClick={forgetTeacherCode}>
             {t('teacherTurnOff')}

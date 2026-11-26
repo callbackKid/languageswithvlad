@@ -3,6 +3,7 @@ import { type KeyboardEvent, type ReactNode, useEffect, useRef, useState } from 
 import { useTranslation } from '@/shared/i18n';
 
 import { settingsText } from '../i18n/settings';
+import styles from './Settings.module.css';
 
 /** The profile picture with a pencil on its corner. With a picture, the pencil opens a menu
     (upload another, remove it); without one, it opens the file picker straight away. */
@@ -62,12 +63,12 @@ export default function PictureMenu({
   }
 
   return (
-    <div className="settings-picture" ref={wrapper}>
+    <div className={styles.picture} ref={wrapper}>
       {children}
       <button
         type="button"
         ref={pencil}
-        className="picture-edit"
+        className={styles['picture-edit']}
         aria-label={t('editPicture')}
         data-tooltip={t('editPicture')}
         aria-haspopup={hasPicture ? 'menu' : undefined}
@@ -85,7 +86,7 @@ export default function PictureMenu({
         </svg>
       </button>
       {isOpen && (
-        <div className="picture-menu" role="menu" ref={menu} onKeyDown={onMenuKey}>
+        <div className={styles['picture-menu']} role="menu" ref={menu} onKeyDown={onMenuKey}>
           <button
             type="button"
             role="menuitem"

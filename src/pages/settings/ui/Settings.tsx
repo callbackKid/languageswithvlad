@@ -22,6 +22,7 @@ import PageHead from '@/shared/ui/PageHead';
 import { settingsText } from '../i18n/settings';
 import LearningCard from './LearningCard';
 import PictureMenu from './PictureMenu';
+import styles from './Settings.module.css';
 import TeacherCard from './TeacherCard';
 
 // each lesson tab under the name it has on the lesson page
@@ -115,10 +116,10 @@ export default function Settings({ lessonDocument }: { lessonDocument: DocumentI
       </PageHead>
 
       {/* Profile and Interface side by side on a wide screen, one under the other on a phone */}
-      <div className="settings-top">
-        <section className="settings-card">
+      <div className={styles.top}>
+        <section className={styles.card}>
           <h2>{t('profile')}</h2>
-          <div className="settings-profile">
+          <div className={styles.profile}>
             <PictureMenu
               hasPicture={!!settings.avatar}
               onFile={(file) => void choosePicture(file)}
@@ -126,7 +127,7 @@ export default function Settings({ lessonDocument }: { lessonDocument: DocumentI
             >
               <Avatar size={96} />
             </PictureMenu>
-            <div className="settings-profile-fields">
+            <div className={styles['profile-fields']}>
               {hasPictureError && (
                 <p className="field-error" role="alert">
                   {t('pictureFailed')}
@@ -145,9 +146,13 @@ export default function Settings({ lessonDocument }: { lessonDocument: DocumentI
               <small className="hint">{t('nameHint')}</small>
             </div>
           </div>
-          <div className="settings-row">
-            <span className="settings-label">{t('dailyGoal')}</span>
-            <div className="seg goal-choice" role="group" aria-label={t('dailyGoal')}>
+          <div className={styles.row}>
+            <span className={styles.label}>{t('dailyGoal')}</span>
+            <div
+              className={`seg ${styles['goal-choice']}`}
+              role="group"
+              aria-label={t('dailyGoal')}
+            >
               {DAILY_GOALS.map((goal) => (
                 <button
                   key={goal}
@@ -161,8 +166,8 @@ export default function Settings({ lessonDocument }: { lessonDocument: DocumentI
             </div>
           </div>
           {canSpeak && (
-            <div className="settings-row">
-              <span className="settings-label">{t('speechSpeed')}</span>
+            <div className={styles.row}>
+              <span className={styles.label}>{t('speechSpeed')}</span>
               <div className="seg" role="group" aria-label={t('speechSpeed')}>
                 {SPEECH_SPEEDS.map((speed) => (
                   <button
@@ -188,15 +193,15 @@ export default function Settings({ lessonDocument }: { lessonDocument: DocumentI
             </div>
           )}
         </section>
-        <section className="settings-card">
+        <section className={styles.card}>
           <h2>{t('interface')}</h2>
-          <div className="settings-row">
-            <label className="settings-label" htmlFor="settings-ui-language">
+          <div className={styles.row}>
+            <label className={styles.label} htmlFor="settings-ui-language">
               {t('interfaceLanguage')}
             </label>
             <select
               id="settings-ui-language"
-              className="settings-select"
+              className={styles.select}
               value={uiLanguage}
               onChange={(event) => {
                 const chosen = UI_LANGUAGES.find((option) => option.id === event.target.value);
@@ -210,13 +215,13 @@ export default function Settings({ lessonDocument }: { lessonDocument: DocumentI
               ))}
             </select>
           </div>
-          <div className="settings-row">
-            <label className="settings-label" htmlFor="settings-translate-to">
+          <div className={styles.row}>
+            <label className={styles.label} htmlFor="settings-translate-to">
               {t('translateTo')}
             </label>
             <select
               id="settings-translate-to"
-              className="settings-select"
+              className={styles.select}
               value={settings.translateTo}
               onChange={(event) => {
                 const translateTo = UI_LANGUAGES.find((option) => option.id === event.target.value);
@@ -230,14 +235,14 @@ export default function Settings({ lessonDocument }: { lessonDocument: DocumentI
                 </option>
               ))}
             </select>
-            <small className="hint settings-row-note">{t('translateToHint')}</small>
+            <small className={`hint ${styles['row-note']}`}>{t('translateToHint')}</small>
           </div>
           {/* always on the page, so a screen reader reads the note when it appears */}
-          <small className="hint settings-status" role="status">
+          <small className={`hint ${styles.status}`} role="status">
             {settings.translateTo !== openedTranslateTo && t('translateToChanged')}
           </small>
-          <div className="settings-row">
-            <span className="settings-label">{t('theme')}</span>
+          <div className={styles.row}>
+            <span className={styles.label}>{t('theme')}</span>
             <div className="seg" role="group" aria-label={t('theme')}>
               {THEMES.map((theme) => (
                 <button
@@ -256,10 +261,10 @@ export default function Settings({ lessonDocument }: { lessonDocument: DocumentI
 
       <LearningCard />
 
-      <section className="settings-card">
+      <section className={styles.card}>
         <h2>{t('menu')}</h2>
         <p className="hint">{t('menuHint')}</p>
-        <ul className="settings-sections">
+        <ul className={styles.sections}>
           {SECTIONS.filter((entry) => entry.inMenu !== false).map((entry) => {
             const fixed = ALWAYS_SHOWN.includes(entry.id);
             return (
@@ -279,10 +284,10 @@ export default function Settings({ lessonDocument }: { lessonDocument: DocumentI
         </ul>
       </section>
 
-      <section className="settings-card">
+      <section className={styles.card}>
         <h2>{t('lessonTabs')}</h2>
         <p className="hint">{t('lessonTabsHint')}</p>
-        <ul className="settings-sections">
+        <ul className={styles.sections}>
           {LESSON_TABS.map((tab) => {
             const shown = !settings.hiddenTabs.includes(tab);
             return (
@@ -305,10 +310,10 @@ export default function Settings({ lessonDocument }: { lessonDocument: DocumentI
 
       <TeacherCard />
 
-      <section className="settings-card">
+      <section className={styles.card}>
         <h2>{t('document')}</h2>
         <p className="hint">{t('documentHint')}</p>
-        <p className="settings-document">
+        <p className={styles.document}>
           <span aria-hidden="true">📄</span> <b>{lessonDocument.title}</b>
         </p>
         <div className="row-actions">

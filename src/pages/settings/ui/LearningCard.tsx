@@ -17,6 +17,7 @@ import {
 import { common, learning, useTranslation } from '@/shared/i18n';
 
 import { settingsText } from '../i18n/settings';
+import styles from './Settings.module.css';
 
 // The language's tenses when its verbs have tables (not English); null otherwise.
 const verbLanguageOf = (language: Language): VerbLanguage | null =>
@@ -67,19 +68,19 @@ export default function LearningCard() {
   };
 
   return (
-    <section className="settings-card">
+    <section className={styles.card}>
       <h2>{t('learning')}</h2>
-      <span className="settings-label">{t('studying')}</span>
-      <ul className="settings-learned">
+      <span className={styles.label}>{t('studying')}</span>
+      <ul className={styles.learned}>
         {settings.studying.map((language) => {
           const name = names.t(`name.${language}`);
           const level = settings.levels[language];
           const verbLanguage = verbLanguageOf(language);
           return (
-            <li key={language} className="settings-learned-language">
-              <div className="settings-learned-head">
+            <li key={language} className={styles['learned-language']}>
+              <div className={styles['learned-head']}>
                 <b>{name}</b>
-                <label className="settings-level">
+                <label className={styles.level}>
                   {t('level')}
                   <select
                     value={level}
@@ -164,7 +165,7 @@ function TenseChoice({
 }) {
   const { t } = useTranslation(settingsText);
   return (
-    <fieldset className="settings-tenses">
+    <fieldset className={styles.tenses}>
       <legend>{t('quizTenses')}</legend>
       <ul>
         {TENSES_BY_LANGUAGE[language].map((tense: Tense) => {
@@ -223,8 +224,8 @@ function AddLanguage({ choices, onDone }: { choices: Language[]; onDone: () => v
   };
 
   return (
-    <div className="settings-add-language">
-      <div className="settings-add-fields">
+    <div className={styles['add-language']}>
+      <div className={styles['add-fields']}>
         <label className="form-field">
           <span>{t('newLanguage')}</span>
           <select
