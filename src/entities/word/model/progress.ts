@@ -8,7 +8,7 @@ import {
   languageOfTense,
 } from '@/shared/config';
 import { dayKey } from '@/shared/lib/dates';
-import { asFields, loadChecked, save } from '@/shared/lib/storage';
+import { asFields, loadChecked, trySave, watchStorage } from '@/shared/lib/storage';
 
 import { type Word } from './types';
 
@@ -95,6 +95,20 @@ function asProgress(raw: unknown): Progress {
 let docId: string | null = null;
 let state: Progress = EMPTY;
 const subscribers = new Set<() => void>();
+type ProgressUpdate = (progress: Progress) => Progress;
+const pending = new Map<string, ProgressUpdate[]>();
+const scheduled = new Set<string>();
+let stopWatching: (() => void) | undefined;
+const progressKey = (id: string) => `progress:${id}`;
+const readProgress = (id: string) => loadChecked(progressKey(id), asProgress) ?? EMPTY;
+
+function notifyProgress() {
+  subscribers.forEach((notify) => notify());
+}
+
+function readWithPending(id: string): Progress {
+  return (pending.get(id) ?? []).reduce((current, update) => update(current), readProgress(id));
+}
 
 // A word's key in saved progress. Saved in students' browsers: never change it.
 export const wordKey = (fr: string) =>
@@ -105,17 +119,24 @@ export const formKey = (infinitive: string, tense: string, person: string, negat
 // Learned: answered right LEARNED_STREAK times in a row.
 export const isLearned = (stat: WordStat | undefined) => !!stat && stat.streak >= LEARNED_STREAK;
 
-// Safe to call while rendering: the new state is readable at once, subscribers hear about it after the render.
+// Select the progress snapshot before the first render or when the user changes documents.
 export function setProgressDoc(id: string | null) {
   if (id === docId) return;
+  stopWatching?.();
   docId = id;
-  state = (id && loadChecked('progress:' + id, asProgress)) || EMPTY;
-  queueMicrotask(() => subscribers.forEach((notify) => notify()));
+  state = id ? readWithPending(id) : EMPTY;
+  stopWatching = id
+    ? watchStorage(progressKey(id), () => {
+        state = readWithPending(id);
+        notifyProgress();
+      })
+    : undefined;
+  queueMicrotask(notifyProgress);
 }
 
 // Counts one more answer for today.
-function withAnswer(progress: Progress): Progress {
-  const today = dayKey(new Date());
+function withAnswer(progress: Progress, answeredAt: number): Progress {
+  const today = dayKey(new Date(answeredAt));
   const days = progress.days || {};
   return { ...progress, days: { ...days, [today]: (days[today] || 0) + 1 } };
 }
@@ -134,10 +155,37 @@ export function dailyStats(progress: Progress = state): { today: number; streak:
   return { today, streak };
 }
 
-function commit(next: Progress) {
-  state = next;
-  if (docId) save('progress:' + docId, next);
-  subscribers.forEach((notify) => notify());
+function flush(id: string) {
+  if (!scheduled.delete(id)) return;
+  const next = readWithPending(id);
+  if (trySave(progressKey(id), next)) pending.delete(id);
+  if (docId === id) {
+    state = next;
+    notifyProgress();
+  }
+}
+
+function commit(update: ProgressUpdate) {
+  const id = docId;
+  // Keep feedback immediate even while another tab holds the document's write lock.
+  state = update(state);
+  if (!id) {
+    notifyProgress();
+    return;
+  }
+  const updates = pending.get(id);
+  if (updates) updates.push(update);
+  else pending.set(id, [update]);
+  notifyProgress();
+  if (scheduled.has(id)) return;
+  scheduled.add(id);
+  // Re-read inside the lock. A snapshot that was current when the answer was entered can be stale.
+  if (navigator.locks) {
+    void navigator.locks.request(progressKey(id), () => flush(id)).catch(() => flush(id));
+  } else {
+    // On older browsers, still read the latest snapshot before writing and listen for changes.
+    flush(id);
+  }
 }
 
 function baseStat(word: Word, old?: WordStat): WordStat {
@@ -161,28 +209,33 @@ function baseStat(word: Word, old?: WordStat): WordStat {
 // Counts an answer on a word; a wrong one puts the word on Words to learn.
 export function recordWord(word: Word, ok: boolean) {
   const identity = wordKey(word.fr);
-  const stat = baseStat(word, state.words[identity]);
-  if (ok) {
-    stat.right++;
-    stat.streak++;
-    if (stat.streak >= LEARNED_STREAK) stat.hard = false;
-  } else {
-    stat.wrong++;
-    stat.streak = 0;
-    stat.hard = true;
-  }
-  stat.last = Date.now();
-  commit(withAnswer({ ...state, words: { ...state.words, [identity]: stat } }));
+  const answeredAt = Date.now();
+  commit((current) => {
+    const stat = baseStat(word, current.words[identity]);
+    if (ok) {
+      stat.right++;
+      stat.streak++;
+      if (stat.streak >= LEARNED_STREAK) stat.hard = false;
+    } else {
+      stat.wrong++;
+      stat.streak = 0;
+      stat.hard = true;
+    }
+    stat.last = answeredAt;
+    return withAnswer({ ...current, words: { ...current.words, [identity]: stat } }, answeredAt);
+  });
 }
 
 // Stars or unstars a word (Words to learn).
 export function setHard(word: Word, hard: boolean) {
   const identity = wordKey(word.fr);
-  const stat = baseStat(word, state.words[identity]);
-  stat.hard = hard;
-  // starring a learned word means the student wants to review it again
-  if (hard && stat.streak >= LEARNED_STREAK) stat.streak = 0;
-  commit({ ...state, words: { ...state.words, [identity]: stat } });
+  commit((current) => {
+    const stat = baseStat(word, current.words[identity]);
+    stat.hard = hard;
+    // starring a learned word means the student wants to review it again
+    if (hard && stat.streak >= LEARNED_STREAK) stat.streak = 0;
+    return { ...current, words: { ...current.words, [identity]: stat } };
+  });
 }
 
 // Counts an answer on one verb form.
@@ -195,20 +248,21 @@ export function recordForm(
   negative = false
 ) {
   const identity = formKey(infinitive, tense, person, negative);
-  const old: FormStat | undefined = state.forms[identity];
-  const stat: FormStat = {
-    inf: infinitive,
-    t: tense,
-    p: person,
-    f: form,
-    negative,
-    right: old?.right ?? 0,
-    wrong: old?.wrong ?? 0,
-    last: Date.now(),
-  };
-  if (ok) stat.right++;
-  else stat.wrong++;
-  commit(withAnswer({ ...state, forms: { ...state.forms, [identity]: stat } }));
+  const answeredAt = Date.now();
+  commit((current) => {
+    const old = current.forms[identity];
+    const stat: FormStat = {
+      inf: infinitive,
+      t: tense,
+      p: person,
+      f: form,
+      negative,
+      right: (old?.right ?? 0) + Number(ok),
+      wrong: (old?.wrong ?? 0) + Number(!ok),
+      last: answeredAt,
+    };
+    return withAnswer({ ...current, forms: { ...current.forms, [identity]: stat } }, answeredAt);
+  });
 }
 
 // The open document's progress, for code outside React.

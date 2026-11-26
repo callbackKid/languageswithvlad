@@ -332,6 +332,7 @@ Claude is called when a lesson is first prepared, when a verb is first opened, f
 ## Limits
 
 - Progress, stars, notes, streaks and lessons from photos or PDFs live in each browser (localStorage), so they don’t follow a student to another device.
+- Progress updates appear across tabs using the same document. On browsers with Web Locks, simultaneous answers are written one tab at a time. Older browsers refresh from the latest saved progress before writing.
 - Private documents can’t be read; they must be shared by link.
 - **Exercise** on a group of words needs at least 3 ticked words in one language, and sends Claude at most 30 of them (the weaker ones first, among those with a translation). In development (`yarn start`), React's StrictMode asks Claude twice for each round; the first answer is ignored, and production asks once.
 - A textbook PDF is read 20 pages at a time; scanned pages are heavy, so a long scanned chapter may need to be split.

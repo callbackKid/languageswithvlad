@@ -51,6 +51,18 @@ export const NEWS: NewsDay[] = [
     date: '2026-11-26',
     items: [
       {
+        kind: 'fixed',
+        text: {
+          en: 'When you practise in two tabs in the same browser, each tab keeps the answers saved by the other.',
+          ru: 'Если вы занимаетесь в двух вкладках одного браузера, ответы из обеих вкладок сохраняются.',
+          fr: 'Si vous vous entraînez dans deux onglets du même navigateur, les réponses données dans les deux onglets sont conservées.',
+          de: 'Wenn du in zwei Tabs desselben Browsers übst, bleiben deine Antworten aus beiden Tabs erhalten.',
+          es: 'Si practicas en dos pestañas del mismo navegador, se conservan las respuestas de ambas.',
+          pt: 'Se praticar em dois separadores do mesmo navegador, as respostas de ambos ficam guardadas.',
+          it: 'Se ti eserciti in due schede dello stesso browser, le risposte di entrambe vengono salvate.',
+        },
+      },
+      {
         kind: 'better',
         text: {
           en: 'You can now move between tabs with the arrow keys and open the focused tab with Enter or Space.',

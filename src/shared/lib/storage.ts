@@ -8,13 +8,29 @@ export function load<T>(key: string): T | null {
     return null;
   }
 }
-// Saves a value; a full or blocked storage is ignored.
-export function save(key: string, value: unknown): void {
+// Reports whether storage accepted the value, including when storage is full or blocked.
+export function trySave(key: string, value: unknown): boolean {
   try {
     localStorage.setItem(PREFIX + key, JSON.stringify(value));
+    return true;
   } catch {
-    // storage full or blocked
+    return false;
   }
+}
+
+// Best-effort save for callers that do not present a saved status.
+export function save(key: string, value: unknown): void {
+  trySave(key, value);
+}
+
+// Listen for other tabs writing this key or clearing local storage.
+export function watchStorage(key: string, notify: () => void): () => void {
+  const onStorage = (event: StorageEvent) => {
+    if ((event.key === PREFIX + key || event.key === null) && event.storageArea === localStorage)
+      notify();
+  };
+  window.addEventListener('storage', onStorage);
+  return () => window.removeEventListener('storage', onStorage);
 }
 // Removes a saved value.
 export function remove(key: string): void {
