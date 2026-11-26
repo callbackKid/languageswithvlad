@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 
 import { type Conjugation, normalizeConjugation, type VerbRef } from '@/entities/verb/@x/lesson';
 import { type Pair, type Word, wordKey } from '@/entities/word/@x/lesson';
@@ -107,9 +107,8 @@ export interface Bank {
   failed: number;
   // older lessons not prepared yet, left until the student opens them
   waiting: number;
-  /** call when a lesson view prepares or re-prepares a lesson; translateTo is the language it was
-      asked in, and an answer in a language the setting has since left is dropped */
-  put: (lessonKey: string, analysis: Analysis, translateTo: UiLanguage) => void;
+  // Only analyses for the currently shown lesson revision and translation language enter the bank.
+  put: (lesson: Pick<Lesson, 'key' | 'hash'>, analysis: Analysis, translateTo: UiLanguage) => void;
 }
 
 // Every prepared lesson's words, verbs and pairs, newest lesson first. The newest lessons are prepared one at a time if missing.
@@ -132,6 +131,10 @@ export function useBank(lessons: Lesson[], hasClaude: boolean): Bank {
   const generation = useRef(0);
 
   // The translation language of the analyses shown, so a switch keeps no words in the old one.
+  const currentLessons = useRef(lessons);
+  useLayoutEffect(() => {
+    currentLessons.current = lessons;
+  }, [lessons]);
   const shownLanguage = useRef(translateTo);
 
   // Pick up cached lessons whenever the document or the translation language changes.
@@ -177,10 +180,11 @@ export function useBank(lessons: Lesson[], hasClaude: boolean): Bank {
       .then((raw) => {
         const analysis = normalizeAnalysis(raw);
         // the language the request was made in, even if the setting changed meanwhile
-        save(analysisKey(next.hash, translateTo), analysis);
+        const cached = readAnalysis(next.hash, translateTo);
+        if (!cached) save(analysisKey(next.hash, translateTo), analysis);
         if (requestGeneration === generation.current)
           setAnalyses((previous) =>
-            previous[next.key] ? previous : { ...previous, [next.key]: analysis }
+            previous[next.key] ? previous : { ...previous, [next.key]: cached ?? analysis }
           );
       })
       .catch(() => {
@@ -193,11 +197,15 @@ export function useBank(lessons: Lesson[], hasClaude: boolean): Bank {
       });
   }, [lessons, hasClaude, analyses, failed, tick, translateTo]);
 
-  const put = useCallback((key: string, analysis: Analysis, askedIn: UiLanguage) => {
-    // it is saved under its own key all the same; only the bank shows the current language
-    if (askedIn !== getSettings().translateTo) return;
-    setAnalyses((previous) => ({ ...previous, [key]: analysis }));
-  }, []);
+  const put = useCallback(
+    ({ key, hash }: Pick<Lesson, 'key' | 'hash'>, analysis: Analysis, askedIn: UiLanguage) => {
+      if (askedIn !== getSettings().translateTo) return;
+      if (!currentLessons.current.some((lesson) => lesson.key === key && lesson.hash === hash))
+        return;
+      setAnalyses((previous) => ({ ...previous, [key]: analysis }));
+    },
+    []
+  );
 
   const removed = useRemoved();
   return useMemo(() => {
@@ -275,8 +283,9 @@ export function usePreparedLesson(lesson: Lesson | null, bank: Bank, hasClaude: 
       .analyze(lesson.body)
       .then((raw) => {
         const analysis = normalizeAnalysis(raw);
-        save(analysisKey(lesson.hash, translateTo), analysis);
-        put(lesson.key, analysis, translateTo);
+        const cached = readAnalysis(lesson.hash, translateTo);
+        if (!cached) save(analysisKey(lesson.hash, translateTo), analysis);
+        if (alive) put(lesson, cached ?? analysis, translateTo);
       })
       // the warm-up then asks about the mistakes alone
       .catch(() => {})

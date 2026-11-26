@@ -52,6 +52,8 @@ async function request<T>(path: string, init?: RequestInit, teacherCode?: string
     throw new ApiError(0, 'offline', translator(common).t('offline'));
   }
   const data = await response.json().catch(() => null);
+  // An abandoned document read must not dispatch an access-code error for the new selection.
+  init?.signal?.throwIfAborted();
   // Vite alone (yarn dev) answers /api/* with index.html and a 200.
   if (response.ok && data === null)
     throw new ApiError(response.status, 'no_api', translator(common).t('noServer'));
@@ -200,8 +202,8 @@ export const api = {
       method: 'POST',
       body: JSON.stringify({ docId, text, lesson }),
     }),
-  doc: (id: string) =>
-    request<{ title: string; text: string }>(`/api/doc?id=${encodeURIComponent(id)}`),
+  doc: (id: string, signal?: AbortSignal) =>
+    request<{ title: string; text: string }>(`/api/doc?id=${encodeURIComponent(id)}`, { signal }),
   analyze: (body: string, fresh = false) => analyzeOnce(body, fresh),
   // the grammar, homework and book exercises of a lesson, explained in the interface language
   lessonExtras: (body: string, explainIn: string, fresh = false) =>

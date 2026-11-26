@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import {
-  docIdFrom,
   findCall,
   isNotion,
   sourceUrl,
@@ -26,7 +25,7 @@ import { Settings } from '@/pages/settings';
 import { Stats } from '@/pages/stats';
 import { Reader } from '@/pages/text';
 import { Tutorial } from '@/pages/tutorial';
-import { api, ApiError, type BoardServer } from '@/shared/api';
+import { api, type BoardServer } from '@/shared/api';
 import {
   applyTeacherHealth,
   isStudied,
@@ -35,10 +34,10 @@ import {
   SECTIONS,
   useSettings,
 } from '@/shared/config';
-import { app, type Translator, translator, useTranslation } from '@/shared/i18n';
+import { app, type Translator, useTranslation } from '@/shared/i18n';
 import { followLink, hrefFor, navigate, usePath } from '@/shared/lib/router';
 import { stopSpeaking } from '@/shared/lib/speech';
-import { asFields, load, loadChecked, loadText, remove, save } from '@/shared/lib/storage';
+import { load, loadText, remove, save } from '@/shared/lib/storage';
 import Avatar from '@/shared/ui/Avatar';
 import SpeechNote from '@/shared/ui/SpeechNote';
 import { Discuss } from '@/widgets/discussion';
@@ -46,19 +45,8 @@ import { Feedback } from '@/widgets/feedback';
 import { NextLessonBadge } from '@/widgets/next-lesson-badge';
 import { WordActions } from '@/widgets/word-menu';
 
+import { useDocumentSync } from './model/useDocumentSync';
 import TooltipLayer from './TooltipLayer';
-
-interface DocCache {
-  title: string;
-  text: string;
-  fetchedAt: number;
-}
-// the document as last read on this device, so the app opens at once and works offline
-const loadDocCache = (id: string): DocCache | null =>
-  loadChecked('doc:' + id, (raw) =>
-    asFields(raw, { title: 'string', text: 'string', fetchedAt: 'number' })
-  );
-type Sync = { state: 'idle' | 'loading' | 'ok' | 'error'; message?: string };
 
 function ago(timestamp: number, { t, locale }: Translator<keyof (typeof app)['en']>): string {
   const minutes = Math.round((Date.now() - timestamp) / 60000);
@@ -73,15 +61,6 @@ function ago(timestamp: number, { t, locale }: Translator<keyof (typeof app)['en
 // phones show the menu as a list that drops down, so it starts closed there
 const PHONE = '(max-width: 760px)';
 const onPhone = () => window.matchMedia(PHONE).matches;
-
-function initialDocId(): string | null {
-  const fromUrl = docIdFrom(new URLSearchParams(window.location.search).get('doc') || '');
-  if (fromUrl) {
-    save('doc', fromUrl);
-    return fromUrl;
-  }
-  return loadText('doc');
-}
 
 // the round buttons' icons, drawn on a 16×16 grid around its centre (8, 8): text characters
 // (« ☰ ↻) sat off-centre in the circle, by an amount that depends on the font
@@ -111,7 +90,7 @@ function ButtonIcon({ name }: { name: keyof typeof ICON_PATHS }) {
 }
 
 // The whole app: the top bar, the menu and the page of the current address.
-export default function App() {
+export default function App({ initialDocId }: { initialDocId: string | null }) {
   const translation = useTranslation(app);
   const settings = useSettings();
   const { t, rich } = translation;
@@ -124,9 +103,7 @@ export default function App() {
   const [jitsiAppId, setJitsiAppId] = useState<string | null>(null);
   const [notionReady, setNotionReady] = useState(false);
   const [boardServer, setBoardServer] = useState<BoardServer | null>(null);
-  const [docId, setDocId] = useState<string | null>(initialDocId);
-  const [doc, setDoc] = useState<DocCache | null>(() => (docId ? loadDocCache(docId) : null));
-  const [sync, setSync] = useState<Sync>({ state: 'idle' });
+  const { docId, doc, sync, selectDocument, syncDocument } = useDocumentSync(initialDocId);
   const [changing, setChanging] = useState(false);
   const [unseenNews, setUnseenNews] = useState(hasUnseenNews);
   const newsSeen = useCallback(() => setUnseenNews(false), []);
@@ -180,47 +157,18 @@ export default function App() {
     return () => window.removeEventListener('cahier:need-code', onCode);
   }, []);
 
-  // Only the newest sync may touch the screen: an answer for a document the user has since
-  // switched away from is saved for later, never shown.
-  const latestSync = useRef(0);
-  // a quiet sync (the live one during a lesson) shows no spinner and keeps the old status if it fails
-  const runSync = useCallback(async (id: string, quiet = false) => {
-    const syncNumber = ++latestSync.current;
-    if (!quiet) setSync({ state: 'loading' });
-    try {
-      const fetched = await api.doc(id);
-      const next = { title: fetched.title, text: fetched.text, fetchedAt: Date.now() };
-      save('doc:' + id, next);
-      if (syncNumber !== latestSync.current) return;
-      setDoc(next);
-      setSync({ state: 'ok' });
-    } catch (error) {
-      if (syncNumber !== latestSync.current || quiet) return;
-      setSync({
-        state: 'error',
-        // read at the moment of failure, so a new interface language doesn't start a sync
-        message: error instanceof ApiError ? error.message : translator(app).t('readFailed'),
-      });
-    }
-  }, []);
-
-  useEffect(() => {
-    if (docId) void runSync(docId);
-  }, [docId, runSync]);
   // leaving the editor pulls in whatever was just written there
   const previousSection = useRef(section);
   useEffect(() => {
-    if (previousSection.current === 'document' && section !== 'document' && docId)
-      void runSync(docId);
+    if (previousSection.current === 'document' && section !== 'document') void syncDocument();
     previousSection.current = section;
-  }, [section, docId, runSync]);
+  }, [section, syncDocument]);
   // something was just written into the document (a lesson from a photo)
   useEffect(() => {
-    if (!docId) return;
-    const onChanged = () => void runSync(docId);
+    const onChanged = () => void syncDocument();
     window.addEventListener('cahier:doc-changed', onChanged);
     return () => window.removeEventListener('cahier:doc-changed', onChanged);
-  }, [docId, runSync]);
+  }, [syncDocument]);
 
   // split again only when the text changed: a live sync every minute mostly brings back the same text
   const docText = doc?.text;
@@ -230,11 +178,9 @@ export default function App() {
   );
   const lessonOn = useLessonOn(docText ?? '');
   useLiveSync(lessonOn && !!docId, () => {
-    if (docId) void runSync(docId, true);
+    void syncDocument(true);
   });
   const bank = useBank(lessons, hasClaude);
-  // Set while rendering, so the first quiz round already sees this document's progress.
-  setProgressDoc(docId);
   // the same words the Words to learn page lists
   const hardCount = Object.values(useProgress().words).filter(
     (stat) => stat.hard && isStudied(stat.language, settings)
@@ -247,16 +193,12 @@ export default function App() {
   const currentLessonKey = lesson?.key ?? null;
 
   function connect(id: string) {
-    if (id !== docId) {
-      setDoc(loadDocCache(id));
-    }
-    save('doc', id);
-    setDocId(id);
+    setProgressDoc(id);
+    selectDocument(id);
     setChanging(false);
     const url = new URL(window.location.href);
     url.searchParams.set('doc', id);
     window.history.replaceState(null, '', url);
-    if (id === docId) void runSync(id);
   }
 
   if (needsCode)
@@ -266,7 +208,7 @@ export default function App() {
           save('code', code);
           setNeedsCode(false);
           // the first sync was refused for the missing code
-          if (docId) void runSync(docId);
+          void syncDocument();
         }}
         onClear={() => remove('code')}
       />
@@ -292,7 +234,7 @@ export default function App() {
   const docUrl = sourceUrl(docId);
   let status: string;
   if (sync.state === 'loading') status = t('syncing');
-  else if (sync.state === 'error') status = sync.message || '';
+  else if (sync.state === 'error') status = sync.message;
   else if (doc)
     status = t('synced', { count: lessons.length, ago: ago(doc.fetchedAt, translation) });
   else status = t('notSynced');
@@ -323,7 +265,7 @@ export default function App() {
         <button
           type="button"
           className="icon-button"
-          onClick={() => void runSync(docId)}
+          onClick={() => void syncDocument()}
           disabled={sync.state === 'loading'}
           data-tooltip={t('sync')}
           aria-label={t('sync')}

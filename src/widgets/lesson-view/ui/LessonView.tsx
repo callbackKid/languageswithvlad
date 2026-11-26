@@ -73,7 +73,11 @@ export default function LessonView({
   /** whether the server can write to this document (to add exercises from the book); left out
       for a lesson that isn't in the document */
   docWriter?: boolean;
-  onAnalysis?: (lessonKey: string, analysis: Analysis, translateTo: UiLanguage) => void;
+  onAnalysis?: (
+    lesson: Pick<Lesson, 'key' | 'hash'>,
+    analysis: Analysis,
+    translateTo: UiLanguage
+  ) => void;
   // the newest lesson in the document, whose homework Home shows with an exercise per task
   isNewest?: boolean;
   /** the Words tab's list, given by the page: it is another widget (word-list), and one widget
@@ -129,11 +133,12 @@ export default function LessonView({
       .analyze(lesson.body, fresh > 0)
       .then((raw) => {
         const prepared = normalizeAnalysis(raw);
-        save(analysisKey(lesson.hash, translateTo), prepared);
-        onAnalysis?.(lesson.key, prepared, translateTo);
+        if (alive || !readAnalysis(lesson.hash, translateTo))
+          save(analysisKey(lesson.hash, translateTo), prepared);
         if (alive) {
           setAnalysis(prepared);
           setState('ready');
+          onAnalysis?.({ key: lesson.key, hash: lesson.hash }, prepared, translateTo);
         }
       })
       .catch((failure) => {
