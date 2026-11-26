@@ -15,7 +15,9 @@
     "format:check": "prettier --check .",
     "verify": "yarn lint && yarn format:check && yarn typecheck && yarn fsd",
     "fsd": "steiger ./src",
-    "prepare": "husky || true"
+    "prepare": "husky || true",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@excalidraw/excalidraw": "0.18.1",
@@ -47,7 +49,8 @@
     "typescript": "5.5.3",
     "typescript-eslint": "8.18.2",
     "vercel": "65.8.0",
-    "vite": "5.3.4"
+    "vite": "5.3.4",
+    "vitest": "3.2.4"
   },
   "lint-staged": {
     "*.{ts,tsx,js}": [
