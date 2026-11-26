@@ -1,9 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 
 import {
-  fetchConjugation,
   type FormQuestion,
-  readConjugation,
   removedCount,
   removeVerb,
   restore,
@@ -29,7 +27,6 @@ import {
   languageOfTense,
   type Tense,
   TENSES_BY_LANGUAGE,
-  useTranslationLanguage,
   type VerbLanguage,
 } from '@/shared/config';
 import { common, exercises, useTranslation } from '@/shared/i18n';
@@ -39,6 +36,8 @@ import { keepBracketsTogether, shuffle } from '@/shared/lib/util';
 import ExerciseHead from '@/shared/ui/ExerciseHead';
 import InlineConfirm from '@/shared/ui/InlineConfirm';
 import WaitingFact from '@/shared/ui/WaitingFact';
+
+import { useVerbConjugations, verbIdentity } from '../model/useVerbConjugations';
 
 // the order of the verb list, kept on the device for every lesson
 const SORT_KEY = 'verb-sort';
@@ -66,70 +65,41 @@ export default function VerbsTab({
 }) {
   const { t, rich, language: uiLanguage } = useTranslation(exercises);
   const commonText = useTranslation(common);
-  const translationOf = useTranslationLanguage();
+  const { lookup, load: loadTable, translationOf } = useVerbConjugations(verbs, hasClaude);
   const [currentVerb, setCurrentVerb] = useState<string | null>(null);
   // the verb whose ✕ was pressed: its row asks before taking it out
   const [removing, setRemoving] = useState<string | null>(null);
   const [tense, setTense] = useState<Tense>('présent');
   const [isNegative, setIsNegative] = useState(false);
-  const [conjugations, setConjugations] = useState<Record<string, Conjugation>>(() => {
-    const out: Record<string, Conjugation> = {};
-    for (const verb of verbs) {
-      const conjugation = readConjugation(verb.inf, verbLanguageOf(verb));
-      if (conjugation) out[verb.inf] = conjugation;
-    }
-    return out;
-  });
-  const [status, setStatus] = useState<Record<string, string>>({});
   const [mode, setMode] = useState<'table' | 'drill' | 'quiz'>('table');
   const [sort, setSort] = useState<VerbSort>(savedSort);
   const removedVerbs = removedCount(useRemoved(), 'verbs', lessonKey ? [lessonKey] : []);
 
-  // fresh: ignore the saved table and ask Claude again
-  async function open(verb: VerbRef, fresh = false) {
-    setCurrentVerb(verb.inf);
-    setMode('table');
-    if (status[verb.inf] === 'loading') return;
-    if (!fresh) {
-      if (conjugations[verb.inf]) return;
-      const cached = readConjugation(verb.inf, verbLanguageOf(verb));
-      if (cached) {
-        setConjugations((previous) => ({ ...previous, [verb.inf]: cached }));
-        return;
-      }
-    }
-    if (!hasClaude) {
-      setStatus((previous) => ({
-        ...previous,
-        [verb.inf]: commonText.t('needsClaude'),
-      }));
-      return;
-    }
-    setStatus((previous) => ({ ...previous, [verb.inf]: 'loading' }));
-    try {
-      const conjugation = await fetchConjugation(verb, fresh);
-      setConjugations((previous) => ({ ...previous, [verb.inf]: conjugation }));
-      setStatus((previous) => {
-        const copy = { ...previous };
-        delete copy[verb.inf];
-        return copy;
-      });
-    } catch (error) {
-      setStatus((previous) => ({
-        ...previous,
-        [verb.inf]: error instanceof ApiError ? error.message : commonText.t('unreadable'),
-      }));
-    }
-  }
-
-  // once, after the first render; open() itself skips a table that is already there
+  const currentReference = verbs.find((verb) => verbIdentity(verb) === currentVerb);
+  const currentTable = currentReference ? lookup(currentReference) : null;
+  const shownConjugation = currentTable?.table;
+  const request = currentTable?.request;
   const openedFirst = useRef(false);
+  const requestedTable = useRef<string | null>(null);
   useEffect(() => {
-    const first = verbs[0];
-    if (!openFirst || openedFirst.current || !first) return;
-    openedFirst.current = true;
-    void open(first);
-  });
+    if (openFirst && !openedFirst.current && verbs[0]) {
+      openedFirst.current = true;
+      setCurrentVerb(verbIdentity(verbs[0]));
+    }
+  }, [openFirst, verbs]);
+  useEffect(() => {
+    const key = currentReference
+      ? `${verbIdentity(currentReference)}:${translationOf(verbLanguageOf(currentReference))}`
+      : null;
+    if (key === requestedTable.current) return;
+    requestedTable.current = key;
+    if (currentReference) void loadTable(currentReference);
+  }, [currentReference, loadTable, translationOf]);
+
+  function open(verb: VerbRef) {
+    setCurrentVerb(verbIdentity(verb));
+    setMode('table');
+  }
 
   // under the list, and in place of it once every verb is taken out
   const restoreLink = lessonKey && removedVerbs > 0 && (
@@ -146,19 +116,10 @@ export default function VerbsTab({
         {restoreLink}
       </>
     );
-  const loaded = verbs.filter((verb) => conjugations[verb.inf]);
+  const loaded = verbs.flatMap((verb) => lookup(verb).table ?? []);
 
-  if (mode === 'quiz')
-    return (
-      <Quiz
-        conjugations={loaded.flatMap((verb) => conjugations[verb.inf] ?? [])}
-        onClose={() => setMode('table')}
-      />
-    );
+  if (mode === 'quiz') return <Quiz conjugations={loaded} onClose={() => setMode('table')} />;
 
-  const shownConjugation = currentVerb ? conjugations[currentVerb] : null;
-  const shownStatus = currentVerb ? status[currentVerb] : undefined;
-  const currentReference = verbs.find((verb) => verb.inf === currentVerb);
   const language =
     shownConjugation?.language ?? (currentReference ? verbLanguageOf(currentReference) : 'fr');
   const tenses: readonly Tense[] = TENSES_BY_LANGUAGE[language];
@@ -174,8 +135,7 @@ export default function VerbsTab({
     : affirmativeRows;
 
   // a French -ir verb whose table is loaded is placed by its nous form
-  const groupOf = (verb: VerbRef) =>
-    verbGroup(verb.inf, verbLanguageOf(verb), conjugations[verb.inf]);
+  const groupOf = (verb: VerbRef) => verbGroup(verb.inf, verbLanguageOf(verb), lookup(verb).table);
   // German verbs have no groups: then the list is alphabetical, with nothing to choose
   const hasGroups = verbs.some((verb) => groupOf(verb) !== null);
   const shownSort: VerbSort = hasGroups ? sort : 'alphabet';
@@ -211,11 +171,11 @@ export default function VerbsTab({
             {shownSort === 'group' && <h3 className="verb-group-name">{name}</h3>}
             <ul className="verbs">
               {section.verbs.map((verb) => (
-                <li key={verb.inf} className="verb-row">
+                <li key={verbIdentity(verb)} className="verb-row">
                   <button
                     type="button"
                     className="verb"
-                    aria-pressed={currentVerb === verb.inf}
+                    aria-pressed={currentVerb === verbIdentity(verb)}
                     onClick={() => void open(verb)}
                   >
                     <span className="fr" lang={verbLanguageOf(verb)}>
@@ -235,19 +195,21 @@ export default function VerbsTab({
                       className="row-remove"
                       data-tooltip={t('removeWord')}
                       aria-label={t('removeWordLabel', { word: verb.inf })}
-                      aria-expanded={removing === verb.inf}
-                      onClick={() => setRemoving(removing === verb.inf ? null : verb.inf)}
+                      aria-expanded={removing === verbIdentity(verb)}
+                      onClick={() =>
+                        setRemoving(removing === verbIdentity(verb) ? null : verbIdentity(verb))
+                      }
                     >
                       ✕
                     </button>
                   )}
-                  {lessonKey && removing === verb.inf && (
+                  {lessonKey && removing === verbIdentity(verb) && (
                     <InlineConfirm
                       question={t('removeWordConfirm', { word: verb.inf })}
                       yesLabel={t('removeWord')}
                       onYes={() => {
                         removeVerb(lessonKey, verb.inf);
-                        if (currentVerb === verb.inf) setCurrentVerb(null);
+                        if (currentVerb === verbIdentity(verb)) setCurrentVerb(null);
                         setRemoving(null);
                       }}
                       onNo={() => setRemoving(null)}
@@ -275,31 +237,30 @@ export default function VerbsTab({
       </div>
 
       {!currentVerb && <p className="empty">{t('pickVerb')}</p>}
-      {shownStatus === 'loading' && (
+      {request?.state === 'loading' && (
         <WaitingFact>
           {rich(
             'conjugating',
             { i: (chunk) => <i lang={language}>{chunk}</i> },
-            { verb: currentVerb }
+            { verb: currentReference?.inf ?? '' }
           )}
         </WaitingFact>
       )}
-      {shownStatus && shownStatus !== 'loading' && (
-        <div className="note err">
-          <p>{shownStatus}</p>
+      {request?.state === 'unavailable' && (
+        <p className="note err" role="alert">
+          {commonText.t('needsClaude')}
+        </p>
+      )}
+      {request?.state === 'error' && (
+        <div className="note err" role="alert">
+          <p>
+            {request.error instanceof ApiError ? request.error.message : commonText.t('unreadable')}
+          </p>
           <button
             type="button"
             className="btn"
             onClick={() => {
-              const verb = verbs.find((candidate) => candidate.inf === currentVerb);
-              if (verb) {
-                setStatus((previous) => {
-                  const copy = { ...previous };
-                  delete copy[verb.inf];
-                  return copy;
-                });
-                void open(verb);
-              }
+              if (currentReference) void loadTable(currentReference, request.fresh);
             }}
           >
             {commonText.t('tryAgain')}
@@ -338,8 +299,7 @@ export default function VerbsTab({
                   className="btn ghost inline"
                   data-tooltip={t('conjugateAgainTitle')}
                   onClick={() => {
-                    const verb = verbs.find((candidate) => candidate.inf === currentVerb);
-                    if (verb) void open(verb, true);
+                    if (currentReference) void loadTable(currentReference, true);
                   }}
                 >
                   {t('conjugateAgain')}

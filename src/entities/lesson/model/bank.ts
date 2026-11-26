@@ -73,10 +73,12 @@ export function readConjugation(
 
 /** A verb's tables: the saved ones, or (fresh, or none saved) Claude's, which are then saved.
     Throws when Claude's answer can't be used. */
-export async function fetchConjugation(verb: VerbRef, fresh = false): Promise<Conjugation> {
+export async function fetchConjugation(
+  verb: VerbRef,
+  fresh = false,
+  translation: UiLanguage = translationLanguage(verbLanguageOf(verb))
+): Promise<Conjugation> {
   const language = verbLanguageOf(verb);
-  // once, so the request and the key it is saved under always agree
-  const translation = translationLanguage(language);
   const cached = fresh ? null : readConjugation(verb.inf, language, translation);
   if (cached) return cached;
   const conjugation = normalizeConjugation(
@@ -129,12 +131,12 @@ export function useBank(lessons: Lesson[], hasClaude: boolean): Bank {
   const busy = useRef(false);
   // Bumped when the document changes, so answers for the old one are dropped.
   const generation = useRef(0);
-
-  // The translation language of the analyses shown, so a switch keeps no words in the old one.
   const currentLessons = useRef(lessons);
   useLayoutEffect(() => {
     currentLessons.current = lessons;
   }, [lessons]);
+
+  // The translation language of the analyses shown, so a switch keeps no words in the old one.
   const shownLanguage = useRef(translateTo);
 
   // Pick up cached lessons whenever the document or the translation language changes.

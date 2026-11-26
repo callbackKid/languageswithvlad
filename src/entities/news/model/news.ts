@@ -48,6 +48,23 @@ export interface NewsDay {
 
 export const NEWS: NewsDay[] = [
   {
+    date: '2026-11-26',
+    items: [
+      {
+        kind: 'fixed',
+        text: {
+          en: 'An older sync can no longer replace a newer copy of the lesson document. Verbs that share a spelling across languages now open the right conjugation table.',
+          ru: 'Результат более ранней синхронизации больше не перезапишет свежую версию документа с уроками. Для глаголов, которые пишутся одинаково в разных языках, теперь открывается таблица спряжения нужного языка.',
+          fr: 'Une synchronisation lancée plus tôt ne peut plus remplacer une version plus récente du document de cours. Si un verbe s’écrit de la même façon dans plusieurs langues, c’est maintenant le tableau de conjugaison de la bonne langue qui s’ouvre.',
+          de: 'Eine früher gestartete Synchronisierung kann eine neuere Version des Lektionsdokuments nicht mehr überschreiben. Bei Verben, die in mehreren Sprachen gleich geschrieben werden, öffnet sich jetzt die Verbtabelle für die richtige Sprache.',
+          es: 'Una sincronización anterior ya no puede sobrescribir una versión más reciente del documento de clase. Si un verbo se escribe igual en varios idiomas, ahora se abre la tabla de conjugación del idioma correcto.',
+          pt: 'Uma sincronização anterior já não pode substituir uma versão mais recente do documento da lição. Quando um verbo se escreve da mesma forma em várias línguas, abre-se agora a tabela de conjugação da língua certa.',
+          it: 'Una sincronizzazione precedente non può più sovrascrivere una versione più recente del documento delle lezioni. Quando un verbo si scrive allo stesso modo in più lingue, ora si apre la tabella di coniugazione della lingua giusta.',
+        },
+      },
+    ],
+  },
+  {
     date: '2026-11-25',
     items: [
       {
