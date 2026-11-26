@@ -3,6 +3,7 @@ import { useMemo, useState } from 'react';
 import { type Analysis, type Bank, BankNote } from '@/entities/lesson';
 import { VerbsTab } from '@/features/conjugate-verb';
 import { app, pages, useTranslation } from '@/shared/i18n';
+import { useTabs } from '@/shared/lib/useTabs';
 import { shownTopic } from '@/shared/lib/util';
 import PageHead from '@/shared/ui/PageHead';
 import { WordsTab } from '@/widgets/word-list';
@@ -15,6 +16,7 @@ export default function Practice({ bank, hasClaude }: { bank: Bank; hasClaude: b
   // null means every lesson, including ones still being prepared
   const [selectedLessons, setSelectedLessons] = useState<Set<string> | null>(null);
   const [tab, setTab] = useState<'words' | 'verbs'>('words');
+  const { tabListProps, tabProps, panelProps } = useTabs(tab);
 
   const analysis = useMemo((): Analysis => {
     const isIncluded = (key: string | undefined) =>
@@ -74,12 +76,11 @@ export default function Practice({ bank, hasClaude }: { bank: Bank; hasClaude: b
         ))}
       </div>
       <section className="panel solo">
-        <div className="tabs" role="tablist">
+        <div className="tabs" {...tabListProps} aria-label={appText.t('section.practice')}>
           <button
             type="button"
             className="tab"
-            role="tab"
-            aria-selected={tab === 'words'}
+            {...tabProps('words')}
             onClick={() => setTab('words')}
           >
             {t('words')}
@@ -88,18 +89,19 @@ export default function Practice({ bank, hasClaude }: { bank: Bank; hasClaude: b
           <button
             type="button"
             className="tab"
-            role="tab"
-            aria-selected={tab === 'verbs'}
+            {...tabProps('verbs')}
             onClick={() => setTab('verbs')}
           >
             {t('verbs')}
             <span className="count">{analysis.verbs.length}</span>
           </button>
         </div>
-        <div className="body">
+        <div className="body" {...panelProps('words')}>
           {tab === 'words' && (
             <WordsTab key={selectionKey} analysis={analysis} hasClaude={hasClaude} />
           )}
+        </div>
+        <div className="body" {...panelProps('verbs')}>
           {tab === 'verbs' && (
             <VerbsTab
               key={selectionKey}

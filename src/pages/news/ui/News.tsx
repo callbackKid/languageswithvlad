@@ -11,6 +11,7 @@ import {
 } from '@/entities/news';
 import { type Language, useSettings, useTeacher } from '@/shared/config';
 import { app, learning, useTranslation } from '@/shared/i18n';
+import { useTabs } from '@/shared/lib/useTabs';
 import PageHead from '@/shared/ui/PageHead';
 
 import { newsText } from '../i18n/news';
@@ -25,6 +26,7 @@ export default function News({ onSeen }: { onSeen: () => void }) {
   const { isTeacher } = useTeacher();
   const { studying } = useSettings();
   const [tab, setTab] = useState<NewsTab>('new');
+  const { tabListProps, tabProps, panelProps } = useTabs(tab);
   // a student of one language sees that language's news at once
   const [chosenLanguage, setLanguage] = useState<Language | 'all'>(() =>
     studying.length === 1 ? (studying[0] ?? 'all') : 'all'
@@ -95,14 +97,13 @@ export default function News({ onSeen }: { onSeen: () => void }) {
           </div>
         )}
       </div>
-      <div className="tabs news-tabs" role="tablist">
+      <div className="tabs news-tabs" {...tabListProps} aria-label={sectionNames.t('section.news')}>
         {NEWS_TABS.map((shown) => (
           <button
             type="button"
             key={shown}
             className="tab"
-            role="tab"
-            aria-selected={tab === shown}
+            {...tabProps(shown)}
             onClick={() => setTab(shown)}
           >
             {t(`tab.${shown}`)}
@@ -110,37 +111,42 @@ export default function News({ onSeen }: { onSeen: () => void }) {
           </button>
         ))}
       </div>
-      {days.length ? (
-        <ol className="news">
-          {days.map((day) => (
-            <li key={day.date} className="news-day">
-              <h2>
-                <time dateTime={day.date}>{dateFormat.format(dateOf(day.date))}</time>
-              </h2>
-              <ul>
-                {day.items.map((item) => (
-                  <li key={item.text.en} className="news-item">
-                    {/* on the fixes tab every item is a fix: the label would say nothing */}
-                    {tab === 'new' && (
-                      <span className={'news-kind ' + item.kind}>{t(`kind.${item.kind}`)}</span>
-                    )}
-                    <span>
-                      {item.text[uiLanguage]}
-                      {item.languages && shownLanguage === 'all' && (
-                        <span className="news-languages">
-                          {item.languages.map((language) => names.t(`name.${language}`)).join(', ')}
-                        </span>
+      {NEWS_TABS.map((shown) => shown !== tab && <div key={shown} {...panelProps(shown)} />)}
+      <div key={tab} {...panelProps(tab)}>
+        {days.length ? (
+          <ol className="news">
+            {days.map((day) => (
+              <li key={day.date} className="news-day">
+                <h2>
+                  <time dateTime={day.date}>{dateFormat.format(dateOf(day.date))}</time>
+                </h2>
+                <ul>
+                  {day.items.map((item) => (
+                    <li key={item.text.en} className="news-item">
+                      {/* on the fixes tab every item is a fix: the label would say nothing */}
+                      {tab === 'new' && (
+                        <span className={'news-kind ' + item.kind}>{t(`kind.${item.kind}`)}</span>
                       )}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </li>
-          ))}
-        </ol>
-      ) : (
-        <p className="empty">{t('empty')}</p>
-      )}
+                      <span>
+                        {item.text[uiLanguage]}
+                        {item.languages && shownLanguage === 'all' && (
+                          <span className="news-languages">
+                            {item.languages
+                              .map((language) => names.t(`name.${language}`))
+                              .join(', ')}
+                          </span>
+                        )}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ol>
+        ) : (
+          <p className="empty">{t('empty')}</p>
+        )}
+      </div>
     </>
   );
 }

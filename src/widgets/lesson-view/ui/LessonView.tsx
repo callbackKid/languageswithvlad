@@ -35,6 +35,7 @@ import {
 } from '@/shared/i18n';
 import { requestOnce } from '@/shared/lib/once';
 import { loadChecked, save } from '@/shared/lib/storage';
+import { useTabs } from '@/shared/lib/useTabs';
 import { shownTopic } from '@/shared/lib/util';
 import HelpLink from '@/shared/ui/HelpLink';
 import WaitingFact from '@/shared/ui/WaitingFact';
@@ -91,6 +92,7 @@ export default function LessonView({
   const [chosenTab, setTab] = useState<Tab>('words');
   // a tab hidden in Settings gives way to the first one shown
   const tab = shownTabs.includes(chosenTab) ? chosenTab : (shownTabs[0] ?? 'words');
+  const { tabListProps, tabProps, panelProps } = useTabs(tab);
   const { isTeacher } = useTeacher();
   // on a phone the tabs scroll sideways: the open one is kept in view
   const tabList = useRef<HTMLDivElement>(null);
@@ -136,9 +138,9 @@ export default function LessonView({
         if (alive || !readAnalysis(lesson.hash, translateTo))
           save(analysisKey(lesson.hash, translateTo), prepared);
         if (alive) {
+          onAnalysis?.({ key: lesson.key, hash: lesson.hash }, prepared, translateTo);
           setAnalysis(prepared);
           setState('ready');
-          onAnalysis?.({ key: lesson.key, hash: lesson.hash }, prepared, translateTo);
         }
       })
       .catch((failure) => {
@@ -238,13 +240,7 @@ export default function LessonView({
 
   const tabButton = (id: Tab, label: string, count?: number) =>
     shownTabs.includes(id) && (
-      <button
-        type="button"
-        className="tab"
-        role="tab"
-        aria-selected={tab === id}
-        onClick={() => setTab(id)}
-      >
+      <button type="button" className="tab" {...tabProps(id)} onClick={() => setTab(id)}>
         {label}
         {count !== undefined && <span className="count">{count}</span>}
       </button>
@@ -289,7 +285,12 @@ export default function LessonView({
         )}
       </section>
       <section className="panel">
-        <div className="tabs" role="tablist" ref={tabList}>
+        <div
+          className="tabs"
+          {...tabListProps}
+          aria-label={lesson.title || `${lesson.word} ${lesson.n}`}
+          ref={tabList}
+        >
           {tabButton('words', t('words'), tagged?.words.length ?? 0)}
           {tabButton('verbs', t('verbs'), tagged?.verbs.length ?? 0)}
           {tabButton('grammar', t('grammar'), extras?.grammar.length)}
@@ -299,7 +300,8 @@ export default function LessonView({
           {tabButton('notes', t('myNotes'))}
           {tabButton('source', t('original'))}
         </div>
-        <div className="body">
+        {shownTabs.map((id) => id !== tab && <div key={id} {...panelProps(id)} />)}
+        <div key={tab} className="body" {...panelProps(tab)}>
           {(tab === 'words' || tab === 'verbs') && note}
           {tab === 'words' && tagged && (
             <Fragment key={lesson.hash + (tagged.local ? 'l' : 'c')}>

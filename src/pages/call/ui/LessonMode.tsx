@@ -30,6 +30,7 @@ import { call, homework as homeworkText, paper, talk, useTranslation } from '@/s
 import { clockTime, dayKey } from '@/shared/lib/dates';
 import { followLink, hrefFor } from '@/shared/lib/router';
 import { loadChecked, loadText, remove, save } from '@/shared/lib/storage';
+import { useTabs } from '@/shared/lib/useTabs';
 import { hash } from '@/shared/lib/util';
 import CallCard from '@/shared/ui/CallCard';
 import InlineConfirm from '@/shared/ui/InlineConfirm';
@@ -445,6 +446,7 @@ export default function LessonMode({
   const preparing = usePreparedLesson(earlier, bank, hasClaude);
   const newest = lessons[lessons.length - 1] ?? null;
   const [tab, setTab] = useState<CallTab>(readCallTab);
+  const { tabListProps, tabProps, panelProps } = useTabs(tab);
   // the call running in the page (Jitsi or Zoom); its video sits above the tabs, so a tab never closes it
   const [joined, setJoined] = useState<JoinedCall | null>(null);
   function chooseTab(chosen: CallTab) {
@@ -509,29 +511,20 @@ export default function LessonMode({
           )}
           {/* under the call, so switching never closes it; both tabs stay on the page, hidden in
               turn, so an exercise or a discussion question in progress isn't lost */}
-          <div className="tabs call-tabs" role="tablist" aria-label={t('callTabs')}>
+          <div className="tabs call-tabs" {...tabListProps} aria-label={t('callTabs')}>
             {CALL_TABS.map((id) => (
               <button
                 key={id}
                 type="button"
                 className="tab"
-                role="tab"
-                id={`call-tab-${id}`}
-                aria-controls={`call-panel-${id}`}
-                aria-selected={tab === id}
+                {...tabProps(id)}
                 onClick={() => chooseTab(id)}
               >
                 {id === 'lesson' ? t('lessonTab') : t('activitiesTab')}
               </button>
             ))}
           </div>
-          <div
-            className="call-tab-panel"
-            role="tabpanel"
-            id="call-panel-lesson"
-            aria-labelledby="call-tab-lesson"
-            hidden={tab !== 'lesson'}
-          >
+          <div className="call-tab-panel" {...panelProps('lesson')}>
             {hasClaude && <MakeExerciseCard bank={bank} lesson={newest} />}
             <WrittenHomework lesson={earlier} docId={docId} />
             <LessonWords bank={bank} lesson={newest} />
@@ -539,13 +532,7 @@ export default function LessonMode({
               <BookCard docId={docId} lesson={newest} canWrite={!!target.docWriter} />
             )}
           </div>
-          <div
-            className="call-tab-panel"
-            role="tabpanel"
-            id="call-panel-activities"
-            aria-labelledby="call-tab-activities"
-            hidden={tab !== 'activities'}
-          >
+          <div className="call-tab-panel" {...panelProps('activities')}>
             {!activity && (
               <WarmUpCard
                 lesson={earlier}

@@ -51,6 +51,18 @@ export const NEWS: NewsDay[] = [
     date: '2026-11-26',
     items: [
       {
+        kind: 'better',
+        text: {
+          en: 'You can now move between tabs with the arrow keys and open the focused tab with Enter or Space.',
+          ru: 'Теперь можно перемещать фокус между вкладками клавишами со стрелками и открывать вкладку клавишей Enter или пробелом.',
+          fr: 'Vous pouvez maintenant parcourir les onglets avec les touches fléchées, puis appuyer sur Entrée ou sur la barre d’espace pour ouvrir l’onglet.',
+          de: 'Du kannst jetzt mit den Pfeiltasten von Tab zu Tab gehen und den jeweiligen Tab mit der Eingabe- oder Leertaste öffnen.',
+          es: 'Ahora puedes recorrer las pestañas con las flechas del teclado y abrir la que tiene el foco con Intro o la barra espaciadora.',
+          pt: 'Agora pode percorrer os separadores com as teclas de seta e abrir o separador em foco com Enter ou com a barra de espaços.',
+          it: 'Ora puoi spostarti tra le schede con i tasti freccia e aprire quella su cui ti trovi con Invio o con la barra spaziatrice.',
+        },
+      },
+      {
         kind: 'fixed',
         text: {
           en: 'An older sync can no longer replace a newer copy of the lesson document. Verbs that share a spelling across languages now open the right conjugation table.',
