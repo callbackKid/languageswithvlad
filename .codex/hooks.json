@@ -1,0 +1,57 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash|Read|Edit|Write|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "'/Users/vlad/languageswithvlad/.codex/hooks/guard.sh'",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "'/Users/vlad/languageswithvlad/.codex/hooks/format.sh'",
+            "timeout": 60,
+            "statusMessage": "ESLint + Prettier"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "'/Users/vlad/languageswithvlad/.codex/hooks/session-start.sh'",
+            "timeout": 15
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "'/Users/vlad/languageswithvlad/.codex/hooks/typecheck.sh'",
+            "timeout": 120,
+            "statusMessage": "yarn typecheck"
+          },
+          {
+            "type": "command",
+            "command": "'/Users/vlad/languageswithvlad/.codex/hooks/news-reminder.sh'",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,41 @@
+# Every page in the menu and every lesson tab, for: node …/driver.mjs < this file
+# /document (Google's editor) and /call (Zoom, the board) load third-party frames and are checked by hand.
+nav /
+a11y home
+nav /lessons
+a11y lesson-words
+click tab /^Verbs/
+click button /se lever/
+a11y lesson-verbs
+click button Practise this tense
+a11y lesson-verbs-drill
+click tab /^Grammar/
+a11y lesson-grammar
+click tab /^Homework/
+a11y lesson-homework
+click tab /^Book exercises/
+a11y lesson-book-exercises
+click tab /^My notes/
+a11y lesson-notes
+click tab /^Original/
+a11y lesson-original
+nav /all-lessons
+a11y all-lessons
+nav /discuss
+a11y discuss
+nav /my-words
+a11y my-words
+nav /mistakes
+a11y mistakes
+nav /stats
+a11y stats
+nav /text
+a11y text
+nav /photo
+a11y photo
+nav /tutorial
+a11y tutorial
+nav /news
+a11y news
+nav /settings
+a11y settings

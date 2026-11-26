@@ -1,0 +1,27 @@
+# Wide-screen layouts (run with --width 1280): what a phone never shows.
+nav /
+shot desk-home
+---
+nav /lessons
+wait-text Morning routine
+shot desk-lessons-column
+click button Lessons in a row
+shot desk-lessons-row
+click button Hide the lesson list
+shot desk-lessons-row-folded
+click button Show the lesson list
+click button Lessons in a row
+click button Hide the lesson list
+shot desk-lessons-column-folded
+click button Show the lesson list
+---
+nav /lessons
+click tab /^Phonetics/
+wait-text The sound
+shot desk-phonetics
+---
+nav /call
+shot desk-call
+---
+nav /settings
+shot desk-settings

@@ -1,0 +1,29 @@
+# The main pages in the two interface languages with the longest words (German, Russian), light
+# theme: texts that overflow or wrap badly. The driver reports any page that scrolls sideways.
+#   node .claude/skills/run-languageswithvlad/driver.mjs --themes light --out "$TMPDIR/audit-shots" < .claude/skills/audit-app/tour-languages.steps
+nav /settings
+# the interface language is a dropdown in Settings
+eval (()=>{const select=document.querySelector('#settings-ui-language');select.value='de';select.dispatchEvent(new Event('change',{bubbles:true}));return 1})()
+nav /
+shot de-home
+nav /lessons
+shot de-lesson-words
+click tab /^Verben/
+click button /se lever/
+shot de-lesson-verbs
+nav /stats
+shot de-stats
+nav /settings
+shot de-settings
+---
+nav /settings
+# the interface language is a dropdown in Settings
+eval (()=>{const select=document.querySelector('#settings-ui-language');select.value='ru';select.dispatchEvent(new Event('change',{bubbles:true}));return 1})()
+nav /
+shot ru-home
+nav /lessons
+shot ru-lesson-words
+nav /tutorial
+shot ru-tutorial
+nav /settings
+shot ru-settings

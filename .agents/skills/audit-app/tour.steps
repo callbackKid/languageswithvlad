@@ -1,0 +1,95 @@
+# Every page, lesson tab and main exercise, one screenshot each, for:
+#   node .claude/skills/run-languageswithvlad/driver.mjs --out "$TMPDIR/audit-shots" < .claude/skills/audit-app/tour.steps
+# A line "---" ends a block: a failed step skips only the rest of its block.
+nav /
+shot home
+---
+nav /lessons
+shot lesson-words
+click tab /^Verbs/
+shot lesson-verbs-list
+click button /se lever/
+shot lesson-verbs-table
+click button Practise this tense
+fill table.conj input @0 me lève
+fill table.conj input @2 elle se lève
+fill table.conj input @3 nous levons
+click button Check answers
+shot lesson-verbs-drill-checked
+---
+nav /lessons
+click tab /^Grammar/
+shot lesson-grammar
+click tab /^Homework/
+shot lesson-homework
+click tab /^Book exercises/
+shot lesson-book
+click tab /^My notes/
+shot lesson-notes
+click tab /^Original/
+shot lesson-original
+---
+# the German lesson is dated yesterday in the test data: the second newest link, not a fixed date
+nav /lessons
+eval (()=>{const links=[...document.querySelectorAll('a.lesson-link')];links[links.length-2].click();return 1})()
+wait-text aufstehen
+shot lesson-german
+# its three words make the one group with 3 words: the Exercise button works there
+click button /An exercise on the words of “Morning routine”/
+wait-text Question 1 of
+shot group-exercise
+---
+# groups with fewer than 3 words: one note over the list, and no button on them
+nav /lessons
+wait-text An exercise on a group needs at least 3 ticked words
+shot group-note
+---
+nav /lessons
+click tab /^Phonetics/
+wait-text The sound
+shot lesson-phonetics
+click button Practise
+wait-text Question 1 of
+shot phonetics-round
+---
+nav /lessons
+click button Listen
+wait-text Word 1 of
+shot listen
+---
+nav /all-lessons
+shot all-lessons
+---
+nav /discuss
+shot discuss
+---
+nav /my-words
+shot my-words
+---
+nav /mistakes
+shot mistakes
+---
+nav /stats
+shot stats
+---
+nav /text
+shot text
+---
+nav /photo
+shot photo
+---
+nav /tutorial
+shot tutorial
+---
+nav /news
+shot news
+---
+nav /settings
+shot settings
+eval (()=>{const key='cahier-fr:settings';const value=JSON.parse(localStorage.getItem(key)||'{}');value.avatar='data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';localStorage.setItem(key,JSON.stringify(value));return 1})()
+nav /settings
+click button Edit picture
+shot settings-picture-menu
+---
+nav /nowhere
+shot unknown-address
