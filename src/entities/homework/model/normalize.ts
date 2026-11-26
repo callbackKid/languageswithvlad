@@ -4,7 +4,7 @@ import { asText } from '@/shared/lib/util';
 import { type Writing, type WritingCheck } from './types';
 
 // Claude's check of a written answer; null when the reply has no corrected text.
-export function normalizeWritingCheck(raw: unknown): WritingCheck | null {
+export const normalizeWritingCheck = (raw: unknown): WritingCheck | null => {
   const data = asObject(raw);
   const corrected = asText(data.corrected);
   if (!corrected) return null;
@@ -20,10 +20,10 @@ export function normalizeWritingCheck(raw: unknown): WritingCheck | null {
       .filter((mistake) => mistake.wrong || mistake.right),
     comment: asText(data.comment),
   };
-}
+};
 
 // A written homework answer as saved on the device; null when it has no task.
-export function normalizeWriting(raw: unknown): Writing | null {
+export const normalizeWriting = (raw: unknown): Writing | null => {
   const data = asObject(raw);
   const task = asText(data.task);
   if (!task) return null;
@@ -35,4 +35,4 @@ export function normalizeWriting(raw: unknown): Writing | null {
     ...(typeof data.checkedText === 'string' && { checkedText: data.checkedText }),
     ...(typeof data.checkedAt === 'number' && { checkedAt: data.checkedAt }),
   };
-}
+};

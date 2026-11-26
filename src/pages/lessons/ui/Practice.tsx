@@ -10,7 +10,7 @@ import PageHead from '@/shared/ui/PageHead';
 import { WordsTab } from '@/widgets/word-list';
 
 // Every exercise, run on the words and verbs of all lessons or the ones picked.
-export default function Practice({ bank, hasClaude }: { bank: Bank; hasClaude: boolean }) {
+const Practice = ({ bank, hasClaude }: { bank: Bank; hasClaude: boolean }) => {
   const { t } = useTranslation(pages);
   const appText = useTranslation(app);
   const uiLanguage = appText.language;
@@ -115,4 +115,6 @@ export default function Practice({ bank, hasClaude }: { bank: Bank; hasClaude: b
       </section>
     </>
   );
-}
+};
+
+export default Practice;

@@ -14,7 +14,7 @@ import { normalizeGaps } from '../model/normalize';
 import { type GapItem } from '../model/types';
 
 // Fill the gap with the lesson's words: sentences Claude writes around them.
-export default function GapFill({
+const GapFill = ({
   words,
   onClose,
   onRestart,
@@ -24,7 +24,7 @@ export default function GapFill({
   onClose: () => void;
   onRestart: () => void;
   onRoundEnd?: () => void;
-}) {
+}) => {
   const { t, rich } = useTranslation(exercises);
   const language = words[0]?.language ?? 'fr';
   // Asked for once, with the words the exercise started with: the parent may hand over a new
@@ -56,11 +56,13 @@ export default function GapFill({
       onRoundEnd={onRoundEnd}
     />
   );
-}
+};
+
+export default GapFill;
 
 /** A round of gap sentences: pick the right answer for each, then see the score. The
     sentences are loaded once, when the round starts; a new round remounts it. */
-export function GapRound({
+export const GapRound = ({
   title,
   language,
   waiting,
@@ -83,7 +85,7 @@ export function GapRound({
   onRestart: () => void;
   // called once when the round is over
   onRoundEnd?: () => void;
-}) {
+}) => {
   const { t } = useTranslation(exercises);
   const commonText = useTranslation(common);
   const translationOf = useTranslationLanguage();
@@ -224,4 +226,4 @@ export function GapRound({
       )}
     </div>
   );
-}
+};

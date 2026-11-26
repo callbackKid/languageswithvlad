@@ -16,7 +16,7 @@ const MAX_SENTENCES = 8;
 
 /** Sentences with a gap for some of the lesson's words, at the student's level; with
     action "definitions", a definition of each word in its own language instead (the blitz). */
-export default async function handler(request: VercelRequest, response: VercelResponse) {
+const handler = async (request: VercelRequest, response: VercelResponse) => {
   if (!onlyPost(request, response) || !checkAccess(request, response)) return;
   const raw: unknown[] = Array.isArray(request.body?.words) ? request.body.words : [];
   const words = raw
@@ -49,4 +49,6 @@ export default async function handler(request: VercelRequest, response: VercelRe
   } catch (error) {
     fail(response, error);
   }
-}
+};
+
+export default handler;

@@ -30,7 +30,7 @@ const MAX_CONTEXT_LENGTH = 600;
 const MAX_TASK_LENGTH = 600;
 
 // One of the four actions above, chosen by body.action.
-export default async function handler(request: VercelRequest, response: VercelResponse) {
+const handler = async (request: VercelRequest, response: VercelResponse) => {
   if (!onlyPost(request, response) || !checkAccess(request, response)) return;
   const body = (request.body ?? {}) as Record<string, unknown>;
   try {
@@ -87,4 +87,6 @@ export default async function handler(request: VercelRequest, response: VercelRe
   } catch (error) {
     return fail(response, error);
   }
-}
+};
+
+export default handler;

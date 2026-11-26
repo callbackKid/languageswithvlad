@@ -50,7 +50,7 @@ const EMPTY: Progress = { words: {}, forms: {} };
 
 /** Saved progress with every entry checked: a word or form with missing fields is dropped rather
     than breaking the exercises, Stats and Mistakes. */
-function asProgress(raw: unknown): Progress {
+const asProgress = (raw: unknown): Progress => {
   const data = raw && typeof raw === 'object' ? (raw as Record<string, unknown>) : {};
   const entries = (value: unknown) =>
     Object.entries(value && typeof value === 'object' ? value : {});
@@ -91,7 +91,7 @@ function asProgress(raw: unknown): Progress {
   const days: Record<string, number> = {};
   for (const [day, count] of entries(data.days)) if (typeof count === 'number') days[day] = count;
   return { words, forms, days };
-}
+};
 let docId: string | null = null;
 let state: Progress = EMPTY;
 const subscribers = new Set<() => void>();
@@ -102,13 +102,13 @@ let stopWatching: (() => void) | undefined;
 const progressKey = (id: string) => `progress:${id}`;
 const readProgress = (id: string) => loadChecked(progressKey(id), asProgress) ?? EMPTY;
 
-function notifyProgress() {
+const notifyProgress = () => {
   subscribers.forEach((notify) => notify());
-}
+};
 
-function readWithPending(id: string): Progress {
+const readWithPending = (id: string): Progress => {
   return (pending.get(id) ?? []).reduce((current, update) => update(current), readProgress(id));
-}
+};
 
 // A word's key in saved progress. Saved in students' browsers: never change it.
 export const wordKey = (fr: string) =>
@@ -120,7 +120,7 @@ export const formKey = (infinitive: string, tense: string, person: string, negat
 export const isLearned = (stat: WordStat | undefined) => !!stat && stat.streak >= LEARNED_STREAK;
 
 // Select the progress snapshot before the first render or when the user changes documents.
-export function setProgressDoc(id: string | null) {
+export const setProgressDoc = (id: string | null) => {
   if (id === docId) return;
   stopWatching?.();
   docId = id;
@@ -132,17 +132,17 @@ export function setProgressDoc(id: string | null) {
       })
     : undefined;
   queueMicrotask(notifyProgress);
-}
+};
 
 // Counts one more answer for today.
-function withAnswer(progress: Progress, answeredAt: number): Progress {
+const withAnswer = (progress: Progress, answeredAt: number): Progress => {
   const today = dayKey(new Date(answeredAt));
   const days = progress.days || {};
   return { ...progress, days: { ...days, [today]: (days[today] || 0) + 1 } };
-}
+};
 
 // Today's answers and the run of days in a row with at least one answer; a run still counts until today is over.
-export function dailyStats(progress: Progress = state): { today: number; streak: number } {
+export const dailyStats = (progress: Progress = state): { today: number; streak: number } => {
   const days = progress.days || {};
   const cursor = new Date();
   const today = days[dayKey(cursor)] || 0;
@@ -153,9 +153,9 @@ export function dailyStats(progress: Progress = state): { today: number; streak:
     cursor.setDate(cursor.getDate() - 1);
   }
   return { today, streak };
-}
+};
 
-function flush(id: string) {
+const flush = (id: string) => {
   if (!scheduled.delete(id)) return;
   const next = readWithPending(id);
   if (trySave(progressKey(id), next)) pending.delete(id);
@@ -163,9 +163,9 @@ function flush(id: string) {
     state = next;
     notifyProgress();
   }
-}
+};
 
-function commit(update: ProgressUpdate) {
+const commit = (update: ProgressUpdate) => {
   const id = docId;
   // Keep feedback immediate even while another tab holds the document's write lock.
   state = update(state);
@@ -186,9 +186,9 @@ function commit(update: ProgressUpdate) {
     // On older browsers, still read the latest snapshot before writing and listen for changes.
     flush(id);
   }
-}
+};
 
-function baseStat(word: Word, old?: WordStat): WordStat {
+const baseStat = (word: Word, old?: WordStat): WordStat => {
   return {
     right: 0,
     wrong: 0,
@@ -204,10 +204,10 @@ function baseStat(word: Word, old?: WordStat): WordStat {
     lesson: word.lesson || old?.lesson || '',
     language: word.language ?? old?.language,
   };
-}
+};
 
 // Counts an answer on a word; a wrong one puts the word on Words to learn.
-export function recordWord(word: Word, ok: boolean) {
+export const recordWord = (word: Word, ok: boolean) => {
   const identity = wordKey(word.fr);
   const answeredAt = Date.now();
   commit((current) => {
@@ -224,10 +224,10 @@ export function recordWord(word: Word, ok: boolean) {
     stat.last = answeredAt;
     return withAnswer({ ...current, words: { ...current.words, [identity]: stat } }, answeredAt);
   });
-}
+};
 
 // Stars or unstars a word (Words to learn).
-export function setHard(word: Word, hard: boolean) {
+export const setHard = (word: Word, hard: boolean) => {
   const identity = wordKey(word.fr);
   commit((current) => {
     const stat = baseStat(word, current.words[identity]);
@@ -236,17 +236,17 @@ export function setHard(word: Word, hard: boolean) {
     if (hard && stat.streak >= LEARNED_STREAK) stat.streak = 0;
     return { ...current, words: { ...current.words, [identity]: stat } };
   });
-}
+};
 
 // Counts an answer on one verb form.
-export function recordForm(
+export const recordForm = (
   infinitive: string,
   tense: string,
   person: string,
   form: string,
   ok: boolean,
   negative = false
-) {
+) => {
   const identity = formKey(infinitive, tense, person, negative);
   const answeredAt = Date.now();
   commit((current) => {
@@ -263,23 +263,23 @@ export function recordForm(
     };
     return withAnswer({ ...current, forms: { ...current.forms, [identity]: stat } }, answeredAt);
   });
-}
+};
 
 // The open document's progress, for code outside React.
 export const getProgress = () => state;
 
 // outside the hook, so React subscribes once instead of on every render
-function subscribe(listener: () => void) {
+const subscribe = (listener: () => void) => {
   subscribers.add(listener);
   return () => {
     subscribers.delete(listener);
   };
-}
+};
 
 // The open document's progress; the component re-renders with every answer counted.
-export function useProgress(): Progress {
+export const useProgress = (): Progress => {
   return useSyncExternalStore(subscribe, getProgress);
-}
+};
 
 // A saved word as a Word again, for exercises on Words to learn and mistakes.
 export const statWord = (stat: WordStat): Word => ({
@@ -296,10 +296,10 @@ const byMisses = <T extends { wrong: number; right: number }>(first: T, second: 
   second.wrong - first.wrong || first.right - second.right;
 
 // The words and verb forms missed most often, most misses first.
-export function topMistakes(
+export const topMistakes = (
   progress: Progress = state,
   limit = 20
-): { words: WordStat[]; forms: FormStat[] } {
+): { words: WordStat[]; forms: FormStat[] } => {
   // only the languages the student learns (Settings); a verb form's tense names its language
   const settings = getSettings();
   return {
@@ -312,4 +312,4 @@ export function topMistakes(
       .sort(byMisses)
       .slice(0, limit),
   };
-}
+};

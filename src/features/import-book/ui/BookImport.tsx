@@ -18,7 +18,7 @@ type Step = 'idle' | 'reading' | 'review' | 'saving' | 'done';
     ticked (the exercises, the text, the grammar) without any answers, the teacher or student
     checks the text, and it is written under this lesson in the document, so both of them see it
     on every device. */
-export default function BookImport({
+const BookImport = ({
   docId,
   lessonKey,
   docWriter,
@@ -29,7 +29,7 @@ export default function BookImport({
   docWriter: boolean;
   // inside a card that already has the title (lesson mode)
   embedded?: boolean;
-}) {
+}) => {
   const { t } = useTranslation(paper);
   const commonText = useTranslation(common);
   const [step, setStep] = useState<Step>('idle');
@@ -44,7 +44,7 @@ export default function BookImport({
     setStep('idle');
     setError(failure instanceof ApiError ? failure.message : fallback);
   };
-  async function readPages(pages: Parameters<typeof api.bookExercises>[0]) {
+  const readPages = async (pages: Parameters<typeof api.bookExercises>[0]) => {
     setStep('reading');
     setError('');
     try {
@@ -56,8 +56,8 @@ export default function BookImport({
     } catch (failure) {
       failed(failure, translator(paper).t('bookFailed'));
     }
-  }
-  async function readPhotos(files: File[]) {
+  };
+  const readPhotos = async (files: File[]) => {
     if (files.length > MAX_PHOTOS) {
       setError(t('tooManyPhotos', { count: MAX_PHOTOS }));
       return;
@@ -69,8 +69,8 @@ export default function BookImport({
     } catch (failure) {
       failed(failure, translator(paper).t('photosFailed'));
     }
-  }
-  async function openPdf(file: File) {
+  };
+  const openPdf = async (file: File) => {
     setError('');
     try {
       const pageCount = await pdfPageCount(file);
@@ -80,15 +80,15 @@ export default function BookImport({
     } catch {
       setError(t('pdfFailed'));
     }
-  }
-  async function readPdf() {
+  };
+  const readPdf = async () => {
     if (!pdf) return;
     const pages = await extractPages(pdf.file, firstPage, lastPage).catch(() => null);
     if (!pages) setError(t('pdfFailed'));
     else if ('error' in pages) setError(pages.error);
     else await readPages({ data: pages.data });
-  }
-  async function add() {
+  };
+  const add = async () => {
     setStep('saving');
     setError('');
     try {
@@ -100,7 +100,7 @@ export default function BookImport({
       setStep('review');
       setError(failure instanceof ApiError ? failure.message : commonText.t('addFailed'));
     }
-  }
+  };
 
   return (
     <section className="book-import">
@@ -241,4 +241,6 @@ export default function BookImport({
       )}
     </section>
   );
-}
+};
+
+export default BookImport;

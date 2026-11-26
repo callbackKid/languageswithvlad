@@ -9,11 +9,11 @@ import { type ExerciseQuestion, type MadeExercise } from './types';
     becomes a gap to type), and a question without a prompt or an answer is dropped. Throws when
     none is left. translatedTo: the language it was asked in (a saved one keeps its own; give
     Russian for those, since one saved without it was made in Russian). */
-export function normalizeExercise(
+export const normalizeExercise = (
   raw: unknown,
   language: Language,
   translatedTo: UiLanguage
-): MadeExercise {
+): MadeExercise => {
   const data = asObject(raw);
   const questions = asArray(data.questions)
     .map(asObject)
@@ -47,4 +47,4 @@ export function normalizeExercise(
     questions,
     translatedTo: asUiLanguage(data.translatedTo) ?? translatedTo,
   };
-}
+};

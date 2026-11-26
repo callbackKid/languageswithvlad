@@ -40,12 +40,12 @@ const DAY = 86400000;
 const KEY_WEIGHT = 2.5;
 
 // Key words first, each group in the order given: for exercises that take the first few.
-export function keyWordsFirst<T extends { key?: boolean }>(items: T[]): T[] {
+export const keyWordsFirst = <T extends { key?: boolean }>(items: T[]): T[] => {
   return [...items.filter((item) => item.key), ...items.filter((item) => !item.key)];
-}
+};
 
 // Draws n items without replacement, each with probability proportional to its weight.
-function weighted<T>(items: T[], weight: (item: T) => number, count: number): T[] {
+const weighted = <T>(items: T[], weight: (item: T) => number, count: number): T[] => {
   const pool = items.map((item) => ({ item, weight: Math.max(weight(item), 0.01) }));
   const out: T[] = [];
   while (out.length < count && pool.length) {
@@ -57,11 +57,11 @@ function weighted<T>(items: T[], weight: (item: T) => number, count: number): T[
     out.push(picked.item);
   }
   return out;
-}
+};
 
 /** Hard words first, then new and half-known ones; learned words come back now and then for
     review. The lesson's key words (★) come up more often whatever their state. */
-export function pickWords(words: Word[], progress: Progress, count: number): Word[] {
+export const pickWords = (words: Word[], progress: Progress, count: number): Word[] => {
   const now = Date.now();
   const weight = (word: Word) => {
     const stat = progress.words[wordKey(word.fr)];
@@ -76,11 +76,11 @@ export function pickWords(words: Word[], progress: Progress, count: number): Wor
     (word) => weight(word) * (word.key ? KEY_WEIGHT : 1),
     count
   );
-}
+};
 
 /** Every form of a verb in the tenses the student has learned (Settings, or their level); French
     verbs also in the negative (negate knows French only). */
-export function verbForms(conjugation: Conjugation): FormQuestion[] {
+export const verbForms = (conjugation: Conjugation): FormQuestion[] => {
   const language = conjugation.language ?? 'fr';
   const all: FormQuestion[] = [];
   for (const tense of knownTenses(language))
@@ -90,10 +90,10 @@ export function verbForms(conjugation: Conjugation): FormQuestion[] {
         all.push({ inf: conjugation.inf, t: tense, ...negate(form, tense), negative: true });
     }
   return all;
-}
+};
 
 // Forms of the verbs whose tables the student has opened, missed forms more often.
-export function pickForms(verbs: VerbRef[], progress: Progress, count: number): FormQuestion[] {
+export const pickForms = (verbs: VerbRef[], progress: Progress, count: number): FormQuestion[] => {
   const all: FormQuestion[] = [];
   for (const verb of verbs) {
     const language = verbLanguageOf(verb);
@@ -112,7 +112,7 @@ export function pickForms(verbs: VerbRef[], progress: Progress, count: number): 
     },
     count
   );
-}
+};
 
 // too common to tell two translations apart
 const FILLER = new Set([
@@ -151,14 +151,14 @@ const translationWords = (text: string) =>
 
 /** True when the candidate could also be a right answer: same sense, or translations sharing a
     word (выделить, отметить / отметить). A false overlap only drops a wrong answer. */
-function overlaps(word: Word, sense: string | undefined, candidate: Word): boolean {
+const overlaps = (word: Word, sense: string | undefined, candidate: Word): boolean => {
   if (sense && sense === candidate.sense) return true;
   const own = new Set(translationWords(word.ru));
   return translationWords(candidate.ru).some((part) => own.has(part));
-}
+};
 
 // Three wrong answers of the same kind of word when possible, none of them close in meaning.
-function distractors(word: Word, pool: Word[], side: 'fr' | 'ru'): string[] | null {
+const distractors = (word: Word, pool: Word[], side: 'fr' | 'ru'): string[] | null => {
   const seen = new Set([word[side].toLowerCase()]);
   const out: string[] = [];
   // words rebuilt from mistakes carry no sense, the lesson's copy does
@@ -174,7 +174,7 @@ function distractors(word: Word, pool: Word[], side: 'fr' | 'ru'): string[] | nu
     if (out.length === 3) return out;
   }
   return null;
-}
+};
 
 // The form of an adjective a dictation asks for, when its forms sound alike.
 export type DictationForm = 'masculine' | 'feminine';
@@ -185,7 +185,7 @@ export type DictationForm = 'masculine' | 'feminine';
     wrote the feminine: Russian греческий / греческая, Spanish, Italian and Portuguese -o / -a.
     null when it can't be told (English, German and French don't show it, nor does a Russian
     plural or an Italian -e) or doesn't matter. */
-export function dictationForm(word: Word, translation: UiLanguage): DictationForm | null {
+export const dictationForm = (word: Word, translation: UiLanguage): DictationForm | null => {
   if ((word.language ?? 'fr') !== 'fr' || word.kind !== 'adjective') return null;
   // both forms written ("grec, grecque"): the dictation reads them both
   if (/[,/]/.test(word.fr)) return null;
@@ -202,15 +202,19 @@ export function dictationForm(word: Word, translation: UiLanguage): DictationFor
     if (first.endsWith('o')) return 'masculine';
   }
   return null;
-}
+};
 
 // Every word read aloud once, to be typed.
-export function buildDictation(targets: Word[]): QuizItem[] {
+export const buildDictation = (targets: Word[]): QuizItem[] => {
   return shuffle(targets).map((word) => ({ kind: 'listen' as const, word }));
-}
+};
 
 // A round of mixed questions on these words (pick, type, listen) and on these verb forms.
-export function buildQuiz(targets: Word[], pool: Word[], forms: FormQuestion[] = []): QuizItem[] {
+export const buildQuiz = (
+  targets: Word[],
+  pool: Word[],
+  forms: FormQuestion[] = []
+): QuizItem[] => {
   // every question starts from or ends at the translation
   const items: QuizItem[] = targets
     .filter((word) => word.ru)
@@ -230,11 +234,11 @@ export function buildQuiz(targets: Word[], pool: Word[], forms: FormQuestion[] =
       return { kind: 'type-fr', word };
     });
   return shuffle([...items, ...forms.map((form) => ({ kind: 'form' as const, form }))]);
-}
+};
 
 /** A choice question on each word that has three wrong answers to offer, for rounds played
     against the clock (the quiz game): no typing, about half one way and half the other. */
-export function buildChoiceQuiz(targets: Word[], pool: Word[]): QuizItem[] {
+export const buildChoiceQuiz = (targets: Word[], pool: Word[]): QuizItem[] => {
   const items: QuizItem[] = [];
   for (const word of targets.filter((target) => target.ru)) {
     // the other direction when this one has too few wrong answers
@@ -251,4 +255,4 @@ export function buildChoiceQuiz(targets: Word[], pool: Word[]): QuizItem[] {
     }
   }
   return shuffle(items);
-}
+};

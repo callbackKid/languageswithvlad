@@ -3,7 +3,7 @@ import { common, useTranslation } from '@/shared/i18n';
 import { type Bank } from '../model/bank';
 
 // Says when some lessons aren't in the cross-lesson pages yet: still preparing, failed, or never opened.
-export default function BankNote({ bank }: { bank: Bank }) {
+const BankNote = ({ bank }: { bank: Bank }) => {
   const { t } = useTranslation(common);
   if (bank.pending)
     return (
@@ -25,4 +25,6 @@ export default function BankNote({ bank }: { bank: Bank }) {
       </div>
     );
   return null;
-}
+};
+
+export default BankNote;

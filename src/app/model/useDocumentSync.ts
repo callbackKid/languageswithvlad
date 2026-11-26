@@ -20,18 +20,18 @@ const readCachedDocument = (id: string): CachedDocument | null =>
   );
 
 // A student link selects its document before the app renders.
-export function initializeDocumentId(): string | null {
+export const initializeDocumentId = (): string | null => {
   const fromUrl = docIdFrom(new URLSearchParams(window.location.search).get('doc') || '');
   if (fromUrl) {
     save('doc', fromUrl);
     return fromUrl;
   }
   return loadText('doc');
-}
+};
 
 /** Keeps the document cache and the visible sync status together. A quiet refresh waits for any
     active read to finish before the next interval, so it cannot interrupt a visible refresh. */
-export function useDocumentSync(initialId: string | null) {
+export const useDocumentSync = (initialId: string | null) => {
   const [docId, setDocId] = useState(initialId);
   const [doc, setDoc] = useState(() => (initialId ? readCachedDocument(initialId) : null));
   const [sync, setSync] = useState<SyncStatus>({ state: 'idle' });
@@ -69,7 +69,7 @@ export function useDocumentSync(initialId: string | null) {
     return () => pending.current?.abort();
   }, [syncDocument]);
 
-  function selectDocument(id: string) {
+  const selectDocument = (id: string) => {
     if (selectedId.current !== id) {
       selectedId.current = id;
       setDocId(id);
@@ -77,7 +77,7 @@ export function useDocumentSync(initialId: string | null) {
     }
     save('doc', id);
     void syncDocument();
-  }
+  };
 
   return { docId, doc, sync, selectDocument, syncDocument };
-}
+};

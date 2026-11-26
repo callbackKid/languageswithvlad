@@ -19,13 +19,13 @@ const LABELS: Record<Language, string> = {
 };
 
 // What's happening, plus a fact about the language that changes every 20 seconds, while the student waits for Claude.
-export default function WaitingFact({
+const WaitingFact = ({
   children,
   language = 'fr',
 }: {
   children: ReactNode;
   language?: Language;
-}) {
+}) => {
   const { t, language: uiLanguage } = useTranslation(common);
   const facts = FACTS[language];
   // a different first fact each time, so waiting twice doesn't show the same one
@@ -62,4 +62,6 @@ export default function WaitingFact({
       )}
     </div>
   );
-}
+};
+
+export default WaitingFact;

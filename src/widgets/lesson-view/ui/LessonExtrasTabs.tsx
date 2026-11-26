@@ -19,7 +19,7 @@ import { Button } from '@/shared/ui/controls';
    of the lesson by Claude (LessonView keeps it), explained in the interface language. */
 
 // The grammar points to revise, each with a round of practice sentences.
-export function GrammarTab({ extras }: { extras: LessonExtras }) {
+export const GrammarTab = ({ extras }: { extras: LessonExtras }) => {
   const { t } = useTranslation(paper);
   const [practising, setPractising] = useState<GrammarRule | null>(null);
   const [round, setRound] = useState(0);
@@ -73,10 +73,10 @@ export function GrammarTab({ extras }: { extras: LessonExtras }) {
       ))}
     </div>
   );
-}
+};
 
 // The homework, ticked off on this device.
-export function HomeworkTab({
+export const HomeworkTab = ({
   tasks,
   storageKey,
   language,
@@ -87,7 +87,7 @@ export function HomeworkTab({
   language: Language;
   // Home shows these tasks too, each with its exercise: a link there
   onHome?: boolean;
-}) {
+}) => {
   const { t } = useTranslation(paper);
   // the tasks done, by their text, so a task stays ticked when the lesson is edited around it;
   // read on every render, since the store re-renders the tab when ticks are saved (on Home too)
@@ -132,10 +132,10 @@ export function HomeworkTab({
       )}
     </>
   );
-}
+};
 
 // The exercises from the student's book that are in the lesson, and a way to add more.
-export function BookTab({
+export const BookTab = ({
   extras,
   docId,
   lessonKey,
@@ -148,7 +148,7 @@ export function BookTab({
   // whether the server can write to this document; undefined: the lesson isn't in it
   docWriter: boolean | undefined;
   hasClaude: boolean;
-}) {
+}) => {
   const { t } = useTranslation(paper);
   const exercises = extras?.book ?? [];
   return (
@@ -181,4 +181,4 @@ export function BookTab({
       )}
     </>
   );
-}
+};

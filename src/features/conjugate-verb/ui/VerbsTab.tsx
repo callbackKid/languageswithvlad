@@ -49,7 +49,7 @@ const savedSort = (): VerbSort => {
 
 /** A lesson's verbs as a list, in alphabetical order or by group (1, 2, 3), with a table in each
     tense, a typing drill per tense and a quick quiz. */
-export default function VerbsTab({
+const VerbsTab = ({
   verbs,
   hasClaude,
   waiting,
@@ -63,7 +63,7 @@ export default function VerbsTab({
   openFirst?: boolean;
   // one lesson's own verbs: they can be taken out of it (✕) and brought back
   lessonKey?: string;
-}) {
+}) => {
   const { t, rich, language: uiLanguage } = useTranslation(exercises);
   const commonText = useTranslation(common);
   const { lookup, load: loadTable, translationOf } = useVerbConjugations(verbs, hasClaude);
@@ -97,10 +97,10 @@ export default function VerbsTab({
     if (currentReference) void loadTable(currentReference);
   }, [currentReference, loadTable, translationOf]);
 
-  function open(verb: VerbRef) {
+  const open = (verb: VerbRef) => {
     setCurrentVerb(verbIdentity(verb));
     setMode('table');
-  }
+  };
 
   // under the list, and in place of it once every verb is taken out
   const restoreLink = lessonKey && removedVerbs > 0 && (
@@ -357,9 +357,11 @@ export default function VerbsTab({
       )}
     </>
   );
-}
+};
 
-function Drill({
+export default VerbsTab;
+
+const Drill = ({
   inf,
   tense,
   language,
@@ -373,7 +375,7 @@ function Drill({
   isNegative: boolean;
   rows: Form[];
   onStop: () => void;
-}) {
+}) => {
   const { t } = useTranslation(exercises);
   const commonText = useTranslation(common);
   const [values, setValues] = useState<string[]>(() => rows.map(() => ''));
@@ -479,13 +481,13 @@ function Drill({
       </div>
     </form>
   );
-}
+};
 
-function makeQuiz(conjugations: Conjugation[]): FormQuestion[] {
+const makeQuiz = (conjugations: Conjugation[]): FormQuestion[] => {
   return shuffle(conjugations.flatMap(verbForms)).slice(0, 10);
-}
+};
 
-function Quiz({ conjugations, onClose }: { conjugations: Conjugation[]; onClose: () => void }) {
+const Quiz = ({ conjugations, onClose }: { conjugations: Conjugation[]; onClose: () => void }) => {
   const { t } = useTranslation(exercises);
   const commonText = useTranslation(common);
   const [questions, setQuestions] = useState(() => makeQuiz(conjugations));
@@ -601,4 +603,4 @@ function Quiz({ conjugations, onClose }: { conjugations: Conjugation[]; onClose:
       )}
     </div>
   );
-}
+};

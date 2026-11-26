@@ -13,7 +13,7 @@ import ExerciseRound from './ExerciseRound';
 
 /** A round by Claude made when it opens and again with Create another, never saved: the waiting
     fact while Claude writes, an error with Try again, then the round. load asks for it. */
-export default function RoundLoader({
+const RoundLoader = ({
   title,
   language,
   waiting,
@@ -30,7 +30,7 @@ export default function RoundLoader({
   onClose: () => void;
   // the way out's name, when not Close (see ExerciseRound)
   closeLabel?: string;
-}) {
+}) => {
   const commonText = useTranslation(common);
   // counts the requests: each change asks Claude for a new round
   const [attempt, setAttempt] = useState(0);
@@ -66,11 +66,11 @@ export default function RoundLoader({
     };
   }, [attempt]);
 
-  function again() {
+  const again = () => {
     setExercise(null);
     setError('');
     setAttempt((previous) => previous + 1);
-  }
+  };
 
   if (exercise)
     return (
@@ -98,4 +98,6 @@ export default function RoundLoader({
       )}
     </div>
   );
-}
+};
+
+export default RoundLoader;

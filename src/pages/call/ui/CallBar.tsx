@@ -20,7 +20,7 @@ export type JoinedCall =
 /** The way into the lesson's call, one line beside lesson mode's title: a name and Join for a
     call that runs in the page (Jitsi, or Zoom when the server can sign), Google Meet's ways to
     open beside the app, or Open in Zoom. While a call runs here, it says so, with Leave. */
-export default function CallBar({
+const CallBar = ({
   docText,
   zoomReady,
   hasJitsi,
@@ -35,7 +35,7 @@ export default function CallBar({
   joined: JoinedCall | null;
   onJoin: (joining: JoinedCall) => void;
   onLeave: () => void;
-}) {
+}) => {
   const { t } = useTranslation(call);
   const link = findCall(docText);
   const [name, setName] = useState(() => loadText(NAME_KEY) ?? getSettings().name);
@@ -147,4 +147,6 @@ export default function CallBar({
       )}
     </div>
   );
-}
+};
+
+export default CallBar;

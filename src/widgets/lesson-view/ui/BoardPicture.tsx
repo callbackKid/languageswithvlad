@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react';
 
 /** A board saved during a lesson, drawn as a picture. Excalidraw is a big library, so
     LessonDrawings loads this file only when there is a board to show. */
-export default function BoardPicture({
+const BoardPicture = ({
   elements,
   files,
   dark,
@@ -14,7 +14,7 @@ export default function BoardPicture({
   files: Record<string, unknown>;
   dark: boolean;
   label: string;
-}) {
+}) => {
   const holder = useRef<HTMLDivElement>(null);
   useEffect(() => {
     let alive = true;
@@ -37,4 +37,6 @@ export default function BoardPicture({
     };
   }, [elements, files, dark, label]);
   return <div className="board-picture" ref={holder} />;
-}
+};
+
+export default BoardPicture;

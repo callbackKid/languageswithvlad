@@ -19,19 +19,19 @@ const FALLBACK_DAYS = 7;
 
 /** The lesson the warm-up goes over: the newest one before today, since today's may already be
     written in the document. */
-export function previousLesson(lessons: Lesson[], now = new Date()): Lesson | null {
+export const previousLesson = (lessons: Lesson[], now = new Date()): Lesson | null => {
   const today = startOfDay(now);
   return [...lessons].reverse().find((lesson) => lesson.date.getTime() < today) ?? null;
-}
+};
 
 /** Questions on the previous lesson's words and on what the student got wrong since that lesson:
     the mistakes first, then the lesson's words, the ones not known yet more often. */
-export function warmUpRound(
+export const warmUpRound = (
   bank: Bank,
   lesson: Lesson | null,
   progress: Progress,
   now = new Date()
-): QuizItem[] {
+): QuizItem[] => {
   const since = lesson
     ? startOfDay(lesson.date)
     : startOfDay(now) - FALLBACK_DAYS * 24 * 60 * 60 * 1000;
@@ -83,11 +83,11 @@ export function warmUpRound(
   // wrong answers come from every lesson, so a short lesson still gets four choices
   const pool = bank.words.length >= 4 ? bank.words : targets;
   return buildQuiz(targets, pool, missedForms);
-}
+};
 
 /** The round the day before a lesson: the newest lesson's words and the words still hard, so
     they are fresh for it. */
-export function prepareRound(words: Word[], bank: Bank, progress: Progress): QuizItem[] {
+export const prepareRound = (words: Word[], bank: Bank, progress: Progress): QuizItem[] => {
   const settings = getSettings();
   const hard = Object.values(progress.words)
     .filter((stat) => stat.hard && isStudied(stat.language, settings))
@@ -102,4 +102,4 @@ export function prepareRound(words: Word[], bank: Bank, progress: Progress): Qui
   );
   const targets = [...fromLesson, ...hard];
   return buildQuiz(targets, bank.words.length >= 4 ? bank.words : targets);
-}
+};

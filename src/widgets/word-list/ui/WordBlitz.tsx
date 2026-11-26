@@ -17,7 +17,7 @@ import { normalizeDefinitions } from '../model/normalize';
 /** The vocabulary blitz: a round of the picked words, half in gap sentences to fill from choices,
     half guessed from a definition in their own language and typed. Claude writes both at once;
     a new round remounts it (onRestart) and asks for new ones. */
-export default function WordBlitz({
+const WordBlitz = ({
   words,
   onClose,
   onRestart,
@@ -25,7 +25,7 @@ export default function WordBlitz({
   words: Word[];
   onClose: () => void;
   onRestart: () => void;
-}) {
+}) => {
   const { t } = useTranslation(exercises);
   const commonText = useTranslation(common);
   // Asked for once, with the words the round started with: the list may change while it runs
@@ -88,4 +88,6 @@ export default function WordBlitz({
   return (
     <WordQuiz title={t('blitz')} make={() => round} onClose={onClose} onNextRound={onRestart} />
   );
-}
+};
+
+export default WordBlitz;

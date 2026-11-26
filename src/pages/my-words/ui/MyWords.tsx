@@ -8,7 +8,7 @@ import PageHead from '@/shared/ui/PageHead';
 import { WordsTab } from '@/widgets/word-list';
 
 // The student's list of unfamiliar words: starred by hand or missed in an exercise.
-export default function MyWords({ hasClaude }: { hasClaude: boolean }) {
+const MyWords = ({ hasClaude }: { hasClaude: boolean }) => {
   const { t, rich, locale } = useTranslation(pages);
   const names = useTranslation(learning);
   const progress = useProgress();
@@ -72,4 +72,6 @@ export default function MyWords({ hasClaude }: { hasClaude: boolean }) {
       )}
     </>
   );
-}
+};
+
+export default MyWords;

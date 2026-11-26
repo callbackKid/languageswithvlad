@@ -4,7 +4,7 @@ import { app, useTranslation } from '@/shared/i18n';
 
 /** The lesson document itself: a Google Doc opens for editing right here; a Notion page can't be
     shown inside another site, so it gets a link instead. */
-export default function LessonDocument({ url, isNotion }: { url: string; isNotion: boolean }) {
+const LessonDocument = ({ url, isNotion }: { url: string; isNotion: boolean }) => {
   const { rich } = useTranslation(app);
   const link = (chunk: ReactNode) => (
     <a href={url} target="_blank" rel="noopener noreferrer">
@@ -24,4 +24,6 @@ export default function LessonDocument({ url, isNotion }: { url: string; isNotio
       <iframe title="Google Doc" src={url} allow="clipboard-read; clipboard-write" />
     </main>
   );
-}
+};
+
+export default LessonDocument;

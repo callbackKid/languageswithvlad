@@ -44,14 +44,14 @@ export const isUiLanguage = (value: unknown): value is UiLanguage =>
   UI_LANGUAGES.some((language) => language.id === value);
 
 // The browser's language when the app supports it, English otherwise.
-function browserLanguage(): UiLanguage {
+const browserLanguage = (): UiLanguage => {
   const preferred = typeof navigator === 'undefined' ? [] : navigator.languages || [];
   for (const tag of preferred) {
     const code = tag.slice(0, 2).toLowerCase();
     if (isUiLanguage(code)) return code;
   }
   return 'en';
-}
+};
 
 let current: UiLanguage = (() => {
   const saved = loadText(STORAGE_KEY);
@@ -61,19 +61,19 @@ const listeners = new Set<() => void>();
 if (typeof document !== 'undefined') document.documentElement.lang = current;
 
 // Changes the interface language everywhere and keeps the choice on this device.
-export function setUiLanguage(language: UiLanguage) {
+export const setUiLanguage = (language: UiLanguage) => {
   current = language;
   save(STORAGE_KEY, language);
   document.documentElement.lang = language;
   listeners.forEach((listener) => listener());
-}
+};
 // The interface language, for code outside React.
 export const getUiLanguage = () => current;
 
-function subscribe(listener: () => void) {
+const subscribe = (listener: () => void) => {
   listeners.add(listener);
   return () => listeners.delete(listener);
-}
+};
 // The interface language; the component re-renders when it changes.
 export const useUiLanguage = () => useSyncExternalStore(subscribe, getUiLanguage, getUiLanguage);
 
@@ -81,15 +81,15 @@ export const useUiLanguage = () => useSyncExternalStore(subscribe, getUiLanguage
  * One area's texts in every language. English is the reference: the other languages must have
  * exactly its keys, so a missing translation is a type error.
  */
-export function defineMessages<Keys extends string>(
+export const defineMessages = <Keys extends string>(
   messages: { en: Record<Keys, Message> } & Record<Exclude<UiLanguage, 'en'>, Record<Keys, Message>>
-) {
+) => {
   return messages;
-}
+};
 type Messages<Keys extends string> = Record<UiLanguage, Record<Keys, Message>>;
 
 const pluralRules = new Map<UiLanguage, Intl.PluralRules>();
-function pickForm(message: Message | undefined, language: UiLanguage, params?: Params): string {
+const pickForm = (message: Message | undefined, language: UiLanguage, params?: Params): string => {
   // a key missing from the dictionaries shows as nothing rather than breaking the page
   if (message === undefined) return '';
   if (typeof message === 'string') return message;
@@ -100,7 +100,7 @@ function pickForm(message: Message | undefined, language: UiLanguage, params?: P
     pluralRules.set(language, rules);
   }
   return message[rules.select(count)] ?? message.other;
-}
+};
 
 const fill = (text: string, params?: Params) =>
   params
@@ -108,11 +108,11 @@ const fill = (text: string, params?: Params) =>
     : text;
 
 // A text with <b>tags</b> and {placeholders} turned into React: tags by the renderers, placeholders by values.
-function richText(
+const richText = (
   text: string,
   tags: Record<string, (chunk: ReactNode) => ReactNode>,
   values: Record<string, ReactNode>
-): ReactNode {
+): ReactNode => {
   const parts: ReactNode[] = [];
   // placeholder names may use any letters: {leçon}
   const pattern = /<(\w+)>([\s\S]*?)<\/\1>|<(\w+)\/>|\{([\p{L}\p{N}_]+)\}/gu;
@@ -134,7 +134,7 @@ function richText(
   }
   if (last < text.length) parts.push(text.slice(last));
   return parts.map((part, index) => <Fragment key={index}>{part}</Fragment>);
-}
+};
 
 export interface Translator<Keys extends string> {
   // the plain text, with {placeholders} filled in
@@ -154,10 +154,10 @@ export interface Translator<Keys extends string> {
 const translators = new WeakMap<object, Partial<Record<UiLanguage, Translator<string>>>>();
 
 // One area's texts in a language, for code outside React; components use useTranslation.
-export function translator<Keys extends string>(
+export const translator = <Keys extends string>(
   messages: Messages<Keys>,
   language: UiLanguage = current
-): Translator<Keys> {
+): Translator<Keys> => {
   let byLanguage = translators.get(messages);
   if (!byLanguage) {
     byLanguage = {};
@@ -179,9 +179,9 @@ export function translator<Keys extends string>(
   };
   byLanguage[language] = created as Translator<string>;
   return created;
-}
+};
 
 // The texts of one area in the chosen language; the component re-renders when it changes.
-export function useTranslation<Keys extends string>(messages: Messages<Keys>): Translator<Keys> {
+export const useTranslation = <Keys extends string>(messages: Messages<Keys>): Translator<Keys> => {
   return translator(messages, useUiLanguage());
-}
+};

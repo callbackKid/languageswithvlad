@@ -6,7 +6,7 @@ export const phoneticsKey = (hash: string, uiLanguage: string) => `phonetics:${h
 
 /** The reading kept on the device (Claude's answer as it came, read the way it is read on
     arrival); null when there is none or it is broken. */
-export function readPhonetics(key: string): LessonPhonetics | null {
+export const readPhonetics = (key: string): LessonPhonetics | null => {
   return loadChecked(key, (raw) => {
     try {
       return normalizePhonetics(raw);
@@ -14,4 +14,4 @@ export function readPhonetics(key: string): LessonPhonetics | null {
       return null;
     }
   });
-}
+};

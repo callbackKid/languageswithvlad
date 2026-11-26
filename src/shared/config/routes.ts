@@ -57,7 +57,7 @@ export const NEEDS_LESSONS: Section[] = [
 ];
 
 // "/lessons/2026-11-12_7" → the Lessons section and that lesson; null for a path the app doesn't have.
-export function parsePath(path: string): { section: Section; lessonKey: string | null } | null {
+export const parsePath = (path: string): { section: Section; lessonKey: string | null } | null => {
   const [first = '', second] = path.split('/').filter(Boolean);
   const entry = SECTIONS.find((candidate) => candidate.path === '/' + first);
   if (!entry || (second && entry.id !== 'lessons')) return null;
@@ -68,7 +68,7 @@ export function parsePath(path: string): { section: Section; lessonKey: string |
     // a broken %-escape typed into the address: not a lesson
     return null;
   }
-}
+};
 
 // The address of one lesson's page.
 export const lessonPath = (key: string) => '/lessons/' + encodeURIComponent(key);

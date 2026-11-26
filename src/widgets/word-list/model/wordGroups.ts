@@ -20,12 +20,12 @@ type GroupStore = Record<string, string>;
 
 const storageKey = (uiLanguage: UiLanguage) => 'word-groups:' + uiLanguage;
 
-function asGroupStore(raw: unknown): GroupStore | null {
+const asGroupStore = (raw: unknown): GroupStore | null => {
   if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return null;
   return Object.fromEntries(
     Object.entries(raw).filter((entry): entry is [string, string] => typeof entry[1] === 'string')
   );
-}
+};
 
 const loadGroups = (uiLanguage: UiLanguage): GroupStore =>
   loadChecked(storageKey(uiLanguage), asGroupStore) ?? {};
@@ -40,7 +40,7 @@ export interface WordGroup {
 }
 
 // The words in their groups: the biggest group first, the words in no group last.
-export function groupWords(words: Word[], groupOf: (word: Word) => string): WordGroup[] {
+export const groupWords = (words: Word[], groupOf: (word: Word) => string): WordGroup[] => {
   const byName = new Map<string, Word[]>();
   for (const word of words) {
     const name = groupOf(word);
@@ -54,13 +54,13 @@ export function groupWords(words: Word[], groupOf: (word: Word) => string): Word
         b.words.length - a.words.length ||
         a.name.localeCompare(b.name)
     );
-}
+};
 
 export type GroupingState = 'ready' | 'loading' | 'error';
 
 /** The group of each word, asking Claude about the words not grouped yet (60 at a time) while
     enabled. groupOf gives "" for a word in no group, or one still waiting for its group. */
-export function useWordGroups(words: Word[], enabled: boolean, uiLanguage: UiLanguage) {
+export const useWordGroups = (words: Word[], enabled: boolean, uiLanguage: UiLanguage) => {
   const [stored, setStored] = useState(() => ({ uiLanguage, groups: loadGroups(uiLanguage) }));
   // a new interface language has its own names
   const groups = stored.uiLanguage === uiLanguage ? stored.groups : loadGroups(uiLanguage);
@@ -120,4 +120,4 @@ export function useWordGroups(words: Word[], enabled: boolean, uiLanguage: UiLan
       setAttempt((previous) => previous + 1);
     },
   };
-}
+};

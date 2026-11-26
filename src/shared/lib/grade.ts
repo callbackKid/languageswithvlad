@@ -21,17 +21,17 @@ const normalize = (text: string) =>
     .trim();
 
 // "allé(e)s" → allés, allées … every optional part on or off.
-function variants(answer: string): string[] {
+const variants = (answer: string): string[] => {
   const normalized = normalize(answer);
   const match = normalized.match(/\(([^)]*)\)/);
   if (!match || match.index === undefined) return [normalized];
   const before = normalized.slice(0, match.index),
     after = normalized.slice(match.index + match[0].length);
   return [...variants(before + after), ...variants(before + match[1] + after)];
-}
+};
 
 // How close a typed answer is: right, right but for the accents, wrong, or not answered.
-export function grade(input: string, answer: string, pronoun = ''): Grade {
+export const grade = (input: string, answer: string, pronoun = ''): Grade => {
   const typed = normalize(input);
   // only a blank field is empty; an answer of only punctuation ("?" for "I don't know") is wrong,
   // so the right answer is shown instead of Check doing nothing
@@ -57,4 +57,4 @@ export function grade(input: string, answer: string, pronoun = ''): Grade {
   if (readings.some((reading) => accepted.some((variant) => strip(variant) === strip(reading))))
     return 'accent';
   return 'bad';
-}
+};

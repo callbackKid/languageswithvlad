@@ -13,23 +13,23 @@ const subscribers = new Set<() => void>();
 export const loadDone = (key: string): string[] => loadTexts(key);
 
 // Saves a lesson's ticked tasks and lets the components showing them know.
-export function saveDone(key: string, tasks: string[]) {
+export const saveDone = (key: string, tasks: string[]) => {
   save(key, tasks);
   version++;
   subscribers.forEach((notify) => notify());
-}
+};
 
 const getVersion = () => version;
 
 // outside the hook, so React subscribes once instead of on every render
-function subscribe(listener: () => void) {
+const subscribe = (listener: () => void) => {
   subscribers.add(listener);
   return () => {
     subscribers.delete(listener);
   };
-}
+};
 
 // A number that changes whenever ticks are saved: a component re-reads them with loadDone.
-export function useHomeworkDone(): number {
+export const useHomeworkDone = (): number => {
   return useSyncExternalStore(subscribe, getVersion);
-}
+};

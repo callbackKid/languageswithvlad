@@ -15,7 +15,7 @@ interface Shown {
 }
 
 // Mounted once in App; reads data-tooltip from whatever the pointer or focus is on.
-export default function TooltipLayer() {
+const TooltipLayer = () => {
   const [shown, setShown] = useState<Shown | null>(null);
   const [position, setPosition] = useState<{ left: number; top: number } | null>(null);
   const bubble = useRef<HTMLDivElement>(null);
@@ -118,4 +118,6 @@ export default function TooltipLayer() {
       {shown.text}
     </div>
   );
-}
+};
+
+export default TooltipLayer;

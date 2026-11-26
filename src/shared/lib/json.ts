@@ -13,7 +13,7 @@ export const asArray = (value: unknown): unknown[] => (Array.isArray(value) ? va
 export const asTexts = (value: unknown): string[] => asArray(value).map(asText).filter(Boolean);
 
 // Picks string fields out of an answer, "" for anything missing.
-export function asObjectText<K extends string>(raw: unknown, keys: K[]): Record<K, string> {
+export const asObjectText = <K extends string>(raw: unknown, keys: K[]): Record<K, string> => {
   const object = asObject(raw);
   return Object.fromEntries(keys.map((key) => [key, asText(object[key])])) as Record<K, string>;
-}
+};

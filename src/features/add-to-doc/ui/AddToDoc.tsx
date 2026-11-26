@@ -14,17 +14,17 @@ export interface DocTarget {
 }
 
 // "13.11.2026 8 Leçon" and the lines under it, in the format the app reads lessons from.
-export function lessonText(lessonNumber: number, lines: string[]): string {
+export const lessonText = (lessonNumber: number, lines: string[]): string => {
   const heading = `${documentDate(new Date())} ${lessonNumber} Leçon`;
   return `\n\n${heading}\n${lines
     .map((line) => line.trim())
     .filter(Boolean)
     .join('\n')}\n`;
-}
+};
 
 /** Appends the lines to the document as a new lesson, or, when lessons are given and one is
     picked, under that lesson; then asks the app to sync. */
-export default function AddToDoc({
+const AddToDoc = ({
   target,
   lines,
   lessons = [],
@@ -36,7 +36,7 @@ export default function AddToDoc({
   lessons?: Lesson[];
   // the key of the lesson picked at first, instead of a new lesson
   defaultLesson?: string;
-}) {
+}) => {
   const { t, locale } = useTranslation(common);
   const [state, setState] = useState<'idle' | 'saving' | 'done' | 'error'>('idle');
   const [message, setMessage] = useState('');
@@ -50,7 +50,7 @@ export default function AddToDoc({
 
   if (!target.docWriter) return <p className="hint">{t('docWriterMissing')}</p>;
 
-  async function add() {
+  const add = async () => {
     setState('saving');
     try {
       if (chosen) {
@@ -66,7 +66,7 @@ export default function AddToDoc({
       setState('error');
       setMessage(error instanceof ApiError ? error.message : t('addFailed'));
     }
-  }
+  };
 
   return (
     <div className="row-actions add-to-doc">
@@ -106,4 +106,6 @@ export default function AddToDoc({
       )}
     </div>
   );
-}
+};
+
+export default AddToDoc;

@@ -24,24 +24,24 @@ declare global {
 /** On an iPhone the browser's voice counts as a ringer sound, so the silent switch mutes it while
     other apps still play: "playback" makes Safari treat the page as media, like those apps. It is
     set on the tap that asks for speech, as Safari wants. Other browsers don't have it. */
-function playEvenWhenSilenced() {
+const playEvenWhenSilenced = () => {
   if (navigator.audioSession && navigator.audioSession.type !== 'playback')
     navigator.audioSession.type = 'playback';
-}
+};
 
 // Settings → speech speed. Far apart on purpose: the browsers' voices change speed less than the
 // number says, and 0.9 against 0.65 was hard to tell apart.
 const RATES: Record<SpeechSpeed, number> = { normal: 1, slow: 0.55 };
 
 // The browser's voice for a language, if it has one.
-function voiceFor(language: UiLanguage): SpeechSynthesisVoice | undefined {
+const voiceFor = (language: UiLanguage): SpeechSynthesisVoice | undefined => {
   const locale = LOCALES[language];
   const voices = window.speechSynthesis.getVoices();
   return (
     voices.find((candidate) => candidate.lang === locale) ||
     voices.find((candidate) => candidate.lang.startsWith(language))
   );
-}
+};
 
 /** Why the browser couldn't read aloud, for the note that tells the student: it has no voices at
     all, none for the language, or the voice failed (error is the browser's code, or "silent" when
@@ -59,34 +59,34 @@ const dismissed = new Set<string>();
 const problemKey = (value: SpeechProblem) =>
   value.kind === 'noVoice' ? `noVoice:${value.language}` : value.kind;
 
-function setProblem(next: SpeechProblem | null) {
+const setProblem = (next: SpeechProblem | null) => {
   if (next && dismissed.has(problemKey(next))) return;
   // the same problem again (another tap on 🔊) keeps the note as it is
   if (JSON.stringify(next) === JSON.stringify(problem)) return;
   problem = next;
   problemListeners.forEach((listener) => listener());
-}
+};
 
 // For useSyncExternalStore: the current problem, and a way to hear when it changes.
 export const getSpeechProblem = () => problem;
-export function subscribeSpeechProblem(listener: () => void) {
+export const subscribeSpeechProblem = (listener: () => void) => {
   problemListeners.add(listener);
   return () => {
     problemListeners.delete(listener);
   };
-}
+};
 
 // The student closed the note: this problem stays quiet until the page is reloaded.
-export function dismissSpeechProblem() {
+export const dismissSpeechProblem = () => {
   if (problem) dismissed.add(problemKey(problem));
   setProblem(null);
-}
+};
 
 // Says so when the voices are known and none reads the language (Chrome fills the list late).
-function checkVoice(language: UiLanguage) {
+const checkVoice = (language: UiLanguage) => {
   if (window.speechSynthesis.getVoices().length && !voiceFor(language))
     setProblem({ kind: 'noVoice', language });
-}
+};
 
 // Errors that only mean the read was stopped on purpose: by a new read, a page change or Stop.
 const STOPPED_ERRORS = ['interrupted', 'canceled'];
@@ -100,14 +100,14 @@ const START_TIMEOUT_MS = 5000;
 let watched: SpeechSynthesisUtterance | null = null;
 let startTimer = 0;
 
-function stopWatching() {
+const stopWatching = () => {
   window.clearTimeout(startTimer);
   watched = null;
-}
+};
 
 /** Watches a read for the problems the student can't see: an error, or no start at all (no voices,
     or the browser's speech stuck). A read that starts clears a failure shown before. */
-function watch(utterance: SpeechSynthesisUtterance, language: UiLanguage) {
+const watch = (utterance: SpeechSynthesisUtterance, language: UiLanguage) => {
   stopWatching();
   watched = utterance;
   startTimer = window.setTimeout(() => {
@@ -136,10 +136,10 @@ function watch(utterance: SpeechSynthesisUtterance, language: UiLanguage) {
         : { kind: 'failed', error: event.error }
     );
   });
-}
+};
 
 // The text as an utterance in the language's voice at the speed from Settings; null when empty.
-function utteranceFor(text: string, language: UiLanguage): SpeechSynthesisUtterance | null {
+const utteranceFor = (text: string, language: UiLanguage): SpeechSynthesisUtterance | null => {
   if (!canSpeak) return null;
   const spoken = forSpeech(text);
   if (!spoken) return null;
@@ -149,10 +149,10 @@ function utteranceFor(text: string, language: UiLanguage): SpeechSynthesisUttera
   const voice = voiceFor(language);
   if (voice) utterance.voice = voice;
   return utterance;
-}
+};
 
 // Reads text aloud in the browser's own voice for the language; nothing is sent to a server.
-export function speak(text: string, language: UiLanguage = 'fr') {
+export const speak = (text: string, language: UiLanguage = 'fr') => {
   const utterance = utteranceFor(text, language);
   if (!utterance) return;
   checkVoice(language);
@@ -160,14 +160,14 @@ export function speak(text: string, language: UiLanguage = 'fr') {
   window.speechSynthesis.cancel();
   watch(utterance, language);
   window.speechSynthesis.speak(utterance);
-}
+};
 
 /** Whether the browser can read the language. True while its list of voices is still empty
     (Chrome fills it a moment after the page opens): it is then worth trying. */
-export function hasVoice(language: UiLanguage): boolean {
+export const hasVoice = (language: UiLanguage): boolean => {
   if (!canSpeak) return false;
   return !window.speechSynthesis.getVoices().length || voiceFor(language) !== undefined;
-}
+};
 
 // the utterance being read, kept so the browser doesn't drop it (Chrome then never says it ended)
 let reading: SpeechSynthesisUtterance | null = null;
@@ -177,7 +177,7 @@ const MIN_READ_MS = 1500;
 
 /** Reads text aloud and resolves when the voice has finished, or was stopped. Resolves at once
     when there is nothing to read or no voice for the language (the text is then only shown). */
-export function speakAndWait(text: string, language: UiLanguage): Promise<void> {
+export const speakAndWait = (text: string, language: UiLanguage): Promise<void> => {
   const utterance = utteranceFor(text, language);
   if (!utterance) return Promise.resolve();
   if (!hasVoice(language)) {
@@ -205,32 +205,32 @@ export function speakAndWait(text: string, language: UiLanguage): Promise<void> 
     watch(utterance, language);
     window.speechSynthesis.speak(utterance);
   });
-}
+};
 
 /** A silent utterance on the tap that starts a read-through: iPhone Safari speaks from a timer
     only after the page has spoken once in answer to a tap. */
-export function unlockSpeech() {
+export const unlockSpeech = () => {
   if (!canSpeak) return;
   playEvenWhenSilenced();
   const silent = new SpeechSynthesisUtterance(' ');
   silent.volume = 0;
   window.speechSynthesis.speak(silent);
-}
+};
 
 /** Stops whatever is being read aloud: on leaving a page and when the tab is hidden, so no word
     goes on playing over a page that has nothing to do with it. */
-export function stopSpeaking() {
+export const stopSpeaking = () => {
   if (!canSpeak) return;
   stopWatching();
   window.speechSynthesis.cancel();
-}
+};
 
 // "il/elle/on se lève" → "il se lève", "allé(e)s" → "allés": read one natural form, not the notation.
-export function forSpeech(text: string): string {
+export const forSpeech = (text: string): string => {
   return text
     .replace(/(\p{L}+)(?:\/\p{L}+)+/gu, '$1')
     .replace(/\([^)]*\)/g, '')
     .replace(/(['’])\s+/g, '$1')
     .replace(/\s+/g, ' ')
     .trim();
-}
+};

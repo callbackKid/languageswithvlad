@@ -5,13 +5,7 @@ import { Button } from '@/shared/ui/controls';
 import LanguagePicker from '@/shared/ui/LanguagePicker';
 
 // Asks for the class code once, when the server wants one (APP_ACCESS_CODE).
-export default function CodeGate({
-  onDone,
-  onClear,
-}: {
-  onDone: (code: string) => void;
-  onClear: () => void;
-}) {
+const CodeGate = ({ onDone, onClear }: { onDone: (code: string) => void; onClear: () => void }) => {
   const { t } = useTranslation(app);
   const [code, setCode] = useState('');
   return (
@@ -45,4 +39,6 @@ export default function CodeGate({
       </form>
     </div>
   );
-}
+};
+
+export default CodeGate;

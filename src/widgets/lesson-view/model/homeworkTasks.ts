@@ -6,14 +6,14 @@ import { type HomeworkTask } from '@/entities/lesson';
     clears them; Claude only adds what each asks (empty when Claude split or worded the task
     otherwise, or hasn't read the lesson). Without a block, Claude's list as before; null while
     there is none yet. */
-export function homeworkTasks(
+export const homeworkTasks = (
   body: string,
   claudeTasks: HomeworkTask[] | null
-): HomeworkTask[] | null {
+): HomeworkTask[] | null => {
   const items = homeworkItems(body);
   if (!items.length) return claudeTasks;
   return items.map((task) => ({
     task,
     meaning: claudeTasks?.find((candidate) => sameTask(candidate.task, task))?.meaning ?? '',
   }));
-}
+};

@@ -6,7 +6,7 @@ import { IconButton } from './controls';
 
 /** A question asked in place, under the row it is about, instead of the browser's alert: ✓ does
     it, the red ✕ (or Escape) doesn't. Focus moves to ✕, so Enter by habit changes nothing. */
-export default function InlineConfirm({
+const InlineConfirm = ({
   question,
   yesLabel,
   onYes,
@@ -16,7 +16,7 @@ export default function InlineConfirm({
   yesLabel: string;
   onYes: () => void;
   onNo: () => void;
-}) {
+}) => {
   const { t } = useTranslation(common);
   const noButton = useRef<HTMLButtonElement>(null);
 
@@ -42,4 +42,6 @@ export default function InlineConfirm({
       </IconButton>
     </div>
   );
-}
+};
+
+export default InlineConfirm;

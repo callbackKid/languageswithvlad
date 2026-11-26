@@ -12,7 +12,7 @@ import { LISTEN_PAUSES, type ListenPause, readListenPause, saveListenPause } fro
 
 /** The ticked words read aloud one by one: the word in the language learned, a pause to say it
     back, its translation, another pause, then the next word. Nothing is graded. */
-export default function Listen({ words, onClose }: { words: Word[]; onClose: () => void }) {
+const Listen = ({ words, onClose }: { words: Word[]; onClose: () => void }) => {
   const { t } = useTranslation(exercises);
   const commonText = useTranslation(common);
   const translationOf = useTranslationLanguage();
@@ -57,25 +57,25 @@ export default function Listen({ words, onClose }: { words: Word[]; onClose: () 
     };
   }, [word, phase, isPaused, pause, language, translation]);
 
-  function goTo(position: number) {
+  const goTo = (position: number) => {
     setIndex(position);
     setPhase('word');
-  }
-  function toggleShuffle() {
+  };
+  const toggleShuffle = () => {
     const shuffled = !isShuffled;
     setShuffled(shuffled);
     setOrder(shuffled ? shuffle(words) : words);
     goTo(0);
-  }
-  function choosePause(chosen: ListenPause) {
+  };
+  const choosePause = (chosen: ListenPause) => {
     setPause(chosen);
     saveListenPause(chosen);
-  }
-  function listenAgain() {
+  };
+  const listenAgain = () => {
     unlockSpeech();
     setPaused(false);
     goTo(0);
-  }
+  };
 
   const settings = (
     <div className="listen-settings">
@@ -143,4 +143,6 @@ export default function Listen({ words, onClose }: { words: Word[]; onClose: () 
       {settings}
     </div>
   );
-}
+};
+
+export default Listen;

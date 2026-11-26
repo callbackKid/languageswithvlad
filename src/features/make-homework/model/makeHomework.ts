@@ -86,7 +86,7 @@ const KEY_WORDS_SHOWN = 5;
 const oneTask = (text: string) => text.replace(/;/g, ',').replace(/\s+/g, ' ').trim();
 
 // The homework block for a lesson, from Claude's reply and the lesson's words.
-export function homeworkBlock({
+export const homeworkBlock = ({
   raw,
   lessonNumber,
   words,
@@ -97,7 +97,7 @@ export function homeworkBlock({
   words: Word[];
   // gap sentences need Claude, so they are offered only when the app has it
   gaps: boolean;
-}): string {
+}): string => {
   const data = (raw && typeof raw === 'object' ? raw : {}) as Record<string, unknown>;
   const language = asLanguage(data.language);
   const phrases = PHRASES[language];
@@ -127,7 +127,7 @@ export function homeworkBlock({
   if (translate.length) tasks.push(`${phrases.translate} ${translate.join(' / ')}`);
   if (writing) tasks.push(writing);
   return [`${phrases.label}:`, ...tasks.map((task) => `- ${task}`)].join('\n');
-}
+};
 
 // "Devoirs", "Homework", …: the label a homework block starts with in a language.
 export const homeworkLabel = (language: Language) => PHRASES[language].label;

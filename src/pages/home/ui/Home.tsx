@@ -21,7 +21,7 @@ const ROUND = 10;
 const FORMS = 2;
 
 // The landing page: a round of random questions from every lesson, weighted towards what the student doesn't know yet.
-export default function Home({
+const Home = ({
   bank,
   lessons,
   hasClaude,
@@ -35,7 +35,7 @@ export default function Home({
   docId: string;
   docText: string;
   canWrite: boolean;
-}) {
+}) => {
   const { t } = useTranslation(pages);
   const progress = useProgress();
   const { dailyGoal } = useSettings();
@@ -123,4 +123,6 @@ export default function Home({
       )}
     </>
   );
-}
+};
+
+export default Home;

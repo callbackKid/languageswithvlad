@@ -21,7 +21,7 @@ import ExerciseHead from '@/shared/ui/ExerciseHead';
 import WaitingFact from '@/shared/ui/WaitingFact';
 
 // The corrected text with every fix marked, in order.
-function markFixes(corrected: string, check: WritingCheck): ReactNode[] {
+const markFixes = (corrected: string, check: WritingCheck): ReactNode[] => {
   const parts: ReactNode[] = [];
   let position = 0;
   check.mistakes.forEach((mistake, index) => {
@@ -32,10 +32,10 @@ function markFixes(corrected: string, check: WritingCheck): ReactNode[] {
   });
   parts.push(corrected.slice(position));
   return parts;
-}
+};
 
 // What Claude said about an answer: the corrected text, each mistake with its rule, a comment.
-export function WritingResult({ check, language }: { check: WritingCheck; language: Language }) {
+export const WritingResult = ({ check, language }: { check: WritingCheck; language: Language }) => {
   const { t } = useTranslation(homeworkText);
   return (
     <div className="writing-result">
@@ -65,11 +65,11 @@ export function WritingResult({ check, language }: { check: WritingCheck; langua
       {check.comment && <p className="writing-comment">{check.comment}</p>}
     </div>
   );
-}
+};
 
 /** A written homework task ("5 phrases au passé composé", "traduire : …"): the student writes,
     Claude corrects. The draft and the check are kept on this device under storageKey. */
-export default function WritingTask({
+const WritingTask = ({
   task,
   language,
   storageKey,
@@ -83,7 +83,7 @@ export default function WritingTask({
   hasClaude: boolean;
   onClose: () => void;
   onChecked?: () => void;
-}) {
+}) => {
   const { t } = useTranslation(homeworkText);
   const commonText = useTranslation(common);
   const [writing, setWriting] = useState<Writing>(
@@ -96,7 +96,7 @@ export default function WritingTask({
     setWriting(next);
     save(storageKey, next);
   };
-  async function check() {
+  const check = async () => {
     const text = writing.text.trim();
     if (!text) return;
     setChecking(true);
@@ -123,7 +123,7 @@ export default function WritingTask({
     } finally {
       setChecking(false);
     }
-  }
+  };
 
   const edited = !!writing.check && writing.checkedText !== writing.text.trim();
   return (
@@ -165,4 +165,6 @@ export default function WritingTask({
       )}
     </div>
   );
-}
+};
+
+export default WritingTask;

@@ -5,8 +5,8 @@
 const pending = new Map<string, Promise<unknown>>();
 
 // The request on its way for this key, or a new one asked with ask.
-export function requestOnce(key: string, ask: () => Promise<unknown>): Promise<unknown> {
+export const requestOnce = (key: string, ask: () => Promise<unknown>): Promise<unknown> => {
   const asked = pending.get(key) ?? ask().finally(() => pending.delete(key));
   pending.set(key, asked);
   return asked;
-}
+};

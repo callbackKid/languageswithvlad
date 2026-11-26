@@ -22,7 +22,7 @@ const tableIdentity = (verb: VerbRef, translation: UiLanguage) =>
   `${verbIdentity(verb)}:${translation}`;
 
 // Keeps request state and tables separate for each verb and effective translation language.
-export function useVerbConjugations(verbs: VerbRef[], hasClaude: boolean) {
+export const useVerbConjugations = (verbs: VerbRef[], hasClaude: boolean) => {
   const { translateTo } = useSettings();
   const uiLanguage = useUiLanguage();
   const translationOf = useCallback(
@@ -51,10 +51,10 @@ export function useVerbConjugations(verbs: VerbRef[], hasClaude: boolean) {
     };
   }, []);
 
-  function lookup(verb: VerbRef): Entry {
+  const lookup = (verb: VerbRef): Entry => {
     const key = tableIdentity(verb, translationOf(verbLanguageOf(verb)));
     return { table: entries[key]?.table ?? cached.get(key), request: entries[key]?.request };
-  }
+  };
 
   const load = useCallback(
     async (verb: VerbRef, fresh = false) => {
@@ -97,4 +97,4 @@ export function useVerbConjugations(verbs: VerbRef[], hasClaude: boolean) {
   );
 
   return { lookup, load, translationOf };
-}
+};

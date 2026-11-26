@@ -20,7 +20,7 @@ const AHEAD = 24 * 60 * 60 * 1000;
 
 /** The day before a lesson, on Home: a round on the newest lesson's words and the hard words,
     so they are fresh for it. Marked done once a round is finished. */
-export default function PrepareCard({
+const PrepareCard = ({
   lesson,
   docText,
   bank,
@@ -33,7 +33,7 @@ export default function PrepareCard({
   bank: Bank;
   hasClaude: boolean;
   docId: string;
-}) {
+}) => {
   const { t, locale } = useTranslation(homeCards);
   const [revising, setRevising] = useState(false);
   const next = parseNextLesson(docText);
@@ -84,4 +84,6 @@ export default function PrepareCard({
       </div>
     </section>
   );
-}
+};
+
+export default PrepareCard;

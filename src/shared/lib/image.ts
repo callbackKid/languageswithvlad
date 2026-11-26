@@ -4,7 +4,7 @@ export interface ImagePayload {
 }
 
 // Shrinks a photo so its long side is at most maxSide pixels and returns it as base64 JPEG, without the data: prefix.
-export async function shrinkImage(file: File, maxSide: number): Promise<ImagePayload> {
+export const shrinkImage = async (file: File, maxSide: number): Promise<ImagePayload> => {
   const bitmap = await createImageBitmap(file);
   const scale = Math.min(1, maxSide / Math.max(bitmap.width, bitmap.height));
   const canvas = document.createElement('canvas');
@@ -14,4 +14,4 @@ export async function shrinkImage(file: File, maxSide: number): Promise<ImagePay
   bitmap.close();
   const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
   return { mediaType: 'image/jpeg', data: dataUrl.slice(dataUrl.indexOf(',') + 1) };
-}
+};

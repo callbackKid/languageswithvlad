@@ -129,7 +129,7 @@ const fold = (text: string) =>
 
 /** The tenses an item names, in every language that has a tense by that name, and the text with
     those names taken out (so they aren't read as verbs). */
-function findTenses(text: string): { tenses: Tense[]; rest: string } {
+const findTenses = (text: string): { tenses: Tense[]; rest: string } => {
   const source = text.normalize('NFC');
   const folded = fold(source);
   const found = new Set<Tense>();
@@ -155,7 +155,7 @@ function findTenses(text: string): { tenses: Tense[]; rest: string } {
   for (const [start, end] of spans)
     rest = rest.slice(0, start) + ' '.repeat(end - start) + rest.slice(end);
   return { tenses: [...found], rest };
-}
+};
 const WRITING =
   /phrases?|sentences?|\bsätze\b|\bsatz\b|frases?|frasi|écri|rédig|\bwrite\b|schreib|escrib|escrev|scriv|напис|сочин|предложени|décri|describe|beschreib|descriv|descrev|опиши|tradu|translat|übersetz|перев(?:ест|ед|од)/iu;
 const WORDS =
@@ -164,7 +164,7 @@ const WORDS_FIRST = new RegExp(`^\\s*(?:${WORDS.source})`, 'iu');
 const NUMBER = /(\d{1,3})/;
 
 // "verbes être, avoir — présent" → the verbs and the tenses, when they can be told.
-function readVerbs(text: string): { verbs: string[]; tenses: Tense[] } {
+const readVerbs = (text: string): { verbs: string[]; tenses: Tense[] } => {
   const { tenses, rest } = findTenses(text);
   const listed = rest
     .replace(VERB_WORDS, ' ')
@@ -184,10 +184,10 @@ function readVerbs(text: string): { verbs: string[]; tenses: Tense[] } {
     // one or two words: "aller", "se lever"
     .filter((verb) => verb && verb.split(/\s+/).length <= 2 && !/\d/.test(verb));
   return { verbs, tenses };
-}
+};
 
 // What one item asks for.
-export function readItem(text: string): HomeworkItem {
+export const readItem = (text: string): HomeworkItem => {
   const number = Number(text.match(NUMBER)?.[1]) || undefined;
   if (GAPS.test(text)) return { text, kind: 'gaps', lessonNumber: number };
   if (VERBS.test(text)) {
@@ -199,10 +199,10 @@ export function readItem(text: string): HomeworkItem {
   if (WRITING.test(text)) return { text, kind: 'writing' };
   if (WORDS.test(text)) return { text, kind: 'words', lessonNumber: number };
   return { text, kind: 'other' };
-}
+};
 
 // The items of the last homework block in a lesson's text; none when it has no block.
-export function homeworkItems(body: string): string[] {
+export const homeworkItems = (body: string): string[] => {
   const lines = body.split('\n');
   let items: string[] = [];
   lines.forEach((line, index) => {
@@ -227,7 +227,7 @@ export function homeworkItems(body: string): string[] {
     items = [...inline, ...listed];
   });
   return items.map((item) => item.replace(/[.;]+$/, ''));
-}
+};
 
 /** A task's text for comparing: case, punctuation, the kind of apostrophe and extra spaces
     don't count, since the Homework tab ticks Claude's copy of a task and Home the teacher's.
@@ -251,20 +251,23 @@ export const isTaskDone = (done: string[], task: string) =>
   done.some((item) => sameTask(item, task));
 
 // How many of a lesson's homework tasks are not ticked yet; null when its text has no homework.
-export function homeworkLeft(body: string, done: string[]): { left: number; total: number } | null {
+export const homeworkLeft = (
+  body: string,
+  done: string[]
+): { left: number; total: number } | null => {
   const items = homeworkItems(body);
   if (!items.length) return null;
   return { left: items.filter((item) => !isTaskDone(done, item)).length, total: items.length };
-}
+};
 
 /** The homework of the newest lesson: what is due for the next lesson. Homework written in an
     older lesson is left out, since that lesson has happened since. */
-export function findHomework(lessons: Lesson[]): Homework | null {
+export const findHomework = (lessons: Lesson[]): Homework | null => {
   const lesson = lessons[lessons.length - 1];
   if (!lesson) return null;
   const items = homeworkItems(lesson.body);
   return items.length ? { lesson, items: items.map(readItem) } : null;
-}
+};
 
 /** Where the ticks of a lesson's homework are kept: by the items' text, shared with the
     lesson's Homework tab. */

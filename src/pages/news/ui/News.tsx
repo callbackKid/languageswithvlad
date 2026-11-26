@@ -20,7 +20,7 @@ import { newsText } from '../i18n/news';
 /** What changed in the app, by day: new features and fixes on two tabs, for one of the student's
     languages (the news about every language stays), and for the teacher, by audience. Opening
     the page clears the dot next to News in the menu. */
-export default function News({ onSeen }: { onSeen: () => void }) {
+const News = ({ onSeen }: { onSeen: () => void }) => {
   const { t, language: uiLanguage, locale } = useTranslation(newsText);
   const sectionNames = useTranslation(app);
   const names = useTranslation(learning);
@@ -150,4 +150,6 @@ export default function News({ onSeen }: { onSeen: () => void }) {
       </div>
     </>
   );
-}
+};
+
+export default News;

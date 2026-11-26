@@ -65,7 +65,7 @@ export interface DocumentInfo {
 }
 
 // The student's settings: profile, document, interface, learning and the menu.
-export default function Settings({ lessonDocument }: { lessonDocument: DocumentInfo }) {
+const Settings = ({ lessonDocument }: { lessonDocument: DocumentInfo }) => {
   const { t, language: uiLanguage } = useTranslation(settingsText);
   const sectionNames = useTranslation(app);
   const tabNames = useTranslation(paper);
@@ -76,7 +76,7 @@ export default function Settings({ lessonDocument }: { lessonDocument: DocumentI
       are prepared again in it; choosing this one again takes the note away (its lessons are kept) */
   const [openedTranslateTo] = useState(settings.translateTo);
 
-  async function copyLink() {
+  const copyLink = async () => {
     try {
       await navigator.clipboard.writeText(lessonDocument.studentLink);
       setCopied(true);
@@ -84,9 +84,9 @@ export default function Settings({ lessonDocument }: { lessonDocument: DocumentI
     } catch {
       window.prompt(sectionNames.t('copyPrompt'), lessonDocument.studentLink);
     }
-  }
+  };
 
-  async function choosePicture(file: File) {
+  const choosePicture = async (file: File) => {
     setHasPictureError(false);
     try {
       // small and square-ish: it sits in a circle in the top bar
@@ -95,7 +95,7 @@ export default function Settings({ lessonDocument }: { lessonDocument: DocumentI
     } catch {
       setHasPictureError(true);
     }
-  }
+  };
   const toggleSection = (section: Section) =>
     updateSettings({
       hidden: settings.hidden.includes(section)
@@ -331,4 +331,6 @@ export default function Settings({ lessonDocument }: { lessonDocument: DocumentI
       </section>
     </>
   );
-}
+};
+
+export default Settings;

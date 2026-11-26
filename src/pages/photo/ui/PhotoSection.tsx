@@ -14,7 +14,7 @@ const MODES = ['underlined', 'handwritten', 'textbook'] as const;
 type Mode = (typeof MODES)[number];
 
 // Everything that starts from paper: underlined words in a book, handwritten lesson notes, or a textbook chapter.
-export default function PhotoSection({
+const PhotoSection = ({
   hasClaude,
   target,
   lessons,
@@ -23,7 +23,7 @@ export default function PhotoSection({
   target: DocTarget;
   // the underlined words can go under one of them
   lessons: Lesson[];
-}) {
+}) => {
   const { t } = useTranslation(paper);
   const [mode, setMode] = useState<Mode>(() => {
     const saved = load<unknown>('photo:mode');
@@ -56,4 +56,6 @@ export default function PhotoSection({
       )}
     </>
   );
-}
+};
+
+export default PhotoSection;

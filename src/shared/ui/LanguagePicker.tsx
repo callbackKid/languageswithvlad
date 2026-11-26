@@ -1,7 +1,7 @@
 import { app, setUiLanguage, UI_LANGUAGES, type UiLanguage, useTranslation } from '@/shared/i18n';
 
 // The dropdown in the top bar that changes the language of the interface.
-export default function LanguagePicker() {
+const LanguagePicker = () => {
   const { t, language } = useTranslation(app);
   return (
     <select
@@ -18,4 +18,6 @@ export default function LanguagePicker() {
       ))}
     </select>
   );
-}
+};
+
+export default LanguagePicker;

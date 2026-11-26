@@ -16,7 +16,7 @@ const comparable = (word: string) => word.toLowerCase().replace(/[’‘ʼ`]/g, 
     spelling matched without regard to case or the kind of apostrophe. Words left out aren't in the map, even when that is
     all of them (the caller keeps them as in no group, so they aren't asked about again); throws
     only when the answer has no list of groups at all. */
-export function normalizeWordGroups(raw: unknown, sent: string[]): Map<string, string> {
+export const normalizeWordGroups = (raw: unknown, sent: string[]): Map<string, string> => {
   const { groups } = asObject(raw);
   if (!Array.isArray(groups)) throw new Error('no_groups');
   const wanted = new Map(sent.map((word) => [comparable(word), word]));
@@ -30,7 +30,7 @@ export function normalizeWordGroups(raw: unknown, sent: string[]): Map<string, s
     }
   }
   return found;
-}
+};
 
 // a definition longer than this is cut (the prompt asks for about 15 words)
 const MAX_DEFINITION_LENGTH = 300;
@@ -38,10 +38,10 @@ const MAX_DEFINITION_LENGTH = 300;
 /** Claude's definitions for the blitz, each matched to its word (spelling compared without regard
     to case). A definition that contains the word itself gives the answer away and is left out;
     throws when none is left. */
-export function normalizeDefinitions(
+export const normalizeDefinitions = (
   raw: unknown,
   words: Word[]
-): { word: Word; definition: string }[] {
+): { word: Word; definition: string }[] => {
   const wanted = new Map(words.map((word) => [word.fr.toLowerCase(), word]));
   const found = new Map<Word, string>();
   for (const item of asArray(raw).map(asObject)) {
@@ -53,9 +53,9 @@ export function normalizeDefinitions(
   }
   if (!found.size) throw new Error('empty');
   return [...found].map(([word, definition]) => ({ word, definition }));
-}
+};
 
 // The word without a leading article, as it would appear inside a sentence: "la boulangerie" → "boulangerie".
-function bareWord(text: string): string {
+const bareWord = (text: string): string => {
   return text.replace(ARTICLE, '').trim() || text;
-}
+};

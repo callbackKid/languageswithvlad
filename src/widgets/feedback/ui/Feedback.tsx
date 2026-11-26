@@ -26,7 +26,7 @@ interface Draft {
 }
 const EMPTY_DRAFT: Draft = { kind: 'bug', message: '', contact: '' };
 // the unsent message kept on this device; only its usable fields
-function asDraft(raw: unknown): Partial<Draft> {
+const asDraft = (raw: unknown): Partial<Draft> => {
   const data = raw && typeof raw === 'object' ? (raw as Record<string, unknown>) : {};
   const kind = KINDS.find((known) => known === data.kind);
   return {
@@ -34,20 +34,20 @@ function asDraft(raw: unknown): Partial<Draft> {
     ...(typeof data.message === 'string' && { message: data.message }),
     ...(typeof data.contact === 'string' && { contact: data.contact }),
   };
-}
+};
 
 interface Picture extends ImagePayload {
   preview: string;
 }
 
 // Where it happened, so the teacher doesn't have to ask.
-function browserLine(): string {
+const browserLine = (): string => {
   const theme = isDark() ? 'dark' : 'light';
   return `${navigator.userAgent.slice(0, MAX_BROWSER_LENGTH)} · window ${window.innerWidth}×${window.innerHeight} · ${theme} theme`;
-}
+};
 
 // A "Feedback" button that opens a form: report a bug, suggest a change or write anything, with screenshots. Goes to the teacher's Telegram.
-export default function Feedback({ docTitle }: { docTitle: string }) {
+const Feedback = ({ docTitle }: { docTitle: string }) => {
   const { t } = useTranslation(talk);
   const { t: tc } = useTranslation(common);
   const dialog = useRef<HTMLDialogElement>(null);
@@ -72,7 +72,7 @@ export default function Feedback({ docTitle }: { docTitle: string }) {
   previews.current = pictures.map((picture) => picture.preview);
   useEffect(() => () => previews.current.forEach((url) => URL.revokeObjectURL(url)), []);
 
-  async function addFiles(files: File[]) {
+  const addFiles = async (files: File[]) => {
     const images = files.filter((file) => file.type.startsWith('image/'));
     const room = MAX_PICTURES - pictures.length;
     if (!images.length) return;
@@ -92,21 +92,21 @@ export default function Feedback({ docTitle }: { docTitle: string }) {
     } catch {
       setError(t('pictureFailed'));
     }
-  }
+  };
 
-  function removePicture(index: number) {
+  const removePicture = (index: number) => {
     const removed = pictures[index];
     if (removed) URL.revokeObjectURL(removed.preview);
     setPictures((previous) => previous.filter((_picture, position) => position !== index));
-  }
+  };
 
-  function open() {
+  const open = () => {
     if (state === 'sent') setState('idle');
     dialog.current?.showModal();
-  }
+  };
   const close = () => dialog.current?.close();
 
-  async function send() {
+  const send = async () => {
     setState('sending');
     setError('');
     try {
@@ -129,7 +129,7 @@ export default function Feedback({ docTitle }: { docTitle: string }) {
       setState('error');
       setError(failure instanceof ApiError ? failure.message : t('sendFailed'));
     }
-  }
+  };
 
   // a screenshot copied to the clipboard can be pasted straight into the form
   const onPaste = (event: ClipboardEvent) => {
@@ -280,4 +280,6 @@ export default function Feedback({ docTitle }: { docTitle: string }) {
       </dialog>
     </>
   );
-}
+};
+
+export default Feedback;

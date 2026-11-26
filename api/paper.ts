@@ -29,7 +29,7 @@ const LONG_PAPER_TOKENS = 16000;
 const MAX_PDF_BASE64_LENGTH = 4_000_000;
 
 // From paper: underlined words on a photo, handwritten notes, textbook pages or exercises from the book (body.kind).
-export default async function handler(request: VercelRequest, response: VercelResponse) {
+const handler = async (request: VercelRequest, response: VercelResponse) => {
   if (!onlyPost(request, response) || !checkAccess(request, response)) return;
   const kind: unknown = request.body?.kind;
   try {
@@ -71,11 +71,13 @@ export default async function handler(request: VercelRequest, response: VercelRe
   } catch (error) {
     return fail(response, error);
   }
-}
+};
+
+export default handler;
 
 // The parts of a book page asked for, the known ones only; the exercises when none is.
-function bookParts(value: unknown): BookPart[] {
+const bookParts = (value: unknown): BookPart[] => {
   const asked = Array.isArray(value) ? value : [];
   const parts = BOOK_PARTS.filter((part) => asked.includes(part));
   return parts.length ? parts : ['exercises'];
-}
+};

@@ -60,7 +60,7 @@ export interface LessonWordsProps {
 }
 
 // One lesson's page: its heading and its tabs (Words, Verbs, Grammar, Homework, Book exercises, My notes, Original).
-export default function LessonView({
+const LessonView = ({
   lesson,
   docId,
   hasClaude,
@@ -85,7 +85,7 @@ export default function LessonView({
   /** the Words tab's list, given by the page: it is another widget (word-list), and one widget
       can't import another */
   renderWords: (props: LessonWordsProps) => ReactNode;
-}) {
+}) => {
   const { t, locale, language: uiLanguage } = useTranslation(paper);
   const commonText = useTranslation(common);
   const { hiddenTabs, translateTo } = useSettings();
@@ -401,4 +401,6 @@ export default function LessonView({
       </section>
     </>
   );
-}
+};
+
+export default LessonView;

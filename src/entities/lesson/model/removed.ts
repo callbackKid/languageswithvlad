@@ -21,7 +21,7 @@ export interface Removed {
 export type RemovedKind = keyof Removed;
 
 // Only lists of texts under each lesson are kept: anything else saved there is dropped.
-function asLists(stored: unknown): Record<string, string[]> {
+const asLists = (stored: unknown): Record<string, string[]> => {
   const lists: Record<string, string[]> = {};
   if (stored && typeof stored === 'object')
     for (const [lessonKey, list] of Object.entries(stored)) {
@@ -31,30 +31,30 @@ function asLists(stored: unknown): Record<string, string[]> {
       if (texts.length) lists[lessonKey] = texts;
     }
   return lists;
-}
-function asRemoved(raw: unknown): Removed {
+};
+const asRemoved = (raw: unknown): Removed => {
   const stored =
     raw && typeof raw === 'object' ? (raw as Partial<Record<RemovedKind, unknown>>) : {};
   return { words: asLists(stored.words), verbs: asLists(stored.verbs) };
-}
+};
 
 let current: Removed = asRemoved(load<unknown>(KEY));
 const listeners = new Set<() => void>();
 
-function publish(next: Removed) {
+const publish = (next: Removed) => {
   current = next;
   save(KEY, next);
   listeners.forEach((listener) => listener());
-}
+};
 
 // How a verb is kept in the list: its infinitive in lower case.
 const verbKey = (infinitive: string) => infinitive.trim().toLowerCase();
 
-function removeFrom(kind: RemovedKind, lessonKey: string, key: string) {
+const removeFrom = (kind: RemovedKind, lessonKey: string, key: string) => {
   const list = current[kind][lessonKey] ?? [];
   if (list.includes(key)) return;
   publish({ ...current, [kind]: { ...current[kind], [lessonKey]: [...list, key] } });
-}
+};
 
 // Takes a word out of its lesson's list.
 export const removeWord = (lessonKey: string, fr: string) =>
@@ -64,18 +64,22 @@ export const removeVerb = (lessonKey: string, infinitive: string) =>
   removeFrom('verbs', lessonKey, verbKey(infinitive));
 
 // Puts every word, or every verb, taken out of these lessons back.
-export function restore(kind: RemovedKind, lessonKeys: string[]) {
+export const restore = (kind: RemovedKind, lessonKeys: string[]) => {
   const lists = { ...current[kind] };
   for (const lessonKey of lessonKeys) delete lists[lessonKey];
   publish({ ...current, [kind]: lists });
-}
+};
 
 // How many words, or verbs, were taken out of these lessons.
 export const removedCount = (removed: Removed, kind: RemovedKind, lessonKeys: string[]) =>
   lessonKeys.reduce((sum, lessonKey) => sum + (removed[kind][lessonKey]?.length ?? 0), 0);
 
 // A lesson's analysis without the words and verbs taken out of it; the same object when nothing was.
-export function withoutRemoved(analysis: Analysis, lessonKey: string, removed: Removed): Analysis {
+export const withoutRemoved = (
+  analysis: Analysis,
+  lessonKey: string,
+  removed: Removed
+): Analysis => {
   const words = removed.words[lessonKey] ?? [];
   const verbs = removed.verbs[lessonKey] ?? [];
   if (!words.length && !verbs.length) return analysis;
@@ -84,12 +88,12 @@ export function withoutRemoved(analysis: Analysis, lessonKey: string, removed: R
     words: analysis.words.filter((word) => !words.includes(wordKey(word.fr))),
     verbs: analysis.verbs.filter((verb) => !verbs.includes(verbKey(verb.inf))),
   };
-}
+};
 
-function subscribe(listener: () => void) {
+const subscribe = (listener: () => void) => {
   listeners.add(listener);
   return () => listeners.delete(listener);
-}
+};
 // For code outside React (lessonWords).
 export const getRemoved = () => current;
 // What was taken out of the lessons; the component re-renders when that changes.

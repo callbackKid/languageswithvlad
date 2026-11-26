@@ -1,11 +1,11 @@
 import { type FocusEvent, type KeyboardEvent, useId, useState } from 'react';
 
 // Keyboard focus moves independently of selection, so reading a tab label never starts loading it.
-export function useTabs(selected: string) {
+export const useTabs = (selected: string) => {
   const id = useId();
   const [focused, setFocused] = useState<string | null>(null);
 
-  function onKeyDown(event: KeyboardEvent<HTMLDivElement>) {
+  const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
     const tabs = Array.from(
       event.currentTarget.querySelectorAll<HTMLButtonElement>('[role="tab"]')
@@ -31,7 +31,7 @@ export function useTabs(selected: string) {
     if (!target) return;
     event.preventDefault();
     target.focus();
-  }
+  };
 
   return {
     tabListProps: {
@@ -57,4 +57,4 @@ export function useTabs(selected: string) {
       tabIndex: 0,
     }),
   };
-}
+};

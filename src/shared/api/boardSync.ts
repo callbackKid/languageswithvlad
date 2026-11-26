@@ -43,7 +43,7 @@ export interface BoardConnection {
 const randomId = () => Math.random().toString(36).slice(2, 10);
 
 // A room on Supabase Realtime: works between any two devices.
-function supabaseConnection(server: BoardServer, room: string, name: string): BoardConnection {
+const supabaseConnection = (server: BoardServer, room: string, name: string): BoardConnection => {
   const id = randomId();
   const client = createClient(server.url, server.key, {
     auth: { persistSession: false, autoRefreshToken: false },
@@ -89,10 +89,10 @@ function supabaseConnection(server: BoardServer, room: string, name: string): Bo
       void client.removeChannel(channel);
     },
   };
-}
+};
 
 // Tabs of one browser, for trying the board during development without Supabase.
-function localConnection(room: string, name: string): BoardConnection {
+const localConnection = (room: string, name: string): BoardConnection => {
   const id = randomId();
   const channel = new BroadcastChannel('cahier-board:' + room);
   const handlers = new Map<BoardEvent | 'presence', (payload: Record<string, unknown>) => void>();
@@ -144,16 +144,16 @@ function localConnection(room: string, name: string): BoardConnection {
       channel.close();
     },
   };
-}
+};
 
 // Opens a board room: through Supabase when it's set up, between tabs in development, or null.
-export function connectBoard(
+export const connectBoard = (
   server: BoardServer | null,
   room: string,
   name: string
-): BoardConnection | null {
+): BoardConnection | null => {
   if (server) return supabaseConnection(server, room, name);
   if (import.meta.env.DEV && typeof BroadcastChannel !== 'undefined')
     return localConnection(room, name);
   return null;
-}
+};

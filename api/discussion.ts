@@ -11,7 +11,7 @@ const MAX_TOPIC_LENGTH = 120;
 const DISCUSSION_TOKENS = 5000;
 
 // A discussion question for the start of a lesson, for a chosen level, vocabulary topic and grammar point.
-export default async function handler(request: VercelRequest, response: VercelResponse) {
+const handler = async (request: VercelRequest, response: VercelResponse) => {
   if (!onlyPost(request, response) || !checkAccess(request, response)) return;
   const level = asLevel(request.body?.level);
   if (!level) return response.status(400).json({ error: 'bad_request' });
@@ -31,4 +31,6 @@ export default async function handler(request: VercelRequest, response: VercelRe
   } catch (error) {
     fail(response, error);
   }
-}
+};
+
+export default handler;

@@ -4,7 +4,7 @@ import { asText, shuffle } from '@/shared/lib/util';
 import { type GapItem } from './types';
 
 // Gap sentences with their choices shuffled; throws when there are none.
-export function normalizeGaps(raw: unknown): GapItem[] {
+export const normalizeGaps = (raw: unknown): GapItem[] => {
   const normalize = (text: string) => text.toLowerCase().replace(/[’']/g, "'").trim();
   const items = asArray(raw)
     .map(asObject)
@@ -31,4 +31,4 @@ export function normalizeGaps(raw: unknown): GapItem[] {
     .filter((item): item is GapItem => !!item);
   if (!items.length) throw new Error('empty');
   return items;
-}
+};

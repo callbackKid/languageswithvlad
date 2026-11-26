@@ -5,7 +5,7 @@ import { asText } from '@/shared/lib/util';
 import { type PhotoItem, type WordCard } from './wordCard';
 
 // One word or phrase Claude found in a photo, tagged with the language of the photo.
-export function photoItem(raw: unknown, language: Language): PhotoItem {
+export const photoItem = (raw: unknown, language: Language): PhotoItem => {
   const item = asObject(raw);
   return {
     fr: asText(item.fr),
@@ -17,17 +17,17 @@ export function photoItem(raw: unknown, language: Language): PhotoItem {
     explanation: asText(item.explanation),
     language,
   };
-}
+};
 
 // Saved photo or text notes, each with the language it was saved with.
-export function normalizePhotoItems(raw: unknown): PhotoItem[] {
+export const normalizePhotoItems = (raw: unknown): PhotoItem[] => {
   return asArray(raw)
     .map((item) => photoItem(item, asLanguage(asObject(item).language)))
     .filter((item) => item.fr);
-}
+};
 
 // A selected word's card; null when Claude gave no translation.
-export function normalizeWordCard(raw: unknown, selection: string): WordCard | null {
+export const normalizeWordCard = (raw: unknown, selection: string): WordCard | null => {
   const data = asObject(raw);
   const language = asLanguage(data.language);
   const item = photoItem(raw, language);
@@ -44,4 +44,4 @@ export function normalizeWordCard(raw: unknown, selection: string): WordCard | n
       .map((example) => ({ text: asText(example.text), ru: asText(example.ru) }))
       .filter((example) => example.text),
   };
-}
+};

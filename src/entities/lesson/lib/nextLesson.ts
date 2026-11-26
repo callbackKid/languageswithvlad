@@ -49,7 +49,7 @@ export interface NextLesson {
 }
 
 // Minutes the zone is ahead of UTC at that moment.
-function zoneOffsetMinutes(moment: number, zone: string): number {
+const zoneOffsetMinutes = (moment: number, zone: string): number => {
   const parts = Object.fromEntries(
     new Intl.DateTimeFormat('en-US', {
       timeZone: zone,
@@ -72,36 +72,39 @@ function zoneOffsetMinutes(moment: number, zone: string): number {
     part('minute')
   );
   return Math.round((asUtc - moment) / 60000);
-}
+};
 
 // A wall-clock time in a zone ("18:00 in Paris") as a real moment.
-function zonedTime(
+const zonedTime = (
   year: number,
   month: number,
   day: number,
   hour: number,
   minute: number,
   zone: string
-): Date {
+): Date => {
   const wall = Date.UTC(year, month - 1, day, hour, minute);
   // twice, so a time near a daylight-saving switch settles on the right offset
   let moment = wall - zoneOffsetMinutes(wall, zone) * 60000;
   moment = wall - zoneOffsetMinutes(moment, zone) * 60000;
   return new Date(moment);
-}
+};
 
 /** A line that says when the next lesson is: the label followed by ":" or a dash
     ("le cours prochain: à confirmer" counts too), or by a date. "Devoirs: lire le texte pour le
     cours prochain" only mentions it, and must not hide the date written above. */
-function isNextLessonLine(line: string): boolean {
+const isNextLessonLine = (line: string): boolean => {
   const match = line.match(LINE);
   if (!match || match.index === undefined) return false;
   const afterLabel = line.slice(match.index + match[0].length);
   return /^\s*[:–—-]/.test(afterLabel) || DATE_TIME.test(afterLabel);
-}
+};
 
 // null when the document never mentions the next lesson; "unconfirmed" when its newest mention has no usable date.
-export function parseNextLesson(text: string, now = new Date()): NextLesson | 'unconfirmed' | null {
+export const parseNextLesson = (
+  text: string,
+  now = new Date()
+): NextLesson | 'unconfirmed' | null => {
   const lines = text.split('\n').filter(isNextLessonLine);
   // only the newest mention counts: "le cours prochain: à confirmer" cancels an older date
   const line = lines[lines.length - 1];
@@ -151,4 +154,4 @@ export function parseNextLesson(text: string, now = new Date()): NextLesson | 'u
     zoneLabel: zone && !sameZone ? (zone.split('/')[1] ?? zone).replace(/_/g, ' ') : null,
     state,
   };
-}
+};

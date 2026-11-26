@@ -10,7 +10,7 @@ export const MIN_GROUP_WORDS = 3;
 const MAX_GROUP_WORDS = 30;
 
 // The group's words in the language most of them are in: a group on Words to learn can mix languages, a round has one.
-function inMainLanguage(words: Word[]): { language: Language; words: Word[] } | null {
+const inMainLanguage = (words: Word[]): { language: Language; words: Word[] } | null => {
   const counts = new Map<Language, number>();
   for (const word of words) {
     const language = word.language ?? 'fr';
@@ -22,19 +22,19 @@ function inMainLanguage(words: Word[]): { language: Language; words: Word[] } | 
     if (language === null || count > (counts.get(language) ?? 0)) language = candidate;
   if (language === null) return null;
   return { language, words: words.filter((word) => (word.language ?? 'fr') === language) };
-}
+};
 
 // Whether a round can be made on these words: at least MIN_GROUP_WORDS of them in one language.
-export function canMakeGroupExercise(words: Word[]): boolean {
+export const canMakeGroupExercise = (words: Word[]): boolean => {
   return (inMainLanguage(words)?.words.length ?? 0) >= MIN_GROUP_WORDS;
-}
+};
 
 /** The words a round on one group practises: those in the group's main language, the weaker ones
     first when there are too many. null when fewer than MIN_GROUP_WORDS are left. */
-export function wordsForGroupExercise(
+export const wordsForGroupExercise = (
   words: Word[],
   progress: Progress
-): { language: Language; words: string[] } | null {
+): { language: Language; words: string[] } | null => {
   const main = inMainLanguage(words);
   if (!main || main.words.length < MIN_GROUP_WORDS) return null;
   const chosen =
@@ -44,4 +44,4 @@ export function wordsForGroupExercise(
   // pickWords leaves out words without a translation, so count again
   if (chosen.length < MIN_GROUP_WORDS) return null;
   return { language: main.language, words: chosen.map((word) => word.fr) };
-}
+};

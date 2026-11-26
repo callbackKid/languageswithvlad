@@ -10,7 +10,7 @@ const FOLDED_KEY = 'call:folded';
 /** A card of lesson mode that folds: its title is a button, and a folded card stays folded on
     this device until it is opened again. Folding only hides the card, so a call or the board
     in it goes on. The actions next to the title show while the card is open. */
-export default function CallCard({
+const CallCard = ({
   id,
   title,
   actions,
@@ -23,17 +23,17 @@ export default function CallCard({
   actions?: ReactNode;
   className?: string;
   children: ReactNode;
-}) {
+}) => {
   const [isFolded, setFolded] = useState(() => loadTexts(FOLDED_KEY).includes(id));
   const bodyId = useId();
 
-  function toggle() {
+  const toggle = () => {
     const folded = !isFolded;
     setFolded(folded);
     // read again: another card may have changed the list since this one was drawn
     const others = loadTexts(FOLDED_KEY).filter((saved) => saved !== id);
     save(FOLDED_KEY, folded ? [...others, id] : others);
-  }
+  };
 
   return (
     <section className={`call-card ${className}${isFolded ? ' folded' : ''}`.trim()}>
@@ -59,4 +59,6 @@ export default function CallCard({
       </div>
     </section>
   );
-}
+};
+
+export default CallCard;

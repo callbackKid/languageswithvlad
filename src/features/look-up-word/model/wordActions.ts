@@ -21,26 +21,26 @@ const MENU_WIDTH = 380;
 // Space between the menu and the edges of the window or the selected text, in pixels.
 const GAP = 8;
 // Where the menu goes under something on the screen, kept inside the window, in page coordinates.
-export function menuPlace(box: DOMRect): { top: number; left: number } {
+export const menuPlace = (box: DOMRect): { top: number; left: number } => {
   const left = Math.max(GAP, Math.min(box.left, window.innerWidth - MENU_WIDTH - GAP));
   return { top: box.bottom + window.scrollY + GAP, left: left + window.scrollX };
-}
+};
 
 // The sentence of the paragraph that holds the selection; the paragraph's start when it spans several.
-export function sentenceAround(paragraph: string, selection: string): string {
+export const sentenceAround = (paragraph: string, selection: string): string => {
   const sentences = paragraph.split(/(?<=[.!?…»"])\s+/);
   const found = sentences.find((sentence) => sentence.includes(selection));
   return (found ?? paragraph).slice(0, MAX_CONTEXT_LENGTH);
-}
+};
 
 // What was selected, on one line and without the punctuation around it; "" when it holds no letter.
-export function cleanSelection(raw: string): string {
+export const cleanSelection = (raw: string): string => {
   const text = raw
     .replace(/\s+/g, ' ')
     .trim()
     .replace(/^[^\p{L}\p{N}]+|[^\p{L}\p{N}]+$/gu, '');
   return /\p{L}/u.test(text) && text.length <= MAX_SELECTION_LENGTH ? text : '';
-}
+};
 
 // The language a lang attribute names, when it is one the app teaches (not Russian, not the interface's).
 export const learnedLanguage = (lang: string | null | undefined): Language | null =>
@@ -56,7 +56,7 @@ interface SavedCard {
 export const cardKey = (selection: string, context: string, translation: UiLanguage) =>
   hash(`${selection.toLowerCase()}|${context}`) + (translation === 'ru' ? '' : ':' + translation);
 // The saved cards by key; an entry without its time is dropped (its card is checked when read).
-function savedCards(): Record<string, SavedCard> {
+const savedCards = (): Record<string, SavedCard> => {
   const raw = load<unknown>(CARDS_KEY);
   const entries = raw && typeof raw === 'object' ? Object.entries(raw) : [];
   return Object.fromEntries(
@@ -65,25 +65,25 @@ function savedCards(): Record<string, SavedCard> {
       return fields ? [[key, { card: (entry as { card?: unknown }).card, at: fields.at }]] : [];
     })
   );
-}
+};
 
 // The card Claude wrote for this selection in this sentence, in translation, checked; null when there is none.
-export function readWordCard(
+export const readWordCard = (
   selection: string,
   context: string,
   translation: UiLanguage
-): WordCard | null {
+): WordCard | null => {
   const saved = savedCards()[cardKey(selection, context, translation)];
   return saved ? normalizeWordCard(saved.card, selection) : null;
-}
+};
 
 // Keeps a card made in translation, dropping the oldest beyond MAX_CARDS.
-export function saveWordCard(
+export const saveWordCard = (
   selection: string,
   context: string,
   card: WordCard,
   translation: UiLanguage
-): void {
+): void => {
   const entries = Object.entries({
     ...savedCards(),
     [cardKey(selection, context, translation)]: { card, at: Date.now() },
@@ -91,7 +91,7 @@ export function saveWordCard(
     .sort(([, a], [, b]) => b.at - a.at)
     .slice(0, MAX_CARDS);
   save(CARDS_KEY, Object.fromEntries(entries));
-}
+};
 
 /** Opens the word menu on a word that wasn't selected: one clicked on the Text page, or typed in
     Look up a word. Its detail is a LookUp. */
@@ -119,7 +119,7 @@ export const lookUp = (detail: LookUp) =>
   window.dispatchEvent(new CustomEvent(LOOK_UP_EVENT, { detail }));
 
 // A look-up from an event, checked: it comes from page code, but through the untyped DOM.
-export function asLookUp(raw: unknown): LookUp | null {
+export const asLookUp = (raw: unknown): LookUp | null => {
   const fields = asFields(raw, {
     text: 'string',
     context: 'string',
@@ -132,7 +132,7 @@ export function asLookUp(raw: unknown): LookUp | null {
   if (!fields || !language || !text) return null;
   const source = (raw as { source?: unknown }).source;
   return { ...fields, text, language, source: typeof source === 'string' ? source : null };
-}
+};
 
 // The fields of a card that a list of explained words keeps (the Text page's saved notes).
 export const cardNote = (card: WordCard): PhotoItem => ({
@@ -147,12 +147,12 @@ export const cardNote = (card: WordCard): PhotoItem => ({
 });
 
 // "avoir raison — был прав (avait raison, imparfait, il)": one line of a lesson in the document.
-export function docLine(item: PhotoItem): string {
+export const docLine = (item: PhotoItem): string => {
   const notes = [item.base && item.base !== item.fr ? item.fr : '', item.tense]
     .filter(Boolean)
     .join(', ');
   return `${item.base || item.fr} — ${item.ru}${notes ? ` (${notes})` : ''}`;
-}
+};
 
 // The card as a word for Words to learn: its dictionary form with that form's translation.
 export const cardWord = (card: WordCard): Word => ({

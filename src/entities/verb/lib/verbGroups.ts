@@ -38,7 +38,7 @@ const FRENCH_THIRD_GROUP_IR = [
 ];
 
 // The infinitive without its reflexive pronoun: "se lever", "alzarsi", "sich waschen" → its verb.
-function bareInfinitive(infinitive: string, language: VerbLanguage): string {
+const bareInfinitive = (infinitive: string, language: VerbLanguage): string => {
   const lower = infinitive.trim().toLowerCase();
   if (language === 'fr') return lower.replace(/^(se |s['’])/, '');
   // levantarse, alzarsi, levantar-se
@@ -47,14 +47,14 @@ function bareInfinitive(infinitive: string, language: VerbLanguage): string {
   if (language === 'pt') return lower.replace(/-se$/, '');
   if (language === 'de') return lower.replace(/^sich /, '');
   return lower;
-}
+};
 
 // A verb's group, or null when its language has none or the ending is unusual.
-export function verbGroup(
+export const verbGroup = (
   infinitive: string,
   language: VerbLanguage,
   conjugation?: Conjugation | null
-): VerbGroup | null {
+): VerbGroup | null => {
   const verb = bareInfinitive(infinitive, language);
   if (language === 'fr') {
     if (verb === 'aller') return 3;
@@ -80,17 +80,17 @@ export function verbGroup(
     return null;
   }
   return null;
-}
+};
 
 /** Verbs in alphabetical order, or, by group, in groups 1, 2, 3 and then those without one, each
     group alphabetical. A reflexive verb sorts by the verb itself (se lever with the l's), and é
     sorts with e. */
-export function sortVerbs<T extends { inf: string; language?: Language }>(
+export const sortVerbs = <T extends { inf: string; language?: Language }>(
   verbs: T[],
   sort: VerbSort,
   groupOf: (verb: T) => VerbGroup | null,
   locale: string
-): { group: VerbGroup | null; verbs: T[] }[] {
+): { group: VerbGroup | null; verbs: T[] }[] => {
   const collator = new Intl.Collator(locale, { sensitivity: 'base' });
   const nameOf = (verb: T) =>
     bareInfinitive(verb.inf, isVerbLanguage(verb.language) ? verb.language : 'fr');
@@ -100,4 +100,4 @@ export function sortVerbs<T extends { inf: string; language?: Language }>(
   return groups
     .map((group) => ({ group, verbs: sorted.filter((verb) => groupOf(verb) === group) }))
     .filter((entry) => entry.verbs.length);
-}
+};

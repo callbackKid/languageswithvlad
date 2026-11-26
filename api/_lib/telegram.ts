@@ -17,11 +17,11 @@ export interface TelegramPhoto {
 }
 
 // Whether the bot token and the chat are set, so feedback can reach the teacher's Telegram.
-export function telegramConfigured(): boolean {
+export const telegramConfigured = (): boolean => {
   return !!(process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_CHAT_ID);
-}
+};
 
-async function call(method: string, body: FormData): Promise<void> {
+const call = async (method: string, body: FormData): Promise<void> => {
   const token = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID;
   if (!token || !chatId) throw new TelegramError(501, 'feedback_off');
@@ -33,22 +33,22 @@ async function call(method: string, body: FormData): Promise<void> {
     console.error('Telegram', method, response.status, answer?.description);
     throw new TelegramError(502, 'delivery_failed');
   }
-}
+};
 
 const photoFile = (photo: TelegramPhoto) =>
   new Blob([Buffer.from(photo.data, 'base64')], { type: photo.mediaType || 'image/jpeg' });
 const fileName = (index: number) => `screenshot-${index + 1}.jpg`;
 
 // Sends one message, without photos, to the teacher's chat.
-export async function sendText(text: string): Promise<void> {
+export const sendText = async (text: string): Promise<void> => {
   const body = new FormData();
   body.set('text', text.slice(0, MAX_TEXT));
   body.set('disable_web_page_preview', 'true');
   await call('sendMessage', body);
-}
+};
 
 // The text with the photos under it: as a caption when it fits, otherwise as its own message first.
-export async function sendWithPhotos(text: string, photos: TelegramPhoto[]): Promise<void> {
+export const sendWithPhotos = async (text: string, photos: TelegramPhoto[]): Promise<void> => {
   if (!photos.length) return sendText(text);
   const fitsCaption = text.length <= MAX_CAPTION;
   if (!fitsCaption) await sendText(text);
@@ -70,4 +70,4 @@ export async function sendWithPhotos(text: string, photos: TelegramPhoto[]): Pro
   body.set('media', JSON.stringify(media));
   photos.forEach((photo, index) => body.set(`photo${index}`, photoFile(photo), fileName(index)));
   return call('sendMediaGroup', body);
-}
+};

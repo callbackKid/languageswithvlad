@@ -22,7 +22,7 @@ const REFLEXIVE = [
 ] as const;
 
 // "manger" → je vais manger…; "se lever" → je vais me lever…; "s'habiller" → je vais m'habiller…
-export function futurProche(infinitive: string): Form[] {
+export const futurProche = (infinitive: string): Form[] => {
   const verb = infinitive.trim().replace(/\s+/g, ' ');
   // "s'habiller", "s’en aller": the pronoun is elided, with the infinitive's own apostrophe
   const elided = verb.match(/^s(['’])\s*(.+)$/i);
@@ -36,4 +36,4 @@ export function futurProche(infinitive: string): Form[] {
     } else if (reflexive) rest = pronoun + (reflexive[1] ?? '');
     return { p: person, f: `${aller} ${rest}` };
   });
-}
+};

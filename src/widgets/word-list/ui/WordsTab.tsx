@@ -54,13 +54,13 @@ type Exercise =
   | 'listen';
 
 // The mark of a key word of the lesson (★ in the document).
-export function KeyBadge() {
+export const KeyBadge = () => {
   const { t } = useTranslation(exercises);
   return <span className="key-word">{t('keyWord')}</span>;
-}
+};
 
 // The button next to a group's name: a round by Claude on its ticked words, once there are enough.
-function GroupButton({
+const GroupButton = ({
   name,
   words,
   onStart,
@@ -68,7 +68,7 @@ function GroupButton({
   name: string;
   words: Word[];
   onStart: (round: { name: string; words: Word[] }) => void;
-}) {
+}) => {
   const { t } = useTranslation(makeExerciseText);
   // too few: one note over the list says why (groupNote), rather than one under every group
   if (!canMakeGroupExercise(words)) return null;
@@ -83,10 +83,10 @@ function GroupButton({
       {t('groupButton')}
     </Button>
   );
-}
+};
 
 // How close a word on Words to learn is to leaving it: ●●○ for 2 right answers in a row of the 3 needed.
-function LearnProgress({ word }: { word: Word }) {
+const LearnProgress = ({ word }: { word: Word }) => {
   const { t } = useTranslation(exercises);
   const streak = Math.min(useProgress().words[wordKey(word.fr)]?.streak ?? 0, LEARNED_STREAK);
   const label = t('learnProgress', { count: streak, total: LEARNED_STREAK });
@@ -101,16 +101,16 @@ function LearnProgress({ word }: { word: Word }) {
       {'●'.repeat(streak) + '○'.repeat(LEARNED_STREAK - streak)}
     </span>
   );
-}
+};
 
 // Tab-separated text Anki imports as cards: word, translation, transcription.
-function ankiText(words: Analysis['words']): string {
+const ankiText = (words: Analysis['words']): string => {
   const clean = (text: string) => text.replace(/[\t\r\n]+/g, ' ').trim();
   return words.map((word) => [word.fr, word.ru, word.tr].map(clean).join('\t')).join('\n') + '\n';
-}
+};
 
 // A lesson's words, with the exercises on the ones ticked.
-export default function WordsTab({
+const WordsTab = ({
   analysis,
   hasClaude,
   onRefresh,
@@ -129,7 +129,7 @@ export default function WordsTab({
   grouped?: boolean;
   // one lesson's own list: its words can be taken out of it (✕) and brought back
   lessonKey?: string;
-}) {
+}) => {
   const { t, rich, language: uiLanguage } = useTranslation(exercises);
   const commonText = useTranslation(common);
   const exerciseText = useTranslation(makeExerciseText);
@@ -469,4 +469,6 @@ export default function WordsTab({
       </p>
     </>
   );
-}
+};
+
+export default WordsTab;

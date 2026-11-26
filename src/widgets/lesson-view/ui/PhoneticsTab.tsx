@@ -21,7 +21,7 @@ import { phoneticsKey, readPhonetics } from '../model/phonetics';
 /** The lesson's pronunciation points (sounds, reading rules, liaison, stress), each explained like
     a grammar rule with a round of questions. Read by Claude the first time the tab opens, apart
     from the Grammar tab's reading, and kept for this lesson text and interface language. */
-export default function PhoneticsTab({
+const PhoneticsTab = ({
   body,
   hash,
   language,
@@ -36,7 +36,7 @@ export default function PhoneticsTab({
   hasClaude: boolean;
   // told how many points Claude found, when the reading arrives (the tab's count)
   onRead?: (count: number) => void;
-}) {
+}) => {
   const { t, language: uiLanguage } = useTranslation(paper);
   const commonText = useTranslation(common);
   const storageKey = phoneticsKey(hash, uiLanguage);
@@ -163,4 +163,6 @@ export default function PhoneticsTab({
       ))}
     </div>
   );
-}
+};
+
+export default PhoneticsTab;

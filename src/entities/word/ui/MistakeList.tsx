@@ -5,13 +5,7 @@ import { type FormStat, type WordStat } from '../model/progress';
 import Transcription from './Transcription';
 
 // Missed words and verb forms with how often each was missed.
-export default function MistakeList({
-  words = [],
-  forms = [],
-}: {
-  words?: WordStat[];
-  forms?: FormStat[];
-}) {
+const MistakeList = ({ words = [], forms = [] }: { words?: WordStat[]; forms?: FormStat[] }) => {
   const { t } = useTranslation(common);
   const translationOf = useTranslationLanguage();
   return (
@@ -47,4 +41,6 @@ export default function MistakeList({
       ))}
     </ul>
   );
-}
+};
+
+export default MistakeList;

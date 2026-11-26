@@ -50,7 +50,7 @@ export const readRecords = (docId: string): GameRecord[] =>
 
 /** The words a round is played on: the newest lesson's, with the one before it when the newest
     has too few to tell apart (a lesson that has only just started). */
-export function gameWords(lessons: Lesson[], bank: Bank, hasClaude: boolean): Word[] {
+export const gameWords = (lessons: Lesson[], bank: Bank, hasClaude: boolean): Word[] => {
   const newest = lessons[lessons.length - 1];
   if (!newest) return [];
   const words = lessonWords(newest, bank, hasClaude).filter((word) => word.ru);
@@ -63,16 +63,16 @@ export function gameWords(lessons: Lesson[], bank: Bank, hasClaude: boolean): Wo
       (word) => word.ru && !seen.has(word.fr.toLowerCase())
     ),
   ];
-}
+};
 
 // The best rounds on this device, best first.
-export function RecordsTable({
+export const RecordsTable = ({
   records,
   highlight,
 }: {
   records: GameRecord[];
   highlight?: number;
-}) {
+}) => {
   const { t, locale } = useTranslation(game);
   if (!records.length) return <p className="hint">{t('noRecords')}</p>;
   const date = new Intl.DateTimeFormat(locale, { day: 'numeric', month: 'short' });
@@ -101,7 +101,7 @@ export function RecordsTable({
       </tbody>
     </table>
   );
-}
+};
 
 type Answer = { picked: string | null; points: number };
 type ChoiceItem = Extract<QuizItem, { kind: 'pick-ru' | 'pick-fr' }>;
@@ -110,7 +110,7 @@ const isChoice = (item: QuizItem | undefined): item is ChoiceItem =>
 
 /** A round against the clock: choice questions, points for a right answer and more for a fast
     one, and the records table at the end. Made for the shared screen during the lesson. */
-export default function QuizGame({
+const QuizGame = ({
   words,
   pool,
   lessonNumber,
@@ -125,7 +125,7 @@ export default function QuizGame({
   lessonKey: string;
   docId: string;
   onClose: () => void;
-}) {
+}) => {
   const { t } = useTranslation(game);
   const translationOf = useTranslationLanguage();
   const make = () =>
@@ -298,4 +298,6 @@ export default function QuizGame({
       )}
     </div>
   );
-}
+};
+
+export default QuizGame;

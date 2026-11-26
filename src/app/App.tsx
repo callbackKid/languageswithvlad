@@ -49,7 +49,7 @@ import { WordActions } from '@/widgets/word-menu';
 import { useDocumentSync } from './model/useDocumentSync';
 import TooltipLayer from './TooltipLayer';
 
-function ago(timestamp: number, { t, locale }: Translator<keyof (typeof app)['en']>): string {
+const ago = (timestamp: number, { t, locale }: Translator<keyof (typeof app)['en']>): string => {
   const minutes = Math.round((Date.now() - timestamp) / 60000);
   if (minutes < 1) return t('justNow');
   if (minutes < 60) return t('minutesAgo', { count: minutes });
@@ -57,7 +57,7 @@ function ago(timestamp: number, { t, locale }: Translator<keyof (typeof app)['en
   return hours < 24
     ? t('hoursAgo', { count: hours })
     : new Date(timestamp).toLocaleDateString(locale);
-}
+};
 
 // phones show the menu as a list that drops down, so it starts closed there
 const PHONE = '(max-width: 760px)';
@@ -72,7 +72,7 @@ const ICON_PATHS = {
 };
 
 // An icon for a round icon button, in the text colour.
-function ButtonIcon({ name }: { name: keyof typeof ICON_PATHS }) {
+const ButtonIcon = ({ name }: { name: keyof typeof ICON_PATHS }) => {
   return (
     <svg
       aria-hidden="true"
@@ -88,10 +88,10 @@ function ButtonIcon({ name }: { name: keyof typeof ICON_PATHS }) {
       <path d={ICON_PATHS[name]} />
     </svg>
   );
-}
+};
 
 // The whole app: the top bar, the menu and the page of the current address.
-export default function App({ initialDocId }: { initialDocId: string | null }) {
+const App = ({ initialDocId }: { initialDocId: string | null }) => {
   const translation = useTranslation(app);
   const settings = useSettings();
   const { t, rich } = translation;
@@ -193,14 +193,14 @@ export default function App({ initialDocId }: { initialDocId: string | null }) {
     null;
   const currentLessonKey = lesson?.key ?? null;
 
-  function connect(id: string) {
+  const connect = (id: string) => {
     setProgressDoc(id);
     selectDocument(id);
     setChanging(false);
     const url = new URL(window.location.href);
     url.searchParams.set('doc', id);
     window.history.replaceState(null, '', url);
-  }
+  };
 
   if (needsCode)
     return (
@@ -465,4 +465,6 @@ export default function App({ initialDocId }: { initialDocId: string | null }) {
       <TooltipLayer />
     </>
   );
-}
+};
+
+export default App;

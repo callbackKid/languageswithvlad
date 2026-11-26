@@ -44,7 +44,7 @@ const readLast = (): MadeExercise | null =>
 /** The exercise maker in lesson mode, for the teacher and the student alike: grammar and/or the lesson's words, a level and a
     number of questions; Claude writes a mixed round (choose, fill the gap, translate) that the
     student then does right here, each answer checked and explained. */
-export default function MakeExercise({
+const MakeExercise = ({
   language,
   words,
   lessonNumber,
@@ -53,7 +53,7 @@ export default function MakeExercise({
   // the newest lesson's words, the ones the exercise can practise
   words: string[];
   lessonNumber: number | null;
-}) {
+}) => {
   const { t } = useTranslation(makeExerciseText);
   const commonText = useTranslation(common);
   const [grammar, setGrammar] = useState('');
@@ -68,7 +68,7 @@ export default function MakeExercise({
   const practised = useWords ? words : [];
   const canMake = !!grammar.trim() || practised.length > 0;
 
-  async function make(event?: FormEvent) {
+  const make = async (event?: FormEvent) => {
     event?.preventDefault();
     if (!canMake) return;
     setState('loading');
@@ -90,7 +90,7 @@ export default function MakeExercise({
         failure instanceof ApiError ? failure.message : translator(makeExerciseText).t('failed')
       );
     }
-  }
+  };
 
   if (exercise && isRunning)
     return <ExerciseRound exercise={exercise} onClose={() => setRunning(false)} />;
@@ -171,4 +171,6 @@ export default function MakeExercise({
       )}
     </>
   );
-}
+};
+
+export default MakeExercise;

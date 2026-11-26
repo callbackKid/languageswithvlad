@@ -60,7 +60,7 @@ export interface BoardHandle {
 }
 
 // The board itself: saved on this device per day, and shared live when a connection is given.
-export default function BoardCanvas({
+const BoardCanvas = ({
   storageKey,
   language,
   dark,
@@ -81,7 +81,7 @@ export default function BoardCanvas({
   name: string;
   onReady: (handle: BoardHandle) => void;
   onPeers: (peers: BoardPeer[]) => void;
-}) {
+}) => {
   const api = useRef<ExcalidrawImperativeAPI | null>(null);
   // opened and closed by the effect below, so React's double mount in development is harmless
   const connectionRef = useRef<BoardConnection | null>(null);
@@ -269,4 +269,6 @@ export default function BoardCanvas({
       }}
     />
   );
-}
+};
+
+export default BoardCanvas;

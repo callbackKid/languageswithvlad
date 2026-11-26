@@ -23,7 +23,7 @@ const LOGGED_DETAIL = 300;
 export class GoogleError extends HttpError {}
 
 // The service account in GOOGLE_SERVICE_ACCOUNT; null when it isn't set or can't be read.
-export function serviceAccount(): ServiceAccount | null {
+export const serviceAccount = (): ServiceAccount | null => {
   const raw = process.env.GOOGLE_SERVICE_ACCOUNT;
   if (!raw) return null;
   try {
@@ -34,14 +34,14 @@ export function serviceAccount(): ServiceAccount | null {
   } catch {
     return null;
   }
-}
+};
 
 const base64Url = (input: string | Buffer) => Buffer.from(input).toString('base64url');
 
 let cachedToken: { value: string; expiresAt: number } | null = null;
 
 // A short-lived access token, reused while it is valid.
-async function accessToken(account: ServiceAccount): Promise<string> {
+const accessToken = async (account: ServiceAccount): Promise<string> => {
   if (cachedToken && cachedToken.expiresAt > Date.now() + 60_000) return cachedToken.value;
   const now = Math.floor(Date.now() / 1000);
   const header = base64Url(JSON.stringify({ alg: 'RS256', typ: 'JWT' }));
@@ -77,7 +77,7 @@ async function accessToken(account: ServiceAccount): Promise<string> {
   const data = (await tokenResponse.json()) as { access_token: string; expires_in: number };
   cachedToken = { value: data.access_token, expiresAt: Date.now() + data.expires_in * 1000 };
   return data.access_token;
-}
+};
 
 interface DocParagraph {
   startIndex?: number;
@@ -86,11 +86,11 @@ interface DocParagraph {
 
 /** Inserts the text at the end of one lesson: just before the next lesson's heading, or at the
     end of the document for the newest one. False when the lesson isn't in the document. */
-export async function insertIntoLesson(
+export const insertIntoLesson = async (
   documentId: string,
   target: LessonTarget,
   text: string
-): Promise<boolean> {
+): Promise<boolean> => {
   const account = serviceAccount();
   if (!account) throw new GoogleError(501, 'google_off');
   const token = await accessToken(account);
@@ -124,10 +124,10 @@ export async function insertIntoLesson(
   });
   if (!docsResponse.ok) throw new GoogleError(502, 'google_rejected');
   return true;
-}
+};
 
 // Adds text at the very end of a Google Doc.
-export async function appendToDoc(documentId: string, text: string): Promise<void> {
+export const appendToDoc = async (documentId: string, text: string): Promise<void> => {
   const account = serviceAccount();
   if (!account) throw new GoogleError(501, 'google_off');
   const token = await accessToken(account);
@@ -149,4 +149,4 @@ export async function appendToDoc(documentId: string, text: string): Promise<voi
     throw new GoogleError(403, 'google_no_edit', { email: account.client_email });
   }
   throw new GoogleError(502, 'google_rejected');
-}
+};

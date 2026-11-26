@@ -17,7 +17,7 @@ const JITSI_ROOM = /^lesson-[a-z0-9-]{4,60}$/;
 const MAX_NAME_LENGTH = 60;
 
 // A signature or token for joining one call inside the app.
-export default function handler(request: VercelRequest, response: VercelResponse) {
+const handler = (request: VercelRequest, response: VercelResponse) => {
   if (!onlyPost(request, response) || !checkAccess(request, response)) return;
   const body = (request.body ?? {}) as Record<string, unknown>;
 
@@ -41,4 +41,6 @@ export default function handler(request: VercelRequest, response: VercelResponse
   )
     return response.status(400).json({ error: 'bad_meeting_number' });
   response.status(200).json({ signature: zoomSignature(meetingNumber, sdkKey, secret) });
-}
+};
+
+export default handler;

@@ -10,7 +10,7 @@ import { Button } from '@/shared/ui/controls';
 import PageHead from '@/shared/ui/PageHead';
 
 // The words and verb forms missed most often, and a quiz on just those.
-export default function Mistakes({ bank }: { bank: Bank }) {
+const Mistakes = ({ bank }: { bank: Bank }) => {
   const { t } = useTranslation(pages);
   const progress = useProgress();
   const [isPractising, setPractising] = useState(false);
@@ -79,4 +79,6 @@ export default function Mistakes({ bank }: { bank: Bank }) {
       )}
     </>
   );
-}
+};
+
+export default Mistakes;

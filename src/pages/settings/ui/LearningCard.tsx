@@ -25,38 +25,41 @@ const verbLanguageOf = (language: Language): VerbLanguage | null =>
   VERB_LANGUAGES.find((candidate) => candidate === language) ?? null;
 
 // The tenses with one ticked or unticked, in the language's order; null when none would be left.
-function withToggled(language: VerbLanguage, ticked: readonly Tense[], tense: Tense) {
+const withToggled = (language: VerbLanguage, ticked: readonly Tense[], tense: Tense) => {
   const all: readonly Tense[] = TENSES_BY_LANGUAGE[language];
   const next = all.filter((name) =>
     name === tense ? !ticked.includes(name) : ticked.includes(name)
   );
   return next.length ? next : null;
-}
+};
 
 // The tenses ticked by hand without one language's: that language follows its level again.
-function withoutLanguage(tenses: Settings['tenses'], language: VerbLanguage): Settings['tenses'] {
+const withoutLanguage = (
+  tenses: Settings['tenses'],
+  language: VerbLanguage
+): Settings['tenses'] => {
   const others = { ...tenses };
   delete others[language];
   return others;
-}
+};
 
 // The tenses ticked by hand with one language's set; left out when they match the level's.
-function tensesWith(
+const tensesWith = (
   tenses: Settings['tenses'],
   language: VerbLanguage,
   level: Level,
   ticked: readonly Tense[]
-): Settings['tenses'] {
+): Settings['tenses'] => {
   // the same as the level's: follow the level, so a new level brings its tenses
   const sameAsLevel = ticked.join('|') === tensesForLevel(language, level).join('|');
   return sameAsLevel
     ? withoutLanguage(tenses, language)
     : { ...withoutLanguage(tenses, language), [language]: [...ticked] };
-}
+};
 
 /** The Learning card: the languages being learned, each with its level and the tenses quizzes
     ask, and a button that adds one more after asking for the same. */
-export default function LearningCard() {
+const LearningCard = () => {
   const { t } = useTranslation(settingsText);
   const names = useTranslation(learning);
   const settings = useSettings();
@@ -144,10 +147,12 @@ export default function LearningCard() {
       <small className="hint">{t('quizTensesHint')}</small>
     </section>
   );
-}
+};
+
+export default LearningCard;
 
 // The tenses quizzes ask in one language, as checkboxes; one always stays ticked.
-function TenseChoice({
+const TenseChoice = ({
   language,
   level,
   ticked,
@@ -160,7 +165,7 @@ function TenseChoice({
   onChange: (ticked: Tense[]) => void;
   // shown when the tenses were ticked by hand: back to the level's
   onFollowLevel?: () => void;
-}) {
+}) => {
   const { t } = useTranslation(settingsText);
   return (
     <fieldset className={styles.tenses}>
@@ -194,11 +199,11 @@ function TenseChoice({
       )}
     </fieldset>
   );
-}
+};
 
 /** The form that adds a language: which one, the level, and the quiz tenses (the level's until
     some are ticked by hand). */
-function AddLanguage({ choices, onDone }: { choices: Language[]; onDone: () => void }) {
+const AddLanguage = ({ choices, onDone }: { choices: Language[]; onDone: () => void }) => {
   const { t } = useTranslation(settingsText);
   const names = useTranslation(learning);
   const commonText = useTranslation(common);
@@ -279,4 +284,4 @@ function AddLanguage({ choices, onDone }: { choices: Language[]; onDone: () => v
       </div>
     </div>
   );
-}
+};

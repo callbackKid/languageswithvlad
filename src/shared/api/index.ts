@@ -39,7 +39,7 @@ export class ApiError extends Error {
 }
 
 // teacherCode replaces the saved one, to check a code before it is kept.
-async function request<T>(path: string, init?: RequestInit, teacherCode?: string): Promise<T> {
+const request = async <T>(path: string, init?: RequestInit, teacherCode?: string): Promise<T> => {
   const headers: Record<string, string> = { 'content-type': 'application/json' };
   const code = loadText('code');
   if (code) headers['x-access-code'] = code;
@@ -63,7 +63,7 @@ async function request<T>(path: string, init?: RequestInit, teacherCode?: string
     throw new ApiError(response.status, errorCode, messageFor(response.status, errorCode, fields));
   }
   return data as T;
-}
+};
 
 type CommonKey = keyof (typeof common)['en'];
 // The text in common.ts for each error code the server sends (api/), so every error the student
@@ -111,7 +111,7 @@ const ERROR_TEXTS: Record<string, CommonKey> = {
 
 /** The error in the interface language: by its code, or by the status for an answer without one
     (a timeout, a proxy). An English sentence from a server older than the app is shown as it is. */
-function messageFor(status: number, errorCode: string, fields: Record<string, unknown>): string {
+const messageFor = (status: number, errorCode: string, fields: Record<string, unknown>): string => {
   const { t } = translator(common);
   if (status === 401) {
     window.dispatchEvent(new Event('cahier:need-code'));
@@ -130,7 +130,7 @@ function messageFor(status: number, errorCode: string, fields: Record<string, un
   return errorCode && errorCode.length > 3 && !/^[a-z_]+$/.test(errorCode)
     ? errorCode
     : t('somethingWrong');
-}
+};
 
 // Prompts that only learn the language from what they read (a lesson, a photo, a text) get the
 // student's level in every language, from Settings.
@@ -139,7 +139,7 @@ function messageFor(status: number, errorCode: string, fields: Record<string, un
     language is part of the key: an answer in Russian never stands in for one in English. Claude
     finds out the lesson's language itself, so it gets the fallback for a lesson in translateTo. */
 const inflight = new Map<string, Promise<unknown>>();
-function analyzeOnce(body: string, fresh: boolean): Promise<unknown> {
+const analyzeOnce = (body: string, fresh: boolean): Promise<unknown> => {
   const { levels, translateTo } = getSettings();
   const cacheKey = `${fresh ? 1 : 0}:${translateTo}:${body}`;
   let pending = inflight.get(cacheKey);
@@ -156,7 +156,7 @@ function analyzeOnce(body: string, fresh: boolean): Promise<unknown> {
     inflight.set(cacheKey, pending);
   }
   return pending;
-}
+};
 
 interface Health {
   needsCode: boolean;

@@ -38,13 +38,13 @@ const firstWords = (text: string) => {
 };
 
 // True-or-false statements about the text: each is answered once, then explained.
-function TrueFalse({
+const TrueFalse = ({
   statements,
   language,
 }: {
   statements: TextStudy['statements'];
   language: Language;
-}) {
+}) => {
   const { t } = useTranslation(reader);
   const translationOf = useTranslationLanguage();
   const [answers, setAnswers] = useState<Record<number, boolean>>({});
@@ -93,12 +93,12 @@ function TrueFalse({
       )}
     </>
   );
-}
+};
 
 /** A pasted text to read: any word or phrase explained by the word menu (a click on a word, or a
     selection) and kept in a list under the text, a translation of the whole text, and words,
     questions and a true-or-false exercise built from it. */
-export default function Reader({ hasClaude }: { hasClaude: boolean }) {
+const Reader = ({ hasClaude }: { hasClaude: boolean }) => {
   const { t } = useTranslation(reader);
   const translationOf = useTranslationLanguage();
   const commonText = useTranslation(common);
@@ -168,7 +168,7 @@ export default function Reader({ hasClaude }: { hasClaude: boolean }) {
   const failure = (problem: unknown, fallback: 'translateFailed' | 'studyFailed') =>
     setError(problem instanceof ApiError ? problem.message : translator(reader).t(fallback));
 
-  function addText() {
+  const addText = () => {
     const text = draft.trim();
     if (!text) return;
     if (text.length > MAX_TEXT_LENGTH) {
@@ -185,18 +185,18 @@ export default function Reader({ hasClaude }: { hasClaude: boolean }) {
     setTexts([entry, ...texts].slice(0, MAX_TEXTS));
     setDraft('');
     open(entry.id);
-  }
+  };
 
-  function removeCurrent() {
+  const removeCurrent = () => {
     setDeleting(null);
     if (!current) return;
     const next = texts.filter((entry) => entry.id !== current.id);
     setTexts(next);
     open(next[0]?.id ?? null);
-  }
+  };
 
   // A click on a word opens the word menu on it; a selection opens it by itself.
-  function lookUpWord(event: MouseEvent<HTMLElement>) {
+  const lookUpWord = (event: MouseEvent<HTMLElement>) => {
     const target = event.target;
     if (!(target instanceof HTMLElement) || !target.classList.contains('reader-word')) return;
     if (!window.getSelection()?.isCollapsed) return;
@@ -208,9 +208,9 @@ export default function Reader({ hasClaude }: { hasClaude: boolean }) {
       ...menuPlace(target.getBoundingClientRect()),
       source: WORD_SOURCE,
     });
-  }
+  };
 
-  async function translate() {
+  const translate = async () => {
     if (!current) return;
     setTranslating('loading');
     setError('');
@@ -227,9 +227,9 @@ export default function Reader({ hasClaude }: { hasClaude: boolean }) {
       setTranslating('error');
       failure(problem, 'translateFailed');
     }
-  }
+  };
 
-  async function study() {
+  const study = async () => {
     if (!current) return;
     setStudying('loading');
     setError('');
@@ -245,7 +245,7 @@ export default function Reader({ hasClaude }: { hasClaude: boolean }) {
       setStudying('error');
       failure(problem, 'studyFailed');
     }
-  }
+  };
 
   if (!hasClaude)
     return (
@@ -504,4 +504,6 @@ export default function Reader({ hasClaude }: { hasClaude: boolean }) {
       )}
     </>
   );
-}
+};
+
+export default Reader;

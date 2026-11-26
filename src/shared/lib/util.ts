@@ -35,7 +35,7 @@ export const asText = (value: unknown): string => (typeof value === 'string' ? v
 export const keepBracketsTogether = (text: string): string => text.replace(/(\S)\(/g, '$1⁠(');
 
 // Saves text as a file in the browser's downloads.
-export function downloadText(filename: string, text: string, type = 'text/plain') {
+export const downloadText = (filename: string, text: string, type = 'text/plain') => {
   const url = URL.createObjectURL(new Blob([text], { type: type + ';charset=utf-8' }));
   const link = document.createElement('a');
   link.href = url;
@@ -44,4 +44,4 @@ export function downloadText(filename: string, text: string, type = 'text/plain'
   link.click();
   link.remove();
   setTimeout(() => URL.revokeObjectURL(url), RELEASE_AFTER);
-}
+};

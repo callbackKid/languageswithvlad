@@ -20,7 +20,7 @@ const Button = ({ children, primary }: { children: ReactNode; primary?: boolean 
 );
 const Key = ({ children }: { children: ReactNode }) => <kbd className="key">{children}</kbd>;
 
-function OpenLink({ section, children }: { section: Section; children?: ReactNode }) {
+const OpenLink = ({ section, children }: { section: Section; children?: ReactNode }) => {
   const { t } = useTranslation(tutorial);
   const sectionName = useTranslation(app).t(`section.${section}`);
   const entry = SECTIONS.find((candidate) => candidate.id === section);
@@ -34,7 +34,7 @@ function OpenLink({ section, children }: { section: Section; children?: ReactNod
       {children ?? t('open', { section: sectionName })} →
     </a>
   );
-}
+};
 
 // The markup the tutorial texts may use.
 const TAGS: Record<string, (chunk: ReactNode) => ReactNode> = {
@@ -53,7 +53,7 @@ const QUICK_START = [1, 2, 3, 4];
 const range = (count: number) => Array.from({ length: count }, (_value, index) => index + 1);
 
 // The drawings of the screen, labelled with the same texts the app shows.
-function MockBody({ id }: { id: string }) {
+const MockBody = ({ id }: { id: string }) => {
   const { t: appText, rich: appRich } = useTranslation(app);
   const exercise = useTranslation(exercises).t;
   const page = useTranslation(pages).t;
@@ -171,10 +171,10 @@ function MockBody({ id }: { id: string }) {
     default:
       return null;
   }
-}
+};
 
 // A guide to every part of the app, for someone using it for the first time.
-export default function Tutorial() {
+const Tutorial = () => {
   const { t, rich } = useTranslation(tutorial);
   const text = (key: string) => rich(key as TutorialKey, TAGS);
   const plain = (key: string) => t(key as TutorialKey);
@@ -278,4 +278,6 @@ export default function Tutorial() {
       </section>
     </>
   );
-}
+};
+
+export default Tutorial;

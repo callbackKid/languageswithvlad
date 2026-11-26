@@ -21,52 +21,52 @@ export class HttpError extends Error {
 }
 
 // Compares in constant time, so the answer's timing doesn't leak how much of a guess was right.
-function sameSecret(given: string, expected: string): boolean {
+const sameSecret = (given: string, expected: string): boolean => {
   const givenBytes = Buffer.from(given);
   const expectedBytes = Buffer.from(expected);
   return givenBytes.length === expectedBytes.length && timingSafeEqual(givenBytes, expectedBytes);
-}
+};
 
 // Rejects requests without the shared access code (when one is configured).
-export function checkAccess(request: VercelRequest, response: VercelResponse): boolean {
+export const checkAccess = (request: VercelRequest, response: VercelResponse): boolean => {
   const code = process.env.APP_ACCESS_CODE;
   if (!code) return true;
   const given = request.headers['x-access-code'];
   if (typeof given === 'string' && sameSecret(given, code)) return true;
   response.status(401).json({ error: 'access_code' });
   return false;
-}
+};
 
 /** True when the request carries the teacher code (APP_TEACHER_CODE), which unlocks the teacher's
     tools; without the variable nobody is a teacher. */
-export function isTeacher(request: VercelRequest): boolean {
+export const isTeacher = (request: VercelRequest): boolean => {
   const code = process.env.APP_TEACHER_CODE;
   const given = request.headers['x-teacher-code'];
   return !!code && typeof given === 'string' && sameSecret(given, code);
-}
+};
 
 // Rejects a request for a teacher's tool that doesn't carry the teacher code.
-export function checkTeacher(request: VercelRequest, response: VercelResponse): boolean {
+export const checkTeacher = (request: VercelRequest, response: VercelResponse): boolean => {
   if (isTeacher(request)) return true;
   response.status(403).json({ error: 'teacher_code' });
   return false;
-}
+};
 
 // Rejects every method but POST, the only one the endpoints that change or cost something take.
-export function onlyPost(request: VercelRequest, response: VercelResponse): boolean {
+export const onlyPost = (request: VercelRequest, response: VercelResponse): boolean => {
   if (request.method === 'POST') return true;
   response.setHeader('Allow', 'POST');
   response.status(405).json({ error: 'method' });
   return false;
-}
+};
 
 // Answers with the error's own status and message when it is one of ours, 500 otherwise.
-export function fail(response: VercelResponse, error: unknown) {
+export const fail = (response: VercelResponse, error: unknown) => {
   if (error instanceof HttpError)
     return response.status(error.status).json({ ...error.details, error: error.message });
   console.error(error);
   return response.status(500).json({ error: 'server_error' });
-}
+};
 
 // A request field as trimmed text of at most maxLength characters; "" when it isn't a string.
 export const text = (value: unknown, maxLength: number): string =>

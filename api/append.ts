@@ -10,7 +10,7 @@ const MAX_TEXT_LENGTH = 20_000;
 
 /** Appends a new lesson (heading and lines, built by the app) to the end of the Google Doc or
     Notion page; or, with a lesson key, adds the lines at the end of that lesson. */
-export default async function handler(request: VercelRequest, response: VercelResponse) {
+const handler = async (request: VercelRequest, response: VercelResponse) => {
   if (!onlyPost(request, response) || !checkAccess(request, response)) return;
   const documentId = typeof request.body?.docId === 'string' ? request.body.docId : '';
   const text = typeof request.body?.text === 'string' ? request.body.text : '';
@@ -34,4 +34,6 @@ export default async function handler(request: VercelRequest, response: VercelRe
   } catch (error) {
     fail(response, error);
   }
-}
+};
+
+export default handler;

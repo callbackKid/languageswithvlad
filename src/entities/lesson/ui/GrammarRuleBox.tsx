@@ -9,7 +9,7 @@ import { type GrammarRule } from '../model/types';
 
 /** A grammar point explained: what it is, how it's formed, when it's used, examples and the usual
     mistake. Folded away until opened; used in Discuss and in a lesson's Grammar and Phonetics tabs. */
-export default function GrammarRuleBox({
+const GrammarRuleBox = ({
   rule,
   language,
   label,
@@ -32,7 +32,7 @@ export default function GrammarRuleBox({
   formationLabel?: string;
   // buttons under the explanation
   children?: ReactNode;
-}) {
+}) => {
   const { t, language: uiLanguage } = useTranslation(talk);
   const Title = level === 2 ? 'h2' : 'h3';
   const Part = level === 2 ? 'h3' : 'h4';
@@ -101,4 +101,6 @@ export default function GrammarRuleBox({
       </div>
     </details>
   );
-}
+};
+
+export default GrammarRuleBox;

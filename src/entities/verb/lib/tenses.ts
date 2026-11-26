@@ -50,13 +50,13 @@ const FIRST_LEVEL: {
 };
 
 // The tenses usually learned by a level, in the order the Verbs tab shows them.
-export function tensesForLevel(language: VerbLanguage, level: Level): Tense[] {
+export const tensesForLevel = (language: VerbLanguage, level: Level): Tense[] => {
   const reached = LEVELS.indexOf(level);
   const firstLevels: Record<string, Level> = FIRST_LEVEL[language];
   return TENSES_BY_LANGUAGE[language].filter(
     (tense) => LEVELS.indexOf(firstLevels[tense] ?? 'A0') <= reached
   );
-}
+};
 
 // The tenses quizzes ask in a language: the ones ticked in Settings, or those of the level.
 export const knownTenses = (language: VerbLanguage, settings: Settings = getSettings()): Tense[] =>

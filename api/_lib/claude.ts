@@ -25,7 +25,7 @@ const MEDIA_TYPES = new Set<string>(['image/jpeg', 'image/png', 'image/webp', 'i
 const MAX_TOTAL_BASE64 = 4_000_000;
 
 // Reads up to maxCount photos from the request body ({images: [{mediaType, data}]}); an HttpError is the answer to send back.
-export function readImages(body: unknown, maxCount: number): ImageInput[] | HttpError {
+export const readImages = (body: unknown, maxCount: number): ImageInput[] | HttpError => {
   const raw = (body as { images?: unknown } | null)?.images;
   const list = Array.isArray(raw) ? raw : [];
   if (!list.length) return new HttpError(400, 'nothing_sent');
@@ -47,10 +47,10 @@ export function readImages(body: unknown, maxCount: number): ImageInput[] | Http
   }
   if (total > MAX_TOTAL_BASE64) return new HttpError(413, 'pictures_too_large');
   return images;
-}
+};
 
 // Asks Claude and returns the JSON in its answer; a warm instance answers an identical prompt from its cache.
-export async function claudeJSON(
+export const claudeJSON = async (
   prompt: string,
   options: {
     model?: string;
@@ -60,7 +60,7 @@ export async function claudeJSON(
     // base64 PDFs, read before the prompt
     pdfs?: string[];
   } = {}
-): Promise<unknown> {
+): Promise<unknown> => {
   const model = options.model || MODEL;
   const images = options.images || [];
   const pdfs = options.pdfs || [];
@@ -128,10 +128,10 @@ export async function claudeJSON(
     cache.set(key, value);
   }
   return value;
-}
+};
 
 // The JSON in Claude's reply, also when it comes in a ```json fence or after a sentence; undefined when there is none.
-export function extractJSON(text: string): unknown {
+export const extractJSON = (text: string): unknown => {
   const trimmed = text.trim();
   const tries = [trimmed];
   const fence = trimmed.match(/```(?:json)?\s*([\s\S]*?)```/);
@@ -147,4 +147,4 @@ export function extractJSON(text: string): unknown {
     }
   }
   return undefined;
-}
+};

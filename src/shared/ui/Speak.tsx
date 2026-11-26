@@ -6,7 +6,7 @@ import { IconButton } from './controls';
 
 /** A small 🔊 button that reads the text aloud; hidden where the browser has no speech. label
     replaces "Listen: {text}" for a screen reader where the text must stay hidden (an answer). */
-export default function Speak({
+const Speak = ({
   text,
   language = 'fr',
   label,
@@ -14,7 +14,7 @@ export default function Speak({
   text: string;
   language?: Language;
   label?: string;
-}) {
+}) => {
   const { t } = useTranslation(common);
   if (!canSpeak) return null;
   return (
@@ -30,4 +30,6 @@ export default function Speak({
       🔊
     </IconButton>
   );
-}
+};
+
+export default Speak;

@@ -5,7 +5,7 @@ import { checkAccess, fail } from './_lib/http.js';
 import { NOTION_ID, readNotion } from './_lib/notion.js';
 
 // Reads a Google Doc shared as "Anyone with the link can view", or a Notion page, as plain text.
-export default async function handler(request: VercelRequest, response: VercelResponse) {
+const handler = async (request: VercelRequest, response: VercelResponse) => {
   // the class code guards the lessons too: with Notion connected, this reads private pages
   if (!checkAccess(request, response)) return;
   const id = String(request.query.id || '');
@@ -54,4 +54,6 @@ export default async function handler(request: VercelRequest, response: VercelRe
     console.error(error);
     return response.status(502).json({ error: 'unreachable' });
   }
-}
+};
+
+export default handler;

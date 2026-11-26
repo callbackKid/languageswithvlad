@@ -21,7 +21,7 @@ type Side = 'left' | 'right';
 
 /** The next few pairs, and the ones left for later rounds. No text appears twice in a round:
     two tiles reading the same (two words with one translation) can't be told apart. */
-function makeRound(pool: MatchPair[]) {
+const makeRound = (pool: MatchPair[]) => {
   const round: MatchPair[] = [];
   const rest: MatchPair[] = [];
   const seenLeft = new Set<string>();
@@ -41,10 +41,10 @@ function makeRound(pool: MatchPair[]) {
     leftIds: shuffle(round.map((pair) => pair.id)),
     rightIds: shuffle(round.map((pair) => pair.id)),
   };
-}
+};
 
 // Two columns to match, words and their translations or synonyms and antonyms, a few pairs at a time.
-export default function Match({
+const Match = ({
   pairs,
   mode,
   onClose,
@@ -54,7 +54,7 @@ export default function Match({
   mode: 'words' | 'syn';
   onClose: () => void;
   onRestart: () => void;
-}) {
+}) => {
   const { t } = useTranslation(exercises);
   const names = useTranslation(learning);
   // key words of the lesson (★) in the first rounds
@@ -77,7 +77,7 @@ export default function Match({
   const roundDone = round.length > 0 && done.size === round.length;
   const title = mode === 'syn' ? t('synonyms') : t('matchTranslations');
 
-  function choose(side: Side, id: string) {
+  const choose = (side: Side, id: string) => {
     if (done.has(id)) return;
     const next = { ...pick, [side]: pick[side] === id ? null : id };
     setWrong(null);
@@ -98,13 +98,13 @@ export default function Match({
       if (word) recordWord(word, false);
     }
     setPick({ left: null, right: null });
-  }
-  function nextRound() {
+  };
+  const nextRound = () => {
     setRound(makeRound(rest));
     setDone(new Set());
     setPick({ left: null, right: null });
     setWrong(null);
-  }
+  };
 
   const tile = (side: Side, id: string) => {
     const pair = byId[id];
@@ -178,4 +178,6 @@ export default function Match({
       )}
     </div>
   );
-}
+};
+
+export default Match;

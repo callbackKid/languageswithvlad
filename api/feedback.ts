@@ -25,7 +25,7 @@ const PHOTO_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp']);
 const RECENT_LIMIT = 5;
 const RECENT_WINDOW = 10 * 60 * 1000;
 const recent = new Map<string, number[]>();
-function tooMany(visitor: string): boolean {
+const tooMany = (visitor: string): boolean => {
   const now = Date.now();
   // forget visitors whose reports are all old, so the list doesn't grow for ever
   for (const [known, times] of recent)
@@ -34,9 +34,9 @@ function tooMany(visitor: string): boolean {
   times.push(now);
   recent.set(visitor, times);
   return times.length > RECENT_LIMIT;
-}
+};
 
-function readPhotos(raw: unknown): TelegramPhoto[] | HttpError {
+const readPhotos = (raw: unknown): TelegramPhoto[] | HttpError => {
   const list = Array.isArray(raw) ? raw : [];
   if (list.length > MAX_PHOTOS)
     return new HttpError(400, 'too_many_pictures', { count: String(MAX_PHOTOS) });
@@ -56,10 +56,10 @@ function readPhotos(raw: unknown): TelegramPhoto[] | HttpError {
   }
   if (total > MAX_PHOTOS_BASE64) return new HttpError(413, 'pictures_too_large');
   return photos;
-}
+};
 
 // A bug report, suggestion or any message from a student, with optional screenshots, sent to the teacher's Telegram.
-export default async function handler(request: VercelRequest, response: VercelResponse) {
+const handler = async (request: VercelRequest, response: VercelResponse) => {
   if (!onlyPost(request, response) || !checkAccess(request, response)) return;
   if (!telegramConfigured()) return response.status(501).json({ error: 'feedback_off' });
 
@@ -98,4 +98,6 @@ export default async function handler(request: VercelRequest, response: VercelRe
   } catch (error) {
     fail(response, error);
   }
-}
+};
+
+export default handler;

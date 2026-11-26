@@ -61,7 +61,7 @@ const MAX_EXERCISE_WORDS = 30;
 const utcDay = () => new Date().toISOString().slice(0, 10);
 
 // Notes taken during the lesson, saved per day, with a button that adds them to the Google Doc.
-function LessonNotes({ docId, target }: { docId: string; target: DocTarget }) {
+const LessonNotes = ({ docId, target }: { docId: string; target: DocTarget }) => {
   const { t } = useTranslation(call);
   const storageKey = `call-notes:${docId}:${today()}`;
   const [text, setText] = useState(() => loadText(storageKey) ?? '');
@@ -135,12 +135,12 @@ function LessonNotes({ docId, target }: { docId: string; target: DocTarget }) {
       <AddToDoc key={hash(text)} target={target} lines={text.split('\n')} />
     </CallCard>
   );
-}
+};
 
 /** The homework the teacher sets during the lesson, one task per line, saved on this device for
     the day. It goes into the document as a homework block ("Devoirs:" and a "- " line per task)
     under the lesson picked, the newest at first, so the student finds it on Home as a checklist. */
-function HomeworkNotes({
+const HomeworkNotes = ({
   docId,
   target,
   lessons,
@@ -148,7 +148,7 @@ function HomeworkNotes({
   docId: string;
   target: DocTarget;
   lessons: Lesson[];
-}) {
+}) => {
   const { t } = useTranslation(call);
   const storageKey = `call-homework:${docId}:${today()}`;
   const [text, setText] = useState(() => loadText(storageKey) ?? '');
@@ -182,10 +182,10 @@ function HomeworkNotes({
       />
     </CallCard>
   );
-}
+};
 
 // The words of the newest lesson, to glance at and say aloud during the call.
-function LessonWords({ bank, lesson }: { bank: Bank; lesson: Lesson | null }) {
+const LessonWords = ({ bank, lesson }: { bank: Bank; lesson: Lesson | null }) => {
   const { t } = useTranslation(call);
   const translationOf = useTranslationLanguage();
   // the key words (★) first
@@ -235,11 +235,11 @@ function LessonWords({ bank, lesson }: { bank: Bank; lesson: Lesson | null }) {
       )}
     </CallCard>
   );
-}
+};
 
 /** The student's answers to the previous lesson's written tasks, as Claude corrected them, for
     the teacher to go over on the shared screen. Kept on the student's device, so shown there. */
-function WrittenHomework({ lesson, docId }: { lesson: Lesson | null; docId: string }) {
+const WrittenHomework = ({ lesson, docId }: { lesson: Lesson | null; docId: string }) => {
   const { t } = useTranslation(homeworkText);
   if (!lesson) return null;
   const language = readLessonLanguage(lesson.hash) ?? 'fr';
@@ -273,11 +273,11 @@ function WrittenHomework({ lesson, docId }: { lesson: Lesson | null; docId: stri
       ))}
     </CallCard>
   );
-}
+};
 
 /** Where the warm-up or the game opens: above the call, scrolled into view, since the button
     that opened it may be further down. */
-function ActivityPlace({ children }: { children: ReactNode }) {
+const ActivityPlace = ({ children }: { children: ReactNode }) => {
   const place = useRef<HTMLElement>(null);
   useEffect(() => {
     place.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -287,10 +287,10 @@ function ActivityPlace({ children }: { children: ReactNode }) {
       {children}
     </section>
   );
-}
+};
 
 // The exercise maker, on the newest lesson's words (key words first) and any grammar point.
-function MakeExerciseCard({ bank, lesson }: { bank: Bank; lesson: Lesson | null }) {
+const MakeExerciseCard = ({ bank, lesson }: { bank: Bank; lesson: Lesson | null }) => {
   const { t } = useTranslation(makeExerciseText);
   const words = keyWordsFirst(lesson ? bank.words.filter((word) => word.lesson === lesson.key) : [])
     .map((word) => word.fr)
@@ -304,11 +304,11 @@ function MakeExerciseCard({ bank, lesson }: { bank: Bank; lesson: Lesson | null 
       />
     </CallCard>
   );
-}
+};
 
 // A discussion question for the lesson, made here as on its own page.
 // Pages of the student's book, from photos or a PDF, written under the newest lesson.
-function BookCard({
+const BookCard = ({
   docId,
   lesson,
   canWrite,
@@ -316,7 +316,7 @@ function BookCard({
   docId: string;
   lesson: Lesson;
   canWrite: boolean;
-}) {
+}) => {
   const { t } = useTranslation(paper);
   const callText = useTranslation(call);
   return (
@@ -327,19 +327,19 @@ function BookCard({
       <BookImport docId={docId} lessonKey={lesson.key} docWriter={canWrite} embedded />
     </CallCard>
   );
-}
+};
 
-function DiscussCard({ bank, hasClaude }: { bank: Bank; hasClaude: boolean }) {
+const DiscussCard = ({ bank, hasClaude }: { bank: Bank; hasClaude: boolean }) => {
   const { t } = useTranslation(talk);
   return (
     <CallCard id="discuss" title={t('discussTitle')} className="discuss-card">
       <Discuss bank={bank} hasClaude={hasClaude} embedded />
     </CallCard>
   );
-}
+};
 
 // The quiz game offered during the lesson, with the records so far.
-function GameCard({ docId, onStart }: { docId: string; onStart: () => void }) {
+const GameCard = ({ docId, onStart }: { docId: string; onStart: () => void }) => {
   const { t } = useTranslation(game);
   return (
     <CallCard id="game" title={t('title')}>
@@ -352,10 +352,10 @@ function GameCard({ docId, onStart }: { docId: string; onStart: () => void }) {
       </div>
     </CallCard>
   );
-}
+};
 
 // The warm-up offered at the start of the lesson.
-function WarmUpCard({
+const WarmUpCard = ({
   lesson,
   preparing,
   onStart,
@@ -363,7 +363,7 @@ function WarmUpCard({
   lesson: Lesson | null;
   preparing: boolean;
   onStart: () => void;
-}) {
+}) => {
   const { t, locale } = useTranslation(call);
   const date = (value: Date) =>
     new Intl.DateTimeFormat(locale, { day: 'numeric', month: 'long' }).format(value);
@@ -381,11 +381,11 @@ function WarmUpCard({
       </div>
     </CallCard>
   );
-}
+};
 
 /** The warm-up round: the previous lesson's words and the student's mistakes since, ending with
     the list of what didn't stick, for the teacher to see on the shared screen. */
-function WarmUp({
+const WarmUp = ({
   bank,
   lesson,
   onClose,
@@ -393,7 +393,7 @@ function WarmUp({
   bank: Bank;
   lesson: Lesson | null;
   onClose: () => void;
-}) {
+}) => {
   const { t } = useTranslation(call);
   return (
     <ActivityPlace>
@@ -407,7 +407,7 @@ function WarmUp({
       />
     </ActivityPlace>
   );
-}
+};
 
 // Lesson mode: the call, the warm-up and the game, the teacher's notes and the lesson's words on one screen.
 // The two tabs under the call: the lesson's own cards, and the warm-up, the game and Discuss.
@@ -417,7 +417,7 @@ type CallTab = (typeof CALL_TABS)[number];
 const TAB_KEY = 'call:tab';
 const readCallTab = (): CallTab => CALL_TABS.find((tab) => tab === loadText(TAB_KEY)) ?? 'lesson';
 
-export default function LessonMode({
+const LessonMode = ({
   docText,
   docId,
   bank,
@@ -438,7 +438,7 @@ export default function LessonMode({
   jitsiAppId: string | null;
   boardServer: BoardServer | null;
   hasClaude: boolean;
-}) {
+}) => {
   const { t } = useTranslation(call);
   // the warm-up or the game, shown above the call
   const [activity, setActivity] = useState<'warm-up' | 'game' | null>(null);
@@ -449,10 +449,10 @@ export default function LessonMode({
   const { tabListProps, tabProps, panelProps } = useTabs(tab);
   // the call running in the page (Jitsi or Zoom); its video sits above the tabs, so a tab never closes it
   const [joined, setJoined] = useState<JoinedCall | null>(null);
-  function chooseTab(chosen: CallTab) {
+  const chooseTab = (chosen: CallTab) => {
     setTab(chosen);
     save(TAB_KEY, chosen);
-  }
+  };
   return (
     <>
       <PageHead
@@ -557,4 +557,6 @@ export default function LessonMode({
       <HomeworkNotes docId={docId} target={target} lessons={lessons} />
     </>
   );
-}
+};
+
+export default LessonMode;

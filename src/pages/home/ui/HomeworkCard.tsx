@@ -42,7 +42,7 @@ const ROUND = 10;
 const VERB_FORMS = 12;
 
 // "Next lesson in 2 days", read from the document's "le cours prochain:" line.
-function DueLine({ docText }: { docText: string }) {
+const DueLine = ({ docText }: { docText: string }) => {
   const { t } = useTranslation(homeworkText);
   const next = parseNextLesson(docText);
   if (!next || next === 'unconfirmed' || next.state !== 'upcoming') return null;
@@ -52,11 +52,11 @@ function DueLine({ docText }: { docText: string }) {
       {days <= 0 ? t('dueToday') : days === 1 ? t('dueTomorrow') : t('dueIn', { count: days })}
     </span>
   );
-}
+};
 
 /** A round on one lesson's words: a quiz, or gap sentences. The lesson is prepared first if this
     device doesn't have it yet. */
-function WordsExercise({
+const WordsExercise = ({
   lesson,
   gaps,
   bank,
@@ -70,7 +70,7 @@ function WordsExercise({
   hasClaude: boolean;
   onClose: () => void;
   onDone: () => void;
-}) {
+}) => {
   const { t } = useTranslation(homeworkText);
   const preparing = usePreparedLesson(lesson, bank, hasClaude);
   const [round, setRound] = useState(0);
@@ -106,11 +106,11 @@ function WordsExercise({
       }
     />
   );
-}
+};
 
 /** "verbes être, avoir — présent": forms of those verbs in that tense (in every tense when none
     is named). Tables the device doesn't have are asked from Claude. */
-function VerbsExercise({
+const VerbsExercise = ({
   item,
   language,
   hasClaude,
@@ -122,7 +122,7 @@ function VerbsExercise({
   hasClaude: boolean;
   onClose: () => void;
   onDone: () => void;
-}) {
+}) => {
   const { t } = useTranslation(homeworkText);
   const verbs = item.verbs ?? [];
   // "presente" names a tense in three languages: only the lesson's counts
@@ -183,11 +183,11 @@ function VerbsExercise({
       />
     </>
   );
-}
+};
 
 /** The homework the teacher wrote in the newest lesson, as a checklist on Home. Each task opens
     its exercise when the app has one; finishing it ticks the task. */
-export default function HomeworkCard({
+const HomeworkCard = ({
   homework,
   lessons,
   bank,
@@ -204,7 +204,7 @@ export default function HomeworkCard({
   docText: string;
   // whether the server can write to the document, for the report
   canWrite: boolean;
-}) {
+}) => {
   const { t } = useTranslation(homeworkText);
   const storageKey = homeworkKey(docId, homework.lesson.key);
   // read on every render: the store re-renders this card whenever ticks are saved anywhere
@@ -319,4 +319,6 @@ export default function HomeworkCard({
       <SendToTeacher lessons={lessons} docId={docId} canWrite={canWrite} />
     </section>
   );
-}
+};
+
+export default HomeworkCard;

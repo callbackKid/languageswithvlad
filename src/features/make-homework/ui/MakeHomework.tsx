@@ -31,9 +31,9 @@ const TRANSLATE_TO_KEY = 'homework:translate-to';
 
 /** The teacher's last choice when it is still one of the languages, their own translation
     language otherwise. */
-function savedTranslateTo(): UiLanguage {
+const savedTranslateTo = (): UiLanguage => {
   return asUiLanguage(load<unknown>(TRANSLATE_TO_KEY)) ?? getSettings().translateTo;
-}
+};
 
 const SENTENCE_COUNTS = Array.from(
   { length: MAX_TRANSLATE_SENTENCES - MIN_TRANSLATE_SENTENCES + 1 },
@@ -42,7 +42,7 @@ const SENTENCE_COUNTS = Array.from(
 
 /** "Make homework with Claude": a Devoirs: block from the lesson's words and grammar, key words
     first, checked and edited by the teacher, then written under the lesson in the document. */
-export default function MakeHomework({
+const MakeHomework = ({
   lesson,
   words,
   language,
@@ -58,7 +58,7 @@ export default function MakeHomework({
   // whether the server can write to this document
   docWriter: boolean;
   hasClaude: boolean;
-}) {
+}) => {
   const { t } = useTranslation(homeworkText);
   const commonText = useTranslation(common);
   const [step, setStep] = useState<Step>('idle');
@@ -69,7 +69,7 @@ export default function MakeHomework({
   const [level, setLevel] = useState<Level>(() => getSettings().levels[language]);
   const [translateTo, setTranslateTo] = useState<UiLanguage>(savedTranslateTo);
 
-  async function make() {
+  const make = async () => {
     setStep('making');
     setError('');
     try {
@@ -89,8 +89,8 @@ export default function MakeHomework({
         failure instanceof ApiError ? failure.message : translator(homeworkText).t('makeFailed')
       );
     }
-  }
-  async function add() {
+  };
+  const add = async () => {
     setStep('saving');
     setError('');
     try {
@@ -102,7 +102,7 @@ export default function MakeHomework({
       setStep('review');
       setError(failure instanceof ApiError ? failure.message : commonText.t('addFailed'));
     }
-  }
+  };
 
   return (
     <section className="make-homework">
@@ -216,4 +216,6 @@ export default function MakeHomework({
       )}
     </section>
   );
-}
+};
+
+export default MakeHomework;

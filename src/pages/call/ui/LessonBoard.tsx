@@ -16,7 +16,7 @@ const BoardCanvas = lazy(() => import('./BoardCanvas'));
 
 /** A drawing board for the lesson: write, draw, paste pictures. With sharing set up, the teacher
     and the student draw on the same board live; it is also saved on each device for each day. */
-export default function LessonBoard({
+const LessonBoard = ({
   storageKey,
   room,
   server,
@@ -26,7 +26,7 @@ export default function LessonBoard({
   room: string;
   // where the board is shared (Supabase), or null when it isn't set up
   server: BoardServer | null;
-}) {
+}) => {
   const { t, language } = useTranslation(call);
   const settings = useSettings();
   // the theme chosen in Settings, or the system's
@@ -51,7 +51,7 @@ export default function LessonBoard({
     };
   }, []);
 
-  async function savePicture() {
+  const savePicture = async () => {
     const blob = await handle.current?.picture();
     if (!blob) return;
     const url = URL.createObjectURL(blob);
@@ -60,7 +60,7 @@ export default function LessonBoard({
     link.download = `board-${new Date().toISOString().slice(0, 10)}.png`;
     link.click();
     setTimeout(() => URL.revokeObjectURL(url), RELEASE_AFTER);
-  }
+  };
 
   return (
     <CallCard
@@ -149,4 +149,6 @@ export default function LessonBoard({
       )}
     </CallCard>
   );
-}
+};
+
+export default LessonBoard;

@@ -7,7 +7,7 @@ import { Button } from '@/shared/ui/controls';
 import { cleanSelection, lookUp, menuPlace } from '../model/wordActions';
 
 // A word or phrase typed by hand, one that isn't in any text, opened in the word menu.
-export default function LookUpWord() {
+const LookUpWord = () => {
   const { t } = useTranslation(wordActions);
   const names = useTranslation(learning);
   const { studying } = useSettings();
@@ -18,7 +18,7 @@ export default function LookUpWord() {
   const language = chosen && studying.includes(chosen) ? chosen : (studying[0] ?? 'fr');
   const word = cleanSelection(typed);
 
-  function submit(event: FormEvent) {
+  const submit = (event: FormEvent) => {
     event.preventDefault();
     if (!word || !field.current) return;
     lookUp({
@@ -29,7 +29,7 @@ export default function LookUpWord() {
       ...menuPlace(field.current.getBoundingClientRect()),
       source: null,
     });
-  }
+  };
 
   return (
     <form className="look-up" onSubmit={submit}>
@@ -66,4 +66,6 @@ export default function LookUpWord() {
       </Button>
     </form>
   );
-}
+};
+
+export default LookUpWord;

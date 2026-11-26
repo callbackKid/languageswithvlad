@@ -7,7 +7,7 @@ import { asText } from '@/shared/lib/util';
 import { type Analysis, type GrammarRule, type LessonExtras, type LessonPhonetics } from './types';
 
 // The grammar, homework and book exercises Claude found in a lesson; missing parts are empty.
-export function normalizeExtras(raw: unknown): LessonExtras {
+export const normalizeExtras = (raw: unknown): LessonExtras => {
   const data = asObject(raw);
   return {
     language: asLanguage(data.language),
@@ -27,12 +27,12 @@ export function normalizeExtras(raw: unknown): LessonExtras {
       }))
       .filter((exercise) => exercise.title || exercise.instructions || exercise.items.length),
   };
-}
+};
 
 /** The pronunciation points Claude found in a lesson (or the device's copy of that answer, kept as
     it came), as rules with transcribed examples; [] when the lesson has none. Throws when the
     answer has no list of points at all. */
-export function normalizePhonetics(raw: unknown): LessonPhonetics {
+export const normalizePhonetics = (raw: unknown): LessonPhonetics => {
   const data = asObject(raw);
   if (!Array.isArray(data.phonetics)) throw new Error('no_phonetics');
   return {
@@ -59,10 +59,10 @@ export function normalizePhonetics(raw: unknown): LessonPhonetics {
       )
       .filter((topic) => topic.title),
   };
-}
+};
 
 // A lesson's words, pairs and verbs from Claude's answer or the device's copy; throws when the words are missing.
-export function normalizeAnalysis(raw: unknown): Analysis {
+export const normalizeAnalysis = (raw: unknown): Analysis => {
   const data = asObject(raw);
   const seen = new Set<string>();
   const words: Word[] = asArray(data.words)
@@ -103,10 +103,10 @@ export function normalizeAnalysis(raw: unknown): Analysis {
   if (!Array.isArray(data.words)) throw new Error('malformed');
   const language = asLanguage(data.language);
   return { language, topic: asText(data.topic), words, pairs, verbs, local: false };
-}
+};
 
 // The grammar rule Claude explains for a lesson; null when the answer has neither a title nor a summary.
-export function normalizeGrammarRule(raw: unknown): GrammarRule | null {
+export const normalizeGrammarRule = (raw: unknown): GrammarRule | null => {
   const data = asObject(raw);
   const title = asText(data.title);
   const summary = asText(data.summary);
@@ -122,4 +122,4 @@ export function normalizeGrammarRule(raw: unknown): GrammarRule | null {
       .filter((item) => item.text),
     pitfall: asText(data.pitfall),
   };
-}
+};

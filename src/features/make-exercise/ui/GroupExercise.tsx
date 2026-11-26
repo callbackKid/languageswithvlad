@@ -14,7 +14,7 @@ import RoundLoader from './RoundLoader';
 /** A round of GROUP_QUESTIONS mixed questions by Claude on one group of words, at the student's
     level; made when it opens and again with Create another, never saved. name is the group's
     name as shown. */
-export default function GroupExercise({
+const GroupExercise = ({
   words,
   name,
   onClose,
@@ -22,7 +22,7 @@ export default function GroupExercise({
   words: Word[];
   name: string;
   onClose: () => void;
-}) {
+}) => {
   const { t } = useTranslation(makeExerciseText);
   const commonText = useTranslation(common);
   const [practised] = useState(() => wordsForGroupExercise(words, getProgress()));
@@ -66,4 +66,6 @@ export default function GroupExercise({
       closeLabel={commonText.t('backToWords')}
     />
   );
-}
+};
+
+export default GroupExercise;

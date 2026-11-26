@@ -1,48 +1,48 @@
 const PREFIX = 'cahier-fr:';
 // A saved value as it was stored, or null. Only a cast: check anything but plain values (loadChecked).
-export function load<T>(key: string): T | null {
+export const load = <T>(key: string): T | null => {
   try {
     const stored = localStorage.getItem(PREFIX + key);
     return stored ? (JSON.parse(stored) as T) : null;
   } catch {
     return null;
   }
-}
+};
 // Reports whether storage accepted the value, including when storage is full or blocked.
-export function trySave(key: string, value: unknown): boolean {
+export const trySave = (key: string, value: unknown): boolean => {
   try {
     localStorage.setItem(PREFIX + key, JSON.stringify(value));
     return true;
   } catch {
     return false;
   }
-}
+};
 
 // Best-effort save for callers that do not present a saved status.
-export function save(key: string, value: unknown): void {
+export const save = (key: string, value: unknown): void => {
   trySave(key, value);
-}
+};
 
 // Listen for other tabs writing this key or clearing local storage.
-export function watchStorage(key: string, notify: () => void): () => void {
+export const watchStorage = (key: string, notify: () => void): (() => void) => {
   const onStorage = (event: StorageEvent) => {
     if ((event.key === PREFIX + key || event.key === null) && event.storageArea === localStorage)
       notify();
   };
   window.addEventListener('storage', onStorage);
   return () => window.removeEventListener('storage', onStorage);
-}
+};
 // Removes a saved value.
-export function remove(key: string): void {
+export const remove = (key: string): void => {
   try {
     localStorage.removeItem(PREFIX + key);
   } catch {
     // ignore
   }
-}
+};
 
 // Whether anything is saved under a key that starts with this prefix ("an2:" for any analysis).
-export function hasSavedKey(prefix: string): boolean {
+export const hasSavedKey = (prefix: string): boolean => {
   try {
     for (let index = 0; index < localStorage.length; index++) {
       if (localStorage.key(index)?.startsWith(PREFIX + prefix)) return true;
@@ -51,25 +51,25 @@ export function hasSavedKey(prefix: string): boolean {
   } catch {
     return false;
   }
-}
+};
 
 // A saved list of texts (ticked homework tasks): anything else in it is dropped.
 // A saved text; null when there is none or what is kept there isn't a text (damaged, or another shape).
-export function loadText(key: string): string | null {
+export const loadText = (key: string): string | null => {
   const stored = load<unknown>(key);
   return typeof stored === 'string' ? stored : null;
-}
+};
 
-export function loadTexts(key: string): string[] {
+export const loadTexts = (key: string): string[] => {
   const stored = load<unknown>(key);
   return Array.isArray(stored)
     ? stored.filter((item): item is string => typeof item === 'string')
     : [];
-}
+};
 
 /** A saved value passed through a check (a normalizeX or asX function): null when nothing is
     saved, or when what is saved can't be used (an older shape, a value edited by hand). */
-export function loadChecked<T>(key: string, check: (raw: unknown) => T | null): T | null {
+export const loadChecked = <T>(key: string, check: (raw: unknown) => T | null): T | null => {
   const stored = load<unknown>(key);
   if (stored == null) return null;
   try {
@@ -77,7 +77,7 @@ export function loadChecked<T>(key: string, check: (raw: unknown) => T | null): 
   } catch {
     return null;
   }
-}
+};
 
 type FieldKind = 'string' | 'number';
 type Fields<Shape extends Record<string, FieldKind>> = {
@@ -85,10 +85,10 @@ type Fields<Shape extends Record<string, FieldKind>> = {
 };
 /** An object with these fields of these kinds ({ title: 'string', at: 'number' }), or null when
     one is missing or of another kind. Other fields are dropped. */
-export function asFields<Shape extends Record<string, FieldKind>>(
+export const asFields = <Shape extends Record<string, FieldKind>>(
   raw: unknown,
   shape: Shape
-): Fields<Shape> | null {
+): Fields<Shape> | null => {
   if (!raw || typeof raw !== 'object') return null;
   const source = raw as Record<string, unknown>;
   const out: Record<string, unknown> = {};
@@ -98,9 +98,9 @@ export function asFields<Shape extends Record<string, FieldKind>>(
   }
   // every field of the shape was checked to be of its kind just above
   return out as Fields<Shape>;
-}
+};
 
 // The items of a saved list that pass the check; [] when nothing usable is saved.
-export function asList<T>(raw: unknown, check: (item: unknown) => T | null): T[] {
+export const asList = <T>(raw: unknown, check: (item: unknown) => T | null): T[] => {
   return (Array.isArray(raw) ? raw : []).map(check).filter((item): item is T => item !== null);
-}
+};

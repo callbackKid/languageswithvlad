@@ -8,35 +8,35 @@ export const MAX_PDF_PAGES = 20;
 // keep in step with MAX_PDF_BASE64_LENGTH in api/paper.ts
 const MAX_BASE64_LENGTH = 4_000_000;
 
-async function loadPdf(file: File) {
+const loadPdf = async (file: File) => {
   const { PDFDocument } = await import('pdf-lib');
   // some textbooks are "encrypted" only to forbid editing; their pages can still be copied
   return {
     PDFDocument,
     source: await PDFDocument.load(await file.arrayBuffer(), { ignoreEncryption: true }),
   };
-}
+};
 
 // How many pages a PDF has, read in the browser.
-export async function pdfPageCount(file: File): Promise<number> {
+export const pdfPageCount = async (file: File): Promise<number> => {
   return (await loadPdf(file)).source.getPageCount();
-}
+};
 
-function toBase64(bytes: Uint8Array): string {
+const toBase64 = (bytes: Uint8Array): string => {
   let binary = '';
   // in chunks: String.fromCharCode with a whole book's bytes at once overflows the call stack
   for (let offset = 0; offset < bytes.length; offset += 0x8000) {
     binary += String.fromCharCode(...bytes.subarray(offset, offset + 0x8000));
   }
   return btoa(binary);
-}
+};
 
 // Pages firstPage…lastPage (counting from 1) as a new PDF, in base64; a string error when it can't be sent.
-export async function extractPages(
+export const extractPages = async (
   file: File,
   firstPage: number,
   lastPage: number
-): Promise<{ data: string } | { error: string }> {
+): Promise<{ data: string } | { error: string }> => {
   const { PDFDocument, source } = await loadPdf(file);
   const pageCount = source.getPageCount();
   if (firstPage < 1 || lastPage > pageCount || firstPage > lastPage)
@@ -55,4 +55,4 @@ export async function extractPages(
       error: translator(paper).t('pagesTooLarge'),
     };
   return { data };
-}
+};

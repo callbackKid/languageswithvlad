@@ -284,7 +284,7 @@ const DEFAULT_CHOICE: Choice = {
 };
 
 // A topic or grammar dropdown with an "Other…" choice that opens a text field.
-function TopicSelect({
+const TopicSelect = ({
   label,
   options,
   extra,
@@ -309,7 +309,7 @@ function TopicSelect({
   dimmed?: boolean;
   onChange: (value: string) => void;
   onCustom: (value: string) => void;
-}) {
+}) => {
   const { t } = useTranslation(talk);
   return (
     <label className={'discuss-field' + (dimmed ? ' dimmed' : '')}>
@@ -343,11 +343,11 @@ function TopicSelect({
       )}
     </label>
   );
-}
+};
 
 /** A discussion question for the start of a lesson: chosen level, vocabulary topic and grammar
     point. Embedded, it leaves out the page heading: lesson mode shows it in a card of its own. */
-export default function Discuss({
+const Discuss = ({
   bank,
   hasClaude,
   embedded = false,
@@ -355,7 +355,7 @@ export default function Discuss({
   bank: Bank;
   hasClaude: boolean;
   embedded?: boolean;
-}) {
+}) => {
   const { t, language: uiLanguage } = useTranslation(talk);
   // on its page the sections sit under the page's h1; in lesson mode, under its card's h2
   const SectionTitle = embedded ? 'h3' : 'h2';
@@ -419,7 +419,7 @@ export default function Discuss({
   const topic = ownTopic || listTopic;
   const grammar = listGrammar === CUSTOM ? choice.customGrammar : listGrammar;
 
-  async function generate() {
+  const generate = async () => {
     setState('loading');
     setError('');
     try {
@@ -442,7 +442,7 @@ export default function Discuss({
       setState('error');
       setError(failure instanceof ApiError ? failure.message : t('questionFailed'));
     }
-  }
+  };
 
   return (
     <>
@@ -654,4 +654,6 @@ export default function Discuss({
       )}
     </>
   );
-}
+};
+
+export default Discuss;

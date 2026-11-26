@@ -14,7 +14,7 @@ export interface SharedElement extends JsonObject {
   version: number;
 }
 // The shapes in a message, without the ones that aren't shapes.
-export function asSharedElements(value: unknown): SharedElement[] {
+export const asSharedElements = (value: unknown): SharedElement[] => {
   return (Array.isArray(value) ? value : []).filter(
     (element): element is SharedElement =>
       isObject(element) &&
@@ -22,10 +22,10 @@ export function asSharedElements(value: unknown): SharedElement[] {
       typeof element.type === 'string' &&
       typeof element.version === 'number'
   );
-}
+};
 
 // A picture on the board: kept only when it is a data: URL with its id and type.
-export function asSharedFiles(value: unknown): BinaryFileData[] {
+export const asSharedFiles = (value: unknown): BinaryFileData[] => {
   return (Array.isArray(value) ? value : []).filter(
     (file): file is BinaryFileData =>
       isObject(file) &&
@@ -34,14 +34,14 @@ export function asSharedFiles(value: unknown): BinaryFileData[] {
       typeof file.dataURL === 'string' &&
       file.dataURL.startsWith('data:')
   );
-}
+};
 
 // Where someone's pointer is; undefined when the message has no usable position.
-export function asPointer(value: unknown): Collaborator['pointer'] {
+export const asPointer = (value: unknown): Collaborator['pointer'] => {
   if (!isObject(value) || typeof value.x !== 'number' || typeof value.y !== 'number')
     return undefined;
   return { x: value.x, y: value.y, tool: value.tool === 'laser' ? 'laser' : 'pointer' };
-}
+};
 
 // Whether that person is pressing: Excalidraw draws the pointer differently.
 export const asPointerButton = (value: unknown): Collaborator['button'] =>
@@ -54,11 +54,11 @@ export interface SavedBoard {
   files: Record<string, BinaryFileData>;
 }
 // The board saved on this device; null when nothing usable was saved.
-export function asSavedBoard(raw: unknown): SavedBoard | null {
+export const asSavedBoard = (raw: unknown): SavedBoard | null => {
   if (!isObject(raw)) return null;
   const files = asSharedFiles(Object.values(isObject(raw.files) ? raw.files : {}));
   return {
     elements: asSharedElements(raw.elements),
     files: Object.fromEntries(files.map((file) => [file.id, file])),
   };
-}
+};

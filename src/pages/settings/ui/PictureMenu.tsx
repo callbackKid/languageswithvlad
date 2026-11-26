@@ -8,7 +8,7 @@ import styles from './Settings.module.css';
 
 /** The profile picture with a pencil on its corner. With a picture, the pencil opens a menu
     (upload another, remove it); without one, it opens the file picker straight away. */
-export default function PictureMenu({
+const PictureMenu = ({
   children,
   hasPicture,
   onFile,
@@ -19,7 +19,7 @@ export default function PictureMenu({
   hasPicture: boolean;
   onFile: (file: File) => void;
   onRemove: () => void;
-}) {
+}) => {
   const { t } = useTranslation(settingsText);
   const [isOpen, setOpen] = useState(false);
   const wrapper = useRef<HTMLDivElement>(null);
@@ -27,10 +27,10 @@ export default function PictureMenu({
   const input = useRef<HTMLInputElement>(null);
   const menu = useRef<HTMLDivElement>(null);
 
-  function close() {
+  const close = () => {
     setOpen(false);
     pencil.current?.focus();
-  }
+  };
 
   // while open: focus its first item, and close on a click anywhere outside
   useEffect(() => {
@@ -44,7 +44,7 @@ export default function PictureMenu({
   }, [isOpen]);
 
   // ↑ and ↓ move between the items, Escape closes the menu
-  function onMenuKey(event: KeyboardEvent<HTMLDivElement>) {
+  const onMenuKey = (event: KeyboardEvent<HTMLDivElement>) => {
     if (event.key === 'Escape') {
       event.preventDefault();
       close();
@@ -56,12 +56,12 @@ export default function PictureMenu({
     const current = items.findIndex((item) => item === document.activeElement);
     const step = event.key === 'ArrowDown' ? 1 : -1;
     items[(current + step + items.length) % items.length]?.focus();
-  }
+  };
 
-  function choose(action: () => void) {
+  const choose = (action: () => void) => {
     close();
     action();
-  }
+  };
 
   return (
     <div className={styles.picture} ref={wrapper}>
@@ -112,4 +112,6 @@ export default function PictureMenu({
       />
     </div>
   );
-}
+};
+
+export default PictureMenu;

@@ -32,7 +32,7 @@ export const daysSince = (lesson: Lesson, now = new Date()) => daysBetween(lesso
 /** After a lesson, on Home: what it brought ("Today, lesson 6: 12 new words, 2 verbs"), its
     words and grammar, and a round to start revising them. Shown on the lesson's day and the
     next, until the student hides it. */
-export default function LessonSummary({
+const LessonSummary = ({
   lesson,
   bank,
   hasClaude,
@@ -42,7 +42,7 @@ export default function LessonSummary({
   bank: Bank;
   hasClaude: boolean;
   docId: string;
-}) {
+}) => {
   const { t, language: uiLanguage } = useTranslation(homeCards);
   const hiddenKey = `summary-hidden:${docId}:${lesson.key}`;
   const [hidden, setHidden] = useState(() => !!load<boolean>(hiddenKey));
@@ -128,4 +128,6 @@ export default function LessonSummary({
       </div>
     </section>
   );
-}
+};
+
+export default LessonSummary;

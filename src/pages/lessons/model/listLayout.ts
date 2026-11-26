@@ -10,10 +10,10 @@ const VIEW_KEY = 'lessons-view';
 const OPEN_KEY = 'lessons-open';
 
 // The view kept on this device; the column when there is none or it isn't one of ours.
-export function readListView(): LessonListView {
+export const readListView = (): LessonListView => {
   const stored = load<unknown>(VIEW_KEY);
   return LESSON_LIST_VIEWS.find((view) => view === stored) ?? 'column';
-}
+};
 
 // Keeps the view chosen on this device.
 export const saveListView = (view: LessonListView) => save(VIEW_KEY, view);

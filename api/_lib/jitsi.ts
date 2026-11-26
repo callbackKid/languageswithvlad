@@ -12,14 +12,14 @@ const TOKEN_HOURS = 3;
 const base64url = (value: string | Buffer) => Buffer.from(value).toString('base64url');
 
 // The JaaS AppID when calls are set up, otherwise null. It isn't secret: it is part of every call's address.
-export function jitsiAppId(): string | null {
+export const jitsiAppId = (): string | null => {
   const { JAAS_APP_ID, JAAS_KEY_ID, JAAS_PRIVATE_KEY } = process.env;
   return JAAS_APP_ID && JAAS_KEY_ID && JAAS_PRIVATE_KEY ? JAAS_APP_ID : null;
-}
+};
 
 /** A JWT (RS256) that lets one person into one room: the teacher as its moderator, a student as
     a participant. Recording, streaming and phone calls stay off: they cost extra on JaaS. */
-export function jitsiToken({
+export const jitsiToken = ({
   room,
   name,
   moderator,
@@ -27,7 +27,7 @@ export function jitsiToken({
   room: string;
   name: string;
   moderator: boolean;
-}): string {
+}): string => {
   const appId = process.env.JAAS_APP_ID ?? '';
   const keyId = process.env.JAAS_KEY_ID ?? '';
   const privateKey = (process.env.JAAS_PRIVATE_KEY ?? '').replace(/\\n/g, '\n');
@@ -60,4 +60,4 @@ export function jitsiToken({
   const signer = createSign('RSA-SHA256');
   signer.update(`${header}.${payload}`);
   return `${header}.${payload}.${base64url(signer.sign(privateKey))}`;
-}
+};

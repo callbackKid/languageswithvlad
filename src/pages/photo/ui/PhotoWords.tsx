@@ -29,7 +29,7 @@ interface LastScan {
 /** Photos of book pages with underlined words (up to MAX_PHOTOS at once) → a translation,
     dictionary form, tense and short explanation for each word, ready to add to the document as a
     new lesson or under one of its lessons. */
-export default function PhotoWords({
+const PhotoWords = ({
   hasClaude,
   target,
   lessons,
@@ -37,7 +37,7 @@ export default function PhotoWords({
   hasClaude: boolean;
   target: DocTarget;
   lessons: Lesson[];
-}) {
+}) => {
   const { t } = useTranslation(paper);
   const commonText = useTranslation(common);
   const [previews, setPreviews] = useState<string[]>([]);
@@ -73,7 +73,7 @@ export default function PhotoWords({
   );
 
   // Reads the photos one by one and adds their words to those already found (kept).
-  async function read(files: File[], kept: PhotoItem[]) {
+  const read = async (files: File[], kept: PhotoItem[]) => {
     reading.current += 1;
     const current = reading.current;
     setError('');
@@ -102,7 +102,7 @@ export default function PhotoWords({
     // read at the moment of failure, so a new interface language is used
     if (missed.length)
       setError(reason || translator(paper).t('somePhotosFailed', { count: missed.length }));
-  }
+  };
 
   return (
     <>
@@ -181,4 +181,6 @@ export default function PhotoWords({
       )}
     </>
   );
-}
+};
+
+export default PhotoWords;

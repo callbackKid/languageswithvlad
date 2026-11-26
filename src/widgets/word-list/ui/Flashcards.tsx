@@ -9,7 +9,7 @@ import ExerciseHead from '@/shared/ui/ExerciseHead';
 import Speak from '@/shared/ui/Speak';
 
 // Cards with a word on one side and its translation on the other; a card not known comes back later.
-export default function Flashcards({
+const Flashcards = ({
   words,
   onClose,
   onRestart,
@@ -17,7 +17,7 @@ export default function Flashcards({
   words: Word[];
   onClose: () => void;
   onRestart: () => void;
-}) {
+}) => {
   const { t } = useTranslation(exercises);
   const [deck, setDeck] = useState(() => shuffle(words));
   // "fr" direction means from the language being learned into the translation language
@@ -145,4 +145,6 @@ export default function Flashcards({
       <p className="kbd">{t('keys')}</p>
     </div>
   );
-}
+};
+
+export default Flashcards;

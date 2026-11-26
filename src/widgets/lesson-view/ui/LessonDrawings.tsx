@@ -10,7 +10,7 @@ const BoardPicture = lazy(() => import('./BoardPicture'));
 
 /** What was drawn on the board and written in lesson mode on the day of this lesson, as this
     device saved it (src/pages/call/ui/LessonMode.tsx keeps both per day). */
-export default function LessonDrawings({ docId, date }: { docId: string; date: Date }) {
+const LessonDrawings = ({ docId, date }: { docId: string; date: Date }) => {
   const { t } = useTranslation(paper);
   const settings = useSettings();
   const day = dayKey(date);
@@ -42,4 +42,6 @@ export default function LessonDrawings({ docId, date }: { docId: string; date: D
       )}
     </section>
   );
-}
+};
+
+export default LessonDrawings;

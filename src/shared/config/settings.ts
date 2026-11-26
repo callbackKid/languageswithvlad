@@ -83,9 +83,22 @@ const KEY = 'settings';
 export const defaultTranslateTo = (hasHistory: boolean, uiLanguage: UiLanguage): UiLanguage =>
   hasHistory ? 'ru' : uiLanguage;
 
+// Only known tenses of each language, and never an empty list (that language then follows its level).
+const sanitizeTenses = (raw: unknown): Settings['tenses'] => {
+  const stored: Partial<Record<string, unknown>> = raw && typeof raw === 'object' ? raw : {};
+  const tenses: Settings['tenses'] = {};
+  for (const language of VERB_LANGUAGES) {
+    const list = stored[language];
+    const all: readonly Tense[] = TENSES_BY_LANGUAGE[language];
+    const kept = Array.isArray(list) ? all.filter((tense) => list.includes(tense)) : [];
+    if (kept.length) tenses[language] = kept;
+  }
+  return tenses;
+};
+
 /** Older or hand-edited values never break the app: anything unknown falls back to the default.
     missingTranslateTo is used when no valid translation language is saved. */
-function sanitize(raw: Partial<Settings> | null, missingTranslateTo: UiLanguage): Settings {
+const sanitize = (raw: Partial<Settings> | null, missingTranslateTo: UiLanguage): Settings => {
   const value = { ...DEFAULTS, ...raw };
   const studying = (Array.isArray(value.studying) ? value.studying : []).filter((language) =>
     LANGUAGES.includes(language)
@@ -114,20 +127,7 @@ function sanitize(raw: Partial<Settings> | null, missingTranslateTo: UiLanguage)
     tenses: sanitizeTenses(value.tenses),
     translateTo: isUiLanguage(raw?.translateTo) ? raw.translateTo : missingTranslateTo,
   };
-}
-
-// Only known tenses of each language, and never an empty list (that language then follows its level).
-function sanitizeTenses(raw: unknown): Settings['tenses'] {
-  const stored: Partial<Record<string, unknown>> = raw && typeof raw === 'object' ? raw : {};
-  const tenses: Settings['tenses'] = {};
-  for (const language of VERB_LANGUAGES) {
-    const list = stored[language];
-    const all: readonly Tense[] = TENSES_BY_LANGUAGE[language];
-    const kept = Array.isArray(list) ? all.filter((tense) => list.includes(tense)) : [];
-    if (kept.length) tenses[language] = kept;
-  }
-  return tenses;
-}
+};
 
 const stored = load<Partial<Settings>>(KEY);
 let current = sanitize(
@@ -150,12 +150,12 @@ export const isDark = (settings: Settings = current) =>
 const THEME_COLOR = { light: '#ffffff', dark: '#191919' } as const;
 
 // The page reads data-theme ("light" or "dark"): the chosen theme, or the system's.
-function applyTheme(settings: Settings) {
+const applyTheme = (settings: Settings) => {
   if (typeof document === 'undefined') return;
   const theme = isDark(settings) ? 'dark' : 'light';
   document.documentElement.dataset.theme = theme;
   document.querySelector('meta[name="theme-color"]')?.setAttribute('content', THEME_COLOR[theme]);
-}
+};
 applyTheme(current);
 if (typeof window !== 'undefined')
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
@@ -170,17 +170,17 @@ if (typeof window !== 'undefined')
 export const getSettings = () => current;
 
 // Changes some settings, saves them and applies the theme.
-export function updateSettings(changes: Partial<Settings>) {
+export const updateSettings = (changes: Partial<Settings>) => {
   current = sanitize({ ...current, ...changes }, current.translateTo);
   save(KEY, current);
   applyTheme(current);
   listeners.forEach((listener) => listener());
-}
+};
 
-function subscribe(listener: () => void) {
+const subscribe = (listener: () => void) => {
   listeners.add(listener);
   return () => listeners.delete(listener);
-}
+};
 // The settings; the component re-renders when they change.
 export const useSettings = () => useSyncExternalStore(subscribe, getSettings, getSettings);
 

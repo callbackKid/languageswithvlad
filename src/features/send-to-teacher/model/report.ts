@@ -24,7 +24,7 @@ const MAX_FORMS = 8;
 const INDENT = '   ';
 
 // The report on everything since the lesson: homework, answers, mistakes, written answers.
-export function buildReport({
+export const buildReport = ({
   lesson,
   homework,
   docId,
@@ -37,7 +37,7 @@ export function buildReport({
   docId: string;
   progress: Progress;
   now?: Date;
-}): string {
+}): string => {
   const { t, locale } = translator(homeworkText);
   const settings = getSettings();
   const since = startOfDay(lesson.date);
@@ -107,4 +107,4 @@ export function buildReport({
       lines.push(`${INDENT}✗ ${mistake.wrong} → ${mistake.right}`);
   }
   return lines.join('\n');
-}
+};

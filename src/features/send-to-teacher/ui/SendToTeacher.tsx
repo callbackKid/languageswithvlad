@@ -14,7 +14,7 @@ type Step = 'idle' | 'review' | 'saving' | 'done';
 
 /** "Send to the teacher": a short report on everything since the newest lesson, checked by the
     student, then added to the document under that lesson for the teacher to read. */
-export default function SendToTeacher({
+const SendToTeacher = ({
   lessons,
   docId,
   canWrite,
@@ -23,7 +23,7 @@ export default function SendToTeacher({
   docId: string;
   // whether the server can write to the document
   canWrite: boolean;
-}) {
+}) => {
   const { t, locale } = useTranslation(homeworkText);
   const commonText = useTranslation(common);
   const lesson = lessons[lessons.length - 1];
@@ -41,7 +41,7 @@ export default function SendToTeacher({
     setError('');
     setStep('review');
   };
-  async function add() {
+  const add = async () => {
     if (!lesson) return;
     setStep('saving');
     setError('');
@@ -57,7 +57,7 @@ export default function SendToTeacher({
       setStep('review');
       setError(failure instanceof ApiError ? failure.message : commonText.t('addFailed'));
     }
-  }
+  };
   const sentDate =
     sentAt &&
     new Intl.DateTimeFormat(locale, {
@@ -121,4 +121,6 @@ export default function SendToTeacher({
       )}
     </section>
   );
-}
+};
+
+export default SendToTeacher;

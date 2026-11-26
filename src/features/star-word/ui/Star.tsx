@@ -3,7 +3,7 @@ import { common, useTranslation } from '@/shared/i18n';
 import { IconButton } from '@/shared/ui/controls';
 
 // Adds a word to, or removes it from, the "Words to learn" list.
-export default function Star({ word }: { word: Word }) {
+const Star = ({ word }: { word: Word }) => {
   const { t } = useTranslation(common);
   const isStarred = !!useProgress().words[wordKey(word.fr)]?.hard;
   return (
@@ -17,4 +17,6 @@ export default function Star({ word }: { word: Word }) {
       {isStarred ? '★' : '☆'}
     </IconButton>
   );
-}
+};
+
+export default Star;

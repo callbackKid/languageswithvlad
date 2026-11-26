@@ -30,6 +30,7 @@ Prettier decides: 100 columns, single quotes, semicolons, trailing commas where 
 
 ## TypeScript
 
+- Prefer arrow functions. Keep function declarations where the code relies on hoisting, overloads, or a function's own `this`. Use named functions where a callback needs its own name, as with `forwardRef` components.
 - `strict` and `noUncheckedIndexedAccess` are on 🤖. An array or record lookup may be `undefined`: handle it with a guard, a default (`?? ''`) or destructuring defaults.
 - No `any` 🤖. Data from outside (Claude, the document, `localStorage`, request bodies) is `unknown` until a `normalizeX` / `asX` function has checked it.
 - No non-null `!` 🤖. Handle the missing case, or narrow with a check.

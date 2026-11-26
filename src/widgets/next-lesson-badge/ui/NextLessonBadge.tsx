@@ -6,7 +6,7 @@ import { daysBetween } from '@/shared/lib/dates';
 
 /** The next lesson's date and time, read from the newest "le cours prochain:" / "next lesson:" line in
     the document, with the button that enters the lesson: a widget in the middle of the top bar. */
-export default function NextLessonBadge({ text, action }: { text: string; action?: ReactNode }) {
+const NextLessonBadge = ({ text, action }: { text: string; action?: ReactNode }) => {
   const { t, rich, locale } = useTranslation(app);
   const [now, setNow] = useState(() => new Date());
   // keeps "today", "now" and "not confirmed" up to date while the page stays open
@@ -93,4 +93,6 @@ export default function NextLessonBadge({ text, action }: { text: string; action
     </>,
     { title: lesson.start.toLocaleString(locale) }
   );
-}
+};
+
+export default NextLessonBadge;

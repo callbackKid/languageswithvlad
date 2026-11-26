@@ -28,7 +28,7 @@ const FOLD_ICONS = {
 } as const;
 
 // An icon for the list's round buttons, in the text colour.
-function ListIcon({ path }: { path: string }) {
+const ListIcon = ({ path }: { path: string }) => {
   return (
     <svg aria-hidden="true" viewBox="0 0 16 16" width="16" height="16">
       <path
@@ -41,11 +41,11 @@ function ListIcon({ path }: { path: string }) {
       />
     </svg>
   );
-}
+};
 
 /** Lesson history: one tab with the lessons, oldest to newest, and the open one beside them; the
     other with every downloaded lesson's words and verbs together (Practice). */
-export default function Lessons({
+const Lessons = ({
   tab,
   lessons,
   lesson,
@@ -63,7 +63,7 @@ export default function Lessons({
   hasClaude: boolean;
   // whether the server can write to the lesson document
   canWrite: boolean;
-}) {
+}) => {
   const { t, locale } = useTranslation(app);
   const shortDateFormat = new Intl.DateTimeFormat(locale, { day: 'numeric', month: 'short' });
   const listText = useTranslation(lessonsText);
@@ -98,16 +98,16 @@ export default function Lessons({
     // again when lessons finish downloading: their ⤓ and homework badges widen the rows
   }, [currentLessonKey, tab, lessons.length, listView, isListOpen, downloaded.size]);
 
-  function toggleView() {
+  const toggleView = () => {
     const view = listView === 'row' ? 'column' : 'row';
     setListView(view);
     saveListView(view);
-  }
-  function toggleList() {
+  };
+  const toggleList = () => {
     const open = !isListOpen;
     setListOpen(open);
     saveListOpen(open);
-  }
+  };
   const isRow = listView === 'row';
   const foldLabel = listText.t(isListOpen ? 'hideList' : 'showList');
 
@@ -223,4 +223,6 @@ export default function Lessons({
       )}
     </div>
   );
-}
+};
+
+export default Lessons;

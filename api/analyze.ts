@@ -66,7 +66,7 @@ const MAX_GROUP_NAME_LENGTH = 60;
    - "homework": homework for the next lesson, made from its words and grammar;
    - "exercise": a mixed exercise made in lesson mode, on a grammar point and/or words;
    - "groups": a lesson's or the student's words sorted into groups by meaning. */
-export default async function handler(request: VercelRequest, response: VercelResponse) {
+const handler = async (request: VercelRequest, response: VercelResponse) => {
   if (!onlyPost(request, response) || !checkAccess(request, response)) return;
   const action: unknown = request.body?.action ?? 'words';
   try {
@@ -190,16 +190,18 @@ export default async function handler(request: VercelRequest, response: VercelRe
   } catch (error) {
     return fail(response, error);
   }
-}
+};
+
+export default handler;
 
 // The number of questions asked for, kept within the range.
-function questionCount(value: unknown): number {
+const questionCount = (value: unknown): number => {
   if (typeof value !== 'number' || !Number.isInteger(value)) return DEFAULT_EXERCISE_QUESTIONS;
   return Math.min(MAX_EXERCISE_QUESTIONS, Math.max(MIN_EXERCISE_QUESTIONS, value));
-}
+};
 
 // The number of sentences to translate the teacher asked for, kept within the range.
-function sentenceCount(value: unknown): number {
+const sentenceCount = (value: unknown): number => {
   if (typeof value !== 'number' || !Number.isInteger(value)) return DEFAULT_TRANSLATE_SENTENCES;
   return Math.min(MAX_TRANSLATE_SENTENCES, Math.max(MIN_TRANSLATE_SENTENCES, value));
-}
+};

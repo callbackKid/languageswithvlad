@@ -16,13 +16,13 @@ type Result = 'ok' | 'bad' | 'accent' | 'article';
 const ARTICLE =
   /^(?:(?:le|la|les|un|une|des|der|die|das|ein|eine|el|los|las|una|o|a|os|as|um|uma|il|lo|i|gli|uno)\s+|(?:l|un)['’]\s*)/i;
 
-function gradeWord(typed: string, answer: string): Result | null {
+const gradeWord = (typed: string, answer: string): Result | null => {
   const result = grade(typed, answer);
   if (result === 'empty') return null;
   if (result !== 'bad') return result;
   const bare = answer.replace(ARTICLE, '');
   return bare !== answer && grade(typed, bare) !== 'bad' ? 'article' : 'bad';
-}
+};
 
 // An answer the student got wrong, for the list at the end of a round.
 interface Missed {
@@ -33,7 +33,7 @@ interface Missed {
 
 /** A run of mixed questions; make() builds the next round. With review, the end of a round
     lists what the student got wrong (the warm-up, for the teacher to go over). */
-export default function WordQuiz({
+const WordQuiz = ({
   title,
   make,
   onClose,
@@ -57,7 +57,7 @@ export default function WordQuiz({
   /** false for a quiz that is simply on the page (Home): its first listening question waits for
       the student instead of speaking as soon as the page opens */
   speakAtOnce?: boolean;
-}) {
+}) => {
   const { t: tx } = useTranslation(exercises);
   const { t, rich } = useTranslation(common);
   const names = useTranslation(learning);
@@ -433,4 +433,6 @@ export default function WordQuiz({
       {feedback}
     </>
   );
-}
+};
+
+export default WordQuiz;

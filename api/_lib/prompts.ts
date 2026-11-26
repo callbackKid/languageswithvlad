@@ -53,11 +53,11 @@ const WORD_FORMS: Record<LearnLanguage, string> = {
 
 /** body is one lesson's notes; the endpoint has already refused anything too long to read whole.
     translation: the language the translations (ru) are written in. */
-export function analysisPrompt(
+export const analysisPrompt = (
   body: string,
   levels: Levels,
   translation: TranslationRequest
-): string {
+): string => {
   return `You are helping a learner whose own language is ${EXPLAIN_NAMES[translation.language]} learn a foreign language: ${LANGUAGE_LIST}. ${levelLine(levels)} The level shapes only the translations you write yourself (see words), never which words you list. ${translationRule(translation, 'lesson')} Below are raw notes from one lesson, written by the teacher in that language mixed with translations, often in Russian. They are messy: some words have no translation, and some lines are conjugation tables, example sentences or pronunciation rules.
 
 First decide which language the lesson teaches, judging by its vocabulary rather than by headings or labels (a lesson in any of them may still be headed "leçon"): ${LANGUAGE_KEY}.
@@ -75,7 +75,7 @@ Lesson notes:
 """
 ${body}
 """`;
-}
+};
 
 /** How each language's verb tables are asked for. The tense names must be unique across languages
     (the app tells a saved form's language by its tense): keep them in step with TENSES_BY_LANGUAGE
@@ -148,19 +148,19 @@ export const asVerbLanguage = (value: unknown): VerbLanguage | null =>
 
 /** The prompt for a verb's tables, in the tenses of its language. meaning is the verb's translation
     in its lesson, already in translateTo. */
-export function conjugationPrompt(
+export const conjugationPrompt = (
   infinitive: string,
   meaning: string,
   language: VerbLanguage,
   translateTo: ExplainLanguage
-): string {
+): string => {
   const table = VERB_TABLES[language];
   const shape = table.tenses.map(([name, persons]) => `"${name}": [..${persons}]`).join(', ');
   return `Conjugate the ${LANGUAGE_NAMES[language]} verb "${infinitive}"${meaning ? ` (meaning: ${meaning})` : ''}.
 Reply with only a JSON object:
 {"inf": string, "ru": string, "aux": ${table.aux}, "pp": string, "tenses": {${shape}}}
 Each item is {"p": string, "f": string}. ${table.rules} ru is a short ${EXPLAIN_NAMES[translateTo]} translation.`;
-}
+};
 
 // "for French exactly one of présent, passé composé, …" for every language with verb tables.
 const TENSE_CHOICES = (Object.keys(VERB_TABLES) as VerbLanguage[])
@@ -171,28 +171,28 @@ const TENSE_CHOICES = (Object.keys(VERB_TABLES) as VerbLanguage[])
   .join('; ');
 
 // The prompt for fill-the-gap sentences on a lesson's words, at the student's level.
-export function gapPrompt(
+export const gapPrompt = (
   words: { fr: string; ru: string }[],
   count: number,
   language: LearnLanguage,
   level = 'A1',
   translateTo: ExplainLanguage = 'ru'
-): string {
+): string => {
   const list = words.map((word) => `- ${word.fr} = ${word.ru}`).join('\n');
   return `Write ${count} short, simple ${LANGUAGE_NAMES[language]} sentences at CEFR level ${level} (A0 means a complete beginner: very short sentences with the most common words) for a learner. Each sentence uses one word from the list below (each with its meaning; a meaning may be in another language), and that word is the gap to fill. Use each word at most once; reuse words only if the list is shorter than ${count}. The gapped text is the exact form the word takes in the sentence (conjugated verb, agreed adjective, article included for nouns if natural).
 Reply with only a JSON array of objects: {"before": string, "after": string, "answer": string, "word": string, "ru": string, "options": [string, string, string]}. before and after are the text around the gap, answer the gapped text, word the list entry it comes from, ru a ${EXPLAIN_NAMES[translateTo]} translation of the whole sentence, options three plausible wrong answers of the same kind (other forms or other words from the list).
 
 Words:
 ${list}`;
-}
+};
 
 // Definitions of some of the lesson's words in their own language, for the student to guess the word from.
-export function definitionPrompt(
+export const definitionPrompt = (
   words: { fr: string; ru: string }[],
   language: LearnLanguage,
   level = 'A1',
   translateTo: ExplainLanguage = 'ru'
-): string {
+): string => {
   const list = words.map((word) => `- ${word.fr} = ${word.ru}`).join('\n');
   const name = LANGUAGE_NAMES[language];
   return `For each ${name} word or expression below (with its meaning in this lesson, in ${EXPLAIN_NAMES[translateTo]} or possibly in another language), write a short definition in ${name} for a learner at CEFR level ${level} (A0 means a complete beginner: only the most common words), the way a learner's dictionary explains a word: one simple sentence of at most about 15 words, with words easier than the one defined. The learner reads the definition and has to guess the word, so the definition never contains the word itself, a word of the same root or its translation, and it fits only this word, not another word of the list. A noun may start with what kind of thing it is (in French: un endroit où…, une personne qui…, un objet pour…); a verb with what you do.
@@ -200,7 +200,7 @@ Reply with only a JSON array of objects, in the order of the list: {"word": stri
 
 Words:
 ${list}`;
-}
+};
 
 // How one word or phrase the learner marked is described: shared by the photo and the reader.
 const MARKED_ITEM_RULES = `- fr: the marked text exactly as it is written (a single marked phrase stays one item).
@@ -212,23 +212,23 @@ const MARKED_ITEM_RULES = `- fr: the marked text exactly as it is written (a sin
 - explanation: one or two short sentences in the translation language on what it means here and anything worth knowing: register (in Russian: разговорное, книжное), literal meaning or origin, a common related expression, why this tense is used.`;
 
 // The prompt for the underlined words on a photo of a book page.
-export function photoPrompt(levels: Levels, translation: TranslationRequest): string {
+export const photoPrompt = (levels: Levels, translation: TranslationRequest): string => {
   return `The image is a photo of a page from a book in ${LANGUAGE_LIST}. A learner has underlined (or highlighted, or circled) some words and phrases. Find every marked word or phrase, in reading order. Ignore text that is not marked.
 ${levelLine(levels)} ${translationRule(translation, 'page')} ${LEVEL_STYLE}
 Reply with only a JSON object: {"language": ${LANGUAGE_CODES}, "items": [{"fr": string, "context": string, "ru": string, "base": string, "kind": string, "tense": string, "explanation": string}]}.
 - language: the language of the book: ${LANGUAGE_KEY}.
 ${MARKED_ITEM_RULES}`;
-}
+};
 
 /** A word or phrase selected anywhere in the app, for its menu of actions: the translation and
     explanation in its sentence (as for a marked word in a pasted text), a definition in its own
     language and examples, all in one answer so switching between them needs no new request. */
-export function wordPrompt(
+export const wordPrompt = (
   selection: string,
   context: string,
   levels: Levels,
   translation: TranslationRequest
-): string {
+): string => {
   return `A learner of ${LANGUAGE_LIST} selected a word or phrase in a lesson and wants to understand it and learn it. Explain it as it is used in this sentence.
 ${levelLine(levels)} ${translationRule(translation, 'selection')} ${LEVEL_STYLE}
 Selected: """${selection}"""
@@ -240,12 +240,12 @@ ${MARKED_ITEM_RULES}
 - definition: what the dictionary form means, explained in the selected text's own language the way a learner's dictionary does: one or two short, simple sentences at the learner's level, without using the word itself.
 - definitionRu: the translation of definition.
 - examples: 3 short everyday sentences in the selected text's language using the dictionary form (conjugated or agreed as the sentence needs), at the learner's level and each showing a different common use; ru is the translation of each.`;
-}
+};
 
 /** An exercise the teacher makes in lesson mode: a mixed round on a grammar point and/or some
     words, at a level, for the student to do in the app. Each question has one answer the app can
     check (with the other right answers listed), and a short reason in the translation language. */
-export function exercisePrompt({
+export const exercisePrompt = ({
   language,
   level,
   grammar,
@@ -263,7 +263,7 @@ export function exercisePrompt({
   translateTo: ExplainLanguage;
   // the interface language: the title is shown among its texts
   explainIn: ExplainLanguage;
-}): string {
+}): string => {
   const name = LANGUAGE_NAMES[language];
   const translationName = EXPLAIN_NAMES[translateTo];
   const focus = [
@@ -280,10 +280,10 @@ Mix three kinds of question, about a third of each, in a varied order:
 - "translate": prompt is a short everyday ${translationName} sentence (4 to 8 words); answer is its natural ${name} translation, using what is practised.
 Every question practises the point${grammar && words.length ? 's' : ''} above, with vocabulary of the level, and has one clear answer. accept lists other answers that are just as right (another word order, a contraction, a synonym); [] when there are none. ru is the ${translationName} translation of the prompt for "choice" and "gap", "" for "translate". explanation is one short sentence in ${translationName} saying why the answer is right. options is [] for "gap" and "translate".
 Reply with only a JSON object: {"title": string, "questions": [{"type": "choice" | "gap" | "translate", "prompt": string, "options": [string], "answer": string, "accept": [string], "ru": string, "explanation": string}]}. title says what the exercise practises, in ${EXPLAIN_NAMES[explainIn]}, in at most 6 words.`;
-}
+};
 
 // A natural translation of a text into the translation language, paragraph by paragraph, and the text's language.
-export function translatePrompt(paragraphs: string[], translation: TranslationRequest): string {
+export const translatePrompt = (paragraphs: string[], translation: TranslationRequest): string => {
   const name = EXPLAIN_NAMES[translation.language];
   const fallback = fallbackName(translation);
   const instead = fallback ? ` If it is already in ${name}, translate it into ${fallback}.` : '';
@@ -291,10 +291,14 @@ export function translatePrompt(paragraphs: string[], translation: TranslationRe
 Reply with only a JSON object: {"language": ${LANGUAGE_CODES}, "paragraphs": [string]}. language is the language of the text: ${LANGUAGE_KEY}. paragraphs has exactly ${paragraphs.length} item${paragraphs.length === 1 ? '' : 's'}: the translation of each paragraph, in the same order, without the numbers.
 
 ${paragraphs.map((paragraph, index) => `[${index + 1}] ${paragraph}`).join('\n\n')}`;
-}
+};
 
 // Vocabulary, questions and true-or-false statements built from a text the learner pasted.
-export function studyPrompt(body: string, levels: Levels, translation: TranslationRequest): string {
+export const studyPrompt = (
+  body: string,
+  levels: Levels,
+  translation: TranslationRequest
+): string => {
   return `A learner pasted the text below (an article, a story, a post) to study with. It is in ${LANGUAGE_LIST}. ${levelLine(levels)} ${translationRule(translation, 'text')}
 Reply with only a JSON object:
 {"language": ${LANGUAGE_CODES}, "title": string, "words": [{"fr": string, "ru": string, "kind": "noun"|"verb"|"adjective"|"adverb"|"expression"|"other", "sense": string}], "questions": [{"question": string, "ru": string}], "statements": [{"text": string, "ru": string, "correct": boolean, "why": string}]}
@@ -308,17 +312,17 @@ Text:
 """
 ${body}
 """`;
-}
+};
 
 // The prompt for photos of handwritten notes, copied out as the text of a lesson.
-export function transcribePrompt(pageCount: number): string {
+export const transcribePrompt = (pageCount: number): string => {
   return `${pageCount === 1 ? 'The image is a photo' : `The ${pageCount} images are photos, in order,`} of handwritten notes from a language lesson: ${LANGUAGE_LIST} words and phrases, translations (often Russian), conjugation tables, example sentences, pronunciation in square brackets.
 Transcribe every line exactly as written, top to bottom, keeping the writer's line breaks, punctuation, dashes, arrows (→) and square brackets. Keep the writer's spelling and accents; do not correct, translate or add anything. Write a word you cannot read as [?]. Leave out crossed-out text, page numbers and doodles. Separate pages with an empty line.
 Reply with only a JSON object: {"title": string, "text": string}. title is what the notes are about, in English, at most 6 words; text is the transcription.`;
-}
+};
 
 // The prompt for the pages of a textbook (a PDF), turned into lesson notes.
-export function textbookPrompt(levels: Levels, translation: TranslationRequest): string {
+export const textbookPrompt = (levels: Levels, translation: TranslationRequest): string => {
   return `The PDF holds a few pages from a ${LANGUAGE_LIST} textbook, usually one chapter. Write the lesson notes a teacher would write from them for a learner, as plain text, one item per line, using only what these pages teach.
 ${levelLine(levels)} ${translationRule(translation, 'page')} ${LEVEL_STYLE} The level decides how the rules are explained and which example sentences you choose, not which of the chapter's words you list.
 The notes:
@@ -328,7 +332,7 @@ The notes:
 - A line "Exemples:" ("Examples:", "Beispiele:", "Ejemplos:", "Exemplos:", "Esempi:") followed by up to 10 useful sentences from the pages, each followed by " — " and its translation.
 Leave out exercise instructions, answer keys, page numbers, headers and anything not in the textbook's language or about it. Do not invent content that is not on the pages.
 Reply with only a JSON object: {"title": string, "text": string}. title is the chapter's topic in English, at most 6 words; text is the notes.`;
-}
+};
 
 export interface DiscussionRequest {
   language: LearnLanguage;
@@ -374,30 +378,30 @@ export const asTranslationRequest = (body: unknown): TranslationRequest => {
 /** The name of the language to use instead for a text in the translation language itself, or null
     when there can't be one: Russian is never learned, and a language the app already resolved
     (it knows what is learned) comes with itself as the fallback. */
-function fallbackName({ language, fallback }: TranslationRequest): string | null {
+const fallbackName = ({ language, fallback }: TranslationRequest): string | null => {
   const isLearned = LEARN_LANGUAGES.some((code) => code === language);
   return isLearned && fallback !== language ? EXPLAIN_NAMES[fallback] : null;
-}
+};
 /** "The translation language is French, or German for a lesson in French itself: …". source
     names what Claude reads, whose language it finds out itself. */
-function translationRule(
+const translationRule = (
   translation: TranslationRequest,
   source: 'lesson' | 'text' | 'page' | 'selection'
-): string {
+): string => {
   const name = EXPLAIN_NAMES[translation.language];
   const fallback = fallbackName(translation);
   const instead = fallback ? `, or ${fallback} for a ${source} in ${name} itself` : '';
   return `The translation language is ${name}${instead}: write every translation and explanation in it.`;
-}
+};
 
 /** The prompt that sorts a learner's words into groups by meaning, named in the interface
     language. known: the names the learner's other words are already grouped under, reused so
     the same topic keeps one name. */
-export function wordGroupsPrompt(
+export const wordGroupsPrompt = (
   words: { fr: string; ru: string }[],
   known: string[],
   explainIn: ExplainLanguage
-): string {
+): string => {
   const list = words.map((word) => `- ${word.fr} = ${word.ru}`).join('\n');
   const knownLine = known.length
     ? `The learner's other words are already in these groups: ${known.map((name) => `"${name}"`).join(', ')}. When a word fits one of them, use that name exactly as written.\n`
@@ -407,17 +411,17 @@ ${knownLine}Reply with only a JSON object: {"groups": [{"name": string, "words":
 
 Words:
 ${list}`;
-}
+};
 
 // The prompt for a discussion question, with follow-ups, sentence starters and useful words.
-export function discussionPrompt({
+export const discussionPrompt = ({
   language,
   level,
   topic,
   grammar,
   explainIn,
   translateTo,
-}: DiscussionRequest): string {
+}: DiscussionRequest): string => {
   const languageName = LANGUAGE_NAMES[language];
   const explainName = EXPLAIN_NAMES[explainIn];
   const translationName = EXPLAIN_NAMES[translateTo];
@@ -436,18 +440,18 @@ Reply with only a JSON object:
 - starters: 3 sentence beginnings in ${languageName} that use the grammar topic, for the student to finish (for example “Quand j’étais petit, je…”).
 - grammarTip: one or two sentences in ${explainName} reminding how to form the grammar point, with a ${languageName} example; "" if there is no grammar topic.
 - grammarRule: null if there is no grammar topic. Otherwise a short, clear explanation of the rule for a student at ${level}, written in ${explainName} (forms and examples in ${languageName}): title is the name of the grammar point; summary is one or two sentences on what it is; formation lists the steps or forms (for a tense, how it is built, with the endings or the auxiliary, and irregular forms worth knowing), each item one short line; usage lists when it is used, each item one short line with a tiny ${languageName} example; examples are 3 or 4 natural ${languageName} sentences on the vocabulary topic, each with its ${translationName} translation; pitfall is the most common mistake learners make with it and how to avoid it, one or two sentences.`;
-}
+};
 
 // The heading that starts exercises copied from a book into a lesson, in each language.
 const BOOK_HEADINGS =
   '"📖 Exercices du manuel" (French), "📖 Textbook exercises" (English), "📖 Übungen aus dem Lehrbuch" (German), "📖 Ejercicios del libro" (Spanish), "📖 Exercícios do manual" (Portuguese), "📖 Esercizi dal libro" (Italian)';
 
 // The grammar, homework and book exercises of one lesson, explained in the interface language.
-export function lessonExtrasPrompt(
+export const lessonExtrasPrompt = (
   body: string,
   explainIn: ExplainLanguage,
   levels: Levels
-): string {
+): string => {
   const explainName = EXPLAIN_NAMES[explainIn];
   return `Below are a teacher's notes from one language lesson for a student. The lesson teaches ${LANGUAGE_LIST}, and the notes mix that language with translations, often in Russian. Find three things in them.
 ${levelLine(levels)} Explain the grammar for that level: at A0 and A1 a short summary, two or three formation lines and the simplest examples, leaving out rare exceptions; at A2 simple but complete; at B1 and above complete, with the exceptions and nuances that level is ready for. Explanations stay in ${explainName}. Leave out the student's report and questions: a line beginning with 📝 or ❓ and every line after it that begins with an emoji or with spaces.
@@ -464,10 +468,14 @@ Lesson notes:
 """
 ${body}
 """`;
-}
+};
 
 // The pronunciation points of one lesson (sounds, spelling and sound, liaison, stress…), explained in the interface language.
-export function phoneticsPrompt(body: string, explainIn: ExplainLanguage, levels: Levels): string {
+export const phoneticsPrompt = (
+  body: string,
+  explainIn: ExplainLanguage,
+  levels: Levels
+): string => {
   const explainName = EXPLAIN_NAMES[explainIn];
   return `Below are a teacher's notes from one language lesson for a student. The lesson teaches ${LANGUAGE_LIST}, and the notes mix that language with translations, often in Russian. Find the phonetics the lesson teaches: a sound and how it is written, a rule for reading letters, silent letters, nasal vowels, liaison or elision, stress, rhythm or intonation. It is often after a word like Phonétique, Phonetics, Phonetik, Fonética, Fonetica, Prononciation, Pronunciation, Aussprache or Произношение, or in a remark about how something is pronounced. A transcription next to a single word ([bɔ̃ʒuʁ]) is not a topic on its own.
 ${levelLine(levels)} Explain each point for that level, in ${explainName}. Leave out the student's report and questions: a line beginning with 📝 or ❓ and every line after it that begins with an emoji or with spaces.
@@ -482,11 +490,11 @@ Lesson notes:
 """
 ${body}
 """`;
-}
+};
 
 /** Choice questions on one pronunciation point, for the student to do in the app: which word has
     the sound, which transcription is right, which letter is silent, what was heard. */
-export function phoneticsPracticePrompt({
+export const phoneticsPracticePrompt = ({
   language,
   level,
   title,
@@ -500,7 +508,7 @@ export function phoneticsPracticePrompt({
   summary: string;
   count: number;
   explainIn: ExplainLanguage;
-}): string {
+}): string => {
   const name = LANGUAGE_NAMES[language];
   const explainName = EXPLAIN_NAMES[explainIn];
   return `Write ${count} questions for a learner of ${name} at CEFR level ${level} (A0 is a complete beginner) on this pronunciation point: "${title}"${summary ? ` (${summary})` : ''}.
@@ -512,7 +520,7 @@ Reply with only a JSON object: {"title": string, "questions": [{"type": "choice"
 - explanation is one short sentence in ${explainName} saying why the answer is right.
 - say is the ${name} word or phrase the app should read aloud for the question, when hearing it helps or the question asks what was heard; "" otherwise. say is never one of the options, except in a question that asks what was heard.
 - heard is true only for a question that asks which word was heard: its say is the answer, its prompt doesn't show it, and its options sound clearly different from each other (never homophones such as vert, verre, vers). At most a third of the questions are of this kind.`;
-}
+};
 
 export interface GrammarPracticeRequest {
   language: LearnLanguage;
@@ -527,7 +535,7 @@ export interface GrammarPracticeRequest {
 }
 
 // Gap sentences that practise one grammar point.
-export function grammarPracticePrompt({
+export const grammarPracticePrompt = ({
   language,
   level,
   title,
@@ -535,11 +543,11 @@ export function grammarPracticePrompt({
   count,
   explainIn,
   translateTo,
-}: GrammarPracticeRequest): string {
+}: GrammarPracticeRequest): string => {
   const languageName = LANGUAGE_NAMES[language];
   return `Write ${count} short ${languageName} sentences at CEFR level ${level} that practise this grammar point: "${title}"${summary ? ` (${summary})` : ''}. A learner fills one gap in each, where the grammar point decides the answer. Vary the sentences: different persons, verbs and situations, from easy to harder.
 Reply with only a JSON array of objects: {"before": string, "after": string, "answer": string, "options": [string, string, string], "ru": string, "why": string}. before and after are the text around the gap, answer the exact text of the gap, options three wrong answers that are typical mistakes with this grammar point (a wrong form, ending, auxiliary, agreement or preposition), never another correct answer. ru is a ${EXPLAIN_NAMES[translateTo]} translation of the whole sentence. why is one short sentence in ${EXPLAIN_NAMES[explainIn]} saying why the answer is right.`;
-}
+};
 
 // The parts of a book page a lesson can take; keep in step with BOOK_PARTS in src/shared/api/index.ts.
 export const BOOK_PARTS = ['exercises', 'text', 'grammar'] as const;
@@ -547,7 +555,7 @@ export type BookPart = (typeof BOOK_PARTS)[number];
 
 /** Book pages (photos or PDF pages) copied out for a lesson: the exercises, the reading text and
     the grammar, whichever were asked for, and never an answer: the student does them. */
-export function bookExercisesPrompt(parts: readonly BookPart[]): string {
+export const bookExercisesPrompt = (parts: readonly BookPart[]): string => {
   const wanted = [
     parts.includes('text')
       ? `- the text: every reading text, dialogue or document to read on the pages, after a line naming it in the book's language with its page when visible ("Texte, p. 34"), its paragraphs as printed;`
@@ -567,10 +575,10 @@ Reply with only a JSON object: {"text": string}. text is plain text:
 ${wanted}
 - an empty line between the parts and between exercises.
 Copy the words exactly as printed, in the book's language. Never write an answer: leave out answer keys, solutions, corrected versions and printed answers, and when a blank has been filled in (in print or by hand), still write it as ___. Leave out page headers, page numbers and anything that wasn't asked for.`;
-}
+};
 
 // A written homework task checked like a tutor would: the mistakes fixed and each one explained.
-export function writingCheckPrompt({
+export const writingCheckPrompt = ({
   task,
   text,
   level,
@@ -580,7 +588,7 @@ export function writingCheckPrompt({
   text: string;
   level: string;
   explainIn: ExplainLanguage;
-}): string {
+}): string => {
   const explainName = EXPLAIN_NAMES[explainIn];
   return `You are a friendly language tutor checking a student's written homework, at CEFR level ${level}. The student learns ${LANGUAGE_LIST}.
 The task, as the teacher wrote it: """${task}"""
@@ -594,11 +602,11 @@ Reply with only a JSON object: {"language": ${LANGUAGE_CODES}, "corrected": stri
 - corrected: the student's text with only the mistakes fixed (grammar, spelling, agreement, word choice that is wrong, missing accents). Keep their wording, their sentences and their line breaks; don't rewrite what is correct just to make it sound better.
 - mistakes: every fix, in the order they appear. wrong is the fragment exactly as the student wrote it, right is the fixed fragment exactly as it appears in corrected, keeping each fragment short (a few words). why is one short sentence in ${explainName}, the way a tutor would say it, naming the rule (agreement of the past participle with être, a feminine noun takes la, …). Return [] when there are no mistakes.
 - comment: one or two sentences in ${explainName} on the whole answer: does it do what the task asks (the number of sentences, the tense or the topic it names), what went well, and the one thing to revise. Be encouraging and concrete.`;
-}
+};
 
 /** Homework made from one lesson: the parts Claude writes. The app builds the "Devoirs:" block
     around them (src/features/make-homework/model/makeHomework.ts), in a form its homework checklist reads. */
-export function homeworkPrompt({
+export const homeworkPrompt = ({
   body,
   keyWords,
   level,
@@ -612,7 +620,7 @@ export function homeworkPrompt({
   sentences: number;
   // the language the sentences to translate are written in
   translation: TranslationRequest;
-}): string {
+}): string => {
   const name = EXPLAIN_NAMES[translation.language];
   const fallback = fallbackName(translation);
   const instead = fallback ? ` (in ${fallback} for a lesson in ${name} itself)` : '';
@@ -633,4 +641,4 @@ Lesson notes:
 """
 ${body}
 """`;
-}
+};

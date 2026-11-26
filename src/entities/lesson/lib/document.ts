@@ -6,7 +6,7 @@ import { type Analysis, type Lesson, type LessonWord } from '../model/types';
 import { notionIdFrom } from './source';
 
 // The lessons' source from a pasted link: a Google Docs id, or "notion-<id>" for a Notion page.
-export function docIdFrom(input: string): string | null {
+export const docIdFrom = (input: string): string | null => {
   const text = input.trim();
   const notion = notionIdFrom(text);
   if (notion) return notion;
@@ -15,10 +15,10 @@ export function docIdFrom(input: string): string | null {
   const match = text.match(/\/d\/([a-zA-Z0-9_-]{20,100})(?![a-zA-Z0-9_-])/);
   if (match?.[1]) return match[1];
   return /^[a-zA-Z0-9_-]{20,100}$/.test(text) ? text : null;
-}
+};
 
 // The document's text without Markdown escapes, trailing spaces and runs of blank lines.
-export function clean(text: string): string {
+export const clean = (text: string): string => {
   return text
     .replace(/\r/g, '')
     .replace(/\\([!_[\]*`#+\-.()~>|{}])/g, '$1')
@@ -26,7 +26,7 @@ export function clean(text: string): string {
     .map((line) => line.replace(/\s+$/, ''))
     .join('\n')
     .replace(/\n{3,}/g, '\n\n');
-}
+};
 
 // The heading words a lesson may start with, and how each is shown.
 const LESSON_WORDS: [RegExp, LessonWord][] = [
@@ -39,7 +39,7 @@ const LESSON_WORDS: [RegExp, LessonWord][] = [
 
 /** Every line like "14.10.2026 1 Leçon" (or Lesson, Lektion, Lección, Clase, Lição, Aula, Lezione)
     starts a lesson. */
-export function splitLessons(text: string): Lesson[] {
+export const splitLessons = (text: string): Lesson[] => {
   const cleaned = clean(text);
   const headingPattern =
     /^[ \t]*(\d{1,2})\.(\d{1,2})\.(\d{4})[ \t]+(\d+)[ \t]*(le[çc]on|lesson|lektion|lecci[óo]n|clase|li[çc][ãa]o|aula|lezione)(?![\p{L}])[^\n]*$/gimu;
@@ -89,7 +89,7 @@ export function splitLessons(text: string): Lesson[] {
       hash: hash(body),
     };
   });
-}
+};
 
 const CYRILLIC = /[А-Яа-яЁё]/;
 
@@ -100,7 +100,7 @@ const REPORT_LINE = /^(?:\s|\p{Extended_Pictographic})/u;
 /** A lesson's text without the student's report and questions: from a line starting with 📝
     or ❓ up to the first line that doesn't start with an emoji or spaces. Their sentences
     aren't vocabulary. */
-export function withoutReport(body: string): string {
+export const withoutReport = (body: string): string => {
   const kept: string[] = [];
   let inReport = false;
   for (const line of body.split('\n')) {
@@ -109,7 +109,7 @@ export function withoutReport(body: string): string {
     if (!inReport) kept.push(line);
   }
   return kept.join('\n');
-}
+};
 
 // "★ la boulangerie — пекарня": the teacher marks a key word of the lesson with a star
 const KEY_MARK = /[★⭐]/u;
@@ -129,7 +129,7 @@ const comparable = (text: string) =>
     .replace(LEADING_ARTICLE, '');
 
 // The words the teacher starred in a lesson, as written before the translation or transcription.
-function starredWords(body: string): Set<string> {
+const starredWords = (body: string): Set<string> => {
   const starred = new Set<string>();
   for (const line of body.split('\n')) {
     if (!KEY_MARK.test(line)) continue;
@@ -141,17 +141,17 @@ function starredWords(body: string): Set<string> {
     if (head) starred.add(head);
   }
   return starred;
-}
+};
 
 /** The lesson's words with the starred ones marked as key words. Claude marks them too, but an
     analysis kept from before the star was added, or one with a corrected spelling, may miss it. */
-export function markKeyWords(words: Word[], body: string): Word[] {
+export const markKeyWords = (words: Word[], body: string): Word[] => {
   const starred = starredWords(body);
   if (!starred.size) return words;
   return words.map((word) =>
     word.key || !starred.has(comparable(word.fr)) ? word : { ...word, key: true }
   );
-}
+};
 
 /** The language a heading word points to ("Lektion" → German), for lessons read without Claude.
     "Leçon" is the oldest heading, and French. */
@@ -169,7 +169,7 @@ export const languageOfLesson = (lesson: Pick<Lesson, 'word'>): Language =>
   LESSON_WORD_LANGUAGES[lesson.word];
 
 // The lesson's words without Claude, from "mot — перевод" lines, in the language of its heading.
-export function localParse(body: string, language: Language = 'fr'): Analysis {
+export const localParse = (body: string, language: Language = 'fr'): Analysis => {
   const words: Word[] = [];
   const seen = new Set<string>();
   for (let line of withoutReport(body).split('\n')) {
@@ -208,4 +208,4 @@ export function localParse(body: string, language: Language = 'fr'): Analysis {
     });
   }
   return { language, topic: '', words, pairs: [], verbs: [], local: true };
-}
+};

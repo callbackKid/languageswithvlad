@@ -6,7 +6,7 @@ import { Button } from '@/shared/ui/controls';
 import LanguagePicker from '@/shared/ui/LanguagePicker';
 
 // The first screen: paste the link of the lesson document (a Google Doc or a Notion page).
-export default function Connect({
+const Connect = ({
   current,
   onConnect,
   onCancel,
@@ -14,7 +14,7 @@ export default function Connect({
   current: string | null;
   onConnect: (id: string) => void;
   onCancel?: () => void;
-}) {
+}) => {
   const { t, rich } = useTranslation(app);
   const commonText = useTranslation(common);
   const [value, setValue] = useState(current ? sourceUrl(current) : '');
@@ -78,4 +78,6 @@ export default function Connect({
       )}
     </div>
   );
-}
+};
+
+export default Connect;

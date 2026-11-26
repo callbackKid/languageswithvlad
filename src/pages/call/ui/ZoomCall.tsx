@@ -20,7 +20,7 @@ const ZOOM_LANGUAGES = {
 
 /** A Zoom meeting running inside the page (Zoom Meeting SDK, component view). The SDK is large,
     so it's only downloaded when someone actually joins. */
-export default function ZoomCall({
+const ZoomCall = ({
   meetingNumber,
   passcode,
   userName,
@@ -30,7 +30,7 @@ export default function ZoomCall({
   passcode: string;
   userName: string;
   onLeave: () => void;
-}) {
+}) => {
   const { t } = useTranslation(call);
   const root = useRef<HTMLDivElement>(null);
   const [state, setState] = useState<'joining' | 'in' | 'error'>('joining');
@@ -96,4 +96,6 @@ export default function ZoomCall({
       </Button>
     </div>
   );
-}
+};
+
+export default ZoomCall;

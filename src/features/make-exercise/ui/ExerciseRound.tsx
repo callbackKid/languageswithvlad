@@ -11,16 +11,16 @@ import { makeExerciseText } from '../i18n/makeExercise';
 import { type ExerciseQuestion, type MadeExercise } from '../model/types';
 
 // How an answer compares with the right one and the others just as right: the best of them.
-function gradeAnswer(input: string, question: ExerciseQuestion): Grade {
+const gradeAnswer = (input: string, question: ExerciseQuestion): Grade => {
   const grades = [question.answer, ...question.accept].map((answer) => grade(input, answer));
   if (grades.includes('ok')) return 'ok';
   if (grades.includes('accent')) return 'accent';
   return grades[0] ?? 'bad';
-}
+};
 
 /** One round of a made exercise: a question at a time, checked, explained, and a score at the
     end. onAnother (Create another) asks for a new round; without it, the round just closes. */
-export default function ExerciseRound({
+const ExerciseRound = ({
   exercise,
   onClose,
   onAnother,
@@ -31,7 +31,7 @@ export default function ExerciseRound({
   onAnother?: () => void;
   // the way out's name: Close by default, Back to words when the round was opened from a word list
   closeLabel?: string;
-}) {
+}) => {
   const { t } = useTranslation(makeExerciseText);
   const commonText = useTranslation(common);
   const [questions, setQuestions] = useState(() => shuffle(exercise.questions));
@@ -45,7 +45,7 @@ export default function ExerciseRound({
   const { language } = exercise;
   const question = questions[index];
 
-  function answer(given: string) {
+  const answer = (given: string) => {
     if (!question) return;
     // a picked option has no typo to forgive: [maʒe] for [mɑ̃ʒe] is wrong, not "mind the accents"
     const graded =
@@ -58,21 +58,21 @@ export default function ExerciseRound({
     setResult(graded);
     setShowRu(true);
     if (graded !== 'bad') setScore((previous) => previous + 1);
-  }
+  };
   // to the next question, or, from the start, a new order of the same questions
-  function goTo(position: number) {
+  const goTo = (position: number) => {
     setIndex(position);
     setTyped('');
     setPicked(null);
     setResult(null);
     setShowRu(false);
-  }
+  };
   const next = () => goTo(index + 1);
-  function again() {
+  const again = () => {
     setQuestions(shuffle(exercise.questions));
     setScore(0);
     goTo(0);
-  }
+  };
 
   const head = (
     <ExerciseHead
@@ -200,4 +200,6 @@ export default function ExerciseRound({
       )}
     </div>
   );
-}
+};
+
+export default ExerciseRound;

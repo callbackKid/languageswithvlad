@@ -7,7 +7,7 @@ import { asText } from '@/shared/lib/util';
 import { type Discussion } from './types';
 
 // A discussion question and what comes with it; null when the answer has no question.
-export function normalizeDiscussion(raw: unknown, translatedTo: UiLanguage): Discussion | null {
+export const normalizeDiscussion = (raw: unknown, translatedTo: UiLanguage): Discussion | null => {
   const data = asObject(raw);
   const question = asText(data.question);
   if (!question) return null;
@@ -24,4 +24,4 @@ export function normalizeDiscussion(raw: unknown, translatedTo: UiLanguage): Dis
     grammarRule: normalizeGrammarRule(data.grammarRule),
     translatedTo: asUiLanguage(data.translatedTo) ?? translatedTo,
   };
-}
+};

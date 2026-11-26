@@ -21,41 +21,41 @@ let code: string | null = typeof stored === 'string' && stored ? stored : null;
 let current: TeacherState = { available: false, isTeacher: !!code };
 const listeners = new Set<() => void>();
 
-function publish(next: TeacherState) {
+const publish = (next: TeacherState) => {
   current = next;
   listeners.forEach((listener) => listener());
-}
+};
 
 // The code sent with every request, or null on a student's device.
 export const getTeacherCode = () => code;
 
 // Called with the server's answer at start-up: a saved code it no longer accepts is dropped.
-export function applyTeacherHealth(available: boolean, confirmed: boolean) {
+export const applyTeacherHealth = (available: boolean, confirmed: boolean) => {
   if (code && !confirmed) {
     code = null;
     remove(KEY);
   }
   publish({ available, isTeacher: !!code && confirmed });
-}
+};
 
 // Keeps a code the server has just confirmed.
-export function saveTeacherCode(confirmedCode: string) {
+export const saveTeacherCode = (confirmedCode: string) => {
   code = confirmedCode;
   save(KEY, confirmedCode);
   publish({ ...current, isTeacher: true });
-}
+};
 
 // Turns the teacher's tools off on this device.
-export function forgetTeacherCode() {
+export const forgetTeacherCode = () => {
   code = null;
   remove(KEY);
   publish({ ...current, isTeacher: false });
-}
+};
 
-function subscribe(listener: () => void) {
+const subscribe = (listener: () => void) => {
   listeners.add(listener);
   return () => listeners.delete(listener);
-}
+};
 const getTeacherState = () => current;
 // Whether the teacher's tools are on; the component re-renders when that changes.
 export const useTeacher = () => useSyncExternalStore(subscribe, getTeacherState, getTeacherState);

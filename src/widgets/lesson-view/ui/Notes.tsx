@@ -4,7 +4,7 @@ import { common, useTranslation } from '@/shared/i18n';
 import { loadText, save } from '@/shared/lib/storage';
 
 // A notepad, saved on this device as the student types.
-export default function Notes({ storageKey }: { storageKey: string }) {
+const Notes = ({ storageKey }: { storageKey: string }) => {
   const { t } = useTranslation(common);
   const [text, setText] = useState(() => loadText(storageKey) || '');
   const [status, setStatus] = useState<'' | 'saving' | 'saved'>('');
@@ -45,4 +45,6 @@ export default function Notes({ storageKey }: { storageKey: string }) {
       </div>
     </>
   );
-}
+};
+
+export default Notes;

@@ -19,7 +19,7 @@ declare global {
 }
 
 // Loads the IFrame API for this AppID, once: only when someone joins a call.
-function loadJitsi(appId: string): Promise<void> {
+const loadJitsi = (appId: string): Promise<void> => {
   if (window.JitsiMeetExternalAPI) return Promise.resolve();
   return new Promise((resolve, reject) => {
     const script = document.createElement('script');
@@ -32,12 +32,12 @@ function loadJitsi(appId: string): Promise<void> {
     };
     document.head.append(script);
   });
-}
+};
 
 /** A Jitsi video call running inside the page (JaaS IFrame API). The server signs a token for the
     room, with the teacher as its moderator; the call ends when the person leaves it in Jitsi,
     presses Leave, or leaves lesson mode. */
-export default function JitsiCall({
+const JitsiCall = ({
   appId,
   room,
   userName,
@@ -47,7 +47,7 @@ export default function JitsiCall({
   room: string;
   userName: string;
   onLeave: () => void;
-}) {
+}) => {
   const { t } = useTranslation(call);
   const root = useRef<HTMLDivElement>(null);
   const [state, setState] = useState<'joining' | 'in' | 'error'>('joining');
@@ -107,4 +107,6 @@ export default function JitsiCall({
       </Button>
     </div>
   );
-}
+};
+
+export default JitsiCall;

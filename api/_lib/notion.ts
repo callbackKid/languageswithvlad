@@ -26,13 +26,16 @@ export const NOTION_ID = /^notion-([0-9a-f]{32})$/;
 export class NotionError extends HttpError {}
 
 // Whether NOTION_TOKEN is set, so Notion pages can be read.
-export function notionConfigured(): boolean {
+export const notionConfigured = (): boolean => {
   return !!process.env.NOTION_TOKEN;
-}
+};
 
 const pause = (milliseconds: number) => new Promise((resolve) => setTimeout(resolve, milliseconds));
 
-async function notion<T>(path: string, init: { method?: string; body?: unknown } = {}): Promise<T> {
+const notion = async <T>(
+  path: string,
+  init: { method?: string; body?: unknown } = {}
+): Promise<T> => {
   const token = process.env.NOTION_TOKEN;
   if (!token) throw new NotionError(501, 'notion_off');
   for (let attempt = 0; ; attempt++) {
@@ -63,7 +66,7 @@ async function notion<T>(path: string, init: { method?: string; body?: unknown }
     console.error('Notion', path, response.status, code);
     throw new NotionError(502, 'notion_unreachable');
   }
-}
+};
 
 interface RichText {
   plain_text: string;
@@ -94,7 +97,7 @@ interface Database {
 }
 
 // The text of a rich-text run; a call link hidden behind other words is kept, so "Join call" finds it.
-function plain(texts: RichText[] | undefined): string {
+const plain = (texts: RichText[] | undefined): string => {
   return (texts ?? [])
     .map((text) => {
       const href = text.href ?? '';
@@ -104,9 +107,9 @@ function plain(texts: RichText[] | undefined): string {
         : text.plain_text;
     })
     .join('');
-}
+};
 
-async function children(blockId: string): Promise<Block[]> {
+const children = async (blockId: string): Promise<Block[]> => {
   const blocks: Block[] = [];
   let cursor: string | null = null;
   do {
@@ -116,13 +119,13 @@ async function children(blockId: string): Promise<Block[]> {
     cursor = page.has_more ? page.next_cursor : null;
   } while (cursor && blocks.length < MAX_BLOCKS);
   return blocks;
-}
+};
 
 const pad = (value: number) => String(value).padStart(2, '0');
 const HEADING = /^\s*\d{1,2}\.\d{1,2}\.\d{4}\s+\d+/;
 
 // A database row's title; when it isn't a lesson heading but the row has a date, one is made from it.
-function rowTitle(row: Page, position: number): string {
+const rowTitle = (row: Page, position: number): string => {
   const properties = Object.values(row.properties);
   const title = plain(properties.find((property) => property.type === 'title')?.title);
   if (HEADING.test(title)) return title;
@@ -134,7 +137,7 @@ function rowTitle(row: Page, position: number): string {
   const [year, month, day] = date.split('-').map(Number);
   if (!year || !month || !day) return title;
   return `${pad(day)}.${pad(month)}.${year} ${position + 1} Leçon${title ? `\n${title}` : ''}`;
-}
+};
 
 class Reader {
   private count = 0;
@@ -216,7 +219,7 @@ const tidy = (lines: string[]) =>
     .trim();
 
 // The page (or database of lessons) as { title, text }.
-export async function readNotion(id: string): Promise<{ title: string; text: string }> {
+export const readNotion = async (id: string): Promise<{ title: string; text: string }> => {
   const reader = new Reader();
   try {
     const page: Page = await notion(`/pages/${id}`);
@@ -237,7 +240,7 @@ export async function readNotion(id: string): Promise<{ title: string; text: str
       throw error.message === 'notion_not_shared' ? error : databaseError;
     }
   }
-}
+};
 
 const paragraph = (text: string, type = 'paragraph') => ({
   object: 'block',
@@ -248,19 +251,19 @@ const paragraph = (text: string, type = 'paragraph') => ({
 
 // Adds a lesson: under the page's last block, or as a new row when the link is a database of lessons.
 // The one line a top-level block shows: a sub-page's title, or its text.
-function blockLine(block: Block): string {
+const blockLine = (block: Block): string => {
   if (block.type === 'child_page') return (block.child_page as { title?: string }).title ?? '';
   const content = (block[block.type] ?? {}) as { rich_text?: RichText[] };
   return plain(content.rich_text);
-}
+};
 
 /** Adds the lines at the end of one lesson: inside its sub-page or database row, or after its
     last block on the page. False when the lesson isn't found at the page's top level. */
-export async function insertIntoNotionLesson(
+export const insertIntoNotionLesson = async (
   id: string,
   target: LessonTarget,
   text: string
-): Promise<boolean> {
+): Promise<boolean> => {
   const blocks = text
     .trim()
     .split('\n')
@@ -311,10 +314,10 @@ export async function insertIntoNotionLesson(
     await add(id, last);
   }
   return true;
-}
+};
 
 // Adds a new lesson (its heading and lines) at the end of a Notion page, or as a row of a lesson database.
-export async function appendToNotion(id: string, text: string): Promise<void> {
+export const appendToNotion = async (id: string, text: string): Promise<void> => {
   const lines = text.split('\n').map((line) => line.trimEnd());
   const headingIndex = lines.findIndex((line) => line.trim());
   const heading = lines[headingIndex]?.trim() ?? '';
@@ -343,4 +346,4 @@ export async function appendToNotion(id: string, text: string): Promise<void> {
       },
     });
   }
-}
+};

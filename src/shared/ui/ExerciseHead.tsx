@@ -5,7 +5,7 @@ import { common, useTranslation } from '@/shared/i18n';
 import { Button } from './controls';
 
 // The title row of an exercise: its name, a progress counter, and a way back.
-export default function ExerciseHead({
+const ExerciseHead = ({
   title,
   children,
   onClose,
@@ -15,7 +15,7 @@ export default function ExerciseHead({
   children?: ReactNode;
   onClose?: () => void;
   closeLabel?: string;
-}) {
+}) => {
   const { t } = useTranslation(common);
   return (
     <div className="ex-head">
@@ -28,4 +28,6 @@ export default function ExerciseHead({
       )}
     </div>
   );
-}
+};
+
+export default ExerciseHead;

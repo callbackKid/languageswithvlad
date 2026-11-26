@@ -10,7 +10,7 @@ import styles from './Settings.module.css';
 
 /** The Settings card where the teacher turns the teacher's tools on, with the teacher code.
     Shown only when the server has a teacher code set up. */
-export default function TeacherCard() {
+const TeacherCard = () => {
   const { t } = useTranslation(settingsText);
   const commonText = useTranslation(common);
   const { available, isTeacher } = useTeacher();
@@ -75,4 +75,6 @@ export default function TeacherCard() {
       )}
     </section>
   );
-}
+};
+
+export default TeacherCard;

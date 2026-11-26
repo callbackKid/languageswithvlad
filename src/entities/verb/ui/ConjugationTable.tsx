@@ -5,7 +5,7 @@ import Speak from '@/shared/ui/Speak';
 import { type Form } from '../model/types';
 
 // One tense of a verb as a table: person and form, each form read aloud with 🔊.
-export default function ConjugationTable({ rows, language }: { rows: Form[]; language: Language }) {
+const ConjugationTable = ({ rows, language }: { rows: Form[]; language: Language }) => {
   return (
     <table className="conj" lang={language}>
       <tbody>
@@ -23,4 +23,6 @@ export default function ConjugationTable({ rows, language }: { rows: Form[]; lan
       </tbody>
     </table>
   );
-}
+};
+
+export default ConjugationTable;

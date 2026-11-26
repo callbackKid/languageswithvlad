@@ -11,7 +11,7 @@ const CONJUGATION_TOKENS = 3000;
 const MAX_TRANSLATION_LENGTH = 100;
 
 // A verb's conjugation tables, in any language that has them (French, German, Spanish, Italian, Portuguese).
-export default async function handler(request: VercelRequest, response: VercelResponse) {
+const handler = async (request: VercelRequest, response: VercelResponse) => {
   if (!onlyPost(request, response) || !checkAccess(request, response)) return;
   const infinitive = typeof request.body?.inf === 'string' ? request.body.inf.trim() : '';
   const ru = text(request.body?.ru, MAX_TRANSLATION_LENGTH);
@@ -36,4 +36,6 @@ export default async function handler(request: VercelRequest, response: VercelRe
   } catch (error) {
     fail(response, error);
   }
-}
+};
+
+export default handler;

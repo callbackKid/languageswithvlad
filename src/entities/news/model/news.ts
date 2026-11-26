@@ -24,10 +24,10 @@ export type NewsAudience = (typeof NEWS_AUDIENCES)[number];
 
 /** The days with the items one tab shows, newest first, without the days left empty: for one
     language, the items about it and those about every language; for one audience, its items. */
-export function newsFor(
+export const newsFor = (
   days: NewsDay[],
   { tab, language, audience }: { tab: NewsTab; language: Language | 'all'; audience: NewsAudience }
-): NewsDay[] {
+): NewsDay[] => {
   return days
     .map((day) => ({
       ...day,
@@ -39,7 +39,7 @@ export function newsFor(
       ),
     }))
     .filter((day) => day.items.length);
-}
+};
 export interface NewsDay {
   // YYYY-MM-DD
   date: string;

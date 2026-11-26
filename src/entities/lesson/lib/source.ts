@@ -7,7 +7,7 @@ const NOTION_PREFIX = 'notion-';
 export const isNotion = (id: string) => id.startsWith(NOTION_PREFIX);
 
 // notion.so/…/Lessons-0123…cdef?pvs=4, xyz.notion.site/…, also with a dashed id → "notion-0123…cdef".
-export function notionIdFrom(input: string): string | null {
+export const notionIdFrom = (input: string): string | null => {
   const text = input.trim();
   if (!/notion\.(?:so|site)\//i.test(text)) return null;
   // the page id ends the last part of the path: "Lessons-0123…cdef", or a dashed id
@@ -17,11 +17,11 @@ export function notionIdFrom(input: string): string | null {
   const last = path.replace(/\/+$/, '').split('/').pop() ?? '';
   const id = dashed?.replace(/-/g, '') ?? last.match(/(?:^|-)([0-9a-f]{32})$/i)?.[1];
   return id ? NOTION_PREFIX + id.toLowerCase() : null;
-}
+};
 
 // The page to open for editing.
-export function sourceUrl(id: string): string {
+export const sourceUrl = (id: string): string => {
   return isNotion(id)
     ? `https://www.notion.so/${id.slice(NOTION_PREFIX.length)}`
     : `https://docs.google.com/document/d/${encodeURIComponent(id)}/edit`;
-}
+};

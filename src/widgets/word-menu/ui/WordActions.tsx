@@ -40,7 +40,7 @@ const VIEWS = ['translate', 'define', 'examples', 'conjugate'] as const;
 type View = (typeof VIEWS)[number];
 
 // The selection on the page, when it is text in a language being learned outside the skipped places.
-function pickedNow(): LookUp | null {
+const pickedNow = (): LookUp | null => {
   const selection = window.getSelection();
   if (!selection || selection.isCollapsed || !selection.rangeCount) return null;
   const text = cleanSelection(selection.toString());
@@ -63,13 +63,13 @@ function pickedNow(): LookUp | null {
     ...menuPlace(range.getBoundingClientRect()),
     source: element.closest('[data-word-source]')?.getAttribute('data-word-source') ?? null,
   };
-}
+};
 
 /** The menu on a word or phrase selected anywhere in the app, in text marked with a language being
     learned: its translation in the sentence, a definition, examples and verb tables (one request
     to Claude for all of them, kept on the device), 🔊, ☆, and, on a lesson's pages, a line added
     under that lesson in the document. */
-export default function WordActions({
+const WordActions = ({
   hasClaude,
   docId,
   lesson,
@@ -80,7 +80,7 @@ export default function WordActions({
   // the lesson a looked-up word can be added to: the open lesson, or the newest one in lesson mode
   lesson: Lesson | null;
   canWrite: boolean;
-}) {
+}) => {
   const { t, rich } = useTranslation(wordActions);
   const commonText = useTranslation(common);
   const translationOf = useTranslationLanguage();
@@ -153,14 +153,14 @@ export default function WordActions({
   }, [picked]);
 
   // Tells the part of the page the word came from that it now has a card (the Text page lists them).
-  function report(found: WordCard) {
+  const report = (found: WordCard) => {
     if (!picked?.source) return;
     const detail: CardFound = { card: found, source: picked.source };
     window.dispatchEvent(new CustomEvent(CARD_EVENT, { detail }));
-  }
+  };
 
   // The card for the selection: the saved one, or Claude's answer; null while it fails.
-  async function cardNow(): Promise<WordCard | null> {
+  const cardNow = async (): Promise<WordCard | null> => {
     if (card) {
       report(card);
       return card;
@@ -190,14 +190,14 @@ export default function WordActions({
       setError(failure instanceof ApiError ? failure.message : translator(wordActions).t('failed'));
       return null;
     }
-  }
+  };
 
-  function choose(next: View) {
+  const choose = (next: View) => {
     setView(next);
     void cardNow();
-  }
+  };
 
-  async function addToLesson() {
+  const addToLesson = async () => {
     if (!card || !lesson) return;
     setAdding('saving');
     setAddError('');
@@ -212,7 +212,7 @@ export default function WordActions({
         failure instanceof ApiError ? failure.message : translator(common).t('addFailed')
       );
     }
-  }
+  };
 
   if (!picked) return null;
   const { language } = picked;
@@ -358,4 +358,6 @@ export default function WordActions({
       )}
     </div>
   );
-}
+};
+
+export default WordActions;

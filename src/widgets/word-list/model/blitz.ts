@@ -8,11 +8,11 @@ export const BLITZ_SIZE = 10;
 /** One blitz round: the gap sentences and the definitions taken in turn. A sentence whose word
     isn't one of the words sent (Claude changed its spelling) is left out, since its answer
     couldn't be counted for the word. */
-export function buildBlitz(
+export const buildBlitz = (
   gaps: GapItem[],
   definitions: { word: Word; definition: string }[],
   words: Word[]
-): QuizItem[] {
+): QuizItem[] => {
   const byText = new Map(words.map((word) => [word.fr.toLowerCase(), word]));
   const gapItems: QuizItem[] = [];
   for (const gap of gaps) {
@@ -41,4 +41,4 @@ export function buildBlitz(
     if (define) round.push(define);
   }
   return round;
-}
+};

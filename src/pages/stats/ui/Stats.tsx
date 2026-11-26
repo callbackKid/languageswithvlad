@@ -16,7 +16,7 @@ const asKind = (kind: string): Kind => (KINDS.includes(kind as Kind) ? (kind as 
 
 const percent = (part: number, whole: number) => (whole ? Math.round((part / whole) * 100) : 0);
 
-function Meter({ value, max, label }: { value: number; max: number; label: string }) {
+const Meter = ({ value, max, label }: { value: number; max: number; label: string }) => {
   const { t } = useTranslation(pages);
   const share = percent(value, max);
   return (
@@ -32,7 +32,7 @@ function Meter({ value, max, label }: { value: number; max: number; label: strin
       <div className="meter-fill" style={{ width: share + '%' }} />
     </div>
   );
-}
+};
 
 interface Row {
   id: string;
@@ -40,12 +40,18 @@ interface Row {
   right: number;
   total: number;
 }
-function addTo(rowsById: Map<string, Row>, id: string, name: string, right: number, wrong: number) {
+const addTo = (
+  rowsById: Map<string, Row>,
+  id: string,
+  name: string,
+  right: number,
+  wrong: number
+) => {
   const row = rowsById.get(id) || { id, name, right: 0, total: 0 };
   row.right += right;
   row.total += right + wrong;
   rowsById.set(id, row);
-}
+};
 
 // Lowest accuracy first, leaving out topics with too few answers to judge.
 const weakest = (rowsById: Map<string, Row>) =>
@@ -53,7 +59,7 @@ const weakest = (rowsById: Map<string, Row>) =>
     .filter((row) => row.total >= MIN_ANSWERS)
     .sort((first, second) => first.right / first.total - second.right / second.total);
 
-function RankList({ title, rows }: { title: string; rows: Row[] }) {
+const RankList = ({ title, rows }: { title: string; rows: Row[] }) => {
   const { t } = useTranslation(pages);
   if (!rows.length) return null;
   return (
@@ -77,10 +83,10 @@ function RankList({ title, rows }: { title: string; rows: Row[] }) {
       </ul>
     </div>
   );
-}
+};
 
 // The Stats page: words learned, right answers, progress per lesson, weak topics and common mistakes.
-export default function Stats({
+const Stats = ({
   bank,
   lessons,
   docId,
@@ -90,7 +96,7 @@ export default function Stats({
   lessons: Lesson[];
   docId: string;
   canWrite: boolean;
-}) {
+}) => {
   const { t, language: uiLanguage } = useTranslation(pages);
   const progress = useProgress();
   const settings = useSettings();
@@ -273,4 +279,6 @@ export default function Stats({
       </section>
     </>
   );
-}
+};
+
+export default Stats;

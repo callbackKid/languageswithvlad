@@ -6,7 +6,7 @@ import HelpLink from './HelpLink';
 
 /** A page's title and intro; with a guide, a "?" beside the title opens its Tutorial card. aside
     sits on the right of them on a wide screen and under them on a phone (lesson mode's call). */
-export default function PageHead({
+const PageHead = ({
   title,
   guide,
   aside,
@@ -16,7 +16,7 @@ export default function PageHead({
   guide?: GuideId;
   aside?: ReactNode;
   children?: ReactNode;
-}) {
+}) => {
   const heading = (
     <>
       <div className="title-row">
@@ -38,4 +38,6 @@ export default function PageHead({
       )}
     </section>
   );
-}
+};
+
+export default PageHead;

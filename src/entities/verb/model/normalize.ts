@@ -6,19 +6,19 @@ import { futurProche } from '../lib/futurProche';
 import { type Conjugation, type Form } from './types';
 
 // "je me" "lève" → "je" "me lève": the reflexive pronoun belongs to the answer, not the person.
-export function withPerson(form: Form): Form {
+export const withPerson = (form: Form): Form => {
   const match = form.p.match(/^(\S+)\s+(me|te|se|nous|vous|[mts]['’])$/i);
   if (!match) return form;
   const [, person = '', pronoun = ''] = match;
   return { p: person, f: /['’]$/.test(pronoun) ? pronoun + form.f : `${pronoun} ${form.f}` };
-}
+};
 
 // A verb's tables in the tenses of its language; throws when even the first tense is missing.
-export function normalizeConjugation(
+export const normalizeConjugation = (
   raw: unknown,
   infinitive: string,
   language: VerbLanguage
-): Conjugation {
+): Conjugation => {
   const data = asObject(raw);
   const rawTenses = asObject(data.tenses);
   const tenses: Conjugation['tenses'] = {};
@@ -41,4 +41,4 @@ export function normalizeConjugation(
     language,
     tenses,
   };
-}
+};

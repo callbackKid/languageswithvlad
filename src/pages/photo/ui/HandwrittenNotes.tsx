@@ -52,7 +52,7 @@ const toLesson = (
 });
 
 // Photos of handwritten notes, or pages of a textbook PDF → text the student can correct → the same words, verbs and exercises as a lesson from the document.
-export default function HandwrittenNotes({
+const HandwrittenNotes = ({
   hasClaude,
   target,
   source,
@@ -60,7 +60,7 @@ export default function HandwrittenNotes({
   hasClaude: boolean;
   target: DocTarget;
   source: PaperSource;
-}) {
+}) => {
   const { t } = useTranslation(paper);
   const commonText = useTranslation(common);
   const { storageKey } = SOURCES[source];
@@ -94,7 +94,7 @@ export default function HandwrittenNotes({
   const current = currentIndex >= 0 ? entries[currentIndex] : null;
 
   // Adds the notes Claude wrote as a new saved lesson and opens them for checking.
-  function addEntry(answer: unknown, nothingFound: string) {
+  const addEntry = (answer: unknown, nothingFound: string) => {
     const { title, text } = asObjectText(answer, ['title', 'text']);
     if (!text) throw new ApiError(0, 'empty', nothingFound);
     const entry: HandwrittenLesson = { id: Date.now().toString(36), title, text, at: Date.now() };
@@ -102,9 +102,9 @@ export default function HandwrittenNotes({
     setCurrentId(entry.id);
     // the student checks the text before the lesson is prepared
     setDraft(text);
-  }
+  };
 
-  async function openPdf(file: File) {
+  const openPdf = async (file: File) => {
     setState('loading');
     setError('');
     try {
@@ -117,9 +117,9 @@ export default function HandwrittenNotes({
       setState('error');
       setError(t('pdfFailed'));
     }
-  }
+  };
 
-  async function readPdf() {
+  const readPdf = async () => {
     if (!pdf) return;
     setState('loading');
     setError('');
@@ -133,9 +133,9 @@ export default function HandwrittenNotes({
       setState('error');
       setError(failure instanceof ApiError ? failure.message : t('pagesFailed'));
     }
-  }
+  };
 
-  async function read(files: File[]) {
+  const read = async (files: File[]) => {
     if (files.length > MAX_PAGES) {
       setState('error');
       setError(t('tooManyPages', { count: MAX_PAGES }));
@@ -165,23 +165,23 @@ export default function HandwrittenNotes({
     } finally {
       setProgress(null);
     }
-  }
+  };
 
-  function saveDraft() {
+  const saveDraft = () => {
     if (!current || draft === null) return;
     const text = draft.trim();
     if (text) store(entries.map((entry) => (entry.id === current.id ? { ...entry, text } : entry)));
     setDraft(null);
-  }
+  };
 
-  function remove() {
+  const remove = () => {
     setDeleting(null);
     if (!current) return;
     const next = entries.filter((entry) => entry.id !== current.id);
     store(next);
     setCurrentId(next[0]?.id ?? null);
     setDraft(null);
-  }
+  };
 
   if (!hasClaude) return <p className="empty">{commonText.t('needsClaude')}</p>;
 
@@ -361,4 +361,6 @@ export default function HandwrittenNotes({
         ))}
     </>
   );
-}
+};
+
+export default HandwrittenNotes;

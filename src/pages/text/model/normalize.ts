@@ -6,7 +6,7 @@ import { asText } from '@/shared/lib/util';
 import { type ReaderText, type TextStudy } from './types';
 
 // A pasted text as saved on the device, with what Claude made of it; null when it has no text.
-export function normalizeReaderText(raw: unknown): ReaderText | null {
+export const normalizeReaderText = (raw: unknown): ReaderText | null => {
   const data = asObject(raw);
   const id = asText(data.id);
   const text = typeof data.text === 'string' ? data.text : '';
@@ -28,22 +28,24 @@ export function normalizeReaderText(raw: unknown): ReaderText | null {
     ...(translation.length && { translation }),
     ...(study && { study }),
   };
-}
+};
 
 /** The translated paragraphs, and the text's language when Claude named one it knows (null
     otherwise); throws when the answer has no paragraphs. */
-export function normalizeTranslation(raw: unknown): {
+export const normalizeTranslation = (
+  raw: unknown
+): {
   paragraphs: string[];
   language: Language | null;
-} {
+} => {
   const data = asObject(raw);
   const paragraphs = asTexts(data.paragraphs);
   if (!paragraphs.length) throw new Error('empty');
   return { paragraphs, language: LANGUAGES.find((code) => code === data.language) ?? null };
-}
+};
 
 // Words, questions and statements built from a text, with the text's language.
-export function normalizeStudy(raw: unknown): { language: Language; study: TextStudy } {
+export const normalizeStudy = (raw: unknown): { language: Language; study: TextStudy } => {
   const data = asObject(raw);
   const language = asLanguage(data.language);
   const seen = new Set<string>();
@@ -77,4 +79,4 @@ export function normalizeStudy(raw: unknown): { language: Language; study: TextS
     .filter((item) => item.text);
   if (!words.length && !questions.length && !statements.length) throw new Error('empty');
   return { language, study: { title: asText(data.title), words, questions, statements } };
-}
+};

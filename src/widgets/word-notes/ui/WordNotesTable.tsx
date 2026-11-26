@@ -16,14 +16,14 @@ const asWord = (item: PhotoItem): Word => ({
 
 /** Words and phrases the student marked (on a photo or in a pasted text), each with its
     translation in context, dictionary form, tense and a short explanation. */
-export default function WordNotesTable({
+const WordNotesTable = ({
   items,
   firstColumn,
 }: {
   items: PhotoItem[];
   // the heading of the first column: "Underlined", "Word or phrase"
   firstColumn: string;
-}) {
+}) => {
   const { t } = useTranslation(paper);
   const translationOf = useTranslationLanguage();
   return (
@@ -82,4 +82,6 @@ export default function WordNotesTable({
       <p className="legend">{t('photoStarLegend')}</p>
     </div>
   );
-}
+};
+
+export default WordNotesTable;
