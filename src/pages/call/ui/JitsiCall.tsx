@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import { api, ApiError } from '@/shared/api';
 import { call, getUiLanguage, translator, useTranslation } from '@/shared/i18n';
+import { Button } from '@/shared/ui/controls';
 
 // Jitsi as a Service: every call runs on 8x8's servers, under the app's AppID
 const JAAS_DOMAIN = '8x8.vc';
@@ -101,9 +102,9 @@ export default function JitsiCall({
         </div>
       )}
       <div ref={root} className={'jitsi-root' + (state === 'in' ? ' in' : '')} />
-      <button type="button" className="btn ghost" onClick={onLeave}>
+      <Button variant="ghost" onClick={onLeave}>
         {t('leave')}
-      </button>
+      </Button>
     </div>
   );
 }

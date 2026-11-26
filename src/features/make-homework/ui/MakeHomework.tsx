@@ -13,6 +13,7 @@ import {
   useTranslation,
 } from '@/shared/i18n';
 import { load, save } from '@/shared/lib/storage';
+import { Button } from '@/shared/ui/controls';
 import WaitingFact from '@/shared/ui/WaitingFact';
 
 import {
@@ -167,9 +168,7 @@ export default function MakeHomework({
           )}
           {(step === 'idle' || step === 'done') && (
             <div className="row-actions">
-              <button type="button" className="btn" onClick={() => void make()}>
-                {t('makeButton')}
-              </button>
+              <Button onClick={() => void make()}>{t('makeButton')}</Button>
             </div>
           )}
           {step === 'making' && <WaitingFact language={language}>{t('making')}</WaitingFact>}
@@ -183,30 +182,23 @@ export default function MakeHomework({
                 onChange={(event) => setText(event.target.value)}
               />
               <div className="row-actions">
-                <button
-                  type="button"
-                  className="btn primary"
+                <Button
+                  variant="primary"
                   disabled={step === 'saving' || !text.trim()}
                   onClick={() => void add()}
                 >
                   {step === 'saving' ? commonText.t('adding') : t('addToLesson')}
-                </button>
-                <button
-                  type="button"
-                  className="btn"
-                  disabled={step === 'saving'}
-                  onClick={() => void make()}
-                >
+                </Button>
+                <Button disabled={step === 'saving'} onClick={() => void make()}>
                   {t('makeAgain')}
-                </button>
-                <button
-                  type="button"
-                  className="btn ghost"
+                </Button>
+                <Button
+                  variant="ghost"
                   disabled={step === 'saving'}
                   onClick={() => setStep('idle')}
                 >
                   {commonText.t('cancel')}
-                </button>
+                </Button>
               </div>
             </>
           )}

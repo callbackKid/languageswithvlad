@@ -13,6 +13,7 @@ import { common, getUiLanguage, paper, translator, useTranslation } from '@/shar
 import { requestOnce } from '@/shared/lib/once';
 import { canSpeak, hasVoice } from '@/shared/lib/speech';
 import { save } from '@/shared/lib/storage';
+import { Button } from '@/shared/ui/controls';
 import WaitingFact from '@/shared/ui/WaitingFact';
 
 import { phoneticsKey, readPhonetics } from '../model/phonetics';
@@ -127,13 +128,9 @@ export default function PhoneticsTab({
     return (
       <div className="note err" role="alert">
         <p>{error}</p>
-        <button
-          type="button"
-          className="btn"
-          onClick={() => setAttempt((previous) => previous + 1)}
-        >
+        <Button onClick={() => setAttempt((previous) => previous + 1)}>
           {commonText.t('tryAgain')}
-        </button>
+        </Button>
       </div>
     );
   if (!phonetics) return null;
@@ -152,16 +149,15 @@ export default function PhoneticsTab({
           formationLabel={t('phoneticsRules')}
         >
           <div className="row-actions">
-            <button
-              type="button"
-              className="btn primary"
+            <Button
+              variant="primary"
               onClick={() => {
                 setPractising(topic);
                 setRound((previous) => previous + 1);
               }}
             >
               {t('practisePhonetics')}
-            </button>
+            </Button>
           </div>
         </GrammarRuleBox>
       ))}

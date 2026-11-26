@@ -1,0 +1,86 @@
+/* Shared by buttons, links and file-picker labels. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  /* blue, so a button stands out from the cards and fields around it */
+  border: 1px solid var(--accent);
+  background: var(--surface);
+  border-radius: 8px;
+  padding: 7px 14px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.3;
+}
+.btn:hover {
+  border-color: var(--accent-text);
+}
+.btn.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
+}
+.btn.primary:hover {
+  background: var(--accent-hover);
+}
+/* a quieter button: no fill, but the same blue border as the others */
+.btn.ghost {
+  background: transparent;
+  color: var(--ink);
+}
+/* a × that closes or clears something, and a button inside a line of text, stay borderless,
+   like the icons and text around them */
+.btn.ghost.dismiss,
+.btn.ghost.inline {
+  border-color: transparent;
+}
+/* a × that closes or clears something: narrower, as it holds one sign */
+.btn.ghost.dismiss {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+.btn[disabled] {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.btn.big {
+  padding: 11px 20px;
+  font-size: 15px;
+}
+
+a.btn {
+  text-decoration: none;
+  color: inherit;
+}
+
+.btn.inline {
+  padding: 0;
+  font-size: inherit;
+  color: var(--ink);
+}
+
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--paper);
+  color: var(--text);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+}
+.icon-button:hover {
+  border-color: var(--accent);
+  color: var(--accent-text);
+}
+.icon-button[disabled] {
+  opacity: 0.5;
+  cursor: default;
+}

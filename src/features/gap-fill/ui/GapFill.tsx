@@ -6,6 +6,7 @@ import { api, ApiError } from '@/shared/api';
 import { getSettings, type Language, useTranslationLanguage } from '@/shared/config';
 import { common, exercises, translator, useTranslation } from '@/shared/i18n';
 import { shuffle } from '@/shared/lib/util';
+import { Button } from '@/shared/ui/controls';
 import ExerciseHead from '@/shared/ui/ExerciseHead';
 import WaitingFact from '@/shared/ui/WaitingFact';
 
@@ -126,9 +127,7 @@ export function GapRound({
         <ExerciseHead title={title} onClose={onClose} />
         <div className="note err">
           <p>{error}</p>
-          <button type="button" className="btn" onClick={onRestart}>
-            {commonText.t('tryAgain')}
-          </button>
+          <Button onClick={onRestart}>{commonText.t('tryAgain')}</Button>
         </div>
       </div>
     );
@@ -147,9 +146,9 @@ export function GapRound({
         <ExerciseHead title={title} onClose={onClose} />
         <p className="score">{commonText.t('scoreLine', { score, total: items.length })}</p>
         <div className="row-actions">
-          <button type="button" className="btn primary" onClick={onRestart}>
+          <Button variant="primary" onClick={onRestart}>
             {t('newSentences')}
-          </button>
+          </Button>
         </div>
       </div>
     );
@@ -183,8 +182,8 @@ export function GapRound({
           const stateClass =
             picked == null ? '' : choice === item.answer ? ' ok' : choice === picked ? ' bad' : '';
           return (
-            <button
-              type="button"
+            <Button
+              variant="unstyled"
               key={choice}
               className={'choice' + stateClass}
               lang={language}
@@ -197,7 +196,7 @@ export function GapRound({
               }}
             >
               {choice}
-            </button>
+            </Button>
           );
         })}
       </div>
@@ -209,9 +208,8 @@ export function GapRound({
           </p>
           {item.why && <p className="hint gap-why">{item.why}</p>}
           <div className="row-actions">
-            <button
-              type="button"
-              className="btn primary"
+            <Button
+              variant="primary"
               autoFocus
               onClick={() => {
                 setIndex((previous) => previous + 1);
@@ -220,7 +218,7 @@ export function GapRound({
               }}
             >
               {index + 1 < items.length ? t('nextSentence') : commonText.t('seeScore')}
-            </button>
+            </Button>
           </div>
         </>
       )}

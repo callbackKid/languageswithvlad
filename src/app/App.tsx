@@ -39,6 +39,7 @@ import { followLink, hrefFor, navigate, usePath } from '@/shared/lib/router';
 import { stopSpeaking } from '@/shared/lib/speech';
 import { load, loadText, remove, save } from '@/shared/lib/storage';
 import Avatar from '@/shared/ui/Avatar';
+import { IconButton } from '@/shared/ui/controls';
 import SpeechNote from '@/shared/ui/SpeechNote';
 import { Discuss } from '@/widgets/discussion';
 import { Feedback } from '@/widgets/feedback';
@@ -262,16 +263,13 @@ export default function App({ initialDocId }: { initialDocId: string | null }) {
             {sync.state === 'loading' && <span className="spinner" aria-hidden="true" />} {status}
           </div>
         </div>
-        <button
-          type="button"
-          className="icon-button"
+        <IconButton
           onClick={() => void syncDocument()}
           disabled={sync.state === 'loading'}
-          data-tooltip={t('sync')}
-          aria-label={t('sync')}
+          label={t('sync')}
         >
           <ButtonIcon name="sync" />
-        </button>
+        </IconButton>
         <div className="top-lesson">
           <NextLessonBadge
             text={doc?.text ?? ''}
@@ -305,13 +303,11 @@ export default function App({ initialDocId }: { initialDocId: string | null }) {
       <div className={'shell' + (menuOpen ? '' : ' menu-closed')}>
         <aside className="sidebar">
           <div className="sidebar-inner">
-            <button
-              type="button"
+            <IconButton
               className="sidebar-toggle"
               aria-expanded={menuOpen}
               aria-controls="sections-menu"
-              data-tooltip={menuOpen ? t('hideMenu') : t('showMenu')}
-              aria-label={menuOpen ? t('hideMenu') : t('showMenu')}
+              label={menuOpen ? t('hideMenu') : t('showMenu')}
               onClick={toggleMenu}
             >
               <span className="icon-button" aria-hidden="true">
@@ -319,7 +315,7 @@ export default function App({ initialDocId }: { initialDocId: string | null }) {
               </span>
               {/* on a phone the closed menu says where you are */}
               <span className="sidebar-current">{t(`section.${menuSection}`)}</span>
-            </button>
+            </IconButton>
             <nav
               id="sections-menu"
               className="sections"

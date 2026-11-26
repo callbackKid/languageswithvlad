@@ -2,6 +2,7 @@ import { type FormEvent, useRef, useState } from 'react';
 
 import { type Language, useSettings } from '@/shared/config';
 import { learning, useTranslation, wordActions } from '@/shared/i18n';
+import { Button } from '@/shared/ui/controls';
 
 import { cleanSelection, lookUp, menuPlace } from '../model/wordActions';
 
@@ -60,9 +61,9 @@ export default function LookUpWord() {
           ))}
         </select>
       )}
-      <button type="submit" className="btn primary" disabled={!word}>
+      <Button type="submit" variant="primary" disabled={!word}>
         {t('lookUp')}
-      </button>
+      </Button>
     </form>
   );
 }

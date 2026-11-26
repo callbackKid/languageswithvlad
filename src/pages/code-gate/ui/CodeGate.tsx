@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import { app, useTranslation } from '@/shared/i18n';
+import { Button } from '@/shared/ui/controls';
 import LanguagePicker from '@/shared/ui/LanguagePicker';
 
 // Asks for the class code once, when the server wants one (APP_ACCESS_CODE).
@@ -38,9 +39,9 @@ export default function CodeGate({
           autoComplete="off"
           autoFocus
         />
-        <button className="btn primary big" type="submit" disabled={!code.trim()}>
+        <Button variant="primary" className="big" type="submit" disabled={!code.trim()}>
           {t('codeContinue')}
-        </button>
+        </Button>
       </form>
     </div>
   );

@@ -9,6 +9,7 @@ import { asObjectText } from '@/shared/lib/json';
 import { extractPages, MAX_PDF_PAGES, pdfPageCount } from '@/shared/lib/pdf';
 import { asFields, asList, load, save } from '@/shared/lib/storage';
 import { hash } from '@/shared/lib/util';
+import { Button } from '@/shared/ui/controls';
 import InlineConfirm from '@/shared/ui/InlineConfirm';
 import WaitingFact from '@/shared/ui/WaitingFact';
 import { LessonView } from '@/widgets/lesson-view';
@@ -275,9 +276,9 @@ export default function HandwrittenNotes({
               onChange={(event) => setLastPage(Number(event.target.value))}
             />
           </label>
-          <button className="btn primary" type="submit">
+          <Button variant="primary" type="submit">
             {t('readPages')}
-          </button>
+          </Button>
         </form>
       )}
       {state === 'loading' && (
@@ -313,29 +314,28 @@ export default function HandwrittenNotes({
                 spellCheck={false}
               />
               <div className="row-actions">
-                <button type="button" className="btn primary" onClick={saveDraft}>
+                <Button variant="primary" onClick={saveDraft}>
                   {t('prepareLesson')}
-                </button>
-                <button type="button" className="btn ghost" onClick={() => setDraft(null)}>
+                </Button>
+                <Button variant="ghost" onClick={() => setDraft(null)}>
                   {commonText.t('cancel')}
-                </button>
+                </Button>
               </div>
             </div>
           </section>
         ) : (
           <>
             <div className="row-actions handwritten-actions">
-              <button type="button" className="btn ghost" onClick={() => setDraft(current.text)}>
+              <Button variant="ghost" onClick={() => setDraft(current.text)}>
                 {t('editText')}
-              </button>
-              <button
-                type="button"
-                className="btn ghost"
+              </Button>
+              <Button
+                variant="ghost"
                 aria-expanded={deleting === current.id}
                 onClick={() => setDeleting(deleting === current.id ? null : current.id)}
               >
                 {t('delete')}
-              </button>
+              </Button>
               {deleting === current.id && (
                 <InlineConfirm
                   question={t('deleteConfirm', { title: current.title || t('theseNotes') })}

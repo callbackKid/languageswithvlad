@@ -5,6 +5,7 @@ import { type Bank, type Lesson } from '@/entities/lesson';
 import { lessonPath } from '@/shared/config';
 import { app, useTranslation } from '@/shared/i18n';
 import { followLink, hrefFor } from '@/shared/lib/router';
+import { IconButton } from '@/shared/ui/controls';
 import { LessonView } from '@/widgets/lesson-view';
 import { WordsTab } from '@/widgets/word-list';
 
@@ -140,27 +141,17 @@ export default function Lessons({
         >
           <div className="lessons-panel">
             <div className="lessons-controls">
-              <button
-                type="button"
-                className="icon-button"
-                aria-pressed={isRow}
-                aria-label={listText.t('listAsRow')}
-                data-tooltip={listText.t('listAsRow')}
-                onClick={toggleView}
-              >
+              <IconButton aria-pressed={isRow} label={listText.t('listAsRow')} onClick={toggleView}>
                 <ListIcon path={ROW_ICON} />
-              </button>
-              <button
-                type="button"
-                className="icon-button"
+              </IconButton>
+              <IconButton
                 aria-expanded={isListOpen}
                 aria-controls="lesson-list"
-                aria-label={foldLabel}
-                data-tooltip={foldLabel}
+                label={foldLabel}
                 onClick={toggleList}
               >
                 <ListIcon path={FOLD_ICONS[listView][isListOpen ? 'open' : 'folded']} />
-              </button>
+              </IconButton>
             </div>
             <nav
               id="lesson-list"

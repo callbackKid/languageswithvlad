@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { api } from '@/shared/api';
 import { forgetTeacherCode, saveTeacherCode, useTeacher } from '@/shared/config';
 import { common, useTranslation } from '@/shared/i18n';
+import { Button } from '@/shared/ui/controls';
 
 import { settingsText } from '../i18n/settings';
 import styles from './Settings.module.css';
@@ -40,9 +41,9 @@ export default function TeacherCard() {
       {isTeacher ? (
         <div className={styles.row}>
           <span role="status">{t('teacherOn')}</span>
-          <button type="button" className="btn ghost" onClick={forgetTeacherCode}>
+          <Button variant="ghost" onClick={forgetTeacherCode}>
             {t('teacherTurnOff')}
-          </button>
+          </Button>
         </div>
       ) : (
         <form
@@ -61,9 +62,9 @@ export default function TeacherCard() {
             />
           </label>
           <div className="row-actions">
-            <button type="submit" className="btn primary" disabled={!code.trim() || checking}>
+            <Button type="submit" variant="primary" disabled={!code.trim() || checking}>
               {t('teacherTurnOn')}
-            </button>
+            </Button>
           </div>
         </form>
       )}

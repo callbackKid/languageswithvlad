@@ -53,11 +53,14 @@ Prettier decides: 100 columns, single quotes, semicolons, trailing commas where 
 
 - Function components, default-exported, one main component per file; a slice's `index.ts` exports it by name (`export { default as WordsTab } from './ui/WordsTab'`). Small helper components used only by it may live in the same file.
 - Props are typed inline next to the destructuring; shared shapes are exported interfaces.
+- List the props a component accepts. Forward props by name and avoid catch-all `...props` spreads.
 - The rules of hooks and complete dependency lists 🤖. Don't silence `react-hooks/exhaustive-deps`: if an effect must not re-run for some value, read that value when it is needed (a ref, or `translator(messages)` for a text) instead of leaving it out of the list.
 - **Rendering and state updaters are pure.** No saving, no `URL.createObjectURL`, no requests inside `setState((previous) => …)` or in the component body: React may run them twice. Do the side effect next to the `setState` call or in an effect.
 - An effect that starts something asynchronous guards against a late answer (`let alive = true` … `return () => { alive = false }`), and cleans up what it created: timers, listeners, object URLs.
 - Don't store what can be computed from props or other state. `useMemo` only for work that is actually heavy (building the word bank, statistics).
-- Every `<button>` has `type="button"` or `type="submit"` 🤖.
+- Put reusable controls such as buttons and selects in `src/shared/ui/controls/`. Import them from the folder's public API at `@/shared/ui/controls`.
+- Use `Button` for text actions and `IconButton` for icon-only actions with a localized label. Use `variant="unstyled"` for controls with their own styles, such as tabs, menu items and answer choices. Keep their ARIA attributes and keyboard handlers.
+- `Button` renders a native button with `type="button"` by default. Pass `type="submit"` for form submission.
 - A promise that is deliberately not awaited is marked: `void runSync(docId)`.
 - External links: `target="_blank" rel="noopener noreferrer"`.
 - A component that asks Claude shows `WaitingFact` while it waits and an error with a "Try again" button when it fails.
@@ -98,7 +101,7 @@ Prettier decides: 100 columns, single quotes, semicolons, trailing commas where 
 
 ## Styles
 
-- Theme variables, base styles, shared pieces and the app shell live in `src/app/styles.css`. Existing page sections can move when their styles have a clear owner.
+- Theme variables, base styles and the app shell live in `src/app/styles.css`. Keep shared button styles in `src/shared/ui/controls/Buttons.css` so buttons, links and file-picker labels can use them.
 - Keep styles owned by a page or feature in a `.module.css` file beside its UI, as in `src/pages/settings/ui/Settings.module.css`. Use `:global(...)` for an existing shared class only under a local selector. Keep rules for the same element together and define each selector once.
 - Rules for narrow screens and for reduced motion sit at the end of the section or module they affect. There is one phone breakpoint, `max-width: 760px`. Two others are allowed, each for one layout: lesson mode folds its two columns at 860px, and the top bar gives the next lesson a row of its own at 1180px.
 - Colours, fonts and radii only through the CSS variables at the top (`var(--accent)`, `var(--line)`…), so both themes work. The dark values are defined once, under `:root[data-theme='dark']`; `settings.ts` and the small script in `index.html` set `data-theme`.

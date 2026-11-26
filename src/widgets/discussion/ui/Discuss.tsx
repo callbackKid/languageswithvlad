@@ -13,6 +13,7 @@ import {
 import { common, learning, talk, useTranslation } from '@/shared/i18n';
 import { asFields, load, loadChecked, save } from '@/shared/lib/storage';
 import { shownTopic } from '@/shared/lib/util';
+import { Button, IconButton } from '@/shared/ui/controls';
 import PageHead from '@/shared/ui/PageHead';
 import Speak from '@/shared/ui/Speak';
 import WaitingFact from '@/shared/ui/WaitingFact';
@@ -487,14 +488,14 @@ export default function Discuss({
               <span>{t('level')}</span>
               <div className="seg" role="group" aria-label={t('level')}>
                 {LEVELS.map((level) => (
-                  <button
+                  <Button
+                    variant="unstyled"
                     key={level}
-                    type="button"
                     aria-pressed={choice.level === level}
                     onClick={() => update({ level })}
                   >
                     {level}
-                  </button>
+                  </Button>
                 ))}
               </div>
             </div>
@@ -523,15 +524,13 @@ export default function Discuss({
                   onChange={(event) => update({ customTopic: event.target.value })}
                 />
                 {ownTopic && (
-                  <button
-                    type="button"
+                  <IconButton
                     className="btn ghost dismiss"
-                    aria-label={t('clearOwnTopic')}
-                    data-tooltip={t('clearOwnTopic')}
+                    label={t('clearOwnTopic')}
                     onClick={() => update({ customTopic: '' })}
                   >
                     ×
-                  </button>
+                  </IconButton>
                 )}
               </div>
               <small className="hint">{t('ownTopicHint')}</small>
@@ -546,9 +545,9 @@ export default function Discuss({
               onCustom={(value) => update({ customGrammar: value })}
             />
             <div className="row-actions">
-              <button className="btn primary" type="submit" disabled={state === 'loading'}>
+              <Button variant="primary" type="submit" disabled={state === 'loading'}>
                 {discussion ? t('askQuestion') : t('writeQuestion')}
-              </button>
+              </Button>
             </div>
           </form>
 
@@ -572,13 +571,9 @@ export default function Discuss({
                     {discussion.ru}
                   </p>
                 ) : (
-                  <button
-                    type="button"
-                    className="btn ghost"
-                    onClick={() => setShowTranslation(true)}
-                  >
+                  <Button variant="ghost" onClick={() => setShowTranslation(true)}>
                     {commonText.t('showTranslation')}
-                  </button>
+                  </Button>
                 ))}
 
               <div className="discussion-grid">

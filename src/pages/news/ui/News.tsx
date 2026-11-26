@@ -12,6 +12,7 @@ import {
 import { type Language, useSettings, useTeacher } from '@/shared/config';
 import { app, learning, useTranslation } from '@/shared/i18n';
 import { useTabs } from '@/shared/lib/useTabs';
+import { Button } from '@/shared/ui/controls';
 import PageHead from '@/shared/ui/PageHead';
 
 import { newsText } from '../i18n/news';
@@ -85,22 +86,22 @@ export default function News({ onSeen }: { onSeen: () => void }) {
         {isTeacher && (
           <div className="seg" role="group" aria-label={t('filterAudience')}>
             {NEWS_AUDIENCES.map((shown) => (
-              <button
-                type="button"
+              <Button
+                variant="unstyled"
                 key={shown}
                 aria-pressed={chosenAudience === shown}
                 onClick={() => setAudience(shown)}
               >
                 {t(`audience.${shown}`)}
-              </button>
+              </Button>
             ))}
           </div>
         )}
       </div>
       <div className="tabs news-tabs" {...tabListProps} aria-label={sectionNames.t('section.news')}>
         {NEWS_TABS.map((shown) => (
-          <button
-            type="button"
+          <Button
+            variant="unstyled"
             key={shown}
             className="tab"
             {...tabProps(shown)}
@@ -108,7 +109,7 @@ export default function News({ onSeen }: { onSeen: () => void }) {
           >
             {t(`tab.${shown}`)}
             <span className="count">{countOf(shown)}</span>
-          </button>
+          </Button>
         ))}
       </div>
       {NEWS_TABS.map((shown) => shown !== tab && <div key={shown} {...panelProps(shown)} />)}

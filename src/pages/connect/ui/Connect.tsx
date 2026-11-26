@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import { docIdFrom, sourceUrl } from '@/entities/lesson';
 import { app, common, useTranslation } from '@/shared/i18n';
+import { Button } from '@/shared/ui/controls';
 import LanguagePicker from '@/shared/ui/LanguagePicker';
 
 // The first screen: paste the link of the lesson document (a Google Doc or a Notion page).
@@ -61,13 +62,13 @@ export default function Connect({
             setError('');
           }}
         />
-        <button className="btn primary big" type="submit">
+        <Button variant="primary" className="big" type="submit">
           {t('loadLessons')}
-        </button>
+        </Button>
         {onCancel && (
-          <button className="btn ghost" type="button" onClick={onCancel}>
+          <Button variant="ghost" onClick={onCancel}>
             {commonText.t('cancel')}
-          </button>
+          </Button>
         )}
       </form>
       {error && (

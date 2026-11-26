@@ -33,6 +33,7 @@ import { loadChecked, loadText, remove, save } from '@/shared/lib/storage';
 import { useTabs } from '@/shared/lib/useTabs';
 import { hash } from '@/shared/lib/util';
 import CallCard from '@/shared/ui/CallCard';
+import { Button } from '@/shared/ui/controls';
 import InlineConfirm from '@/shared/ui/InlineConfirm';
 import PageHead from '@/shared/ui/PageHead';
 import Speak from '@/shared/ui/Speak';
@@ -95,18 +96,17 @@ function LessonNotes({ docId, target }: { docId: string; target: DocTarget }) {
       className="call-notes"
       actions={
         <>
-          <button type="button" className="btn ghost" onClick={insertTime}>
+          <Button variant="ghost" onClick={insertTime}>
             {t('insertTime')}
-          </button>
-          <button
-            type="button"
-            className="btn ghost"
+          </Button>
+          <Button
+            variant="ghost"
             disabled={!text}
             aria-expanded={isAskingToClear}
             onClick={() => setAskingToClear(!isAskingToClear)}
           >
             {t('clearNotes')}
-          </button>
+          </Button>
         </>
       }
     >
@@ -346,9 +346,9 @@ function GameCard({ docId, onStart }: { docId: string; onStart: () => void }) {
       <p className="hint">{t('hint', { count: GAME_QUESTIONS, seconds: GAME_SECONDS })}</p>
       <RecordsTable records={readRecords(docId)} />
       <div className="row-actions">
-        <button type="button" className="btn primary" onClick={onStart}>
+        <Button variant="primary" onClick={onStart}>
           {t('play')}
-        </button>
+        </Button>
       </div>
     </CallCard>
   );
@@ -375,9 +375,9 @@ function WarmUpCard({
           : t('warmUpHintNoLesson')}
       </p>
       <div className="row-actions">
-        <button type="button" className="btn primary" disabled={preparing} onClick={onStart}>
+        <Button variant="primary" disabled={preparing} onClick={onStart}>
           {preparing && lesson ? t('preparingWarmUp', { n: lesson.n }) : t('startWarmUp')}
-        </button>
+        </Button>
       </div>
     </CallCard>
   );
@@ -513,15 +513,15 @@ export default function LessonMode({
               turn, so an exercise or a discussion question in progress isn't lost */}
           <div className="tabs call-tabs" {...tabListProps} aria-label={t('callTabs')}>
             {CALL_TABS.map((id) => (
-              <button
+              <Button
+                variant="unstyled"
                 key={id}
-                type="button"
                 className="tab"
                 {...tabProps(id)}
                 onClick={() => chooseTab(id)}
               >
                 {id === 'lesson' ? t('lessonTab') : t('activitiesTab')}
-              </button>
+              </Button>
             ))}
           </div>
           <div className="call-tab-panel" {...panelProps('lesson')}>

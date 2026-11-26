@@ -5,6 +5,7 @@ import { useTranslationLanguage } from '@/shared/config';
 import { common, exercises, useTranslation } from '@/shared/i18n';
 import { speakAndWait, stopSpeaking, unlockSpeech } from '@/shared/lib/speech';
 import { shuffle } from '@/shared/lib/util';
+import { Button } from '@/shared/ui/controls';
 import ExerciseHead from '@/shared/ui/ExerciseHead';
 
 import { LISTEN_PAUSES, type ListenPause, readListenPause, saveListenPause } from '../model/listen';
@@ -83,14 +84,14 @@ export default function Listen({ words, onClose }: { words: Word[]; onClose: () 
       </span>
       <span className="seg" role="group" aria-labelledby="listen-pause-label">
         {LISTEN_PAUSES.map((option) => (
-          <button
+          <Button
+            variant="unstyled"
             key={option}
-            type="button"
             aria-pressed={pause === option}
             onClick={() => choosePause(option)}
           >
             {t('seconds', { count: option })}
-          </button>
+          </Button>
         ))}
       </span>
       <label className="check">
@@ -108,9 +109,9 @@ export default function Listen({ words, onClose }: { words: Word[]; onClose: () 
         <p className="score">{t('listenDone', { count: order.length })}</p>
         {settings}
         <div className="row-actions">
-          <button type="button" className="btn primary" onClick={listenAgain}>
+          <Button variant="primary" onClick={listenAgain}>
             {t('listenRestart')}
-          </button>
+          </Button>
         </div>
       </div>
     );
@@ -128,19 +129,16 @@ export default function Listen({ words, onClose }: { words: Word[]; onClose: () 
         </p>
       </div>
       <div className="row-actions">
-        <button
-          type="button"
-          className="btn primary"
+        <Button
+          variant="primary"
           onClick={() => {
             if (isPaused) unlockSpeech();
             setPaused((previous) => !previous);
           }}
         >
           {isPaused ? t('listenContinue') : t('listenStop')}
-        </button>
-        <button type="button" className="btn" onClick={() => goTo(index + 1)}>
-          {commonText.t('next')}
-        </button>
+        </Button>
+        <Button onClick={() => goTo(index + 1)}>{commonText.t('next')}</Button>
       </div>
       {settings}
     </div>

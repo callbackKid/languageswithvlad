@@ -8,6 +8,8 @@ import {
   subscribeSpeechProblem,
 } from '@/shared/lib/speech';
 
+import { IconButton } from './controls';
+
 /** The note over every page when the browser couldn't read aloud: what went wrong and how to
     fix it, so a 🔊 that stays silent isn't a mystery. Closed with ×; gone once a read works. */
 export default function SpeechNote() {
@@ -17,15 +19,9 @@ export default function SpeechNote() {
   return (
     <div className="note warn speech-note" role="alert">
       <p>{describe(problem)}</p>
-      <button
-        type="button"
-        className="btn ghost dismiss"
-        aria-label={t('close')}
-        data-tooltip={t('close')}
-        onClick={dismissSpeechProblem}
-      >
+      <IconButton className="btn ghost dismiss" label={t('close')} onClick={dismissSpeechProblem}>
         ×
-      </button>
+      </IconButton>
     </div>
   );
 

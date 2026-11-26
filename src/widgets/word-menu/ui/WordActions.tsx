@@ -22,6 +22,7 @@ import { Star } from '@/features/star-word';
 import { api, ApiError } from '@/shared/api';
 import { TENSES_BY_LANGUAGE, translationLanguage, useTranslationLanguage } from '@/shared/config';
 import { common, translator, useTranslation, wordActions } from '@/shared/i18n';
+import { Button, IconButton } from '@/shared/ui/controls';
 import Speak from '@/shared/ui/Speak';
 import WaitingFact from '@/shared/ui/WaitingFact';
 
@@ -233,28 +234,22 @@ export default function WordActions({
         </b>
         <Speak text={picked.text} language={language} />
         {card && <Star word={cardWord(card)} />}
-        <button
-          type="button"
-          className="icon-button"
-          aria-label={commonText.t('close')}
-          data-tooltip={commonText.t('close')}
-          onClick={() => setPicked(null)}
-        >
+        <IconButton label={commonText.t('close')} onClick={() => setPicked(null)}>
           ×
-        </button>
+        </IconButton>
       </div>
 
       {hasClaude ? (
         <div className="seg word-actions-views" role="group" aria-label={t('actionsLabel')}>
           {shownViews.map((candidate) => (
-            <button
-              type="button"
+            <Button
+              variant="unstyled"
               key={candidate}
               aria-pressed={view === candidate}
               onClick={() => choose(candidate)}
             >
               {t(candidate)}
-            </button>
+            </Button>
           ))}
         </div>
       ) : (
@@ -269,9 +264,7 @@ export default function WordActions({
       {state === 'error' && (
         <div className="note err" role="alert">
           <p>{error}</p>
-          <button type="button" className="btn" onClick={() => void cardNow()}>
-            {commonText.t('tryAgain')}
-          </button>
+          <Button onClick={() => void cardNow()}>{commonText.t('tryAgain')}</Button>
         </div>
       )}
 
@@ -337,9 +330,7 @@ export default function WordActions({
         <div className="row-actions word-actions-add">
           {canWrite ? (
             <>
-              <button
-                type="button"
-                className="btn"
+              <Button
                 disabled={adding === 'saving' || adding === 'done'}
                 onClick={() => void addToLesson()}
               >
@@ -348,7 +339,7 @@ export default function WordActions({
                   : adding === 'done'
                     ? commonText.t('added')
                     : t('addToLesson', { n: lesson.n })}
-              </button>
+              </Button>
               {adding === 'done' && (
                 <span className="hint" role="status">
                   {t('addedToLesson', { n: lesson.n })}

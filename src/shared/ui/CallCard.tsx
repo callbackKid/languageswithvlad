@@ -2,6 +2,8 @@ import { type ReactNode, useId, useState } from 'react';
 
 import { loadTexts, save } from '@/shared/lib/storage';
 
+import { Button } from './controls';
+
 // the ids of the folded cards, kept on this device for every lesson
 const FOLDED_KEY = 'call:folded';
 
@@ -37,8 +39,8 @@ export default function CallCard({
     <section className={`call-card ${className}${isFolded ? ' folded' : ''}`.trim()}>
       <div className="call-card-head">
         <h2>
-          <button
-            type="button"
+          <Button
+            variant="unstyled"
             className="fold-button"
             aria-expanded={!isFolded}
             aria-controls={bodyId}
@@ -48,7 +50,7 @@ export default function CallCard({
               ▾
             </span>
             {title}
-          </button>
+          </Button>
         </h2>
         {!isFolded && actions}
       </div>

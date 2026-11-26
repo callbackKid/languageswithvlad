@@ -35,6 +35,7 @@ import { homework as homeworkText, useTranslation } from '@/shared/i18n';
 import { daysBetween } from '@/shared/lib/dates';
 import { followLink, hrefFor } from '@/shared/lib/router';
 import { shuffle } from '@/shared/lib/util';
+import { Button } from '@/shared/ui/controls';
 import WaitingFact from '@/shared/ui/WaitingFact';
 
 const ROUND = 10;
@@ -301,9 +302,7 @@ export default function HomeworkCard({
                 <span lang={lessonLanguage}>{item.text}</span>
               </label>
               {label ? (
-                <button type="button" className="btn" onClick={() => setOpen(item)}>
-                  {label}
-                </button>
+                <Button onClick={() => setOpen(item)}>{label}</Button>
               ) : (
                 <a
                   className="open-link"

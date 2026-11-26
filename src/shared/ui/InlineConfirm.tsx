@@ -2,6 +2,8 @@ import { useEffect, useRef } from 'react';
 
 import { common, useTranslation } from '@/shared/i18n';
 
+import { IconButton } from './controls';
+
 /** A question asked in place, under the row it is about, instead of the browser's alert: ✓ does
     it, the red ✕ (or Escape) doesn't. Focus moves to ✕, so Enter by habit changes nothing. */
 export default function InlineConfirm({
@@ -32,25 +34,12 @@ export default function InlineConfirm({
       }}
     >
       <p>{question}</p>
-      <button
-        type="button"
-        className="inline-confirm-yes"
-        aria-label={yesLabel}
-        data-tooltip={yesLabel}
-        onClick={onYes}
-      >
+      <IconButton className="inline-confirm-yes" label={yesLabel} onClick={onYes}>
         ✓
-      </button>
-      <button
-        ref={noButton}
-        type="button"
-        className="inline-confirm-no"
-        aria-label={t('cancel')}
-        data-tooltip={t('cancel')}
-        onClick={onNo}
-      >
+      </IconButton>
+      <IconButton ref={noButton} className="inline-confirm-no" label={t('cancel')} onClick={onNo}>
         ✕
-      </button>
+      </IconButton>
     </div>
   );
 }

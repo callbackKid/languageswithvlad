@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { ApiError } from '@/shared/api';
 import { type Language } from '@/shared/config';
 import { common, translator, useTranslation } from '@/shared/i18n';
+import { Button } from '@/shared/ui/controls';
 import ExerciseHead from '@/shared/ui/ExerciseHead';
 import WaitingFact from '@/shared/ui/WaitingFact';
 
@@ -90,9 +91,7 @@ export default function RoundLoader({
       {error ? (
         <div className="note err" role="alert">
           <p>{error}</p>
-          <button type="button" className="btn" onClick={again}>
-            {commonText.t('tryAgain')}
-          </button>
+          <Button onClick={again}>{commonText.t('tryAgain')}</Button>
         </div>
       ) : (
         <WaitingFact language={language}>{waiting}</WaitingFact>

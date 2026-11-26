@@ -7,6 +7,7 @@ import { api, ApiError } from '@/shared/api';
 import { getSettings, type Language, useTranslationLanguage } from '@/shared/config';
 import { common, translator, useTranslation } from '@/shared/i18n';
 import { asList, load, save } from '@/shared/lib/storage';
+import { Button } from '@/shared/ui/controls';
 import InlineConfirm from '@/shared/ui/InlineConfirm';
 import PageHead from '@/shared/ui/PageHead';
 import Speak from '@/shared/ui/Speak';
@@ -65,13 +66,13 @@ function TrueFalse({
               {answer === undefined ? (
                 <div className="seg" role="group" aria-label={t('trueFalseTitle')}>
                   {[true, false].map((choice) => (
-                    <button
-                      type="button"
+                    <Button
+                      variant="unstyled"
                       key={String(choice)}
                       onClick={() => setAnswers({ ...answers, [index]: choice })}
                     >
                       {choice ? t('isTrue') : t('isFalse')}
-                    </button>
+                    </Button>
                   ))}
                 </div>
               ) : (
@@ -290,17 +291,13 @@ export default function Reader({ hasClaude }: { hasClaude: boolean }) {
             />
           </label>
           <div className="row-actions">
-            <button type="submit" className="btn primary" disabled={!draft.trim()}>
+            <Button type="submit" variant="primary" disabled={!draft.trim()}>
               {t('read')}
-            </button>
+            </Button>
             {texts.length > 0 && (
-              <button
-                type="button"
-                className="btn ghost"
-                onClick={() => open(texts[0]?.id ?? null)}
-              >
+              <Button variant="ghost" onClick={() => open(texts[0]?.id ?? null)}>
                 {commonText.t('cancel')}
-              </button>
+              </Button>
             )}
             <span className="hint">
               {draft.length} / {MAX_TEXT_LENGTH}
@@ -324,12 +321,8 @@ export default function Reader({ hasClaude }: { hasClaude: boolean }) {
                 ))}
               </select>
             )}
-            <button type="button" className="btn" onClick={() => open(null)}>
-              {t('newText')}
-            </button>
-            <button
-              type="button"
-              className="btn"
+            <Button onClick={() => open(null)}>{t('newText')}</Button>
+            <Button
               disabled={translating === 'loading'}
               onClick={() =>
                 translation ? setShowTranslation(!showTranslation) : void translate()
@@ -340,15 +333,14 @@ export default function Reader({ hasClaude }: { hasClaude: boolean }) {
                 : showTranslation
                   ? t('hideTranslation')
                   : t('showTranslation')}
-            </button>
-            <button
-              type="button"
-              className="btn ghost"
+            </Button>
+            <Button
+              variant="ghost"
               aria-expanded={deleting === current.id}
               onClick={() => setDeleting(deleting === current.id ? null : current.id)}
             >
               {t('delete')}
-            </button>
+            </Button>
             {deleting === current.id && (
               <InlineConfirm
                 question={t('deleteConfirm', { title: current.title })}
@@ -443,13 +435,12 @@ export default function Reader({ hasClaude }: { hasClaude: boolean }) {
                 <>
                   {!current.study && <p className="hint">{t('exercisesHint')}</p>}
                   <div className="row-actions lead">
-                    <button
-                      type="button"
-                      className={'btn' + (current.study ? '' : ' primary')}
+                    <Button
+                      variant={current.study ? undefined : 'primary'}
                       onClick={() => void study()}
                     >
                       {current.study ? t('makeAgain') : t('makeExercises')}
-                    </button>
+                    </Button>
                   </div>
                 </>
               )}

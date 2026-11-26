@@ -37,6 +37,7 @@ import { requestOnce } from '@/shared/lib/once';
 import { loadChecked, save } from '@/shared/lib/storage';
 import { useTabs } from '@/shared/lib/useTabs';
 import { shownTopic } from '@/shared/lib/util';
+import { Button } from '@/shared/ui/controls';
 import HelpLink from '@/shared/ui/HelpLink';
 import WaitingFact from '@/shared/ui/WaitingFact';
 
@@ -240,10 +241,10 @@ export default function LessonView({
 
   const tabButton = (id: Tab, label: string, count?: number) =>
     shownTabs.includes(id) && (
-      <button type="button" className="tab" {...tabProps(id)} onClick={() => setTab(id)}>
+      <Button variant="unstyled" className="tab" {...tabProps(id)} onClick={() => setTab(id)}>
         {label}
         {count !== undefined && <span className="count">{count}</span>}
-      </button>
+      </Button>
     );
 
   let note = null;
@@ -253,9 +254,9 @@ export default function LessonView({
     note = (
       <div className="note err">
         <p>{error}</p>
-        <button type="button" className="btn" onClick={() => setFresh((previous) => previous + 1)}>
+        <Button onClick={() => setFresh((previous) => previous + 1)}>
           {commonText.t('tryAgain')}
-        </button>
+        </Button>
       </div>
     );
   else if (analysis?.local)
@@ -338,13 +339,9 @@ export default function LessonView({
           {wantsExtras && extrasState === 'error' && (
             <div className="note err" role="alert">
               <p>{extrasError}</p>
-              <button
-                type="button"
-                className="btn"
-                onClick={() => setFreshExtras((previous) => previous + 1)}
-              >
+              <Button onClick={() => setFreshExtras((previous) => previous + 1)}>
                 {commonText.t('tryAgain')}
-              </button>
+              </Button>
             </div>
           )}
           {tab === 'grammar' && extras && <GrammarTab key={extrasKey} extras={extras} />}
@@ -388,13 +385,9 @@ export default function LessonView({
           )}
           {wantsExtras && extras && hasClaude && (
             <p className="row-actions extras-refresh">
-              <button
-                type="button"
-                className="btn ghost"
-                onClick={() => setFreshExtras((previous) => previous + 1)}
-              >
+              <Button variant="ghost" onClick={() => setFreshExtras((previous) => previous + 1)}>
                 {t('readAgain')}
-              </button>
+              </Button>
             </p>
           )}
           {tab === 'notes' && (

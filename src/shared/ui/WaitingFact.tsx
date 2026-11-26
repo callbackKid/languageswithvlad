@@ -4,6 +4,8 @@ import { type Language } from '@/shared/config';
 import { common, useTranslation } from '@/shared/i18n';
 import { FACTS } from '@/shared/lib/facts';
 
+import { Button } from './controls';
+
 // long enough to read a phrase and its note; "Next fact" is there for faster readers
 const ROTATE_EVERY = 20_000;
 // "Did you know?" in the language being learned
@@ -53,9 +55,9 @@ export default function WaitingFact({
             {fact.phrase}
           </b>
           <figcaption>{fact.note[uiLanguage]}</figcaption>
-          <button type="button" className="btn ghost fact-next" onClick={next}>
+          <Button variant="ghost" className="fact-next" onClick={next}>
             {t('nextFact')}
-          </button>
+          </Button>
         </figure>
       )}
     </div>

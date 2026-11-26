@@ -15,6 +15,7 @@ import {
   type VerbLanguage,
 } from '@/shared/config';
 import { common, learning, useTranslation } from '@/shared/i18n';
+import { Button, IconButton } from '@/shared/ui/controls';
 
 import { settingsText } from '../i18n/settings';
 import styles from './Settings.module.css';
@@ -99,15 +100,14 @@ export default function LearningCard() {
                 </label>
                 {/* the last language stays: there is nothing to practise without one */}
                 {settings.studying.length > 1 && (
-                  <button
-                    type="button"
+                  <IconButton
                     className="row-remove"
-                    data-tooltip={t('stopLearning')}
-                    aria-label={t('stopLearningLabel', { language: name })}
+                    tooltip={t('stopLearning')}
+                    label={t('stopLearningLabel', { language: name })}
                     onClick={() => stopLearning(language)}
                   >
                     ✕
-                  </button>
+                  </IconButton>
                 )}
               </div>
               {verbLanguage && (
@@ -136,9 +136,7 @@ export default function LearningCard() {
         <AddLanguage choices={notStudied} onDone={() => setIsAdding(false)} />
       ) : (
         notStudied.length > 0 && (
-          <button type="button" className="btn" onClick={() => setIsAdding(true)}>
-            + {t('addLanguage')}
-          </button>
+          <Button onClick={() => setIsAdding(true)}>+ {t('addLanguage')}</Button>
         )
       )}
       <small className="hint">{t('studyingHint')}</small>
@@ -190,9 +188,9 @@ function TenseChoice({
         })}
       </ul>
       {onFollowLevel && (
-        <button type="button" className="btn ghost" onClick={onFollowLevel}>
+        <Button variant="ghost" onClick={onFollowLevel}>
           {t('tensesByLevel', { level })}
-        </button>
+        </Button>
       )}
     </fieldset>
   );
@@ -272,12 +270,12 @@ function AddLanguage({ choices, onDone }: { choices: Language[]; onDone: () => v
         />
       )}
       <div className="row-actions">
-        <button type="button" className="btn primary" onClick={add}>
+        <Button variant="primary" onClick={add}>
           {t('addThisLanguage', { language: names.t(`name.${language}`) })}
-        </button>
-        <button type="button" className="btn ghost" onClick={onDone}>
+        </Button>
+        <Button variant="ghost" onClick={onDone}>
           {commonText.t('cancel')}
-        </button>
+        </Button>
       </div>
     </div>
   );

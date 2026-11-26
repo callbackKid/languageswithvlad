@@ -4,6 +4,7 @@ import { type BoardPeer, type BoardServer } from '@/shared/api';
 import { isDark, useSettings } from '@/shared/config';
 import { call, useTranslation } from '@/shared/i18n';
 import CallCard from '@/shared/ui/CallCard';
+import { Button } from '@/shared/ui/controls';
 import InlineConfirm from '@/shared/ui/InlineConfirm';
 
 import { type BoardHandle } from './BoardCanvas';
@@ -70,9 +71,8 @@ export default function LessonBoard({
         <>
           {isOpen && (
             <>
-              <button
-                type="button"
-                className="btn ghost"
+              <Button
+                variant="ghost"
                 onClick={() =>
                   isFullScreen
                     ? void document.exitFullscreen()
@@ -80,18 +80,17 @@ export default function LessonBoard({
                 }
               >
                 {isFullScreen ? t('exitFullScreen') : t('fullScreen')}
-              </button>
-              <button type="button" className="btn ghost" onClick={() => void savePicture()}>
+              </Button>
+              <Button variant="ghost" onClick={() => void savePicture()}>
                 {t('savePicture')}
-              </button>
-              <button
-                type="button"
-                className="btn ghost"
+              </Button>
+              <Button
+                variant="ghost"
                 aria-expanded={isAskingToClear}
                 onClick={() => setAskingToClear(!isAskingToClear)}
               >
                 {t('clearBoard')}
-              </button>
+              </Button>
             </>
           )}
         </>
@@ -143,9 +142,9 @@ export default function LessonBoard({
         </div>
       ) : (
         <div className="row-actions">
-          <button type="button" className="btn primary" onClick={() => setIsOpen(true)}>
+          <Button variant="primary" onClick={() => setIsOpen(true)}>
             {t('openBoard')}
-          </button>
+          </Button>
         </div>
       )}
     </CallCard>

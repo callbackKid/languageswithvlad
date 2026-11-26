@@ -5,6 +5,7 @@ import { VerbsTab } from '@/features/conjugate-verb';
 import { app, pages, useTranslation } from '@/shared/i18n';
 import { useTabs } from '@/shared/lib/useTabs';
 import { shownTopic } from '@/shared/lib/util';
+import { Button } from '@/shared/ui/controls';
 import PageHead from '@/shared/ui/PageHead';
 import { WordsTab } from '@/widgets/word-list';
 
@@ -54,17 +55,17 @@ export default function Practice({ bank, hasClaude }: { bank: Bank; hasClaude: b
       </PageHead>
       <BankNote bank={bank} />
       <div className="chips" role="group" aria-label={appText.t('lessonsLabel')}>
-        <button
-          type="button"
+        <Button
+          variant="unstyled"
           className="chip"
           aria-pressed={!selectedLessons}
           onClick={() => setSelectedLessons(null)}
         >
           {t('all')}
-        </button>
+        </Button>
         {ready.map((lesson) => (
-          <button
-            type="button"
+          <Button
+            variant="unstyled"
             key={lesson.key}
             className="chip"
             aria-pressed={!!selectedLessons && selectedLessons.has(lesson.key)}
@@ -72,29 +73,29 @@ export default function Practice({ bank, hasClaude }: { bank: Bank; hasClaude: b
             data-tooltip={shownTopic(lesson.topic, uiLanguage) || undefined}
           >
             {lesson.word} {lesson.n}
-          </button>
+          </Button>
         ))}
       </div>
       <section className="panel solo">
         <div className="tabs" {...tabListProps} aria-label={appText.t('section.practice')}>
-          <button
-            type="button"
+          <Button
+            variant="unstyled"
             className="tab"
             {...tabProps('words')}
             onClick={() => setTab('words')}
           >
             {t('words')}
             <span className="count">{words.length}</span>
-          </button>
-          <button
-            type="button"
+          </Button>
+          <Button
+            variant="unstyled"
             className="tab"
             {...tabProps('verbs')}
             onClick={() => setTab('verbs')}
           >
             {t('verbs')}
             <span className="count">{analysis.verbs.length}</span>
-          </button>
+          </Button>
         </div>
         <div className="body" {...panelProps('words')}>
           {tab === 'words' && (

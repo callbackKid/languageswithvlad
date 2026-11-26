@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { common, useTranslation } from '@/shared/i18n';
 import { type Grade, grade } from '@/shared/lib/grade';
 import { shuffle } from '@/shared/lib/util';
+import { Button } from '@/shared/ui/controls';
 import ExerciseHead from '@/shared/ui/ExerciseHead';
 import Speak from '@/shared/ui/Speak';
 
@@ -86,12 +87,10 @@ export default function ExerciseRound({
         {head}
         <p className="score">{commonText.t('scoreLine', { score, total: questions.length })}</p>
         <div className="row-actions">
-          <button type="button" className="btn primary" onClick={again}>
+          <Button variant="primary" onClick={again}>
             {t('again')}
-          </button>
-          <button type="button" className="btn" onClick={onAnother ?? onClose}>
-            {t('makeAnother')}
-          </button>
+          </Button>
+          <Button onClick={onAnother ?? onClose}>{t('makeAnother')}</Button>
         </div>
       </div>
     );
@@ -138,8 +137,8 @@ export default function ExerciseRound({
                     ? ' bad'
                     : '';
             return (
-              <button
-                type="button"
+              <Button
+                variant="unstyled"
                 key={option}
                 className={'choice' + stateClass}
                 lang={language}
@@ -150,7 +149,7 @@ export default function ExerciseRound({
                 }}
               >
                 {option}
-              </button>
+              </Button>
             );
           })}
         </div>
@@ -175,9 +174,9 @@ export default function ExerciseRound({
             aria-label={commonText.t('yourAnswer')}
           />
           {!result && (
-            <button type="submit" className="btn primary">
+            <Button type="submit" variant="primary">
               {commonText.t('check')}
-            </button>
+            </Button>
           )}
         </form>
       )}
@@ -194,9 +193,9 @@ export default function ExerciseRound({
                 )}
           </p>
           {question.explanation && <p lang={exercise.translatedTo}>{question.explanation}</p>}
-          <button type="button" className="btn primary" onClick={next}>
+          <Button variant="primary" onClick={next}>
             {index + 1 < questions.length ? commonText.t('next') : commonText.t('seeScore')}
-          </button>
+          </Button>
         </div>
       )}
     </div>

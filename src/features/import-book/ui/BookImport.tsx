@@ -5,6 +5,7 @@ import { common, paper, translator, useTranslation } from '@/shared/i18n';
 import { shrinkImage } from '@/shared/lib/image';
 import { asObjectText } from '@/shared/lib/json';
 import { extractPages, pdfPageCount } from '@/shared/lib/pdf';
+import { Button } from '@/shared/ui/controls';
 import WaitingFact from '@/shared/ui/WaitingFact';
 
 // keep in step with MAX_HANDWRITTEN_PAGES in api/paper.ts
@@ -193,9 +194,9 @@ export default function BookImport({
                   onChange={(event) => setLastPage(Number(event.target.value))}
                 />
               </label>
-              <button className="btn primary" type="submit">
+              <Button variant="primary" type="submit">
                 {t('readPages')}
-              </button>
+              </Button>
             </form>
           )}
           {step === 'reading' && <WaitingFact>{t('readingBook')}</WaitingFact>}
@@ -209,22 +210,20 @@ export default function BookImport({
                 onChange={(event) => setText(event.target.value)}
               />
               <div className="row-actions">
-                <button
-                  type="button"
-                  className="btn primary"
+                <Button
+                  variant="primary"
                   disabled={step === 'saving' || !text.trim()}
                   onClick={() => void add()}
                 >
                   {step === 'saving' ? commonText.t('adding') : t('addToLesson')}
-                </button>
-                <button
-                  type="button"
-                  className="btn ghost"
+                </Button>
+                <Button
+                  variant="ghost"
                   disabled={step === 'saving'}
                   onClick={() => setStep('idle')}
                 >
                   {commonText.t('cancel')}
-                </button>
+                </Button>
               </div>
             </>
           )}

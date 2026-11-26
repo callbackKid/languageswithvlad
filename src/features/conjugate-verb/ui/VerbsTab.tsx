@@ -33,6 +33,7 @@ import { common, exercises, useTranslation } from '@/shared/i18n';
 import { type Grade, grade } from '@/shared/lib/grade';
 import { load, save } from '@/shared/lib/storage';
 import { keepBracketsTogether, shuffle } from '@/shared/lib/util';
+import { Button, IconButton } from '@/shared/ui/controls';
 import ExerciseHead from '@/shared/ui/ExerciseHead';
 import InlineConfirm from '@/shared/ui/InlineConfirm';
 import WaitingFact from '@/shared/ui/WaitingFact';
@@ -104,9 +105,9 @@ export default function VerbsTab({
   // under the list, and in place of it once every verb is taken out
   const restoreLink = lessonKey && removedVerbs > 0 && (
     <p className="legend legend-actions">
-      <button type="button" className="btn ghost" onClick={() => restore('verbs', [lessonKey])}>
+      <Button variant="ghost" onClick={() => restore('verbs', [lessonKey])}>
         {t('restoreVerbs', { count: removedVerbs })}
-      </button>
+      </Button>
     </p>
   );
   if (!verbs.length)
@@ -146,8 +147,8 @@ export default function VerbsTab({
       {hasGroups && verbs.length > 1 && (
         <div className="seg verb-sort" role="group" aria-label={t('sortVerbs')}>
           {VERB_SORTS.map((option) => (
-            <button
-              type="button"
+            <Button
+              variant="unstyled"
               key={option}
               aria-pressed={shownSort === option}
               onClick={() => {
@@ -156,7 +157,7 @@ export default function VerbsTab({
               }}
             >
               {t(option === 'alphabet' ? 'sortAlphabet' : 'sortByGroup')}
-            </button>
+            </Button>
           ))}
         </div>
       )}
@@ -172,8 +173,8 @@ export default function VerbsTab({
             <ul className="verbs">
               {section.verbs.map((verb) => (
                 <li key={verbIdentity(verb)} className="verb-row">
-                  <button
-                    type="button"
+                  <Button
+                    variant="unstyled"
                     className="verb"
                     aria-pressed={currentVerb === verbIdentity(verb)}
                     onClick={() => void open(verb)}
@@ -188,20 +189,19 @@ export default function VerbsTab({
                     >
                       {verb.ru}
                     </span>
-                  </button>
+                  </Button>
                   {lessonKey && (
-                    <button
-                      type="button"
+                    <IconButton
                       className="row-remove"
-                      data-tooltip={t('removeWord')}
-                      aria-label={t('removeWordLabel', { word: verb.inf })}
+                      tooltip={t('removeWord')}
+                      label={t('removeWordLabel', { word: verb.inf })}
                       aria-expanded={removing === verbIdentity(verb)}
                       onClick={() =>
                         setRemoving(removing === verbIdentity(verb) ? null : verbIdentity(verb))
                       }
                     >
                       ✕
-                    </button>
+                    </IconButton>
                   )}
                   {lessonKey && removing === verbIdentity(verb) && (
                     <InlineConfirm
@@ -223,14 +223,9 @@ export default function VerbsTab({
       })}
       {restoreLink}
       <div className="row-actions quiz-bar">
-        <button
-          type="button"
-          className="btn"
-          disabled={!loaded.length}
-          onClick={() => setMode('quiz')}
-        >
+        <Button disabled={!loaded.length} onClick={() => setMode('quiz')}>
           {t('quickQuiz')}
-        </button>
+        </Button>
         <span className="hint">
           {loaded.length ? t('usesVerbs', { count: loaded.length }) : t('openVerbFirst')}
         </span>
@@ -256,15 +251,13 @@ export default function VerbsTab({
           <p>
             {request.error instanceof ApiError ? request.error.message : commonText.t('unreadable')}
           </p>
-          <button
-            type="button"
-            className="btn"
+          <Button
             onClick={() => {
               if (currentReference) void loadTable(currentReference, request.fresh);
             }}
           >
             {commonText.t('tryAgain')}
-          </button>
+          </Button>
         </div>
       )}
 
@@ -294,40 +287,48 @@ export default function VerbsTab({
               <>
                 {' '}
                 ·{' '}
-                <button
-                  type="button"
-                  className="btn ghost inline"
+                <Button
+                  variant="ghost"
+                  className="inline"
                   data-tooltip={t('conjugateAgainTitle')}
                   onClick={() => {
                     if (currentReference) void loadTable(currentReference, true);
                   }}
                 >
                   {t('conjugateAgain')}
-                </button>
+                </Button>
               </>
             )}
           </p>
           <div className="tense-tabs" role="group" aria-label={t('tense')}>
             {tenses.map((tenseOption) => (
-              <button
-                type="button"
+              <Button
+                variant="unstyled"
                 key={tenseOption}
                 aria-pressed={shownTense === tenseOption}
                 disabled={!(shownConjugation.tenses[tenseOption] || []).length}
                 onClick={() => setTense(tenseOption)}
               >
                 {tenseOption}
-              </button>
+              </Button>
             ))}
           </div>
           {canNegate && (
             <div className="tense-tabs" role="group" aria-label={t('sentenceType')}>
-              <button type="button" aria-pressed={!isNegative} onClick={() => setIsNegative(false)}>
+              <Button
+                variant="unstyled"
+                aria-pressed={!isNegative}
+                onClick={() => setIsNegative(false)}
+              >
                 {t('affirmative')}
-              </button>
-              <button type="button" aria-pressed={isNegative} onClick={() => setIsNegative(true)}>
+              </Button>
+              <Button
+                variant="unstyled"
+                aria-pressed={isNegative}
+                onClick={() => setIsNegative(true)}
+              >
                 {commonText.t('negative')}
-              </button>
+              </Button>
             </div>
           )}
           {!rows.length ? (
@@ -346,9 +347,9 @@ export default function VerbsTab({
             <>
               <ConjugationTable rows={rows} language={language} />
               <div className="row-actions">
-                <button type="button" className="btn primary" onClick={() => setMode('drill')}>
+                <Button variant="primary" onClick={() => setMode('drill')}>
                   {t('practiseTense')}
-                </button>
+                </Button>
               </div>
             </>
           )}
@@ -456,9 +457,8 @@ function Drill({
             <span className="score">
               {commonText.t('scoreLine', { score, total: rows.length })}
             </span>
-            <button
-              type="button"
-              className="btn primary"
+            <Button
+              variant="primary"
               onClick={() => {
                 setValues(rows.map(() => ''));
                 setChecked(false);
@@ -466,16 +466,16 @@ function Drill({
               }}
             >
               {commonText.t('tryAgain')}
-            </button>
+            </Button>
           </>
         ) : (
-          <button type="submit" className="btn primary">
+          <Button type="submit" variant="primary">
             {t('checkAnswers')}
-          </button>
+          </Button>
         )}
-        <button type="button" className="btn ghost" onClick={onStop}>
+        <Button variant="ghost" onClick={onStop}>
           {t('showTable')}
-        </button>
+        </Button>
       </div>
     </form>
   );
@@ -513,9 +513,8 @@ function Quiz({ conjugations, onClose }: { conjugations: Conjugation[]; onClose:
         {head}
         <p className="score">{commonText.t('scoreLine', { score, total: questions.length })}</p>
         <div className="row-actions">
-          <button
-            type="button"
-            className="btn primary"
+          <Button
+            variant="primary"
             onClick={() => {
               setQuestions(makeQuiz(conjugations));
               setIndex(0);
@@ -525,7 +524,7 @@ function Quiz({ conjugations, onClose }: { conjugations: Conjugation[]; onClose:
             }}
           >
             {t('newQuiz')}
-          </button>
+          </Button>
         </div>
       </div>
     );
@@ -577,9 +576,9 @@ function Quiz({ conjugations, onClose }: { conjugations: Conjugation[]; onClose:
           spellCheck={false}
           aria-label={commonText.t('yourAnswer')}
         />
-        <button className="btn primary" type="submit">
+        <Button variant="primary" type="submit">
           {result ? commonText.t('next') : commonText.t('check')}
-        </button>
+        </Button>
       </form>
       {result === 'ok' && <p className="feedback ok">{commonText.t('right')}</p>}
       {result === 'accent' && (

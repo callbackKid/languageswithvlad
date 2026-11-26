@@ -6,6 +6,7 @@ import { getProgress } from '@/entities/word';
 import { api, ApiError } from '@/shared/api';
 import { common, homework as homeworkText, useTranslation } from '@/shared/i18n';
 import { load, save } from '@/shared/lib/storage';
+import { Button } from '@/shared/ui/controls';
 
 import { buildReport } from '../model/report';
 
@@ -76,9 +77,7 @@ export default function SendToTeacher({
           <p className="hint">{t('sendHint', { n: lesson.n })}</p>
           {(step === 'idle' || step === 'done') && (
             <div className="row-actions">
-              <button type="button" className="btn" onClick={prepare}>
-                {t('prepareReport')}
-              </button>
+              <Button onClick={prepare}>{t('prepareReport')}</Button>
               {sentDate && <span className="hint">{t('lastSent', { date: sentDate })}</span>}
             </div>
           )}
@@ -91,22 +90,20 @@ export default function SendToTeacher({
                 onChange={(event) => setText(event.target.value)}
               />
               <div className="row-actions">
-                <button
-                  type="button"
-                  className="btn primary"
+                <Button
+                  variant="primary"
                   disabled={step === 'saving' || !text.trim()}
                   onClick={() => void add()}
                 >
                   {step === 'saving' ? commonText.t('adding') : t('addReport')}
-                </button>
-                <button
-                  type="button"
-                  className="btn ghost"
+                </Button>
+                <Button
+                  variant="ghost"
                   disabled={step === 'saving'}
                   onClick={() => setStep('idle')}
                 >
                   {commonText.t('cancel')}
-                </button>
+                </Button>
               </div>
             </>
           )}

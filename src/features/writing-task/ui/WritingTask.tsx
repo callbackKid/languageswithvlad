@@ -16,6 +16,7 @@ import {
   useTranslation,
 } from '@/shared/i18n';
 import { loadChecked, save } from '@/shared/lib/storage';
+import { Button } from '@/shared/ui/controls';
 import ExerciseHead from '@/shared/ui/ExerciseHead';
 import WaitingFact from '@/shared/ui/WaitingFact';
 
@@ -141,15 +142,14 @@ export default function WritingTask({
         onChange={(event) => keep({ ...writing, text: event.target.value })}
       />
       <div className="row-actions">
-        <button
-          type="button"
-          className="btn primary"
+        <Button
+          variant="primary"
           disabled={checking || !hasClaude || !writing.text.trim()}
           data-tooltip={hasClaude ? undefined : commonText.t('needsClaude')}
           onClick={() => void check()}
         >
           {writing.check ? t('checkAgain') : t('check')}
-        </button>
+        </Button>
       </div>
       {checking && <WaitingFact language={language}>{t('checking')}</WaitingFact>}
       {error && (

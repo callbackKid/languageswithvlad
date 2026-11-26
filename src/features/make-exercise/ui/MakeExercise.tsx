@@ -11,6 +11,7 @@ import {
 } from '@/shared/config';
 import { common, translator, useTranslation } from '@/shared/i18n';
 import { loadChecked, save } from '@/shared/lib/storage';
+import { Button } from '@/shared/ui/controls';
 import WaitingFact from '@/shared/ui/WaitingFact';
 
 import { makeExerciseText } from '../i18n/makeExercise';
@@ -126,14 +127,14 @@ export default function MakeExercise({
         <div className="make-exercise-row">
           <div className="seg" role="group" aria-label={t('level')}>
             {LEVELS.map((candidate) => (
-              <button
+              <Button
+                variant="unstyled"
                 key={candidate}
-                type="button"
                 aria-pressed={level === candidate}
                 onClick={() => setLevel(candidate)}
               >
                 {candidate}
-              </button>
+              </Button>
             ))}
           </div>
           <label className="make-exercise-count">
@@ -149,13 +150,13 @@ export default function MakeExercise({
         </div>
         {!canMake && <p className="hint">{t('pickSomething')}</p>}
         <div className="row-actions">
-          <button type="submit" className="btn primary" disabled={!canMake || state === 'loading'}>
+          <Button type="submit" variant="primary" disabled={!canMake || state === 'loading'}>
             {t('make')}
-          </button>
+          </Button>
           {exercise && state !== 'loading' && (
-            <button type="button" className="btn" onClick={() => setRunning(true)}>
+            <Button onClick={() => setRunning(true)}>
               {t('openLast', { title: exercise.title || '…' })}
-            </button>
+            </Button>
           )}
         </div>
       </form>
@@ -165,9 +166,7 @@ export default function MakeExercise({
       {state === 'error' && (
         <div className="note err" role="alert">
           <p>{error}</p>
-          <button type="button" className="btn" onClick={() => void make()}>
-            {commonText.t('tryAgain')}
-          </button>
+          <Button onClick={() => void make()}>{commonText.t('tryAgain')}</Button>
         </div>
       )}
     </>

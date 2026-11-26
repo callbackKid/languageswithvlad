@@ -17,6 +17,7 @@ import { app, paper, setUiLanguage, UI_LANGUAGES, useTranslation } from '@/share
 import { shrinkImage } from '@/shared/lib/image';
 import { canSpeak, speak } from '@/shared/lib/speech';
 import Avatar from '@/shared/ui/Avatar';
+import { Button } from '@/shared/ui/controls';
 import PageHead from '@/shared/ui/PageHead';
 
 import { settingsText } from '../i18n/settings';
@@ -154,14 +155,14 @@ export default function Settings({ lessonDocument }: { lessonDocument: DocumentI
               aria-label={t('dailyGoal')}
             >
               {DAILY_GOALS.map((goal) => (
-                <button
+                <Button
+                  variant="unstyled"
                   key={goal}
-                  type="button"
                   aria-pressed={settings.dailyGoal === goal}
                   onClick={() => updateSettings({ dailyGoal: goal })}
                 >
                   {t('goalValue', { count: goal })}
-                </button>
+                </Button>
               ))}
             </div>
           </div>
@@ -170,26 +171,25 @@ export default function Settings({ lessonDocument }: { lessonDocument: DocumentI
               <span className={styles.label}>{t('speechSpeed')}</span>
               <div className="seg" role="group" aria-label={t('speechSpeed')}>
                 {SPEECH_SPEEDS.map((speed) => (
-                  <button
+                  <Button
+                    variant="unstyled"
                     key={speed}
-                    type="button"
                     aria-pressed={settings.speechSpeed === speed}
                     onClick={() => updateSettings({ speechSpeed: speed })}
                   >
                     {t(`speed.${speed}`)}
-                  </button>
+                  </Button>
                 ))}
               </div>
-              <button
-                type="button"
-                className="btn ghost"
+              <Button
+                variant="ghost"
                 onClick={() => {
                   const language = settings.studying[0] ?? 'fr';
                   speak(SAMPLES[language], language);
                 }}
               >
                 🔊 {t('tryIt')}
-              </button>
+              </Button>
             </div>
           )}
         </section>
@@ -245,14 +245,14 @@ export default function Settings({ lessonDocument }: { lessonDocument: DocumentI
             <span className={styles.label}>{t('theme')}</span>
             <div className="seg" role="group" aria-label={t('theme')}>
               {THEMES.map((theme) => (
-                <button
+                <Button
+                  variant="unstyled"
                   key={theme}
-                  type="button"
                   aria-pressed={settings.theme === theme}
                   onClick={() => updateSettings({ theme })}
                 >
                   {t(`theme.${theme}`)}
-                </button>
+                </Button>
               ))}
             </div>
           </div>
@@ -320,12 +320,12 @@ export default function Settings({ lessonDocument }: { lessonDocument: DocumentI
           <a className="btn" href={lessonDocument.url} target="_blank" rel="noopener noreferrer">
             {sectionNames.t('openDocument')}
           </a>
-          <button type="button" className="btn" onClick={() => void copyLink()}>
+          <Button onClick={() => void copyLink()}>
             {copied ? sectionNames.t('linkCopied') : sectionNames.t('copyLink')}
-          </button>
-          <button type="button" className="btn ghost" onClick={lessonDocument.onChange}>
+          </Button>
+          <Button variant="ghost" onClick={lessonDocument.onChange}>
             {sectionNames.t('changeDocument')}
-          </button>
+          </Button>
         </div>
         <small className="hint">{t('studentLinkHint')}</small>
       </section>

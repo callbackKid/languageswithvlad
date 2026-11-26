@@ -4,6 +4,7 @@ import { findCall, openCallWindow } from '@/entities/lesson';
 import { getSettings } from '@/shared/config';
 import { call, useTranslation } from '@/shared/i18n';
 import { loadText, save } from '@/shared/lib/storage';
+import { Button } from '@/shared/ui/controls';
 
 // the name the call shows, kept on this device for the next lesson
 const NAME_KEY = 'call:name';
@@ -47,9 +48,7 @@ export default function CallBar({
         <span className="call-live">
           <span className="live-dot" aria-hidden="true" /> {t('inCall')}
         </span>
-        <button type="button" className="btn" onClick={onLeave}>
-          {t('leaveCall')}
-        </button>
+        <Button onClick={onLeave}>{t('leaveCall')}</Button>
       </div>
     );
 
@@ -108,14 +107,14 @@ export default function CallBar({
               onChange={(event) => setPasscode(event.target.value)}
             />
           )}
-          <button
+          <Button
             type="submit"
-            className="btn primary"
+            variant="primary"
             disabled={!name.trim()}
             data-tooltip={inPage === 'jitsi' ? t('jitsiExplain') : t('zoomExplain')}
           >
             {inPage === 'jitsi' ? t('joinCall') : t('joinHere')}
-          </button>
+          </Button>
         </form>
       )}
       {link?.kind === 'meet' && (
@@ -124,20 +123,12 @@ export default function CallBar({
           <summary className="btn">{t('meetTitle')} ▾</summary>
           <div className="call-meet-menu">
             <p className="hint">{t('meetExplain')}</p>
-            <button
-              type="button"
-              className="btn primary"
-              onClick={() => setBlocked(!openCallWindow(link.url))}
-            >
+            <Button variant="primary" onClick={() => setBlocked(!openCallWindow(link.url))}>
               {t('openMeet')}
-            </button>
-            <button
-              type="button"
-              className="btn"
-              onClick={() => setBlocked(!openCallWindow(link.url, 'half'))}
-            >
+            </Button>
+            <Button onClick={() => setBlocked(!openCallWindow(link.url, 'half'))}>
               {t('sideBySide')}
-            </button>
+            </Button>
             {newTab(t('openInTab'))}
             <p className="legend">{t('pipTip')}</p>
           </div>

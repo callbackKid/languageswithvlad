@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import { api, ApiError } from '@/shared/api';
 import { call, getUiLanguage, translator, type UiLanguage, useTranslation } from '@/shared/i18n';
+import { Button } from '@/shared/ui/controls';
 
 // the Zoom window speaks the same language as the app
 // the size of the call inside the page, in pixels: 16:9, as wide as the lesson mode's column
@@ -90,9 +91,9 @@ export default function ZoomCall({
         </div>
       )}
       <div ref={root} className="zoom-root" />
-      <button type="button" className="btn ghost" onClick={onLeave}>
+      <Button variant="ghost" onClick={onLeave}>
         {t('leave')}
-      </button>
+      </Button>
     </div>
   );
 }

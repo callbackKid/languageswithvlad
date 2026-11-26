@@ -11,6 +11,7 @@ import { getProgress } from '@/entities/word';
 import { WordQuiz } from '@/features/quiz';
 import { useTranslation } from '@/shared/i18n';
 import { load, save } from '@/shared/lib/storage';
+import { Button } from '@/shared/ui/controls';
 
 import { homeCards } from '../i18n/homeCards';
 
@@ -77,13 +78,9 @@ export default function PrepareCard({
         </p>
       )}
       <div className="row-actions">
-        <button
-          type="button"
-          className={done ? 'btn' : 'btn primary'}
-          onClick={() => setRevising(true)}
-        >
+        <Button variant={done ? undefined : 'primary'} onClick={() => setRevising(true)}>
           {done ? t('prepareAgain') : t('prepareButton')}
-        </button>
+        </Button>
       </div>
     </section>
   );

@@ -4,6 +4,7 @@ import { recordWord, type Word } from '@/entities/word';
 import { useTranslationLanguage } from '@/shared/config';
 import { exercises, learning, useTranslation } from '@/shared/i18n';
 import { shuffle } from '@/shared/lib/util';
+import { Button } from '@/shared/ui/controls';
 import ExerciseHead from '@/shared/ui/ExerciseHead';
 
 // word is set for translation pairs, so results count towards progress.
@@ -119,8 +120,8 @@ export default function Match({
       .filter(Boolean)
       .join(' ');
     return (
-      <button
-        type="button"
+      <Button
+        variant="unstyled"
         key={id}
         className={tileClass}
         disabled={isDone}
@@ -133,7 +134,7 @@ export default function Match({
             {pair.kind === 'synonym' ? t('synonymTag') : t('antonymTag')}
           </span>
         )}
-      </button>
+      </Button>
     );
   };
   const grid = (
@@ -150,9 +151,9 @@ export default function Match({
         <p className="score">{t('pairsDone', { count: pairs.length, mistakes })}</p>
         {grid}
         <div className="row-actions">
-          <button type="button" className="btn primary" onClick={onRestart}>
+          <Button variant="primary" onClick={onRestart}>
             {t('playAgain')}
-          </button>
+          </Button>
         </div>
       </div>
     );
@@ -170,9 +171,9 @@ export default function Match({
       {grid}
       {roundDone && (
         <div className="row-actions">
-          <button type="button" className="btn primary" onClick={nextRound}>
+          <Button variant="primary" onClick={nextRound}>
             {t('nextPairs')}
-          </button>
+          </Button>
         </div>
       )}
     </div>

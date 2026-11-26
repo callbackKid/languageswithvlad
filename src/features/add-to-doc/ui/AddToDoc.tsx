@@ -4,6 +4,7 @@ import { type Lesson } from '@/entities/lesson';
 import { api, ApiError } from '@/shared/api';
 import { common, useTranslation } from '@/shared/i18n';
 import { documentDate } from '@/shared/lib/dates';
+import { Button } from '@/shared/ui/controls';
 
 // Where new lessons go: the connected document, the lesson number to use next, and whether the server can write.
 export interface DocTarget {
@@ -89,12 +90,7 @@ export default function AddToDoc({
           </select>
         </label>
       )}
-      <button
-        type="button"
-        className="btn"
-        disabled={state === 'saving' || state === 'done' || !lines.length}
-        onClick={add}
-      >
+      <Button disabled={state === 'saving' || state === 'done' || !lines.length} onClick={add}>
         {state === 'saving'
           ? t('adding')
           : state === 'done'
@@ -102,7 +98,7 @@ export default function AddToDoc({
             : chosen
               ? t('addUnder', { lesson: lessonName(chosen) })
               : t('addAsLesson', { number: target.nextLessonNumber })}
-      </button>
+      </Button>
       {message && (
         <span className={'hint' + (state === 'error' ? ' err' : '')} role="status">
           {message}

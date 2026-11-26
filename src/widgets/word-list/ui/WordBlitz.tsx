@@ -7,6 +7,7 @@ import { WordQuiz } from '@/features/quiz';
 import { api, ApiError } from '@/shared/api';
 import { getSettings } from '@/shared/config';
 import { common, exercises, translator, useTranslation } from '@/shared/i18n';
+import { Button } from '@/shared/ui/controls';
 import ExerciseHead from '@/shared/ui/ExerciseHead';
 import WaitingFact from '@/shared/ui/WaitingFact';
 
@@ -73,9 +74,7 @@ export default function WordBlitz({
         <ExerciseHead title={t('blitz')} onClose={onClose} />
         <div className="note err" role="alert">
           <p>{error}</p>
-          <button type="button" className="btn" onClick={onRestart}>
-            {commonText.t('tryAgain')}
-          </button>
+          <Button onClick={onRestart}>{commonText.t('tryAgain')}</Button>
         </div>
       </div>
     );

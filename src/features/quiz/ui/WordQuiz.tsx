@@ -6,6 +6,7 @@ import { type Language, languageOfTense, useTranslationLanguage } from '@/shared
 import { common, exercises, learning, useTranslation } from '@/shared/i18n';
 import { grade } from '@/shared/lib/grade';
 import { speak } from '@/shared/lib/speech';
+import { Button } from '@/shared/ui/controls';
 import ExerciseHead from '@/shared/ui/ExerciseHead';
 import Speak from '@/shared/ui/Speak';
 
@@ -159,9 +160,9 @@ export default function WordQuiz({
             <p className="hint">{review.none}</p>
           ))}
         <div className="row-actions">
-          <button type="button" className="btn primary" autoFocus onClick={onNextRound ?? restart}>
+          <Button variant="primary" autoFocus onClick={onNextRound ?? restart}>
             {tx('nextRound')}
-          </button>
+          </Button>
         </div>
       </>
     );
@@ -283,9 +284,9 @@ export default function WordQuiz({
         </p>
       )}
       <div className="row-actions">
-        <button type="button" ref={nextButton} className="btn primary" onClick={next}>
+        <Button ref={nextButton} variant="primary" onClick={next}>
           {index + 1 < questions.length ? t('next') : t('seeScore')}
-        </button>
+        </Button>
       </div>
     </>
   );
@@ -325,8 +326,8 @@ export default function WordQuiz({
             const stateClass =
               picked == null ? '' : choice === right ? ' ok' : choice === picked ? ' bad' : '';
             return (
-              <button
-                type="button"
+              <Button
+                variant="unstyled"
                 key={choice}
                 className={'choice' + stateClass + (question.kind === 'pick-ru' ? ' ru' : '')}
                 lang={
@@ -339,7 +340,7 @@ export default function WordQuiz({
                 }}
               >
                 {choice}
-              </button>
+              </Button>
             );
           })}
         </div>
@@ -369,13 +370,12 @@ export default function WordQuiz({
           <p className="quiz-word">
             {/* nothing has played yet only on Home's quiz, before the student's first step:
                 the first press turns speaking on, which plays the word */}
-            <button
-              type="button"
-              className="btn big"
+            <Button
+              className="big"
               onClick={() => (autoSpeak ? speak(question.word.fr, language) : setAutoSpeak(true))}
             >
               {autoSpeak ? tx('listenAgain') : tx('listenFirst')}
-            </button>
+            </Button>
           </p>
           <p className="ru-line">
             {form ? tx(`writeWhatYouHearForm.${form}`) : tx('writeWhatYouHear')}
@@ -415,9 +415,9 @@ export default function WordQuiz({
           aria-label={t('yourAnswer')}
         />
         {!result && (
-          <button className="btn primary" type="submit">
+          <Button variant="primary" type="submit">
             {t('check')}
-          </button>
+          </Button>
         )}
       </form>
       {/* only in a mixed round: a dictation round would be left empty, and it can be closed */}
@@ -425,9 +425,9 @@ export default function WordQuiz({
         !result &&
         questions.some((item) => item.kind !== 'listen') && (
           <div className="row-actions">
-            <button type="button" className="btn ghost" onClick={skipListening}>
+            <Button variant="ghost" onClick={skipListening}>
               {tx('cantListen')}
-            </button>
+            </Button>
           </div>
         )}
       {feedback}

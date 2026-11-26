@@ -2,6 +2,8 @@ import { type Language } from '@/shared/config';
 import { common, useTranslation } from '@/shared/i18n';
 import { canSpeak, speak } from '@/shared/lib/speech';
 
+import { IconButton } from './controls';
+
 /** A small 🔊 button that reads the text aloud; hidden where the browser has no speech. label
     replaces "Listen: {text}" for a screen reader where the text must stay hidden (an answer). */
 export default function Speak({
@@ -16,17 +18,16 @@ export default function Speak({
   const { t } = useTranslation(common);
   if (!canSpeak) return null;
   return (
-    <button
-      type="button"
+    <IconButton
       className="speak"
-      data-tooltip={t('listen')}
-      aria-label={label ?? t('listenTo', { text })}
+      tooltip={t('listen')}
+      label={label ?? t('listenTo', { text })}
       onClick={(event) => {
         event.stopPropagation();
         speak(text, language);
       }}
     >
       🔊
-    </button>
+    </IconButton>
   );
 }

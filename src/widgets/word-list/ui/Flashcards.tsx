@@ -4,6 +4,7 @@ import { recordWord, Transcription, type Word } from '@/entities/word';
 import { useTranslationLanguage } from '@/shared/config';
 import { exercises, useTranslation } from '@/shared/i18n';
 import { shuffle } from '@/shared/lib/util';
+import { Button } from '@/shared/ui/controls';
 import ExerciseHead from '@/shared/ui/ExerciseHead';
 import Speak from '@/shared/ui/Speak';
 
@@ -62,8 +63,8 @@ export default function Flashcards({
 
   const directionToggle = (
     <span className="seg" role="group" aria-label={t('direction')}>
-      <button
-        type="button"
+      <Button
+        variant="unstyled"
         aria-pressed={direction === 'fr'}
         onClick={() => {
           setDirection('fr');
@@ -71,9 +72,9 @@ export default function Flashcards({
         }}
       >
         {code} → {translationCode}
-      </button>
-      <button
-        type="button"
+      </Button>
+      <Button
+        variant="unstyled"
         aria-pressed={direction === 'ru'}
         onClick={() => {
           setDirection('ru');
@@ -81,7 +82,7 @@ export default function Flashcards({
         }}
       >
         {translationCode} → {code}
-      </button>
+      </Button>
     </span>
   );
 
@@ -94,9 +95,9 @@ export default function Flashcards({
         </ExerciseHead>
         <p className="score">{t('cardsDone', { count: words.length })}</p>
         <div className="row-actions">
-          <button type="button" className="btn primary" onClick={onRestart}>
+          <Button variant="primary" onClick={onRestart}>
             {t('startOver')}
-          </button>
+          </Button>
         </div>
       </div>
     );
@@ -108,8 +109,8 @@ export default function Flashcards({
         <span className="progress">{t('known', { done, total: words.length })}</span>
         {directionToggle}
       </ExerciseHead>
-      <button
-        type="button"
+      <Button
+        variant="unstyled"
         className="card"
         onClick={() => setFlipped((previous) => !previous)}
         aria-label={t('flipCard')}
@@ -131,15 +132,15 @@ export default function Flashcards({
         ) : (
           <span className="sub">{t('tapToSee')}</span>
         )}
-      </button>
+      </Button>
       <div className="card-actions">
         <Speak text={card.fr} language={language} />
-        <button type="button" className="btn big" onClick={again}>
+        <Button className="big" onClick={again}>
           {t('again')}
-        </button>
-        <button type="button" className="btn primary big" onClick={know}>
+        </Button>
+        <Button variant="primary" className="big" onClick={know}>
           {t('iKnowIt')}
-        </button>
+        </Button>
       </div>
       <p className="kbd">{t('keys')}</p>
     </div>

@@ -6,6 +6,7 @@ import { WordQuiz } from '@/features/quiz';
 import { type Tense } from '@/shared/config';
 import { pages, useTranslation } from '@/shared/i18n';
 import { shuffle } from '@/shared/lib/util';
+import { Button } from '@/shared/ui/controls';
 import PageHead from '@/shared/ui/PageHead';
 
 // The words and verb forms missed most often, and a quiz on just those.
@@ -52,9 +53,9 @@ export default function Mistakes({ bank }: { bank: Bank }) {
       ) : (
         <>
           <div className="row-actions lead">
-            <button type="button" className="btn primary" onClick={() => setPractising(true)}>
+            <Button variant="primary" onClick={() => setPractising(true)}>
               {t('practiseMistakes')}
-            </button>
+            </Button>
           </div>
           <div className="mistake-cols">
             {words.length > 0 && (

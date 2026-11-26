@@ -8,6 +8,7 @@ import { api, ApiError } from '@/shared/api';
 import { common, paper, translator, useTranslation } from '@/shared/i18n';
 import { shrinkImage } from '@/shared/lib/image';
 import { asFields, loadChecked, save } from '@/shared/lib/storage';
+import { Button } from '@/shared/ui/controls';
 import WaitingFact from '@/shared/ui/WaitingFact';
 import { WordNotesTable } from '@/widgets/word-notes';
 
@@ -155,13 +156,9 @@ export default function PhotoWords({
             <div className="note err" role="alert">
               <p>{error}</p>
               {failed.length > 0 && (
-                <button
-                  type="button"
-                  className="btn"
-                  onClick={() => void read(failed, scan?.items ?? [])}
-                >
+                <Button onClick={() => void read(failed, scan?.items ?? [])}>
                   {commonText.t('tryAgain')}
-                </button>
+                </Button>
               )}
             </div>
           )}

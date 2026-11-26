@@ -11,6 +11,7 @@ import { recordWord, type Word } from '@/entities/word';
 import { useTranslationLanguage } from '@/shared/config';
 import { useTranslation } from '@/shared/i18n';
 import { asFields, asList, load, save } from '@/shared/lib/storage';
+import { Button } from '@/shared/ui/controls';
 import ExerciseHead from '@/shared/ui/ExerciseHead';
 import Speak from '@/shared/ui/Speak';
 
@@ -215,9 +216,9 @@ export default function QuizGame({
         {best && <p className="game-record">{t('newRecord')}</p>}
         <RecordsTable records={records} highlight={finished.at} />
         <div className="row-actions">
-          <button type="button" className="btn primary" autoFocus onClick={restart}>
+          <Button variant="primary" autoFocus onClick={restart}>
             {t('playAgain')}
-          </button>
+          </Button>
         </div>
       </div>
     );
@@ -262,8 +263,8 @@ export default function QuizGame({
                 ? ' bad'
                 : '';
           return (
-            <button
-              type="button"
+            <Button
+              variant="unstyled"
               key={choice}
               className={'choice' + state + (question.kind === 'pick-ru' ? ' ru' : '')}
               lang={question.kind === 'pick-ru' ? translationOf(question.word.language) : language}
@@ -271,7 +272,7 @@ export default function QuizGame({
               onClick={() => choose(choice)}
             >
               {choice}
-            </button>
+            </Button>
           );
         })}
       </div>
@@ -285,14 +286,13 @@ export default function QuizGame({
                 : t('wrong', { answer: right })}
           </p>
           <div className="row-actions">
-            <button
-              type="button"
+            <Button
               ref={nextButton}
-              className="btn primary"
+              variant="primary"
               onClick={() => (index + 1 < questions.length ? setIndex(index + 1) : finish())}
             >
               {index + 1 < questions.length ? t('next') : t('finish')}
-            </button>
+            </Button>
           </div>
         </>
       )}

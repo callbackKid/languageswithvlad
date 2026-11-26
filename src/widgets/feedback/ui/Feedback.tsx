@@ -5,6 +5,7 @@ import { getSettings, isDark } from '@/shared/config';
 import { common, talk, useTranslation } from '@/shared/i18n';
 import { type ImagePayload, shrinkImage } from '@/shared/lib/image';
 import { load, save } from '@/shared/lib/storage';
+import { Button, IconButton } from '@/shared/ui/controls';
 
 const MAX_PICTURES = 3;
 // the server cuts the message and the contact at the same lengths (api/feedback.ts)
@@ -145,9 +146,9 @@ export default function Feedback({ docTitle }: { docTitle: string }) {
 
   return (
     <>
-      <button type="button" className="btn ghost" onClick={open}>
+      <Button variant="ghost" onClick={open}>
         {t('feedback')}
-      </button>
+      </Button>
       <dialog
         ref={dialog}
         className="report-dialog"
@@ -165,12 +166,12 @@ export default function Feedback({ docTitle }: { docTitle: string }) {
             <h2 id="report-title">{t('thanks')}</h2>
             <p>{t('sent')}</p>
             <div className="row-actions">
-              <button type="button" className="btn primary" onClick={close}>
+              <Button variant="primary" onClick={close}>
                 {tc('close')}
-              </button>
-              <button type="button" className="btn ghost" onClick={() => setState('idle')}>
+              </Button>
+              <Button variant="ghost" onClick={() => setState('idle')}>
                 {t('writeAnother')}
-              </button>
+              </Button>
             </div>
           </div>
         ) : (
@@ -186,14 +187,14 @@ export default function Feedback({ docTitle }: { docTitle: string }) {
 
             <div className="seg report-kinds" role="group" aria-label={t('whatAbout')}>
               {KINDS.map((entry) => (
-                <button
+                <Button
+                  variant="unstyled"
                   key={entry}
-                  type="button"
                   aria-pressed={draft.kind === entry}
                   onClick={() => update({ kind: entry })}
                 >
                   {t(`kind.${entry}`)}
-                </button>
+                </Button>
               ))}
             </div>
 
@@ -215,14 +216,13 @@ export default function Feedback({ docTitle }: { docTitle: string }) {
                 {pictures.map((picture, index) => (
                   <figure key={picture.preview}>
                     <img src={picture.preview} alt={t('attachedPicture', { count: index + 1 })} />
-                    <button
-                      type="button"
+                    <IconButton
                       className="report-remove"
-                      aria-label={t('removePicture', { count: index + 1 })}
+                      label={t('removePicture', { count: index + 1 })}
                       onClick={() => removePicture(index)}
                     >
                       ×
-                    </button>
+                    </IconButton>
                   </figure>
                 ))}
                 {pictures.length < MAX_PICTURES && (
@@ -264,16 +264,16 @@ export default function Feedback({ docTitle }: { docTitle: string }) {
             )}
 
             <div className="row-actions">
-              <button
+              <Button
                 type="submit"
-                className="btn primary"
+                variant="primary"
                 disabled={state === 'sending' || !draft.message.trim()}
               >
                 {state === 'sending' ? t('sending') : t('send')}
-              </button>
-              <button type="button" className="btn ghost" onClick={close}>
+              </Button>
+              <Button variant="ghost" onClick={close}>
                 {tc('cancel')}
-              </button>
+              </Button>
             </div>
           </form>
         )}

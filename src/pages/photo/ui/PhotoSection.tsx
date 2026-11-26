@@ -4,6 +4,7 @@ import { type Lesson } from '@/entities/lesson';
 import { type DocTarget } from '@/features/add-to-doc';
 import { paper, useTranslation } from '@/shared/i18n';
 import { load, save } from '@/shared/lib/storage';
+import { Button } from '@/shared/ui/controls';
 import PageHead from '@/shared/ui/PageHead';
 
 import HandwrittenNotes from './HandwrittenNotes';
@@ -37,14 +38,14 @@ export default function PhotoSection({
       <PageHead guide="photo" title={t('fromPaper')} />
       <div className="seg photo-mode" role="group" aria-label={t('whatToRead')}>
         {MODES.map((entry) => (
-          <button
-            type="button"
+          <Button
+            variant="unstyled"
             key={entry}
             aria-pressed={mode === entry}
             onClick={() => choose(entry)}
           >
             {t(`mode.${entry}`)}
-          </button>
+          </Button>
         ))}
       </div>
       {mode === 'underlined' ? (

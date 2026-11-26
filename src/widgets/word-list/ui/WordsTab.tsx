@@ -31,6 +31,7 @@ import { useTranslationLanguage } from '@/shared/config';
 import { common, exercises, useTranslation } from '@/shared/i18n';
 import { canSpeak, unlockSpeech } from '@/shared/lib/speech';
 import { downloadText } from '@/shared/lib/util';
+import { Button, IconButton } from '@/shared/ui/controls';
 import InlineConfirm from '@/shared/ui/InlineConfirm';
 import Speak from '@/shared/ui/Speak';
 
@@ -72,15 +73,15 @@ function GroupButton({
   // too few: one note over the list says why (groupNote), rather than one under every group
   if (!canMakeGroupExercise(words)) return null;
   return (
-    <button
-      type="button"
-      className="btn ghost word-group-exercise"
+    <Button
+      variant="ghost"
+      className="word-group-exercise"
       aria-label={t('groupLabel', { name })}
       data-tooltip={t('groupTooltip')}
       onClick={() => onStart({ name, words })}
     >
       {t('groupButton')}
-    </button>
+    </Button>
   );
 }
 
@@ -239,71 +240,37 @@ export default function WordsTab({
   return (
     <>
       <div className="ex-bar">
-        <button
-          type="button"
-          className="btn primary"
-          disabled={picked.length < 1}
-          onClick={() => start('quiz')}
-        >
+        <Button variant="primary" disabled={picked.length < 1} onClick={() => start('quiz')}>
           {t('quiz')}
-        </button>
-        <button
-          type="button"
-          className="btn"
-          disabled={picked.length < 1}
-          onClick={() => start('cards')}
-        >
+        </Button>
+        <Button disabled={picked.length < 1} onClick={() => start('cards')}>
           {t('flashcards')}
-        </button>
-        <button
-          type="button"
-          className="btn"
-          disabled={picked.length < 2}
-          onClick={() => start('match')}
-        >
+        </Button>
+        <Button disabled={picked.length < 2} onClick={() => start('match')}>
           {t('matchTranslations')}
-        </button>
+        </Button>
         {!(hidePairs && !hasPairs) && (
-          <button
-            type="button"
-            className="btn"
+          <Button
             disabled={!hasPairs}
             data-tooltip={hasPairs ? undefined : t('noPairs')}
             onClick={() => start('syn')}
           >
             {t('synonyms')}
-          </button>
+          </Button>
         )}
-        <button
-          type="button"
-          className="btn"
-          disabled={picked.length < 1 || !hasClaude}
-          onClick={() => start('gap')}
-        >
+        <Button disabled={picked.length < 1 || !hasClaude} onClick={() => start('gap')}>
           {t('fillGap')}
-        </button>
-        <button
-          type="button"
-          className="btn"
-          disabled={picked.length < 1 || !hasClaude}
-          onClick={() => start('blitz')}
-        >
+        </Button>
+        <Button disabled={picked.length < 1 || !hasClaude} onClick={() => start('blitz')}>
           {t('blitz')}
-        </button>
+        </Button>
         {canSpeak && (
-          <button
-            type="button"
-            className="btn"
-            disabled={picked.length < 1}
-            onClick={() => start('dictation')}
-          >
+          <Button disabled={picked.length < 1} onClick={() => start('dictation')}>
             {t('dictation')}
-          </button>
+          </Button>
         )}
         {canSpeak && (
-          <button
-            type="button"
-            className="btn"
+          <Button
             disabled={picked.length < 1}
             onClick={() => {
               // on the tap itself, so an iPhone lets the read-through speak
@@ -312,21 +279,20 @@ export default function WordsTab({
             }}
           >
             {t('listen')}
-          </button>
+          </Button>
         )}
         <span className="hint">{t('picked', { picked: picked.length, total: shown.length })}</span>
       </div>
       <div className="sel-bar">
-        <button type="button" className="btn ghost" onClick={() => setUnpicked(new Set())}>
+        <Button variant="ghost" onClick={() => setUnpicked(new Set())}>
           {t('pickAll')}
-        </button>
-        <button
-          type="button"
-          className="btn ghost"
+        </Button>
+        <Button
+          variant="ghost"
           onClick={() => setUnpicked(new Set(analysis.words.map((word) => word.fr)))}
         >
           {t('clear')}
-        </button>
+        </Button>
         <input
           type="search"
           placeholder={t('filterWords')}
@@ -370,9 +336,7 @@ export default function WordsTab({
       {grouping.state === 'error' && (
         <div className="note err" role="alert">
           <p>{t('groupingFailed')}</p>
-          <button type="button" className="btn" onClick={grouping.retry}>
-            {commonText.t('tryAgain')}
-          </button>
+          <Button onClick={grouping.retry}>{commonText.t('tryAgain')}</Button>
         </div>
       )}
       {list.length ? (
@@ -439,16 +403,15 @@ export default function WordsTab({
                   <Speak text={word.fr} language={word.language ?? 'fr'} />
                   <Star word={word} />
                   {lessonKey && (
-                    <button
-                      type="button"
+                    <IconButton
                       className="row-remove"
-                      data-tooltip={t('removeWord')}
-                      aria-label={t('removeWordLabel', { word: word.fr })}
+                      tooltip={t('removeWord')}
+                      label={t('removeWordLabel', { word: word.fr })}
                       aria-expanded={removing === word.fr}
                       onClick={() => setRemoving(removing === word.fr ? null : word.fr)}
                     >
                       ✕
-                    </button>
+                    </IconButton>
                   )}
                   {lessonKey && removing === word.fr && (
                     <InlineConfirm
@@ -485,29 +448,23 @@ export default function WordsTab({
       )}
       <p className="legend legend-actions">
         {picked.length > 0 && (
-          <button
-            type="button"
-            className="btn ghost"
+          <Button
+            variant="ghost"
             onClick={() => downloadText('words.txt', ankiText(picked))}
             data-tooltip={t('ankiTitle')}
           >
             {t('ankiExport', { count: picked.length })}
-          </button>
+          </Button>
         )}
         {lessonKey && removedWords > 0 && (
-          <button type="button" className="btn ghost" onClick={() => restore('words', [lessonKey])}>
+          <Button variant="ghost" onClick={() => restore('words', [lessonKey])}>
             {t('restoreWords', { count: removedWords })}
-          </button>
+          </Button>
         )}
         {onRefresh && (
-          <button
-            type="button"
-            className="btn ghost"
-            onClick={onRefresh}
-            data-tooltip={t('refreshTitle')}
-          >
+          <Button variant="ghost" onClick={onRefresh} data-tooltip={t('refreshTitle')}>
             {t('refresh')}
-          </button>
+          </Button>
         )}
       </p>
     </>

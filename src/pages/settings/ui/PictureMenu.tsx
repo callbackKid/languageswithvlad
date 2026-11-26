@@ -1,6 +1,7 @@
 import { type KeyboardEvent, type ReactNode, useEffect, useRef, useState } from 'react';
 
 import { useTranslation } from '@/shared/i18n';
+import { Button, IconButton } from '@/shared/ui/controls';
 
 import { settingsText } from '../i18n/settings';
 import styles from './Settings.module.css';
@@ -65,12 +66,10 @@ export default function PictureMenu({
   return (
     <div className={styles.picture} ref={wrapper}>
       {children}
-      <button
-        type="button"
+      <IconButton
         ref={pencil}
         className={styles['picture-edit']}
-        aria-label={t('editPicture')}
-        data-tooltip={t('editPicture')}
+        label={t('editPicture')}
         aria-haspopup={hasPicture ? 'menu' : undefined}
         aria-expanded={hasPicture ? isOpen : undefined}
         onClick={() => (hasPicture ? setOpen((previous) => !previous) : input.current?.click())}
@@ -84,19 +83,19 @@ export default function PictureMenu({
             strokeLinejoin="round"
           />
         </svg>
-      </button>
+      </IconButton>
       {isOpen && (
         <div className={styles['picture-menu']} role="menu" ref={menu} onKeyDown={onMenuKey}>
-          <button
-            type="button"
+          <Button
+            variant="unstyled"
             role="menuitem"
             onClick={() => choose(() => input.current?.click())}
           >
             {t('uploadPicture')}
-          </button>
-          <button type="button" role="menuitem" onClick={() => choose(onRemove)}>
+          </Button>
+          <Button variant="unstyled" role="menuitem" onClick={() => choose(onRemove)}>
             {t('removePicture')}
-          </button>
+          </Button>
         </div>
       )}
       <input

@@ -20,6 +20,7 @@ import { daysBetween } from '@/shared/lib/dates';
 import { followLink, hrefFor } from '@/shared/lib/router';
 import { load, loadChecked, save } from '@/shared/lib/storage';
 import { shownTopic } from '@/shared/lib/util';
+import { Button, IconButton } from '@/shared/ui/controls';
 
 import { homeCards } from '../i18n/homeCards';
 
@@ -86,18 +87,16 @@ export default function LessonSummary({
             ? t('summaryToday', { n: lesson.n, counts })
             : t('summaryYesterday', { n: lesson.n, counts })}
         </h2>
-        <button
-          type="button"
+        <IconButton
           className="btn ghost dismiss"
-          data-tooltip={t('hide')}
-          aria-label={t('hide')}
+          label={t('hide')}
           onClick={() => {
             save(hiddenKey, true);
             setHidden(true);
           }}
         >
           ✕
-        </button>
+        </IconButton>
       </div>
       {shownTopic(analysis.topic, uiLanguage) && (
         <p className="hint">{t('topic', { topic: analysis.topic })}</p>
@@ -119,9 +118,9 @@ export default function LessonSummary({
       )}
       <div className="row-actions">
         {words.length > 0 && (
-          <button type="button" className="btn primary" onClick={() => setRevising(true)}>
+          <Button variant="primary" onClick={() => setRevising(true)}>
             {t('startRevising')}
-          </button>
+          </Button>
         )}
         <a className="btn" href={hrefFor(path)} onClick={(event) => followLink(event, path)}>
           {t('openLesson')}
