@@ -48,6 +48,23 @@ export interface NewsDay {
 
 export const NEWS: NewsDay[] = [
   {
+    date: '2026-11-27',
+    items: [
+      {
+        kind: 'fixed',
+        text: {
+          en: 'Corrections in dictation, conjugation practice, and other exercises are easier to read in both themes.',
+          ru: 'Исправления в диктантах, упражнениях на спряжение и других заданиях теперь легче читать и в светлой, и в тёмной теме.',
+          fr: 'Les corrections des dictées, des exercices de conjugaison et des autres exercices sont plus lisibles avec les deux thèmes.',
+          de: 'Die Korrekturen bei Diktaten, Konjugationsübungen und anderen Übungen sind in beiden Designs leichter zu lesen.',
+          es: 'Las correcciones de los dictados, los ejercicios de conjugación y otros ejercicios se leen mejor en ambos temas.',
+          pt: 'As correções nos ditados, nos exercícios de conjugação e nos restantes exercícios são mais fáceis de ler em ambos os temas.',
+          it: 'Le correzioni nei dettati, negli esercizi di coniugazione e negli altri esercizi sono più leggibili in entrambi i temi.',
+        },
+      },
+    ],
+  },
+  {
     date: '2026-11-26',
     items: [
       {

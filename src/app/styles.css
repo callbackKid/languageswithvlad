@@ -27,6 +27,7 @@
   --ok: #3d7657;
   --ok-soft: #edf3ec;
   --bad: #d44c47;
+  --bad-text: #b63430;
   --bad-soft: #fdebec;
   --on-bad: #ffffff;
   --warn: #8f6219;
@@ -66,6 +67,7 @@
   --ok: #6bb58a;
   --ok-soft: #243d30;
   --bad: #df5452;
+  --bad-text: #f17270;
   --bad-soft: #522e2a;
   --on-bad: #ffffff;
   --warn: #e3b86f;
@@ -2078,7 +2080,7 @@ pre.source {
   color: var(--ok);
 }
 .feedback.bad {
-  color: var(--bad);
+  color: var(--bad-text);
 }
 
 .quiz-q {
@@ -2366,7 +2368,7 @@ table.conj input.accent {
   margin-top: 3px;
 }
 .fix.bad {
-  color: var(--bad);
+  color: var(--bad-text);
 }
 .fix.accent {
   color: var(--warn);
