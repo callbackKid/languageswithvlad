@@ -13,11 +13,12 @@ import {
   updateSettings,
   useSettings,
 } from '@/shared/config';
-import { app, paper, setUiLanguage, UI_LANGUAGES, useTranslation } from '@/shared/i18n';
+import { app, paper, UI_LANGUAGES, useTranslation } from '@/shared/i18n';
 import { shrinkImage } from '@/shared/lib/image';
 import { canSpeak, speak } from '@/shared/lib/speech';
 import Avatar from '@/shared/ui/Avatar';
 import { Button, Input, Select } from '@/shared/ui/controls';
+import LanguagePicker from '@/shared/ui/LanguagePicker';
 import PageHead from '@/shared/ui/PageHead';
 
 import { settingsText } from '../i18n/settings';
@@ -66,7 +67,7 @@ export interface DocumentInfo {
 
 // The student's settings: profile, document, interface, learning and the menu.
 const Settings = ({ lessonDocument }: { lessonDocument: DocumentInfo }) => {
-  const { t, language: uiLanguage } = useTranslation(settingsText);
+  const { t } = useTranslation(settingsText);
   const sectionNames = useTranslation(app);
   const tabNames = useTranslation(paper);
   const settings = useSettings();
@@ -199,21 +200,12 @@ const Settings = ({ lessonDocument }: { lessonDocument: DocumentInfo }) => {
             <label className={styles.label} htmlFor="settings-ui-language">
               {t('interfaceLanguage')}
             </label>
-            <Select
+            <LanguagePicker
               id="settings-ui-language"
               className={styles.select}
-              value={uiLanguage}
-              onChange={(event) => {
-                const chosen = UI_LANGUAGES.find((option) => option.id === event.target.value);
-                if (chosen) setUiLanguage(chosen.id);
-              }}
-            >
-              {UI_LANGUAGES.map((option) => (
-                <option key={option.id} value={option.id}>
-                  {option.flag} {option.name}
-                </option>
-              ))}
-            </Select>
+              errorClassName={styles['row-note']}
+              showTooltip={false}
+            />
           </div>
           <div className={styles.row}>
             <label className={styles.label} htmlFor="settings-translate-to">

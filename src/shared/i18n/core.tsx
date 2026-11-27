@@ -1,6 +1,9 @@
 import { Fragment, type ReactNode, useSyncExternalStore } from 'react';
+import { startupErrors } from 'virtual:interface-catalogs';
 
 import { loadText, save } from '@/shared/lib/storage';
+
+import { loadInterfaceCatalog } from './catalogs';
 
 // The language of the interface (buttons, hints, the Tutorial); translations have their own setting.
 export type UiLanguage = 'en' | 'ru' | 'fr' | 'de' | 'es' | 'pt' | 'it';
@@ -60,12 +63,24 @@ let current: UiLanguage = (() => {
 const listeners = new Set<() => void>();
 if (typeof document !== 'undefined') document.documentElement.lang = current;
 
-// Changes the interface language everywhere and keeps the choice on this device.
-export const setUiLanguage = (language: UiLanguage) => {
+export const prepareUiLanguage = () => loadInterfaceCatalog(current);
+export const getUiStartupError = () => startupErrors[current];
+
+let languageRequest = 0;
+// Keep showing the current language until the new catalog has loaded.
+export const setUiLanguage = async (language: UiLanguage): Promise<boolean> => {
+  const request = ++languageRequest;
+  try {
+    await loadInterfaceCatalog(language);
+  } catch {
+    return request !== languageRequest;
+  }
+  if (request !== languageRequest) return true;
   current = language;
   save(STORAGE_KEY, language);
   document.documentElement.lang = language;
   listeners.forEach((listener) => listener());
+  return true;
 };
 // The interface language, for code outside React.
 export const getUiLanguage = () => current;
@@ -167,7 +182,7 @@ export const translator = <Keys extends string>(
   if (cached) return cached as Translator<Keys>;
 
   const text = (key: Keys, params?: Params) =>
-    pickForm(messages[language][key] ?? messages.en[key], language, params);
+    pickForm(messages[language]?.[key] ?? messages.en?.[key], language, params);
   const created: Translator<Keys> = {
     t: (key, params) => fill(text(key, params), params),
     rich: (key, tags = {}, values = {}) => {
