@@ -1,6 +1,6 @@
+import { LATEST_NEWS_DATE } from '@/entities/news';
 import { type Language } from '@/shared/config';
 import { type UiLanguage } from '@/shared/i18n';
-import { loadText, save } from '@/shared/lib/storage';
 
 /* What changed in the app, for the News page. Add an entry here with every change students
    will notice: the newest day goes first, and every text needs all seven interface languages. */
@@ -48,7 +48,7 @@ export interface NewsDay {
 
 export const NEWS: NewsDay[] = [
   {
-    date: '2026-11-27',
+    date: LATEST_NEWS_DATE,
     items: [
       {
         kind: 'fixed',
@@ -1380,11 +1380,3 @@ export const NEWS: NewsDay[] = [
     ],
   },
 ];
-
-const LATEST = NEWS[0]?.date ?? '';
-const SEEN_KEY = 'news-seen';
-
-// Whether there is news this device hasn't opened the News page for yet.
-export const hasUnseenNews = () => (loadText(SEEN_KEY) ?? '') < LATEST;
-// Marks every News entry as seen on this device: the dot in the menu goes away.
-export const markNewsSeen = () => save(SEEN_KEY, LATEST);

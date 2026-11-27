@@ -131,4 +131,4 @@ Prettier decides: 100 columns, single quotes, semicolons, trailing commas where 
 3. Type bad input into every changed form field.
 4. New text: all seven interface languages filled in, and it reads naturally in each.
 5. New feature: a line in the README, a guide or step in the Tutorial, and its item removed from TODO.md.
-6. A change students will notice: an entry for today in `src/entities/news/model/news.ts`, so it shows on the News page.
+6. A change students will notice: an entry for today in `src/pages/news/model/news.ts`, so it shows on the News page.

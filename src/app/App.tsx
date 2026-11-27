@@ -19,7 +19,6 @@ import { Home } from '@/pages/home';
 import { Lessons } from '@/pages/lessons';
 import { Mistakes } from '@/pages/mistakes';
 import { MyWords } from '@/pages/my-words';
-import { News } from '@/pages/news';
 import { PhotoSection } from '@/pages/photo';
 import { Settings } from '@/pages/settings';
 import { Stats } from '@/pages/stats';
@@ -48,7 +47,7 @@ import { WordActions } from '@/widgets/word-menu';
 import { useDocumentSync } from './model/useDocumentSync';
 import TooltipLayer from './TooltipLayer';
 
-const TutorialUnavailable = () => {
+const PageUnavailable = () => {
   const { t } = useTranslation(common);
   return (
     <div className="note err" role="alert">
@@ -58,10 +57,23 @@ const TutorialUnavailable = () => {
   );
 };
 
+const PageLoading = ({ title }: { title: string }) => (
+  <p className="hint" role="status">
+    <span className="spinner" aria-hidden="true" /> {title}…
+  </p>
+);
+
+const News = lazy(() =>
+  import('@/pages/news').then(
+    ({ News }) => ({ default: News }),
+    () => ({ default: PageUnavailable })
+  )
+);
+
 const Tutorial = lazy(() =>
   import('@/pages/tutorial').then(
     ({ Tutorial }) => ({ default: Tutorial }),
-    () => ({ default: TutorialUnavailable })
+    () => ({ default: PageUnavailable })
   )
 );
 
@@ -449,13 +461,7 @@ const App = ({ initialDocId }: { initialDocId: string | null }) => {
                 />
               )}
               {section === 'tutorial' && (
-                <Suspense
-                  fallback={
-                    <p className="hint" role="status">
-                      <span className="spinner" aria-hidden="true" /> {t('section.tutorial')}…
-                    </p>
-                  }
-                >
+                <Suspense fallback={<PageLoading title={t('section.tutorial')} />}>
                   <Tutorial />
                 </Suspense>
               )}
@@ -474,7 +480,11 @@ const App = ({ initialDocId }: { initialDocId: string | null }) => {
                 <PhotoSection hasClaude={hasClaude} target={docTarget} lessons={lessons} />
               )}
               {section === 'text' && <Reader hasClaude={hasClaude} />}
-              {section === 'news' && <News onSeen={newsSeen} />}
+              {section === 'news' && (
+                <Suspense fallback={<PageLoading title={t('section.news')} />}>
+                  <News onSeen={newsSeen} />
+                </Suspense>
+              )}
             </main>
           )}
         </div>

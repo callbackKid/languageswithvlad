@@ -1,14 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import {
-  markNewsSeen,
-  NEWS,
-  NEWS_AUDIENCES,
-  NEWS_TABS,
-  type NewsAudience,
-  newsFor,
-  type NewsTab,
-} from '@/entities/news';
+import { markNewsSeen } from '@/entities/news';
 import { type Language, useSettings, useTeacher } from '@/shared/config';
 import { app, learning, useTranslation } from '@/shared/i18n';
 import { useTabs } from '@/shared/lib/useTabs';
@@ -16,6 +8,14 @@ import { Button, Select } from '@/shared/ui/controls';
 import PageHead from '@/shared/ui/PageHead';
 
 import { newsText } from '../i18n/news';
+import {
+  NEWS,
+  NEWS_AUDIENCES,
+  NEWS_TABS,
+  type NewsAudience,
+  newsFor,
+  type NewsTab,
+} from '../model/news';
 import styles from './News.module.css';
 
 /** What changed in the app, by day: new features and fixes on two tabs, for one of the student's
