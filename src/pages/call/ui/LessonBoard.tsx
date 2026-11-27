@@ -1,6 +1,6 @@
 import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react';
 
-import { type BoardPeer, type BoardServer } from '@/shared/api';
+import { type BoardPeer, type BoardServer, loadBoardSharing } from '@/shared/api';
 import { isDark, useSettings } from '@/shared/config';
 import { call, useTranslation } from '@/shared/i18n';
 import CallCard from '@/shared/ui/CallCard';
@@ -143,7 +143,14 @@ const LessonBoard = ({
         </div>
       ) : (
         <div className="row-actions">
-          <Button variant="primary" onClick={() => setIsOpen(true)}>
+          <Button
+            variant="primary"
+            onClick={() => {
+              // Start the SDK and canvas downloads together on shared boards.
+              if (server?.url) void loadBoardSharing().catch(() => undefined);
+              setIsOpen(true);
+            }}
+          >
             {t('openBoard')}
           </Button>
         </div>

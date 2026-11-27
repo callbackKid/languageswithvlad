@@ -393,10 +393,84 @@ contain code used by drawing, exports, saved boards, localization, and live shar
   `page.coverage`. Use the innermost V8 range counts to classify coverage and
   convert the generated script spans to UTF-8 bytes.
 
-The first follow-up is to try importing Supabase on demand when the board has a
-sharing server, then compare both standalone and live-board opens. The renderer
-itself is mostly Excalidraw. Splitting the existing renderer file alone offers
-little transfer savings if the blank board still requests the same code.
+The renderer itself is mostly Excalidraw. Splitting the existing renderer file
+alone offers little transfer savings if the blank board still requests the same
+code. Supabase is a separate dependency with a clear condition for loading it.
+
+## Load Supabase only for shared boards
+
+Standalone boards skip the Supabase SDK. Opening a configured shared board starts the SDK
+download alongside the renderer, and attaches the connection after the SDK is ready. Leaving
+while it loads cancels the pending attachment. A failed SDK load leaves the canvas available
+for local drawing and PNG export.
+
+### Instruments and reproduction
+
+- Build the baseline at `1c533b8` and the split variant with Node.js 22.19.0 and Vite 5.3.4.
+  Serve both builds with loopback HTTP and `node:zlib` gzip. Reuse the same fixture lesson,
+  and include a test board server in `/api/health` for shared runs. Use Supabase JS 2.118.0.
+- Use Chrome 158.0.8127.89 driven by Playwright Core 1.48.2 at 1280 × 900, English, and
+  light theme. Start from a fresh context with the HTTP cache disabled. After Lesson space
+  settles, set CDP network shaping to 1.6 Mbps down, 0.75 Mbps up, and 150 ms latency.
+  Open the board in five pairs per configuration, alternating build order. Count
+  first-party `/assets/` bodies from Resource Timing `encodedBodySize`, excluding HTTP
+  headers, the HTML document, API responses, and external fonts. Mark the next animation
+  frame after the canvas has a nonzero size. For shared runs also mark when the peer
+  status shows the fixture peer.
+- Playwright intercepts the Supabase WebSocket locally. The fixture acknowledges the channel
+  join, supplies local and remote presence, and records outbound drawing messages. This
+  verifies the browser client handshake and measures fixture presence. Real server latency,
+  two-device sync across production infrastructure, and external fonts are outside the capture.
+
+### Results
+
+| Open action | Baseline JavaScript (gzip bytes) | Split JavaScript (gzip bytes) |       Difference |
+| ----------- | -------------------------------: | ----------------------------: | ---------------: |
+| Standalone  |                          436,885 |                       377,766 | −59,119 (−13.5%) |
+| Shared      |                          436,885 |                       438,252 |   +1,367 (+0.3%) |
+
+The full first-party asset totals were 520,835 → 461,716 bytes for a standalone open
+and 520,835 → 522,202 bytes for a shared open. The board wrapper shrank from 60,792
+to 1,681 gzip bytes. The new 60,486-byte Supabase chunk (`index-BbFRdJz9.js`) appeared
+only after opening a configured shared board. The renderer changed by 8 gzip bytes
+(373,388 → 373,380). Starting Lesson space increased the entry from 150,484 to 150,989
+gzip bytes (+505), with the same CSS and English catalog. Combining the entry
+difference and the open action, the standalone path still saved 58,614 bytes.
+
+| Slower-network metric          | Baseline median (ms) | Split median (ms) | Median paired change (ms) |
+| ------------------------------ | -------------------: | ----------------: | ------------------------: |
+| Standalone, first canvas frame |                2,523 |             2,228 |                      −295 |
+| Shared, first canvas frame     |                2,530 |             2,542 |                       +12 |
+| Shared, fixture peer shown     |                2,529 |             2,544 |                       +15 |
+
+The Supabase request began 1 ms after the click in each timed shared trial. Changes
+in shared timings are small relative to the 2.5 s open. These timings cover the
+observed local fixture only.
+
+<details>
+<summary>All paired timing samples (milliseconds after click)</summary>
+
+| Configuration | Pair | Baseline canvas | Split canvas | Baseline peer | Split peer |
+| ------------- | ---: | --------------: | -----------: | ------------: | ---------: |
+| Standalone    |    1 |            2516 |         2228 |             — |          — |
+| Standalone    |    2 |            2522 |         2228 |             — |          — |
+| Standalone    |    3 |            2523 |         2228 |             — |          — |
+| Standalone    |    4 |            2529 |         2231 |             — |          — |
+| Standalone    |    5 |            2528 |         2228 |             — |          — |
+| Shared        |    1 |            2531 |         2550 |          2530 |       2552 |
+| Shared        |    2 |            2529 |         2518 |          2527 |       2520 |
+| Shared        |    3 |            2530 |         2542 |          2529 |       2544 |
+| Shared        |    4 |            2529 |         2546 |          2527 |       2548 |
+| Shared        |    5 |            2531 |         2539 |          2530 |       2541 |
+
+</details>
+
+Browser checks verified local drawing and PNG export, the shared channel join and
+drawing broadcast, local operation after blocking the SDK, and no channel join when
+leaving Lesson space during the SDK download. Two tabs under Vite dev discovered
+each other through `BroadcastChannel`, reflected one tab leaving, and skipped the
+Supabase download. At 390 px, axe-core reported the same missing accessible name on
+Excalidraw's menu in both builds and both themes.
 
 ## Instruments and reproduction
 

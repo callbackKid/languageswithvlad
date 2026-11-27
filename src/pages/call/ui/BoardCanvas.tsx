@@ -128,79 +128,100 @@ const BoardCanvas = ({
   const serverUrl = server?.url ?? '';
   const serverKey = server?.key ?? '';
   useEffect(() => {
-    const connection = connectBoard(
-      serverUrl ? { url: serverUrl, key: serverKey } : null,
-      room,
-      name
-    );
-    connectionRef.current = connection;
-    if (!connection) return;
+    const controller = new AbortController();
+    const { signal } = controller;
     const sharedVersions = shared.current;
     const knownFiles = sentFiles.current;
     const pointers = collaborators.current;
-    connection.on('elements', (payload) => {
-      const instance = api.current;
-      if (!instance) return;
-      // shapes from the others, in Excalidraw's own format, the malformed ones left out
-      const shared = asSharedElements(payload.elements);
-      if (!shared.length) return;
-      // checked for what reconcileElements reads (id, type, version) on the line above
-      const remote = shared as unknown as RemoteElements;
-      for (const element of remote)
-        sharedVersions.set(
-          element.id,
-          Math.max(sharedVersions.get(element.id) ?? -1, element.version)
-        );
-      instance.updateScene({
-        elements: reconcileElements(
-          instance.getSceneElementsIncludingDeleted(),
-          remote,
-          instance.getAppState()
-        ),
-        // someone else's strokes don't go on this person's undo stack
-        captureUpdate: CaptureUpdateAction.NEVER,
+
+    const attach = (connection: BoardConnection | null) => {
+      if (!connection) return;
+      if (signal.aborted) {
+        connection.close();
+        return;
+      }
+      connectionRef.current = connection;
+      connection.on('elements', (payload) => {
+        const instance = api.current;
+        if (!instance) return;
+        // shapes from the others, in Excalidraw's own format, the malformed ones left out
+        const shared = asSharedElements(payload.elements);
+        if (!shared.length) return;
+        // checked for what reconcileElements reads (id, type, version) on the line above
+        const remote = shared as unknown as RemoteElements;
+        for (const element of remote)
+          sharedVersions.set(
+            element.id,
+            Math.max(sharedVersions.get(element.id) ?? -1, element.version)
+          );
+        instance.updateScene({
+          elements: reconcileElements(
+            instance.getSceneElementsIncludingDeleted(),
+            remote,
+            instance.getAppState()
+          ),
+          // someone else's strokes don't go on this person's undo stack
+          captureUpdate: CaptureUpdateAction.NEVER,
+        });
       });
-    });
-    connection.on('files', (payload) => {
-      const files = asSharedFiles(payload.files);
-      if (!files.length) return;
-      for (const file of files) knownFiles.add(file.id);
-      api.current?.addFiles(files);
-    });
-    // a newcomer gets the whole board
-    connection.on('hello', () => sendChanges(true));
-    connection.on('pointer', (payload) => {
-      const instance = api.current;
-      const sender = typeof payload.from === 'string' ? payload.from : '';
-      if (!instance || !sender) return;
-      // a socket id is any non-empty text, which the check above proves
-      const from = sender as SocketId;
-      pointers.set(from, {
-        pointer: asPointer(payload.pointer),
-        button: asPointerButton(payload.button),
-        username: String(payload.name ?? ''),
-        id: from,
+      connection.on('files', (payload) => {
+        const files = asSharedFiles(payload.files);
+        if (!files.length) return;
+        for (const file of files) knownFiles.add(file.id);
+        api.current?.addFiles(files);
       });
-      instance.updateScene({ collaborators: new Map(pointers) });
-    });
-    connection.onPeers((peers) => {
-      onPeers(peers);
-      // the pointers of people who left disappear
-      const here = new Set<string>(peers.map((peer) => peer.id));
-      for (const id of pointers.keys()) if (!here.has(id)) pointers.delete(id);
-      api.current?.updateScene({ collaborators: new Map(pointers) });
-    });
-    connection.onStatus((status) => {
-      if (status === 'live') connection.send('hello', {});
-    });
-    connection.start();
-    return () => {
+      // a newcomer gets the whole board
+      connection.on('hello', () => sendChanges(true));
+      connection.on('pointer', (payload) => {
+        const instance = api.current;
+        const sender = typeof payload.from === 'string' ? payload.from : '';
+        if (!instance || !sender) return;
+        // a socket id is any non-empty text, which the check above proves
+        const from = sender as SocketId;
+        pointers.set(from, {
+          pointer: asPointer(payload.pointer),
+          button: asPointerButton(payload.button),
+          username: String(payload.name ?? ''),
+          id: from,
+        });
+        instance.updateScene({ collaborators: new Map(pointers) });
+      });
+      connection.onPeers((peers) => {
+        if (signal.aborted) return;
+        onPeers(peers);
+        // the pointers of people who left disappear
+        const here = new Set<string>(peers.map((peer) => peer.id));
+        for (const id of pointers.keys()) if (!here.has(id)) pointers.delete(id);
+        api.current?.updateScene({ collaborators: new Map(pointers) });
+      });
+      connection.onStatus((status) => {
+        if (!signal.aborted && status === 'live') connection.send('hello', {});
+      });
+      connection.start();
+    };
+
+    const stop = () => {
       window.clearTimeout(sendTimer.current);
-      connection.close();
+      sendTimer.current = undefined;
+      const connection = connectionRef.current;
       connectionRef.current = null;
+      connection?.close();
       sharedVersions.clear();
       knownFiles.clear();
       pointers.clear();
+    };
+
+    void connectBoard(serverUrl ? { url: serverUrl, key: serverKey } : null, room, name, signal)
+      .then(attach)
+      .catch(() => {
+        if (signal.aborted) return;
+        stop();
+        onPeers([]);
+      });
+
+    return () => {
+      controller.abort();
+      stop();
     };
   }, [serverUrl, serverKey, room, name, sendChanges, onPeers]);
 

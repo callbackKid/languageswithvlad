@@ -10,7 +10,7 @@
    - "pointer":  where someone's pointer is, to draw it with their name.
    Who is on the board comes from presence. */
 
-import { createClient, type RealtimeChannel } from '@supabase/supabase-js';
+import type { RealtimeChannel } from '@supabase/supabase-js';
 
 // Where the board is shared: the Supabase project, from /api/health.
 export interface BoardServer {
@@ -42,8 +42,15 @@ export interface BoardConnection {
 
 const randomId = () => Math.random().toString(36).slice(2, 10);
 
+export const loadBoardSharing = () => import('@supabase/supabase-js');
+
 // A room on Supabase Realtime: works between any two devices.
-const supabaseConnection = (server: BoardServer, room: string, name: string): BoardConnection => {
+const supabaseConnection = (
+  createClient: Awaited<ReturnType<typeof loadBoardSharing>>['createClient'],
+  server: BoardServer,
+  room: string,
+  name: string
+): BoardConnection => {
   const id = randomId();
   const client = createClient(server.url, server.key, {
     auth: { persistSession: false, autoRefreshToken: false },
@@ -147,12 +154,16 @@ const localConnection = (room: string, name: string): BoardConnection => {
 };
 
 // Opens a board room: through Supabase when it's set up, between tabs in development, or null.
-export const connectBoard = (
+export const connectBoard = async (
   server: BoardServer | null,
   room: string,
-  name: string
-): BoardConnection | null => {
-  if (server) return supabaseConnection(server, room, name);
+  name: string,
+  signal: AbortSignal
+): Promise<BoardConnection | null> => {
+  if (server) {
+    const { createClient } = await loadBoardSharing();
+    return signal.aborted ? null : supabaseConnection(createClient, server, room, name);
+  }
   if (import.meta.env.DEV && typeof BroadcastChannel !== 'undefined')
     return localConnection(room, name);
   return null;
