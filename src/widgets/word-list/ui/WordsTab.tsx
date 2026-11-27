@@ -31,7 +31,7 @@ import { useTranslationLanguage } from '@/shared/config';
 import { common, exercises, useTranslation } from '@/shared/i18n';
 import { canSpeak, unlockSpeech } from '@/shared/lib/speech';
 import { downloadText } from '@/shared/lib/util';
-import { Button, IconButton } from '@/shared/ui/controls';
+import { Button, IconButton, Select } from '@/shared/ui/controls';
 import InlineConfirm from '@/shared/ui/InlineConfirm';
 import Speak from '@/shared/ui/Speak';
 
@@ -301,7 +301,7 @@ const WordsTab = ({
           onChange={(event) => setFilter(event.target.value)}
         />
         {hasGroups && (
-          <select
+          <Select
             aria-label={t('groupFilter')}
             value={
               group === null ? '' : String(groups.findIndex((listed) => listed.name === group))
@@ -320,7 +320,7 @@ const WordsTab = ({
                 })}
               </option>
             ))}
-          </select>
+          </Select>
         )}
       </div>
       {hasSmallGroup && (

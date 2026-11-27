@@ -15,7 +15,7 @@ import {
   type VerbLanguage,
 } from '@/shared/config';
 import { common, learning, useTranslation } from '@/shared/i18n';
-import { Button, IconButton } from '@/shared/ui/controls';
+import { Button, IconButton, Select } from '@/shared/ui/controls';
 
 import { settingsText } from '../i18n/settings';
 import styles from './Settings.module.css';
@@ -86,7 +86,7 @@ const LearningCard = () => {
                 <b>{name}</b>
                 <label className={styles.level}>
                   {t('level')}
-                  <select
+                  <Select
                     value={level}
                     onChange={(event) => {
                       const chosen = LEVELS.find((option) => option === event.target.value);
@@ -99,7 +99,7 @@ const LearningCard = () => {
                         {option}
                       </option>
                     ))}
-                  </select>
+                  </Select>
                 </label>
                 {/* the last language stays: there is nothing to practise without one */}
                 {settings.studying.length > 1 && (
@@ -231,7 +231,7 @@ const AddLanguage = ({ choices, onDone }: { choices: Language[]; onDone: () => v
       <div className={styles['add-fields']}>
         <label className="form-field">
           <span>{t('newLanguage')}</span>
-          <select
+          <Select
             value={language}
             onChange={(event) => {
               const chosen = choices.find((option) => option === event.target.value);
@@ -246,11 +246,11 @@ const AddLanguage = ({ choices, onDone }: { choices: Language[]; onDone: () => v
                 {names.t(`name.${option}`)}
               </option>
             ))}
-          </select>
+          </Select>
         </label>
         <label className="form-field">
           <span>{t('level')}</span>
-          <select
+          <Select
             value={level}
             onChange={(event) => {
               const chosen = LEVELS.find((option) => option === event.target.value);
@@ -262,7 +262,7 @@ const AddLanguage = ({ choices, onDone }: { choices: Language[]; onDone: () => v
                 {option}
               </option>
             ))}
-          </select>
+          </Select>
         </label>
       </div>
       {verbLanguage && (

@@ -2,7 +2,7 @@ import { type FormEvent, useRef, useState } from 'react';
 
 import { type Language, useSettings } from '@/shared/config';
 import { learning, useTranslation, wordActions } from '@/shared/i18n';
-import { Button } from '@/shared/ui/controls';
+import { Button, Select } from '@/shared/ui/controls';
 
 import { cleanSelection, lookUp, menuPlace } from '../model/wordActions';
 
@@ -46,7 +46,7 @@ const LookUpWord = () => {
         spellCheck={false}
       />
       {studying.length > 1 && (
-        <select
+        <Select
           aria-label={t('lookUpLanguage')}
           value={language}
           onChange={(event) => {
@@ -59,7 +59,7 @@ const LookUpWord = () => {
               {names.t(`name.${candidate}`)}
             </option>
           ))}
-        </select>
+        </Select>
       )}
       <Button type="submit" variant="primary" disabled={!word}>
         {t('lookUp')}

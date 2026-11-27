@@ -4,7 +4,7 @@ import { type Lesson } from '@/entities/lesson';
 import { api, ApiError } from '@/shared/api';
 import { common, useTranslation } from '@/shared/i18n';
 import { documentDate } from '@/shared/lib/dates';
-import { Button } from '@/shared/ui/controls';
+import { Button, Select } from '@/shared/ui/controls';
 
 // Where new lessons go: the connected document, the lesson number to use next, and whether the server can write.
 export interface DocTarget {
@@ -73,7 +73,7 @@ const AddToDoc = ({
       {lessons.length > 0 && (
         <label className="add-to-doc-place">
           <span>{t('addWhere')}</span>
-          <select
+          <Select
             value={place}
             disabled={state === 'saving' || state === 'done'}
             onChange={(event) => setPlace(event.target.value)}
@@ -87,7 +87,7 @@ const AddToDoc = ({
                 })}
               </option>
             ))}
-          </select>
+          </Select>
         </label>
       )}
       <Button disabled={state === 'saving' || state === 'done' || !lines.length} onClick={add}>

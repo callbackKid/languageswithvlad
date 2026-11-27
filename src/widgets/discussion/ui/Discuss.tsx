@@ -13,7 +13,7 @@ import {
 import { common, learning, talk, useTranslation } from '@/shared/i18n';
 import { asFields, load, loadChecked, save } from '@/shared/lib/storage';
 import { shownTopic } from '@/shared/lib/util';
-import { Button, IconButton } from '@/shared/ui/controls';
+import { Button, IconButton, Select } from '@/shared/ui/controls';
 import PageHead from '@/shared/ui/PageHead';
 import Speak from '@/shared/ui/Speak';
 import WaitingFact from '@/shared/ui/WaitingFact';
@@ -314,7 +314,7 @@ const TopicSelect = ({
   return (
     <label className={'discuss-field' + (dimmed ? ' dimmed' : '')}>
       <span>{label}</span>
-      <select value={value} onChange={(event) => onChange(event.target.value)}>
+      <Select value={value} onChange={(event) => onChange(event.target.value)}>
         {noneLabel !== undefined && <option value="">{noneLabel}</option>}
         {options.map((option) => (
           <option key={option} value={option}>
@@ -331,7 +331,7 @@ const TopicSelect = ({
           </optgroup>
         )}
         {allowCustom && <option value={CUSTOM}>{t('other')}</option>}
-      </select>
+      </Select>
       {value === CUSTOM && (
         <input
           type="text"
@@ -464,7 +464,7 @@ const Discuss = ({
           >
             <label className="discuss-field">
               <span>{t('language')}</span>
-              <select
+              <Select
                 value={language}
                 onChange={(event) => {
                   const next = event.target.value as Language;
@@ -482,7 +482,7 @@ const Discuss = ({
                     {names.t(`name.${code}`)}
                   </option>
                 ))}
-              </select>
+              </Select>
             </label>
             <div className="discuss-field">
               <span>{t('level')}</span>

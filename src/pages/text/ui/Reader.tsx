@@ -7,7 +7,7 @@ import { api, ApiError } from '@/shared/api';
 import { getSettings, type Language, useTranslationLanguage } from '@/shared/config';
 import { common, translator, useTranslation } from '@/shared/i18n';
 import { asList, load, save } from '@/shared/lib/storage';
-import { Button } from '@/shared/ui/controls';
+import { Button, Select } from '@/shared/ui/controls';
 import InlineConfirm from '@/shared/ui/InlineConfirm';
 import PageHead from '@/shared/ui/PageHead';
 import Speak from '@/shared/ui/Speak';
@@ -308,7 +308,7 @@ const Reader = ({ hasClaude }: { hasClaude: boolean }) => {
         <>
           <div className="row-actions lead">
             {texts.length > 1 && (
-              <select
+              <Select
                 className="reader-select"
                 aria-label={t('savedTexts')}
                 value={current.id}
@@ -319,7 +319,7 @@ const Reader = ({ hasClaude }: { hasClaude: boolean }) => {
                     {entry.title}
                   </option>
                 ))}
-              </select>
+              </Select>
             )}
             <Button onClick={() => open(null)}>{t('newText')}</Button>
             <Button

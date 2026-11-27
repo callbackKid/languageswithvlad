@@ -12,7 +12,7 @@ import {
 import { type Language, useSettings, useTeacher } from '@/shared/config';
 import { app, learning, useTranslation } from '@/shared/i18n';
 import { useTabs } from '@/shared/lib/useTabs';
-import { Button } from '@/shared/ui/controls';
+import { Button, Select } from '@/shared/ui/controls';
 import PageHead from '@/shared/ui/PageHead';
 
 import { newsText } from '../i18n/news';
@@ -67,7 +67,7 @@ const News = ({ onSeen }: { onSeen: () => void }) => {
         {studying.length > 1 && (
           <label className="news-filter">
             <span>{t('filterLanguage')}</span>
-            <select
+            <Select
               value={shownLanguage}
               onChange={(event) => {
                 const value = event.target.value;
@@ -80,7 +80,7 @@ const News = ({ onSeen }: { onSeen: () => void }) => {
                   {names.t(`name.${language}`)}
                 </option>
               ))}
-            </select>
+            </Select>
           </label>
         )}
         {isTeacher && (

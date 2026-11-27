@@ -11,7 +11,7 @@ import {
 } from '@/shared/config';
 import { common, translator, useTranslation } from '@/shared/i18n';
 import { loadChecked, save } from '@/shared/lib/storage';
-import { Button } from '@/shared/ui/controls';
+import { Button, Select } from '@/shared/ui/controls';
 import WaitingFact from '@/shared/ui/WaitingFact';
 
 import { makeExerciseText } from '../i18n/makeExercise';
@@ -139,13 +139,13 @@ const MakeExercise = ({
           </div>
           <label className="make-exercise-count">
             <span>{t('count')}</span>
-            <select value={count} onChange={(event) => setCount(Number(event.target.value))}>
+            <Select value={count} onChange={(event) => setCount(Number(event.target.value))}>
               {QUESTION_COUNTS.map((option) => (
                 <option key={option} value={option}>
                   {option}
                 </option>
               ))}
-            </select>
+            </Select>
           </label>
         </div>
         {!canMake && <p className="hint">{t('pickSomething')}</p>}

@@ -17,7 +17,7 @@ import { app, paper, setUiLanguage, UI_LANGUAGES, useTranslation } from '@/share
 import { shrinkImage } from '@/shared/lib/image';
 import { canSpeak, speak } from '@/shared/lib/speech';
 import Avatar from '@/shared/ui/Avatar';
-import { Button } from '@/shared/ui/controls';
+import { Button, Select } from '@/shared/ui/controls';
 import PageHead from '@/shared/ui/PageHead';
 
 import { settingsText } from '../i18n/settings';
@@ -199,7 +199,7 @@ const Settings = ({ lessonDocument }: { lessonDocument: DocumentInfo }) => {
             <label className={styles.label} htmlFor="settings-ui-language">
               {t('interfaceLanguage')}
             </label>
-            <select
+            <Select
               id="settings-ui-language"
               className={styles.select}
               value={uiLanguage}
@@ -213,13 +213,13 @@ const Settings = ({ lessonDocument }: { lessonDocument: DocumentInfo }) => {
                   {option.flag} {option.name}
                 </option>
               ))}
-            </select>
+            </Select>
           </div>
           <div className={styles.row}>
             <label className={styles.label} htmlFor="settings-translate-to">
               {t('translateTo')}
             </label>
-            <select
+            <Select
               id="settings-translate-to"
               className={styles.select}
               value={settings.translateTo}
@@ -234,7 +234,7 @@ const Settings = ({ lessonDocument }: { lessonDocument: DocumentInfo }) => {
                   {option.flag} {option.name}
                 </option>
               ))}
-            </select>
+            </Select>
             <small className={`hint ${styles['row-note']}`}>{t('translateToHint')}</small>
           </div>
           {/* always on the page, so a screen reader reads the note when it appears */}

@@ -13,7 +13,7 @@ import {
   useTranslation,
 } from '@/shared/i18n';
 import { load, save } from '@/shared/lib/storage';
-import { Button } from '@/shared/ui/controls';
+import { Button, Select } from '@/shared/ui/controls';
 import WaitingFact from '@/shared/ui/WaitingFact';
 
 import {
@@ -116,7 +116,7 @@ const MakeHomework = ({
             <div className="make-homework-options">
               <label className="form-field">
                 <span>{t('makeSentences')}</span>
-                <select
+                <Select
                   value={sentences}
                   onChange={(event) => setSentences(Number(event.target.value))}
                 >
@@ -125,11 +125,11 @@ const MakeHomework = ({
                       {count}
                     </option>
                   ))}
-                </select>
+                </Select>
               </label>
               <label className="form-field">
                 <span>{t('makeLevel')}</span>
-                <select
+                <Select
                   value={level}
                   onChange={(event) =>
                     setLevel(
@@ -144,11 +144,11 @@ const MakeHomework = ({
                       {choice}
                     </option>
                   ))}
-                </select>
+                </Select>
               </label>
               <label className="form-field">
                 <span>{t('makeTranslateTo')}</span>
-                <select
+                <Select
                   value={translateTo}
                   onChange={(event) => {
                     const chosen = UI_LANGUAGES.find((option) => option.id === event.target.value);
@@ -162,7 +162,7 @@ const MakeHomework = ({
                       {option.flag} {option.name}
                     </option>
                   ))}
-                </select>
+                </Select>
               </label>
             </div>
           )}

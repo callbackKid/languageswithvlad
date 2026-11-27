@@ -9,7 +9,7 @@ import { asObjectText } from '@/shared/lib/json';
 import { extractPages, MAX_PDF_PAGES, pdfPageCount } from '@/shared/lib/pdf';
 import { asFields, asList, load, save } from '@/shared/lib/storage';
 import { hash } from '@/shared/lib/util';
-import { Button } from '@/shared/ui/controls';
+import { Button, Select } from '@/shared/ui/controls';
 import InlineConfirm from '@/shared/ui/InlineConfirm';
 import WaitingFact from '@/shared/ui/WaitingFact';
 import { LessonView } from '@/widgets/lesson-view';
@@ -229,7 +229,7 @@ const HandwrittenNotes = ({
           )}
         </label>
         {entries.length > 1 && (
-          <select
+          <Select
             aria-label={t('savedNotes')}
             value={currentId ?? ''}
             onChange={(event) => {
@@ -242,7 +242,7 @@ const HandwrittenNotes = ({
                 {entry.title || `${name} ${entries.length - position}`}
               </option>
             ))}
-          </select>
+          </Select>
         )}
       </div>
       {pdf && state !== 'loading' && (
