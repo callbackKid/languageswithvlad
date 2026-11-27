@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import {
   findCall,
@@ -24,7 +24,6 @@ import { PhotoSection } from '@/pages/photo';
 import { Settings } from '@/pages/settings';
 import { Stats } from '@/pages/stats';
 import { Reader } from '@/pages/text';
-import { Tutorial } from '@/pages/tutorial';
 import { api, type BoardServer } from '@/shared/api';
 import {
   applyTeacherHealth,
@@ -34,12 +33,12 @@ import {
   SECTIONS,
   useSettings,
 } from '@/shared/config';
-import { app, type Translator, useTranslation } from '@/shared/i18n';
+import { app, common, type Translator, useTranslation } from '@/shared/i18n';
 import { followLink, hrefFor, navigate, usePath } from '@/shared/lib/router';
 import { stopSpeaking } from '@/shared/lib/speech';
 import { load, loadText, remove, save } from '@/shared/lib/storage';
 import Avatar from '@/shared/ui/Avatar';
-import { IconButton } from '@/shared/ui/controls';
+import { Button, IconButton } from '@/shared/ui/controls';
 import SpeechNote from '@/shared/ui/SpeechNote';
 import { Discuss } from '@/widgets/discussion';
 import { Feedback } from '@/widgets/feedback';
@@ -48,6 +47,23 @@ import { WordActions } from '@/widgets/word-menu';
 
 import { useDocumentSync } from './model/useDocumentSync';
 import TooltipLayer from './TooltipLayer';
+
+const TutorialUnavailable = () => {
+  const { t } = useTranslation(common);
+  return (
+    <div className="note err" role="alert">
+      <p>{t('somethingWrong')}</p>
+      <Button onClick={() => window.location.reload()}>{t('tryAgain')}</Button>
+    </div>
+  );
+};
+
+const Tutorial = lazy(() =>
+  import('@/pages/tutorial').then(
+    ({ Tutorial }) => ({ default: Tutorial }),
+    () => ({ default: TutorialUnavailable })
+  )
+);
 
 const ago = (timestamp: number, { t, locale }: Translator<keyof (typeof app)['en']>): string => {
   const minutes = Math.round((Date.now() - timestamp) / 60000);
@@ -432,7 +448,17 @@ const App = ({ initialDocId }: { initialDocId: string | null }) => {
                   canWrite={!!docTarget.docWriter}
                 />
               )}
-              {section === 'tutorial' && <Tutorial />}
+              {section === 'tutorial' && (
+                <Suspense
+                  fallback={
+                    <p className="hint" role="status">
+                      <span className="spinner" aria-hidden="true" /> {t('section.tutorial')}…
+                    </p>
+                  }
+                >
+                  <Tutorial />
+                </Suspense>
+              )}
               {section === 'settings' && (
                 <Settings
                   lessonDocument={{
