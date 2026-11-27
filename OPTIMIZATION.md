@@ -211,10 +211,76 @@ apply to a single run of the relevant action. The five warnings correspond to
   showed its join error in both runs. Both fetched the same SDK chunk. A successful call's
   media and other vendor requests are outside the fixture measurement.
 
-A focused follow-up is to measure the trade-off of waiting for the Zoom signature before starting
-the SDK download. That could save 992,470 bytes on failed joins, while a successful join would
-lose the current parallel fetch. For the board, profile the blank-board path first. The largest
-renderer chunk accounts for about 85% of the JavaScript fetched by that action.
+The largest board renderer accounts for about 85% of the JavaScript fetched on blank-board
+open. Profile that path first when investigating board startup.
+
+## Zoom signature ordering benchmark
+
+This comparison uses two local variants of the production build. The parallel variant starts
+the SDK download and signature request together. The gated variant waits for a successful
+signature response before importing the SDK. Both variants stop at the point just before
+creating the Zoom client. The measurement covers readiness to initialize the SDK. A live
+meeting, provider media requests, and warm-cache joins are outside this benchmark.
+
+### Instruments and reproduction
+
+- Serve the production assets from `2f65c81` using Node.js 22.19.0 and `node:zlib` gzip.
+  In memory, replace the compiled join expression in the app entry for each variant. Keep
+  the same SDK chunk, and mark readiness immediately after the signature and dynamic import
+  have both resolved. Return before `createClient()` so the fixture makes no Zoom requests.
+- Use Chrome 158.0.8127.89 and Playwright Core 1.48.2 at 1280 × 900, English, and light theme.
+  Reuse the browser skill's lesson fixture with a fake Zoom link and Zoom enabled. Use a fresh
+  context for every trial and disable caching via CDP. Wait for Lesson space to settle before
+  applying network shaping with `Network.emulateNetworkConditions`. Leave CPU throttling off.
+- Mark the **Join here** click with `performance.mark()` and report the elapsed milliseconds
+  to readiness. Use Resource Timing to check when the signature response finished and when
+  the SDK request started. Count SDK response-body bytes with `encodedBodySize`. The local API
+  waits 400 ms before returning an accepted placeholder signature, and returns an immediate
+  HTTP 403 in the rejection case. Run one unthrottled warm-up per variant, then seven pairs
+  per network profile with alternating order.
+
+### Results
+
+Waiting for the signature saved **992,470 gzip bytes** in the rejected trial and added
+**409–414 ms** to the median paired time to SDK readiness when the 400 ms fixture
+signature was accepted. In every accepted trial, both variants downloaded 992,470 SDK bytes.
+
+| Network profile                                       | Parallel median (ms) | Wait for signature median (ms) | Median of paired changes (ms) |
+| ----------------------------------------------------- | -------------------: | -----------------------------: | ----------------------------: |
+| Slower, 1.6 Mbps down / 0.75 Mbps up / 150 ms latency |                5,237 |                          5,651 |                          +414 |
+| Faster, 15 Mbps down / 5 Mbps up / 40 ms latency      |                  691 |                          1,100 |                          +409 |
+
+The faster-profile 403 reached the browser 58 ms after the click in the parallel run and
+54 ms in the gated run. Both displayed the join error. The parallel variant began the SDK
+request at 5 ms and that transfer completed despite the rejection. The gated variant sent
+zero SDK requests.
+
+<details>
+<summary>All accepted-signature timing samples (milliseconds after click)</summary>
+
+| Profile | Pair | Parallel ready | Gated ready | Gated minus parallel | Parallel SDK start / signature end | Gated SDK start / signature end |
+| ------- | ---: | -------------: | ----------: | -------------------: | ---------------------------------: | ------------------------------: |
+| slower  |    1 |           5237 |        5651 |                  414 |                            3 / 419 |                       423 / 421 |
+| slower  |    2 |           5235 |        5654 |                  419 |                            4 / 419 |                       427 / 425 |
+| slower  |    3 |           5239 |        5651 |                  412 |                            4 / 422 |                       419 / 418 |
+| slower  |    4 |           5236 |        5644 |                  408 |                            4 / 423 |                       430 / 429 |
+| slower  |    5 |           5237 |        5661 |                  424 |                            3 / 420 |                       433 / 431 |
+| slower  |    6 |           5240 |        5656 |                  416 |                            4 / 425 |                       429 / 427 |
+| slower  |    7 |           5237 |        5649 |                  412 |                            2 / 438 |                       423 / 421 |
+| faster  |    1 |            695 |        1099 |                  404 |                            4 / 413 |                       412 / 410 |
+| faster  |    2 |            691 |        1100 |                  409 |                            4 / 414 |                       416 / 414 |
+| faster  |    3 |            695 |        1085 |                  390 |                            5 / 414 |                       411 / 409 |
+| faster  |    4 |            682 |        1092 |                  410 |                            4 / 413 |                       413 / 411 |
+| faster  |    5 |            689 |        1102 |                  413 |                            4 / 413 |                       413 / 411 |
+| faster  |    6 |            686 |        1102 |                  416 |                            3 / 410 |                       415 / 413 |
+| faster  |    7 |            694 |        1102 |                  408 |                            4 / 413 |                       414 / 412 |
+
+</details>
+
+Keep parallel loading for now. Waiting trades a delay on every cold join with an accepted
+signature for a bandwidth saving on rejected joins. The measured delay depends on signature
+latency. The next benchmark target is the board renderer, which accounted for 373,388 gzip
+bytes when opening a blank board.
 
 ## Instruments and reproduction
 
