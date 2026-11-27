@@ -1,4 +1,5 @@
 @import '../shared/ui/controls/Buttons.css';
+@import '../shared/ui/controls/FormField.css';
 
 /* Colours, fonts and the two themes. Every other rule takes its colours from these variables. */
 :root {
@@ -534,35 +535,6 @@ a {
   margin-top: 4px;
   font-size: 13px;
   color: var(--muted);
-}
-
-.form-field {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  font-size: 14px;
-}
-.form-field > span {
-  font-size: 12px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--muted);
-}
-.form-field textarea,
-.form-field input[type='text'],
-.form-field input[type='password'] {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 8px 10px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: var(--paper);
-  color: var(--text);
-}
-.form-field textarea {
-  resize: vertical;
-  min-height: 110px;
 }
 
 @keyframes spin {
