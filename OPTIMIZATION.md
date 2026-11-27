@@ -282,6 +282,122 @@ signature for a bandwidth saving on rejected joins. The measured delay depends o
 latency. The next benchmark target is the board renderer, which accounted for 373,388 gzip
 bytes when opening a blank board.
 
+## Blank-board renderer profile
+
+The blank board took **2,511 ms** to reach its first rendered frame on the slower
+network. The renderer's last byte arrived at **2,461 ms**, and the median per-run
+gap from that byte to the frame was **58 ms**. On loopback, the same action took
+**78 ms** at normal CPU speed and **167 ms** with 4× Chrome CPU throttling.
+
+### Bundle composition
+
+The renderer (`percentages-BXMCSKIN-DhuJzVQ2.js`) weighs 1,144,534 decoded bytes and
+373,388 gzip bytes. It accounts for **85.5%** of the 436,885 JavaScript bytes
+transferred when the blank board opens. The saved-board preview also imports this
+renderer. Rollup lists 66 dynamic imports from the renderer. The request audit
+above shows which were actually used on this path.
+
+| Source in the renderer | Attributed minified bytes | Share of decoded chunk |
+| ---------------------- | ------------------------: | ---------------------: |
+| Excalidraw             |                   954,628 |                  83.4% |
+| pako                   |                    46,204 |                   4.0% |
+| Radix UI               |                    37,891 |                   3.3% |
+| Floating UI            |                    22,477 |                   2.0% |
+| roughjs                |                    18,782 |                   1.6% |
+| Jotai                  |                     7,974 |                   0.7% |
+| Other and unmapped     |                    56,578 |                   4.9% |
+
+The board wrapper (`BoardCanvas-B_xr-9-n.js`) weighs a separate 231,274 decoded
+bytes and 60,792 gzip bytes. Supabase packages account for about 220,908 decoded bytes
+of that wrapper. The local-board fixture supplied no live-sharing server, yet Chrome
+still downloaded the wrapper with Supabase. `boardSync.ts` statically imports
+`createClient`, while its connection function checks whether sharing is configured.
+
+### Network and rendering timeline
+
+Values in the table are medians of five cache-disabled trials, in milliseconds
+after clicking **Open the board**. The last column takes the difference within
+each run before calculating the median.
+
+| Profile                                       | Renderer request start | Renderer first byte | Renderer last byte | Board frame | Last byte → frame |
+| --------------------------------------------- | ---------------------: | ------------------: | -----------------: | ----------: | ----------------: |
+| Loopback                                      |                      2 |                   7 |                 11 |          78 |                67 |
+| 1.6 Mbps down / 0.75 Mbps up / 150 ms latency |                      2 |                 156 |              2,461 |       2,511 |                58 |
+| Loopback, 4× CPU throttle                     |                      3 |                   9 |                 11 |         167 |               156 |
+
+<details>
+<summary>All timing samples (milliseconds after click)</summary>
+
+| Profile      | Trial | Renderer request start | Renderer first byte | Renderer last byte | Wrapper last byte | Board frame |
+| ------------ | ----: | ---------------------: | ------------------: | -----------------: | ----------------: | ----------: |
+| loopback     |     1 |                      2 |                   7 |                 10 |                 7 |          78 |
+| loopback     |     2 |                      2 |                   7 |                 11 |                 7 |          79 |
+| loopback     |     3 |                      2 |                   7 |                 11 |                 8 |          64 |
+| loopback     |     4 |                      2 |                   7 |                 10 |                 7 |          64 |
+| loopback     |     5 |                      2 |                   7 |                 11 |                 7 |          78 |
+| slow-network |     1 |                      2 |                 156 |               2460 |               884 |        2510 |
+| slow-network |     2 |                      2 |                 156 |               2462 |               888 |        2510 |
+| slow-network |     3 |                      2 |                 156 |               2461 |               884 |        2524 |
+| slow-network |     4 |                      2 |                 157 |               2464 |               888 |        2527 |
+| slow-network |     5 |                      2 |                 155 |               2453 |               878 |        2511 |
+| cpu-4x       |     1 |                      3 |                   8 |                 11 |                 9 |         166 |
+| cpu-4x       |     2 |                      4 |                   9 |                 11 |                 9 |         167 |
+| cpu-4x       |     3 |                      3 |                   8 |                 11 |                 9 |         168 |
+| cpu-4x       |     4 |                      4 |                   9 |                 11 |                 9 |         166 |
+| cpu-4x       |     5 |                      3 |                   9 |                 11 |                 9 |         181 |
+
+</details>
+
+### CPU and JavaScript coverage
+
+Three separate V8 profiles per setting measured time with a renderer frame at
+the top of the sampled stack (self) or anywhere on it (inclusive). Inclusive time
+can include browser work such as layout. These samples do not measure all browser
+work or isolate parsing and compilation.
+
+| Profile                   | Renderer self samples (ms) | Renderer inclusive samples (ms) |
+| ------------------------- | -------------------------- | ------------------------------- |
+| Loopback                  | 12.5, 16.3, 17.1           | 12.8, 17.5, 17.1                |
+| Loopback, 4× CPU throttle | 51.5, 58.6, 65.1           | 64.3, 65.1, 72.5                |
+
+Two recurring renderer self-time hotspots map to Excalidraw's
+`chunk-K2UTITRG.js`. Walking scrollable ancestors and reading computed styles
+sampled 3.8 ms in each unthrottled run and 11.9, 13.0 and 13.9 ms at 4×.
+Creating browser `FontFace` objects sampled 1.3, 2.5 and 3.5 ms unthrottled and
+7.8, 9.9 and 9.6 ms at 4×.
+
+In a separate precise-coverage run, Chrome marked **344,541 of 1,144,534 bytes**
+(30.1%) active in the renderer and **8,256 of 231,274 bytes** (3.6%) in the board
+wrapper. This is coverage of one blank-board open. The unexecuted ranges also
+contain code used by drawing, exports, saved boards, localization, and live sharing.
+
+### Instruments and reproduction
+
+- Use the production assets from `3e79531`, Node.js 22.19.0, Vite 5.3.4, and the
+  repository's Excalidraw 0.18.1. Read the Rollup chunk's static and dynamic imports
+  from a `build({ build: { write: false } })` run.
+- Rebuild in memory with hidden source maps and confirm the emitted chunks are
+  byte-identical to the profiled assets. Use `@jridgewell/trace-mapping` to assign
+  each span between generated mapping columns to its source package. This gives
+  an approximate attribution of decoded bytes. Gzip is measured on each whole
+  chunk using `node:zlib`. The profiling maps are kept out of production.
+- Serve `dist` over loopback with gzip and the project browser skill's API fixture
+  without a sharing server. Run Chrome 158.0.8127.89 through Playwright Core 1.48.2
+  at 1280 × 900 in English and light theme. Block third-party URLs, including
+  external fonts, and use a fresh context for every run. Let Lesson space settle
+  before applying CDP network or CPU throttling. Warm up once.
+- Mark the open click and wait for a nonzero interactive canvas and the toolbar's
+  **More tools** button. Mark readiness on the following animation frame. Use
+  Resource Timing for request timestamps and exclude the setup before the click.
+  In separate runs use CDP `Profiler` (1 ms sampling interval) and Playwright
+  `page.coverage`. Use the innermost V8 range counts to classify coverage and
+  convert the generated script spans to UTF-8 bytes.
+
+The first follow-up is to try importing Supabase on demand when the board has a
+sharing server, then compare both standalone and live-board opens. The renderer
+itself is mostly Excalidraw. Splitting the existing renderer file alone offers
+little transfer savings if the blank board still requests the same code.
+
 ## Instruments and reproduction
 
 - **Build and bundle graph:** Node.js 22.19.0, Vite 5.3.4 and Rollup. Run `yarn build` to get Vite's
