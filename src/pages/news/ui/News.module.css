@@ -1,0 +1,111 @@
+/* the language and audience choice above the tabs */
+.news-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 16px;
+  margin-bottom: 8px;
+}
+.news-filter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.news-filter select {
+  padding: 4px 30px 4px 6px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background-color: var(--paper);
+  color: var(--text);
+}
+.news-tabs {
+  margin-bottom: 20px;
+  padding: 0;
+}
+
+.news {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.news-day {
+  position: relative;
+  padding: 0 0 26px 24px;
+  border-left: 2px solid var(--line);
+}
+.news-day:last-child {
+  padding-bottom: 0;
+}
+/* a dot on the timeline for each day */
+.news-day::before {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: -7px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 4px var(--bg);
+}
+.news-day h2 {
+  margin: 0 0 10px;
+  font-size: 18px;
+}
+.news-day ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.news-item {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+}
+.news-kind {
+  flex: none;
+  min-width: 84px;
+  padding: 1px 8px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+}
+.news-kind.new {
+  background: color-mix(in srgb, var(--accent) 16%, transparent);
+  color: var(--accent-text);
+}
+.news-kind.better {
+  background: var(--ok-soft);
+  color: var(--ok);
+}
+.news-kind.fixed {
+  background: var(--warn-soft);
+  color: var(--text);
+}
+/* the languages an item is about, when the page shows every language */
+.news-languages {
+  display: block;
+  margin-top: 4px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+@media (max-width: 760px) {
+  .news-item {
+    flex-direction: column;
+    gap: 6px;
+  }
+  .news-kind {
+    min-width: 0;
+  }
+}

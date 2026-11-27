@@ -8,6 +8,7 @@ import { Button } from '@/shared/ui/controls';
 import PageHead from '@/shared/ui/PageHead';
 
 import HandwrittenNotes from './HandwrittenNotes';
+import styles from './PhotoSection.module.css';
 import PhotoWords from './PhotoWords';
 
 const MODES = ['underlined', 'handwritten', 'textbook'] as const;
@@ -36,7 +37,7 @@ const PhotoSection = ({
   return (
     <>
       <PageHead guide="photo" title={t('fromPaper')} />
-      <div className="seg photo-mode" role="group" aria-label={t('whatToRead')}>
+      <div className={`seg ${styles['photo-mode']}`} role="group" aria-label={t('whatToRead')}>
         {MODES.map((entry) => (
           <Button
             variant="unstyled"

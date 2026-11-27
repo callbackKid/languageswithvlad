@@ -16,6 +16,7 @@ import ExerciseHead from '@/shared/ui/ExerciseHead';
 import Speak from '@/shared/ui/Speak';
 
 import { game } from '../i18n/game';
+import styles from './QuizGame.module.css';
 
 // Questions in a round, and seconds for each.
 export const GAME_QUESTIONS = 10;
@@ -77,7 +78,7 @@ export const RecordsTable = ({
   if (!records.length) return <p className="hint">{t('noRecords')}</p>;
   const date = new Intl.DateTimeFormat(locale, { day: 'numeric', month: 'short' });
   return (
-    <table className="game-records">
+    <table className={styles['game-records']}>
       <caption>{t('records')}</caption>
       <thead>
         <tr>
@@ -89,7 +90,7 @@ export const RecordsTable = ({
       </thead>
       <tbody>
         {records.slice(0, SHOWN_RECORDS).map((record, index) => (
-          <tr key={record.at} className={record.at === highlight ? 'current' : undefined}>
+          <tr key={record.at} className={record.at === highlight ? styles.current : undefined}>
             <td>{index + 1}</td>
             <td>{record.points}</td>
             <td>
@@ -211,9 +212,9 @@ const QuizGame = ({
     return (
       <div className="ex quiz-game">
         <ExerciseHead title={title} onClose={onClose} closeLabel={t('backToLesson')} />
-        <p className="game-score">{t('score', { points: finished.points })}</p>
+        <p className={styles['game-score']}>{t('score', { points: finished.points })}</p>
         <p className="hint">{t('correct', { correct: finished.correct, total: finished.total })}</p>
-        {best && <p className="game-record">{t('newRecord')}</p>}
+        {best && <p className={styles['game-record']}>{t('newRecord')}</p>}
         <RecordsTable records={records} highlight={finished.at} />
         <div className="row-actions">
           <Button variant="primary" autoFocus onClick={restart}>
@@ -237,7 +238,7 @@ const QuizGame = ({
         </span>
       </ExerciseHead>
       <div
-        className={'game-clock' + (share < 0.3 ? ' low' : '')}
+        className={styles['game-clock'] + (share < 0.3 ? ` ${styles.low}` : '')}
         role="timer"
         aria-label={t('secondsLeft', { seconds: Math.ceil(left / 1000) })}
       >

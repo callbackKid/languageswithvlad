@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import { app, useTranslation } from '@/shared/i18n';
+import styles from '@/shared/ui/ConnectForm.module.css';
 import { Button, Input } from '@/shared/ui/controls';
 import LanguagePicker from '@/shared/ui/LanguagePicker';
 
@@ -9,14 +10,14 @@ const CodeGate = ({ onDone, onClear }: { onDone: (code: string) => void; onClear
   const { t } = useTranslation(app);
   const [code, setCode] = useState('');
   return (
-    <div className="connect">
-      <div className="connect-language">
+    <div className={styles.connect}>
+      <div className={styles['connect-language']}>
         <LanguagePicker />
       </div>
       <h1>{t('codeTitle')}</h1>
       <p>{t('codeIntro')}</p>
       <form
-        className="field"
+        className={styles.field}
         onSubmit={(event) => {
           event.preventDefault();
           if (code.trim()) {

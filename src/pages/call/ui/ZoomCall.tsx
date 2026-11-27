@@ -4,6 +4,8 @@ import { api, ApiError } from '@/shared/api';
 import { call, getUiLanguage, translator, type UiLanguage, useTranslation } from '@/shared/i18n';
 import { Button } from '@/shared/ui/controls';
 
+import styles from './CallProviders.module.css';
+
 // the Zoom window speaks the same language as the app
 // the size of the call inside the page, in pixels: 16:9, as wide as the lesson mode's column
 const ZOOM_VIEW = { width: 480, height: 270 };
@@ -79,7 +81,7 @@ const ZoomCall = ({
   }, [meetingNumber, passcode, userName]);
 
   return (
-    <div className="zoom-call">
+    <div className={styles['zoom-call']}>
       {state === 'joining' && (
         <p className="hint">
           <span className="spinner" /> {t('joining')}
@@ -90,7 +92,7 @@ const ZoomCall = ({
           <p>{error}</p>
         </div>
       )}
-      <div ref={root} className="zoom-root" />
+      <div ref={root} className={styles['zoom-root']} />
       <Button variant="ghost" onClick={onLeave}>
         {t('leave')}
       </Button>

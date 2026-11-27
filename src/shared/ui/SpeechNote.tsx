@@ -9,6 +9,7 @@ import {
 } from '@/shared/lib/speech';
 
 import { IconButton } from './controls';
+import styles from './SpeechNote.module.css';
 
 /** The note over every page when the browser couldn't read aloud: what went wrong and how to
     fix it, so a 🔊 that stays silent isn't a mystery. Closed with ×; gone once a read works. */
@@ -23,7 +24,7 @@ const SpeechNote = () => {
     return t('speechNoVoice', { language: name ?? value.language });
   };
   return (
-    <div className="note warn speech-note" role="alert">
+    <div className={`note warn ${styles['speech-note']}`} role="alert">
       <p>{describe(problem)}</p>
       <IconButton className="btn ghost dismiss" label={t('close')} onClick={dismissSpeechProblem}>
         ×

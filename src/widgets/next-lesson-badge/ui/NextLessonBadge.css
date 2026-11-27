@@ -1,0 +1,66 @@
+.next-lesson-widget {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  padding: 6px 6px 6px 12px;
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--line));
+  border-left: 4px solid var(--accent);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--accent) 10%, var(--bg));
+  box-shadow: 0 1px 3px var(--shadow-soft);
+  font-size: 15px;
+  color: var(--ink);
+}
+/* "Enter the lesson" */
+.next-lesson-widget .btn {
+  padding: 6px 14px;
+}
+.next-lesson-widget > [aria-hidden] {
+  font-size: 20px;
+}
+.next-lesson-widget .next-lesson b {
+  color: var(--accent-text);
+  font-weight: 700;
+}
+.next-lesson-widget.muted {
+  border-color: var(--line);
+  border-left-color: var(--warn);
+  background: var(--warn-soft);
+}
+.next-lesson-widget.muted .next-lesson {
+  color: var(--text);
+}
+.next-lesson-widget.now {
+  border-color: var(--ok);
+  border-left-color: var(--ok);
+  background: var(--ok-soft);
+  font-weight: 600;
+}
+
+.live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ok);
+  animation: live-pulse 1.6s ease-in-out infinite;
+}
+
+.next-lesson-widget .zone {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+@keyframes live-pulse {
+  50% {
+    opacity: 0.3;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .live-dot {
+    animation: none;
+  }
+}
+
+/* not enough room for everything on one line: the next lesson gets a row of its own */

@@ -1,0 +1,203 @@
+/* Lesson history: one lesson at a time, or Downloaded lessons, as two tabs over the page */
+.history {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+.history-tabs {
+  margin: 12px 24px 0;
+  padding: 0;
+}
+.history-practice {
+  padding: 24px 24px 64px;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+/* the list with its two buttons; as a column it stays in view while the lesson scrolls */
+.lessons-panel {
+  position: sticky;
+  top: 0;
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  max-height: 100vh;
+  min-width: 0;
+}
+.lessons-controls {
+  display: flex;
+  gap: 6px;
+  padding: 16px 12px 0 24px;
+}
+nav.lessons {
+  padding: 12px 12px 24px 24px;
+  overflow: auto;
+  min-height: 0;
+}
+
+/* the list as a row above the lesson, scrolled sideways, as on a phone */
+.layout.lessons-as-row {
+  grid-template-columns: minmax(0, 1fr);
+}
+.lessons-as-row .lessons-panel {
+  position: static;
+  max-height: none;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 24px;
+  border-bottom: 1px solid var(--line);
+}
+.lessons-as-row .lessons-controls {
+  padding: 0;
+}
+.lessons-as-row nav.lessons {
+  flex: 1;
+  display: flex;
+  gap: 6px;
+  padding: 4px 0;
+  overflow-x: auto;
+}
+.lessons-as-row .lesson-link {
+  text-decoration: none;
+  color: inherit;
+  width: auto;
+  flex: none;
+  white-space: nowrap;
+}
+.lessons-as-row .lesson-link[aria-current='page'] {
+  box-shadow: inset 0 -3px 0 var(--margin);
+}
+
+/* folded: only the buttons are left; a folded column is a thin strip of them */
+.layout.lessons-folded {
+  grid-template-columns: auto minmax(0, 1fr);
+}
+.layout.lessons-folded.lessons-as-row {
+  grid-template-columns: minmax(0, 1fr);
+}
+.lessons-folded nav.lessons {
+  display: none;
+}
+.lessons-folded:not(.lessons-as-row) .lessons-controls {
+  flex-direction: column;
+  padding: 16px 8px 0 16px;
+}
+
+.lesson-link {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: 0;
+  border-radius: 8px;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+.lesson-link .n {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-style: italic;
+  color: var(--muted);
+  min-width: 22px;
+}
+.lesson-link .d {
+  font-size: 14px;
+  color: var(--muted);
+}
+.lesson-downloaded {
+  display: inline-flex;
+  align-self: center;
+  margin-left: auto;
+  color: var(--muted);
+}
+/* homework left in a downloaded lesson: a red badge with the number of tasks, just before its ⤓
+   icon, both at the row's end; the red is darkened so the white number keeps a 4.5:1 contrast */
+.lesson-homework-left {
+  flex-shrink: 0;
+  align-self: center;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  margin-left: auto;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--bad) 85%, black);
+  color: var(--on-bad);
+  font-family: var(--sans);
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 16px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+.lesson-homework-left + .lesson-downloaded {
+  margin-left: -4px;
+}
+.lesson-link:hover {
+  background: var(--surface);
+}
+.lesson-link[aria-current='page'] {
+  background: var(--surface);
+  box-shadow: inset 3px 0 0 var(--margin);
+}
+.lesson-link[aria-current='page'] .n {
+  color: var(--ink);
+}
+.lesson-link[aria-current='page'] .d {
+  color: var(--text);
+}
+
+@media (max-width: 760px) {
+  .history-tabs {
+    margin: 4px 12px 0;
+  }
+  .history-practice {
+    padding: 20px 12px 48px;
+  }
+
+  .layout,
+  .layout.lessons-folded,
+  .layout.lessons-as-row {
+    grid-template-columns: 1fr;
+  }
+
+  /* a phone always shows the list as a row, without the buttons, even when folded on a computer */
+  .lessons-controls {
+    display: none;
+  }
+  .lessons-panel,
+  .lessons-as-row .lessons-panel {
+    position: static;
+    max-height: none;
+    padding: 0;
+    border-bottom: 0;
+  }
+
+  nav.lessons,
+  .lessons-as-row nav.lessons,
+  .lessons-folded nav.lessons {
+    position: static;
+    max-height: none;
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .lesson-link {
+    width: auto;
+    flex: none;
+    white-space: nowrap;
+  }
+  .lesson-link[aria-current='page'] {
+    box-shadow: inset 0 -3px 0 var(--margin);
+  }
+}

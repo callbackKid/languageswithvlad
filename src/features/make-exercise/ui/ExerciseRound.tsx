@@ -9,6 +9,7 @@ import Speak from '@/shared/ui/Speak';
 
 import { makeExerciseText } from '../i18n/makeExercise';
 import { type ExerciseQuestion, type MadeExercise } from '../model/types';
+import styles from './MakeExercise.module.css';
 
 // How an answer compares with the right one and the others just as right: the best of them.
 const gradeAnswer = (input: string, question: ExerciseQuestion): Grade => {
@@ -102,7 +103,7 @@ const ExerciseRound = ({
       <p className="hint">{t('progress', { current: index + 1, total: questions.length })}</p>
       {isTranslate && <p className="hint">{t('translate')}</p>}
       <p
-        className="made-exercise-prompt"
+        className={styles['made-exercise-prompt']}
         lang={isTranslate ? exercise.translatedTo : (exercise.promptIn ?? language)}
       >
         {question.prompt}

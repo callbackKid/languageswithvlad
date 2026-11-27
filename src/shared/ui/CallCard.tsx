@@ -1,3 +1,5 @@
+import './CallCard.css';
+
 import { type ReactNode, useId, useState } from 'react';
 
 import { loadTexts, save } from '@/shared/lib/storage';

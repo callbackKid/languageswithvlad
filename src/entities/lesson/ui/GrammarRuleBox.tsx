@@ -6,6 +6,7 @@ import { talk, type UiLanguage, useTranslation } from '@/shared/i18n';
 import Speak from '@/shared/ui/Speak';
 
 import { type GrammarRule } from '../model/types';
+import styles from './GrammarRuleBox.module.css';
 
 /** A grammar point explained: what it is, how it's formed, when it's used, examples and the usual
     mistake. Folded away until opened; used in Discuss and in a lesson's Grammar and Phonetics tabs. */
@@ -37,11 +38,11 @@ const GrammarRuleBox = ({
   const Title = level === 2 ? 'h2' : 'h3';
   const Part = level === 2 ? 'h3' : 'h4';
   return (
-    <details className="grammar-rule" open={open}>
+    <details className={styles['grammar-rule']} open={open}>
       <summary>
-        <Title className="grammar-rule-title">{label}</Title>
+        <Title className={styles['grammar-rule-title']}>{label}</Title>
       </summary>
-      <div className="grammar-rule-body" lang={uiLanguage}>
+      <div className={styles['grammar-rule-body']} lang={uiLanguage}>
         {rule.summary && <p>{rule.summary}</p>}
         {rule.formation.length > 0 && (
           <>
@@ -66,7 +67,7 @@ const GrammarRuleBox = ({
         {rule.examples.length > 0 && (
           <>
             <Part>{t('ruleExamples')}</Part>
-            <ul className="grammar-examples">
+            <ul className={styles['grammar-examples']}>
               {rule.examples.map((example) => (
                 <li key={example.text}>
                   <span lang={language}>{example.text}</span>{' '}
@@ -93,7 +94,7 @@ const GrammarRuleBox = ({
           </>
         )}
         {rule.pitfall && (
-          <p className="grammar-pitfall">
+          <p className={styles['grammar-pitfall']}>
             <b>⚠️ {t('rulePitfall')}:</b> {rule.pitfall}
           </p>
         )}

@@ -27,11 +27,11 @@ const PageHead = ({
     </>
   );
   return (
-    <section className={'page-head' + (aside ? ' with-aside' : '')}>
+    <section className={styles['page-head'] + (aside ? ` ${styles['with-aside']}` : '')}>
       {aside ? (
         <>
-          <div className="page-head-text">{heading}</div>
-          <div className="page-head-aside">{aside}</div>
+          <div className={styles['page-head-text']}>{heading}</div>
+          <div className={styles['page-head-aside']}>{aside}</div>
         </>
       ) : (
         heading
@@ -41,3 +41,4 @@ const PageHead = ({
 };
 
 export default PageHead;
+import styles from './PageHead.module.css';

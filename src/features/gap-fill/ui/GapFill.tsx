@@ -12,6 +12,7 @@ import WaitingFact from '@/shared/ui/WaitingFact';
 
 import { normalizeGaps } from '../model/normalize';
 import { type GapItem } from '../model/types';
+import styles from './GapFill.module.css';
 
 // Fill the gap with the lesson's words: sentences Claude writes around them.
 const GapFill = ({
@@ -165,7 +166,7 @@ export const GapRound = ({
       </ExerciseHead>
       <p className="sentence" lang={language}>
         {item.before}{' '}
-        <span className={'gap' + (picked == null ? '' : right ? ' ok' : ' bad')}>
+        <span className={styles.gap + (picked == null ? '' : right ? ' ok' : ' bad')}>
           {picked == null ? ' ' : item.answer}
         </span>{' '}
         {item.after}
@@ -208,7 +209,7 @@ export const GapRound = ({
             {right ? commonText.t('right') : t('gapAnswer', { answer: item.answer })}
             {explain?.(item)}
           </p>
-          {item.why && <p className="hint gap-why">{item.why}</p>}
+          {item.why && <p className={`hint ${styles['gap-why']}`}>{item.why}</p>}
           <div className="row-actions">
             <Button
               variant="primary"

@@ -13,6 +13,7 @@ import { isStudied, useSettings } from '@/shared/config';
 import { pages, useTranslation } from '@/shared/i18n';
 import PageHead from '@/shared/ui/PageHead';
 
+import styles from './Home.module.css';
 import HomeworkCard from './HomeworkCard';
 import LessonSummary from './LessonSummary';
 import PrepareCard from './PrepareCard';
@@ -69,12 +70,12 @@ const Home = ({
         ) : null}
       </PageHead>
       {bank.words.length > 0 && (
-        <div className="daily" role="status">
-          <span className="streak">
+        <div className={styles.daily} role="status">
+          <span className={styles.streak}>
             {streak > 0 ? t('streak', { count: streak }) : t('startStreak')}
           </span>
-          <span className="goal">
-            <span className="goal-bar" aria-hidden="true">
+          <span className={styles.goal}>
+            <span className={styles['goal-bar']} aria-hidden="true">
               <span style={{ width: `${Math.min(today / dailyGoal, 1) * 100}%` }} />
             </span>
             {today >= dailyGoal

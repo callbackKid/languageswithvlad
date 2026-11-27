@@ -1,3 +1,5 @@
+import './WordsTab.css';
+
 import { useState } from 'react';
 
 import {

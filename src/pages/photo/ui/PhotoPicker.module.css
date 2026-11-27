@@ -1,0 +1,43 @@
+.photo-pick {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+.photo-pick label:global(.btn) {
+  cursor: pointer;
+}
+
+.photo-preview {
+  max-height: 160px;
+  max-width: 100%;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+}
+/* several photos: a row of thumbnails that wraps */
+.photo-previews {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.photo-previews .photo-preview {
+  max-height: 110px;
+}
+
+.photo-pick select {
+  font: inherit;
+  font-size: 14px;
+  padding: 7px 30px 7px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background-color: var(--surface);
+  color: var(--text);
+  max-width: 100%;
+}
+
+.photo-intro {
+  font-size: 14px;
+  color: var(--muted);
+  margin: 0 0 14px;
+}

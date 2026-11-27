@@ -16,6 +16,7 @@ import { Button, Select } from '@/shared/ui/controls';
 import PageHead from '@/shared/ui/PageHead';
 
 import { newsText } from '../i18n/news';
+import styles from './News.module.css';
 
 /** What changed in the app, by day: new features and fixes on two tabs, for one of the student's
     languages (the news about every language stays), and for the teacher, by audience. Opening
@@ -63,9 +64,9 @@ const News = ({ onSeen }: { onSeen: () => void }) => {
       <PageHead guide="news" title={sectionNames.t('section.news')}>
         {t('intro')}
       </PageHead>
-      <div className="news-filters">
+      <div className={styles['news-filters']}>
         {studying.length > 1 && (
-          <label className="news-filter">
+          <label className={styles['news-filter']}>
             <span>{t('filterLanguage')}</span>
             <Select
               value={shownLanguage}
@@ -98,7 +99,11 @@ const News = ({ onSeen }: { onSeen: () => void }) => {
           </div>
         )}
       </div>
-      <div className="tabs news-tabs" {...tabListProps} aria-label={sectionNames.t('section.news')}>
+      <div
+        className={`tabs ${styles['news-tabs']}`}
+        {...tabListProps}
+        aria-label={sectionNames.t('section.news')}
+      >
         {NEWS_TABS.map((shown) => (
           <Button
             variant="unstyled"
@@ -115,23 +120,25 @@ const News = ({ onSeen }: { onSeen: () => void }) => {
       {NEWS_TABS.map((shown) => shown !== tab && <div key={shown} {...panelProps(shown)} />)}
       <div key={tab} {...panelProps(tab)}>
         {days.length ? (
-          <ol className="news">
+          <ol className={styles.news}>
             {days.map((day) => (
-              <li key={day.date} className="news-day">
+              <li key={day.date} className={styles['news-day']}>
                 <h2>
                   <time dateTime={day.date}>{dateFormat.format(dateOf(day.date))}</time>
                 </h2>
                 <ul>
                   {day.items.map((item) => (
-                    <li key={item.text.en} className="news-item">
+                    <li key={item.text.en} className={styles['news-item']}>
                       {/* on the fixes tab every item is a fix: the label would say nothing */}
                       {tab === 'new' && (
-                        <span className={'news-kind ' + item.kind}>{t(`kind.${item.kind}`)}</span>
+                        <span className={`${styles['news-kind']} ${styles[item.kind]}`}>
+                          {t(`kind.${item.kind}`)}
+                        </span>
                       )}
                       <span>
                         {item.text[uiLanguage]}
                         {item.languages && shownLanguage === 'all' && (
-                          <span className="news-languages">
+                          <span className={styles['news-languages']}>
                             {item.languages
                               .map((language) => names.t(`name.${language}`))
                               .join(', ')}

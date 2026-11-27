@@ -7,6 +7,8 @@ import { shuffle } from '@/shared/lib/util';
 import { Button } from '@/shared/ui/controls';
 import ExerciseHead from '@/shared/ui/ExerciseHead';
 
+import styles from './Match.module.css';
+
 // word is set for translation pairs, so results count towards progress.
 export interface MatchPair {
   id: string;
@@ -111,11 +113,11 @@ const Match = ({
     if (!pair) return null;
     const isDone = done.has(id);
     const tileClass = [
-      'tile',
-      (side === 'left' || mode === 'syn') && 'fr',
-      isDone && 'done',
-      pick[side] === id && 'picked',
-      wrong && wrong[side === 'left' ? 0 : 1] === id && 'wrong',
+      styles.tile,
+      (side === 'left' || mode === 'syn') && styles.fr,
+      isDone && styles.done,
+      pick[side] === id && styles.picked,
+      wrong && wrong[side === 'left' ? 0 : 1] === id && styles.wrong,
     ]
       .filter(Boolean)
       .join(' ');
@@ -130,7 +132,7 @@ const Match = ({
       >
         {side === 'left' ? pair.a : pair.b}
         {side === 'right' && isDone && mode === 'syn' && (
-          <span className="kind">
+          <span className={styles.kind}>
             {pair.kind === 'synonym' ? t('synonymTag') : t('antonymTag')}
           </span>
         )}
@@ -138,9 +140,9 @@ const Match = ({
     );
   };
   const grid = (
-    <div className="match">
-      <div className="col">{leftIds.map((id) => tile('left', id))}</div>
-      <div className="col">{rightIds.map((id) => tile('right', id))}</div>
+    <div className={styles.match}>
+      <div className={styles.col}>{leftIds.map((id) => tile('left', id))}</div>
+      <div className={styles.col}>{rightIds.map((id) => tile('right', id))}</div>
     </div>
   );
 

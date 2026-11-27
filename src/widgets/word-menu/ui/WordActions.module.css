@@ -1,0 +1,77 @@
+/* the menu on a selected word (WordActions): under the selection on a wide screen, a sheet at
+   the bottom on a phone; the width is MENU_WIDTH in src/features/look-up-word/model/wordActions.ts */
+.word-actions {
+  position: absolute;
+  top: var(--word-top, 0);
+  left: var(--word-left, 0);
+  z-index: 90;
+  width: 380px;
+  max-width: calc(100vw - 16px);
+  max-height: min(70vh, 560px);
+  overflow-y: auto;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--paper);
+  box-shadow: 0 6px 24px var(--shadow);
+}
+.word-actions-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.word-actions-word {
+  margin-right: auto;
+  font-family: var(--serif);
+  font-size: 18px;
+  overflow-wrap: anywhere;
+}
+.word-actions-views {
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+.word-actions-body {
+  margin-top: 12px;
+}
+.word-actions-body p {
+  margin: 0 0 8px;
+}
+.word-actions-ru {
+  font-size: 17px;
+  font-weight: 600;
+}
+.word-actions-examples {
+  margin: 0;
+  padding-left: 18px;
+}
+.word-actions-examples li {
+  margin-bottom: 8px;
+}
+.word-actions-examples [lang]:first-child {
+  font-family: var(--serif);
+}
+.word-actions-examples :global(.ru) {
+  display: block;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.word-actions-add {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+  flex-wrap: wrap;
+}
+
+@media (max-width: 760px) {
+  /* the phone's own copy menu sits by the selection: the word menu takes the bottom instead */
+  .word-actions {
+    position: fixed;
+    top: auto;
+    right: 8px;
+    bottom: 8px;
+    left: 8px;
+    width: auto;
+    max-height: 60vh;
+  }
+}

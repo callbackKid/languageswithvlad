@@ -1,0 +1,15 @@
+.lesson-drawings {
+  margin-top: 22px;
+}
+.lesson-drawings h3 {
+  margin: 16px 0 8px;
+  font-size: 16px;
+}
+/* at its own size, smaller only when it doesn't fit */
+:where(.lesson-drawings) :global(.board-picture) svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}

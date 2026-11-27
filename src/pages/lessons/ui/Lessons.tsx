@@ -17,6 +17,7 @@ import {
   saveListOpen,
   saveListView,
 } from '../model/listLayout';
+import styles from './Lessons.module.css';
 import Practice from './Practice';
 
 // the buttons' icons on a 16×16 grid, like the app shell's: three boxes in a row, and arrows
@@ -112,8 +113,8 @@ const Lessons = ({
   const foldLabel = listText.t(isListOpen ? 'hideList' : 'showList');
 
   return (
-    <div className="history">
-      <nav className="tabs history-tabs" aria-label={t('section.lessons')}>
+    <div className={styles.history}>
+      <nav className={`tabs ${styles['history-tabs']}`} aria-label={t('section.lessons')}>
         {(['lessons', 'practice'] as const).map((tabSection) => {
           const tabPath = tabSection === 'lessons' ? '/lessons' : '/all-lessons';
           return (
@@ -130,17 +131,19 @@ const Lessons = ({
         })}
       </nav>
       {tab === 'practice' ? (
-        <main className="history-practice">
+        <main className={styles['history-practice']}>
           <Practice bank={bank} hasClaude={hasClaude} />
         </main>
       ) : (
         <div
           className={
-            'layout' + (isRow ? ' lessons-as-row' : '') + (isListOpen ? '' : ' lessons-folded')
+            styles.layout +
+            (isRow ? ` ${styles['lessons-as-row']}` : '') +
+            (isListOpen ? '' : ` ${styles['lessons-folded']}`)
           }
         >
-          <div className="lessons-panel">
-            <div className="lessons-controls">
+          <div className={styles['lessons-panel']}>
+            <div className={styles['lessons-controls']}>
               <IconButton aria-pressed={isRow} label={listText.t('listAsRow')} onClick={toggleView}>
                 <ListIcon path={ROW_ICON} />
               </IconButton>
@@ -155,7 +158,7 @@ const Lessons = ({
             </div>
             <nav
               id="lesson-list"
-              className="lessons"
+              className={styles.lessons}
               aria-label={t('lessonsLabel')}
               ref={lessonList}
             >
@@ -164,16 +167,16 @@ const Lessons = ({
                 return (
                   <a
                     key={listedLesson.key}
-                    className="lesson-link"
+                    className={styles['lesson-link']}
                     href={hrefFor(lessonPath(listedLesson.key))}
                     aria-current={listedLesson.key === currentLessonKey ? 'page' : undefined}
                     onClick={(event) => followLink(event, lessonPath(listedLesson.key))}
                   >
-                    <span className="n">{listedLesson.n}</span>
-                    <span className="d">{shortDateFormat.format(listedLesson.date)}</span>
+                    <span className={styles.n}>{listedLesson.n}</span>
+                    <span className={styles.d}>{shortDateFormat.format(listedLesson.date)}</span>
                     {badge && (
                       <span
-                        className="lesson-homework-left"
+                        className={styles['lesson-homework-left']}
                         role="img"
                         aria-label={badge.label}
                         data-tooltip={badge.label}
@@ -183,7 +186,7 @@ const Lessons = ({
                     )}
                     {downloaded.has(listedLesson.key) && (
                       <span
-                        className="lesson-downloaded"
+                        className={styles['lesson-downloaded']}
                         role="img"
                         aria-label={downloadedLabel}
                         data-tooltip={downloadedLabel}

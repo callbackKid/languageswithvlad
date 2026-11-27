@@ -1,0 +1,16 @@
+.speak {
+  flex: none;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font-size: 15px;
+  line-height: 1;
+  padding: 6px;
+  border-radius: 6px;
+  opacity: 0.7;
+  vertical-align: middle;
+}
+.speak:hover {
+  opacity: 1;
+  background: var(--soft);
+}

@@ -1,0 +1,138 @@
+/* the order of the list: A–Z or by group */
+.verb-sort {
+  margin-bottom: 12px;
+}
+/* the verbs of one group, under its name (by group); the whole list in A–Z */
+.verb-group {
+  margin-bottom: 20px;
+}
+.verb-group-name {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  margin: 0 0 6px;
+}
+
+.verbs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  columns: 2 300px;
+  column-gap: 28px;
+}
+.verb-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  border-bottom: 1px solid var(--line);
+  break-inside: avoid;
+}
+/* a row of the list: the verb and its translation; the open one is filled */
+.verb {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  margin: 3px 0;
+  padding: 6px 8px;
+  border: 0;
+  border-radius: 8px;
+  background: none;
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.verb:hover {
+  background: var(--soft);
+}
+.verb :global(.fr) {
+  font-family: var(--serif);
+  font-size: 17px;
+}
+.verb :global(.ru) {
+  margin-left: auto;
+  font-size: 14px;
+  color: var(--muted);
+  text-align: right;
+}
+.verb[aria-pressed='true'] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
+}
+.verb[aria-pressed='true'] :global(.ru) {
+  color: var(--on-accent);
+}
+.verb:hover {
+  border-color: var(--ink);
+}
+
+.conj-head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+}
+.conj-head h2 {
+  font-family: var(--display);
+  font-size: 30px;
+  font-weight: 700;
+  margin: 0;
+  color: var(--ink);
+}
+.conj-head :global(.ru) {
+  color: var(--muted);
+}
+
+.conj-meta {
+  font-size: 14px;
+  color: var(--muted);
+  margin: 0 0 14px;
+}
+
+.tense-tabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+.tense-tabs button {
+  border: 1px solid var(--line);
+  background: none;
+  border-radius: 8px;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 14px;
+}
+.tense-tabs button[aria-pressed='true'] {
+  background: var(--soft);
+  border-color: var(--ink);
+  color: var(--ink);
+  font-weight: 600;
+}
+/* a tense the verb doesn't have, such as the impératif of pouvoir */
+.tense-tabs button[disabled] {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.fix {
+  font-size: 13px;
+  margin-top: 3px;
+}
+.fix:global(.bad) {
+  color: var(--bad-text);
+}
+.fix:global(.accent) {
+  color: var(--warn);
+}
+
+.quiz-bar {
+  margin: -6px 0 20px;
+}

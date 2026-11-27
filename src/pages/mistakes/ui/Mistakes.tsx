@@ -9,6 +9,8 @@ import { shuffle } from '@/shared/lib/util';
 import { Button } from '@/shared/ui/controls';
 import PageHead from '@/shared/ui/PageHead';
 
+import styles from './Mistakes.module.css';
+
 // The words and verb forms missed most often, and a quiz on just those.
 const Mistakes = ({ bank }: { bank: Bank }) => {
   const { t } = useTranslation(pages);
@@ -57,7 +59,7 @@ const Mistakes = ({ bank }: { bank: Bank }) => {
               {t('practiseMistakes')}
             </Button>
           </div>
-          <div className="mistake-cols">
+          <div className={styles['mistake-cols']}>
             {words.length > 0 && (
               <section className="panel solo">
                 <div className="body">

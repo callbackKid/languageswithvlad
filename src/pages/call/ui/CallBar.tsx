@@ -6,6 +6,8 @@ import { call, useTranslation } from '@/shared/i18n';
 import { loadText, save } from '@/shared/lib/storage';
 import { Button, Input } from '@/shared/ui/controls';
 
+import styles from './CallBar.module.css';
+
 // the name the call shows, kept on this device for the next lesson
 const NAME_KEY = 'call:name';
 // a name as Zoom shows it, and a meeting passcode (Zoom allows at most 10 characters; room to spare)
@@ -44,8 +46,8 @@ const CallBar = ({
 
   if (joined)
     return (
-      <div className="call-bar" role="status">
-        <span className="call-live">
+      <div className={styles['call-bar']} role="status">
+        <span className={styles['call-live']}>
           <span className="live-dot" aria-hidden="true" /> {t('inCall')}
         </span>
         <Button onClick={onLeave}>{t('leaveCall')}</Button>
@@ -72,10 +74,10 @@ const CallBar = ({
     );
 
   return (
-    <div className="call-bar">
+    <div className={styles['call-bar']}>
       {inPage && (
         <form
-          className="call-bar-join"
+          className={styles['call-bar-join']}
           onSubmit={(event) => {
             event.preventDefault();
             const trimmed = name.trim();
@@ -119,9 +121,9 @@ const CallBar = ({
       )}
       {link?.kind === 'meet' && (
         // Meet can't run inside the page: its three ways to open, folded under one button
-        <details className="call-meet">
+        <details className={styles['call-meet']}>
           <summary className="btn">{t('meetTitle')} ▾</summary>
-          <div className="call-meet-menu">
+          <div className={styles['call-meet-menu']}>
             <p className="hint">{t('meetExplain')}</p>
             <Button variant="primary" onClick={() => setBlocked(!openCallWindow(link.url))}>
               {t('openMeet')}
@@ -141,7 +143,7 @@ const CallBar = ({
         )}
       {!link && !hasJitsi && <p className="hint">{t('noCall')}</p>}
       {isBlocked && (
-        <div className="note warn call-bar-note" role="alert">
+        <div className={`note warn ${styles['call-bar-note']}`} role="alert">
           <p>{t('popupBlocked')}</p>
         </div>
       )}

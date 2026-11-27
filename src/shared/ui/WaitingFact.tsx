@@ -5,6 +5,7 @@ import { common, useTranslation } from '@/shared/i18n';
 import { FACTS } from '@/shared/lib/facts';
 
 import { Button } from './controls';
+import styles from './WaitingFact.module.css';
 
 // long enough to read a phrase and its note; "Next fact" is there for faster readers
 const ROTATE_EVERY = 20_000;
@@ -42,20 +43,20 @@ const WaitingFact = ({
   const fact = facts[position % facts.length];
 
   return (
-    <div className="waiting" role="status">
-      <p className="waiting-line">
+    <div className={styles.waiting} role="status">
+      <p className={styles['waiting-line']}>
         <span className="spinner" /> {children}
       </p>
       {fact && (
-        <figure className="fact">
-          <span className="fact-label" lang={language}>
+        <figure className={styles.fact}>
+          <span className={styles['fact-label']} lang={language}>
             {LABELS[language]}
           </span>
-          <b className="fact-phrase" lang={language}>
+          <b className={styles['fact-phrase']} lang={language}>
             {fact.phrase}
           </b>
           <figcaption>{fact.note[uiLanguage]}</figcaption>
-          <Button variant="ghost" className="fact-next" onClick={next}>
+          <Button variant="ghost" className={styles['fact-next']} onClick={next}>
             {t('nextFact')}
           </Button>
         </figure>

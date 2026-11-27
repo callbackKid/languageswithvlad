@@ -1,0 +1,19 @@
+.gap-why {
+  margin: 4px 0 0;
+}
+
+.gap {
+  display: inline-block;
+  min-width: 90px;
+  border-bottom: 2px solid var(--ink);
+  text-align: center;
+  color: var(--ink);
+}
+.gap:global(.ok) {
+  color: var(--ok);
+  border-color: var(--ok);
+}
+.gap:global(.bad) {
+  color: var(--bad);
+  border-color: var(--bad);
+}

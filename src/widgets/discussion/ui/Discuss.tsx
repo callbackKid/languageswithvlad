@@ -1,3 +1,5 @@
+import './Discuss.css';
+
 import { useState } from 'react';
 
 import { type Bank, GrammarRuleBox } from '@/entities/lesson';

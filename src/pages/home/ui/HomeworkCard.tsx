@@ -38,6 +38,8 @@ import { shuffle } from '@/shared/lib/util';
 import { Button, Input } from '@/shared/ui/controls';
 import WaitingFact from '@/shared/ui/WaitingFact';
 
+import styles from './HomeworkCard.module.css';
+
 const ROUND = 10;
 const VERB_FORMS = 12;
 
@@ -48,7 +50,7 @@ const DueLine = ({ docText }: { docText: string }) => {
   if (!next || next === 'unconfirmed' || next.state !== 'upcoming') return null;
   const days = daysBetween(new Date(), next.start);
   return (
-    <span className="homework-due">
+    <span className={styles['homework-due']}>
       {days <= 0 ? t('dueToday') : days === 1 ? t('dueTomorrow') : t('dueIn', { count: days })}
     </span>
   );
@@ -242,7 +244,7 @@ const HomeworkCard = ({
     const close = () => setOpen(null);
     const finished = () => mark(open.text, true);
     return (
-      <section className="homework-card exercise">
+      <section className={`${styles['homework-card']} exercise`}>
         {open.kind === 'writing' ? (
           <WritingTask
             task={open.text}
@@ -279,16 +281,16 @@ const HomeworkCard = ({
   const doneCount = homework.items.filter((item) => isTaskDone(done, item.text)).length;
   const path = lessonPath(homework.lesson.key);
   return (
-    <section className="homework-card">
-      <div className="homework-head">
+    <section className={styles['homework-card']}>
+      <div className={styles['homework-head']}>
         <h2>{t('title', { n: homework.lesson.n })}</h2>
         <DueLine docText={docText} />
-        <span className="homework-progress">
+        <span className={styles['homework-progress']}>
           {t('progress', { done: doneCount, total: homework.items.length })}
         </span>
       </div>
       <p className="hint">{t('hint')}</p>
-      <ul className="homework home-homework">
+      <ul className={`homework ${styles['home-homework']}`}>
         {homework.items.map((item) => {
           const label = action(item);
           return (

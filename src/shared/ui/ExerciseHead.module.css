@@ -1,0 +1,21 @@
+.ex-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.ex-head h2 {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 20px;
+  margin: 0;
+  flex: 1;
+}
+
+@media (max-width: 760px) {
+  /* the title on its own row: beside the counter and the way back it wraps word by word */
+  .ex-head h2 {
+    flex-basis: 100%;
+  }
+}

@@ -9,6 +9,8 @@ import { Button } from '@/shared/ui/controls';
 import PageHead from '@/shared/ui/PageHead';
 import { WordsTab } from '@/widgets/word-list';
 
+import styles from './Practice.module.css';
+
 // Every exercise, run on the words and verbs of all lessons or the ones picked.
 const Practice = ({ bank, hasClaude }: { bank: Bank; hasClaude: boolean }) => {
   const { t } = useTranslation(pages);
@@ -54,10 +56,10 @@ const Practice = ({ bank, hasClaude }: { bank: Bank; hasClaude: boolean }) => {
         {t('allIntro')}
       </PageHead>
       <BankNote bank={bank} />
-      <div className="chips" role="group" aria-label={appText.t('lessonsLabel')}>
+      <div className={styles.chips} role="group" aria-label={appText.t('lessonsLabel')}>
         <Button
           variant="unstyled"
-          className="chip"
+          className={styles.chip}
           aria-pressed={!selectedLessons}
           onClick={() => setSelectedLessons(null)}
         >
@@ -67,7 +69,7 @@ const Practice = ({ bank, hasClaude }: { bank: Bank; hasClaude: boolean }) => {
           <Button
             variant="unstyled"
             key={lesson.key}
-            className="chip"
+            className={styles.chip}
             aria-pressed={!!selectedLessons && selectedLessons.has(lesson.key)}
             onClick={() => toggle(lesson.key)}
             data-tooltip={shownTopic(lesson.topic, uiLanguage) || undefined}

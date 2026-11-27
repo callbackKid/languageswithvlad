@@ -18,6 +18,7 @@ import { makeExerciseText } from '../i18n/makeExercise';
 import { normalizeExercise } from '../model/normalize';
 import { type MadeExercise } from '../model/types';
 import ExerciseRound from './ExerciseRound';
+import styles from './MakeExercise.module.css';
 
 // the last exercise made, kept on this device so a reload during the lesson doesn't lose it
 const LAST_KEY = 'exercise:last';
@@ -98,8 +99,8 @@ const MakeExercise = ({
   return (
     <>
       <p className="hint">{t('hint')}</p>
-      <form className="make-exercise" onSubmit={(event) => void make(event)}>
-        <fieldset className="make-exercise-what">
+      <form className={styles['make-exercise']} onSubmit={(event) => void make(event)}>
+        <fieldset className={styles['make-exercise-what']}>
           <legend>{t('practise')}</legend>
           <label className="form-field">
             <span>{t('grammar')}</span>
@@ -124,7 +125,7 @@ const MakeExercise = ({
               : t('noWords')}
           </label>
         </fieldset>
-        <div className="make-exercise-row">
+        <div className={styles['make-exercise-row']}>
           <div className="seg" role="group" aria-label={t('level')}>
             {LEVELS.map((candidate) => (
               <Button
@@ -137,7 +138,7 @@ const MakeExercise = ({
               </Button>
             ))}
           </div>
-          <label className="make-exercise-count">
+          <label className={styles['make-exercise-count']}>
             <span>{t('count')}</span>
             <Select value={count} onChange={(event) => setCount(Number(event.target.value))}>
               {QUESTION_COUNTS.map((option) => (

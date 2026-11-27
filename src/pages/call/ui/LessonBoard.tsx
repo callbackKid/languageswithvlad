@@ -8,6 +8,7 @@ import { Button } from '@/shared/ui/controls';
 import InlineConfirm from '@/shared/ui/InlineConfirm';
 
 import { type BoardHandle } from './BoardCanvas';
+import styles from './LessonBoard.module.css';
 
 // the download has started by then, so the file's address can be let go (milliseconds)
 const RELEASE_AFTER = 1000;
@@ -66,7 +67,7 @@ const LessonBoard = ({
     <CallCard
       id="board"
       title={t('boardTitle')}
-      className="lesson-board"
+      className={styles['lesson-board']}
       actions={
         <>
           {isOpen && (
@@ -109,7 +110,7 @@ const LessonBoard = ({
       )}
       <p className="hint">{shared ? t('boardHintShared') : t('boardHint')}</p>
       {isOpen && shared && (
-        <p className={'board-status' + (others ? ' live' : '')} role="status">
+        <p className={styles['board-status'] + (others ? ` ${styles.live}` : '')} role="status">
           {others
             ? t('boardLive', {
                 names: peers.map((peer) => peer.name || t('someone')).join(', '),
@@ -118,7 +119,7 @@ const LessonBoard = ({
         </p>
       )}
       {isOpen ? (
-        <div ref={frame} className="board-frame">
+        <div ref={frame} className={styles['board-frame']}>
           <Suspense
             fallback={
               <p className="hint">

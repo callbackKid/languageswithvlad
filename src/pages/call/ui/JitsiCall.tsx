@@ -4,6 +4,8 @@ import { api, ApiError } from '@/shared/api';
 import { call, getUiLanguage, translator, useTranslation } from '@/shared/i18n';
 import { Button } from '@/shared/ui/controls';
 
+import styles from './CallProviders.module.css';
+
 // Jitsi as a Service: every call runs on 8x8's servers, under the app's AppID
 const JAAS_DOMAIN = '8x8.vc';
 
@@ -90,7 +92,7 @@ const JitsiCall = ({
   }, [appId, room, userName]);
 
   return (
-    <div className="jitsi-call">
+    <div className={styles['jitsi-call']}>
       {state === 'joining' && (
         <p className="hint">
           <span className="spinner" /> {t('joining')}
@@ -101,7 +103,7 @@ const JitsiCall = ({
           <p>{error}</p>
         </div>
       )}
-      <div ref={root} className={'jitsi-root' + (state === 'in' ? ' in' : '')} />
+      <div ref={root} className={styles['jitsi-root'] + (state === 'in' ? ` ${styles.in}` : '')} />
       <Button variant="ghost" onClick={onLeave}>
         {t('leave')}
       </Button>

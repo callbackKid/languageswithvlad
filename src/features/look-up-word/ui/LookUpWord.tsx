@@ -5,6 +5,7 @@ import { learning, useTranslation, wordActions } from '@/shared/i18n';
 import { Button, Input, Select } from '@/shared/ui/controls';
 
 import { cleanSelection, lookUp, menuPlace } from '../model/wordActions';
+import styles from './LookUpWord.module.css';
 
 // A word or phrase typed by hand, one that isn't in any text, opened in the word menu.
 const LookUpWord = () => {
@@ -32,7 +33,7 @@ const LookUpWord = () => {
   };
 
   return (
-    <form className="look-up" onSubmit={submit}>
+    <form className={styles['look-up']} onSubmit={submit}>
       <Input
         ref={field}
         lang={language}

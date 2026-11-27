@@ -1,4 +1,8 @@
 import './styles.css';
+import '@/shared/ui/HomeworkList.css';
+import '@/shared/ui/OpenLink.css';
+import '@/shared/ui/PdfPages.css';
+import '@/shared/ui/Exercise.css';
 
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';

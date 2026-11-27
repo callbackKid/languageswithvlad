@@ -1,0 +1,18 @@
+.transcript {
+  width: 100%;
+  min-height: 360px;
+  font-family: var(--serif);
+  font-size: 16px;
+  line-height: 1.5;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--paper, var(--surface));
+  color: var(--text);
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+.handwritten-actions {
+  margin: 0 0 8px;
+}

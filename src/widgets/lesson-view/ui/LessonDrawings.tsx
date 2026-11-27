@@ -6,6 +6,8 @@ import { paper, useTranslation } from '@/shared/i18n';
 import { dayKey } from '@/shared/lib/dates';
 import { loadChecked, loadText } from '@/shared/lib/storage';
 
+import styles from './LessonDrawings.module.css';
+
 const BoardPicture = lazy(() => import('./BoardPicture'));
 
 /** What was drawn on the board and written in lesson mode on the day of this lesson, as this
@@ -19,7 +21,7 @@ const LessonDrawings = ({ docId, date }: { docId: string; date: Date }) => {
   const elements = board?.elements ?? [];
   if (!elements.length && !callNotes.trim()) return null;
   return (
-    <section className="lesson-drawings">
+    <section className={styles['lesson-drawings']}>
       <p className="hint">{t('drawingsHint')}</p>
       {elements.length > 0 && (
         <>

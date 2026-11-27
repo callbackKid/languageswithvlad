@@ -1,0 +1,6 @@
+.notes-status {
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 6px;
+  min-height: 20px;
+}

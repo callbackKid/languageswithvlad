@@ -26,11 +26,13 @@ import { Button, IconButton } from '@/shared/ui/controls';
 import Speak from '@/shared/ui/Speak';
 import WaitingFact from '@/shared/ui/WaitingFact';
 
+import styles from './WordActions.module.css';
+
 /** Where the menu never opens on a selection: exercises (it would give the answers away), form
     fields, places marked data-no-word-actions (translations, which may be in a language being
     learned too), and the menu itself. */
 const SKIPPED =
-  '.ex, input, textarea, select, [contenteditable], [data-no-word-actions], .word-actions';
+  '.ex, input, textarea, select, [contenteditable], [data-no-word-actions], [data-word-menu]';
 // The element whose text holds the sentence around a selection.
 const BLOCK = 'p, li, td, th, dd, dt, h1, h2, h3, h4, blockquote, pre, label, div';
 // On a touch screen the selection is adjusted with handles: the menu waits until it rests this long.
@@ -224,12 +226,13 @@ const WordActions = ({
   return (
     <div
       ref={menu}
-      className="word-actions"
+      data-word-menu=""
+      className={styles['word-actions']}
       role="dialog"
       aria-label={t('dialogLabel', { word: picked.text })}
     >
-      <div className="word-actions-head">
-        <b className="word-actions-word" lang={language}>
+      <div className={styles['word-actions-head']}>
+        <b className={styles['word-actions-word']} lang={language}>
           {picked.text}
         </b>
         <Speak text={picked.text} language={language} />
@@ -240,7 +243,11 @@ const WordActions = ({
       </div>
 
       {hasClaude ? (
-        <div className="seg word-actions-views" role="group" aria-label={t('actionsLabel')}>
+        <div
+          className={`seg ${styles['word-actions-views']}`}
+          role="group"
+          aria-label={t('actionsLabel')}
+        >
           {shownViews.map((candidate) => (
             <Button
               variant="unstyled"
@@ -269,10 +276,10 @@ const WordActions = ({
       )}
 
       {card && view && (
-        <div className="word-actions-body">
+        <div className={styles['word-actions-body']}>
           {view === 'translate' && (
             <>
-              <p className="word-actions-ru" lang={translationOf(card.language)}>
+              <p className={styles['word-actions-ru']} lang={translationOf(card.language)}>
                 {card.ru}
               </p>
               {card.base && card.base !== card.fr && (
@@ -298,7 +305,7 @@ const WordActions = ({
           )}
           {view === 'examples' &&
             (card.examples.length ? (
-              <ul className="word-actions-examples">
+              <ul className={styles['word-actions-examples']}>
                 {card.examples.map((example) => (
                   <li key={example.text}>
                     <span lang={language}>{example.text}</span>
@@ -327,7 +334,7 @@ const WordActions = ({
       )}
 
       {card && lesson && (
-        <div className="row-actions word-actions-add">
+        <div className={`row-actions ${styles['word-actions-add']}`}>
           {canWrite ? (
             <>
               <Button

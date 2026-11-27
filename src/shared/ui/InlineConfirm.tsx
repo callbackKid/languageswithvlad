@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react';
 import { common, useTranslation } from '@/shared/i18n';
 
 import { IconButton } from './controls';
+import styles from './InlineConfirm.module.css';
 
 /** A question asked in place, under the row it is about, instead of the browser's alert: ✓ does
     it, the red ✕ (or Escape) doesn't. Focus moves to ✕, so Enter by habit changes nothing. */
@@ -26,7 +27,7 @@ const InlineConfirm = ({
 
   return (
     <div
-      className="inline-confirm"
+      className={styles['inline-confirm']}
       role="group"
       aria-label={question}
       onKeyDown={(event) => {
@@ -34,10 +35,15 @@ const InlineConfirm = ({
       }}
     >
       <p>{question}</p>
-      <IconButton className="inline-confirm-yes" label={yesLabel} onClick={onYes}>
+      <IconButton className={styles['inline-confirm-yes']} label={yesLabel} onClick={onYes}>
         ✓
       </IconButton>
-      <IconButton ref={noButton} className="inline-confirm-no" label={t('cancel')} onClick={onNo}>
+      <IconButton
+        ref={noButton}
+        className={styles['inline-confirm-no']}
+        label={t('cancel')}
+        onClick={onNo}
+      >
         ✕
       </IconButton>
     </div>

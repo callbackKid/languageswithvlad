@@ -2,6 +2,7 @@ import { languageOfTense, useTranslationLanguage } from '@/shared/config';
 import { common, useTranslation } from '@/shared/i18n';
 
 import { type FormStat, type WordStat } from '../model/progress';
+import styles from './MistakeList.module.css';
 import Transcription from './Transcription';
 
 // Missed words and verb forms with how often each was missed.
@@ -9,10 +10,10 @@ const MistakeList = ({ words = [], forms = [] }: { words?: WordStat[]; forms?: F
   const { t } = useTranslation(common);
   const translationOf = useTranslationLanguage();
   return (
-    <ul className="mistakes">
+    <ul className={styles.mistakes}>
       {words.map((stat) => (
         <li key={'w' + stat.fr}>
-          <span className="fr" lang={stat.language ?? 'fr'}>
+          <span className={styles.word} lang={stat.language ?? 'fr'}>
             {stat.fr}
             {stat.tr && (
               <>
@@ -21,22 +22,26 @@ const MistakeList = ({ words = [], forms = [] }: { words?: WordStat[]; forms?: F
               </>
             )}
           </span>
-          <span className="ru" data-no-word-actions lang={translationOf(stat.language)}>
+          <span
+            className={styles.translation}
+            data-no-word-actions
+            lang={translationOf(stat.language)}
+          >
             {stat.ru || '—'}
           </span>
-          <span className="miss">{t('missed', { count: stat.wrong })}</span>
+          <span className={styles.count}>{t('missed', { count: stat.wrong })}</span>
         </li>
       ))}
       {forms.map((stat) => (
         <li key={'f' + stat.inf + stat.t + stat.p + (stat.negative ? '|ne' : '')}>
-          <span className="fr" lang={languageOfTense(stat.t)}>
+          <span className={styles.word} lang={languageOfTense(stat.t)}>
             {stat.p} {stat.f}
           </span>
-          <span className="ru">
+          <span className={styles.translation}>
             <i lang={languageOfTense(stat.t)}>{stat.inf}</i>, {stat.t}
             {stat.negative && `, ${t('negative')}`}
           </span>
-          <span className="miss">{t('missed', { count: stat.wrong })}</span>
+          <span className={styles.count}>{t('missed', { count: stat.wrong })}</span>
         </li>
       ))}
     </ul>

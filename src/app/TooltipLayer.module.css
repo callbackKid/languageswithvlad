@@ -1,0 +1,25 @@
+/* the bubble TooltipLayer shows for elements with data-tooltip; dark on light and light on dark */
+.tooltip {
+  position: fixed;
+  z-index: 100;
+  max-width: min(280px, calc(100vw - 16px));
+  padding: 5px 9px;
+  border-radius: 6px;
+  background: var(--ink);
+  color: var(--bg);
+  font-size: 13px;
+  line-height: 1.4;
+  pointer-events: none;
+  box-shadow: 0 2px 8px var(--shadow);
+  animation: tooltip-in 0.12s ease-out;
+}
+@keyframes tooltip-in {
+  from {
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tooltip {
+    animation: none;
+  }
+}

@@ -1,13 +1,14 @@
 import { app, setUiLanguage, UI_LANGUAGES, type UiLanguage, useTranslation } from '@/shared/i18n';
 
 import { Select } from './controls';
+import styles from './LanguagePicker.module.css';
 
 // The dropdown in the top bar that changes the language of the interface.
 const LanguagePicker = () => {
   const { t, language } = useTranslation(app);
   return (
     <Select
-      className="language-picker"
+      className={styles['language-picker']}
       value={language}
       aria-label={t('interfaceLanguage')}
       data-tooltip={t('interfaceLanguage')}

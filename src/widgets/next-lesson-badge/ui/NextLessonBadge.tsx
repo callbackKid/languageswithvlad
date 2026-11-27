@@ -1,3 +1,5 @@
+import './NextLessonBadge.css';
+
 import { type ReactNode, useEffect, useState } from 'react';
 
 import { parseNextLesson } from '@/entities/lesson';

@@ -15,6 +15,9 @@ import WaitingFact from '@/shared/ui/WaitingFact';
 import { LessonView } from '@/widgets/lesson-view';
 import { WordsTab } from '@/widgets/word-list';
 
+import styles from './HandwrittenNotes.module.css';
+import pickerStyles from './PhotoPicker.module.css';
+
 // Where the lesson comes from: photos of handwritten notes, or pages of a textbook PDF.
 export type PaperSource = 'handwritten' | 'textbook';
 
@@ -188,11 +191,15 @@ const HandwrittenNotes = ({
   return (
     <>
       {source === 'textbook' ? (
-        <p className="hint photo-intro">{t('textbookIntro', { count: MAX_PDF_PAGES })}</p>
+        <p className={`hint ${pickerStyles['photo-intro']}`}>
+          {t('textbookIntro', { count: MAX_PDF_PAGES })}
+        </p>
       ) : (
-        <p className="hint photo-intro">{t('handwrittenIntro', { count: MAX_PAGES })}</p>
+        <p className={`hint ${pickerStyles['photo-intro']}`}>
+          {t('handwrittenIntro', { count: MAX_PAGES })}
+        </p>
       )}
-      <div className="photo-pick">
+      <div className={pickerStyles['photo-pick']}>
         <label className="btn primary">
           {source === 'textbook'
             ? pdf
@@ -307,7 +314,7 @@ const HandwrittenNotes = ({
                 {source === 'textbook' ? t('checkTextbook') : t('checkHandwriting')}
               </p>
               <Textarea
-                className="transcript"
+                className={styles.transcript}
                 lang="fr"
                 value={draft}
                 onChange={(event) => setDraft(event.target.value)}
@@ -325,7 +332,7 @@ const HandwrittenNotes = ({
           </section>
         ) : (
           <>
-            <div className="row-actions handwritten-actions">
+            <div className={`row-actions ${styles['handwritten-actions']}`}>
               <Button variant="ghost" onClick={() => setDraft(current.text)}>
                 {t('editText')}
               </Button>

@@ -1,0 +1,47 @@
+.connect {
+  max-width: 620px;
+  margin: 56px auto;
+  padding: 0 24px;
+}
+.connect h1 {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 44px;
+  line-height: 1.15;
+  margin: 0 0 12px;
+  color: var(--ink);
+}
+.connect p {
+  color: var(--muted);
+  margin: 0 0 20px;
+}
+.connect .field {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.connect input {
+  flex: 1;
+  min-width: 240px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px 12px;
+  background: var(--surface);
+}
+.connect .example {
+  font-family: var(--serif);
+  font-style: normal;
+  color: var(--text);
+  background: var(--soft);
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+.connect p b {
+  color: var(--text);
+}
+
+.connect-language {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 8px;
+}

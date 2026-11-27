@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import { common, useTranslation } from '@/shared/i18n';
 
 import { Button } from './controls';
+import styles from './ExerciseHead.module.css';
 
 // The title row of an exercise: its name, a progress counter, and a way back.
 const ExerciseHead = ({
@@ -18,7 +19,7 @@ const ExerciseHead = ({
 }) => {
   const { t } = useTranslation(common);
   return (
-    <div className="ex-head">
+    <div className={styles['ex-head']}>
       <h2>{title}</h2>
       {children}
       {onClose && (

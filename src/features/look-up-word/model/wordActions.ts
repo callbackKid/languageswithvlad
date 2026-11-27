@@ -16,7 +16,7 @@ const CARDS_KEY = 'words:cards';
 // The oldest cards are dropped beyond this many, so storage doesn't fill up.
 const MAX_CARDS = 150;
 
-// Keep in step with the width of .word-actions in styles.css.
+// Keep in step with the width in the WordActions stylesheet.
 const MENU_WIDTH = 380;
 // Space between the menu and the edges of the window or the selected text, in pixels.
 const GAP = 8;

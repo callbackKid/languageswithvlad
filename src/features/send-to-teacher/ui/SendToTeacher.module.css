@@ -1,0 +1,20 @@
+/* "Send to the teacher": the report, checked before it goes into the document */
+.send-to-teacher {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+:global(.panel) .send-to-teacher {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+.send-to-teacher h3 {
+  margin: 0 0 4px;
+  font-size: 16px;
+}
+.report-text {
+  min-height: 220px;
+  font-size: 14px;
+  line-height: 1.5;
+}

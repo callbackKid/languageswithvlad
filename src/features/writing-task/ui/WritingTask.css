@@ -1,0 +1,52 @@
+/* a written homework task and Claude's check of it */
+.writing-text {
+  min-height: 180px;
+  font-family: var(--serif);
+  font-size: 17px;
+}
+.writing-result h3 {
+  margin: 18px 0 6px;
+  font-size: 16px;
+}
+.writing-corrected {
+  margin: 0;
+  white-space: pre-wrap;
+  font-family: var(--serif);
+  font-size: 17px;
+  line-height: 1.6;
+}
+.writing-corrected mark {
+  background: var(--ok-soft);
+  color: var(--ok);
+  border-radius: 3px;
+  padding: 0 2px;
+}
+.writing-mistakes {
+  margin: 0;
+  padding-left: 20px;
+}
+.writing-mistakes li {
+  margin: 6px 0;
+}
+.writing-mistakes del {
+  color: var(--bad);
+}
+.writing-mistakes ins {
+  color: var(--ok);
+  text-decoration: none;
+  font-weight: 600;
+}
+.writing-mistakes [lang] {
+  font-family: var(--serif);
+}
+.writing-mistakes .why {
+  display: block;
+  font-size: 14px;
+  color: var(--muted);
+}
+.writing-comment {
+  margin: 14px 0 0;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: var(--surface);
+}

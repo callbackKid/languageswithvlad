@@ -1,0 +1,27 @@
+.add-to-doc {
+  margin: 12px 0;
+}
+.add-to-doc :global(.hint) {
+  font-size: 13px;
+  color: var(--muted);
+}
+.add-to-doc :global(.hint):global(.err) {
+  color: var(--bad);
+}
+/* where the lines go: a new lesson or under one of the document's lessons */
+.add-to-doc-place {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 8px;
+  font-size: 14px;
+}
+.add-to-doc-place select {
+  max-width: 100%;
+  padding: 7px 30px 7px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background-color: var(--surface);
+  color: var(--text);
+  font: inherit;
+}

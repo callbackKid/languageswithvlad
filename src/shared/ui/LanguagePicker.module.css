@@ -1,0 +1,8 @@
+.language-picker {
+  font-size: 14px;
+  padding: 6px 30px 6px 8px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background-color: var(--surface);
+  color: var(--text);
+}

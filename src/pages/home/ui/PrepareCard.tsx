@@ -14,6 +14,7 @@ import { load, save } from '@/shared/lib/storage';
 import { Button } from '@/shared/ui/controls';
 
 import { homeCards } from '../i18n/homeCards';
+import styles from './HomeLessonCards.module.css';
 
 // How long before a lesson the round is offered.
 const AHEAD = 24 * 60 * 60 * 1000;
@@ -48,7 +49,7 @@ const PrepareCard = ({
   const words = lessonWords(lesson, bank, hasClaude);
   if (revising)
     return (
-      <section className="home-card exercise">
+      <section className={`${styles['home-card']} exercise`}>
         <WordQuiz
           title={t('prepareTitle')}
           closeLabel={t('backHome')}
@@ -67,8 +68,8 @@ const PrepareCard = ({
   );
   const today = upcoming.start.toDateString() === new Date().toDateString();
   return (
-    <section className="home-card prepare-card">
-      <div className="home-card-head">
+    <section className={`${styles['home-card']} prepare-card`}>
+      <div className={styles['home-card-head']}>
         <h2>{today ? t('prepareToday', { time }) : t('prepareTomorrow', { time })}</h2>
       </div>
       <p className="hint">{t('prepareHint', { n: lesson.n })}</p>

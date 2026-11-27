@@ -15,6 +15,8 @@ import { getUiLanguage, paper, useTranslation } from '@/shared/i18n';
 import { followLink, hrefFor } from '@/shared/lib/router';
 import { Button, Input } from '@/shared/ui/controls';
 
+import styles from './LessonExtrasTabs.module.css';
+
 /* The lesson's Grammar, Homework and Book exercises tabs. What they show comes from one reading
    of the lesson by Claude (LessonView keeps it), explained in the interface language. */
 
@@ -155,9 +157,9 @@ export const BookTab = ({
     <>
       {extras &&
         (exercises.length ? (
-          <ol className="book-exercises">
+          <ol className={styles['book-exercises']}>
             {exercises.map((exercise, index) => (
-              <li key={`${exercise.title}-${index}`} className="book-exercise">
+              <li key={`${exercise.title}-${index}`} className={styles['book-exercise']}>
                 <h2 lang={extras.language}>
                   {exercise.title}
                   {exercise.title && exercise.instructions && ' — '}

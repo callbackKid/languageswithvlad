@@ -1,5 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
+import styles from './TooltipLayer.module.css';
+
 /* One styled tooltip for the whole app. Any element with data-tooltip shows its text when the
    pointer rests on it, and at once when it gets keyboard focus. Screen readers already hear the
    element's aria-label, so the bubble itself is hidden from them. */
@@ -107,7 +109,7 @@ const TooltipLayer = () => {
   return (
     <div
       ref={bubble}
-      className="tooltip"
+      className={styles.tooltip}
       aria-hidden="true"
       style={
         position

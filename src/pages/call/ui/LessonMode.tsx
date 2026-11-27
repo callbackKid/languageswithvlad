@@ -44,6 +44,7 @@ import { game } from '../i18n/game';
 import CallBar, { type JoinedCall } from './CallBar';
 import JitsiCall from './JitsiCall';
 import LessonBoard from './LessonBoard';
+import styles from './LessonMode.module.css';
 import QuizGame, {
   GAME_QUESTIONS,
   GAME_SECONDS,
@@ -93,7 +94,7 @@ const LessonNotes = ({ docId, target }: { docId: string; target: DocTarget }) =>
     <CallCard
       id="notes"
       title={t('notesTitle')}
-      className="call-notes"
+      className={styles['call-notes']}
       actions={
         <>
           <Button variant="ghost" onClick={insertTime}>
@@ -163,7 +164,7 @@ const HomeworkNotes = ({
     save(storageKey, value);
   };
   return (
-    <CallCard id="homework" title={t('homeworkTitle')} className="call-homework">
+    <CallCard id="homework" title={t('homeworkTitle')} className={styles['call-homework']}>
       <p className="hint">{t('homeworkHint')}</p>
       <Textarea
         className="notes"
@@ -211,7 +212,7 @@ const LessonWords = ({ bank, lesson }: { bank: Bank; lesson: Lesson | null }) =>
       }
     >
       {words.length ? (
-        <ul className="call-words">
+        <ul className={styles['call-words']}>
           {words.map((word) => (
             <li key={word.fr}>
               <span className="fr" lang={word.language ?? 'fr'}>
@@ -250,7 +251,7 @@ const WrittenHomework = ({ lesson, docId }: { lesson: Lesson | null; docId: stri
     .filter((writing): writing is Writing => !!writing?.text.trim());
   if (!written.length) return null;
   return (
-    <CallCard id="written" title={t('writtenTitle')} className="written-homework">
+    <CallCard id="written" title={t('writtenTitle')} className={styles['written-homework']}>
       <p className="hint">{t('writtenHint', { n: lesson.n })}</p>
       {written.map((writing) => (
         <details key={writing.task}>
@@ -283,7 +284,7 @@ const ActivityPlace = ({ children }: { children: ReactNode }) => {
     place.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, []);
   return (
-    <section ref={place} className="warm-up">
+    <section ref={place} className={styles['warm-up']}>
       {children}
     </section>
   );
@@ -332,7 +333,7 @@ const BookCard = ({
 const DiscussCard = ({ bank, hasClaude }: { bank: Bank; hasClaude: boolean }) => {
   const { t } = useTranslation(talk);
   return (
-    <CallCard id="discuss" title={t('discussTitle')} className="discuss-card">
+    <CallCard id="discuss" title={t('discussTitle')} className={styles['discuss-card']}>
       <Discuss bank={bank} hasClaude={hasClaude} embedded />
     </CallCard>
   );
@@ -487,8 +488,8 @@ const LessonMode = ({
           />
         </ActivityPlace>
       )}
-      <div className="lesson-mode">
-        <div className="lesson-mode-side">
+      <div className={styles['lesson-mode']}>
+        <div className={styles['lesson-mode-side']}>
           {joined?.kind === 'jitsi' && jitsiAppId && (
             <CallCard id="jitsi" title={t('jitsiTitle')}>
               <JitsiCall
@@ -511,7 +512,11 @@ const LessonMode = ({
           )}
           {/* under the call, so switching never closes it; both tabs stay on the page, hidden in
               turn, so an exercise or a discussion question in progress isn't lost */}
-          <div className="tabs call-tabs" {...tabListProps} aria-label={t('callTabs')}>
+          <div
+            className={`tabs ${styles['call-tabs']}`}
+            {...tabListProps}
+            aria-label={t('callTabs')}
+          >
             {CALL_TABS.map((id) => (
               <Button
                 variant="unstyled"
@@ -524,7 +529,7 @@ const LessonMode = ({
               </Button>
             ))}
           </div>
-          <div className="call-tab-panel" {...panelProps('lesson')}>
+          <div className={styles['call-tab-panel']} {...panelProps('lesson')}>
             {hasClaude && <MakeExerciseCard bank={bank} lesson={newest} />}
             <WrittenHomework lesson={earlier} docId={docId} />
             <LessonWords bank={bank} lesson={newest} />
@@ -532,7 +537,7 @@ const LessonMode = ({
               <BookCard docId={docId} lesson={newest} canWrite={!!target.docWriter} />
             )}
           </div>
-          <div className="call-tab-panel" {...panelProps('activities')}>
+          <div className={styles['call-tab-panel']} {...panelProps('activities')}>
             {!activity && (
               <WarmUpCard
                 lesson={earlier}

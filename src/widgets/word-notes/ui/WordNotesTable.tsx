@@ -4,6 +4,8 @@ import { useTranslationLanguage } from '@/shared/config';
 import { paper, useTranslation } from '@/shared/i18n';
 import Speak from '@/shared/ui/Speak';
 
+import styles from './WordNotesTable.module.css';
+
 // What goes onto Words to learn: the dictionary form when there is one.
 const asWord = (item: PhotoItem): Word => ({
   fr: item.base || item.fr,
@@ -27,8 +29,8 @@ const WordNotesTable = ({
   const { t } = useTranslation(paper);
   const translationOf = useTranslationLanguage();
   return (
-    <div className="photo-table-wrap">
-      <table className="photo-table">
+    <div className={styles['photo-table-wrap']}>
+      <table className={styles['photo-table']}>
         <thead>
           <tr>
             <th>{firstColumn}</th>
@@ -46,7 +48,7 @@ const WordNotesTable = ({
                 <td>
                   <b lang={language}>{item.fr}</b>
                   {item.context && (
-                    <div className="context" lang={language}>
+                    <div className={styles.context} lang={language}>
                       {item.context}
                     </div>
                   )}
@@ -60,17 +62,17 @@ const WordNotesTable = ({
                       <i>{item.base}</i>
                     </div>
                   )}
-                  {item.tense && <div className="tense">{item.tense}</div>}
+                  {item.tense && <div className={styles.tense}>{item.tense}</div>}
                   {!item.base && !item.tense && <span className="muted">—</span>}
                 </td>
                 <td
                   data-no-word-actions
                   lang={translationOf(item.language)}
-                  className="explanation"
+                  className={styles.explanation}
                 >
                   {item.explanation}
                 </td>
-                <td className="actions">
+                <td className={styles.actions}>
                   <Speak text={item.fr} language={language} />
                   <Star word={asWord(item)} />
                 </td>

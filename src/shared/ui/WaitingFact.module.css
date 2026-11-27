@@ -1,0 +1,51 @@
+.waiting {
+  margin: 0 0 18px;
+}
+
+.waiting-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 12px;
+  color: var(--muted);
+}
+
+.fact {
+  margin: 0;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  border-radius: 10px;
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-width: 560px;
+}
+
+.fact-label {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent-text);
+}
+
+.fact-phrase {
+  font-family: var(--serif);
+  font-size: 19px;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.fact figcaption {
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.fact-next {
+  align-self: flex-start;
+  margin-top: 4px;
+  font-size: 13px;
+  color: var(--muted);
+}

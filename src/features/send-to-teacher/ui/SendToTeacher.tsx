@@ -9,6 +9,7 @@ import { load, save } from '@/shared/lib/storage';
 import { Button, Textarea } from '@/shared/ui/controls';
 
 import { buildReport } from '../model/report';
+import styles from './SendToTeacher.module.css';
 
 type Step = 'idle' | 'review' | 'saving' | 'done';
 
@@ -68,7 +69,7 @@ const SendToTeacher = ({
     }).format(sentAt);
 
   return (
-    <section className="send-to-teacher">
+    <section className={styles['send-to-teacher']}>
       <h3>{t('sendTitle')}</h3>
       {!canWrite ? (
         <p className="hint">{commonText.t('docWriterMissing')}</p>
@@ -84,7 +85,7 @@ const SendToTeacher = ({
           {(step === 'review' || step === 'saving') && (
             <>
               <Textarea
-                className="notes report-text"
+                className={`notes ${styles['report-text']}`}
                 value={text}
                 aria-label={t('reportLabel')}
                 onChange={(event) => setText(event.target.value)}

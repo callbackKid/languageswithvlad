@@ -23,6 +23,7 @@ import { shownTopic } from '@/shared/lib/util';
 import { Button, IconButton } from '@/shared/ui/controls';
 
 import { homeCards } from '../i18n/homeCards';
+import styles from './HomeLessonCards.module.css';
 
 const ROUND = 10;
 const SHOWN_WORDS = 8;
@@ -56,7 +57,7 @@ const LessonSummary = ({
   const verbCount = withoutRemoved(analysis, lesson.key, getRemoved()).verbs.length;
   if (revising)
     return (
-      <section className="home-card exercise">
+      <section className={`${styles['home-card']} exercise`}>
         <WordQuiz
           title={t('revisingTitle', { n: lesson.n })}
           closeLabel={t('backHome')}
@@ -80,8 +81,8 @@ const LessonSummary = ({
     loadChecked(`extras:${lesson.hash}:${uiLanguage}`, normalizeExtras)?.grammar ?? [];
   const path = lessonPath(lesson.key);
   return (
-    <section className="home-card lesson-summary">
-      <div className="home-card-head">
+    <section className={`${styles['home-card']} lesson-summary`}>
+      <div className={styles['home-card-head']}>
         <h2>
           {days === 0
             ? t('summaryToday', { n: lesson.n, counts })
@@ -107,7 +108,7 @@ const LessonSummary = ({
         </p>
       )}
       {words.length > 0 && (
-        <ul className="summary-words" lang={analysis.language}>
+        <ul className={styles['summary-words']} lang={analysis.language}>
           {words.slice(0, SHOWN_WORDS).map((word) => (
             <li key={word.fr} className={word.key ? 'key-chip' : undefined}>
               {word.fr}

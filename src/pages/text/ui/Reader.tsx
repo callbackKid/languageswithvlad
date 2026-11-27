@@ -18,6 +18,7 @@ import { WordNotesTable } from '@/widgets/word-notes';
 import { reader } from '../i18n/reader';
 import { normalizeReaderText, normalizeStudy, normalizeTranslation } from '../model/normalize';
 import { type ReaderText, type TextStudy } from '../model/types';
+import styles from './Reader.module.css';
 
 const STORAGE_KEY = 'reader:texts';
 // Keep in step with MAX_TEXT_LENGTH in api/text.ts.
@@ -54,7 +55,7 @@ const TrueFalse = ({
   ).length;
   return (
     <>
-      <ol className="true-false">
+      <ol className={styles['true-false']}>
         {statements.map((statement, index) => {
           const answer = answers[index];
           const isRight = answer === statement.correct;
@@ -198,7 +199,9 @@ const Reader = ({ hasClaude }: { hasClaude: boolean }) => {
   // A click on a word opens the word menu on it; a selection opens it by itself.
   const lookUpWord = (event: MouseEvent<HTMLElement>) => {
     const target = event.target;
-    if (!(target instanceof HTMLElement) || !target.classList.contains('reader-word')) return;
+    if (!(target instanceof HTMLElement) || !target.hasAttribute('data-reader-word')) {
+      return;
+    }
     if (!window.getSelection()?.isCollapsed) return;
     const word = target.textContent ?? '';
     lookUp({
@@ -272,7 +275,7 @@ const Reader = ({ hasClaude }: { hasClaude: boolean }) => {
 
       {!current ? (
         <form
-          className="reader-form"
+          className={styles['reader-form']}
           onSubmit={(event) => {
             event.preventDefault();
             addText();
@@ -309,7 +312,7 @@ const Reader = ({ hasClaude }: { hasClaude: boolean }) => {
           <div className="row-actions lead">
             {texts.length > 1 && (
               <Select
-                className="reader-select"
+                className={styles['reader-select']}
                 aria-label={t('savedTexts')}
                 value={current.id}
                 onChange={(event) => open(event.target.value)}
@@ -363,21 +366,23 @@ const Reader = ({ hasClaude }: { hasClaude: boolean }) => {
               {/* a click on a word, or a selection, opens the word menu; its answers come back to
                   this page as the list of words asked about */}
               <div
-                className="reader-text"
+                className={styles['reader-text']}
                 lang={language}
                 data-word-source={WORD_SOURCE}
                 onClick={lookUpWord}
               >
                 {paragraphs.map((paragraph, index) => (
-                  <div key={index} className="reader-paragraph">
+                  <div key={index} className={styles['reader-paragraph']}>
                     <p>
                       {paragraph.split(WORD).map((part, position) =>
                         // split() with a capturing group puts the words at the odd positions
                         position % 2 ? (
                           <span
                             key={position}
+                            data-reader-word=""
                             className={
-                              'reader-word' + (asked.has(part.toLowerCase()) ? ' asked' : '')
+                              styles['reader-word'] +
+                              (asked.has(part.toLowerCase()) ? ` ${styles.asked}` : '')
                             }
                           >
                             {part}
@@ -389,7 +394,7 @@ const Reader = ({ hasClaude }: { hasClaude: boolean }) => {
                     </p>
                     {showTranslation && aligned && (
                       <p
-                        className="reader-translation"
+                        className={styles['reader-translation']}
                         data-no-word-actions
                         lang={translationOf(language)}
                       >
@@ -400,7 +405,7 @@ const Reader = ({ hasClaude }: { hasClaude: boolean }) => {
                 ))}
                 {showTranslation && translation && !aligned && (
                   <div
-                    className="reader-translation"
+                    className={styles['reader-translation']}
                     data-no-word-actions
                     lang={translationOf(language)}
                   >
@@ -419,14 +424,14 @@ const Reader = ({ hasClaude }: { hasClaude: boolean }) => {
 
               {current.notes.length > 0 && (
                 <>
-                  <h3 className="reader-heading">{t('askedTitle')}</h3>
+                  <h3 className={styles['reader-heading']}>{t('askedTitle')}</h3>
                   <WordNotesTable items={current.notes} firstColumn={t('colMarked')} />
                 </>
               )}
             </div>
           </section>
 
-          <section className="panel solo reader-study">
+          <section className={`panel solo ${styles['reader-study']}`}>
             <div className="body">
               <h2 className="sub-h">{t('exercisesTitle')}</h2>
               {studying === 'loading' ? (
@@ -448,7 +453,7 @@ const Reader = ({ hasClaude }: { hasClaude: boolean }) => {
                 <>
                   {current.study.words.length > 0 && (
                     <>
-                      <h3 className="reader-heading">{t('wordsTitle')}</h3>
+                      <h3 className={styles['reader-heading']}>{t('wordsTitle')}</h3>
                       {/* remounted for a new set of words, so its checkboxes start over */}
                       <WordsTab
                         key={current.id + current.study.words.length}
@@ -460,16 +465,16 @@ const Reader = ({ hasClaude }: { hasClaude: boolean }) => {
                   )}
                   {current.study.questions.length > 0 && (
                     <>
-                      <h3 className="reader-heading">{t('questionsTitle')}</h3>
+                      <h3 className={styles['reader-heading']}>{t('questionsTitle')}</h3>
                       <p className="hint">{t('questionsHint')}</p>
-                      <ol className="reader-questions">
+                      <ol className={styles['reader-questions']}>
                         {current.study.questions.map((item) => (
                           <li key={item.question}>
                             <span lang={language}>{item.question}</span>{' '}
                             <Speak text={item.question} language={language} />
                             {item.ru && (
                               <span
-                                className="translation"
+                                className={styles.translation}
                                 data-no-word-actions
                                 lang={translationOf(language)}
                               >
@@ -483,7 +488,7 @@ const Reader = ({ hasClaude }: { hasClaude: boolean }) => {
                   )}
                   {current.study.statements.length > 0 && (
                     <>
-                      <h3 className="reader-heading">{t('trueFalseTitle')}</h3>
+                      <h3 className={styles['reader-heading']}>{t('trueFalseTitle')}</h3>
                       <TrueFalse
                         key={current.id + current.study.statements[0]?.text}
                         statements={current.study.statements}

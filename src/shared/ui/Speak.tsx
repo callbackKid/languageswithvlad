@@ -3,6 +3,7 @@ import { common, useTranslation } from '@/shared/i18n';
 import { canSpeak, speak } from '@/shared/lib/speech';
 
 import { IconButton } from './controls';
+import styles from './Speak.module.css';
 
 /** A small 🔊 button that reads the text aloud; hidden where the browser has no speech. label
     replaces "Listen: {text}" for a screen reader where the text must stay hidden (an answer). */
@@ -19,7 +20,7 @@ const Speak = ({
   if (!canSpeak) return null;
   return (
     <IconButton
-      className="speak"
+      className={styles.speak}
       tooltip={t('listen')}
       label={label ?? t('listenTo', { text })}
       onClick={(event) => {

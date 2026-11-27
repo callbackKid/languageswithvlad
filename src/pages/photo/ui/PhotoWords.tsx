@@ -13,6 +13,7 @@ import WaitingFact from '@/shared/ui/WaitingFact';
 import { WordNotesTable } from '@/widgets/word-notes';
 
 import { mergePhotoItems, normalizePhoto } from '../model/normalize';
+import styles from './PhotoPicker.module.css';
 
 const LAST_KEY = 'photo:last';
 // long side in pixels: enough to read book print, small enough for the server's upload limit
@@ -106,12 +107,12 @@ const PhotoWords = ({
 
   return (
     <>
-      <p className="hint photo-intro">{t('photoIntro')}</p>
+      <p className={`hint ${styles['photo-intro']}`}>{t('photoIntro')}</p>
       {!hasClaude ? (
         <p className="empty">{commonText.t('needsClaude')}</p>
       ) : (
         <>
-          <div className="photo-pick">
+          <div className={styles['photo-pick']}>
             <label className="btn primary">
               {scan || previews.length ? t('otherPhotos') : t('choosePhotos')}
               <Input
@@ -135,11 +136,11 @@ const PhotoWords = ({
             </label>
             <span className="hint">{t('photoLimit', { count: MAX_PHOTOS })}</span>
             {previews.length > 0 && (
-              <div className="photo-previews">
+              <div className={styles['photo-previews']}>
                 {previews.map((url, index) => (
                   <img
                     key={url}
-                    className="photo-preview"
+                    className={styles['photo-preview']}
                     src={url}
                     alt={t('photoYouSent', { n: index + 1 })}
                   />

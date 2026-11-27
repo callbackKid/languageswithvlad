@@ -39,6 +39,7 @@ import InlineConfirm from '@/shared/ui/InlineConfirm';
 import WaitingFact from '@/shared/ui/WaitingFact';
 
 import { useVerbConjugations, verbIdentity } from '../model/useVerbConjugations';
+import styles from './VerbsTab.module.css';
 
 // the order of the verb list, kept on the device for every lesson
 const SORT_KEY = 'verb-sort';
@@ -145,7 +146,7 @@ const VerbsTab = ({
   return (
     <>
       {hasGroups && verbs.length > 1 && (
-        <div className="seg verb-sort" role="group" aria-label={t('sortVerbs')}>
+        <div className={`seg ${styles['verb-sort']}`} role="group" aria-label={t('sortVerbs')}>
           {VERB_SORTS.map((option) => (
             <Button
               variant="unstyled"
@@ -166,16 +167,16 @@ const VerbsTab = ({
         return (
           <section
             key={section.group ?? 'none'}
-            className="verb-group"
+            className={styles['verb-group']}
             aria-label={shownSort === 'group' ? name : undefined}
           >
-            {shownSort === 'group' && <h3 className="verb-group-name">{name}</h3>}
-            <ul className="verbs">
+            {shownSort === 'group' && <h3 className={styles['verb-group-name']}>{name}</h3>}
+            <ul className={styles.verbs}>
               {section.verbs.map((verb) => (
-                <li key={verbIdentity(verb)} className="verb-row">
+                <li key={verbIdentity(verb)} className={styles['verb-row']}>
                   <Button
                     variant="unstyled"
-                    className="verb"
+                    className={styles.verb}
                     aria-pressed={currentVerb === verbIdentity(verb)}
                     onClick={() => void open(verb)}
                   >
@@ -222,7 +223,7 @@ const VerbsTab = ({
         );
       })}
       {restoreLink}
-      <div className="row-actions quiz-bar">
+      <div className={`row-actions ${styles['quiz-bar']}`}>
         <Button disabled={!loaded.length} onClick={() => setMode('quiz')}>
           {t('quickQuiz')}
         </Button>
@@ -263,13 +264,13 @@ const VerbsTab = ({
 
       {shownConjugation && (
         <>
-          <div className="conj-head">
+          <div className={styles['conj-head']}>
             <h2 lang={language}>{shownConjugation.inf}</h2>
             <span className="ru" data-no-word-actions lang={translationOf(language)}>
               {shownConjugation.ru}
             </span>
           </div>
-          <p className="conj-meta">
+          <p className={styles['conj-meta']}>
             {shownConjugation.pp &&
               rich(
                 'pastParticiple',
@@ -300,7 +301,7 @@ const VerbsTab = ({
               </>
             )}
           </p>
-          <div className="tense-tabs" role="group" aria-label={t('tense')}>
+          <div className={styles['tense-tabs']} role="group" aria-label={t('tense')}>
             {tenses.map((tenseOption) => (
               <Button
                 variant="unstyled"
@@ -314,7 +315,7 @@ const VerbsTab = ({
             ))}
           </div>
           {canNegate && (
-            <div className="tense-tabs" role="group" aria-label={t('sentenceType')}>
+            <div className={styles['tense-tabs']} role="group" aria-label={t('sentenceType')}>
               <Button
                 variant="unstyled"
                 aria-pressed={!isNegative}
@@ -442,10 +443,12 @@ const Drill = ({
                     }}
                   />
                   {(result === 'bad' || result === 'empty') && (
-                    <div className="fix bad">{keepBracketsTogether(row.f)}</div>
+                    <div className={`${styles.fix} bad`}>{keepBracketsTogether(row.f)}</div>
                   )}
                   {result === 'accent' && (
-                    <div className="fix accent">{t('mindAccents', { form: row.f })}</div>
+                    <div className={`${styles.fix} accent`}>
+                      {t('mindAccents', { form: row.f })}
+                    </div>
                   )}
                 </td>
               </tr>

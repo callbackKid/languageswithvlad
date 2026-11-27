@@ -1,0 +1,43 @@
+.book-import {
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+/* what to take from the book's pages: exercises, the text, the grammar */
+.book-parts {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 18px;
+  margin: 0 0 12px;
+  padding: 0;
+  border: 0;
+}
+.book-parts legend {
+  width: 100%;
+  margin-bottom: 6px;
+  padding: 0;
+  font-weight: 600;
+}
+.book-parts .check {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.book-import h2 {
+  margin: 0 0 8px;
+  font-size: 16px;
+}
+
+/* In lesson mode the call card provides the frame. */
+.call-card .book-import {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+textarea.notes.book-text {
+  min-height: 260px;
+  margin-top: 8px;
+}

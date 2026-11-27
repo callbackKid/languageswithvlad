@@ -1,0 +1,20 @@
+.open-link {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  text-decoration: none;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 5px 12px;
+  white-space: nowrap;
+}
+.open-link:hover {
+  border-color: var(--ink);
+}
+
+p .open-link,
+li .open-link {
+  border: 0;
+  padding: 0;
+  text-decoration: underline;
+}

@@ -1,0 +1,46 @@
+.card {
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 10px;
+  border-radius: 12px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  cursor: pointer;
+  padding: 24px;
+  width: 100%;
+}
+.card .face {
+  font-family: var(--serif);
+  font-size: 34px;
+  line-height: 1.25;
+}
+.card .sub {
+  color: var(--muted);
+  font-size: 14px;
+}
+.card .back {
+  font-size: 22px;
+  color: var(--ink);
+}
+
+.card-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.card :global(.tr) {
+  font-size: 16px;
+}
+
+@media (max-width: 760px) {
+  .card .face {
+    font-size: 28px;
+  }
+}

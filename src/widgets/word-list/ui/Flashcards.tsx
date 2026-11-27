@@ -8,6 +8,8 @@ import { Button } from '@/shared/ui/controls';
 import ExerciseHead from '@/shared/ui/ExerciseHead';
 import Speak from '@/shared/ui/Speak';
 
+import styles from './Flashcards.module.css';
+
 // Cards with a word on one side and its translation on the other; a card not known comes back later.
 const Flashcards = ({
   words,
@@ -111,16 +113,16 @@ const Flashcards = ({
       </ExerciseHead>
       <Button
         variant="unstyled"
-        className="card"
+        className={styles.card}
         onClick={() => setFlipped((previous) => !previous)}
         aria-label={t('flipCard')}
       >
-        <span className="face" lang={direction === 'fr' ? language : translation}>
+        <span className={styles.face} lang={direction === 'fr' ? language : translation}>
           {front}
         </span>
         {direction === 'fr' && card.tr && <Transcription tr={card.tr} />}
         {flipped ? (
-          <span className="back" lang={direction === 'fr' ? translation : language}>
+          <span className={styles.back} lang={direction === 'fr' ? translation : language}>
             {back}
             {direction === 'ru' && card.tr && (
               <>
@@ -130,10 +132,10 @@ const Flashcards = ({
             )}
           </span>
         ) : (
-          <span className="sub">{t('tapToSee')}</span>
+          <span className={styles.sub}>{t('tapToSee')}</span>
         )}
       </Button>
-      <div className="card-actions">
+      <div className={styles['card-actions']}>
         <Speak text={card.fr} language={language} />
         <Button className="big" onClick={again}>
           {t('again')}

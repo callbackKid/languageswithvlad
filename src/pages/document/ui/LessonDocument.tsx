@@ -2,6 +2,8 @@ import { type ReactNode } from 'react';
 
 import { app, useTranslation } from '@/shared/i18n';
 
+import styles from './LessonDocument.module.css';
+
 /** The lesson document itself: a Google Doc opens for editing right here; a Notion page can't be
     shown inside another site, so it gets a link instead. */
 const LessonDocument = ({ url, isNotion }: { url: string; isNotion: boolean }) => {
@@ -19,7 +21,7 @@ const LessonDocument = ({ url, isNotion }: { url: string; isNotion: boolean }) =
       </main>
     );
   return (
-    <main className="doc-editor">
+    <main className={styles['doc-editor']}>
       <p className="hint">{rich('editorHint', { link })}</p>
       <iframe title="Google Doc" src={url} allow="clipboard-read; clipboard-write" />
     </main>

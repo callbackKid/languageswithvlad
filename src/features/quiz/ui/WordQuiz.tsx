@@ -10,6 +10,8 @@ import { Button, Input } from '@/shared/ui/controls';
 import ExerciseHead from '@/shared/ui/ExerciseHead';
 import Speak from '@/shared/ui/Speak';
 
+import styles from './WordQuiz.module.css';
+
 type Result = 'ok' | 'bad' | 'accent' | 'article';
 // a noun typed without its article is a near miss, not a mistake
 // (a whole word followed by a space, or an elided one like l' that runs into the noun)
@@ -143,7 +145,7 @@ const WordQuiz = ({
         <p className="score">{t('scoreLine', { score, total: questions.length })}</p>
         {review &&
           (missed.length ? (
-            <section className="quiz-missed">
+            <section className={styles['quiz-missed']}>
               <h3>{review.title}</h3>
               <ul>
                 {missed.map((item) => (

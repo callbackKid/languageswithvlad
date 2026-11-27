@@ -1,3 +1,5 @@
+import './Avatar.css';
+
 import { useSettings } from '@/shared/config';
 
 // A picture of the student: the uploaded one, or the first letter of their name.

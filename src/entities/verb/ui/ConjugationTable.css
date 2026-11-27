@@ -1,0 +1,46 @@
+table.conj {
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 520px;
+}
+table.conj td {
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: middle;
+}
+table.conj td.p {
+  color: var(--muted);
+  width: 110px;
+  font-size: 15px;
+}
+table.conj td.f {
+  font-family: var(--serif);
+  font-size: 19px;
+}
+/* the 🔈 button stays beside the form when a long form wraps, instead of on a line of its own */
+.conj-form {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+table.conj input {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 6px 8px;
+  font-family: var(--serif);
+  font-size: 17px;
+  background: var(--surface);
+}
+table.conj input.ok {
+  border-color: var(--ok);
+  background: var(--ok-soft);
+}
+table.conj input.bad {
+  border-color: var(--bad);
+  background: var(--bad-soft);
+}
+table.conj input.accent {
+  border-color: var(--warn);
+  background: var(--warn-soft);
+}

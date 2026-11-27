@@ -45,6 +45,7 @@ import { homeworkTasks } from '../model/homeworkTasks';
 import { phoneticsKey, readPhonetics } from '../model/phonetics';
 import LessonDrawings from './LessonDrawings';
 import { BookTab, GrammarTab, HomeworkTab } from './LessonExtrasTabs';
+import styles from './LessonView.module.css';
 import Notes from './Notes';
 import PhoneticsTab from './PhoneticsTab';
 
@@ -268,7 +269,7 @@ const LessonView = ({
 
   return (
     <>
-      <section className="sheet">
+      <section className={styles.sheet}>
         <div className="title-row">
           <h1>{lesson.title || `${lesson.word} ${lesson.n}`}</h1>
           <HelpLink guide={tab === 'verbs' ? 'verbs' : 'lessons'} />
@@ -384,7 +385,7 @@ const LessonView = ({
             />
           )}
           {wantsExtras && extras && hasClaude && (
-            <p className="row-actions extras-refresh">
+            <p className={`row-actions ${styles['extras-refresh']}`}>
               <Button variant="ghost" onClick={() => setFreshExtras((previous) => previous + 1)}>
                 {t('readAgain')}
               </Button>
@@ -396,7 +397,7 @@ const LessonView = ({
               <LessonDrawings docId={docId} date={lesson.date} />
             </>
           )}
-          {tab === 'source' && <pre className="source">{lesson.body}</pre>}
+          {tab === 'source' && <pre className={styles.source}>{lesson.body}</pre>}
         </div>
       </section>
     </>

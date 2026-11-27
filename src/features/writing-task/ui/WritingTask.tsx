@@ -1,3 +1,5 @@
+import './WritingTask.css';
+
 import { type ReactNode, useState } from 'react';
 
 import {

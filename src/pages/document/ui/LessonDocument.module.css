@@ -1,0 +1,30 @@
+.doc-editor {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 12px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.doc-editor :global(.hint) {
+  font-size: 13px;
+  color: var(--muted);
+  margin: 0;
+}
+.doc-editor :global(.hint) a {
+  color: var(--ink);
+}
+.doc-editor iframe {
+  width: 100%;
+  height: calc(100vh - 150px);
+  min-height: 480px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+}
+
+@media (max-width: 760px) {
+  .doc-editor {
+    padding: 8px 12px 16px;
+  }
+}

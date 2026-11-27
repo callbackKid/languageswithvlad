@@ -9,6 +9,7 @@ import { Button, Input } from '@/shared/ui/controls';
 import ExerciseHead from '@/shared/ui/ExerciseHead';
 
 import { LISTEN_PAUSES, type ListenPause, readListenPause, saveListenPause } from '../model/listen';
+import styles from './Listen.module.css';
 
 /** The ticked words read aloud one by one: the word in the language learned, a pause to say it
     back, its translation, another pause, then the next word. Nothing is graded. */
@@ -78,7 +79,7 @@ const Listen = ({ words, onClose }: { words: Word[]; onClose: () => void }) => {
   };
 
   const settings = (
-    <div className="listen-settings">
+    <div className={styles['listen-settings']}>
       <span className="hint" id="listen-pause-label">
         {t('listenPause')}
       </span>
@@ -120,11 +121,11 @@ const Listen = ({ words, onClose }: { words: Word[]; onClose: () => void }) => {
     <div className="ex listen">
       {head}
       <p className="hint">{t('listenProgress', { current: index + 1, total: order.length })}</p>
-      <div className="listen-card" aria-live="polite">
-        <p className="listen-word" lang={language}>
+      <div className={styles['listen-card']} aria-live="polite">
+        <p className={styles['listen-word']} lang={language}>
           {word.fr}
         </p>
-        <p className="listen-translation" lang={translation}>
+        <p className={styles['listen-translation']} lang={translation}>
           {phase === 'translation' ? word.ru : ' '}
         </p>
       </div>

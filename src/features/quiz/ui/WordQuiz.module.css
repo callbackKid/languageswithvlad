@@ -1,0 +1,29 @@
+.quiz-missed {
+  margin-top: 16px;
+}
+.quiz-missed h3 {
+  margin: 0 0 8px;
+  font-size: 17px;
+}
+.quiz-missed ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.quiz-missed li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--line);
+}
+/* big enough to read on the other side of a shared screen */
+.quiz-missed :global(.fr) {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 600;
+}
+.quiz-missed :global(.ru) {
+  color: var(--muted);
+}

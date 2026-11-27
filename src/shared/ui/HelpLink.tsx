@@ -1,3 +1,5 @@
+import './HelpLink.css';
+
 import { type GuideId, guidePath } from '@/shared/config';
 import { common, useTranslation } from '@/shared/i18n';
 import { followLink, hrefFor } from '@/shared/lib/router';

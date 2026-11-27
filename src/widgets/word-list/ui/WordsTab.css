@@ -1,0 +1,159 @@
+.ex-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 18px;
+}
+.ex-bar .hint {
+  font-size: 13px;
+  color: var(--muted);
+  margin-left: 4px;
+}
+
+.sel-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.sel-bar input,
+.sel-bar select {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 6px 30px 6px 10px;
+  background-color: var(--surface);
+  color: var(--text);
+}
+.sel-bar input {
+  flex: 1;
+  min-width: 160px;
+  max-width: 260px;
+}
+.sel-bar select {
+  max-width: 100%;
+}
+
+/* the words of one group by meaning, under its name */
+.word-group + .word-group {
+  margin-top: 18px;
+}
+/* the group's name with its Exercise button; they wrap under each other when the name is long */
+.word-group-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 12px;
+  margin: 0 0 6px;
+}
+.word-group-name {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+/* two classes, so it wins over .btn.ghost's colour; --accent-text is the blue meant for text */
+.btn.word-group-exercise {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent-text);
+}
+.word-group-note {
+  margin: 0 0 10px;
+  font-size: 13px;
+}
+.word-group-exercise::before {
+  content: '▶ ';
+  font-size: 10px;
+}
+.word-group-name .count {
+  margin-left: 6px;
+  font-weight: 500;
+}
+.grouping-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 10px;
+}
+
+.words {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  columns: 2 300px;
+  column-gap: 28px;
+}
+.words li {
+  break-inside: avoid;
+}
+
+.word {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  padding: 7px 4px;
+  border-bottom: 1px solid var(--line);
+  cursor: pointer;
+}
+.word input {
+  accent-color: var(--ink);
+  transform: translateY(2px);
+  flex: none;
+}
+.word .fr {
+  font-family: var(--serif);
+  font-size: 17px;
+}
+.word .ru {
+  color: var(--muted);
+  font-size: 14px;
+  margin-left: auto;
+  text-align: right;
+}
+.word .added {
+  color: var(--margin);
+  font-size: 12px;
+  margin-left: 2px;
+}
+
+.word-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  border-bottom: 1px solid var(--line);
+}
+.word-row .word {
+  flex: 1;
+  min-width: 0;
+  border-bottom: 0;
+}
+/* on Words to learn: right answers in a row towards leaving the list (●●○) */
+.learn-progress {
+  flex: none;
+  color: var(--accent-text);
+  font-size: 12px;
+  letter-spacing: 2px;
+  cursor: default;
+}
+
+/* a key word of the lesson (★ in the document) */
+.key-word {
+  display: inline-block;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: var(--warn-soft);
+  color: var(--warn);
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 18px;
+  vertical-align: 2px;
+}

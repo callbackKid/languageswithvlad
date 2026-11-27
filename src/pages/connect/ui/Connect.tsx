@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import { docIdFrom, sourceUrl } from '@/entities/lesson';
 import { app, common, useTranslation } from '@/shared/i18n';
+import styles from '@/shared/ui/ConnectForm.module.css';
 import { Button, Input } from '@/shared/ui/controls';
 import LanguagePicker from '@/shared/ui/LanguagePicker';
 
@@ -20,8 +21,8 @@ const Connect = ({
   const [value, setValue] = useState(current ? sourceUrl(current) : '');
   const [error, setError] = useState('');
   return (
-    <div className="connect">
-      <div className="connect-language">
+    <div className={styles.connect}>
+      <div className={styles['connect-language']}>
         <LanguagePicker />
       </div>
       <h1>{t('connectTitle')}</h1>
@@ -30,8 +31,8 @@ const Connect = ({
           'connectIntro',
           {},
           {
-            leçon: <span className="example">14.10.2026 1 Leçon</span>,
-            lesson: <span className="example">14.10.2026 1 Lesson</span>,
+            leçon: <span className={styles.example}>14.10.2026 1 Leçon</span>,
+            lesson: <span className={styles.example}>14.10.2026 1 Lesson</span>,
           }
         )}
       </p>
@@ -39,7 +40,7 @@ const Connect = ({
       <p className="hint">{t('connectNotion')}</p>
       {/* noValidate: a bare document id is fine too, and our message is clearer than the browser's */}
       <form
-        className="field"
+        className={styles.field}
         noValidate
         onSubmit={(event) => {
           event.preventDefault();

@@ -1,0 +1,40 @@
+.page-head {
+  margin-bottom: 20px;
+}
+.page-head h1 {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 1.15;
+  margin: 0 0 6px;
+  color: var(--ink);
+}
+.page-head p {
+  margin: 0;
+  color: var(--muted);
+  max-width: 62ch;
+}
+/* a title with something on its right (lesson mode's call); under it when there isn't room */
+.page-head.with-aside {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px 24px;
+}
+.page-head-text {
+  min-width: 0;
+}
+.page-head-aside {
+  min-width: 0;
+  max-width: 100%;
+}
+
+@media (max-width: 760px) {
+  .page-head h1 {
+    font-size: 32px;
+  }
+  .page-head.with-aside .page-head-aside {
+    width: 100%;
+  }
+}

@@ -6,6 +6,7 @@ import { followLink, hrefFor } from '@/shared/lib/router';
 import PageHead from '@/shared/ui/PageHead';
 
 import { tutorial } from '../i18n/tutorial';
+import styles from './Tutorial.module.css';
 
 /* A guide for someone opening the app for the first time: a quick start, a map of the sections,
    then one card per section with what it is for, how to use it, a small picture of the screen
@@ -16,9 +17,9 @@ type TutorialKey = keyof (typeof tutorial)['en'];
 
 // A drawn button, looking like the real one.
 const Button = ({ children, primary }: { children: ReactNode; primary?: boolean }) => (
-  <span className={'mock-btn' + (primary ? ' primary' : '')}>{children}</span>
+  <span className={styles['mock-btn'] + (primary ? ' primary' : '')}>{children}</span>
 );
-const Key = ({ children }: { children: ReactNode }) => <kbd className="key">{children}</kbd>;
+const Key = ({ children }: { children: ReactNode }) => <kbd className={styles.key}>{children}</kbd>;
 
 const OpenLink = ({ section, children }: { section: Section; children?: ReactNode }) => {
   const { t } = useTranslation(tutorial);
@@ -61,8 +62,8 @@ const MockBody = ({ id }: { id: string }) => {
   switch (id) {
     case 'header':
       return (
-        <div className="mock-row">
-          <span className="mock-text">
+        <div className={styles['mock-row']}>
+          <span className={styles['mock-text']}>
             {appRich(
               'nextLesson',
               { b: (chunk) => <b>{chunk}</b> },
@@ -76,18 +77,20 @@ const MockBody = ({ id }: { id: string }) => {
       );
     case 'home':
       return (
-        <div className="mock-row">
+        <div className={styles['mock-row']}>
           <b>{page('streak', { count: 4 })}</b>
-          <span className="mock-bar">
+          <span className={styles['mock-bar']}>
             <span style={{ width: '60%' }} />
           </span>
-          <span className="mock-text">{page('goalProgress', { count: 12, goal: 20 })}</span>
+          <span className={styles['mock-text']}>
+            {page('goalProgress', { count: 12, goal: 20 })}
+          </span>
         </div>
       );
     case 'lessons':
       return (
         <>
-          <div className="mock-tabs">
+          <div className={styles['mock-tabs']}>
             <span className="on">
               {lessonText('words')} <i>24</i>
             </span>
@@ -97,13 +100,13 @@ const MockBody = ({ id }: { id: string }) => {
             <span>{lessonText('myNotes')}</span>
             <span>{lessonText('original')}</span>
           </div>
-          <div className="mock-row">
+          <div className={styles['mock-row']}>
             <Button primary>{exercise('quiz')}</Button>
             <Button>{exercise('flashcards')}</Button>
             <Button>{exercise('matchTranslations')}</Button>
             <Button>{exercise('dictation')}</Button>
           </div>
-          <div className="mock-word">
+          <div className={styles['mock-word']}>
             <span className="tick">☑</span>
             <span className="fr">bonjour</span>
             <span className="tr">[bɔ̃ʒuʁ]</span>
@@ -111,7 +114,7 @@ const MockBody = ({ id }: { id: string }) => {
             <span>🔊</span>
             <span>☆</span>
           </div>
-          <div className="mock-word">
+          <div className={styles['mock-word']}>
             <span className="tick">☑</span>
             <span className="fr">la boulangerie</span>
             <span className="ru">
@@ -125,13 +128,13 @@ const MockBody = ({ id }: { id: string }) => {
     case 'verbs':
       return (
         <>
-          <div className="mock-row">
-            <span className="mock-pill on">présent</span>
-            <span className="mock-pill">passé composé</span>
-            <span className="mock-pill">imparfait</span>
-            <span className="mock-pill">futur simple</span>
+          <div className={styles['mock-row']}>
+            <span className={`${styles['mock-pill']} on`}>présent</span>
+            <span className={styles['mock-pill']}>passé composé</span>
+            <span className={styles['mock-pill']}>imparfait</span>
+            <span className={styles['mock-pill']}>futur simple</span>
           </div>
-          <div className="mock-table">
+          <div className={styles['mock-table']}>
             <span>je</span>
             <span className="fr">me réveille 🔊</span>
             <span>tu</span>
@@ -143,16 +146,16 @@ const MockBody = ({ id }: { id: string }) => {
       );
     case 'all-lessons':
       return (
-        <div className="mock-row">
-          <span className="mock-pill on">{page('all')}</span>
-          <span className="mock-pill">Leçon 5</span>
-          <span className="mock-pill">Leçon 6</span>
-          <span className="mock-pill">Leçon 7</span>
+        <div className={styles['mock-row']}>
+          <span className={`${styles['mock-pill']} on`}>{page('all')}</span>
+          <span className={styles['mock-pill']}>Leçon 5</span>
+          <span className={styles['mock-pill']}>Leçon 6</span>
+          <span className={styles['mock-pill']}>Leçon 7</span>
         </div>
       );
     case 'photo':
       return (
-        <div className="mock-photo">
+        <div className={styles['mock-photo']}>
           <span className="head">{lessonText('colUnderlined')}</span>
           <span className="head">{lessonText('colTranslation')}</span>
           <span className="head">{lessonText('colForm')}</span>
@@ -188,12 +191,12 @@ const Tutorial = () => {
     <>
       <PageHead title={t('title')}>{t('intro')}</PageHead>
 
-      <section className="tutorial-block" aria-labelledby="quick-start">
+      <section className={styles['tutorial-block']} aria-labelledby="quick-start">
         <h2 id="quick-start">{t('quickStart')}</h2>
-        <ol className="quick-start">
+        <ol className={styles['quick-start']}>
           {QUICK_START.map((step) => (
             <li key={step}>
-              <span className="step-number">{step}</span>
+              <span className={styles['step-number']}>{step}</span>
               <b>{plain(`quick${step}.title`)}</b>
               <p>{text(`quick${step}.text`)}</p>
             </li>
@@ -201,11 +204,11 @@ const Tutorial = () => {
         </ol>
       </section>
 
-      <section className="tutorial-block" aria-labelledby="map">
+      <section className={styles['tutorial-block']} aria-labelledby="map">
         <h2 id="map">{t('map')}</h2>
-        <div className="guide-map">
+        <div className={styles['guide-map']}>
           {GUIDES.map((guide) => (
-            <a key={guide.id} className="guide-card" href={'#guide-' + guide.id}>
+            <a key={guide.id} className={styles['guide-card']} href={'#guide-' + guide.id}>
               <span className="icon" aria-hidden="true">
                 {guide.icon}
               </span>
@@ -217,8 +220,8 @@ const Tutorial = () => {
       </section>
 
       {GUIDES.map((guide) => (
-        <section key={guide.id} id={'guide-' + guide.id} className="guide">
-          <header className="guide-head">
+        <section key={guide.id} id={'guide-' + guide.id} className={styles.guide}>
+          <header className={styles['guide-head']}>
             <h2>
               <span className="icon" aria-hidden="true">
                 {guide.icon}
@@ -228,10 +231,10 @@ const Tutorial = () => {
             {guide.section && <OpenLink section={guide.section} />}
           </header>
           <p>{text(`${guide.id}.intro`)}</p>
-          <div className={'guide-body' + (guide.mock ? ' with-mock' : '')}>
+          <div className={styles['guide-body'] + (guide.mock ? ` ${styles['with-mock']}` : '')}>
             <div>
               <h3>{t('howTo')}</h3>
-              <ol className="guide-steps">
+              <ol className={styles['guide-steps']}>
                 {range(guide.steps).map((step) => (
                   <li key={step}>{text(`${guide.id}.step${step}`)}</li>
                 ))}
@@ -239,7 +242,7 @@ const Tutorial = () => {
               {guide.tips && (
                 <>
                   <h3>{t('goodToKnow')}</h3>
-                  <ul className="guide-tips">
+                  <ul className={styles['guide-tips']}>
                     {range(guide.tips)
                       .filter((tip) => isTeacher || !guide.teacherTips?.includes(tip))
                       .map((tip) => (
@@ -251,23 +254,23 @@ const Tutorial = () => {
             </div>
             {guide.mock && (
               <figure
-                className="mock"
+                className={styles.mock}
                 aria-label={t('pictureOf', { label: plain(`${guide.id}.mock`) })}
               >
-                <div className="mock-body" aria-hidden="true">
+                <div className={styles['mock-body']} aria-hidden="true">
                   <MockBody id={guide.id} />
                 </div>
                 <figcaption>{plain(`${guide.id}.mock`)}</figcaption>
               </figure>
             )}
           </div>
-          <a className="back-to-top" href="#map">
+          <a className={styles['back-to-top']} href="#map">
             {t('backToMap')}
           </a>
         </section>
       ))}
 
-      <section className="guide" id="guide-storage">
+      <section className={styles.guide} id="guide-storage">
         <h2>
           <span className="icon" aria-hidden="true">
             💾

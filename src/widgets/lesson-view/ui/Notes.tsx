@@ -4,6 +4,8 @@ import { common, useTranslation } from '@/shared/i18n';
 import { loadText, save } from '@/shared/lib/storage';
 import { Textarea } from '@/shared/ui/controls';
 
+import styles from './Notes.module.css';
+
 // A notepad, saved on this device as the student types.
 const Notes = ({ storageKey }: { storageKey: string }) => {
   const { t } = useTranslation(common);
@@ -41,7 +43,7 @@ const Notes = ({ storageKey }: { storageKey: string }) => {
           }, 500);
         }}
       />
-      <div className="notes-status" role="status">
+      <div className={styles['notes-status']} role="status">
         {status === 'saving' ? t('saving') : status === 'saved' ? t('savedHere') : ''}
       </div>
     </>

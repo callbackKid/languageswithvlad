@@ -6,6 +6,8 @@ import { common, useTranslation } from '@/shared/i18n';
 import { documentDate } from '@/shared/lib/dates';
 import { Button, Select } from '@/shared/ui/controls';
 
+import styles from './AddToDoc.module.css';
+
 // Where new lessons go: the connected document, the lesson number to use next, and whether the server can write.
 export interface DocTarget {
   docId: string;
@@ -69,9 +71,9 @@ const AddToDoc = ({
   };
 
   return (
-    <div className="row-actions add-to-doc">
+    <div className={`row-actions ${styles['add-to-doc']}`}>
       {lessons.length > 0 && (
-        <label className="add-to-doc-place">
+        <label className={styles['add-to-doc-place']}>
           <span>{t('addWhere')}</span>
           <Select
             value={place}

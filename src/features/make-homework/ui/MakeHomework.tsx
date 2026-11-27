@@ -22,6 +22,7 @@ import {
   MAX_TRANSLATE_SENTENCES,
   MIN_TRANSLATE_SENTENCES,
 } from '../model/makeHomework';
+import styles from './MakeHomework.module.css';
 
 type Step = 'idle' | 'making' | 'review' | 'saving' | 'done';
 
@@ -105,7 +106,7 @@ const MakeHomework = ({
   };
 
   return (
-    <section className="make-homework">
+    <section className={styles['make-homework']}>
       <h2>{t('makeTitle')}</h2>
       {!docWriter ? (
         <p className="hint">{commonText.t('docWriterMissing')}</p>
@@ -113,7 +114,7 @@ const MakeHomework = ({
         <>
           <p className="hint">{t('makeHint', { label: homeworkLabel(language) })}</p>
           {(step === 'idle' || step === 'done' || step === 'review') && (
-            <div className="make-homework-options">
+            <div className={styles['make-homework-options']}>
               <label className="form-field">
                 <span>{t('makeSentences')}</span>
                 <Select
@@ -175,7 +176,7 @@ const MakeHomework = ({
           {(step === 'review' || step === 'saving') && (
             <>
               <Textarea
-                className="notes homework-text"
+                className={`notes ${styles['homework-text']}`}
                 lang={language}
                 value={text}
                 aria-label={t('homeworkLabel')}

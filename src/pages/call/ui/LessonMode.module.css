@@ -1,0 +1,110 @@
+.lesson-mode {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+  gap: 20px;
+  align-items: start;
+}
+
+.lesson-mode-side {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}
+
+/* the tabs under the call, and the cards of the tab shown */
+.call-tabs {
+  padding: 0;
+  margin-bottom: -8px;
+}
+.call-tab-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.call-tab-panel[hidden] {
+  display: none;
+}
+
+/* the discussion question in lesson mode: the card already frames it, so the form has no frame */
+.discuss-card :global(.discuss-form) {
+  padding: 0;
+  border: 0;
+  background: none;
+}
+.discuss-card :global(.discuss-form):last-child {
+  margin-bottom: 0;
+}
+.call-notes textarea:global(.notes) {
+  min-height: 420px;
+  margin-top: 4px;
+}
+
+/* the homework card at the end of lesson mode: a few lines, one task each */
+.call-homework {
+  margin-top: 20px;
+}
+.call-homework textarea:global(.notes) {
+  min-height: 140px;
+  margin-top: 4px;
+}
+
+.call-words {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+  max-height: 340px;
+  overflow-y: auto;
+}
+.call-words li {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--line);
+}
+.call-words :global(.fr) {
+  font-family: var(--serif);
+  font-weight: 600;
+}
+.call-words :global(.ru) {
+  color: var(--muted);
+  margin-right: auto;
+}
+
+/* the warm-up in lesson mode, above the call */
+.warm-up {
+  margin-bottom: 20px;
+  scroll-margin-top: 16px;
+}
+
+/* the written homework in lesson mode: what the student wrote, and Claude's check */
+.written-homework details {
+  border-top: 1px solid var(--line);
+  padding: 8px 0;
+}
+.written-homework summary {
+  cursor: pointer;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  align-items: baseline;
+}
+.written-homework summary [lang] {
+  font-family: var(--serif);
+  font-weight: 600;
+}
+.written-homework summary :global(.count) {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+@media (max-width: 860px) {
+  .lesson-mode {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .call-notes textarea:global(.notes) {
+    min-height: 260px;
+  }
+}

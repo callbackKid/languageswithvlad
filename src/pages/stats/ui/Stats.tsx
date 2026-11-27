@@ -8,6 +8,8 @@ import { pages, useTranslation } from '@/shared/i18n';
 import { shownTopic } from '@/shared/lib/util';
 import PageHead from '@/shared/ui/PageHead';
 
+import styles from './Stats.module.css';
+
 // Fewer answers than this say too little about a topic to call it weak.
 const MIN_ANSWERS = 4;
 const KINDS = ['noun', 'verb', 'adjective', 'adverb', 'expression', 'other'] as const;
@@ -21,7 +23,7 @@ const Meter = ({ value, max, label }: { value: number; max: number; label: strin
   const share = percent(value, max);
   return (
     <div
-      className="meter"
+      className={styles.meter}
       role="meter"
       aria-valuemin={0}
       aria-valuemax={max}
@@ -29,7 +31,7 @@ const Meter = ({ value, max, label }: { value: number; max: number; label: strin
       aria-label={label}
       data-tooltip={t('meterTitle', { label, value, max, percent: share })}
     >
-      <div className="meter-fill" style={{ width: share + '%' }} />
+      <div className={styles['meter-fill']} style={{ width: share + '%' }} />
     </div>
   );
 };
@@ -63,20 +65,20 @@ const RankList = ({ title, rows }: { title: string; rows: Row[] }) => {
   const { t } = useTranslation(pages);
   if (!rows.length) return null;
   return (
-    <div className="rank">
+    <div className={styles.rank}>
       <h3>{title}</h3>
       <ul>
         {rows.map((row) => (
           <li key={row.id}>
-            <span className="rank-name">{row.name}</span>
+            <span className={styles['rank-name']}>{row.name}</span>
             <Meter
               value={row.right}
               max={row.total}
               label={t('rightAnswersOf', { name: row.name })}
             />
-            <span className="rank-val">
+            <span className={styles['rank-val']}>
               {percent(row.right, row.total)}%
-              <span className="rank-n">{t('ofTotal', { count: row.total })}</span>
+              <span className={styles['rank-n']}>{t('ofTotal', { count: row.total })}</span>
             </span>
           </li>
         ))}
@@ -191,28 +193,30 @@ const Stats = ({
       </PageHead>
       <BankNote bank={bank} />
 
-      <div className="kpis">
-        <div className="kpi">
-          <span className="kpi-label">{t('wordsLearned')}</span>
-          <span className="kpi-value">{learned}</span>
+      <div className={styles.kpis}>
+        <div className={styles.kpi}>
+          <span className={styles['kpi-label']}>{t('wordsLearned')}</span>
+          <span className={styles['kpi-value']}>{learned}</span>
         </div>
-        <div className="kpi">
-          <span className="kpi-label">{t('leftToLearn')}</span>
-          <span className="kpi-value">{Math.max(total - learned, 0)}</span>
+        <div className={styles.kpi}>
+          <span className={styles['kpi-label']}>{t('leftToLearn')}</span>
+          <span className={styles['kpi-value']}>{Math.max(total - learned, 0)}</span>
         </div>
-        <div className="kpi">
-          <span className="kpi-label">{t('rightAnswers')}</span>
-          <span className="kpi-value">{answers ? percent(right, answers) + '%' : '—'}</span>
+        <div className={styles.kpi}>
+          <span className={styles['kpi-label']}>{t('rightAnswers')}</span>
+          <span className={styles['kpi-value']}>
+            {answers ? percent(right, answers) + '%' : '—'}
+          </span>
         </div>
-        <div className="kpi">
-          <span className="kpi-label">{t('onMyWords')}</span>
-          <span className="kpi-value">{hard}</span>
+        <div className={styles.kpi}>
+          <span className={styles['kpi-label']}>{t('onMyWords')}</span>
+          <span className={styles['kpi-value']}>{hard}</span>
         </div>
       </div>
 
-      <section className="panel solo stats-block">
+      <section className={`panel solo ${styles['stats-block']}`}>
         <div className="body">
-          <div className="meter-head">
+          <div className={styles['meter-head']}>
             <h2 className="sub-h">{t('vocabulary')}</h2>
             <span className="hint">
               {t('learnedOf', { learned, count: total, percent: percent(learned, total) })}
@@ -221,21 +225,23 @@ const Stats = ({
           <Meter value={learned} max={total} label={t('wordsLearned')} />
           <p className="legend">{t('learnedRule')}</p>
           {perLesson.length > 0 && (
-            <ul className="lesson-progress">
+            <ul className={styles['lesson-progress']}>
               {perLesson.map((lesson) => (
                 <li key={lesson.key}>
-                  <span className="rank-name">
+                  <span className={styles['rank-name']}>
                     {lesson.word} {lesson.n}
-                    {lesson.topic && <span className="topic-small"> · {lesson.topic}</span>}
+                    {lesson.topic && (
+                      <span className={styles['topic-small']}> · {lesson.topic}</span>
+                    )}
                   </span>
                   <Meter
                     value={lesson.learned}
                     max={lesson.total}
                     label={t('lessonWordsLearned', { lesson: `${lesson.word} ${lesson.n}` })}
                   />
-                  <span className="rank-val">
+                  <span className={styles['rank-val']}>
                     {lesson.learned}
-                    <span className="rank-n"> / {lesson.total}</span>
+                    <span className={styles['rank-n']}> / {lesson.total}</span>
                   </span>
                 </li>
               ))}
@@ -244,11 +250,11 @@ const Stats = ({
         </div>
       </section>
 
-      <section className="panel solo stats-block">
+      <section className={`panel solo ${styles['stats-block']}`}>
         <div className="body">
           <h2 className="sub-h">{t('weakTopics')}</h2>
           {weakLessons.length || weakKinds.length || tenses.length ? (
-            <div className="rank-cols">
+            <div className={styles['rank-cols']}>
               <RankList title={t('lessons')} rows={weakLessons} />
               <RankList title={t('kindsOfWords')} rows={weakKinds} />
               <RankList title={t('tenses')} rows={tenses} />
@@ -262,7 +268,7 @@ const Stats = ({
         </div>
       </section>
 
-      <section className="panel solo stats-block">
+      <section className={`panel solo ${styles['stats-block']}`}>
         <div className="body">
           <h2 className="sub-h">{t('commonMistakes')}</h2>
           {topWords.length || topForms.length ? (

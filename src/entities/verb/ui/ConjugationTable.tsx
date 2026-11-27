@@ -1,3 +1,5 @@
+import './ConjugationTable.css';
+
 import { type Language } from '@/shared/config';
 import { keepBracketsTogether } from '@/shared/lib/util';
 import Speak from '@/shared/ui/Speak';
