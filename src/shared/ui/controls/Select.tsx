@@ -1,3 +1,5 @@
+import './Select.css';
+
 import {
   type AriaAttributes,
   type AriaRole,
@@ -69,7 +71,7 @@ export default forwardRef<HTMLSelectElement, SelectProps>(function Select(
   return (
     <select
       ref={ref}
-      className={className}
+      className={className ? `ui-select ${className}` : 'ui-select'}
       id={id}
       name={name}
       value={value}

@@ -103,6 +103,7 @@ Prettier decides: 100 columns, single quotes, semicolons, trailing commas where 
 ## Styles
 
 - Theme variables, base styles and the app shell live in `src/app/styles.css`. Keep shared button styles in `src/shared/ui/controls/Buttons.css` so buttons, links and file-picker labels can use them.
+- When extracting or moving a UI component during a refactor, move the styles it owns beside the component in the same change. Keep styles that arrange it within a page or feature with that page or feature. Shared select styles live in `src/shared/ui/controls/Select.css`.
 - Keep styles owned by a page or feature in a `.module.css` file beside its UI, as in `src/pages/settings/ui/Settings.module.css`. Use `:global(...)` for an existing shared class only under a local selector. Keep rules for the same element together and define each selector once.
 - Rules for narrow screens and for reduced motion sit at the end of the section or module they affect. There is one phone breakpoint, `max-width: 760px`. Two others are allowed, each for one layout: lesson mode folds its two columns at 860px, and the top bar gives the next lesson a row of its own at 1180px.
 - Colours, fonts and radii only through the CSS variables at the top (`var(--accent)`, `var(--line)`…), so both themes work. The dark values are defined once, under `:root[data-theme='dark']`; `settings.ts` and the small script in `index.html` set `data-theme`.
