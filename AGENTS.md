@@ -37,6 +37,6 @@ The code rules are in CODE_STYLE.md and are binding; follow them from the first 
 - **Help and tooltips**: a new page passes `guide` to `PageHead` (its Tutorial card, `src/shared/config/guides.ts`); an icon or icon button has `data-tooltip`, never `title`.
 - **Tests and the backend**: the owner writes tests themselves to learn (Vitest, and a separate Express/Postgres repo). Explain, guide and review; don't write tests unless asked. What runs now and the test plan: `TESTING.md`; keep it true when a check or a step changes.
 - **Direction**: lessons will move from the Google Doc / Notion into the app itself. Don't deepen the document-based flow when designing new features.
-- **Git**: commit only when asked, with a message that says what changed. Never `--no-verify`. Never read, print or commit `.env.local` or keys.
+- **Git**: when a task changes the repository and all required checks and tests pass, use the `commit-and-push` skill to commit the task changes and push to the current branch's upstream, unless the owner directs otherwise. Report the result and propose the next step. Never `--no-verify`. Never read, print or commit `.env.local` or keys.
 - **Code review**: `REVIEW.md` is the owner's checklist, partly written for another stack (MUI, tables, `.po` files, `yarn ci:check`); apply only the items that fit this project.
 - Talk to the owner in the language they write in (often Russian); code, comments and docs are in English.
