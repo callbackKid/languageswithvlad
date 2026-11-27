@@ -15,6 +15,13 @@ The code rules are in CODE_STYLE.md and are binding; follow them from the first 
 - `yarn lint:fix`, `yarn format` — fix what can be fixed automatically.
 - `yarn start` — UI with the API functions (needs `.env.local`); `yarn dev` — UI only.
 
+## Efficient collaboration
+
+- Keep progress updates brief and useful.
+- Group related changes into a coherent task when the requested scope allows it, so verification is not repeated after every small edit.
+- During implementation, run focused checks for the affected area when they help catch a specific risk. Run `yarn verify` once after the completed batch, before reporting completion. If fixes follow that run, repeat the relevant checks and `yarn verify` on the final state.
+- Keep the final reply to no more than five lines: the result, verification status, and the next recommended step. Give more detail when the owner asks for it or a material risk or blocker needs explanation.
+
 ## Working here
 
 - **Check UI changes in the running app**, not just with the typecheck: the changed page and its neighbours, light and dark theme, 390 px wide.
