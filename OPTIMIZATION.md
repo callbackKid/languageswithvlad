@@ -472,6 +472,104 @@ each other through `BroadcastChannel`, reflected one tab leaving, and skipped th
 Supabase download. At 390 px, axe-core reported the same missing accessible name on
 Excalidraw's menu in both builds and both themes.
 
+## Saved-board preview profile
+
+The **My notes** tab reads the editable board scene from browser storage. Its `BoardPicture`
+component loads only if the lesson has a saved drawing. That component calls Excalidraw's
+`exportToSvg`, and the production chunk statically imports the same renderer as the editor.
+An empty **My notes** tab requested zero preview assets.
+
+### Export-only build and local snapshot prototype
+
+A temporary Vite build with `exportToSvg` as the sole entry export and React externalized
+still needed **371,236 gzip bytes** across two statically loaded files. The public export
+path retains nearly all of the renderer even when the interactive board is absent from the
+entry. Excalidraw 0.18.1 exposes this function from the package root.
+
+The snapshot prototype replaced only the preview component in a temporary build. It reads a
+pre-rendered SVG `Blob` from IndexedDB, renders it through a blob URL in an `<img>` with the
+existing accessible name, then revokes the URL when the preview closes. It uses separate
+light and dark snapshots. Chrome opened both sample drawings without downloading Excalidraw
+or the font-subsetting modules. The snapshot prototype is a cache-hit measurement, and
+snapshot generation was outside the timed interval.
+
+### Instruments and reproduction
+
+- Start from `0c8ab1b` using Node.js 22.19.0, Vite 5.3.4, and Excalidraw 0.18.1. For the
+  export-only build, use an in-memory Vite entry that re-exports `exportToSvg` from
+  `@excalidraw/excalidraw`. Preserve the entry signature, keep React and React DOM external,
+  and sum `node:zlib` gzip bytes along the entry's static Rollup imports.
+- Draw a rectangle, then add `Bonjour!` in the current editor. Take the shape-only and text
+  scenes from the editor's actual saved data. Open their matching lesson's **My notes** tab
+  in the current build to generate the theme-specific SVG fixtures. Preseed the temporary
+  variant's IndexedDB with those SVG bytes before each timed run.
+- Serve each build over loopback HTTP with gzip and the repository's API fixtures. Use
+  Chrome 158.0.8127.89 via Playwright Core 1.48.2. Use a fresh context, disable the HTTP
+  cache, and fulfill the versioned Excalifont URL with its installed bytes. Block other
+  third-party URLs. Measure five alternating pairs per scene at 1280 × 900, in light theme.
+  Apply CDP shaping only after the lesson settles (5 Mbps down, 1 Mbps up, 100 ms latency).
+- Mark the notes-tab click and the animation frame after the SVG has dimensions or the
+  snapshot image has decoded. Count first-party `/assets/` response bodies through
+  Resource Timing, including repeated worker requests. Check the image and its accessible
+  name at 390 px in light and dark theme, with no network throttling for that check.
+
+### Results
+
+| Scene              | Current first-party body bytes | Snapshot first-party body bytes | Current median frame (ms) | Snapshot median frame (ms) | Median paired change (ms) |
+| ------------------ | -----------------------------: | ------------------------------: | ------------------------: | -------------------------: | ------------------------: |
+| Rectangle          |                        375,370 |                             442 |                       761 |                        142 |                      −618 |
+| Rectangle and text |                      1,263,865 |                             442 |                     3,218 |                        143 |                    −3,078 |
+
+These transfer figures count bodies completed through 650 ms after the rendered frame in
+the shaped runs. The 442-byte preview chunk is the only first-party transfer after opening
+a cached preview. The SVG bytes are read from disk. The rectangle snapshot sizes were
+1,110 bytes in light theme and 1,150 in dark. Adding text made them 3,722 and 3,762 bytes.
+At 390 px, the current SVG's screenshot measured 170 × 215 px and the prototype image
+measured 172 × 217 px in both themes. The image kept the existing accessible name.
+Production preview sizing still needs to match the original.
+
+<details>
+<summary>All paired preview timings (milliseconds after clicking My notes)</summary>
+
+| Scene              | Pair | Current | Snapshot | Snapshot minus current |
+| ------------------ | ---: | ------: | -------: | ---------------------: |
+| Rectangle          |    1 |     761 |      130 |                   -631 |
+| Rectangle          |    2 |     747 |      129 |                   -618 |
+| Rectangle          |    3 |     761 |      143 |                   -618 |
+| Rectangle          |    4 |     760 |      144 |                   -616 |
+| Rectangle          |    5 |     776 |      142 |                   -634 |
+| Rectangle and text |    1 |    3193 |      143 |                  -3050 |
+| Rectangle and text |    2 |    3221 |      143 |                  -3078 |
+| Rectangle and text |    3 |    3217 |      144 |                  -3073 |
+| Rectangle and text |    4 |    3218 |      131 |                  -3087 |
+| Rectangle and text |    5 |    3223 |      143 |                  -3080 |
+
+</details>
+
+The current rectangle preview fetched 368 bytes for `BoardPicture-DQ7KJ6GR.js`, 373,380
+for `percentages-BXMCSKIN-2OkU4Ix5.js`, and 1,622 across the file-open, directory-open, and
+file-save helpers (333, 789, and 500 bytes). The text preview also requested the
+Excalifont fixture separately (24,956 bytes), the 736,870-byte shared subsetter, the
+318-byte worker glue, and repeat requests from the worker dependency graph.
+Unthrottled phone-width runs completed **2,374,115 first-party bytes** for the text
+preview. These include two transfers each of the shared subsetter, worker glue, and
+renderer, plus a 150,989-byte app entry in the worker dependency graph. A separate
+shaped text run with a 5 s post-frame capture still recorded 1,263,865 bytes. The
+totals depend on which worker responses complete and browser cache reuse.
+
+### Follow-up
+
+Use a derived snapshot alongside the editable scene, with a cache key that includes
+the document, date, scene revision, and theme. Keep the current SVG renderer as the
+fallback for existing scenes, stale entries, or unavailable storage. A read-through
+cache can seed existing previews. For newly edited boards, compare generating a
+snapshot while the editor is open. In one loopback check, the editor's existing PNG
+export took 60 ms from the test's click attempt to the completed download, produced
+a 9,181-byte 225 × 256 PNG, and requested zero new first-party assets. Keeping the
+snapshot in IndexedDB also avoids adding image bytes to the editable scene stored in
+localStorage. Snapshot creation, invalidation, and legacy fallback need their own
+functional and timing checks before deployment.
+
 ## Instruments and reproduction
 
 - **Build and bundle graph:** Node.js 22.19.0, Vite 5.3.4 and Rollup. Run `yarn build` to get Vite's
