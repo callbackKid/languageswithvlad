@@ -7,6 +7,8 @@ import { type ImagePayload, shrinkImage } from '@/shared/lib/image';
 import { load, save } from '@/shared/lib/storage';
 import { Button, IconButton, Input, Textarea } from '@/shared/ui/controls';
 
+import styles from './Feedback.module.css';
+
 const MAX_PICTURES = 3;
 // the server cuts the message and the contact at the same lengths (api/feedback.ts)
 const MAX_MESSAGE_LENGTH = 3000;
@@ -151,7 +153,7 @@ const Feedback = ({ docTitle }: { docTitle: string }) => {
       </Button>
       <dialog
         ref={dialog}
-        className="report-dialog"
+        className={styles.dialog}
         aria-labelledby="report-title"
         onPaste={onPaste}
         onDragOver={(event) => event.preventDefault()}
@@ -162,7 +164,7 @@ const Feedback = ({ docTitle }: { docTitle: string }) => {
         }}
       >
         {state === 'sent' ? (
-          <div className="report-body">
+          <div className={styles.body}>
             <h2 id="report-title">{t('thanks')}</h2>
             <p>{t('sent')}</p>
             <div className="row-actions">
@@ -176,7 +178,7 @@ const Feedback = ({ docTitle }: { docTitle: string }) => {
           </div>
         ) : (
           <form
-            className="report-body"
+            className={styles.body}
             onSubmit={(event) => {
               event.preventDefault();
               void send();
@@ -185,7 +187,7 @@ const Feedback = ({ docTitle }: { docTitle: string }) => {
             <h2 id="report-title">{t('feedback')}</h2>
             <p className="hint">{t('feedbackIntro')}</p>
 
-            <div className="seg report-kinds" role="group" aria-label={t('whatAbout')}>
+            <div className={`seg ${styles.kinds}`} role="group" aria-label={t('whatAbout')}>
               {KINDS.map((entry) => (
                 <Button
                   variant="unstyled"
@@ -212,12 +214,12 @@ const Feedback = ({ docTitle }: { docTitle: string }) => {
 
             <div className="form-field">
               <span>{t('pictures')}</span>
-              <div className="report-pictures">
+              <div className={styles.pictures}>
                 {pictures.map((picture, index) => (
                   <figure key={picture.preview}>
                     <img src={picture.preview} alt={t('attachedPicture', { count: index + 1 })} />
                     <IconButton
-                      className="report-remove"
+                      className={styles.remove}
                       label={t('removePicture', { count: index + 1 })}
                       onClick={() => removePicture(index)}
                     >
@@ -226,7 +228,7 @@ const Feedback = ({ docTitle }: { docTitle: string }) => {
                   </figure>
                 ))}
                 {pictures.length < MAX_PICTURES && (
-                  <label className="btn report-add">
+                  <label className={`btn ${styles.add}`}>
                     {t('addPicture')}
                     <Input
                       type="file"
@@ -255,7 +257,7 @@ const Feedback = ({ docTitle }: { docTitle: string }) => {
               />
             </label>
 
-            <p className="hint report-privacy">{t('privacy')}</p>
+            <p className={`hint ${styles.privacy}`}>{t('privacy')}</p>
 
             {error && (
               <div className="note err" role="alert">

@@ -1,0 +1,80 @@
+.dialog {
+  width: min(560px, calc(100vw - 32px));
+  max-height: calc(100dvh - 32px);
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--bg);
+  color: var(--text);
+  box-shadow: 0 12px 40px var(--shadow);
+}
+.dialog::backdrop {
+  background: var(--backdrop);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 22px 22px 20px;
+}
+.body h2 {
+  margin: 0;
+  font-family: var(--display);
+  font-size: 20px;
+}
+.body > p {
+  margin: 0;
+}
+.body :global(.row-actions) {
+  margin-top: 4px;
+}
+
+.kinds {
+  align-self: flex-start;
+  flex-wrap: wrap;
+}
+
+.pictures {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+.pictures figure {
+  position: relative;
+  margin: 0;
+}
+.pictures img {
+  display: block;
+  width: 96px;
+  height: 72px;
+  object-fit: cover;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.remove {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.add {
+  height: 72px;
+  box-sizing: border-box;
+}
+
+.privacy {
+  margin: 0;
+}
