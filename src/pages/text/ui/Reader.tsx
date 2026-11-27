@@ -7,7 +7,7 @@ import { api, ApiError } from '@/shared/api';
 import { getSettings, type Language, useTranslationLanguage } from '@/shared/config';
 import { common, translator, useTranslation } from '@/shared/i18n';
 import { asList, load, save } from '@/shared/lib/storage';
-import { Button, Select } from '@/shared/ui/controls';
+import { Button, Select, Textarea } from '@/shared/ui/controls';
 import InlineConfirm from '@/shared/ui/InlineConfirm';
 import PageHead from '@/shared/ui/PageHead';
 import Speak from '@/shared/ui/Speak';
@@ -280,7 +280,7 @@ const Reader = ({ hasClaude }: { hasClaude: boolean }) => {
         >
           <label className="form-field">
             <span>{t('pasteLabel')}</span>
-            <textarea
+            <Textarea
               rows={10}
               value={draft}
               placeholder={t('pastePlaceholder')}

@@ -16,7 +16,7 @@ import {
   useTranslation,
 } from '@/shared/i18n';
 import { loadChecked, save } from '@/shared/lib/storage';
-import { Button } from '@/shared/ui/controls';
+import { Button, Textarea } from '@/shared/ui/controls';
 import ExerciseHead from '@/shared/ui/ExerciseHead';
 import WaitingFact from '@/shared/ui/WaitingFact';
 
@@ -130,7 +130,7 @@ const WritingTask = ({
     <div className="ex writing-task">
       <ExerciseHead title={task} onClose={onClose} closeLabel={t('backToHomework')} />
       <p className="hint">{t('writeHint')}</p>
-      <textarea
+      <Textarea
         className="notes writing-text"
         lang={language}
         value={writing.text}

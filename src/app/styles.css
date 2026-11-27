@@ -105,8 +105,7 @@ body {
   min-height: 100vh;
 }
 
-button,
-textarea {
+button {
   font: inherit;
   color: inherit;
 }
@@ -1338,17 +1337,6 @@ a.tab {
 
 .body {
   padding: 20px 24px 28px;
-}
-
-textarea.notes {
-  width: 100%;
-  min-height: 340px;
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  padding: 14px 16px;
-  background: var(--paper);
-  font: 17px/1.6 var(--serif);
-  resize: vertical;
 }
 
 .notes-status {

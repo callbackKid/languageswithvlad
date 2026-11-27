@@ -1,0 +1,16 @@
+/* Keep element-level specificity so page styles can override shared defaults. */
+textarea:where(.ui-textarea) {
+  font: inherit;
+  color: inherit;
+}
+
+textarea.notes:where(.ui-textarea) {
+  width: 100%;
+  min-height: 340px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 14px 16px;
+  background: var(--paper);
+  font: 17px/1.6 var(--serif);
+  resize: vertical;
+}

@@ -33,7 +33,7 @@ import { loadChecked, loadText, remove, save } from '@/shared/lib/storage';
 import { useTabs } from '@/shared/lib/useTabs';
 import { hash } from '@/shared/lib/util';
 import CallCard from '@/shared/ui/CallCard';
-import { Button } from '@/shared/ui/controls';
+import { Button, Textarea } from '@/shared/ui/controls';
 import InlineConfirm from '@/shared/ui/InlineConfirm';
 import PageHead from '@/shared/ui/PageHead';
 import Speak from '@/shared/ui/Speak';
@@ -123,7 +123,7 @@ const LessonNotes = ({ docId, target }: { docId: string; target: DocTarget }) =>
         />
       )}
       <p className="hint">{t('notesHint')}</p>
-      <textarea
+      <Textarea
         ref={area}
         className="notes"
         value={text}
@@ -165,7 +165,7 @@ const HomeworkNotes = ({
   return (
     <CallCard id="homework" title={t('homeworkTitle')} className="call-homework">
       <p className="hint">{t('homeworkHint')}</p>
-      <textarea
+      <Textarea
         className="notes"
         value={text}
         placeholder={t('homeworkPlaceholder')}

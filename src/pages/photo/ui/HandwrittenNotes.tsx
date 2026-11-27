@@ -9,7 +9,7 @@ import { asObjectText } from '@/shared/lib/json';
 import { extractPages, MAX_PDF_PAGES, pdfPageCount } from '@/shared/lib/pdf';
 import { asFields, asList, load, save } from '@/shared/lib/storage';
 import { hash } from '@/shared/lib/util';
-import { Button, Input, Select } from '@/shared/ui/controls';
+import { Button, Input, Select, Textarea } from '@/shared/ui/controls';
 import InlineConfirm from '@/shared/ui/InlineConfirm';
 import WaitingFact from '@/shared/ui/WaitingFact';
 import { LessonView } from '@/widgets/lesson-view';
@@ -306,7 +306,7 @@ const HandwrittenNotes = ({
               <p className="hint">
                 {source === 'textbook' ? t('checkTextbook') : t('checkHandwriting')}
               </p>
-              <textarea
+              <Textarea
                 className="transcript"
                 lang="fr"
                 value={draft}

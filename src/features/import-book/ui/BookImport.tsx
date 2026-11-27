@@ -5,7 +5,7 @@ import { common, paper, translator, useTranslation } from '@/shared/i18n';
 import { shrinkImage } from '@/shared/lib/image';
 import { asObjectText } from '@/shared/lib/json';
 import { extractPages, pdfPageCount } from '@/shared/lib/pdf';
-import { Button, Input } from '@/shared/ui/controls';
+import { Button, Input, Textarea } from '@/shared/ui/controls';
 import WaitingFact from '@/shared/ui/WaitingFact';
 
 // keep in step with MAX_HANDWRITTEN_PAGES in api/paper.ts
@@ -203,7 +203,7 @@ const BookImport = ({
           {(step === 'review' || step === 'saving') && (
             <>
               <p className="hint">{t('checkBook')}</p>
-              <textarea
+              <Textarea
                 className="notes book-text"
                 value={text}
                 aria-label={t('importBook')}

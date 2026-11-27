@@ -6,7 +6,7 @@ import { getProgress } from '@/entities/word';
 import { api, ApiError } from '@/shared/api';
 import { common, homework as homeworkText, useTranslation } from '@/shared/i18n';
 import { load, save } from '@/shared/lib/storage';
-import { Button } from '@/shared/ui/controls';
+import { Button, Textarea } from '@/shared/ui/controls';
 
 import { buildReport } from '../model/report';
 
@@ -83,7 +83,7 @@ const SendToTeacher = ({
           )}
           {(step === 'review' || step === 'saving') && (
             <>
-              <textarea
+              <Textarea
                 className="notes report-text"
                 value={text}
                 aria-label={t('reportLabel')}

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import { common, useTranslation } from '@/shared/i18n';
 import { loadText, save } from '@/shared/lib/storage';
+import { Textarea } from '@/shared/ui/controls';
 
 // A notepad, saved on this device as the student types.
 const Notes = ({ storageKey }: { storageKey: string }) => {
@@ -22,7 +23,7 @@ const Notes = ({ storageKey }: { storageKey: string }) => {
 
   return (
     <>
-      <textarea
+      <Textarea
         className="notes"
         value={text}
         aria-label={t('notesLabel')}

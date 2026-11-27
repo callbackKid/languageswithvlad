@@ -13,7 +13,7 @@ import {
   useTranslation,
 } from '@/shared/i18n';
 import { load, save } from '@/shared/lib/storage';
-import { Button, Select } from '@/shared/ui/controls';
+import { Button, Select, Textarea } from '@/shared/ui/controls';
 import WaitingFact from '@/shared/ui/WaitingFact';
 
 import {
@@ -174,7 +174,7 @@ const MakeHomework = ({
           {step === 'making' && <WaitingFact language={language}>{t('making')}</WaitingFact>}
           {(step === 'review' || step === 'saving') && (
             <>
-              <textarea
+              <Textarea
                 className="notes homework-text"
                 lang={language}
                 value={text}
