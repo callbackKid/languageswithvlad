@@ -1,0 +1,5 @@
+/* Keep element-level specificity so page styles can override shared defaults. */
+input:where(.ui-input) {
+  font: inherit;
+  color: inherit;
+}

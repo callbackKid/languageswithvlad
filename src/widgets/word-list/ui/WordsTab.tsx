@@ -31,7 +31,7 @@ import { useTranslationLanguage } from '@/shared/config';
 import { common, exercises, useTranslation } from '@/shared/i18n';
 import { canSpeak, unlockSpeech } from '@/shared/lib/speech';
 import { downloadText } from '@/shared/lib/util';
-import { Button, IconButton, Select } from '@/shared/ui/controls';
+import { Button, IconButton, Input, Select } from '@/shared/ui/controls';
 import InlineConfirm from '@/shared/ui/InlineConfirm';
 import Speak from '@/shared/ui/Speak';
 
@@ -293,7 +293,7 @@ const WordsTab = ({
         >
           {t('clear')}
         </Button>
-        <input
+        <Input
           type="search"
           placeholder={t('filterWords')}
           aria-label={t('filterWords')}
@@ -369,7 +369,7 @@ const WordsTab = ({
               {listed.words.map((word) => (
                 <li key={word.fr} className="word-row">
                   <label className="word">
-                    <input
+                    <Input
                       type="checkbox"
                       checked={!unpicked.has(word.fr)}
                       onChange={() => toggle(word.fr)}

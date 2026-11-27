@@ -1,7 +1,7 @@
 import { type KeyboardEvent, type ReactNode, useEffect, useRef, useState } from 'react';
 
 import { useTranslation } from '@/shared/i18n';
-import { Button, IconButton } from '@/shared/ui/controls';
+import { Button, IconButton, Input } from '@/shared/ui/controls';
 
 import { settingsText } from '../i18n/settings';
 import styles from './Settings.module.css';
@@ -98,7 +98,7 @@ const PictureMenu = ({
           </Button>
         </div>
       )}
-      <input
+      <Input
         ref={input}
         type="file"
         accept="image/*"

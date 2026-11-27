@@ -13,7 +13,7 @@ import { api } from '@/shared/api';
 import { getSettings, type Language } from '@/shared/config';
 import { getUiLanguage, paper, useTranslation } from '@/shared/i18n';
 import { followLink, hrefFor } from '@/shared/lib/router';
-import { Button } from '@/shared/ui/controls';
+import { Button, Input } from '@/shared/ui/controls';
 
 /* The lesson's Grammar, Homework and Book exercises tabs. What they show comes from one reading
    of the lesson by Claude (LessonView keeps it), explained in the interface language. */
@@ -110,7 +110,7 @@ export const HomeworkTab = ({
         {tasks.map((task) => (
           <li key={task.task} className={isTaskDone(done, task.task) ? 'done' : undefined}>
             <label>
-              <input
+              <Input
                 type="checkbox"
                 checked={isTaskDone(done, task.task)}
                 onChange={() => toggle(task.task)}

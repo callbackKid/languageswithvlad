@@ -33,7 +33,7 @@ import { common, exercises, useTranslation } from '@/shared/i18n';
 import { type Grade, grade } from '@/shared/lib/grade';
 import { load, save } from '@/shared/lib/storage';
 import { keepBracketsTogether, shuffle } from '@/shared/lib/util';
-import { Button, IconButton } from '@/shared/ui/controls';
+import { Button, IconButton, Input } from '@/shared/ui/controls';
 import ExerciseHead from '@/shared/ui/ExerciseHead';
 import InlineConfirm from '@/shared/ui/InlineConfirm';
 import WaitingFact from '@/shared/ui/WaitingFact';
@@ -413,7 +413,7 @@ const Drill = ({
               <tr key={index}>
                 <td className="p">{row.p}</td>
                 <td>
-                  <input
+                  <Input
                     ref={index === 0 ? first : undefined}
                     className={inputClass}
                     value={values[index]}
@@ -566,7 +566,7 @@ const Quiz = ({ conjugations, onClose }: { conjugations: Conjugation[]; onClose:
         <span className="p" lang={questionLanguage}>
           {question.p}
         </span>
-        <input
+        <Input
           ref={input}
           lang={questionLanguage}
           value={typed}

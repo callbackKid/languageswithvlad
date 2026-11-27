@@ -13,7 +13,7 @@ import {
 import { common, learning, talk, useTranslation } from '@/shared/i18n';
 import { asFields, load, loadChecked, save } from '@/shared/lib/storage';
 import { shownTopic } from '@/shared/lib/util';
-import { Button, IconButton, Select } from '@/shared/ui/controls';
+import { Button, IconButton, Input, Select } from '@/shared/ui/controls';
 import PageHead from '@/shared/ui/PageHead';
 import Speak from '@/shared/ui/Speak';
 import WaitingFact from '@/shared/ui/WaitingFact';
@@ -333,7 +333,7 @@ const TopicSelect = ({
         {allowCustom && <option value={CUSTOM}>{t('other')}</option>}
       </Select>
       {value === CUSTOM && (
-        <input
+        <Input
           type="text"
           value={custom}
           maxLength={MAX_TOPIC_LENGTH}
@@ -515,7 +515,7 @@ const Discuss = ({
                 <span>{t('ownTopic')}</span>
               </label>
               <div className="discuss-own-input">
-                <input
+                <Input
                   id="discuss-own-topic"
                   type="text"
                   value={choice.customTopic}

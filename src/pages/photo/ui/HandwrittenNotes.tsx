@@ -9,7 +9,7 @@ import { asObjectText } from '@/shared/lib/json';
 import { extractPages, MAX_PDF_PAGES, pdfPageCount } from '@/shared/lib/pdf';
 import { asFields, asList, load, save } from '@/shared/lib/storage';
 import { hash } from '@/shared/lib/util';
-import { Button, Select } from '@/shared/ui/controls';
+import { Button, Input, Select } from '@/shared/ui/controls';
 import InlineConfirm from '@/shared/ui/InlineConfirm';
 import WaitingFact from '@/shared/ui/WaitingFact';
 import { LessonView } from '@/widgets/lesson-view';
@@ -202,7 +202,7 @@ const HandwrittenNotes = ({
               ? t('newNotes')
               : t('choosePhotos')}
           {source === 'textbook' ? (
-            <input
+            <Input
               type="file"
               accept="application/pdf"
               hidden
@@ -214,7 +214,7 @@ const HandwrittenNotes = ({
               }}
             />
           ) : (
-            <input
+            <Input
               type="file"
               accept="image/*"
               multiple
@@ -258,7 +258,7 @@ const HandwrittenNotes = ({
           </span>
           <label>
             {t('fromPage')}{' '}
-            <input
+            <Input
               type="number"
               min={1}
               max={pdf.pageCount}
@@ -268,7 +268,7 @@ const HandwrittenNotes = ({
           </label>
           <label>
             {t('toPage')}{' '}
-            <input
+            <Input
               type="number"
               min={1}
               max={pdf.pageCount}

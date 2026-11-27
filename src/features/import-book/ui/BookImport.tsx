@@ -5,7 +5,7 @@ import { common, paper, translator, useTranslation } from '@/shared/i18n';
 import { shrinkImage } from '@/shared/lib/image';
 import { asObjectText } from '@/shared/lib/json';
 import { extractPages, pdfPageCount } from '@/shared/lib/pdf';
-import { Button } from '@/shared/ui/controls';
+import { Button, Input } from '@/shared/ui/controls';
 import WaitingFact from '@/shared/ui/WaitingFact';
 
 // keep in step with MAX_HANDWRITTEN_PAGES in api/paper.ts
@@ -115,7 +115,7 @@ const BookImport = ({
               <legend>{t('takeFromPage')}</legend>
               {BOOK_PARTS.map((part) => (
                 <label key={part} className="check">
-                  <input
+                  <Input
                     type="checkbox"
                     checked={parts.includes(part)}
                     onChange={(event) =>
@@ -136,7 +136,7 @@ const BookImport = ({
             <div className="row-actions">
               <label className="btn">
                 {t('choosePhotos')}
-                <input
+                <Input
                   type="file"
                   accept="image/*"
                   multiple
@@ -150,7 +150,7 @@ const BookImport = ({
               </label>
               <label className="btn">
                 {pdf ? t('anotherPdf') : t('choosePdf')}
-                <input
+                <Input
                   type="file"
                   accept="application/pdf"
                   hidden
@@ -176,7 +176,7 @@ const BookImport = ({
               </span>
               <label>
                 {t('fromPage')}{' '}
-                <input
+                <Input
                   type="number"
                   min={1}
                   max={pdf.pageCount}
@@ -186,7 +186,7 @@ const BookImport = ({
               </label>
               <label>
                 {t('toPage')}{' '}
-                <input
+                <Input
                   type="number"
                   min={1}
                   max={pdf.pageCount}

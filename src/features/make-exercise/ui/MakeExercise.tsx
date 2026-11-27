@@ -11,7 +11,7 @@ import {
 } from '@/shared/config';
 import { common, translator, useTranslation } from '@/shared/i18n';
 import { loadChecked, save } from '@/shared/lib/storage';
-import { Button, Select } from '@/shared/ui/controls';
+import { Button, Input, Select } from '@/shared/ui/controls';
 import WaitingFact from '@/shared/ui/WaitingFact';
 
 import { makeExerciseText } from '../i18n/makeExercise';
@@ -103,7 +103,7 @@ const MakeExercise = ({
           <legend>{t('practise')}</legend>
           <label className="form-field">
             <span>{t('grammar')}</span>
-            <input
+            <Input
               type="text"
               lang={language}
               value={grammar}
@@ -113,7 +113,7 @@ const MakeExercise = ({
             />
           </label>
           <label className="check">
-            <input
+            <Input
               type="checkbox"
               checked={useWords}
               disabled={!words.length}

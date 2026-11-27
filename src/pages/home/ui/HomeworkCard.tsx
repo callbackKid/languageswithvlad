@@ -35,7 +35,7 @@ import { homework as homeworkText, useTranslation } from '@/shared/i18n';
 import { daysBetween } from '@/shared/lib/dates';
 import { followLink, hrefFor } from '@/shared/lib/router';
 import { shuffle } from '@/shared/lib/util';
-import { Button } from '@/shared/ui/controls';
+import { Button, Input } from '@/shared/ui/controls';
 import WaitingFact from '@/shared/ui/WaitingFact';
 
 const ROUND = 10;
@@ -294,7 +294,7 @@ const HomeworkCard = ({
           return (
             <li key={item.text} className={isTaskDone(done, item.text) ? 'done' : undefined}>
               <label>
-                <input
+                <Input
                   type="checkbox"
                   checked={isTaskDone(done, item.text)}
                   onChange={(event) => mark(item.text, event.target.checked)}

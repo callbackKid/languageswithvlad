@@ -17,7 +17,7 @@ import { app, paper, setUiLanguage, UI_LANGUAGES, useTranslation } from '@/share
 import { shrinkImage } from '@/shared/lib/image';
 import { canSpeak, speak } from '@/shared/lib/speech';
 import Avatar from '@/shared/ui/Avatar';
-import { Button, Select } from '@/shared/ui/controls';
+import { Button, Input, Select } from '@/shared/ui/controls';
 import PageHead from '@/shared/ui/PageHead';
 
 import { settingsText } from '../i18n/settings';
@@ -136,7 +136,7 @@ const Settings = ({ lessonDocument }: { lessonDocument: DocumentInfo }) => {
               )}
               <label className="form-field">
                 <span>{t('name')}</span>
-                <input
+                <Input
                   type="text"
                   maxLength={MAX_NAME_LENGTH}
                   value={settings.name}
@@ -270,7 +270,7 @@ const Settings = ({ lessonDocument }: { lessonDocument: DocumentInfo }) => {
             return (
               <li key={entry.id}>
                 <label>
-                  <input
+                  <Input
                     type="checkbox"
                     checked={fixed || !settings.hidden.includes(entry.id)}
                     disabled={fixed}
@@ -293,7 +293,7 @@ const Settings = ({ lessonDocument }: { lessonDocument: DocumentInfo }) => {
             return (
               <li key={tab}>
                 <label>
-                  <input
+                  <Input
                     type="checkbox"
                     checked={shown}
                     // the last tab shown stays

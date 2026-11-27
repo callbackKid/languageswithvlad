@@ -8,7 +8,7 @@ import { api, ApiError } from '@/shared/api';
 import { common, paper, translator, useTranslation } from '@/shared/i18n';
 import { shrinkImage } from '@/shared/lib/image';
 import { asFields, loadChecked, save } from '@/shared/lib/storage';
-import { Button } from '@/shared/ui/controls';
+import { Button, Input } from '@/shared/ui/controls';
 import WaitingFact from '@/shared/ui/WaitingFact';
 import { WordNotesTable } from '@/widgets/word-notes';
 
@@ -114,7 +114,7 @@ const PhotoWords = ({
           <div className="photo-pick">
             <label className="btn primary">
               {scan || previews.length ? t('otherPhotos') : t('choosePhotos')}
-              <input
+              <Input
                 type="file"
                 accept="image/*"
                 multiple

@@ -5,7 +5,7 @@ import { getSettings, isDark } from '@/shared/config';
 import { common, talk, useTranslation } from '@/shared/i18n';
 import { type ImagePayload, shrinkImage } from '@/shared/lib/image';
 import { load, save } from '@/shared/lib/storage';
-import { Button, IconButton } from '@/shared/ui/controls';
+import { Button, IconButton, Input } from '@/shared/ui/controls';
 
 const MAX_PICTURES = 3;
 // the server cuts the message and the contact at the same lengths (api/feedback.ts)
@@ -228,7 +228,7 @@ const Feedback = ({ docTitle }: { docTitle: string }) => {
                 {pictures.length < MAX_PICTURES && (
                   <label className="btn report-add">
                     {t('addPicture')}
-                    <input
+                    <Input
                       type="file"
                       accept="image/*"
                       multiple
@@ -246,7 +246,7 @@ const Feedback = ({ docTitle }: { docTitle: string }) => {
 
             <label className="form-field">
               <span>{t('contact')}</span>
-              <input
+              <Input
                 type="text"
                 maxLength={MAX_CONTACT_LENGTH}
                 value={draft.contact}

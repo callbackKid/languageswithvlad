@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { docIdFrom, sourceUrl } from '@/entities/lesson';
 import { app, common, useTranslation } from '@/shared/i18n';
-import { Button } from '@/shared/ui/controls';
+import { Button, Input } from '@/shared/ui/controls';
 import LanguagePicker from '@/shared/ui/LanguagePicker';
 
 // The first screen: paste the link of the lesson document (a Google Doc or a Notion page).
@@ -51,7 +51,7 @@ const Connect = ({
           onConnect(id);
         }}
       >
-        <input
+        <Input
           type="url"
           inputMode="url"
           placeholder={t('docLinkPlaceholder')}

@@ -15,7 +15,7 @@ import {
   type VerbLanguage,
 } from '@/shared/config';
 import { common, learning, useTranslation } from '@/shared/i18n';
-import { Button, IconButton, Select } from '@/shared/ui/controls';
+import { Button, IconButton, Input, Select } from '@/shared/ui/controls';
 
 import { settingsText } from '../i18n/settings';
 import styles from './Settings.module.css';
@@ -177,7 +177,7 @@ const TenseChoice = ({
           return (
             <li key={tense}>
               <label data-tooltip={isLastOne ? t('atLeastOneTense') : undefined}>
-                <input
+                <Input
                   type="checkbox"
                   checked={isTicked}
                   disabled={isLastOne}

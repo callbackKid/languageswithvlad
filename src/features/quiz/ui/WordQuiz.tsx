@@ -6,7 +6,7 @@ import { type Language, languageOfTense, useTranslationLanguage } from '@/shared
 import { common, exercises, learning, useTranslation } from '@/shared/i18n';
 import { grade } from '@/shared/lib/grade';
 import { speak } from '@/shared/lib/speech';
-import { Button } from '@/shared/ui/controls';
+import { Button, Input } from '@/shared/ui/controls';
 import ExerciseHead from '@/shared/ui/ExerciseHead';
 import Speak from '@/shared/ui/Speak';
 
@@ -402,7 +402,7 @@ const WordQuiz = ({
             {question.form.p}
           </span>
         )}
-        <input
+        <Input
           ref={input}
           lang={language}
           value={typed}

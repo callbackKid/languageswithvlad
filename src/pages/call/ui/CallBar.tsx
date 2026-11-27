@@ -4,7 +4,7 @@ import { findCall, openCallWindow } from '@/entities/lesson';
 import { getSettings } from '@/shared/config';
 import { call, useTranslation } from '@/shared/i18n';
 import { loadText, save } from '@/shared/lib/storage';
-import { Button } from '@/shared/ui/controls';
+import { Button, Input } from '@/shared/ui/controls';
 
 // the name the call shows, kept on this device for the next lesson
 const NAME_KEY = 'call:name';
@@ -88,7 +88,7 @@ const CallBar = ({
             );
           }}
         >
-          <input
+          <Input
             type="text"
             required
             maxLength={MAX_NAME_LENGTH}
@@ -98,7 +98,7 @@ const CallBar = ({
             onChange={(event) => setName(event.target.value)}
           />
           {inPage === 'zoom' && (
-            <input
+            <Input
               type="text"
               maxLength={MAX_PASSCODE_LENGTH}
               value={passcode}

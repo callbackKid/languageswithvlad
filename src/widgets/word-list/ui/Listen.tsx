@@ -5,7 +5,7 @@ import { useTranslationLanguage } from '@/shared/config';
 import { common, exercises, useTranslation } from '@/shared/i18n';
 import { speakAndWait, stopSpeaking, unlockSpeech } from '@/shared/lib/speech';
 import { shuffle } from '@/shared/lib/util';
-import { Button } from '@/shared/ui/controls';
+import { Button, Input } from '@/shared/ui/controls';
 import ExerciseHead from '@/shared/ui/ExerciseHead';
 
 import { LISTEN_PAUSES, type ListenPause, readListenPause, saveListenPause } from '../model/listen';
@@ -95,7 +95,7 @@ const Listen = ({ words, onClose }: { words: Word[]; onClose: () => void }) => {
         ))}
       </span>
       <label className="check">
-        <input type="checkbox" checked={isShuffled} onChange={toggleShuffle} />
+        <Input type="checkbox" checked={isShuffled} onChange={toggleShuffle} />
         {t('shuffle')}
       </label>
     </div>

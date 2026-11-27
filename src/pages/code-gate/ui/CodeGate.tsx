@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { app, useTranslation } from '@/shared/i18n';
-import { Button } from '@/shared/ui/controls';
+import { Button, Input } from '@/shared/ui/controls';
 import LanguagePicker from '@/shared/ui/LanguagePicker';
 
 // Asks for the class code once, when the server wants one (APP_ACCESS_CODE).
@@ -25,7 +25,7 @@ const CodeGate = ({ onDone, onClear }: { onDone: (code: string) => void; onClear
           }
         }}
       >
-        <input
+        <Input
           value={code}
           onChange={(event) => setCode(event.target.value)}
           placeholder={t('codeTitle')}

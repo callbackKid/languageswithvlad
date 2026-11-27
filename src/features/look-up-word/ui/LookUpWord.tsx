@@ -2,7 +2,7 @@ import { type FormEvent, useRef, useState } from 'react';
 
 import { type Language, useSettings } from '@/shared/config';
 import { learning, useTranslation, wordActions } from '@/shared/i18n';
-import { Button, Select } from '@/shared/ui/controls';
+import { Button, Input, Select } from '@/shared/ui/controls';
 
 import { cleanSelection, lookUp, menuPlace } from '../model/wordActions';
 
@@ -33,7 +33,7 @@ const LookUpWord = () => {
 
   return (
     <form className="look-up" onSubmit={submit}>
-      <input
+      <Input
         ref={field}
         lang={language}
         value={typed}

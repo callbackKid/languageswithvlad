@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { common, useTranslation } from '@/shared/i18n';
 import { type Grade, grade } from '@/shared/lib/grade';
 import { shuffle } from '@/shared/lib/util';
-import { Button } from '@/shared/ui/controls';
+import { Button, Input } from '@/shared/ui/controls';
 import ExerciseHead from '@/shared/ui/ExerciseHead';
 import Speak from '@/shared/ui/Speak';
 
@@ -162,7 +162,7 @@ const ExerciseRound = ({
             else answer(typed);
           }}
         >
-          <input
+          <Input
             lang={language}
             value={typed}
             readOnly={!!result}

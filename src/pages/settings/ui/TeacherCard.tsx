@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { api } from '@/shared/api';
 import { forgetTeacherCode, saveTeacherCode, useTeacher } from '@/shared/config';
 import { common, useTranslation } from '@/shared/i18n';
-import { Button } from '@/shared/ui/controls';
+import { Button, Input } from '@/shared/ui/controls';
 
 import { settingsText } from '../i18n/settings';
 import styles from './Settings.module.css';
@@ -54,7 +54,7 @@ const TeacherCard = () => {
         >
           <label className="form-field">
             <span>{t('teacherCode')}</span>
-            <input
+            <Input
               type="password"
               value={code}
               onChange={(event) => setCode(event.target.value)}
