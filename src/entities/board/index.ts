@@ -5,4 +5,11 @@ export {
   asSavedBoard,
   asSharedElements,
   asSharedFiles,
+  type SavedBoard,
 } from './model/boardPayload';
+export {
+  getBoardRevision,
+  readBoardPreview,
+  updateBoardPreviews,
+  writeBoardPreview,
+} from './model/boardPreview';

@@ -20,10 +20,12 @@ import {
   asSavedBoard,
   asSharedElements,
   asSharedFiles,
+  type SavedBoard,
+  updateBoardPreviews,
 } from '@/entities/board';
 import { type BoardConnection, type BoardPeer, type BoardServer, connectBoard } from '@/shared/api';
 import { type UiLanguage } from '@/shared/i18n';
-import { loadChecked, save } from '@/shared/lib/storage';
+import { loadChecked, trySave } from '@/shared/lib/storage';
 
 /* The drawing itself (Excalidraw, MIT). It's a big library, so LessonBoard loads this file only
    when the board is opened. With a connection, every change is sent to the other people on the
@@ -96,10 +98,32 @@ const BoardCanvas = ({
   const lastPointer = useRef(0);
   const collaborators = useRef(new Map<SocketId, Collaborator>());
 
+  const lastSavedScene = useRef<string>();
   const flush = useCallback(() => {
     window.clearTimeout(timer.current);
-    if (unsaved.current) save(storageKey, unsaved.current);
+    const pending = unsaved.current;
     unsaved.current = null;
+    const board = asSavedBoard(pending);
+    if (!board) return;
+    const scene = JSON.stringify(board);
+    if (
+      (lastSavedScene.current === scene &&
+        JSON.stringify(loadChecked(storageKey, asSavedBoard)) === scene) ||
+      !trySave(storageKey, pending)
+    )
+      return;
+    lastSavedScene.current = scene;
+    const render = (board: SavedBoard, dark: boolean) =>
+      exportToBlob({
+        elements: board.elements as never,
+        files: board.files,
+        appState: { exportBackground: true, exportWithDarkMode: dark },
+        mimeType: 'image/png',
+      });
+    // Preview work can finish after the editor closes. Only the current revision is written.
+    const update = () => void updateBoardPreviews(storageKey, scene, render);
+    if ('requestIdleCallback' in window) window.requestIdleCallback(update, { timeout: 1500 });
+    else setTimeout(update, 0);
   }, [storageKey]);
   // the last strokes are kept even when the board closes during the short save delay
   useEffect(() => flush, [flush]);

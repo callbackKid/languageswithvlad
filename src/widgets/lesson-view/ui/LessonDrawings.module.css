@@ -6,7 +6,8 @@
   font-size: 16px;
 }
 /* at its own size, smaller only when it doesn't fit */
-:where(.lesson-drawings) :global(.board-picture) svg {
+:where(.lesson-drawings) :global(.board-picture) svg,
+:where(.lesson-drawings) :global(.board-picture) img {
   display: block;
   max-width: 100%;
   height: auto;

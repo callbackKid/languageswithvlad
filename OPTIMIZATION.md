@@ -570,6 +570,46 @@ snapshot in IndexedDB also avoids adding image bytes to the editable scene store
 localStorage. Snapshot creation, invalidation, and legacy fallback need their own
 functional and timing checks before deployment.
 
+## Production saved-board snapshots
+
+The editor saves the editable scene as before and schedules PNG previews after idle time.
+It generates light and dark variants from the exact persisted scene. The IndexedDB cache
+keeps one entry per board and theme, and the scene's SHA-256 revision prevents an older
+picture from being used after an edit. A completed export checks the current stored scene
+before writing. Clearing a board removes its cached previews.
+
+**My notes** loads the cached image by blob URL when available. Cache misses, stale or
+unreadable entries, and unavailable IndexedDB use the existing SVG renderer. A successful
+legacy render seeds the cache for the matching theme. Editable scenes keep their existing
+storage format.
+
+### Production measurements
+
+The browser run used Chrome 158.0.8127.89 and Playwright Core 1.48.2 with the same loopback
+server, gzip, API fixtures, cache-disabled contexts, and 5 Mbps down / 1 Mbps up / 100 ms
+profile as the prototype. The actual production editor created the stored PNGs. Each timed
+context was seeded with its corresponding editable scene and those IndexedDB entries before
+navigation, so the timing measures a cold page with a preview cache hit.
+
+| Fixture            | Light PNG bytes | Dark PNG bytes | All cache-hit frame times (ms) | Median (ms) |
+| ------------------ | --------------: | -------------: | ------------------------------ | ----------: |
+| Rectangle          |           5,675 |          5,739 | 147, 147, 129, 141, 131        |         141 |
+| Rectangle and text |           8,406 |          8,400 | 145, 144, 145, 145, 144        |         145 |
+
+All ten cache hits fetched **1,476 gzip bytes** after clicking **My notes**. This was
+731 bytes for `BoardPicture-B2macAXD.js` and 745 for `boardPreview-CG3HXR5Q.js`.
+No renderer or font-subsetting chunk was requested. The earlier uncached live-SVG
+benchmarks were 761 ms and 3,218 ms for their rectangle and text fixtures, respectively.
+Those older runs used separately drawn scenes and provide context for the cache-hit
+measurements.
+
+Chrome verified both PNG themes at 390 px, unchanged image labelling, and SVG fallback
+for an older board, a stale revision, a corrupt image, and unavailable IndexedDB. An older
+board's second open used its cached SVG image. Editing replaced both PNGs under a new
+revision, and clearing deleted both entries. For the mobile text fixture the cached PNG
+box was 227 × 258 px and the fallback SVG box was 225 × 257 px.
+Axe-core reported the same existing heading-order finding in both builds and themes.
+
 ## Instruments and reproduction
 
 - **Build and bundle graph:** Node.js 22.19.0, Vite 5.3.4 and Rollup. Run `yarn build` to get Vite's
