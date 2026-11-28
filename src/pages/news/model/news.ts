@@ -53,6 +53,18 @@ export const NEWS: NewsDay[] = [
       {
         kind: 'fixed',
         text: {
+          en: 'Multiple-choice quizzes now show answer options in the language the question asks for.',
+          ru: 'В тестах с выбором ответа варианты теперь показаны на том языке, на котором нужно ответить.',
+          fr: 'Dans les quiz à choix multiple, les réponses proposées sont désormais dans la langue demandée.',
+          de: 'Bei Multiple-Choice-Quizfragen stehen die Antwortmöglichkeiten jetzt in der Sprache, in der du antworten sollst.',
+          es: 'En los tests de opción múltiple, las opciones de respuesta aparecen ahora en el idioma que pide la pregunta.',
+          pt: 'Nos testes de escolha múltipla, as opções de resposta aparecem agora na língua pedida na pergunta.',
+          it: 'Nei quiz a scelta multipla, le opzioni di risposta sono ora nella lingua richiesta dalla domanda.',
+        },
+      },
+      {
+        kind: 'fixed',
+        text: {
           en: 'When you select an older lesson in Downloaded lessons, its words and verbs are available even if they also appear in a newer lesson.',
           ru: 'Если вы выберете более ранний урок в разделе «Загруженные уроки», его слова и глаголы будут доступны, даже если они встречаются и в более позднем уроке.',
           fr: 'Si vous sélectionnez une leçon plus ancienne dans « Leçons téléchargées », ses mots et ses verbes restent disponibles même s’ils figurent aussi dans une leçon plus récente.',

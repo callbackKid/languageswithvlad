@@ -1,6 +1,6 @@
 import { type Conjugation, knownTenses, negate, type VerbRef } from '@/entities/verb/@x/lesson';
 import { formKey, isLearned, type Progress, type Word, wordKey } from '@/entities/word/@x/lesson';
-import { type Tense } from '@/shared/config';
+import { type Tense, translationLanguage } from '@/shared/config';
 import { type UiLanguage } from '@/shared/i18n';
 import { canSpeak } from '@/shared/lib/speech';
 import { shuffle } from '@/shared/lib/util';
@@ -151,19 +151,33 @@ const translationWords = (text: string) =>
 
 /** True when the candidate could also be a right answer: same sense, or translations sharing a
     word (выделить, отметить / отметить). A false overlap only drops a wrong answer. */
-const overlaps = (word: Word, sense: string | undefined, candidate: Word): boolean => {
+const overlaps = (
+  translation: Set<string>,
+  sense: string | undefined,
+  candidate: Word
+): boolean => {
   if (sense && sense === candidate.sense) return true;
-  const own = new Set(translationWords(word.ru));
-  return translationWords(candidate.ru).some((part) => own.has(part));
+  return translationWords(candidate.ru).some((part) => translation.has(part));
 };
 
-// Three wrong answers of the same kind of word when possible, none of them close in meaning.
+// Three wrong answers in the language being asked for, with the same part of speech when possible.
 const distractors = (word: Word, pool: Word[], side: 'fr' | 'ru'): string[] | null => {
   const seen = new Set([word[side].toLowerCase()]);
   const out: string[] = [];
+  const language = word.language ?? 'fr';
+  const answerLanguage = (item: Word) =>
+    side === 'fr' ? (item.language ?? 'fr') : translationLanguage(item.language);
+  const expectedLanguage = answerLanguage(word);
   // words rebuilt from mistakes carry no sense, the lesson's copy does
-  const sense = word.sense || pool.find((candidate) => candidate.fr === word.fr)?.sense;
-  const allowed = pool.filter((candidate) => !overlaps(word, sense, candidate));
+  const sense =
+    word.sense ||
+    pool.find((candidate) => (candidate.language ?? 'fr') === language && candidate.fr === word.fr)
+      ?.sense;
+  const translation = new Set(translationWords(word.ru));
+  const allowed = pool.filter(
+    (candidate) =>
+      answerLanguage(candidate) === expectedLanguage && !overlaps(translation, sense, candidate)
+  );
   const same = shuffle(allowed.filter((candidate) => candidate.kind === word.kind)),
     other = shuffle(allowed.filter((candidate) => candidate.kind !== word.kind));
   for (const candidate of [...same, ...other]) {
