@@ -29,13 +29,15 @@ export const makeExerciseText = defineMessages({
     groupLabel: 'An exercise on the words of “{name}”',
     groupTooltip: '15 questions by Claude on these words',
     groupTooFew: {
-      one: 'An exercise needs at least {count} ticked word',
-      other: 'An exercise needs at least {count} ticked words',
+      one: 'To start an exercise, tick at least {count} word from one language. Each word needs a translation.',
+      other:
+        'To start an exercise, tick at least {count} words from one language. Each word needs a translation.',
     },
     // one note over a grouped word list when a group has too few ticked words for its Exercise
     groupNote: {
-      one: 'An exercise on a group needs at least {count} ticked word in one language.',
-      other: 'An exercise on a group needs at least {count} ticked words in one language.',
+      one: 'To start a group exercise, tick at least {count} word from one language. Each word needs a translation.',
+      other:
+        'To start a group exercise, tick at least {count} words from one language. Each word needs a translation.',
     },
     groupTitle: 'Exercise: {name}',
   },
@@ -73,17 +75,19 @@ export const makeExerciseText = defineMessages({
     groupLabel: 'Упражнение по словам группы «{name}»',
     groupTooltip: '15 вопросов от Claude по этим словам',
     groupTooFew: {
-      one: 'Для упражнения нужно хотя бы {count} отмеченное слово',
-      few: 'Для упражнения нужно хотя бы {count} отмеченных слова',
-      many: 'Для упражнения нужно хотя бы {count} отмеченных слов',
-      other: 'Для упражнения нужно хотя бы {count} отмеченного слова',
+      one: 'Для упражнения отметьте хотя бы {count} слово на одном языке. У каждого слова должен быть перевод.',
+      few: 'Для упражнения отметьте хотя бы {count} слова на одном языке. У каждого слова должен быть перевод.',
+      many: 'Для упражнения отметьте хотя бы {count} слов на одном языке. У каждого слова должен быть перевод.',
+      other:
+        'Для упражнения отметьте хотя бы {count} слова на одном языке. У каждого слова должен быть перевод.',
     },
     // one note over a grouped word list when a group has too few ticked words for its Exercise
     groupNote: {
-      one: 'Для упражнения по группе нужно хотя бы {count} отмеченное слово на одном языке.',
-      few: 'Для упражнения по группе нужно хотя бы {count} отмеченных слова на одном языке.',
-      many: 'Для упражнения по группе нужно хотя бы {count} отмеченных слов на одном языке.',
-      other: 'Для упражнения по группе нужно хотя бы {count} отмеченного слова на одном языке.',
+      one: 'Для упражнения по группе отметьте хотя бы {count} слово на одном языке. У каждого слова должен быть перевод.',
+      few: 'Для упражнения по группе отметьте хотя бы {count} слова на одном языке. У каждого слова должен быть перевод.',
+      many: 'Для упражнения по группе отметьте хотя бы {count} слов на одном языке. У каждого слова должен быть перевод.',
+      other:
+        'Для упражнения по группе отметьте хотя бы {count} слова на одном языке. У каждого слова должен быть перевод.',
     },
     groupTitle: 'Упражнение: {name}',
   },
@@ -114,13 +118,15 @@ export const makeExerciseText = defineMessages({
     groupLabel: 'Exercice sur les mots du groupe « {name} »',
     groupTooltip: '15 questions de Claude sur ces mots',
     groupTooFew: {
-      one: 'Un exercice demande au moins {count} mot coché',
-      other: 'Un exercice demande au moins {count} mots cochés',
+      one: 'Pour démarrer un exercice, cochez au moins {count} mot d’une seule langue. Chaque mot doit avoir une traduction.',
+      other:
+        'Pour démarrer un exercice, cochez au moins {count} mots d’une seule langue. Chaque mot doit avoir une traduction.',
     },
     // one note over a grouped word list when a group has too few ticked words for its Exercise
     groupNote: {
-      one: 'Un exercice sur un groupe demande au moins {count} mot coché dans une même langue.',
-      other: 'Un exercice sur un groupe demande au moins {count} mots cochés dans une même langue.',
+      one: 'Pour démarrer un exercice sur un groupe, cochez au moins {count} mot d’une seule langue. Chaque mot doit avoir une traduction.',
+      other:
+        'Pour démarrer un exercice sur un groupe, cochez au moins {count} mots d’une seule langue. Chaque mot doit avoir une traduction.',
     },
     groupTitle: 'Exercice : {name}',
   },
@@ -151,14 +157,15 @@ export const makeExerciseText = defineMessages({
     groupLabel: 'Übung zu den Wörtern der Gruppe „{name}“',
     groupTooltip: '15 Fragen von Claude zu diesen Wörtern',
     groupTooFew: {
-      one: 'Eine Übung braucht mindestens {count} angehaktes Wort',
-      other: 'Eine Übung braucht mindestens {count} angehakte Wörter',
+      one: 'Wähle für eine Übung mindestens {count} Wort aus einer einzigen Sprache aus. Jedes Wort braucht eine Übersetzung.',
+      other:
+        'Wähle für eine Übung mindestens {count} Wörter aus einer einzigen Sprache aus. Jedes Wort braucht eine Übersetzung.',
     },
     // one note over a grouped word list when a group has too few ticked words for its Exercise
     groupNote: {
-      one: 'Eine Übung zu einer Gruppe braucht mindestens {count} angehaktes Wort in derselben Sprache.',
+      one: 'Wähle für eine Übung zu einer Gruppe mindestens {count} Wort aus einer einzigen Sprache aus. Jedes Wort braucht eine Übersetzung.',
       other:
-        'Eine Übung zu einer Gruppe braucht mindestens {count} angehakte Wörter in derselben Sprache.',
+        'Wähle für eine Übung zu einer Gruppe mindestens {count} Wörter aus einer einzigen Sprache aus. Jedes Wort braucht eine Übersetzung.',
     },
     groupTitle: 'Übung: {name}',
   },
@@ -192,14 +199,15 @@ export const makeExerciseText = defineMessages({
     groupLabel: 'Ejercicio con las palabras del grupo «{name}»',
     groupTooltip: '15 preguntas de Claude sobre estas palabras',
     groupTooFew: {
-      one: 'Un ejercicio necesita al menos {count} palabra marcada',
-      other: 'Un ejercicio necesita al menos {count} palabras marcadas',
+      one: 'Para empezar un ejercicio, marca al menos {count} palabra de un mismo idioma. Cada palabra debe tener una traducción.',
+      other:
+        'Para empezar un ejercicio, marca al menos {count} palabras de un mismo idioma. Cada palabra debe tener una traducción.',
     },
     // one note over a grouped word list when a group has too few ticked words for its Exercise
     groupNote: {
-      one: 'Un ejercicio sobre un grupo necesita al menos {count} palabra marcada en un mismo idioma.',
+      one: 'Para empezar un ejercicio sobre un grupo, marca al menos {count} palabra de un mismo idioma. Cada palabra debe tener una traducción.',
       other:
-        'Un ejercicio sobre un grupo necesita al menos {count} palabras marcadas en un mismo idioma.',
+        'Para empezar un ejercicio sobre un grupo, marca al menos {count} palabras de un mismo idioma. Cada palabra debe tener una traducción.',
     },
     groupTitle: 'Ejercicio: {name}',
   },
@@ -233,14 +241,15 @@ export const makeExerciseText = defineMessages({
     groupLabel: 'Exercício com as palavras do grupo «{name}»',
     groupTooltip: '15 perguntas do Claude sobre estas palavras',
     groupTooFew: {
-      one: 'Um exercício precisa de pelo menos {count} palavra marcada',
-      other: 'Um exercício precisa de pelo menos {count} palavras marcadas',
+      one: 'Para começar um exercício, marque pelo menos {count} palavra de uma só língua. Cada palavra deve ter uma tradução.',
+      other:
+        'Para começar um exercício, marque pelo menos {count} palavras de uma só língua. Cada palavra deve ter uma tradução.',
     },
     // one note over a grouped word list when a group has too few ticked words for its Exercise
     groupNote: {
-      one: 'Um exercício sobre um grupo precisa de pelo menos {count} palavra marcada na mesma língua.',
+      one: 'Para começar um exercício sobre um grupo, marque pelo menos {count} palavra de uma só língua. Cada palavra deve ter uma tradução.',
       other:
-        'Um exercício sobre um grupo precisa de pelo menos {count} palavras marcadas na mesma língua.',
+        'Para começar um exercício sobre um grupo, marque pelo menos {count} palavras de uma só língua. Cada palavra deve ter uma tradução.',
     },
     groupTitle: 'Exercício: {name}',
   },
@@ -274,14 +283,15 @@ export const makeExerciseText = defineMessages({
     groupLabel: 'Esercizio sulle parole del gruppo «{name}»',
     groupTooltip: '15 domande di Claude su queste parole',
     groupTooFew: {
-      one: 'Un esercizio richiede almeno {count} parola spuntata',
-      other: 'Un esercizio richiede almeno {count} parole spuntate',
+      one: 'Per iniziare un esercizio, spunta almeno {count} parola in una sola lingua. Ogni parola deve avere una traduzione.',
+      other:
+        'Per iniziare un esercizio, spunta almeno {count} parole in una sola lingua. Ogni parola deve avere una traduzione.',
     },
     // one note over a grouped word list when a group has too few ticked words for its Exercise
     groupNote: {
-      one: 'Un esercizio su un gruppo richiede almeno {count} parola spuntata nella stessa lingua.',
+      one: 'Per iniziare un esercizio su un gruppo, spunta almeno {count} parola in una sola lingua. Ogni parola deve avere una traduzione.',
       other:
-        'Un esercizio su un gruppo richiede almeno {count} parole spuntate nella stessa lingua.',
+        'Per iniziare un esercizio su un gruppo, spunta almeno {count} parole in una sola lingua. Ogni parola deve avere una traduzione.',
     },
     groupTitle: 'Esercizio: {name}',
   },

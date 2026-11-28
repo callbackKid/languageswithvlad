@@ -4,27 +4,29 @@ import { type Language } from '@/shared/config';
 
 // the questions in a round on one group of words
 export const GROUP_QUESTIONS = 15;
-// fewer ticked words than this make a thin round: the button waits for more
+// The minimum selection of translated words in one language.
 export const MIN_GROUP_WORDS = 3;
 // the most words sent; keep in step with MAX_EXERCISE_WORDS in api/analyze.ts
 const MAX_GROUP_WORDS = 30;
 
-// The group's words in the language most of them are in: a group on Words to learn can mix languages, a round has one.
+// A group may mix languages. Take the language with the most words eligible for the round.
 const inMainLanguage = (words: Word[]): { language: Language; words: Word[] } | null => {
-  const counts = new Map<Language, number>();
+  const byLanguage = new Map<Language, Word[]>();
   for (const word of words) {
+    if (!word.fr.trim() || !word.ru.trim()) continue;
     const language = word.language ?? 'fr';
-    counts.set(language, (counts.get(language) ?? 0) + 1);
+    const group = byLanguage.get(language);
+    if (group) group.push(word);
+    else byLanguage.set(language, [word]);
   }
-  // a tie goes to the language whose word comes first
-  let language: Language | null = null;
-  for (const [candidate, count] of counts)
-    if (language === null || count > (counts.get(language) ?? 0)) language = candidate;
-  if (language === null) return null;
-  return { language, words: words.filter((word) => (word.language ?? 'fr') === language) };
+  // Ties go to the language whose first eligible word comes first.
+  let main: { language: Language; words: Word[] } | null = null;
+  for (const [language, candidates] of byLanguage)
+    if (!main || candidates.length > main.words.length) main = { language, words: candidates };
+  return main;
 };
 
-// Whether a round can be made on these words: at least MIN_GROUP_WORDS of them in one language.
+// Whether the selected words include enough translations in one language to start a round.
 export const canMakeGroupExercise = (words: Word[]): boolean => {
   return (inMainLanguage(words)?.words.length ?? 0) >= MIN_GROUP_WORDS;
 };
@@ -41,7 +43,5 @@ export const wordsForGroupExercise = (
     main.words.length > MAX_GROUP_WORDS
       ? pickWords(main.words, progress, MAX_GROUP_WORDS)
       : main.words;
-  // pickWords leaves out words without a translation, so count again
-  if (chosen.length < MIN_GROUP_WORDS) return null;
   return { language: main.language, words: chosen.map((word) => word.fr) };
 };

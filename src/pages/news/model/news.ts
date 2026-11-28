@@ -53,6 +53,18 @@ export const NEWS: NewsDay[] = [
       {
         kind: 'fixed',
         text: {
+          en: 'Group exercises are available when you select at least three words from one language and each word has a translation.',
+          ru: 'Упражнение по группе доступно, если вы отметили хотя бы три слова на одном языке и у каждого есть перевод.',
+          fr: 'Vous pouvez lancer un exercice sur un groupe si vous cochez au moins trois mots d’une même langue, chacun avec sa traduction.',
+          de: 'Für eine Übung zu einer Gruppe wählst du mindestens drei Wörter aus derselben Sprache aus. Jedes Wort braucht eine Übersetzung.',
+          es: 'Puedes empezar un ejercicio sobre un grupo si marcas al menos tres palabras de un mismo idioma y todas tienen traducción.',
+          pt: 'Pode iniciar um exercício sobre um grupo se marcar pelo menos três palavras da mesma língua e todas tiverem tradução.',
+          it: 'Puoi iniziare un esercizio su un gruppo se spunti almeno tre parole della stessa lingua e ognuna ha una traduzione.',
+        },
+      },
+      {
+        kind: 'fixed',
+        text: {
           en: 'Fill the gap and Vocabulary blitz let you choose a language when you select words from several languages.',
           ru: 'В упражнениях «Вставьте слово» и «Словарный блиц» можно выбрать язык, если вы отметили слова на нескольких языках.',
           fr: 'Les exercices « Texte à trous » et « Vocabulaire éclair » vous permettent de choisir une langue si vous sélectionnez des mots de plusieurs langues.',
