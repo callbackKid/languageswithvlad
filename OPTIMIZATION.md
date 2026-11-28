@@ -610,6 +610,110 @@ revision, and clearing deleted both entries. For the mobile text fixture the cac
 box was 227 × 258 px and the fallback SVG box was 225 × 257 px.
 Axe-core reported the same existing heading-order finding in both builds and themes.
 
+## November 28 optimization pass
+
+### Secondary routes
+
+Photo parsing, Text analysis, and Stats load when opened. Direct links start the route
+download alongside the selected language catalog. The catalog keeps validated dictionaries
+available to modules that register after it finishes loading.
+
+Three alternating cold-cache pairs per route used Chrome with the loopback fixture and
+5 Mbps down, 1 Mbps up, and 100 ms latency. Timings are medians to the heading's first
+frame. Sizes are compressed JavaScript response bodies and exclude CSS and the English
+catalog.
+
+| Route        | Baseline JS bytes | Split JS bytes | Baseline frame (ms) | Split frame (ms) |
+| ------------ | ----------------: | -------------: | ------------------: | ---------------: |
+| Home         |           151,010 |        144,224 |                 804 |              783 |
+| Lessons      |           151,010 |        144,224 |                 790 |              791 |
+| Lesson space |           151,010 |        144,224 |                 683 |              670 |
+| Photo        |           151,010 |        148,385 |                 669 |              671 |
+| Text         |           151,010 |        148,491 |                 660 |              666 |
+| Stats        |           151,010 |        146,349 |                 785 |              769 |
+
+The startup route trial saved 6,786 JavaScript bytes and 967 CSS bytes. The timings
+varied between pairs and support a transfer-size improvement.
+
+### Lesson analysis and large histories
+
+Opening Grammar, choosing **Read the lesson again**, then opening Words and returning
+to Grammar produced three requests in the baseline (one ordinary and two forced).
+The same sequence produced two requests after the fix (one ordinary and one forced).
+Tab changes can share the in-flight reading, and completed readings use the existing
+cache key.
+
+Stats now counts vocabulary and builds lesson totals in one pass. With 500 synthetic
+lessons and 15,000 words, median aggregation fell from 40.20 ms to 9.04 ms. The results
+matched on three fixtures. The shell, star buttons and per-word streak indicators now
+subscribe to the progress value each one displays.
+
+In the same large-history fixture, the Downloaded lessons list took 1.13 s to display
+and 530 ms to toggle a checkbox. The list still renders all rows. Pagination is a
+follow-up for this scale because search, selection, export, and exercises need access
+to the full result set.
+
+### Photo uploads and PDFs
+
+Both PDF entry points reject selected content larger than 3,000,000 bytes before Base64
+encoding. In an isolated before-and-after comparison of an oversized scan, rejection
+took 924 ms before the change and 225 ms after it. The baseline allocated about 70 million
+Base64 characters. Both runs made zero upload requests. Chrome exercised both import
+entry points at 390 px in both themes, and the exact byte boundary was checked separately.
+
+In the four-photo fixture, a browser downscaling prototype reduced sampled peak memory
+growth from 419 MiB to 128 MiB and increased preparation time from 193 ms to 455 ms.
+It remains experimental. The PDF library still parses the source during page selection
+and again during extraction.
+
+### Live-board broadcasts and SVG export
+
+Board image broadcasts now group files by their encoded byte size. The per-picture cap
+still applies. The 200,000-byte payload budget leaves room for the transport envelope.
+In a two-peer Chrome fixture, a pair of pictures would have exceeded 347 kB in one
+message. The receiver saved both pictures from separate 173,850-byte messages and
+received both again after a simulated connection drop and rejoin. The fixture
+exercised the transport locally. Durable deletion markers and delivery acknowledgements
+remain follow-ups.
+
+The SVG export worker previously pulled in the app entry and failed when it accessed
+`document`. Vite now emits the helpers shared by the worker and renderer in a separate
+chunk. Chrome exported the same 1,944-byte embedded font on both attempts, at 390 px in
+both themes. With a normal HTTP cache the second export made no first-party asset
+requests. With the cache disabled, the second export fetched a further 738,379 gzipped
+bytes for the worker and its dependencies. That cache-disabled run measures the
+dependency graph without HTTP cache reuse.
+
+### Zoom and performance metrics
+
+The fixture benchmark above covers the SDK and signature. Live cold and warm joins,
+including media startup, still need a hosted Zoom test meeting. The current parallel
+signature and SDK loading stays in place.
+
+`yarn perf:budget` checks first-load assets in the production bundle graph. It sums the
+static entry dependencies and the largest of the seven language catalogs, plus a
+separate CSS total. The final build measured 162,198 gzip bytes for JavaScript and the
+catalog against a 176,000-byte limit, and 11,078 CSS bytes against a 13,000-byte limit.
+This command can run as a CI gate. Timing samples remain browser lab measurements.
+
+With `CLAUDE_METRICS=1`, the server logs request duration and outcome, with HTTP status
+and token counts when available. The mock provider recorded one cache hit across three
+calls and two upstream requests. Requests with different output-token limits use
+different cache entries. Logs omit prompts, provider response content, and credentials.
+
+### Large-board snapshots
+
+A fixture with 400 shapes, 80 text elements and two images serialized to 569 kB.
+Across three runs per CPU profile, the two PNG previews used about 2.26 MB in total.
+The largest main-thread task took 3.29–3.48 s at normal speed and 13.72–13.92 s at
+4× CPU throttling. These stalls occurred during background preview generation.
+
+The editor now skips background exports above 150 elements, 400,000 serialized bytes,
+or a 2,000,000-pixel export footprint. The same size class of board saved an additional
+edit and scheduled zero background preview jobs in Chrome at 390 px in both themes.
+Its preview rendered when **My notes** opened. These thresholds bound the work the
+editor attempts in the background. On-demand previews can still take time on large drawings.
+
 ## Instruments and reproduction
 
 - **Build and bundle graph:** Node.js 22.19.0, Vite 5.3.4 and Rollup. Run `yarn build` to get Vite's

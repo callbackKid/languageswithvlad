@@ -97,6 +97,7 @@ About 10 minutes.
    | `APP_ACCESS_CODE`                                | recommended | A class code students enter once, so strangers can’t spend your credit.                                                                                   |
    | `APP_TEACHER_CODE`                               | no          | The teacher's own code, entered once in **Settings → Teacher**; it unlocks the teacher's tools (Make homework with Claude). Without it, nobody sees them. |
    | `CLAUDE_MODEL`, `CLAUDE_FAST_MODEL`              | no          | Model overrides.                                                                                                                                          |
+   | `CLAUDE_METRICS`                                 | no          | Set to `1` to log Claude request durations, outcomes and token counts without logging lesson content.                                                     |
    | `GOOGLE_SERVICE_ACCOUNT`                         | no          | Lets the app add lessons to the Google Doc (setup below).                                                                                                 |
    | `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`         | no          | Sends students’ bug reports and ideas to your Telegram (setup below).                                                                                     |
    | `ZOOM_SDK_KEY`, `ZOOM_SDK_SECRET`                | no          | Runs Zoom calls inside the app, in the lesson space (setup below).                                                                                        |
@@ -238,6 +239,8 @@ yarn start   # the UI and the api/ functions together (vercel dev)
 | `yarn lint` / `yarn lint:fix`       | ESLint (with Prettier as a rule); `:fix` repairs what it can.                          |
 | `yarn format` / `yarn format:check` | Prettier on every file, or only a check.                                               |
 | `yarn verify`                       | Lint, format check, typecheck and the FSD layer rules (`yarn fsd`, Steiger) in one go. |
+| `yarn test`                         | Runs the Vitest suite.                                                                 |
+| `yarn perf:budget`                  | Checks the production startup JavaScript, language catalog and CSS gzip budgets.       |
 
 `resolutions` in `package.json` forces patched versions of `nanoid`, `lodash-es` and `katex`, which Excalidraw 0.18.1 (the newest) pulls in with known vulnerabilities; `yarn audit --groups dependencies` then finds none. Remove them when an Excalidraw release brings those versions itself, and check the board’s Mermaid tool (More tools → Mermaid to Excalidraw) after changing them.
 

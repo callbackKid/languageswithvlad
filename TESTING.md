@@ -14,7 +14,7 @@ What checks the code today, how to run each check, and the plan for real tests, 
 
 ## What runs now
 
-There are no automated tests yet: no test runner, no test files, no CI. What runs are **static checks**: they find type errors, broken rules and wrong formatting, but they never run the code to see whether it gives the right answer.
+Run `yarn test` for the Vitest suite and `yarn -s test:watch` while working on it. The suite starts with a grading unit test. Run `yarn perf:budget` to check the production startup gzip budgets for JavaScript, the largest language catalog, and CSS. Run `yarn verify` for the static checks below. These commands run separately.
 
 ### Static checks
 
@@ -53,9 +53,9 @@ In this order. Steps 1 and 2 come first; CI (step 5) can start as soon as there 
 
 Vitest reuses `vite.config.ts`, so the `@/` alias and the TypeScript setup work in tests without extra configuration.
 
-- [ ] Add `vitest` as a dev dependency with an exact version (no `^`) that supports Vite 5 (check with `npm view vitest@<version> peerDependencies`).
-- [ ] Scripts in `package.json`: `"test": "vitest run"` (once, for the hook and CI) and `"test:watch": "vitest"` (re-runs while you edit).
-- [ ] Test files sit next to the code they test: `grade.ts` → `grade.test.ts`. Import `describe`, `it`, `expect` from `vitest` instead of turning on globals, so the types work without changes to `tsconfig.json`.
+- [x] Add `vitest` as an exact dev dependency compatible with Vite 5.
+- [x] Add `yarn test` for a single run and `yarn test:watch` for watch mode.
+- [x] Put `grade.test.ts` next to `grade.ts` and import test functions from `vitest`.
 - [ ] Functions that read `localStorage` (`loadText`, `readListView`…) need a browser-like environment: add `jsdom` or `happy-dom` and put `// @vitest-environment jsdom` at the top of just those test files.
 - [ ] Check that `yarn verify` still passes with test files in `src/` (ESLint, the typecheck and Steiger all see them).
 - [ ] Add `yarn test` to `yarn verify` and to `.husky/pre-commit`, so a broken test stops a commit.
@@ -129,5 +129,5 @@ The whole app in a real browser. `driver.mjs` and `fixtures.mjs` already do most
 There is no `.github/` folder yet. A workflow runs the checks on every push, so they still run when a commit was made on another machine or without the hook.
 
 - [ ] `.github/workflows/ci.yml`: on `push` to `main`, Node and `yarn install --frozen-lockfile`, then `yarn verify` and `yarn test`.
-- [ ] Later in the same workflow: the Playwright tests (install Chrome with `npx playwright install --with-deps chromium`), and `yarn build`.
+- [ ] Later in the same workflow: the Playwright tests (install Chrome with `npx playwright install --with-deps chromium`), `yarn build` and `yarn perf:budget`.
 - [ ] No secrets are needed: the tests use fixtures, never the real API.

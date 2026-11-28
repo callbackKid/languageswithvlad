@@ -51,6 +51,47 @@ export const NEWS: NewsDay[] = [
     date: LATEST_NEWS_DATE,
     items: [
       {
+        kind: 'better',
+        text: {
+          en: 'Large drawings stay responsive while you edit them. Their preview is generated when you open My notes.',
+          ru: 'Большие рисунки можно редактировать без задержек. Предпросмотр создаётся, когда вы открываете вкладку «Мои заметки».',
+          fr: 'Les grands dessins restent fluides pendant la modification. Leur aperçu est généré quand vous ouvrez « Mes notes ».',
+          de: 'Auch bei großen Zeichnungen reagiert die Tafel beim Bearbeiten flüssig. Die Vorschau wird erstellt, wenn du „Meine Notizen“ öffnest.',
+          es: 'Puedes editar dibujos grandes con fluidez. La vista previa se genera al abrir «Mis notas».',
+          pt: 'Pode editar desenhos grandes sem atrasos. A pré-visualização é gerada ao abrir «As minhas notas».',
+          it: 'Puoi modificare i disegni grandi senza rallentamenti. L’anteprima viene generata quando apri «I miei appunti».',
+        },
+      },
+      {
+        kind: 'fixed',
+        text: {
+          en: 'Switching lesson tabs after clicking Read the lesson again no longer starts another reading.',
+          ru: 'Если после нажатия «Прочитать урок заново» вы перейдёте на другую вкладку урока, повторный анализ не запустится.',
+          fr: 'Changer d’onglet après avoir cliqué sur « Relire la leçon » ne relance plus l’analyse de la leçon.',
+          de: 'Wenn du nach einem Klick auf „Lektion neu lesen“ den Tab wechselst, wird die Lektion nicht noch einmal gelesen.',
+          es: 'Cambiar de pestaña tras pulsar «Volver a leer la lección» ya no vuelve a iniciar el análisis de la lección.',
+          pt: 'Mudar de separador depois de clicar em «Voltar a ler a lição» já não inicia uma nova análise da lição.',
+          it: 'Passare a un’altra scheda dopo aver premuto «Rileggi la lezione» non avvia più un’altra analisi della lezione.',
+        },
+      },
+      {
+        kind: 'fixed',
+        text: {
+          en: 'Several small pictures pasted into the shared board together can now reach the other person.',
+          ru: 'Если вы вставите на общую доску сразу несколько небольших изображений, собеседник сможет их увидеть.',
+          fr: 'Si vous collez plusieurs petites images à la fois sur le tableau partagé, l’autre personne peut désormais les voir.',
+          de: 'Wenn du mehrere kleine Bilder auf einmal auf der gemeinsamen Tafel einfügst, kann die andere Person sie jetzt sehen.',
+          es: 'Si pegas varias imágenes pequeñas a la vez en la pizarra compartida, ahora la otra persona puede verlas.',
+          pt: 'Se colar várias imagens pequenas de uma vez no quadro partilhado, a outra pessoa já as pode ver.',
+          it: 'Se incolli più immagini piccole insieme sulla lavagna condivisa, ora anche l’altra persona può vederle.',
+        },
+      },
+    ],
+  },
+  {
+    date: '2026-11-27',
+    items: [
+      {
         kind: 'fixed',
         text: {
           en: 'Corrections in dictation, conjugation practice, and other exercises are easier to read in both themes.',
