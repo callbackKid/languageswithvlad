@@ -648,10 +648,23 @@ lessons and 15,000 words, median aggregation fell from 40.20 ms to 9.04 ms. The 
 matched on three fixtures. The shell, star buttons and per-word streak indicators now
 subscribe to the progress value each one displays.
 
-In the same large-history fixture, the Downloaded lessons list took 1.13 s to display
-and 530 ms to toggle a checkbox. The list still renders all rows. Pagination is a
-follow-up for this scale because search, selection, export, and exercises need access
-to the full result set.
+### Downloaded lessons pagination
+
+Downloaded lessons now renders up to 50 vocabulary rows at a time. Search looks
+across the chosen lessons and returns to the first page. Selection, Anki export, and
+exercises use words across all pages.
+
+Five alternating pairs of production-build runs used the same 500-lesson,
+15,000-word fixture in Chrome 158.0.8127.89 at 390 px. Each run used a fresh browser
+context with local fixture responses. The render timing ends two animation frames
+after the expected rows appear. The checkbox timing ends two animation frames after
+clicking the first word's checkbox.
+
+| Measure                    |   Before |  After |
+| -------------------------- | -------: | -----: |
+| Median first list paint    | 1,092 ms | 115 ms |
+| Median checkbox update     |   513 ms |  32 ms |
+| Vocabulary rows in the DOM |   15,000 |     50 |
 
 ### Photo uploads and PDFs
 

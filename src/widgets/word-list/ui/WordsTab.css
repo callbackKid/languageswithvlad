@@ -37,6 +37,14 @@
   max-width: 100%;
 }
 
+.word-list-pages {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
 /* the words of one group by meaning, under its name */
 .word-group + .word-group {
   margin-top: 18px;

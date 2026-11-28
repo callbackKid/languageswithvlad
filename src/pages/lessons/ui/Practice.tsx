@@ -11,6 +11,9 @@ import { WordsTab } from '@/widgets/word-list';
 
 import styles from './Practice.module.css';
 
+// Bound the number of rows rendered for large lesson histories.
+const WORDS_PER_PAGE = 50;
+
 // Every exercise, run on the words and verbs of all lessons or the ones picked.
 const Practice = ({ bank, hasClaude }: { bank: Bank; hasClaude: boolean }) => {
   const { t } = useTranslation(pages);
@@ -101,7 +104,12 @@ const Practice = ({ bank, hasClaude }: { bank: Bank; hasClaude: boolean }) => {
         </div>
         <div className="body" {...panelProps('words')}>
           {tab === 'words' && (
-            <WordsTab key={selectionKey} analysis={analysis} hasClaude={hasClaude} />
+            <WordsTab
+              key={selectionKey}
+              analysis={analysis}
+              hasClaude={hasClaude}
+              pageSize={WORDS_PER_PAGE}
+            />
           )}
         </div>
         <div className="body" {...panelProps('verbs')}>

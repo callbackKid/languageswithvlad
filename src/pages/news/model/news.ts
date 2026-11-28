@@ -53,6 +53,18 @@ export const NEWS: NewsDay[] = [
       {
         kind: 'better',
         text: {
+          en: 'Downloaded lessons now shows vocabulary in pages. Search, selection, exercises and export still work across the full list.',
+          ru: 'В разделе «Загруженные уроки» слова теперь разбиты на страницы. Поиск, выбор слов, упражнения и экспорт по-прежнему работают со всем списком.',
+          fr: 'Dans « Leçons téléchargées », la liste de mots est désormais répartie sur plusieurs pages. La recherche, la sélection, les exercices et l’export fonctionnent toujours sur toute la liste.',
+          de: 'Unter „Geladene Lektionen“ ist die Wortliste jetzt in Seiten unterteilt. Suche, Auswahl, Übungen und Export funktionieren weiterhin für die ganze Liste.',
+          es: 'En «Lecciones descargadas», la lista de palabras ahora se divide en páginas. La búsqueda, la selección, los ejercicios y la exportación siguen funcionando con toda la lista.',
+          pt: 'Em «Lições descarregadas», a lista de palavras está agora dividida em páginas. A pesquisa, a seleção, os exercícios e a exportação continuam a funcionar em toda a lista.',
+          it: 'In «Lezioni scaricate», l’elenco di parole è ora suddiviso in pagine. La ricerca, la selezione, gli esercizi e l’esportazione continuano a funzionare su tutto l’elenco.',
+        },
+      },
+      {
+        kind: 'better',
+        text: {
           en: 'Large drawings stay responsive while you edit them. Their preview is generated when you open My notes.',
           ru: 'Большие рисунки можно редактировать без задержек. Предпросмотр создаётся, когда вы открываете вкладку «Мои заметки».',
           fr: 'Les grands dessins restent fluides pendant la modification. Leur aperçu est généré quand vous ouvrez « Mes notes ».',

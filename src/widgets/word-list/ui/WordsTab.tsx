@@ -123,6 +123,7 @@ const WordsTab = ({
   showProgress = false,
   grouped = false,
   lessonKey,
+  pageSize,
 }: {
   analysis: Analysis;
   hasClaude: boolean;
@@ -134,14 +135,17 @@ const WordsTab = ({
   grouped?: boolean;
   // one lesson's own list: its words can be taken out of it (✕) and brought back
   lessonKey?: string;
+  // A long vocabulary list can render one page while its actions use the full selection.
+  pageSize?: number;
 }) => {
-  const { t, rich, language: uiLanguage } = useTranslation(exercises);
+  const { t, rich, locale, language: uiLanguage } = useTranslation(exercises);
   const commonText = useTranslation(common);
   const exerciseText = useTranslation(makeExerciseText);
   const translationOf = useTranslationLanguage();
   // Tracks the words left out, so words that arrive later (more lessons prepared) start picked.
   const [unpicked, setUnpicked] = useState<Set<string>>(() => new Set());
   const [filter, setFilter] = useState('');
+  const [requestedPage, setRequestedPage] = useState(1);
   // the name of the group chosen in the filters; null for every group
   const [chosenGroup, setChosenGroup] = useState<string | null>(null);
   const [exercise, setExercise] = useState<Exercise>(null);
@@ -173,10 +177,14 @@ const WordsTab = ({
     group === null ? analysis.words : (groups.find((listed) => listed.name === group)?.words ?? []);
   const picked = shown.filter((word) => !unpicked.has(word.fr));
   const query = filter.toLowerCase();
-  const list = shown.filter(
-    (word) =>
-      !query || word.fr.toLowerCase().includes(query) || word.ru.toLowerCase().includes(query)
-  );
+  const matches = query
+    ? shown.filter(
+        (word) => word.fr.toLowerCase().includes(query) || word.ru.toLowerCase().includes(query)
+      )
+    : shown;
+  const pageCount = pageSize ? Math.max(1, Math.ceil(matches.length / pageSize)) : 1;
+  const page = Math.min(requestedPage, pageCount);
+  const list = pageSize ? matches.slice((page - 1) * pageSize, page * pageSize) : matches;
   const hasPairs = analysis.pairs.length >= 2;
   const start = (kind: Exercise) => {
     setExercise(kind);
@@ -303,7 +311,10 @@ const WordsTab = ({
           placeholder={t('filterWords')}
           aria-label={t('filterWords')}
           value={filter}
-          onChange={(event) => setFilter(event.target.value)}
+          onChange={(event) => {
+            setFilter(event.target.value);
+            setRequestedPage(1);
+          }}
         />
         {hasGroups && (
           <Select
@@ -314,6 +325,7 @@ const WordsTab = ({
             onChange={(event) => {
               const index = event.target.value;
               setChosenGroup(index === '' ? null : (groups[Number(index)]?.name ?? null));
+              setRequestedPage(1);
             }}
           >
             <option value="">{t('allGroups')}</option>
@@ -342,6 +354,26 @@ const WordsTab = ({
         <div className="note err" role="alert">
           <p>{t('groupingFailed')}</p>
           <Button onClick={grouping.retry}>{commonText.t('tryAgain')}</Button>
+        </div>
+      )}
+      {pageCount > 1 && (
+        <div className="word-list-pages" role="group" aria-label={t('wordListPages')}>
+          <Button variant="ghost" disabled={page === 1} onClick={() => setRequestedPage(page - 1)}>
+            {t('previousPage')}
+          </Button>
+          <span className="hint" role="status">
+            {t('pageOf', {
+              page: page.toLocaleString(locale),
+              total: pageCount.toLocaleString(locale),
+            })}
+          </span>
+          <Button
+            variant="ghost"
+            disabled={page === pageCount}
+            onClick={() => setRequestedPage(page + 1)}
+          >
+            {t('nextPage')}
+          </Button>
         </div>
       )}
       {list.length ? (

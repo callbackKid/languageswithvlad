@@ -133,7 +133,7 @@ export const tutorial = defineMessages({
     'all-lessons.step1':
       'Leave <b>All</b> selected, or tap lesson chips to practise only a few lessons.',
     'all-lessons.step2':
-      'Use the <b>Words</b> and <b>Verbs</b> tabs exactly as in a single lesson.',
+      'Use the <b>Words</b> and <b>Verbs</b> tabs exactly as in a single lesson. Use <b>Previous page</b> and <b>Next page</b> to browse longer word lists.',
     'all-lessons.mock': 'lesson chips',
 
     'my-words.title': 'Words to learn',
@@ -400,7 +400,7 @@ export const tutorial = defineMessages({
     'all-lessons.step1':
       'Оставьте выбранным <b>Все</b> или нажмите на нужные уроки, чтобы тренировать только их.',
     'all-lessons.step2':
-      'Пользуйтесь вкладками <b>Слова</b> и <b>Глаголы</b> так же, как в отдельном уроке.',
+      'Пользуйтесь вкладками <b>Слова</b> и <b>Глаголы</b> так же, как в отдельном уроке. Чтобы листать длинные списки слов, нажимайте <b>Предыдущая страница</b> и <b>Следующая страница</b>.',
     'all-lessons.mock': 'выбор уроков',
 
     'my-words.title': 'Слова на изучении',
@@ -666,7 +666,7 @@ export const tutorial = defineMessages({
     'all-lessons.step1':
       'Laissez <b>Toutes</b> sélectionné, ou touchez des leçons pour n’en travailler que quelques-unes.',
     'all-lessons.step2':
-      'Utilisez les onglets <b>Mots</b> et <b>Verbes</b> comme dans une seule leçon.',
+      'Utilisez les onglets <b>Mots</b> et <b>Verbes</b> comme dans une seule leçon. Utilisez <b>Page précédente</b> et <b>Page suivante</b> pour parcourir les longues listes de mots.',
     'all-lessons.mock': 'le choix des leçons',
 
     'my-words.title': 'Mots à apprendre',
@@ -938,7 +938,7 @@ export const tutorial = defineMessages({
     'all-lessons.step1':
       'Lass <b>Alle</b> ausgewählt oder tippe auf einzelne Lektionen, um nur diese zu üben.',
     'all-lessons.step2':
-      'Nutze die Tabs <b>Wörter</b> und <b>Verben</b> wie in einer einzelnen Lektion.',
+      'Nutze die Tabs <b>Wörter</b> und <b>Verben</b> wie in einer einzelnen Lektion. Mit <b>Vorherige Seite</b> und <b>Nächste Seite</b> kannst du durch längere Wortlisten blättern.',
     'all-lessons.mock': 'die Lektionsauswahl',
 
     'my-words.title': 'Lernwörter',
@@ -1206,7 +1206,7 @@ export const tutorial = defineMessages({
     'all-lessons.step1':
       'Deja <b>Todas</b> seleccionado o toca las etiquetas de lecciones para practicar solo algunas.',
     'all-lessons.step2':
-      'Usa las pestañas <b>Palabras</b> y <b>Verbos</b> igual que en una sola lección.',
+      'Usa las pestañas <b>Palabras</b> y <b>Verbos</b> igual que en una sola lección. Usa <b>Página anterior</b> y <b>Página siguiente</b> para recorrer listas de palabras más largas.',
     'all-lessons.mock': 'etiquetas de lecciones',
 
     'my-words.title': 'Palabras por aprender',
@@ -1476,7 +1476,7 @@ export const tutorial = defineMessages({
     'all-lessons.step1':
       'Deixe <b>Todas</b> selecionado ou toque nas etiquetas das lições para praticar só algumas.',
     'all-lessons.step2':
-      'Use os separadores <b>Palavras</b> e <b>Verbos</b> tal como numa só lição.',
+      'Use os separadores <b>Palavras</b> e <b>Verbos</b> tal como numa só lição. Use <b>Página anterior</b> e <b>Página seguinte</b> para percorrer listas de palavras mais longas.',
     'all-lessons.mock': 'etiquetas das lições',
 
     'my-words.title': 'Palavras por aprender',
@@ -1743,7 +1743,8 @@ export const tutorial = defineMessages({
       'La seconda scheda della <b>Cronologia lezioni</b>: tutti gli esercizi su parole e verbi, con tutte le lezioni preparate insieme.',
     'all-lessons.step1':
       'Lascia selezionato <b>Tutte</b> oppure tocca le etichette delle lezioni per esercitarti solo su alcune.',
-    'all-lessons.step2': 'Usa le schede <b>Parole</b> e <b>Verbi</b> come in una singola lezione.',
+    'all-lessons.step2':
+      'Usa le schede <b>Parole</b> e <b>Verbi</b> come in una singola lezione. Usa <b>Pagina precedente</b> e <b>Pagina successiva</b> per sfogliare gli elenchi di parole più lunghi.',
     'all-lessons.mock': 'etichette delle lezioni',
 
     'my-words.title': 'Parole da imparare',
