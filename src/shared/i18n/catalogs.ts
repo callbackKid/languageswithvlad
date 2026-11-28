@@ -6,6 +6,7 @@ type Dictionary = Record<string, Message>;
 type LocalizedDictionary = Partial<Record<UiLanguage, Dictionary>>;
 
 const dictionaries = new Map<string, LocalizedDictionary>();
+const loadedCatalogs = new Map<UiLanguage, Map<string, Dictionary>>();
 const loads = new Map<UiLanguage, Promise<void>>();
 
 // The build replaces startup dictionaries with these stable objects before emitting the bundle.
@@ -13,6 +14,10 @@ export const getInterfaceDictionary = (key: string): LocalizedDictionary => {
   const existing = dictionaries.get(key);
   if (existing) return existing;
   const dictionary: LocalizedDictionary = {};
+  for (const [language, catalog] of loadedCatalogs) {
+    const messages = catalog.get(key);
+    if (messages) dictionary[language] = messages;
+  }
   dictionaries.set(key, dictionary);
   return dictionary;
 };
@@ -35,12 +40,18 @@ const downloadCatalog = async (url: string, language: UiLanguage) => {
   if (!response.ok) throw new Error('Interface catalog could not be downloaded.');
   const data: unknown = await response.json();
   if (!isObject(data)) throw new Error('Invalid interface catalog.');
+  const catalog = new Map<string, Dictionary>();
+  for (const [key, messages] of Object.entries(data)) {
+    if (!isDictionary(messages)) throw new Error('Invalid interface dictionary.');
+    catalog.set(key, messages);
+  }
   const updates: [LocalizedDictionary, Dictionary][] = [];
   for (const [key, dictionary] of dictionaries) {
-    const messages = data[key];
-    if (!isDictionary(messages)) throw new Error('Invalid interface dictionary.');
+    const messages = catalog.get(key);
+    if (!messages) throw new Error('Missing interface dictionary.');
     updates.push([dictionary, messages]);
   }
+  loadedCatalogs.set(language, catalog);
   for (const [dictionary, messages] of updates) dictionary[language] = messages;
 };
 

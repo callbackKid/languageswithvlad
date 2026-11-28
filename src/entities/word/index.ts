@@ -14,6 +14,7 @@ export {
   statWord,
   topMistakes,
   useProgress,
+  useProgressValue,
   wordKey,
   type WordStat,
 } from './model/progress';

@@ -16,6 +16,7 @@
     "verify": "yarn lint && yarn format:check && yarn typecheck && yarn fsd",
     "fsd": "steiger ./src",
     "prepare": "husky || true",
+    "perf:budget": "node build-tools/check-startup-budget.mjs",
     "test": "vitest run",
     "test:watch": "vitest"
   },

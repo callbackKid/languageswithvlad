@@ -11,7 +11,7 @@ import { setProgressDoc } from '@/entities/word';
 import { getUiStartupError, prepareUiLanguage } from '@/shared/i18n';
 import { Button } from '@/shared/ui/controls';
 
-import App from './App';
+import App, { preloadSecondaryPage } from './App';
 import { initializeDocumentId } from './model/useDocumentSync';
 
 const root = document.getElementById('root');
@@ -19,6 +19,7 @@ if (!root) throw new Error('index.html has no #root element');
 const appRoot = createRoot(root);
 const docId = initializeDocumentId();
 setProgressDoc(docId);
+preloadSecondaryPage(window.location.pathname);
 
 const start = async () => {
   try {

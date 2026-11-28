@@ -281,6 +281,11 @@ export const useProgress = (): Progress => {
   return useSyncExternalStore(subscribe, getProgress);
 };
 
+// Subscribe to one displayed value without rendering again for unrelated progress updates.
+export const useProgressValue = <Value extends boolean | number>(
+  select: (progress: Progress) => Value
+): Value => useSyncExternalStore(subscribe, () => select(getProgress()));
+
 // A saved word as a Word again, for exercises on Words to learn and mistakes.
 export const statWord = (stat: WordStat): Word => ({
   fr: stat.fr,

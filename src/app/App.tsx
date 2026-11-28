@@ -10,7 +10,7 @@ import {
   useLiveSync,
 } from '@/entities/lesson';
 import { hasUnseenNews } from '@/entities/news';
-import { setProgressDoc, useProgress } from '@/entities/word';
+import { setProgressDoc, useProgressValue } from '@/entities/word';
 import { LessonMode } from '@/pages/call';
 import { CodeGate } from '@/pages/code-gate';
 import { Connect } from '@/pages/connect';
@@ -19,10 +19,7 @@ import { Home } from '@/pages/home';
 import { Lessons } from '@/pages/lessons';
 import { Mistakes } from '@/pages/mistakes';
 import { MyWords } from '@/pages/my-words';
-import { PhotoSection } from '@/pages/photo';
 import { Settings } from '@/pages/settings';
-import { Stats } from '@/pages/stats';
-import { Reader } from '@/pages/text';
 import { api, type BoardServer } from '@/shared/api';
 import {
   applyTeacherHealth,
@@ -76,6 +73,44 @@ const Tutorial = lazy(() =>
     () => ({ default: PageUnavailable })
   )
 );
+
+const loadPhotoSection = () => import('@/pages/photo');
+const PhotoSection = lazy(() =>
+  loadPhotoSection().then(
+    ({ PhotoSection }) => ({ default: PhotoSection }),
+    () => ({ default: PageUnavailable })
+  )
+);
+
+const loadStats = () => import('@/pages/stats');
+const Stats = lazy(() =>
+  loadStats().then(
+    ({ Stats }) => ({ default: Stats }),
+    () => ({ default: PageUnavailable })
+  )
+);
+
+const loadReader = () => import('@/pages/text');
+const Reader = lazy(() =>
+  loadReader().then(
+    ({ Reader }) => ({ default: Reader }),
+    () => ({ default: PageUnavailable })
+  )
+);
+
+// Start a direct link's route download alongside the interface catalog.
+export const preloadSecondaryPage = (path: string) => {
+  const section = parsePath(path)?.section;
+  const load =
+    section === 'photo'
+      ? loadPhotoSection
+      : section === 'stats'
+        ? loadStats
+        : section === 'text'
+          ? loadReader
+          : undefined;
+  if (load) void load().catch(() => undefined);
+};
 
 const ago = (timestamp: number, { t, locale }: Translator<keyof (typeof app)['en']>): string => {
   const minutes = Math.round((Date.now() - timestamp) / 60000);
@@ -211,9 +246,10 @@ const App = ({ initialDocId }: { initialDocId: string | null }) => {
   });
   const bank = useBank(lessons, hasClaude);
   // the same words the Words to learn page lists
-  const hardCount = Object.values(useProgress().words).filter(
-    (stat) => stat.hard && isStudied(stat.language, settings)
-  ).length;
+  const hardCount = useProgressValue(
+    ({ words }) =>
+      Object.values(words).filter((stat) => stat.hard && isStudied(stat.language, settings)).length
+  );
   // the lesson in the address, or the newest one
   const lesson =
     lessons.find((candidate) => candidate.key === route?.lessonKey) ??
@@ -453,12 +489,14 @@ const App = ({ initialDocId }: { initialDocId: string | null }) => {
               {section === 'mine' && <MyWords hasClaude={hasClaude} />}
               {section === 'mistakes' && <Mistakes bank={bank} />}
               {section === 'stats' && (
-                <Stats
-                  bank={bank}
-                  lessons={lessons}
-                  docId={docId}
-                  canWrite={!!docTarget.docWriter}
-                />
+                <Suspense fallback={<PageLoading title={t('section.stats')} />}>
+                  <Stats
+                    bank={bank}
+                    lessons={lessons}
+                    docId={docId}
+                    canWrite={!!docTarget.docWriter}
+                  />
+                </Suspense>
               )}
               {section === 'tutorial' && (
                 <Suspense fallback={<PageLoading title={t('section.tutorial')} />}>
@@ -477,9 +515,15 @@ const App = ({ initialDocId }: { initialDocId: string | null }) => {
               )}
               {section === 'discuss' && <Discuss bank={bank} hasClaude={hasClaude} />}
               {section === 'photo' && (
-                <PhotoSection hasClaude={hasClaude} target={docTarget} lessons={lessons} />
+                <Suspense fallback={<PageLoading title={t('section.photo')} />}>
+                  <PhotoSection hasClaude={hasClaude} target={docTarget} lessons={lessons} />
+                </Suspense>
               )}
-              {section === 'text' && <Reader hasClaude={hasClaude} />}
+              {section === 'text' && (
+                <Suspense fallback={<PageLoading title={t('section.text')} />}>
+                  <Reader hasClaude={hasClaude} />
+                </Suspense>
+              )}
               {section === 'news' && (
                 <Suspense fallback={<PageLoading title={t('section.news')} />}>
                   <News onSeen={newsSeen} />

@@ -116,7 +116,20 @@ const Stats = ({
     topForms,
   } = useMemo(() => {
     const total = bank.words.length;
-    const learned = bank.words.filter((word) => isLearned(progress.words[wordKey(word.fr)])).length;
+    let learned = 0;
+    const countsByLesson = new Map<string, { total: number; learned: number }>();
+    for (const word of bank.words) {
+      const learnedWord = Number(isLearned(progress.words[wordKey(word.fr)]));
+      learned += learnedWord;
+      if (word.lesson === undefined) continue;
+      const counts = countsByLesson.get(word.lesson);
+      if (counts) {
+        counts.total++;
+        counts.learned += learnedWord;
+      } else {
+        countsByLesson.set(word.lesson, { total: 1, learned: learnedWord });
+      }
+    }
     // only the languages the student learns (Settings)
     const stats = Object.values(progress.words).filter((stat) =>
       isStudied(stat.language, settings)
@@ -131,18 +144,12 @@ const Stats = ({
     const hard = stats.filter((stat) => stat.hard).length;
 
     // Per-lesson progress: words learned out of the lesson's words.
-    const perLesson = bank.lessons
-      .filter((lesson) => lesson.ready)
-      .map((lesson) => {
-        const lessonWords = bank.words.filter((word) => word.lesson === lesson.key);
-        return {
-          ...lesson,
-          topic: shownTopic(lesson.topic, uiLanguage),
-          total: lessonWords.length,
-          learned: lessonWords.filter((word) => isLearned(progress.words[wordKey(word.fr)])).length,
-        };
-      })
-      .filter((lesson) => lesson.total > 0);
+    const perLesson = bank.lessons.flatMap((lesson) => {
+      const counts = countsByLesson.get(lesson.key);
+      return lesson.ready && counts
+        ? [{ ...lesson, topic: shownTopic(lesson.topic, uiLanguage), ...counts }]
+        : [];
+    });
 
     // Weak topics: accuracy by lesson, by kind of word and by tense.
     const byLesson = new Map<string, Row>(),

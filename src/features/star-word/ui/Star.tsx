@@ -1,11 +1,12 @@
-import { setHard, useProgress, type Word, wordKey } from '@/entities/word';
+import { setHard, useProgressValue, type Word, wordKey } from '@/entities/word';
 import { common, useTranslation } from '@/shared/i18n';
 import { IconButton } from '@/shared/ui/controls';
 
 // Adds a word to, or removes it from, the "Words to learn" list.
 const Star = ({ word }: { word: Word }) => {
   const { t } = useTranslation(common);
-  const isStarred = !!useProgress().words[wordKey(word.fr)]?.hard;
+  const identity = wordKey(word.fr);
+  const isStarred = useProgressValue(({ words }) => words[identity]?.hard === true);
   return (
     <IconButton
       className={'star' + (isStarred ? ' on' : '')}

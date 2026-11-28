@@ -16,7 +16,7 @@ import {
   getProgress,
   LEARNED_STREAK,
   Transcription,
-  useProgress,
+  useProgressValue,
   type Word,
   wordKey,
 } from '@/entities/word';
@@ -90,7 +90,10 @@ const GroupButton = ({
 // How close a word on Words to learn is to leaving it: ●●○ for 2 right answers in a row of the 3 needed.
 const LearnProgress = ({ word }: { word: Word }) => {
   const { t } = useTranslation(exercises);
-  const streak = Math.min(useProgress().words[wordKey(word.fr)]?.streak ?? 0, LEARNED_STREAK);
+  const identity = wordKey(word.fr);
+  const streak = useProgressValue(({ words }) =>
+    Math.min(words[identity]?.streak ?? 0, LEARNED_STREAK)
+  );
   const label = t('learnProgress', { count: streak, total: LEARNED_STREAK });
   return (
     <span
