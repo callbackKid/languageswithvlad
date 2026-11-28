@@ -53,6 +53,18 @@ export const NEWS: NewsDay[] = [
       {
         kind: 'fixed',
         text: {
+          en: 'Homework that asks you to translate words or verbs now opens a written answer.',
+          ru: 'Если в домашнем задании нужно перевести слова или глаголы, теперь открывается поле для письменного ответа.',
+          fr: 'Quand un devoir vous demande de traduire des mots ou des verbes, un champ s’ouvre désormais pour votre réponse écrite.',
+          de: 'Wenn du als Hausaufgabe Wörter oder Verben übersetzen sollst, öffnet sich jetzt ein Feld für deine schriftliche Antwort.',
+          es: 'Si una tarea te pide traducir palabras o verbos, ahora se abre un campo para que respondas por escrito.',
+          pt: 'Se uma tarefa pedir para traduzir palavras ou verbos, abre-se agora um campo para responder por escrito.',
+          it: 'Se un compito ti chiede di tradurre parole o verbi, ora si apre un campo in cui scrivere la risposta.',
+        },
+      },
+      {
+        kind: 'fixed',
+        text: {
           en: 'Homework that asks you to practise a number of words uses the lesson that assigned it. An explicit lesson reference still opens that lesson.',
           ru: 'Если в домашнем задании указано количество слов для повторения, упражнение берёт слова из урока, к которому относится задание. Если в задании назван конкретный урок, откроется именно он.',
           fr: 'Si un devoir demande de réviser un certain nombre de mots, l’exercice reprend ceux de la leçon où le devoir a été donné. Si le devoir indique une leçon précise, c’est elle qui s’ouvre.',

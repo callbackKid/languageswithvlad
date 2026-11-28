@@ -161,6 +161,13 @@ const WRITING =
 const WORDS =
   /\b(?:mots|words|wörter|vokabeln|palabras|palavras|parole|vocaboli)\b|vocabula|vokabular|лексик|слова/iu;
 const WORDS_FIRST = new RegExp(`^\\s*(?:${WORDS.source})`, 'iu');
+// An explicit translation instruction can name verbs without asking for conjugation.
+const TRANSLATION_FIRST =
+  /^\s*(?:tradu(?:ire|is|isez|ction|cir|ce|zca|cci[oó]n|zir|za|[çc][ãa]o|rre|ci|cete|zione)|translate|translation|(?:ü|ue)bersetz(?:en|e|t|ung)|перев(?:ести|еди(?:те)?|од))(?!\p{L})/iu;
+const VOCABULARY_TO_TRANSLATE = new RegExp(
+  String.raw`^\s*(?:\d+\s+)?(?:${WORDS.source}|${VERBS.source}|глаголы)\s+(?:à traduire|to translate|zu (?:ü|ue)bersetzen|(?:a|para) traducir|para traduzir|da tradurre|для перевода)(?!\p{L})`,
+  'iu'
+);
 const LESSON_LABEL =
   '(?:le[çc]on|lesson|lektion|lecci[oó]n|clase|li[çc][aã]o|aula|lezione|урок(?:а|е|у)?)';
 // A lesson reference names the lesson directly ("leçon 5", "5. Lektion", "урок №5").
@@ -200,6 +207,8 @@ export const readItem = (text: string): HomeworkItem => {
   const reference = LESSON_REFERENCE.exec(text.normalize('NFC'));
   const lessonNumber = Number(reference?.[1] ?? reference?.[2]) || undefined;
   if (GAPS.test(text)) return { text, kind: 'gaps', lessonNumber };
+  if (TRANSLATION_FIRST.test(text) || VOCABULARY_TO_TRANSLATE.test(text))
+    return { text, kind: 'writing' };
   if (VERBS.test(text)) {
     const { verbs, tenses } = readVerbs(text);
     if (verbs.length) return { text, kind: 'verbs', verbs, tenses };
