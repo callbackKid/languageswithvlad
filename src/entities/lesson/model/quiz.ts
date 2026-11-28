@@ -78,12 +78,15 @@ export const pickWords = (words: Word[], progress: Progress, count: number): Wor
   );
 };
 
-/** Every form of a verb in the tenses the student has learned (Settings, or their level); French
+/** Every form of a verb in the assigned tenses or the student's practice settings; French
     verbs also in the negative (negate knows French only). */
-export const verbForms = (conjugation: Conjugation): FormQuestion[] => {
+export const verbForms = (
+  conjugation: Conjugation,
+  assignedTenses?: readonly Tense[]
+): FormQuestion[] => {
   const language = conjugation.language ?? 'fr';
   const all: FormQuestion[] = [];
-  for (const tense of knownTenses(language))
+  for (const tense of assignedTenses ?? knownTenses(language))
     for (const form of conjugation.tenses[tense] || []) {
       all.push({ inf: conjugation.inf, t: tense, p: form.p, f: form.f });
       if (language === 'fr')

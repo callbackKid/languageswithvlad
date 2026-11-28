@@ -487,7 +487,7 @@ const Drill = ({
 };
 
 const makeQuiz = (conjugations: Conjugation[]): FormQuestion[] => {
-  return shuffle(conjugations.flatMap(verbForms)).slice(0, 10);
+  return shuffle(conjugations.flatMap((conjugation) => verbForms(conjugation))).slice(0, 10);
 };
 
 const Quiz = ({ conjugations, onClose }: { conjugations: Conjugation[]; onClose: () => void }) => {

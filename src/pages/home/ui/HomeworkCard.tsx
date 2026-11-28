@@ -176,9 +176,8 @@ const VerbsExercise = ({
             [],
             shuffle(
               tables
-                .flatMap(verbForms)
-                // the task's tenses when it names this language's, every tense otherwise
-                .filter((form) => !form.negative && (!tenses.length || tenses.includes(form.t)))
+                .flatMap((table) => verbForms(table, tenses.length ? tenses : undefined))
+                .filter((form) => !form.negative)
             ).slice(0, VERB_FORMS)
           )
         }

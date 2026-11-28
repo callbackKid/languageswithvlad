@@ -53,6 +53,18 @@ export const NEWS: NewsDay[] = [
       {
         kind: 'fixed',
         text: {
+          en: 'Conjugation homework now practises the tense the teacher assigned, even if that tense is turned off in general practice settings.',
+          ru: 'В домашних заданиях на спряжение теперь отрабатывается время, которое задал преподаватель, даже если оно отключено в настройках обычной практики.',
+          fr: 'Les devoirs de conjugaison vous font désormais travailler le temps demandé par votre professeur, même si ce temps est désactivé dans les réglages des exercices habituels.',
+          de: 'Bei Konjugationshausaufgaben übst du jetzt die vorgegebene Zeitform, auch wenn du sie in den Einstellungen für die allgemeinen Übungen deaktiviert hast.',
+          es: 'En las tareas de conjugación practicas ahora el tiempo verbal que te ha indicado tu profesor, aunque esté desactivado en los ajustes de práctica general.',
+          pt: 'Nos trabalhos de casa de conjugação, pratica agora o tempo verbal pedido pelo professor, mesmo que esteja desativado nas definições de prática geral.',
+          it: 'Nei compiti di coniugazione ora ti eserciti con il tempo verbale assegnato dall’insegnante, anche se è disattivato nelle impostazioni della pratica generale.',
+        },
+      },
+      {
+        kind: 'fixed',
+        text: {
           en: 'Homework that asks you to translate words or verbs now opens a written answer.',
           ru: 'Если в домашнем задании нужно перевести слова или глаголы, теперь открывается поле для письменного ответа.',
           fr: 'Quand un devoir vous demande de traduire des mots ou des verbes, un champ s’ouvre désormais pour votre réponse écrite.',
