@@ -99,10 +99,45 @@ export interface LessonInfo {
 }
 export type BankVerb = VerbRef & { lesson: string };
 export type BankPair = Pair & { lesson: string };
+type LessonVocabulary = Pick<Analysis, 'language' | 'words' | 'verbs'>;
+type BankVocabulary = { words: Word[]; verbs: BankVerb[] };
+
+// Keep the newest occurrence within the lessons being practised.
+const collectVocabulary = (
+  lessons: ReadonlyMap<string, LessonVocabulary>,
+  selected?: ReadonlySet<string>
+): BankVocabulary => {
+  const words: Word[] = [];
+  const verbs: BankVerb[] = [];
+  const seenWords = new Set<string>();
+  const seenVerbs = new Set<string>();
+  for (const [lesson, { language, words: lessonWords, verbs: lessonVerbs }] of lessons) {
+    if (selected && !selected.has(lesson)) continue;
+    // The same spelling can occur in different languages.
+    for (const word of lessonWords) {
+      const identity = `${language}:${wordKey(word.fr)}`;
+      if (!seenWords.has(identity)) {
+        seenWords.add(identity);
+        words.push({ ...word, lesson, language });
+      }
+    }
+    for (const verb of lessonVerbs) {
+      const identity = `${language}:${verb.inf.toLowerCase()}`;
+      if (!seenVerbs.has(identity)) {
+        seenVerbs.add(identity);
+        verbs.push({ ...verb, lesson, language });
+      }
+    }
+  }
+  return { words, verbs };
+};
+
 export interface Bank {
   words: Word[];
   pairs: BankPair[];
   verbs: BankVerb[];
+  // Deduplicate within the selected lessons so older occurrences can be practised on their own.
+  selectVocabulary: (lessons: ReadonlySet<string>) => BankVocabulary;
   lessons: LessonInfo[];
   // newest lessons still being prepared by Claude
   pending: number;
@@ -211,12 +246,9 @@ export const useBank = (lessons: Lesson[], hasClaude: boolean): Bank => {
 
   const removed = useRemoved();
   return useMemo(() => {
-    const words: Word[] = [],
-      pairs: BankPair[] = [],
-      verbs: BankVerb[] = [],
-      lessonInfos: LessonInfo[] = [];
-    const seenWords = new Set<string>(),
-      seenVerbs = new Set<string>();
+    const vocabulary = new Map<string, LessonVocabulary>();
+    const pairs: BankPair[] = [];
+    const lessonInfos: LessonInfo[] = [];
     for (const lesson of [...lessons].reverse()) {
       const prepared = shown[lesson.key];
       // without the words the student took out of the lesson
@@ -231,32 +263,21 @@ export const useBank = (lessons: Lesson[], hasClaude: boolean): Bank => {
         ready: !!analysis,
       });
       if (!analysis) continue;
-      // the language is part of a word's identity: "la casa" is Spanish and Italian
-      for (const word of markKeyWords(analysis.words, lesson.body)) {
-        const identity = `${analysis.language}:${wordKey(word.fr)}`;
-        if (!seenWords.has(identity)) {
-          seenWords.add(identity);
-          words.push({ ...word, lesson: lesson.key, language: analysis.language });
-        }
-      }
+      vocabulary.set(lesson.key, {
+        language: analysis.language,
+        words: markKeyWords(analysis.words, lesson.body),
+        verbs: analysis.verbs,
+      });
       pairs.push(...analysis.pairs.map((pair) => ({ ...pair, lesson: lesson.key })));
-      // "ser", "ir" and "partir" are verbs in several languages, each with its own tables
-      for (const verb of analysis.verbs) {
-        const identity = `${analysis.language}:${verb.inf.toLowerCase()}`;
-        if (!seenVerbs.has(identity)) {
-          seenVerbs.add(identity);
-          verbs.push({ ...verb, language: analysis.language, lesson: lesson.key });
-        }
-      }
     }
     const auto = new Set(lessons.slice(-AUTO_PREPARE).map((lesson) => lesson.key));
     const missing = lessons.filter((lesson) => !analyses[lesson.key] && !failed.has(lesson.key));
     const pending = hasClaude ? missing.filter((lesson) => auto.has(lesson.key)).length : 0;
     const waiting = hasClaude ? missing.length - pending : 0;
     return {
-      words,
+      ...collectVocabulary(vocabulary),
       pairs,
-      verbs,
+      selectVocabulary: (selected) => collectVocabulary(vocabulary, selected),
       lessons: lessonInfos,
       pending,
       failed: failed.size,

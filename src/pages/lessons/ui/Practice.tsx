@@ -24,10 +24,11 @@ const Practice = ({ bank, hasClaude }: { bank: Bank; hasClaude: boolean }) => {
   const [tab, setTab] = useState<'words' | 'verbs'>('words');
   const { tabListProps, tabProps, panelProps } = useTabs(tab);
 
+  const { words: allWords, verbs: allVerbs, pairs, selectVocabulary } = bank;
   const analysis = useMemo((): Analysis => {
-    const isIncluded = (key: string | undefined) =>
-      !selectedLessons || (!!key && selectedLessons.has(key));
-    const words = bank.words.filter((word) => isIncluded(word.lesson));
+    const { words, verbs } = selectedLessons
+      ? selectVocabulary(selectedLessons)
+      : { words: allWords, verbs: allVerbs };
     const chosenWords = new Set(words.map((word) => word.fr));
     return {
       // lessons can mix languages; each word also carries its own
@@ -35,12 +36,15 @@ const Practice = ({ bank, hasClaude }: { bank: Bank; hasClaude: boolean }) => {
       topic: '',
       words,
       local: !hasClaude,
-      pairs: bank.pairs.filter(
-        (pair) => isIncluded(pair.lesson) && chosenWords.has(pair.a) && chosenWords.has(pair.b)
+      pairs: pairs.filter(
+        (pair) =>
+          (!selectedLessons || selectedLessons.has(pair.lesson)) &&
+          chosenWords.has(pair.a) &&
+          chosenWords.has(pair.b)
       ),
-      verbs: bank.verbs.filter((verb) => isIncluded(verb.lesson)),
+      verbs,
     };
-  }, [bank.words, bank.pairs, bank.verbs, selectedLessons, hasClaude]);
+  }, [allWords, allVerbs, pairs, selectVocabulary, selectedLessons, hasClaude]);
   const { words } = analysis;
   const ready = bank.lessons.filter((lesson) => lesson.ready);
   const toggle = (key: string) =>

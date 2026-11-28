@@ -51,6 +51,18 @@ export const NEWS: NewsDay[] = [
     date: LATEST_NEWS_DATE,
     items: [
       {
+        kind: 'fixed',
+        text: {
+          en: 'When you select an older lesson in Downloaded lessons, its words and verbs are available even if they also appear in a newer lesson.',
+          ru: 'Если вы выберете более ранний урок в разделе «Загруженные уроки», его слова и глаголы будут доступны, даже если они встречаются и в более позднем уроке.',
+          fr: 'Si vous sélectionnez une leçon plus ancienne dans « Leçons téléchargées », ses mots et ses verbes restent disponibles même s’ils figurent aussi dans une leçon plus récente.',
+          de: 'Wenn du unter „Geladene Lektionen“ eine ältere Lektion auswählst, stehen dir ihre Wörter und Verben auch dann zur Verfügung, wenn sie in einer neueren Lektion vorkommen.',
+          es: 'Si seleccionas una lección anterior en «Lecciones descargadas», podrás practicar sus palabras y verbos aunque también aparezcan en una lección más reciente.',
+          pt: 'Se selecionar uma lição mais antiga em «Lições descarregadas», pode praticar as suas palavras e os seus verbos mesmo que também apareçam numa lição mais recente.',
+          it: 'Se selezioni una lezione meno recente in «Lezioni scaricate», puoi esercitarti con le sue parole e i suoi verbi anche se compaiono in una lezione più recente.',
+        },
+      },
+      {
         kind: 'better',
         text: {
           en: 'Downloaded lessons now shows vocabulary in pages. Search, selection, exercises and export still work across the full list.',
