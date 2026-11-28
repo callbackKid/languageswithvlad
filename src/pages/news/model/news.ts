@@ -53,6 +53,18 @@ export const NEWS: NewsDay[] = [
       {
         kind: 'fixed',
         text: {
+          en: 'Homework that asks you to practise a number of words uses the lesson that assigned it. An explicit lesson reference still opens that lesson.',
+          ru: 'Если в домашнем задании указано количество слов для повторения, упражнение берёт слова из урока, к которому относится задание. Если в задании назван конкретный урок, откроется именно он.',
+          fr: 'Si un devoir demande de réviser un certain nombre de mots, l’exercice reprend ceux de la leçon où le devoir a été donné. Si le devoir indique une leçon précise, c’est elle qui s’ouvre.',
+          de: 'Wenn du für die Hausaufgaben eine bestimmte Anzahl von Wörtern üben sollst, verwendet die Übung die Wörter aus der Lektion, in der du die Aufgabe bekommen hast. Wenn eine Lektion ausdrücklich genannt wird, öffnet sich diese Lektion.',
+          es: 'Si una tarea pide practicar un número determinado de palabras, el ejercicio usa las de la lección en la que se asignó la tarea. Si la tarea indica una lección concreta, se abre esa lección.',
+          pt: 'Se uma tarefa pedir para praticar um determinado número de palavras, o exercício usa as palavras da lição em que a tarefa foi dada. Se a tarefa indicar uma lição específica, abre-se essa lição.',
+          it: 'Se un compito chiede di ripassare un certo numero di parole, l’esercizio usa quelle della lezione in cui è stato assegnato. Se il compito indica una lezione precisa, si apre quella lezione.',
+        },
+      },
+      {
+        kind: 'fixed',
+        text: {
           en: 'The Words to learn count in the navigation menu is easier to read in both themes.',
           ru: 'Число слов рядом с пунктом меню «Слова на изучении» теперь легче читать в обеих темах.',
           fr: 'Le nombre de mots affiché à côté de « Mots à apprendre » dans le menu est plus lisible dans les deux thèmes.',

@@ -161,7 +161,16 @@ const WRITING =
 const WORDS =
   /\b(?:mots|words|wörter|vokabeln|palabras|palavras|parole|vocaboli)\b|vocabula|vokabular|лексик|слова/iu;
 const WORDS_FIRST = new RegExp(`^\\s*(?:${WORDS.source})`, 'iu');
-const NUMBER = /(\d{1,3})/;
+const LESSON_LABEL =
+  '(?:le[çc]on|lesson|lektion|lecci[oó]n|clase|li[çc][aã]o|aula|lezione|урок(?:а|е|у)?)';
+// A lesson reference names the lesson directly ("leçon 5", "5. Lektion", "урок №5").
+const LESSON_WITH_NUMBER = String.raw`${LESSON_LABEL}\s*(?:(?:n[or]\.?|n[º°]|[#№])\s*)?(\d{1,3})(?![\p{L}\p{N}]|[.,]\d)`;
+const ORDINAL_ENDING = String.raw`(?:\.?[ºª]|\.|er|re|[èe]re|[èe]me|e|st|nd|rd|th|-(?:й|го|му|м))`;
+const NUMBER_WITH_LESSON = String.raw`(?<!\d[.,])(\d{1,3})${ORDINAL_ENDING}?\s+${LESSON_LABEL}(?![\p{L}\p{N}])`;
+const LESSON_REFERENCE = new RegExp(
+  String.raw`(?<![\p{L}\p{N}])(?:${LESSON_WITH_NUMBER}|${NUMBER_WITH_LESSON})`,
+  'iu'
+);
 
 // "verbes être, avoir — présent" → the verbs and the tenses, when they can be told.
 const readVerbs = (text: string): { verbs: string[]; tenses: Tense[] } => {
@@ -188,16 +197,17 @@ const readVerbs = (text: string): { verbs: string[]; tenses: Tense[] } => {
 
 // What one item asks for.
 export const readItem = (text: string): HomeworkItem => {
-  const number = Number(text.match(NUMBER)?.[1]) || undefined;
-  if (GAPS.test(text)) return { text, kind: 'gaps', lessonNumber: number };
+  const reference = LESSON_REFERENCE.exec(text.normalize('NFC'));
+  const lessonNumber = Number(reference?.[1] ?? reference?.[2]) || undefined;
+  if (GAPS.test(text)) return { text, kind: 'gaps', lessonNumber };
   if (VERBS.test(text)) {
     const { verbs, tenses } = readVerbs(text);
     if (verbs.length) return { text, kind: 'verbs', verbs, tenses };
   }
   // "mots de la leçon 6 — surtout : la phrase": a words task, whatever its words are
-  if (WORDS_FIRST.test(text)) return { text, kind: 'words', lessonNumber: number };
+  if (WORDS_FIRST.test(text)) return { text, kind: 'words', lessonNumber };
   if (WRITING.test(text)) return { text, kind: 'writing' };
-  if (WORDS.test(text)) return { text, kind: 'words', lessonNumber: number };
+  if (WORDS.test(text)) return { text, kind: 'words', lessonNumber };
   return { text, kind: 'other' };
 };
 
