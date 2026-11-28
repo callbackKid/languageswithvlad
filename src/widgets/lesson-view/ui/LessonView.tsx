@@ -25,14 +25,7 @@ import {
   useSettings,
   useTeacher,
 } from '@/shared/config';
-import {
-  common,
-  getUiLanguage,
-  paper,
-  translator,
-  type UiLanguage,
-  useTranslation,
-} from '@/shared/i18n';
+import { common, paper, translator, type UiLanguage, useTranslation } from '@/shared/i18n';
 import { requestOnce } from '@/shared/lib/once';
 import { loadChecked, save } from '@/shared/lib/storage';
 import { useTabs } from '@/shared/lib/useTabs';
@@ -177,20 +170,26 @@ const LessonView = ({
   const [extrasState, setExtrasState] = useState<'idle' | 'loading' | 'error'>('idle');
   // why the reading failed, in the interface language (a lesson too long, no access…)
   const [extrasError, setExtrasError] = useState('');
-  const [freshExtras, setFreshExtras] = useState(0);
+  const [extrasAttempt, setExtrasAttempt] = useState(0);
+  const pendingRefresh = useRef<{ key: string }>();
+  const refreshExtras = () => {
+    pendingRefresh.current = { key: extrasKey };
+    setExtrasAttempt((previous) => previous + 1);
+  };
   const wantsExtras = EXTRA_TABS.includes(tab);
   // the teacher's tasks when the text has a homework block, with what Claude says each asks
   const homework = homeworkTasks(lesson.body, extras?.homework ?? null);
   const hasTeacherHomework = homeworkItems(lesson.body).length > 0;
   useEffect(() => {
-    const cached = freshExtras ? null : loadChecked(extrasKey, normalizeExtras);
+    const refresh = pendingRefresh.current?.key === extrasKey ? pendingRefresh.current : undefined;
+    const cached = refresh ? null : loadChecked(extrasKey, normalizeExtras);
     setExtras(cached);
     setExtrasState('idle');
     if (cached || !wantsExtras || !hasClaude) return;
     let alive = true;
     setExtrasState('loading');
     // a reading already on its way (the tab left and opened again) is waited for, not paid twice
-    requestOnce(extrasKey, () => api.lessonExtras(lesson.body, getUiLanguage(), freshExtras > 0))
+    requestOnce(extrasKey, () => api.lessonExtras(lesson.body, uiLanguage, !!refresh))
       .then((raw) => {
         const read = normalizeExtras(raw);
         save(extrasKey, read);
@@ -205,11 +204,14 @@ const LessonView = ({
         setExtrasError(
           failure instanceof ApiError ? failure.message : translator(common).t('unreadable')
         );
+      })
+      .finally(() => {
+        if (pendingRefresh.current === refresh) pendingRefresh.current = undefined;
       });
     return () => {
       alive = false;
     };
-  }, [extrasKey, lesson.body, wantsExtras, hasClaude, freshExtras]);
+  }, [extrasKey, lesson.body, wantsExtras, hasClaude, extrasAttempt, uiLanguage]);
 
   // the Phonetics tab's count: from the reading kept on the device, or from the tab once it reads
   const phoneticsStorageKey = phoneticsKey(lesson.hash, uiLanguage);
@@ -340,9 +342,7 @@ const LessonView = ({
           {wantsExtras && extrasState === 'error' && (
             <div className="note err" role="alert">
               <p>{extrasError}</p>
-              <Button onClick={() => setFreshExtras((previous) => previous + 1)}>
-                {commonText.t('tryAgain')}
-              </Button>
+              <Button onClick={refreshExtras}>{commonText.t('tryAgain')}</Button>
             </div>
           )}
           {tab === 'grammar' && extras && <GrammarTab key={extrasKey} extras={extras} />}
@@ -386,7 +386,7 @@ const LessonView = ({
           )}
           {wantsExtras && extras && hasClaude && (
             <p className={`row-actions ${styles['extras-refresh']}`}>
-              <Button variant="ghost" onClick={() => setFreshExtras((previous) => previous + 1)}>
+              <Button variant="ghost" onClick={refreshExtras}>
                 {t('readAgain')}
               </Button>
             </p>

@@ -10,8 +10,6 @@ const DEFAULT_MAX_TOKENS = 4000;
    (many students opening the same lesson or the same verb). */
 const cache = new Map<string, unknown>();
 const MAX_CACHE = 500;
-// characters of an error answer written to the log: enough to see what went wrong
-const LOGGED_DETAIL = 500;
 
 export class ClaudeError extends HttpError {}
 
@@ -62,6 +60,17 @@ export const claudeJSON = async (
   } = {}
 ): Promise<unknown> => {
   const model = options.model || MODEL;
+  const started = performance.now();
+  const report = (
+    outcome: 'cache_hit' | 'ok' | 'transport_error' | 'http_error' | 'unreadable',
+    details?: { status?: number; inputTokens?: number; outputTokens?: number }
+  ) => {
+    if (process.env.CLAUDE_METRICS !== '1') return;
+    process.stdout.write(
+      `${JSON.stringify({ event: 'claude_request', outcome, model, ms: Math.round(performance.now() - started), ...details })}\n`
+    );
+  };
+  const maxTokens = options.maxTokens ?? DEFAULT_MAX_TOKENS;
   const images = options.images || [];
   const pdfs = options.pdfs || [];
   const attachments = [
@@ -76,8 +85,11 @@ export const claudeJSON = async (
   ];
   // photos and PDFs are never cached: the key would be the whole file
   const useCache = options.cache !== false && !attachments.length;
-  const key = model + '\u0000' + prompt;
-  if (useCache && cache.has(key)) return cache.get(key);
+  const key = JSON.stringify([model, maxTokens, prompt]);
+  if (useCache && cache.has(key)) {
+    report('cache_hit');
+    return cache.get(key);
+  }
 
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) throw new ClaudeError(500, 'claude_off');
@@ -91,7 +103,7 @@ export const claudeJSON = async (
     },
     body: JSON.stringify({
       model,
-      max_tokens: options.maxTokens ?? DEFAULT_MAX_TOKENS,
+      max_tokens: maxTokens,
       messages: [
         {
           role: 'user',
@@ -99,25 +111,33 @@ export const claudeJSON = async (
         },
       ],
     }),
+  }).catch((error: unknown) => {
+    report('transport_error');
+    throw error;
   });
   if (!apiResponse.ok) {
-    const detail = await apiResponse.text().catch(() => '');
-    console.error('Claude API error', apiResponse.status, detail.slice(0, LOGGED_DETAIL));
+    report('http_error', { status: apiResponse.status });
+    console.error('Claude API error', apiResponse.status);
     if (apiResponse.status === 429 || apiResponse.status === 529)
       throw new ClaudeError(503, 'claude_busy');
     throw new ClaudeError(502, 'claude_failed');
   }
-  const data = (await apiResponse.json()) as {
+  const data = (await apiResponse.json().catch((error: unknown) => {
+    report('unreadable', { status: apiResponse.status });
+    throw error;
+  })) as {
     content?: { type: string; text?: string }[];
     stop_reason?: string;
-    usage?: { output_tokens?: number };
+    usage?: { input_tokens?: number; output_tokens?: number };
   };
+  const usage = { inputTokens: data.usage?.input_tokens, outputTokens: data.usage?.output_tokens };
   const text = (data.content || [])
     .filter((block) => block.type === 'text')
     .map((block) => block.text || '')
     .join('\n');
   const value = extractJSON(text);
   if (value === undefined) {
+    report('unreadable', usage);
     // an answer cut off at max_tokens (thinking counts towards it) ends mid-JSON: say so in the log
     console.warn('Claude answer unreadable', data.stop_reason, data.usage?.output_tokens);
     throw new ClaudeError(502, 'claude_unreadable');
@@ -127,6 +147,7 @@ export const claudeJSON = async (
     if (cache.size >= MAX_CACHE) cache.delete(cache.keys().next().value as string);
     cache.set(key, value);
   }
+  report('ok', usage);
   return value;
 };
 

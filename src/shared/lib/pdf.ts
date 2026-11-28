@@ -5,8 +5,8 @@ import { paper, translator } from '@/shared/i18n';
 
 // Most pages read at once; a chapter is usually 4–15.
 export const MAX_PDF_PAGES = 20;
-// keep in step with MAX_PDF_BASE64_LENGTH in api/paper.ts
-const MAX_BASE64_LENGTH = 4_000_000;
+// The server's 4,000,000 Base64 characters can hold 3,000,000 bytes (api/paper.ts).
+const MAX_PDF_BYTES = 3_000_000;
 
 const loadPdf = async (file: File) => {
   const { PDFDocument } = await import('pdf-lib');
@@ -49,10 +49,10 @@ export const extractPages = async (
     (_unused, offset) => firstPage - 1 + offset
   );
   for (const page of await chapter.copyPages(source, indexes)) chapter.addPage(page);
-  const data = toBase64(await chapter.save());
-  if (data.length > MAX_BASE64_LENGTH)
+  const bytes = await chapter.save();
+  if (bytes.byteLength > MAX_PDF_BYTES)
     return {
       error: translator(paper).t('pagesTooLarge'),
     };
-  return { data };
+  return { data: toBase64(bytes) };
 };

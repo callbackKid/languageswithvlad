@@ -25,7 +25,7 @@ const MAX_HANDWRITTEN_PAGES = 4;
 const SHORT_PAPER_TOKENS = 8000;
 const LONG_PAPER_TOKENS = 16000;
 // The app cuts the chosen pages out of the PDF before sending; Vercel refuses bodies over 4.5 MB.
-// Keep in step with MAX_BASE64_LENGTH in src/shared/lib/pdf.ts.
+// Keep in step with MAX_PDF_BYTES in src/shared/lib/pdf.ts (3 bytes per 4 Base64 characters).
 const MAX_PDF_BASE64_LENGTH = 4_000_000;
 
 // From paper: underlined words on a photo, handwritten notes, textbook pages or exercises from the book (body.kind).
