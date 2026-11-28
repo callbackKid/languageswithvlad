@@ -27,11 +27,11 @@ const GapFill = ({
   onRoundEnd?: () => void;
 }) => {
   const { t, rich } = useTranslation(exercises);
-  const language = words[0]?.language ?? 'fr';
   // Asked for once, with the words the exercise started with: the parent may hand over a new
   // list while it runs (another lesson finishes preparing), and that must not restart it or
   // pay for a second set of sentences. A new round remounts the exercise.
   const startingWords = useRef(words).current;
+  const language = startingWords[0]?.language ?? 'fr';
   return (
     <GapRound
       title={t('fillGap')}

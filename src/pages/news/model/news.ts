@@ -53,6 +53,18 @@ export const NEWS: NewsDay[] = [
       {
         kind: 'fixed',
         text: {
+          en: 'Fill the gap and Vocabulary blitz let you choose a language when you select words from several languages.',
+          ru: 'В упражнениях «Вставьте слово» и «Словарный блиц» можно выбрать язык, если вы отметили слова на нескольких языках.',
+          fr: 'Les exercices « Texte à trous » et « Vocabulaire éclair » vous permettent de choisir une langue si vous sélectionnez des mots de plusieurs langues.',
+          de: 'Wenn du Wörter aus mehreren Sprachen auswählst, kannst du bei „Lückentext“ und „Vokabelblitz“ eine Sprache wählen.',
+          es: 'Si seleccionas palabras de varios idiomas, puedes elegir un idioma en «Rellena el hueco» y «Vocabulario relámpago».',
+          pt: 'Ao selecionar palavras de várias línguas, pode escolher uma língua nos exercícios «Preencha o espaço» e «Vocabulário relâmpago».',
+          it: 'Se selezioni parole di più lingue, puoi scegliere una lingua in «Completa la frase» e «Vocabolario lampo».',
+        },
+      },
+      {
+        kind: 'fixed',
+        text: {
           en: 'Multiple-choice quizzes now show answer options in the language the question asks for.',
           ru: 'В тестах с выбором ответа варианты теперь показаны на том языке, на котором нужно ответить.',
           fr: 'Dans les quiz à choix multiple, les réponses proposées sont désormais dans la langue demandée.',

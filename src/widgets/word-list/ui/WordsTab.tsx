@@ -20,7 +20,6 @@ import {
   type Word,
   wordKey,
 } from '@/entities/word';
-import { GapFill } from '@/features/gap-fill';
 import {
   canMakeGroupExercise,
   GroupExercise,
@@ -39,9 +38,9 @@ import Speak from '@/shared/ui/Speak';
 
 import { groupWords, useWordGroups } from '../model/wordGroups';
 import Flashcards from './Flashcards';
+import GeneratedWordRound from './GeneratedWordRound';
 import Listen from './Listen';
 import Match, { type MatchPair } from './Match';
-import WordBlitz from './WordBlitz';
 
 type Exercise =
   | null
@@ -232,15 +231,13 @@ const WordsTab = ({
       />
     );
   }
-  if (exercise === 'gap')
-    return <GapFill key={run} words={picked} onClose={close} onRestart={() => start('gap')} />;
+  if (exercise === 'gap' || exercise === 'blitz')
+    return <GeneratedWordRound key={run} kind={exercise} words={picked} onClose={close} />;
   if (exercise === 'group' && groupRound)
     return (
       <GroupExercise key={run} words={groupRound.words} name={groupRound.name} onClose={close} />
     );
   if (exercise === 'listen') return <Listen key={run} words={picked} onClose={close} />;
-  if (exercise === 'blitz')
-    return <WordBlitz key={run} words={picked} onClose={close} onRestart={() => start('blitz')} />;
 
   const toggle = (fr: string) =>
     setUnpicked((previous) => {
@@ -274,7 +271,10 @@ const WordsTab = ({
         <Button disabled={picked.length < 1 || !hasClaude} onClick={() => start('gap')}>
           {t('fillGap')}
         </Button>
-        <Button disabled={picked.length < 1 || !hasClaude} onClick={() => start('blitz')}>
+        <Button
+          disabled={!hasClaude || !picked.some((word) => word.ru)}
+          onClick={() => start('blitz')}
+        >
           {t('blitz')}
         </Button>
         {canSpeak && (
