@@ -13,7 +13,13 @@ export const normalizeReaderText = (raw: unknown): ReaderText | null => {
   if (!id || !text.trim()) return null;
   let study: TextStudy | undefined;
   try {
-    study = data.study === undefined ? undefined : normalizeStudy(data.study).study;
+    study =
+      data.study === undefined
+        ? undefined
+        : normalizeStudy(
+            data.study,
+            LANGUAGES.find((code) => code === data.language)
+          ).study;
   } catch {
     // a study with nothing in it is made again on request
   }
@@ -45,9 +51,12 @@ export const normalizeTranslation = (
 };
 
 // Words, questions and statements built from a text, with the text's language.
-export const normalizeStudy = (raw: unknown): { language: Language; study: TextStudy } => {
+export const normalizeStudy = (
+  raw: unknown,
+  savedLanguage?: Language
+): { language: Language; study: TextStudy } => {
   const data = asObject(raw);
-  const language = asLanguage(data.language);
+  const language = savedLanguage ?? asLanguage(data.language);
   const seen = new Set<string>();
   const words: Word[] = asArray(data.words)
     .map(asObject)

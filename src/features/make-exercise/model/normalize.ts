@@ -36,10 +36,10 @@ export const normalizeExercise = (
         ru: asText(item.ru),
         explanation: asText(item.explanation),
         say: asText(item.say),
-        heard: item.heard === true && !!asText(item.say),
+        heard: item.heard === true,
       };
     })
-    .filter((question) => question.prompt && question.answer);
+    .filter((question) => question.prompt && question.answer && (!question.heard || question.say));
   if (!questions.length) throw new Error('empty');
   return {
     title: asText(data.title),

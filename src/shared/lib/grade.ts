@@ -40,21 +40,18 @@ export const grade = (input: string, answer: string, pronoun = ''): Grade => {
   // since in "nous nous levons" the reflexive pronoun looks like the subject one. A person like
   // "il/elle/on" is split before normalize, which turns "/" into a space: any one of them counts,
   // and so does the whole label copied as it is.
-  const readings = [typed];
+  const withoutSubject = (value: string, persons: string[]) => {
+    for (const part of new Set(persons)) {
+      const prefix = part.endsWith("'") ? part : part + ' ';
+      if (value.startsWith(prefix)) return value.slice(prefix.length).trim();
+    }
+    return value;
+  };
   const persons = [pronoun, ...pronoun.split('/')].map(normalize).filter(Boolean);
-  for (const part of [...new Set(persons)]) {
-    if (part.endsWith("'") && typed.startsWith(part)) {
-      readings.push(typed.slice(part.length).trim());
-      break;
-    }
-    if (typed.startsWith(part + ' ')) {
-      readings.push(typed.slice(part.length + 1).trim());
-      break;
-    }
-  }
   const accepted = variants(answer).map((variant) => variant.replace(/\s+/g, ' ').trim());
-  if (readings.some((reading) => accepted.includes(reading))) return 'ok';
-  if (readings.some((reading) => accepted.some((variant) => strip(variant) === strip(reading))))
-    return 'accent';
+  if (accepted.includes(typed) || accepted.includes(withoutSubject(typed, persons))) return 'ok';
+  const stripped = strip(typed);
+  const accentReadings = [stripped, withoutSubject(stripped, persons.map(strip))];
+  if (accepted.some((variant) => accentReadings.includes(strip(variant)))) return 'accent';
   return 'bad';
 };

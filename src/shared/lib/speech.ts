@@ -1,3 +1,5 @@
+import { useSyncExternalStore } from 'react';
+
 import { getSettings, type SpeechSpeed } from '@/shared/config';
 import { type UiLanguage } from '@/shared/i18n';
 
@@ -33,13 +35,15 @@ const playEvenWhenSilenced = () => {
 // number says, and 0.9 against 0.65 was hard to tell apart.
 const RATES: Record<SpeechSpeed, number> = { normal: 1, slow: 0.55 };
 
+const voiceLanguage = (locale: string) => locale.toLowerCase().split(/[-_]/)[0];
+
 // The browser's voice for a language, if it has one.
 const voiceFor = (language: UiLanguage): SpeechSynthesisVoice | undefined => {
   const locale = LOCALES[language];
   const voices = window.speechSynthesis.getVoices();
   return (
     voices.find((candidate) => candidate.lang === locale) ||
-    voices.find((candidate) => candidate.lang.startsWith(language))
+    voices.find((candidate) => voiceLanguage(candidate.lang) === language)
   );
 };
 
@@ -167,6 +171,30 @@ export const speak = (text: string, language: UiLanguage = 'fr') => {
 export const hasVoice = (language: UiLanguage): boolean => {
   if (!canSpeak) return false;
   return !window.speechSynthesis.getVoices().length || voiceFor(language) !== undefined;
+};
+
+// Exercises require an installed voice before they can depend on audio.
+export const hasReadyVoice = (language: UiLanguage): boolean =>
+  canSpeak && voiceFor(language) !== undefined;
+
+const subscribeToVoices = (notify: () => void) => {
+  if (!canSpeak) return () => undefined;
+  window.speechSynthesis.addEventListener('voiceschanged', notify);
+  return () => window.speechSynthesis.removeEventListener('voiceschanged', notify);
+};
+const voiceLanguages = () =>
+  canSpeak
+    ? window.speechSynthesis
+        .getVoices()
+        .map((voice) => voice.lang)
+        .join(',')
+    : '';
+
+// Re-render controls when the browser loads or changes its voices.
+export const useVoiceAvailability = () => {
+  const voices = useSyncExternalStore(subscribeToVoices, voiceLanguages, () => '');
+  const languages = new Set(voices.split(',').map(voiceLanguage));
+  return (language: UiLanguage) => languages.has(language);
 };
 
 // the utterance being read, kept so the browser doesn't drop it (Chrome then never says it ended)

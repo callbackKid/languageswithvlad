@@ -11,7 +11,7 @@ import { api, ApiError } from '@/shared/api';
 import { getSettings, type Language } from '@/shared/config';
 import { common, getUiLanguage, paper, translator, useTranslation } from '@/shared/i18n';
 import { requestOnce } from '@/shared/lib/once';
-import { canSpeak, hasVoice } from '@/shared/lib/speech';
+import { hasReadyVoice } from '@/shared/lib/speech';
 import { save } from '@/shared/lib/storage';
 import { Button } from '@/shared/ui/controls';
 import WaitingFact from '@/shared/ui/WaitingFact';
@@ -109,7 +109,7 @@ const PhoneticsTab = ({
           );
           // only choices (a choice whose answer isn't among its options became a typed gap), and
           // no "what did you hear" question where nothing can be heard
-          const canHear = canSpeak && hasVoice(lessonLanguage);
+          const canHear = hasReadyVoice(lessonLanguage);
           const questions = made.questions.filter(
             (question) => question.type === 'choice' && (canHear || !question.heard)
           );

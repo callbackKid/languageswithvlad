@@ -30,7 +30,7 @@ import { WordQuiz } from '@/features/quiz';
 import { Star } from '@/features/star-word';
 import { useTranslationLanguage } from '@/shared/config';
 import { common, exercises, useTranslation } from '@/shared/i18n';
-import { canSpeak, unlockSpeech } from '@/shared/lib/speech';
+import { canSpeak, unlockSpeech, useVoiceAvailability } from '@/shared/lib/speech';
 import { downloadText } from '@/shared/lib/util';
 import { Button, IconButton, Input, Select } from '@/shared/ui/controls';
 import InlineConfirm from '@/shared/ui/InlineConfirm';
@@ -174,7 +174,11 @@ const WordsTab = ({
   // the chosen group's words are the ones the exercises use
   const shown =
     group === null ? analysis.words : (groups.find((listed) => listed.name === group)?.words ?? []);
+  const hasVoice = useVoiceAvailability();
   const picked = shown.filter((word) => !unpicked.has(word.fr));
+  const dictationWords = picked.filter(
+    (word) => word.fr.trim() && word.ru && hasVoice(word.language ?? 'fr')
+  );
   const query = filter.toLowerCase();
   const matches = query
     ? shown.filter(
@@ -206,7 +210,7 @@ const WordsTab = ({
         key={run}
         title={t('dictation')}
         onClose={close}
-        make={() => buildDictation(pickWords(picked, getProgress(), 10))}
+        make={() => buildDictation(pickWords(dictationWords, getProgress(), 10))}
       />
     );
   if (exercise === 'cards')
@@ -278,7 +282,7 @@ const WordsTab = ({
           {t('blitz')}
         </Button>
         {canSpeak && (
-          <Button disabled={picked.length < 1} onClick={() => start('dictation')}>
+          <Button disabled={!dictationWords.length} onClick={() => start('dictation')}>
             {t('dictation')}
           </Button>
         )}

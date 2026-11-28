@@ -180,10 +180,10 @@ const WordActions = ({
       );
       if (!answer) throw new Error('empty');
       saveWordCard(picked.text, picked.context, answer, translation);
+      report(answer);
       if (pick !== pickCount.current) return null;
       setCard(answer);
       setState('idle');
-      report(answer);
       return answer;
     } catch (failure) {
       if (pick !== pickCount.current) return null;

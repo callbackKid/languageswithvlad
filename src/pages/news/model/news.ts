@@ -53,6 +53,18 @@ export const NEWS: NewsDay[] = [
       {
         kind: 'fixed',
         text: {
+          en: 'Text lookups stay with the text they came from. Portuguese answers recognise missing accents in subject pronouns, French negative imperatives put their pronouns in the right place, and dictation uses only words with an available voice.',
+          ru: 'Результаты поиска слов сохраняются в исходном тексте. При проверке ответов на португальском учитываются пропущенные знаки ударения в местоимениях-подлежащих. Во французском отрицательном повелительном наклонении местоимения теперь стоят на нужном месте. В диктант попадают только слова, для которых доступна озвучка.',
+          fr: 'Les mots consultés restent associés à leur texte d’origine. En portugais, les accents manquants dans les pronoms sujets sont repérés. Les pronoms de l’impératif négatif français sont à la bonne place. La dictée utilise uniquement les mots pour lesquels une voix est disponible.',
+          de: 'Nachgeschlagene Wörter bleiben dem ursprünglichen Text zugeordnet. Bei portugiesischen Antworten werden fehlende Akzente in Subjektpronomen erkannt. Beim verneinten französischen Imperativ stehen die Pronomen an der richtigen Stelle. Im Diktat kommen nur Wörter vor, für die eine Stimme verfügbar ist.',
+          es: 'Las palabras consultadas quedan asociadas al texto de origen. En las respuestas en portugués se detectan las tildes que faltan en los pronombres de sujeto. En el imperativo negativo francés, los pronombres se colocan en su sitio. El dictado solo usa palabras para las que hay una voz disponible.',
+          pt: 'As palavras consultadas ficam associadas ao texto de origem. Nas respostas em português, são detetados os acentos em falta nos pronomes de sujeito. No imperativo negativo em francês, os pronomes ficam no lugar certo. O ditado só usa palavras para as quais existe uma voz disponível.',
+          it: 'Le parole consultate restano associate al testo di origine. Nelle risposte in portoghese vengono rilevati gli accenti mancanti nei pronomi soggetto. Nell’imperativo negativo francese i pronomi sono al posto giusto. Il dettato usa solo parole per cui è disponibile una voce.',
+        },
+      },
+      {
+        kind: 'fixed',
+        text: {
           en: 'Mentioning the next lesson in a homework instruction no longer changes the scheduled date.',
           ru: 'Упоминание следующего урока в домашнем задании больше не меняет дату урока в расписании.',
           fr: 'Mentionner le prochain cours dans une consigne de devoir ne change plus la date prévue.',

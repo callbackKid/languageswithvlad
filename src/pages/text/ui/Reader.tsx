@@ -1,4 +1,4 @@
-import { type MouseEvent, useEffect, useMemo, useState } from 'react';
+import { type MouseEvent, useEffect, useMemo, useRef, useState } from 'react';
 
 import { type Analysis } from '@/entities/lesson';
 import { normalizeWordCard } from '@/entities/word';
@@ -30,7 +30,7 @@ const WORD = /(\p{L}[\p{L}\p{M}'’-]*)/u;
 
 type Busy = 'idle' | 'loading' | 'error';
 // what the word menu calls the words it explains from this page's text
-const WORD_SOURCE = 'reader';
+const WORD_SOURCE = 'reader:';
 
 // The first words of a text, for the list of saved texts until Claude names it.
 const firstWords = (text: string) => {
@@ -107,6 +107,7 @@ const Reader = ({ hasClaude }: { hasClaude: boolean }) => {
     asList(load<unknown>(STORAGE_KEY), normalizeReaderText)
   );
   const [currentId, setCurrentId] = useState<string | null>(() => texts[0]?.id ?? null);
+  const viewVersion = useRef(0);
   const [draft, setDraft] = useState('');
   const [translating, setTranslating] = useState<Busy>('idle');
   const [studying, setStudying] = useState<Busy>('idle');
@@ -136,10 +137,11 @@ const Reader = ({ hasClaude }: { hasClaude: boolean }) => {
       const detail: unknown = event instanceof CustomEvent ? event.detail : null;
       const source = (detail as { source?: unknown } | null)?.source;
       const card = normalizeWordCard((detail as { card?: unknown } | null)?.card, '');
-      if (source !== WORD_SOURCE || !card || !currentId) return;
+      if (typeof source !== 'string' || !source.startsWith(WORD_SOURCE) || !card) return;
+      const textId = source.slice(WORD_SOURCE.length);
       setTexts((previous) =>
         previous.map((entry) =>
-          entry.id === currentId
+          entry.id === textId
             ? {
                 ...entry,
                 notes: [
@@ -154,13 +156,14 @@ const Reader = ({ hasClaude }: { hasClaude: boolean }) => {
     };
     window.addEventListener(CARD_EVENT, onCard);
     return () => window.removeEventListener(CARD_EVENT, onCard);
-  }, [currentId]);
+  }, []);
   // Changes one text, starting from its newest state (an answer may arrive while another is on its way).
   const patch = (id: string, change: (entry: ReaderText) => Partial<ReaderText>) =>
     setTexts((previous) =>
       previous.map((entry) => (entry.id === id ? { ...entry, ...change(entry) } : entry))
     );
   const open = (id: string | null) => {
+    viewVersion.current++;
     setCurrentId(id);
     setError('');
     setTranslating('idle');
@@ -209,12 +212,13 @@ const Reader = ({ hasClaude }: { hasClaude: boolean }) => {
       context: sentenceAround(target.closest('p')?.textContent ?? '', word),
       language,
       ...menuPlace(target.getBoundingClientRect()),
-      source: WORD_SOURCE,
+      source: WORD_SOURCE + currentId,
     });
   };
 
   const translate = async () => {
     if (!current) return;
+    const version = viewVersion.current;
     setTranslating('loading');
     setError('');
     try {
@@ -224,9 +228,11 @@ const Reader = ({ hasClaude }: { hasClaude: boolean }) => {
         translation: translated.paragraphs,
         ...(!entry.language && translated.language && { language: translated.language }),
       }));
+      if (version !== viewVersion.current) return;
       setShowTranslation(true);
       setTranslating('idle');
     } catch (problem) {
+      if (version !== viewVersion.current) return;
       setTranslating('error');
       failure(problem, 'translateFailed');
     }
@@ -234,6 +240,7 @@ const Reader = ({ hasClaude }: { hasClaude: boolean }) => {
 
   const study = async () => {
     if (!current) return;
+    const version = viewVersion.current;
     setStudying('loading');
     setError('');
     try {
@@ -243,8 +250,10 @@ const Reader = ({ hasClaude }: { hasClaude: boolean }) => {
         language: result.language,
         title: result.study.title || entry.title,
       }));
+      if (version !== viewVersion.current) return;
       setStudying('idle');
     } catch (problem) {
+      if (version !== viewVersion.current) return;
       setStudying('error');
       failure(problem, 'studyFailed');
     }
@@ -368,7 +377,7 @@ const Reader = ({ hasClaude }: { hasClaude: boolean }) => {
               <div
                 className={styles['reader-text']}
                 lang={language}
-                data-word-source={WORD_SOURCE}
+                data-word-source={WORD_SOURCE + current.id}
                 onClick={lookUpWord}
               >
                 {paragraphs.map((paragraph, index) => (

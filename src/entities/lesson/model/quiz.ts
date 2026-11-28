@@ -2,7 +2,7 @@ import { type Conjugation, knownTenses, negate, type VerbRef } from '@/entities/
 import { formKey, isLearned, type Progress, type Word, wordKey } from '@/entities/word/@x/lesson';
 import { type Tense, translationLanguage } from '@/shared/config';
 import { type UiLanguage } from '@/shared/i18n';
-import { canSpeak } from '@/shared/lib/speech';
+import { hasReadyVoice } from '@/shared/lib/speech';
 import { shuffle } from '@/shared/lib/util';
 
 import { readConjugation, verbLanguageOf } from './bank';
@@ -223,7 +223,9 @@ export const dictationForm = (word: Word, translation: UiLanguage): DictationFor
 
 // Every word read aloud once, to be typed.
 export const buildDictation = (targets: Word[]): QuizItem[] => {
-  return shuffle(targets).map((word) => ({ kind: 'listen' as const, word }));
+  return shuffle(
+    targets.filter((word) => word.fr.trim() && hasReadyVoice(word.language ?? 'fr'))
+  ).map((word) => ({ kind: 'listen' as const, word }));
 };
 
 // A round of mixed questions on these words (pick, type, listen) and on these verb forms.
@@ -247,7 +249,8 @@ export const buildQuiz = (
         if (wrongAnswers)
           return { kind: 'pick-fr', word, choices: shuffle([word.fr, ...wrongAnswers]) };
       }
-      if (canSpeak && roll > 0.88) return { kind: 'listen', word };
+      if (roll > 0.88 && word.fr.trim() && hasReadyVoice(word.language ?? 'fr'))
+        return { kind: 'listen', word };
       return { kind: 'type-fr', word };
     });
   return shuffle([...items, ...forms.map((form) => ({ kind: 'form' as const, form }))]);
