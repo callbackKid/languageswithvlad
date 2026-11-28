@@ -4,8 +4,10 @@ import {
   CaptureUpdateAction,
   Excalidraw,
   exportToBlob,
+  getCommonBounds,
   reconcileElements,
 } from '@excalidraw/excalidraw';
+import type { ExcalidrawElement } from '@excalidraw/excalidraw/element/types';
 import type {
   BinaryFiles,
   Collaborator,
@@ -20,6 +22,7 @@ import {
   asSavedBoard,
   asSharedElements,
   asSharedFiles,
+  batchBoardFiles,
   type SavedBoard,
   updateBoardPreviews,
 } from '@/entities/board';
@@ -48,11 +51,16 @@ const POINTER_EVERY = 60;
 const SAVE_AFTER = 400;
 // Pictures larger than this aren't sent (a broadcast message is limited to about 256 KB).
 const MAX_SHARED_FILE = 180_000;
+// Big scenes render on demand in My notes rather than competing with editing.
+const MAX_BACKGROUND_PREVIEW_ELEMENTS = 150;
+const MAX_BACKGROUND_PREVIEW_SCENE_BYTES = 400_000;
+const MAX_BACKGROUND_PREVIEW_PIXELS = 2_000_000;
+const BACKGROUND_PREVIEW_PADDING = 10;
 
 type RemoteElements = Parameters<typeof reconcileElements>[1];
 interface Saved {
-  elements: unknown[];
-  files: Record<string, unknown>;
+  elements: readonly ExcalidrawElement[];
+  files: BinaryFiles;
 }
 
 export interface BoardHandle {
@@ -103,6 +111,7 @@ const BoardCanvas = ({
     window.clearTimeout(timer.current);
     const pending = unsaved.current;
     unsaved.current = null;
+    if (!pending) return;
     const board = asSavedBoard(pending);
     if (!board) return;
     const scene = JSON.stringify(board);
@@ -113,11 +122,23 @@ const BoardCanvas = ({
     )
       return;
     lastSavedScene.current = scene;
+    if (board.elements.length) {
+      if (
+        board.elements.length > MAX_BACKGROUND_PREVIEW_ELEMENTS ||
+        new TextEncoder().encode(scene).length > MAX_BACKGROUND_PREVIEW_SCENE_BYTES
+      )
+        return;
+      const [left, top, right, bottom] = getCommonBounds(pending.elements);
+      const padding = 2 * BACKGROUND_PREVIEW_PADDING;
+      if ((right - left + padding) * (bottom - top + padding) > MAX_BACKGROUND_PREVIEW_PIXELS)
+        return;
+    }
     const render = (board: SavedBoard, dark: boolean) =>
       exportToBlob({
         elements: board.elements as never,
         files: board.files,
         appState: { exportBackground: true, exportWithDarkMode: dark },
+        exportPadding: BACKGROUND_PREVIEW_PADDING,
         mimeType: 'image/png',
       });
     // Preview work can finish after the editor closes. Only the current revision is written.
@@ -145,8 +166,10 @@ const BoardCanvas = ({
       (file) =>
         (everything || !sentFiles.current.has(file.id)) && file.dataURL.length < MAX_SHARED_FILE
     );
-    for (const file of files) sentFiles.current.add(file.id);
-    if (files.length) connection.send('files', { files });
+    for (const batch of batchBoardFiles(files)) {
+      connection.send('files', { files: batch });
+      for (const file of batch) sentFiles.current.add(file.id);
+    }
   }, []);
 
   const serverUrl = server?.url ?? '';

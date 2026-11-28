@@ -36,6 +36,31 @@ export const asSharedFiles = (value: unknown): BinaryFileData[] => {
   );
 };
 
+// Leave room for the broadcast envelope above the encoded files payload.
+const BOARD_FILES_PAYLOAD_BYTES = 200_000;
+
+// Keep each broadcast below the byte limit even when several pictures are pasted together.
+export const batchBoardFiles = (files: BinaryFileData[]): BinaryFileData[][] => {
+  const encoder = new TextEncoder();
+  const emptyPayloadBytes = '{"files":[]}'.length;
+  const batches: BinaryFileData[][] = [];
+  let batch: BinaryFileData[] = [];
+  let bytes = emptyPayloadBytes;
+  for (const file of files) {
+    const size = encoder.encode(JSON.stringify(file)).length;
+    if (size + emptyPayloadBytes > BOARD_FILES_PAYLOAD_BYTES) continue;
+    if (batch.length && bytes + size + 1 > BOARD_FILES_PAYLOAD_BYTES) {
+      batches.push(batch);
+      batch = [];
+      bytes = emptyPayloadBytes;
+    }
+    bytes += size + (batch.length ? 1 : 0);
+    batch.push(file);
+  }
+  if (batch.length) batches.push(batch);
+  return batches;
+};
+
 // Where someone's pointer is; undefined when the message has no usable position.
 export const asPointer = (value: unknown): Collaborator['pointer'] => {
   if (!isObject(value) || typeof value.x !== 'number' || typeof value.y !== 'number')

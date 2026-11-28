@@ -5,6 +5,7 @@ export {
   asSavedBoard,
   asSharedElements,
   asSharedFiles,
+  batchBoardFiles,
   type SavedBoard,
 } from './model/boardPayload';
 export {
