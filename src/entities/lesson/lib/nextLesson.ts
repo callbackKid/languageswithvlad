@@ -4,9 +4,10 @@
    the last such line in the document says when the next lesson is. */
 
 const LINE =
-  /(?:l[ae]\s+)?(?:cours|leçon)\s+prochain(?:e)?|(?:l[ae]\s+)?prochain(?:e)?\s+(?:cours|leçon)|next\s+lesson|n(?:ä|ae)chste\s+(?:stunde|lektion|unterricht)|n(?:ä|ae)chster\s+unterricht|pr[óo]xim[ao]\s+(?:clase|lecci[óo]n|aula|li[çc][ãa]o)|prossim[ao]\s+lezione/i;
+  /^\s*(?:(?:l[ae]\s+)?(?:cours|leçon)\s+prochain(?:e)?|(?:l[ae]\s+)?prochain(?:e)?\s+(?:cours|leçon)|next\s+lesson|n(?:ä|ae)chste\s+(?:stunde|lektion|unterricht)|n(?:ä|ae)chster\s+unterricht|pr[óo]xim[ao]\s+(?:clase|lecci[óo]n|aula|li[çc][ãa]o)|prossim[ao]\s+lezione)(?=\s|[:–—-]|$)\s*/i;
 const DATE_TIME =
-  /(\d{1,2})[./-](\d{1,2})[./-](\d{4}|\d{2})(?!\d)(?:[\s,à@at]+(\d{1,2})\s*[:hH.]\s*(\d{2})?)?(.*)$/;
+  /^(\d{1,2})[./-](\d{1,2})[./-](\d{4}|\d{2})(?!\d)(?:[\s,à@at]+(\d{1,2})\s*[:hH.]\s*(\d{2})?)?(.*)$/;
+const SCHEDULE_SEPARATOR = /^[:–—-]\s*/;
 
 // cities a time may be given in, in the spellings of the app's languages
 const ZONES: [RegExp, string][] = [
@@ -90,14 +91,13 @@ const zonedTime = (
   return new Date(moment);
 };
 
-/** A line that says when the next lesson is: the label followed by ":" or a dash
-    ("le cours prochain: à confirmer" counts too), or by a date. "Devoirs: lire le texte pour le
-    cours prochain" only mentions it, and must not hide the date written above. */
-const isNextLessonLine = (line: string): boolean => {
-  const match = line.match(LINE);
-  if (!match || match.index === undefined) return false;
-  const afterLabel = line.slice(match.index + match[0].length);
-  return /^\s*[:–—-]/.test(afterLabel) || DATE_TIME.test(afterLabel);
+// Only a schedule label at the start of a line can introduce a date or an unconfirmed entry.
+const scheduleText = (line: string): string | undefined => {
+  const label = LINE.exec(line);
+  if (!label) return;
+  const afterLabel = line.slice(label[0].length);
+  if (SCHEDULE_SEPARATOR.test(afterLabel)) return afterLabel.replace(SCHEDULE_SEPARATOR, '');
+  return DATE_TIME.test(afterLabel) ? afterLabel : undefined;
 };
 
 // null when the document never mentions the next lesson; "unconfirmed" when its newest mention has no usable date.
@@ -105,12 +105,13 @@ export const parseNextLesson = (
   text: string,
   now = new Date()
 ): NextLesson | 'unconfirmed' | null => {
-  const lines = text.split('\n').filter(isNextLessonLine);
-  // only the newest mention counts: "le cours prochain: à confirmer" cancels an older date
-  const line = lines[lines.length - 1];
-  if (line === undefined) return null;
-
-  const afterLabel = line.slice(line.match(LINE)?.index ?? 0).replace(LINE, '');
+  // "le cours prochain: à confirmer" cancels an older date.
+  const afterLabel = text
+    .split('\n')
+    .reverse()
+    .map(scheduleText)
+    .find((entry) => entry !== undefined);
+  if (afterLabel === undefined) return null;
   const match = afterLabel.match(DATE_TIME);
   if (!match) return 'unconfirmed';
   const [, dayText, monthText, yearText, hourText, minuteText, rest] = match;

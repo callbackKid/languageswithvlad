@@ -53,6 +53,18 @@ export const NEWS: NewsDay[] = [
       {
         kind: 'fixed',
         text: {
+          en: 'Mentioning the next lesson in a homework instruction no longer changes the scheduled date.',
+          ru: 'Упоминание следующего урока в домашнем задании больше не меняет дату урока в расписании.',
+          fr: 'Mentionner le prochain cours dans une consigne de devoir ne change plus la date prévue.',
+          de: 'Wenn in einer Hausaufgabe die nächste Stunde erwähnt wird, ändert sich der geplante Termin nicht mehr.',
+          es: 'Mencionar la próxima clase en el enunciado de una tarea ya no cambia la fecha prevista.',
+          pt: 'Mencionar a próxima aula nas instruções dos trabalhos de casa já não altera a data marcada.',
+          it: 'Menzionare la prossima lezione nelle istruzioni di un compito non cambia più la data prevista.',
+        },
+      },
+      {
+        kind: 'fixed',
+        text: {
           en: 'Conjugation homework now practises the tense the teacher assigned, even if that tense is turned off in general practice settings.',
           ru: 'В домашних заданиях на спряжение теперь отрабатывается время, которое задал преподаватель, даже если оно отключено в настройках обычной практики.',
           fr: 'Les devoirs de conjugaison vous font désormais travailler le temps demandé par votre professeur, même si ce temps est désactivé dans les réglages des exercices habituels.',
