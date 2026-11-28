@@ -480,7 +480,7 @@ main {
   padding: 0 6px;
   border-radius: 10px;
   background: color-mix(in srgb, var(--accent) 18%, transparent);
-  color: var(--accent-text);
+  color: var(--ink);
   font-size: 12px;
   font-weight: 600;
   text-align: center;

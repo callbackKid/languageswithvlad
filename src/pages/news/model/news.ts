@@ -53,6 +53,18 @@ export const NEWS: NewsDay[] = [
       {
         kind: 'fixed',
         text: {
+          en: 'The Words to learn count in the navigation menu is easier to read in both themes.',
+          ru: 'Число слов рядом с пунктом меню «Слова на изучении» теперь легче читать в обеих темах.',
+          fr: 'Le nombre de mots affiché à côté de « Mots à apprendre » dans le menu est plus lisible dans les deux thèmes.',
+          de: 'Die Wortanzahl neben „Lernwörter“ im Menü ist in beiden Designs besser lesbar.',
+          es: 'El número de palabras que aparece junto a «Palabras por aprender» en el menú se lee mejor en ambos temas.',
+          pt: 'O número de palavras junto a «Palavras por aprender» no menu é mais fácil de ler em ambos os temas.',
+          it: 'Il numero di parole accanto a «Parole da imparare» nel menu è più leggibile in entrambi i temi.',
+        },
+      },
+      {
+        kind: 'fixed',
+        text: {
           en: 'Group exercises are available when you select at least three words from one language and each word has a translation.',
           ru: 'Упражнение по группе доступно, если вы отметили хотя бы три слова на одном языке и у каждого есть перевод.',
           fr: 'Vous pouvez lancer un exercice sur un groupe si vous cochez au moins trois mots d’une même langue, chacun avec sa traduction.',
